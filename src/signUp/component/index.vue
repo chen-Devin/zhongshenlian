@@ -3,7 +3,7 @@
     <section class="section">
       <form>
         <div class="form-group">
-          <img v-bind:src="user.wechatHeadImg || './head.jpg'"
+          <img v-bind:src="userHead"
                alt="头像"
                class="img-responsive img-rounded center-block">
         </div>
@@ -101,6 +101,11 @@ export default {
   },
   mounted() {
     this.getInfo();
+  },
+  computed: {
+    userHead() {
+      return user.wechatHeadImg || require('../../img/head.jpg');
+    }
   },
   methods: {
     getInfo() {
@@ -211,9 +216,7 @@ export default {
         if (rep.data.statusCode = '10001') {
           this.getBtnInter();
         }
-      }, (rep) => {
-
-      });
+      }, (rep) => {});
     },
     getBtnInter() {
       var count = 60;

@@ -4,26 +4,32 @@
            class="form-control input-sm"
            id="search"
            placeholder="输入工号、姓名或手机号"
-           v-model="value">
+           v-model="valueInput">
     <button type="button"
             class="btn btn-primary btn-sm"
-            v-on:click="search()">&emsp;搜索&emsp;</button>
+            v-on:click="search()">&nbsp;搜索&nbsp;</button>
     <button type="button"
             class="btn btn-warning btn-sm"
-            v-on:click="clear()">&emsp;重置&emsp;</button>
+            v-on:click="clear()">&nbsp;重置&nbsp;</button>
   </div>
 </template>
 
 <script>
 export default {
   name: 'searchBar',
+  data() {
+    return {
+      valueInput: this.value
+    }
+  },
   props: ['value'],
   methods: {
     search() {
-      $emit('search');
+      this.$emit('search', this.valueInput);
     },
     clear() {
-      $emit('clear');
+      this.valueInput = '';
+      this.$emit('search', this.valueInput);
     }
   }
 }

@@ -17,7 +17,7 @@ const config = {
         main: path.resolve(srcPath, 'main/index.js'),
         signIn: path.resolve(srcPath, 'signIn/index.js'),
         signUp: path.resolve(srcPath, 'signUp/index.js'),
-        vendors: ['vue', 'axios', 'lodash']
+        vendors: ['vue', 'axios', 'lodash', 'qs']
     },
 
     output: {

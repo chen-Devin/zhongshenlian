@@ -1,12 +1,14 @@
 /*
 主色调
+@property 自定义变量
 @author xiaodabao
 @date 2017-03-31
 */
 $origin-color: #fff;
 
 /*
-背景色
+主背景色
+@property 自定义变量
 @author xiaodabao
 @date 2017-03-31
 */
@@ -14,6 +16,7 @@ $background-color: rgba(242,243,247,1);
 
 /*
 修改大尺寸input的圆角
+@property 覆盖默认变量
 @author xiaodabao
 @date 2017-03-31
 */
@@ -21,6 +24,7 @@ $border-radius-large: 3px;
 
 /*
 修改默认非衬线字体
+@property 覆盖默认变量
 @author xiaodabao
 @date 2017-03-31
 */

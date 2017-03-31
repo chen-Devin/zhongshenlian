@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+
 import inforManagement from './routeComponent/inforManagement.vue';
 import authorManagement from './routeComponent/authorManagement.vue';
 import complBusiness from './routeComponent/complBusiness.vue';

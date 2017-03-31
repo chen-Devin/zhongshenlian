@@ -56,48 +56,39 @@ import qs from 'qs';
 import modal from './modal.vue';
 
 export default {
-  name: 'modModal',
+  name: 'addModal',
   data() {
     return {
       staff: (()=>{
         return {
           id: {
-            val: this.initalStaff.id
+            val: ''
           },
           name: {
-            val: this.initalStaff.name,
-            ver: this.initalStaff.name===''?false:true
+            val: '',
+            ver: true
           },
           gender: {
-            val: this.initalStaff.gender===''?'男':this.initalStaff.gender
+            val: '男'
           },
           telephone: {
-            val: this.initalStaff.telephone,
-            ver: (()=>{
-              let reg = /^(1+\d{10})$/;
-              if (this.initalStaff.telephone === '') {
-                return false;
-              } else if (!reg.test(this.initalStaff.telephone)) {
-                return false;
-              } else {
-                return true;
-              }
-            })()
+            val: '',
+            ver: true
           },
           jobNumber: {
-            val: this.initalStaff.jobNumber,
-            ver: this.initalStaff.jobNumber===''?false:true
+            val: '',
+            ver: true
           },
           duties: {
-            val: this.initalStaff.duties,
-            ver: this.initalStaff.duties===''?false:true
+            val: '',
+            ver: true
           },
           department: {
-            val: this.initalStaff.department,
-            ver: this.initalStaff.department===''?false:true
+            val: '',
+            ver: true
           },
           remark: {
-            val: this.initalStaff.remark
+            val: ''
           },
         }
       })(),
@@ -111,7 +102,7 @@ export default {
       }
     };
   },
-  props: ['initalStaff'],
+  props: ['thisDepart'],
   methods: {
     save() {
       let reg = /^(1+\d{10})$/;
@@ -157,9 +148,8 @@ export default {
           data: qs.stringify({
             data: (() => {
               var obj = {
-                command: 'editUser',
+                command: 'editBiddingInfo',
                 platform: 'web',
-                editUserId: this.staff.id.val,
                 phone: this.staff.telephone.val,
                 jobNumber: this.staff.jobNumber.val,
                 userName: this.staff.name.val,
@@ -174,7 +164,8 @@ export default {
         }).then((rep)=>{
           if (rep.data.statusCode = '10001') {
             this.subBtn.cont = '已保存';
-            this.$emit('saved', this.staff);
+            this.staff.id.val = rep.data.data.id;
+            this.$emit('added', this.staff);
           }
         }, (rep)=>{});
       }

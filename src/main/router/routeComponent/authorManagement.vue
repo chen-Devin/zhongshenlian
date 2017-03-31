@@ -31,7 +31,7 @@ export default {
   methods: {
     getInfo() {
       axios({
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'},
         method: 'get',
         url: '/service',
         params: {

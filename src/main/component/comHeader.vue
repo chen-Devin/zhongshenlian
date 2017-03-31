@@ -14,7 +14,7 @@
           <span>{{user.name}} 欢迎您</span>
           <a class="navbar-link">退出</a>
         </p>
-        <img v-bind:src="user.wechatHeadImg" alt="头像" class="img-circle img-head navbar-right">
+        <img v-bind:src="userHead" alt="头像" class="img-circle img-head navbar-right">
       </div><!-- /.container-fluid -->
     </nav>
   </header>
@@ -23,7 +23,12 @@
 <script>
 export default {
   name: 'comHeader',
-  props: ['user']
+  props: ['user'],
+  computed: {
+    userHead() {
+      return this.user.wechatHeadImg || require('../../img/head.jpg');
+    }
+  }
 }
 </script>
 

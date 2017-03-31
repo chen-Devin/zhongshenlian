@@ -3,9 +3,9 @@
     <ul class="nav nav-sidebar">
       <li v-for="(ROU, index) in routes" v-bind:key="index">
         <div class="inside-div" v-bind:class="{active: ROU.show}" v-on:click="showChange(ROU)">
-          <span class="fa" v-bind:class="ROU.flag"></span>
+          <span class="fa module-icon" v-bind:class="ROU.flag"></span>
             {{ROU.name}}
-          <span class="fa direction-icon" v-bind:class="{'fa-caret-down': ROU.show, 'fa-caret-up': !ROU.show}"></span>
+          <span class="" v-bind:class="{selected: ROU.show}"></span>
         </div>
         <ul class="inside-ul" v-show="ROU.show">
           <li v-for="(SUB, index) in ROU.sub" v-bind:class="{active: SUB.active}" v-bind:key="index" v-on:click="actived(SUB)">
@@ -163,14 +163,21 @@ export default {
           background-color: $link-hover-color;
         }
       }
-      span {
+      span.module-icon {
         display: inline-block;
         margin: 10px 10px;
         width: 20px;
-        &.direction-icon {
-          position: absolute;
-          right: 0;
-        }
+      }
+      span.selected {
+        display: inline-block;
+        margin: 10px 0;
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 10px solid $background-color;
+        position: absolute;
+        right: 0;
       }
     }
     ul.inside-ul {

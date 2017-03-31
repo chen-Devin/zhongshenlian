@@ -18,7 +18,7 @@ const config = {
         main: path.resolve(srcPath, 'main/index.js'),
         signIn: path.resolve(srcPath, 'signIn/index.js'),
         signUp: path.resolve(srcPath, 'signUp/index.js'),
-        vendors: ['vue', 'axios', 'lodash']
+        vendors: ['vue', 'axios', 'lodash', 'qs']
     },
 
     output: {
@@ -165,7 +165,7 @@ const config = {
             filename: '[name].[hash].min.js'
         }),
         new UglifyJSPlugin({}),
-        new webpack.BannerPlugin('Copyright xiaodabao.')
+        new webpack.BannerPlugin('Copyright HHIITT.')
     ]
 };
 
