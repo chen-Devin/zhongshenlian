@@ -1,0 +1,10 @@
+//主色调
+$primary-color: darken(#428bca, 6.5%);
+$primary-color-active: darken($primary-color, 15%);
+$error-color: #d9534f;
+$origin-color: #fff;
+$hover-color: lighten(#000, 93.5%);
+$gray-dark: lighten(#000, 20%);
+
+//修改大尺寸input的圆角
+$border-radius-large: 3px;
