@@ -4,7 +4,7 @@
       <li v-for="(ROU, index) in routes" v-bind:key="index">
         <div class="inside-div" v-on:click="showChange(ROU)">
           <span class="fa" v-bind:class="ROU.flag"></span>
-          {{ROU.name}}
+            {{ROU.name}}
           <span class="fa direction-icon" v-bind:class="{'fa-caret-down': ROU.show, 'fa-caret-up': !ROU.show}"></span>
         </div>
         <ul class="inside-ul" v-show="ROU.show">
@@ -44,8 +44,9 @@ export default {
     },
     actived(sub) {
       for (let i = 0; i < this.routes.length; i++) {
-        for(let j = 0; j < this.routes[i].sub.length; j++)
+        for(let j = 0; j < this.routes[i].sub.length; j++) {
           this.routes[i].sub[j].active = false;
+        }
       }
       sub.active = true;
     }
@@ -71,16 +72,13 @@ export default {
       font-size: 18px;
       line-height: 40px;
       &:hover{
-        background: $hover-color;
+        background: $gray-lighter;
         cursor: pointer;
       }
       span {
         display: inline-block;
         margin: 10px 10px;
         width: 20px;
-        // &::before {
-        //   text-align: center;
-        // }
         &.direction-icon {
           position: absolute;
           right: 0;
@@ -97,16 +95,13 @@ export default {
         font-size: 14px;
         line-height: 32px;
         &:hover {
-          background: $hover-color;
+          background: $gray-lighter;
           cursor: pointer;
         }
         &.active {
-          background: $primary-color;
-          a {
-            color: $origin-color;
-          }
+          background: $background-color;
           &:hover {
-            background: $primary-color-active;
+            background: $gray-lighter;
           }
         }
         a {

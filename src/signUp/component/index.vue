@@ -285,10 +285,10 @@ export default {
       border: 1px solid transparent;
       border-radius: $border-radius-large;
       &.focus {
-        border: 1px solid $primary-color;
+        border: 1px solid $brand-primary;
       }
       &.error {
-        border: 1px solid $error-color;
+        border: 1px solid $brand-danger;
       }
     }
     img {
@@ -319,7 +319,7 @@ export default {
     .input-group-btn > button {
       &:hover,
       &:focus {
-        color: $primary-color-active;
+        color: $link-hover-color;
       }
       &:disabled {
         color: #777;

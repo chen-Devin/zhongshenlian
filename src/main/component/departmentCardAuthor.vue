@@ -159,7 +159,7 @@ section {
   box-shadow: 1px 2px 4px rgba(0,0,0,0.175);
   h3 {
     padding-left: 15px;
-    border-left: 3px solid $primary-color;
+    border-left: 3px solid $brand-primary;
     margin-bottom: 20px;
   }
   form.form-inline {

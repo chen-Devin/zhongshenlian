@@ -30,20 +30,20 @@
           <td>{{STAFF.department}}</td>
           <td class="link-wrap">
             <a class="text-paimary"
-               v-on:click.prevent="modify(STAFF)">修改</a>
+               v-on:click.prevent="mod(STAFF)">修改</a>
           </td>
           <td class="link-wrap">
             <a class="text-danger"
-               v-on:click.prevent="delete(STAFF)">删除</a>
+               v-on:click.prevent="del(STAFF)">删除</a>
           </td>
         </tr>
       </tbody>
     </table>
   </section>
-  <mod-modal v-if="showModModal"
+  <!--<mod-modal v-if="showModModal"
              v-bind:initalStaff="modStaff"
              v-on:saved="saved"
-             v-on:canceled="canceled"></mod-modal>
+             v-on:canceled="canceled"></mod-modal>-->
 </template>
 
 <script>
@@ -91,11 +91,11 @@ export default {
           }
       );
     },
-    modify(STAFF) {
+    mod(STAFF) {
       this.modStaff = STAFF;
       this.showModModal = true;
     },
-    delete(STAFF) {
+    del(STAFF) {
       this.delStaff = STAFF;
       this.showDelModal = true;
     },
@@ -128,7 +128,7 @@ section {
   box-shadow: 1px 2px 4px rgba(0,0,0,0.175);
   h3 {
     padding-left: 15px;
-    border-left: 3px solid $primary-color;
+    border-left: 3px solid $brand-primary;
     margin-bottom: 20px;
   }
   form.form-inline {
