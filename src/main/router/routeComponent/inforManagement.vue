@@ -10,8 +10,8 @@
 <script>
 import axios from 'axios';
 
-import crumbs from './crumbs.vue';
-import departmentCardInfor from './departmentCardInfor.vue';
+import crumbs from '../../component/crumbs.vue';
+import departmentCardInfor from '../../component/departmentCardInfor.vue';
 export default {
   name: 'inforManagement',
   data() {

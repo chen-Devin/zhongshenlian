@@ -8,8 +8,8 @@
 <script>
 import axios from 'axios';
 
-import crumbs from './crumbs.vue';
-import departmentCardAuthor from './departmentCardAuthor.vue';
+import crumbs from '../../component/crumbs.vue';
+import departmentCardAuthor from '../../component/departmentCardAuthor.vue';
 
 export default {
   name: 'authorManagement',
