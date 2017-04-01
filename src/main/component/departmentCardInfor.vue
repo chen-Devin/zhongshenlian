@@ -42,20 +42,22 @@
     <mod-modal v-if="showModModal"
                v-bind:initalStaff="modStaff"
                v-on:saved="saved"
-               v-on:modCanceled="canceled"></mod-modal>
+               v-on:canceled="modCanceled"></mod-modal>
     <del-modal v-if="showDelModal"
                v-bind:initalStaff="delStaff"
                v-on:deleted="deleted"
-               v-on:delCanceled="canceled"></del-modal>
+               v-on:canceled="delCanceled"></del-modal>
     <add-modal v-if="showAddModal"
                v-bind:thisDepart="thisDepart"
                v-on:added="added"
-               v-on:addCanceled="canceled"></add-modal>
+               v-on:canceled="addCanceled"></add-modal>
   </section>
 </template>
 
 <script>
 import _ from 'lodash';
+import axios from 'axios';
+
 import searchBar from './searchBar.vue';
 import modModal from './modModal.vue';
 import delModal from './delModal.vue';
@@ -94,7 +96,7 @@ export default {
             })()
         }
       }).then((rep)=>{
-          if(rep.data.statusCode = '10001') {
+          if(rep.data.statusCode === '10001') {
             this.thisDepart.staffArray = rep.data.data.userArray;
             for(let j=0; j < this.thisDepart.staffArray.length; j++) {
               let arr = [];

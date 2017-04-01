@@ -37,7 +37,7 @@ export default {
           flag: '',
           show: false,
           sub: [
-            {name: '已完成业务', link: '/compl-business', active: false},
+            {name: '已完成业务', link: '/complete-business', active: false},
             {name: '招投标信息看板', link: '/infor-board', active: false},
             {name: '规章制度', link: '/rule-regulation', active: false}
           ]
@@ -175,7 +175,7 @@ export default {
         height: 0;
         border-top: 10px solid transparent;
         border-bottom: 10px solid transparent;
-        border-right: 10px solid $background-color;
+        border-right: 10px solid $body-bg;
         position: absolute;
         right: 0;
       }
@@ -195,7 +195,7 @@ export default {
           cursor: pointer;
         }
         &.active {
-          background: $background-color;
+          background: $body-bg;
           &:hover {
             background: $gray-lighter;
           }

@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 
 import inforManagement from './routeComponent/inforManagement.vue';
 import authorManagement from './routeComponent/authorManagement.vue';
-import complBusiness from './routeComponent/complBusiness.vue';
+import completeBusiness from './routeComponent/completeBusiness.vue';
 import inforBoard from './routeComponent/inforBoard.vue';
 import ruleRegulation from './routeComponent/ruleRegulation.vue';
 import reviewBusinessSales from './routeComponent/reviewBusinessSales.vue';
@@ -32,8 +32,8 @@ const router = new VueRouter({
             component: authorManagement
         },
         {
-            path: '/compl-business',
-            component: complBusiness
+            path: '/complete-business',
+            component: completeBusiness
         },
         {
             path: '/infor-board',

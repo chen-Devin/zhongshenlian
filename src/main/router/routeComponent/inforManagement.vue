@@ -12,6 +12,7 @@ import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
 import departmentCardInfor from '../../component/departmentCardInfor.vue';
+
 export default {
   name: 'inforManagement',
   data() {
@@ -46,7 +47,7 @@ export default {
         }
       }).then(
         (rep) => {
-          if (rep.data.statusCode = '10001') {
+          if (rep.data.statusCode === '10001') {
             this.departments = rep.data.data.departmentArray;
           }
         }, (rep) => {

@@ -45,7 +45,7 @@ export default {
         }
       }).then(
           (rep)=>{
-            if(rep.data.statusCode = '10001') {
+            if(rep.data.statusCode === '10001') {
               this.departments = rep.data.data.departmentArray;
               for(let i=0; i < this.departments.length; i++) {
                 for(let j=0; j < this.departments[i].staffArray.length; j++) {
@@ -66,10 +66,7 @@ export default {
                 }
               }
             }
-          },(rep)=>{
-
-          }
-      );
+          },(rep)=>{});
     }
   },
   components: {

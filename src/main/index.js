@@ -46,7 +46,7 @@ axios({
     }
 }).then(
     (rep)=>{
-        if(rep.data.statusCode = '10001') {
+        if(rep.data.statusCode === '10001') {
             app.user.id = rep.data.data.id;
             app.user.telephone = rep.data.data.telephone;
             app.user.name = rep.data.data.name;

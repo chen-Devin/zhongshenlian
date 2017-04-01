@@ -123,7 +123,7 @@ export default {
           })()
         }
       }).then((rep) => {
-        if (rep.data.statusCode = '10001') {
+        if (rep.data.statusCode === '10001') {
           this.user.id = rep.data.data.id;
           this.user.telephone = rep.data.data.telephone;
           this.user.name = rep.data.data.name;
@@ -213,7 +213,7 @@ export default {
           })()
         }
       }).then((rep) => {
-        if (rep.data.statusCode = '10001') {
+        if (rep.data.statusCode === '10001') {
           this.getBtnInter();
         }
       }, (rep) => {});
@@ -254,7 +254,7 @@ export default {
           })()
         }
       }).then((rep) => {
-        if (rep.data.statusCode = '10001') {
+        if (rep.data.statusCode === '10001') {
           this.subBtn.cont = '注册成功';
           window.location.href = 'index.html';
         } else {
@@ -263,9 +263,7 @@ export default {
           this.subBtn.dis = false;
           this.subBtn.cont = '确定';
         }
-      }, (rep) => {
-
-      });
+      }, (rep) => {});
     }
   }
 }

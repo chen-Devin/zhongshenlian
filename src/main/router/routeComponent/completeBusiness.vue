@@ -4,7 +4,7 @@
 
     <script>
     export default {
-        name: 'complBusiness',
+        name: 'completeBusiness',
     }
     </script>
 

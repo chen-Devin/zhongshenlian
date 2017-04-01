@@ -28,7 +28,7 @@
       </div>
       <div class="form-group" v-bind:class="{'has-error': !staff.department.ver}">
         <label for="staff-duty" class="control-label">所属部门</label>
-        <input type="text" class="form-control" placeholder="请输入所属部门" v-model="staff.department.val">
+        <input type="text" class="form-control" placeholder="请输入所属部门" readonly v-model="staff.department.val">
       </div>
       <div class="form-group">
         <label for="staff-duty" class="control-label">备注</label>
@@ -84,7 +84,7 @@ export default {
             ver: true
           },
           department: {
-            val: '',
+            val: this.thisDepart.department,
             ver: true
           },
           remark: {
@@ -162,7 +162,7 @@ export default {
             })()
           })
         }).then((rep)=>{
-          if (rep.data.statusCode = '10001') {
+          if (rep.data.statusCode === '10001') {
             this.subBtn.cont = '已保存';
             this.staff.id.val = rep.data.data.id;
             this.$emit('added', this.staff);

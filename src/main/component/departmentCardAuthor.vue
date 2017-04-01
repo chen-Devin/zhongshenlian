@@ -71,7 +71,7 @@ export default {
             })()
         }
       }).then((rep)=>{
-          if(rep.data.statusCode = '10001') {
+          if(rep.data.statusCode === '10001') {
             this.thisDepart.staffArray = rep.data.data.userArray;
             for(let j=0; j < this.thisDepart.staffArray.length; j++) {
               let arr = [];
@@ -124,7 +124,7 @@ export default {
                 })()
               })
             }).then((rep)=>{
-              if(rep.data.statusCode = '10001') {
+              if(rep.data.statusCode === '10001') {
                 resolve();
               } else {
                 reject();
@@ -148,7 +148,7 @@ export default {
   components: {
     searchBar
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -158,9 +158,9 @@ section {
   position: relative;
   margin: 30px 10px;
   padding: 10px 20px;
-  background-color: #ffffff;
-  border: 1px solid rgba(0,0,0,0.15);
-  box-shadow: 1px 2px 4px rgba(0,0,0,0.175);
+  background-color: $origin-color;
+  border: 1px solid $section-border;
+  box-shadow: 1px 2px 4px $section-border-shadow;
   h3 {
     padding-left: 15px;
     border-left: 3px solid $brand-primary;

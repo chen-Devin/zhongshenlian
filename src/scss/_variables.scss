@@ -7,12 +7,28 @@
 $origin-color: #fff;
 
 /*
-主背景色
+主体section边框色
 @property 自定义变量
+@author xiaodabao
+@date 2017-04-01
+*/
+$section-border: rgba(0,0,0,0.15);
+
+/*
+主体section边框阴影色
+@property 自定义变量
+@author xiaodabao
+@date 2017-04-01
+*/
+$section-border-shadow: rgba(0,0,0,0.175);
+
+/*
+主背景色
+@property 覆盖默认变量
 @author xiaodabao
 @date 2017-03-31
 */
-$background-color: rgba(242,243,247,1);
+$body-bg: rgba(242,243,247,1);
 
 /*
 修改大尺寸input的圆角
@@ -36,13 +52,13 @@ $font-family-sans-serif: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", He
 
 $bootstrap-sass-asset-helper: false !default;
 //
-// Variables
+// Variables变量
 // --------------------------------------------------
 
 
-//== Colors
+//== Colors颜色
 //
-//## Gray and brand colors for use across Bootstrap.
+//## Gray and brand colors for use across Bootstrap. 在Bootstrap中通用的灰色和主体颜色
 
 $gray-base:              #000 !default;
 $gray-darker:            lighten($gray-base, 13.5%) !default; // #222
@@ -58,30 +74,37 @@ $brand-warning:         #f0ad4e !default;
 $brand-danger:          #d9534f !default;
 
 
-//== Scaffolding
+//== Scaffolding脚手架
 //
-//## Settings for some of the most global styles.
+//## Settings for some of the most global styles. 一些全局风格的设置
 
 //** Background color for `<body>`.
+//** `<body>`背景色
 $body-bg:               #fff !default;
 //** Global text color on `<body>`.
+//** `<body>`全局文本色
 $text-color:            $gray-dark !default;
 
 //** Global textual link color.
+//** 全局文本链接色
 $link-color:            $brand-primary !default;
 //** Link hover color set via `darken()` function.
+//** 通过`darken()`函数设置的链接hover颜色
 $link-hover-color:      darken($link-color, 15%) !default;
 //** Link hover decoration.
+//** 链接hover文本修饰
 $link-hover-decoration: underline !default;
 
 
-//== Typography
+//== Typography排版
 //
 //## Font, line-height, and color for body text, headings, and more.
+//## 为网页主体的文本、标题以及其他设置字体、行高以及颜色（sans-serif无衬线）（serif衬线）
 
 $font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+//** 为`<code>`, `<kbd>`, and `<pre>`设置默认等宽（monospace）字体
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
 
@@ -97,18 +120,21 @@ $font-size-h5:            $font-size-base !default;
 $font-size-h6:            ceil(($font-size-base * 0.85)) !default; // ~12px
 
 //** Unit-less `line-height` for use in components like buttons.
+//** 无单位`line-height`用在类似于按钮的组件上
 $line-height-base:        1.428571429 !default; // 20/14
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
+//** 计算"line-height" (`font-size` * `line-height`)用于`margin`, `padding`等
 $line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~20px
 
 //** By default, this inherits from the `<body>`.
+//** 默认情况下，它继承自`<body>`
 $headings-font-family:    inherit !default;
 $headings-font-weight:    500 !default;
 $headings-line-height:    1.1 !default;
 $headings-color:          inherit !default;
 
 
-//== Iconography
+//== Iconography图像
 //
 //## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
 
