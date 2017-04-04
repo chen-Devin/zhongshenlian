@@ -2,14 +2,17 @@
   <div>
     <ul class="nav nav-tabs">
       <li v-bind:class="{active: PART.disp}"
-          v-for="PART in parts"
-          v-on:click="tabSel(PART)">
-        <a>{{PART.name}}</a>
+          v-for="(PART, index) in parts"
+          v-bind:key="index">
+        <a v-on:click="tabSel(PART)">{{PART.name}}</a>
       </li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane"
-           v-for="PART in parts" v-bind:is="PART.content">
+           v-for="(PART, index) in parts"
+           v-show="PART.disp"
+           v-bind:is="PART.content"
+           v-bind:key="index">
       </div>
     </div>
   </div>
@@ -19,6 +22,7 @@
 import businessProfile from './buinessProfile.vue';
 import businessConduct from './businessConduct.vue';
 import billingInfor from './billingInfor.vue';
+import businessReport from './businessReport.vue';
 import operatHistory from './operatHistory.vue';
 
 export default {
@@ -35,9 +39,14 @@ export default {
     }
   },
   method: {
-
+    tabSel(PART) {
+      for(let i=0; i < this.parts.length; i++) {
+        this.parts[i].disp = false;
+      }
+      PART.disp = true;
+    }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
