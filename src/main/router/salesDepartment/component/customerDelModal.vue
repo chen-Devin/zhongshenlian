@@ -20,10 +20,11 @@
 <script>
 import axios from 'axios';
 import qs from 'qs';
-import modal from './modal.vue';
+
+import modal from '../../../component/modal.vue';
 
 export default {
-  name: 'delCustomerModal',
+  name: 'customerDelModal',
   data() {
     return {
       subBtn: {
@@ -54,7 +55,7 @@ export default {
       }).then((rep)=>{
         if (rep.data.statusCode === '10001') {
           this.subBtn.cont = '已删除';
-          this.$emit('deleted', this.initalStaff);
+          this.$emit('deleted', this.initalCustomer);
         }
       }, (rep)=>{});
     },

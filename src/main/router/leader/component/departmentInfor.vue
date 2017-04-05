@@ -1,9 +1,9 @@
 <template>
-  <section>
+  <card>
     <h3>{{thisDepart.department}}</h3>
     <form class="form-inline clearfix">
-      <search-bar v-model="searchVal"
-                  v-on:search="search"></search-bar>
+      <staff-search-bar v-model="searchVal"
+                  v-on:search="search"></staff-search-bar>
       <button type="button"
               class="btn btn-default btn-sm pull-right"
               v-on:click="add()">&nbsp;录入&nbsp;</button>
@@ -29,42 +29,43 @@
           <td class="text-center">{{STAFF.duties}}</td>
           <td class="text-center">{{STAFF.department}}</td>
           <td class="text-center link-wrap">
-            <a class="text-paimary"
+            <a class="text-primary"
                v-on:click.prevent="mod(STAFF)">修改</a>
           </td>
-          <td class="link-wrap">
+          <td class="text-center link-wrap">
             <a class="text-danger"
                v-on:click.prevent="del(STAFF)">删除</a>
           </td>
         </tr>
       </tbody>
     </table>
-    <mod-modal v-if="showModModal"
+    <staff-mod-modal v-if="showModModal"
                v-bind:initalStaff="modStaff"
                v-on:saved="saved"
-               v-on:canceled="modCanceled"></mod-modal>
-    <del-modal v-if="showDelModal"
+               v-on:canceled="modCanceled"></staff-mod-modal>
+    <staff-del-modal v-if="showDelModal"
                v-bind:initalStaff="delStaff"
                v-on:deleted="deleted"
-               v-on:canceled="delCanceled"></del-modal>
-    <add-modal v-if="showAddModal"
+               v-on:canceled="delCanceled"></staff-del-modal>
+    <staff-add-modal v-if="showAddModal"
                v-bind:thisDepart="thisDepart"
                v-on:added="added"
-               v-on:canceled="addCanceled"></add-modal>
-  </section>
+               v-on:canceled="addCanceled"></staff-add-modal>
+  </card>
 </template>
 
 <script>
 import _ from 'lodash';
 import axios from 'axios';
 
-import searchBar from './searchBar.vue';
-import modModal from './modModal.vue';
-import delModal from './delModal.vue';
-import addModal from './addModal.vue';
+import card from '../../../component/card.vue';
+import staffSearchBar from './staffSearchBar.vue';
+import staffModModal from './staffModModal.vue';
+import staffDelModal from './staffDelModal.vue';
+import staffAddModal from './staffAddModal.vue';
 
 export default {
-  name: 'departmentCardInfor',
+  name: 'departmentInfor',
   data() {
     return {
       thisDepart: _.cloneDeep(this.department),
@@ -180,39 +181,32 @@ export default {
     },
   },
   components: {
-    searchBar,
-    modModal,
-    delModal,
-    addModal
+    staffSearchBar,
+    card,
+    staffModModal,
+    staffDelModal,
+    staffAddModal
   }
 }
 </script>
 
 <style lang="sass" scoped>
-@import '../../scss/variables.scss';
+@import '../../../../scss/variables.scss';
 
-section {
-  position: relative;
-  margin: 30px 10px;
-  padding: 10px 20px;
-  background-color: #ffffff;
-  border: 1px solid rgba(0,0,0,0.15);
-  box-shadow: 1px 2px 4px rgba(0,0,0,0.175);
-  h3 {
-    padding-left: 15px;
-    border-left: 3px solid $brand-primary;
-    margin-bottom: 20px;
-  }
-  form.form-inline {
-    margin: 20px auto;
-  }
-  table {
-    margin: 20px auto;
-    .link-wrap {
-      width: 45px;
-      a:hover {
-        cursor: pointer;
-      }
+h3 {
+  padding-left: 15px;
+  border-left: 3px solid $brand-primary;
+  margin-bottom: 20px;
+}
+form.form-inline {
+  margin: 20px auto;
+}
+table {
+  margin: 20px auto;
+  .link-wrap {
+    width: 45px;
+    a:hover {
+      cursor: pointer;
     }
   }
 }

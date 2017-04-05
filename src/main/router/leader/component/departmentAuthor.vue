@@ -1,9 +1,9 @@
 <template>
-  <section>
+  <card>
     <h3>{{thisDepart.department}}</h3>
     <form class="form-inline clearfix">
-      <search-bar v-model="searchVal"
-                  v-on:search="search"></search-bar>
+      <staff-search-bar v-model="searchVal"
+                  v-on:search="search"></staff-search-bar>
       <button type="button"
             class="btn btn-default btn-sm pull-right"
             v-on:click="ediBtnTog()"
@@ -30,16 +30,18 @@
         </tr>
       </tbody>
     </table>
-  </section>
+  </card>
 </template>
 
 <script>
 import axios from 'axios';
 import qs from 'qs';
-import searchBar from './searchBar.vue';
+
+import card from '../../../component/card.vue';
+import staffSearchBar from './staffSearchBar.vue';
 
 export default {
-  name: 'departmentCardAuthor',
+  name: 'departmentAuthor',
   data() {
     return {
       thisDepart: _.cloneDeep(this.department),
@@ -146,31 +148,24 @@ export default {
     }
   },
   components: {
-    searchBar
+    staffSearchBar,
+    card
   }
 };
 </script>
 
 <style lang="sass" scoped>
-@import '../../scss/variables.scss';
+@import '../../../../scss/variables.scss';
 
-section {
-  position: relative;
-  margin: 30px 10px;
-  padding: 10px 20px;
-  background-color: $origin-color;
-  border: 1px solid $section-border;
-  box-shadow: 1px 2px 4px $section-border-shadow;
-  h3 {
-    padding-left: 15px;
-    border-left: 3px solid $brand-primary;
-    margin-bottom: 20px;
-  }
-  form.form-inline {
-    margin: 20px auto;
-  }
-  table {
-    margin: 20px auto;
-  }
+h3 {
+  padding-left: 15px;
+  border-left: 3px solid $brand-primary;
+  margin-bottom: 20px;
+}
+form.form-inline {
+  margin: 20px auto;
+}
+table {
+  margin: 20px auto;
 }
 </style>

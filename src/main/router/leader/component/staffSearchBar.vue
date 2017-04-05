@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'searchBar',
+  name: 'staffSearchBar',
   data() {
     return {
       valueInput: this.value

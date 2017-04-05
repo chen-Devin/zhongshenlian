@@ -1,9 +1,9 @@
 <template>
   <div class="main">
     <crumbs v-bind:paths="paths"></crumbs>
-    <department-card-infor v-for="(DEP, index) in departments"
+    <department-infor v-for="(DEP, index) in departments"
                            v-bind:department="DEP"
-                           v-bind:key="index"></department-card-infor>
+                           v-bind:key="index"></department-infor>
   </div>
 </template>
 
@@ -11,15 +11,14 @@
 import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
-import departmentCardInfor from '../../component/departmentCardInfor.vue';
+import departmentInfor from './component/departmentInfor.vue';
 
 export default {
-  name: 'inforManagement',
+  name: 'staffManagementInfor',
   data() {
     return {
       paths: [
-        { name: '职员管理', url: '/infor-management', present: false },
-        { name: '资料管理', url: '/infor-management', present: true },
+        { name: '职员资料管理', url: '/staff-management-infor', present: true }
       ],
       departments: []
     };
@@ -28,7 +27,7 @@ export default {
     this.getInfo();
   },
   watch: {
-    '$route': 'getInfo'
+    $route: 'getInfo'
   },
   methods: {
     getInfo() {
@@ -58,7 +57,7 @@ export default {
   },
   components: {
     crumbs,
-    departmentCardInfor
+    departmentInfor
   }
 }
 </script>

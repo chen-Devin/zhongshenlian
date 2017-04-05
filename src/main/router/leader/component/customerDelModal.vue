@@ -3,7 +3,7 @@
     <div slot="body">
       <p>
         <span class="fa fa-exclamation-circle fa-5x text-danger"></span>
-        <span class="text-cont">确定删除员工{{initalStaff.name}}吗？</span>
+        <span class="text-cont">确定删除客户{{initalCustomer.name}}吗？</span>
       </p>
     </div>
     <div slot="footer">
@@ -20,10 +20,11 @@
 <script>
 import axios from 'axios';
 import qs from 'qs';
-import modal from './modal.vue';
+
+import modal from '../../../component/modal.vue';
 
 export default {
-  name: 'delModal',
+  name: 'customerDelModal',
   data() {
     return {
       subBtn: {
@@ -32,7 +33,7 @@ export default {
       }
     };
   },
-  props: ['initalStaff'],
+  props: ['initalCustomer'],
   methods: {
     del() {
       this.subBtn.dis = true;
@@ -44,9 +45,9 @@ export default {
         data: qs.stringify({
           data: (() => {
             var obj = {
-              command: 'delUser',
+              command: 'delCustomerInfo',
               platform: 'web',
-              delUserId: this.initalStaff.id
+              id: this.initalCustomer.id
             };
             return JSON.stringify(obj);
           })()
@@ -54,7 +55,7 @@ export default {
       }).then((rep)=>{
         if (rep.data.statusCode === '10001') {
           this.subBtn.cont = '已删除';
-          this.$emit('deleted', this.initalStaff);
+          this.$emit('deleted', this.initalCustomer);
         }
       }, (rep)=>{});
     },

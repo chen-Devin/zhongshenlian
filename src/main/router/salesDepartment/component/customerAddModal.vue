@@ -1,6 +1,6 @@
 <template>
   <modal>
-    <form slot="body">
+    <form class="clearfix" slot="body">
       <div class="form-group"
            v-bind:class="{'has-error': !customer.name.ver}">
         <label for="customer-name"
@@ -19,7 +19,7 @@
                placeholder="请输入客户手机号码"
                v-model="customer.telephone.val">
       </div>
-      <div class="form-group" 
+      <div class="form-group"
            v-bind:class="{'has-error': !customer.customerNature.ver}">
         <label for="customer-nature"
                class="control-label">客户性质</label>
@@ -37,7 +37,8 @@
                placeholder="请输入客户营业执照号码"
                v-model="customer.businessLicenseNumber.val">
       </div>
-      <div class="form-group">
+      <div class="form-group"
+           v-bind:class="{'has-error': !customer.setUpTime.ver}">
         <label for="customer-set-up-time"
                class="control-label">成立日期</label>
         <input type="text"
@@ -61,10 +62,10 @@
         <input type="text"
                class="form-control"
                placeholder="请输入客户资产规模"
-               readonly
                v-model="customer.assetSize.val">
       </div>
-      <div class="form-group">
+      <div class="form-group"
+           v-bind:class="{'has-error': !customer.industry.ver}">
         <label for="customer-industry"
                class="control-label">所属行业</label>
         <input type="text"
@@ -72,26 +73,21 @@
                placeholder="请输入客户所属行业"
                v-model="customer.industry.val">
       </div>
-      <div class="form-group">
-        <label for="customer-id"
-               class="control-label">客户编号</label>
-        <p class="form-control-static">
-          {{customer.id.val}}
-        </p>
-      </div>
-      <div class="form-group">
-        <label for="customer-department-name"
-               class="control-label">业务部门</label>
-        <p class="form-control-static">
-          {{customer.departmentName.val}}
-        </p>
-      </div>
-      <div class="form-group">
-        <label for="customer-founder-name"
-               class="control-label">创建人</label>
-        <p class="form-control-static">
-          {{customer.founderName.val}}
-        </p>
+      <div class="row">
+        <div class="form-group col-xs-6">
+          <label for="customer-department-name"
+                class="control-label">创建部门</label>
+          <p class="form-control-static">
+            {{customer.departmentName.val}}
+          </p>
+        </div>
+        <div class="form-group col-xs-6">
+          <label for="customer-founder-name"
+                class="control-label">创建人</label>
+          <p class="form-control-static">
+            {{customer.founderName.val}}
+          </p>
+        </div>
       </div>
       <div class="alert alert-danger well-sm"
            v-show="alert.show">
@@ -116,66 +112,57 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import modal from './modal.vue';
+import modal from '../../../component/modal.vue';
 
 export default {
-  name: 'modCustomerModal',
+  name: 'customerModModal',
   data() {
     return {
       customer: (() => {
         return {
           id: {
-            val: this.initalCustomer.id
+            val: ''
           },
           name: {
-            val: this.initalCustomer.name,
-            ver: this.initalCustomer.name === '' ? false : true
+            val: '',
+            ver: true
           },
           telephone: {
-            val: this.initalCustomer.telephone,
-            ver: (() => {
-              let reg = /^(1+\d{10})$/;
-              if (this.initalCustomer.telephone === '') {
-                return false;
-              } else if (!reg.test(this.initalCustomer.telephone)) {
-                return false;
-              } else {
-                return true;
-              }
-            })()
+            val: '',
+            ver: true
           },
           businessLicenseNumber: {
-            val: this.initalCustomer.businessLicenseNumber,
-            ver: this.initalCustomer.businessLicenseNumber === '' ? false : true
+            val: '',
+            ver: true
           },
           registeredCapital: {
-            val: this.registeredCapital.registeredCapital,
-            ver: this.registeredCapital.registeredCapital === '' ? false : true
+            val: '',
+            ver: true
           },
           customerNature: {
-            val: this.initalCustomer.customerNature,
-            ver: this.initalCustomer.customerNature === '' ? false : true
+            val: '',
+            ver: true
           },
           assetSize: {
-            val: this.initalCustomer.assetSize,
-            ver: this.initalCustomer.assetSize === '' ? false : true
+            val: '',
+            ver: true
           },
           industry: {
-            val: this.initalCustomer.industry,
-            ver: this.initalCustomer.industry === '' ? false : true
+            val: '',
+            ver: true
           },
           setUpTime: {
-            val: this.initalCustomer.setUpTime,
-            ver: this.initalCustomer.setUpTime === '' ? false : true
+            val: '',
+            ver: true
           },
           founderId: {
-            val: this.initalCustomer.founderId
+            val: this.user.id
           },
           founderName: {
-            val: this.initalCustomer.founderName
+            val: this.user.name
           },
           departmentName: {
-            val: this.initalCustomer.departmentName
+            val: this.user.department
           }
         }
       })(),
@@ -189,7 +176,7 @@ export default {
       }
     };
   },
-  props: ['initalCustomer'],
+  props: ['user'],
   methods: {
     save() {
       let reg = /^(1+\d{10})$/;
@@ -250,10 +237,9 @@ export default {
           data: qs.stringify({
             data: (() => {
               var obj = {
-                command: 'editCustomerInfo',
+                command: 'addCustomerInfo',
                 platform: 'web',
                 data: {
-                  id: this.customer.id.val,
                   name: this.customer.name.val,
                   telephone: this.customer.telephone.val,
                   businessLicenseNumber: this.customer.businessLicenseNumber.val,
@@ -272,8 +258,9 @@ export default {
           })
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            this.customer.id.val = rep.data.data.id;
             this.subBtn.cont = '已保存';
-            this.$emit('saved', this.customer);
+            this.$emit('added', this.customer);
           }
         }, (rep) => {});
       }

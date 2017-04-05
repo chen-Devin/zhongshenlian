@@ -26,9 +26,9 @@ import businessCompleteDetail from './commonUse/businessCompleteDetail.vue';
 import ruleRegulation from './commonUse/ruleRegulation.vue';
 //所长
 import businessAnalysis from './leader/businessAnalysis.vue';
-import businessReviewDetailLeader from './leader/businessReviewDetailLeader.vue';
-import businessReviewListLeader from './leader/businessReviewListLeader.vue';
-import customerInforListLeader from './leader/customerInforListLeader.vue';
+import businessReviewDetailLeader from './leader/businessReviewDetail.vue';
+import businessReviewListLeader from './leader/businessReviewList.vue';
+import customerInforListLeader from './leader/customerInforList.vue';
 import staffManagementAuthor from './leader/staffManagementAuthor.vue';
 import staffManagementInfor from './leader/staffManagementInfor.vue';
 //办公室
@@ -49,10 +49,10 @@ import businessReviewDetailRisk from './riskDepartment/businessReviewDetail.vue'
 import businessHandleDetailArchives from './archivesDepartment/businessHandleDetail.vue';
 import businessHandleListArchives from './archivesDepartment/businessHandleList.vue';
 //财务部
-import businessHandleDetailFinancial from './archivesDepartment/businessHandleDetailFinancial.vue';
-import businessHandleListFinancial from './archivesDepartment/businessHandleListFinancial.vue';
+import businessHandleDetailFinancial from './archivesDepartment/businessHandleDetail.vue';
+import businessHandleListFinancial from './archivesDepartment/businessHandleList.vue';
 //市场部
-import bidInforListMarket from './commonUse/bidInforListMarket.vue';
+import bidInforListMarket from './marketDepartment/bidInforList.vue';
 import bidInforDetail from './marketDepartment/bidInforDetail.vue';
 import bidInforEdit from './marketDepartment/bidInforEdit.vue';
 

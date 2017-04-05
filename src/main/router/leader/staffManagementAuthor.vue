@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <crumbs v-bind:paths="paths"></crumbs>
-    <department-card-author v-for="(DEP, index) in departments" v-bind:department="DEP" v-bind:key="index"></department-card-author>
+    <department-author v-for="(DEP, index) in departments" v-bind:department="DEP" v-bind:key="index"></department-author>
   </div>
 </template>
 
@@ -9,15 +9,14 @@
 import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
-import departmentCardAuthor from '../../component/departmentCardAuthor.vue';
+import departmentAuthor from './component/departmentAuthor.vue';
 
 export default {
   name: 'staffManagementAuthor',
   data() {
     return {
       paths: [
-        {name: '职员管理', url: '/author-management', present: false},
-        {name: '权限管理', url: '/author-management', present: true},
+        {name: '职员权限管理', url: '/author-management-author', present: true}
       ],
       departments: []
     };
@@ -26,7 +25,7 @@ export default {
     this.getInfo();
   },
   watch: {
-    '$route': 'getInfo'
+    $route: 'getInfo'
   },
   methods: {
     getInfo() {
@@ -71,7 +70,7 @@ export default {
   },
   components: {
     crumbs,
-    departmentCardAuthor
+    departmentAuthor
   }
 }
 </script>

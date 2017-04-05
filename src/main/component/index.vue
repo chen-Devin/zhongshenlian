@@ -2,7 +2,7 @@
   <main class="container">
     <div class="row">
       <sidebar class="col-md-2"></sidebar>
-      <router-view class="col-md-10"></router-view>
+      <router-view class="col-md-10" v-bind:user="user"></router-view>
     </div>
   </main>
 </template>
@@ -12,6 +12,7 @@ import sidebar from './sidebar.vue';
 
 export default {
   name: 'index',
+  props: ['user'],
   components: {
     sidebar
   }
