@@ -5,7 +5,7 @@
       <button class="btn btn-primary pull-right"
               v-on:click="add()">
         添加客户
-    </button>
+      </button>
     </h3>
     <table class="table table-striped table-hover">
       <tbody>
@@ -153,13 +153,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '../../../../scss/variables.scss';
-
-h3 {
-  padding-left: 15px;
-  border-left: 3px solid $brand-primary;
-  margin-bottom: 20px;
-}
 table {
   margin: 20px auto;
   .link-wrap {

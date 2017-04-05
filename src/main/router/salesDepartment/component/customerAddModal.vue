@@ -14,7 +14,7 @@
            v-bind:class="{'has-error': !customer.telephone.ver}">
         <label for="customer-telephone"
                class="control-label">手机号</label>
-        <input type="tele"
+        <input type="tel"
                class="form-control"
                placeholder="请输入客户手机号码"
                v-model="customer.telephone.val">

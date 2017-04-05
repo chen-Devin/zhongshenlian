@@ -16,7 +16,7 @@
       </div>
       <div class="form-group" v-bind:class="{'has-error': !staff.telephone.ver}">
         <label for="staff-telephone" class="control-label">手机号</label>
-        <input type="tele" class="form-control" placeholder="请输入职员手机号码" v-model="staff.telephone.val">
+        <input type="tel" class="form-control" placeholder="请输入职员手机号码" v-model="staff.telephone.val">
       </div>
       <div class="form-group" v-bind:class="{'has-error': !staff.jobNumber.ver}">
         <label for="staff-job-number" class="control-label">工号</label>

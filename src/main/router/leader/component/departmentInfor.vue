@@ -3,7 +3,7 @@
     <h3>{{thisDepart.department}}</h3>
     <form class="form-inline clearfix">
       <staff-search-bar v-model="searchVal"
-                  v-on:search="search"></staff-search-bar>
+                        v-on:search="search"></staff-search-bar>
       <button type="button"
               class="btn btn-default btn-sm pull-right"
               v-on:click="add()">&nbsp;录入&nbsp;</button>
@@ -40,17 +40,17 @@
       </tbody>
     </table>
     <staff-mod-modal v-if="showModModal"
-               v-bind:initalStaff="modStaff"
-               v-on:saved="saved"
-               v-on:canceled="modCanceled"></staff-mod-modal>
+                     v-bind:initalStaff="modStaff"
+                     v-on:saved="saved"
+                     v-on:canceled="modCanceled"></staff-mod-modal>
     <staff-del-modal v-if="showDelModal"
-               v-bind:initalStaff="delStaff"
-               v-on:deleted="deleted"
-               v-on:canceled="delCanceled"></staff-del-modal>
+                     v-bind:initalStaff="delStaff"
+                     v-on:deleted="deleted"
+                     v-on:canceled="delCanceled"></staff-del-modal>
     <staff-add-modal v-if="showAddModal"
-               v-bind:thisDepart="thisDepart"
-               v-on:added="added"
-               v-on:canceled="addCanceled"></staff-add-modal>
+                     v-bind:thisDepart="thisDepart"
+                     v-on:added="added"
+                     v-on:canceled="addCanceled"></staff-add-modal>
   </card>
 </template>
 
@@ -82,41 +82,41 @@ export default {
     search(val) {
       this.searchVal = val;
       axios({
-        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'},
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
         method: 'get',
         url: '/service',
         params: {
-            data: (()=>{
+          data: (() => {
             var obj = {
-                command: 'staffSearch',
-                platform: 'web',
-                searchContent: val,
-                department: this.thisDepart.department
+              command: 'staffSearch',
+              platform: 'web',
+              searchContent: val,
+              department: this.thisDepart.department
             }
             return JSON.stringify(obj);
-            })()
+          })()
         }
-      }).then((rep)=>{
-          if(rep.data.statusCode === '10001') {
-            this.thisDepart.staffArray = rep.data.data.userArray;
-            for(let j=0; j < this.thisDepart.staffArray.length; j++) {
-              let arr = [];
-              for(let k=0; k < this.thisDepart.authorityArray.length; k++) {
-                for(let m=0; m < this.thisDepart.staffArray[j].authority.length; m++) {
-                  if (this.thisDepart.authorityArray[k].name === this.thisDepart.staffArray[j].authority[m].name) {
-                    let obj = {
-                      authName: this.thisDepart.staffArray[j].authority[m].name,
-                      stat: this.thisDepart.staffArray[j].authority[m].authority === '0' ? false : true,
-                    };
-                    arr.push(obj);
-                    break;
-                  }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.thisDepart.staffArray = rep.data.data.userArray;
+          for (let j = 0; j < this.thisDepart.staffArray.length; j++) {
+            let arr = [];
+            for (let k = 0; k < this.thisDepart.authorityArray.length; k++) {
+              for (let m = 0; m < this.thisDepart.staffArray[j].authority.length; m++) {
+                if (this.thisDepart.authorityArray[k].name === this.thisDepart.staffArray[j].authority[m].name) {
+                  let obj = {
+                    authName: this.thisDepart.staffArray[j].authority[m].name,
+                    stat: this.thisDepart.staffArray[j].authority[m].authority === '0' ? false : true,
+                  };
+                  arr.push(obj);
+                  break;
                 }
               }
-              this.thisDepart.staffArray[j].authority = arr;
             }
+            this.thisDepart.staffArray[j].authority = arr;
           }
-        },(rep)=>{});
+        }
+      }, (rep) => { });
     },
     mod(STAFF) {
       this.modStaff = STAFF;
@@ -130,7 +130,7 @@ export default {
       this.showAddModal = true;
     },
     saved(modedStaff) {
-      for (let i=0; i < this.thisDepart.staffArray.length; i++) {
+      for (let i = 0; i < this.thisDepart.staffArray.length; i++) {
         if (this.thisDepart.staffArray[i].id === modedStaff.id.val) {
           this.thisDepart.staffArray[i].telephone = modedStaff.telephone.val;
           this.thisDepart.staffArray[i].name = modedStaff.name.val;
@@ -149,7 +149,7 @@ export default {
       this.showModModal = false;
     },
     deleted(deletedStaff) {
-      for (let i=0; i < this.thisDepart.staffArray.length; i++) {
+      for (let i = 0; i < this.thisDepart.staffArray.length; i++) {
         if (this.thisDepart.staffArray[i].id === deletedStaff.id) {
           this.thisDepart.staffArray.splice(i, 1);
           break;
