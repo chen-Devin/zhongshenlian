@@ -104,7 +104,7 @@ export default {
   },
   computed: {
     userHead() {
-      return user.wechatHeadImg || require('../../img/head.jpg');
+      return this.user.wechatHeadImg || require('../../img/head.jpg');
     }
   },
   methods: {

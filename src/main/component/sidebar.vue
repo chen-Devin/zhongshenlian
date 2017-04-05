@@ -24,40 +24,13 @@ export default {
     return {
       routes: [
         {
-          name: '职员管理',
-          flag: '',
-          show: false,
-          sub: [
-            {name: '权限管理', link: '/author-management', active: false},
-            {name: '资料管理', link: '/infor-management', active: false}
-          ]
-        },
-        {
           name: '通用模块',
           flag: '',
           show: false,
           sub: [
-            {name: '已完成业务', link: '/complete-business', active: false},
-            {name: '招投标信息看板', link: '/infor-board', active: false},
+            {name: '已完成业务', link: '/business-complete-list', active: false},
+            {name: '招投标信息看板', link: '/bid-infor-list', active: false},
             {name: '规章制度', link: '/rule-regulation', active: false}
-          ]
-        },
-        {
-          name: '业务部',
-          flag: '',
-          show: false,
-          sub: [
-            {name: '待审核业务', link: '/review-business-sales', active: false},
-            {name: '待处理业务', link: '/handle-business', active: false},
-            {name: '客户信息', link: '/customer-infor-sales', active: false}
-          ]
-        },
-        {
-          name: '风险评估部',
-          flag: '',
-          show: false,
-          sub: [
-            {name: '待审核业务', link: '/review-business-risk', active: false}
           ]
         },
         {
@@ -65,10 +38,10 @@ export default {
           flag: '',
           show: false,
           sub: [
-            {name: '待审核业务', link: '/review-business-lead', active: false},
-            {name: '客户信息', link: '/customer-infor-lead', active: false},
-            {name: '职员权限管理', link: '/author-management', active: false},
-            {name: '职员资料管理', link: '/infor-management', active: false},
+            {name: '待审核业务', link: '/business-review-list-leader', active: false},
+            {name: '客户信息', link: '/customer-infor-list-leader', active: false},
+            {name: '职员权限管理', link: '/staff-management-author', active: false},
+            {name: '职员资料管理', link: '/staff-management-infor', active: false},
             {name: '业务分析', link: '/business-analysis', active: false}
           ]
         },
@@ -77,31 +50,25 @@ export default {
           flag: '',
           show: false,
           sub: [
-            {name: '待发合同编号', link: '/to-contract-num', active: false}
+            {name: '待发合同编号', link: '/business-handle-list-office', active: false}
           ]
         },
         {
-          name: '财务部',
+          name: '业务部',
           flag: '',
           show: false,
           sub: [
-            {name: '代开发票', link: '/acting-invoice', active: false}
+            {name: '待审核业务', link: '/business-review-list-sales', active: false},
+            {name: '待处理业务', link: '/business-handle-list-sales', active: false},
+            {name: '客户信息', link: '/customer-infor-list-sales', active: false}
           ]
         },
         {
-          name: '风险评估部（项目符合）',
+          name: '风险评估部',
           flag: '',
           show: false,
           sub: [
-            {name: '待审核业务', link: '/review-business-risk-pass', active: false}
-          ]
-        },
-        {
-          name: '市场部',
-          flag: '',
-          show: false,
-          sub: [
-            {name: '招投标信息', link: '/bidding-infor', active: false}
+            {name: '待审核业务', link: '/business-review-list-risk', active: false}
           ]
         },
         {
@@ -109,7 +76,23 @@ export default {
           flag: '',
           show: false,
           sub: [
-            {name: '待处理业务', link: '/handle-business-doc', active: false}
+            {name: '待处理业务', link: '/business-handle-list-archives', active: false}
+          ]
+        },
+        {
+          name: '财务部',
+          flag: '',
+          show: false,
+          sub: [
+            {name: '代开发票', link: '/business-handle-list-financial', active: false}
+          ]
+        },
+        {
+          name: '市场部',
+          flag: '',
+          show: false,
+          sub: [
+            {name: '招投标信息', link: '/bid-infor-list-market', active: false}
           ]
         }
       ]

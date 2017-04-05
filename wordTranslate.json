@@ -1,0 +1,22 @@
+{
+    "commonUse": "通用组件",
+    "leader": "所长",
+    "office": "办公室",
+    "department": "部门",
+    "market": "市场",
+    "sales": "业务",
+    "financial": "财务",
+    "risk": "风险评估",
+    "ruleRegulation": "规章制度",
+    "bid": "招投标",
+    "business": "业务",
+    "list": "列表",
+    "detail": "详细内容",
+    "edit": "编辑",
+    "add": "添加",
+    "complete": "已完成",
+    "review": "待审核",
+    "handle": "待处理",
+    "customer": "客户",
+    "staff": "职员"
+}
