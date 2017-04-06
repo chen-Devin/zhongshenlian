@@ -41,7 +41,7 @@
            v-bind:class="{'has-error': !customer.setUpTime.ver}">
         <label for="customer-set-up-time"
                class="control-label">成立日期</label>
-        <input type="text"
+        <input type="date"
                class="form-control"
                placeholder="请输入客户成立日期"
                v-model="customer.setUpTime.val">
@@ -50,7 +50,7 @@
            v-bind:class="{'has-error': !customer.registeredCapital.ver}">
         <label for="customer-registered-capital"
                class="control-label">注册资本</label>
-        <input type="text"
+        <input type="number"
                class="form-control"
                placeholder="请输入客户注册资本"
                v-model="customer.registeredCapital.val">
@@ -59,7 +59,7 @@
            v-bind:class="{'has-error': !customer.assetSize.ver}">
         <label for="customer-asset-size"
                class="control-label">资产规模</label>
-        <input type="text"
+        <input type="number"
                class="form-control"
                placeholder="请输入客户资产规模"
                v-model="customer.assetSize.val">
@@ -136,7 +136,7 @@ export default {
             ver: true
           },
           registeredCapital: {
-            val: '',
+            val: 0,
             ver: true
           },
           customerNature: {
@@ -144,7 +144,7 @@ export default {
             ver: true
           },
           assetSize: {
-            val: '',
+            val: 0,
             ver: true
           },
           industry: {
@@ -152,7 +152,14 @@ export default {
             ver: true
           },
           setUpTime: {
-            val: '',
+            val: (()=>{
+              let t = new Date();
+              let Y = t.getFullYear();
+              let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
+              let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
+              console.log(`${Y}-${M+1}-${D}`);
+              return `${Y}-${M}-${D}`;
+            })(),
             ver: true
           },
           founderId: {

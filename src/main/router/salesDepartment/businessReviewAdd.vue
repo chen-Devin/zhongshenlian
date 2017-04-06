@@ -5,12 +5,12 @@
       <h3>
         新建业务
         <div class="pull-right">
-          <button class="btn btn-success">提交</button>
+          <button class="btn btn-success" v-on:click="subimt()">提交</button>
           <button class="btn btn-warning">暂存</button>
           <button class="btn btn-danger">撤销</button>
         </div>
       </h3>
-      <business-editor v-bind:business="business"
+      <business-editor v-bind:initBusiness="business"
                        v-bind:editable="editable"></business-editor>
     </card>
   </div>
@@ -18,6 +18,8 @@
 
 <script>
 import axios from 'axios';
+
+import bus from '../../bus.js';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
@@ -39,11 +41,25 @@ export default {
         institution: '',
         institutionTele: '',
         purpose: '',
-        startTime: '',
-        endTime: '',
-        peopleNum: '',
-        institutionScale: '',
-        amount: '',
+        startTime: (()=>{
+          let t = new Date();
+          let Y = t.getFullYear();
+          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
+          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
+          console.log(`${Y}-${M+1}-${D}`);
+          return `${Y}-${M}-${D}`;
+        })(),
+        endTime: (()=>{
+          let t = new Date();
+          let Y = t.getFullYear();
+          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
+          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
+          console.log(`${Y}-${M+1}-${D}`);
+          return `${Y}-${M}-${D}`;
+        })(),
+        peopleNum: 0,
+        institutionScale: 0,
+        amount: 0,
         proposerOpinion: '',
         files: []
       },
@@ -51,6 +67,11 @@ export default {
     };
   },
   props: ['user'],
+  methods: {
+    subimt() {
+      bus.$emit('submit');
+    }
+  },
   components: {
     crumbs,
     card,

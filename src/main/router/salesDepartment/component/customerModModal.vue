@@ -41,7 +41,7 @@
            v-bind:class="{'has-error': !customer.setUpTime.ver}">
         <label for="customer-set-up-time"
                class="control-label">成立日期</label>
-        <input type="text"
+        <input type="date"
                class="form-control"
                placeholder="请输入客户成立日期"
                v-model="customer.setUpTime.val">
@@ -50,7 +50,7 @@
            v-bind:class="{'has-error': !customer.registeredCapital.ver}">
         <label for="customer-registered-capital"
                class="control-label">注册资本</label>
-        <input type="text"
+        <input type="number"
                class="form-control"
                placeholder="请输入客户注册资本"
                v-model="customer.registeredCapital.val">
@@ -59,7 +59,7 @@
            v-bind:class="{'has-error': !customer.assetSize.ver}">
         <label for="customer-asset-size"
                class="control-label">资产规模</label>
-        <input type="text"
+        <input type="number"
                class="form-control"
                placeholder="请输入客户资产规模"
                v-model="customer.assetSize.val">

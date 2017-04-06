@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import axios from 'axios';
 
 import card from '../../../component/card.vue';
@@ -62,7 +61,7 @@ export default {
   name: 'customerInfor',
   data() {
     return {
-      thisCustomers: (()=> _.cloneDeep(this.customers))(),
+      thisCustomers: this.customers,
       showModModal: false,
       modCustomer: {},
       showDelModal: false,

@@ -74,6 +74,9 @@ export default {
   list-style: none;
   padding-left: 0;
   margin-top: 30px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
   > li {
     > h5 {
       display: inline-block;

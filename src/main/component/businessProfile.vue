@@ -78,16 +78,6 @@
         <p class="form-control-static"></p>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-12 control-label">审批人意见</label>
-      <div class="col-sm-12">
-        <p class="form-control-static">
-          <ul class="leader-list">
-            <li></li>
-          </ul>
-        </p>
-      </div>
-    </div>
     <hr>
     <div class="form-group">
       <label class="col-sm-12 control-label">相关附件</label>
@@ -97,6 +87,17 @@
             <li>
               <a href=""></a>
             </li>
+          </ul>
+        </p>
+      </div>
+    </div>
+    <hr>
+    <div class="form-group">
+      <label class="col-sm-12 control-label">审批人意见</label>
+      <div class="col-sm-12">
+        <p class="form-control-static">
+          <ul class="leader-list">
+            <li></li>
           </ul>
         </p>
       </div>
