@@ -9,28 +9,16 @@
           新建业务
         </router-link>
       </h3>
-      <ul class="business-list-review">
-        <li class="bg-warning">
-          <h5 class="state">尚未完成</h5>
-          <h5 class="title"><router-link to="/business-review-edit-sales">业务1</router-link></h5>
-          <h5 class="date pull-right">2016/01/01-2016/01/01</h5>
-        </li>
-        <li class="bg-info">
-          <h5 class="state">已提交待审核</h5>
-          <h5 class="title"><router-link to="/business-review-edit-sales">业务1</router-link></h5>
-          <h5 class="date pull-right">2016/01/01-2016/01/01</h5>
-        </li>
-        <li class="bg-danger">
-          <h5 class="state">已审核未通过</h5>
-          <h5 class="title"><router-link to="/business-review-edit-sales">业务1</router-link></h5>
-          <h5 class="date pull-right">2016/01/01-2016/01/01</h5>
-        </li>
-        <li class="bg-success">
-          <h5 class="state">待发合同编号</h5>
-          <h5 class="title"><router-link to="/business-review-edit-sales">业务1</router-link></h5>
-          <h5 class="date pull-right">2016/01/01-2016/01/01</h5>
-        </li>
-      </ul>
+      <div class="business-list-review list-group">
+        <router-link class="list-group-item" v-bind:to="businessRoute(BUSINESS)" v-for="(BUSINESS, index) in businesses" v-bind:key="index">
+          <span class="label label-warning" v-if="BUSINESS.state==='1'">尚未完成</span>
+          <span class="label label-info" v-else-if="BUSINESS.state==='2'">已提交待审核</span>
+          <span class="label label-danger" v-else-if="BUSINESS.state==='3'">已审核未通过</span>
+          <span class="label label-success" v-else-if="BUSINESS.state==='4'">待发合同编号</span>
+          <span class="title">{{BUSINESS.businessName}}</span>
+          <span class="date pull-right">{{BUSINESS.finishTime}}</span>
+        </router-link>
+      </div>
     </card>
   </div>
 </template>
@@ -51,6 +39,11 @@ export default {
       businesses: []
     };
   },
+  computed: {
+    businessRoute(BUSINESS) {
+      return `/business-review-edit-sales/${BUSINESS.id}`;
+    }
+  },
   created() {
     this.getInfo();
   },
@@ -59,7 +52,32 @@ export default {
   },
   methods: {
     getInfo() {
-
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            var obj = {
+              command: 'getBusinessChecking',
+              platform: 'web'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          for(let i=0; i < rep.data.data.businessArray.length; i++) {
+            let obj = {
+              id: rep.data.data.businessArray[i].id,
+              businessName: rep.data.data.businessArray[i].businessName,
+              finishTime: rep.data.data.businessArray[i].finishTime,
+              state: rep.data.data.customerArray[i].state
+            };
+            this.customers.push(obj);
+          }
+        }
+      }, (rep) => {});
     }
   },
   components: {
@@ -71,30 +89,26 @@ export default {
 
 <style lang="sass" scoped>
 .business-list-review {
-  list-style: none;
-  padding-left: 0;
   margin-top: 30px;
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
-  > li {
-    > h5 {
-      display: inline-block;
-      &.state{
-        width: 120px;
-        text-align: center;
-      }
-      &.title {
-        > a {
-          &.hover {
-            cursor: pointer;
-          }
-        }
-      }
-      &.date{
-        padding-right: 10px;
-      }
+  > a.list-group-item {
+    border-right: 0;
+    border-left: 0;
+    // height: 50px;
+    // line-height: 30px;
+    > span.title {
+      margin-left: 7px;
     }
+  }
+  > a.list-group-item:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
+  > a.list-group-item:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
   }
 }
 </style>

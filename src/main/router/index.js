@@ -1,24 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-// import inforManagement from './routeComponent/inforManagement.vue';
-// import authorManagement from './routeComponent/authorManagement.vue';
-// import completeBusiness from './routeComponent/completeBusiness.vue';
-// import inforBoard from './routeComponent/inforBoard.vue';
-// import ruleRegulation from './routeComponent/ruleRegulation.vue';
-// import reviewBusinessSales from './routeComponent/reviewBusinessSales.vue';
-// import handleBusiness from './routeComponent/handleBusiness.vue';
-// import customerInforSales from './routeComponent/customerInforSales.vue';
-// import reviewBusinessRisk from './routeComponent/reviewBusinessRisk.vue';
-// import reviewBusinessLead from './routeComponent/reviewBusinessLead.vue';
-// import customerInforLead from './routeComponent/customerInforLead.vue';
-// import businessAnalysis from './routeComponent/businessAnalysis.vue';
-// import toContractNum from './routeComponent/toContractNum.vue';
-// import actingInvoice from './routeComponent/actingInvoice.vue';
-// import reviewBusinessRiskPass from './routeComponent/reviewBusinessRiskPass.vue';
-// import biddingInfor from './routeComponent/biddingInfor.vue';
-// import handleBusinessDoc from './routeComponent/handleBusinessDoc.vue';
-
 //通用
 import bidInforList from './commonUse/bidInforList.vue';
 import businessCompleteList from './commonUse/businessCompleteList.vue';
@@ -125,7 +107,7 @@ const router = new VueRouter({
             component: businessReviewDetailSales
         },
         {
-            path: '/business-review-edit-sales',
+            path: '/business-review-edit-sales/:id',
             component: businessReviewEditSales
         },
         {

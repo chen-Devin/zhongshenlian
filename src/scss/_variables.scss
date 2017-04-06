@@ -46,7 +46,15 @@ $border-radius-large: 3px;
 */
 $font-family-sans-serif: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-
+/*
+修改type="file"的<input>为不显示
+@property 强制覆盖bootstrap设置
+@author xiaodabao
+@date 2017-04-6
+*/
+input[type="file"] {
+  display: none !important;
+}
 
 
 

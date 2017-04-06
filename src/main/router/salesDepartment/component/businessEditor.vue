@@ -117,10 +117,18 @@
       <label class="col-sm-2 control-label">
         相关附件
       </label>
-      <div class="col-sm-9 text-right">
+      <el-upload class="col-sm-9"
+        action="https://jsonplaceholder.typicode.com/posts/"
+        v-bind:on-preview="handlePreview"
+        v-bind:on-remove="handleRemove"
+        v-bind:file-list="business.files">
+        <el-button size="small" type="primary">点击上传</el-button>
+        <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+      </el-upload>
+      <!--<div class="col-sm-9 text-right">
         <button class="btn btn-primary pull-right">上传文件</button>
       </div>
-      <div class="col-sm-12">
+      <div class="col-sm-offset-3 col-sm-9">
         <p class="form-control-static">
           <ul class="attachment-list">
             <li v-for="File in business.files">
@@ -128,13 +136,20 @@
             </li>
           </ul>
         </p>
-      </div>
+      </div>-->
     </div>
   </form>
 </template>
 
 <script>
+import Vue from 'vue';
+
+import { Button, Upload } from 'element-ui';
+
 import bus from '../../../bus.js';
+
+Vue.use(Button);
+Vue.use(Upload);
 
 export default {
   name: 'businessEditor',
@@ -147,6 +162,14 @@ export default {
   created() {
     bus.$on('submit', ()=>console.log('it works!'));
   },
+  methods: {
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    }
+  }
 };
 </script>
 

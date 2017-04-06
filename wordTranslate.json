@@ -18,5 +18,7 @@
     "review": "待审核",
     "handle": "待处理",
     "customer": "客户",
-    "staff": "职员"
+    "staff": "职员",
+    "approver": "审批人",
+    "advice": "意见"
 }

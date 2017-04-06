@@ -1,4 +1,5 @@
 import Vue from 'vue';
+
 import App from './App.vue';
 import router from './router/index.js';
 
@@ -44,8 +45,7 @@ axios({
         return JSON.stringify(obj);
         })()
     }
-}).then(
-    (rep)=>{
+}).then((rep)=>{
         if(rep.data.statusCode === '10001') {
             app.user.id = rep.data.data.id;
             app.user.telephone = rep.data.data.telephone;
@@ -58,7 +58,4 @@ axios({
             app.user.wechatName = rep.data.data.wechatName;
             app.user.wechatHeadImg = rep.data.data.wechatHeadImg;
         }
-    },(rep)=>{
-
-    }
-);
+    },(rep)=>{});

@@ -58,7 +58,7 @@ export default {
               industry: rep.data.data.customerArray[i].industry,
               setUpTime: rep.data.data.customerArray[i].setUpTime,
               founderId: rep.data.data.customerArray[i].founderId,
-              founderName: rep.data.data.customerArray[i].founderName,
+              founderName: rep.data.data.customerArray[i].founderName
             };
             this.customers.push(obj);
           }

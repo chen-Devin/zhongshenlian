@@ -6,8 +6,8 @@
         新建业务
         <div class="pull-right">
           <button class="btn btn-success" v-on:click="subimt()">提交</button>
-          <button class="btn btn-warning">暂存</button>
-          <button class="btn btn-danger">撤销</button>
+          <button class="btn btn-warning" v-on:click="save()">暂存</button>
+          <button class="btn btn-danger" v-on:click="delete()">撤销</button>
         </div>
       </h3>
       <business-editor v-bind:initBusiness="business"
@@ -61,7 +61,7 @@ export default {
         institutionScale: 0,
         amount: 0,
         proposerOpinion: '',
-        files: []
+        files: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
       },
       editable: true,
     };
