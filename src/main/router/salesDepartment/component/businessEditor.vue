@@ -133,8 +133,8 @@
       <div class="col-sm-offset-3 col-sm-9">
         <p class="form-control-static">
           <ul class="attachment-list">
-            <li v-for="File in business.files">
-              <a v-bind:href="File.addr" target="_blank"></a>
+            <li v-for="FILE in business.files">
+              <a v-bind:href="FILE.addr" target="_blank"></a>
             </li>
           </ul>
         </p>

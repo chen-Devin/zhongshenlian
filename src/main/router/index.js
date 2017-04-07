@@ -103,7 +103,7 @@ const router = new VueRouter({
             component: businessReviewAdd
         },
         {
-            path: '/business-review-detail-sales',
+            path: '/business-review-detail-sales/:id',
             component: businessReviewDetailSales
         },
         {
@@ -123,7 +123,7 @@ const router = new VueRouter({
             component: businessReviewListRisk
         },
         {
-            path: '/business-review-detail-risk',
+            path: '/business-review-detail-risk/:id',
             component: businessReviewDetailRisk
         },
         {

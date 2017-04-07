@@ -1,20 +1,14 @@
 <template>
   <div class="col-sm-12">
-    <h4 class="strong">审批人意见</h4>
+    <h4 class="strong">
+      <slot>error</slot>
+    </h4>
     <ul class="list-group approver-list">
-      <li class="list-group-item">
-        <span>nihao</span>
-        <span class="label label-info">未审核</span>
-      </li>
-      <li class="list-group-item">
-        <span>nihao</span>
-        <span class="label label-success">已通过</span>
-      </li>
-      <li class="list-group-item">
-        <span>nihao</span>
-        <span class="label label-danger" v-on:click="open()">
-          未通过
-        </span>
+      <li class="list-group-item" v-for="(ADVICE, index) in advices" v-bind:key="index">
+        <span>{{ADVICE.approverName}}</span>
+        <span class="label label-success" v-if="ADVICE.approverResult==='1'">已通过</span>
+        <span class="label label-danger" v-else-if="ADVICE.approverResult==='2'"  v-on:click="open(ADVICE.approverOpinion)">未通过</span>
+        <span class="label label-info" v-else>未审核</span>
       </li>
     </ul>
     <modal v-if="showModal">
@@ -40,9 +34,10 @@ export default {
       reason: ''
     };
   },
+  props: ['advices'],
   method: {
-    open(RES) {
-      this.reason = RES;
+    open(REA) {
+      this.reason = REA;
       this.showModal = true;
     },
     close() {
