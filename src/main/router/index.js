@@ -21,7 +21,7 @@ import businessHandleDetailSales from './salesDepartment/businessHandleDetail.vu
 import businessHandleListSales from './salesDepartment/businessHandleList.vue';
 import businessReviewAdd from './salesDepartment/businessReviewAdd.vue';
 import businessReviewDetailSales from './salesDepartment/businessReviewDetail.vue';
-import businessReviewEditSales from './salesDepartment/businessReviewEdit.vue';
+import businessReviewEdit from './salesDepartment/businessReviewEdit.vue';
 import businessReviewListSales from './salesDepartment/businessReviewList.vue';
 import customerInforListSales from './salesDepartment/customerInforList.vue';
 //风险评估部
@@ -63,7 +63,7 @@ const router = new VueRouter({
             component: businessAnalysis
         },
         {
-            path: '/business-review-detail-leader',
+            path: '/business-review-detail-leader/:id',
             component: businessReviewDetailLeader
         },
         {
@@ -107,8 +107,8 @@ const router = new VueRouter({
             component: businessReviewDetailSales
         },
         {
-            path: '/business-review-edit-sales/:id',
-            component: businessReviewEditSales
+            path: '/business-review-edit/:id',
+            component: businessReviewEdit
         },
         {
             path: '/business-review-list-sales',

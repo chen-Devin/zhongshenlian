@@ -114,7 +114,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">
+      <!--<label class="col-sm-2 control-label">
         相关附件
       </label>
       <el-upload class="col-sm-9"
@@ -125,8 +125,8 @@
         v-bind:on-remove="handleRemove"
         v-bind:file-list="business.files">
         <el-button size="small" type="primary" v-if="editable">点击上传</el-button>
-        <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
-      </el-upload>
+        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+      </el-upload>-->
       <!--<div class="col-sm-9 text-right">
         <button class="btn btn-primary pull-right">上传文件</button>
       </div>
@@ -145,6 +145,8 @@
 
 <script>
 import Vue from 'vue';
+import axios from 'axios';
+import qs from 'qs';
 import { Button, Upload } from 'element-ui';
 
 import bus from '../../../bus.js';

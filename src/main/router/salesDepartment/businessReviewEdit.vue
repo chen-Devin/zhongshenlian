@@ -45,19 +45,19 @@ import approverAdvice from '../../component/approverAdvice.vue';
 Vue.prototype.$message = Message;
 
 export default {
-  name: 'businessReviewEditSales',
+  name: 'businessReviewEdit',
   data() {
     return {
       paths: [
         { name: '待审核业务', url: '/business-review-list-sales', present: false },
-        { name: '创建新任务', url: `/business-review-add/${this.$route.params.id}`, present: true },
+        { name: '业务详情', url: `/business-review-edit/${this.$route.params.id}`, present: true },
       ],
       business: {
         id: this.$route.params.id,
         name: '',
-        proposerId: this.user.id,
-        proposerName: this.user.name,
-        proposerTele: this.user.telephone,
+        proposerId: '',
+        proposerName: '',
+        proposerTele: '',
         institution: '',
         institutionTele: '',
         purpose: '',
@@ -86,7 +86,7 @@ export default {
         contractNo: '',
         projectType: '',
         projectAmount: '',
-        projectStatus: '1',
+        projectStatus: '',
         projectApproverArray: [],
         projectSchduleArray: [],
         projectBillingArray: [],
@@ -112,7 +112,7 @@ export default {
         url: '/service',
         params: {
           data: (() => {
-            var obj = {
+            let obj = {
               command: 'getBusinessInfo',
               platform: 'web',
               id: this.$route.params.id
@@ -154,9 +154,9 @@ export default {
       this.leaderAdivces = [];
       for(let i=0; i < this.business.projectApproverArray.length; i++) {
         if(this.business.projectApproverArray[i].department === '风险评估部') {
-          this.riskAdvices.pull(this.business.projectApproverArray[i]);
+          this.riskAdvices.push(this.business.projectApproverArray[i]);
         } else {
-          this.leaderAdivces.pull(this.business.projectApproverArray[i]);
+          this.leaderAdivces.push(this.business.projectApproverArray[i]);
         }
       }
     },
