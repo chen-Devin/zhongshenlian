@@ -83,11 +83,11 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">企业资产规模</label>
+      <label class="col-sm-2 control-label">企业规模</label>
       <div class="col-sm-9">
-        <input type="number"
+        <input type="text"
                class="form-control"
-               placeholder="请输入企业资产规模"
+               placeholder="请输入企业规模"
                v-model="business.institutionScale"
                v-bind:readonly="!editable">
       </div>
@@ -119,10 +119,12 @@
       </label>
       <el-upload class="col-sm-9"
         action="https://jsonplaceholder.typicode.com/posts/"
+        v-bind:before-upload="reSave"
+        http-request=""
         v-bind:on-preview="handlePreview"
         v-bind:on-remove="handleRemove"
         v-bind:file-list="business.files">
-        <el-button size="small" type="primary">点击上传</el-button>
+        <el-button size="small" type="primary" v-if="editable">点击上传</el-button>
         <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
       </el-upload>
       <!--<div class="col-sm-9 text-right">
@@ -143,7 +145,6 @@
 
 <script>
 import Vue from 'vue';
-
 import { Button, Upload } from 'element-ui';
 
 import bus from '../../../bus.js';
@@ -160,15 +161,123 @@ export default {
   },
   props: ['initBusiness', 'editable'],
   created() {
-    bus.$on('submit', ()=>console.log('it works!'));
+    bus.$on('subBusiness', ()=>{this.sub()});
+    bus.$on('savBusiness', ()=>{this.save()});
   },
   methods: {
+    save() {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+          method: 'post',
+          url: '/service',
+          data: qs.stringify({
+            data: (() => {
+              let obj = {
+                command: 'addTempData',
+                platform: 'web',
+                data: {
+                  id: this.business.id,
+                  projectName: this.business.name,
+                  contractNo: this.business.contractNo,
+                  businessUndertakerId: this.business.proposerId,
+                  businessUndertakerName: this.business.proposerName,
+                  undertakerPhone: this.business.proposerTele,
+                  requester: this.business.institution,
+                  requesterPhone: this.business.institutionTele,
+                  reportPurpose: this.business.purpose,
+                  startTime: this.business.startTime,
+                  endTime: this.business.endTime,
+                  peopleNumber: this.business.peopleNum,
+                  enterpriseScale: this.business.institutionScale,
+                  contractAmount: this.business.amount,
+                  applicantOpinion: this.business.proposerOpinion,
+                  projectType: this.business.projectType,
+                  projectAmount: this.business.projectAmount,
+                  projectStatus: this.business.projectStatus,
+                  annexArray: this.business.files,
+                  projectApproverArray: this.business.projectApproverArray,
+                  projectSchduleArray: this.business.projectSchduleArray,
+                  projectBillingArray: this.business.projectBillingArray,
+                  projectOperatingArray: this.business.projectOperatingArray
+                }
+              };
+              return JSON.stringify(obj);
+            })()
+          })
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.business.id = rep.data.data.id;
+            this.$emit('saved', this.business);
+            resolve(rep);
+          }
+        }, (rep) => {});
+      });
+      return promise;
+    },
+    sub() {
+      let promise = new Promise((resolve, reject) => {
+        this.business.projectStatus = '2';
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+          method: 'post',
+          url: '/service',
+          data: qs.stringify({
+            data: (() => {
+              let obj = {
+                command: 'addTempData',
+                platform: 'web',
+                data: {
+                  id: this.business.id,
+                  projectName: this.business.name,
+                  contractNo: this.business.contractNo,
+                  businessUndertakerId: this.business.proposerId,
+                  businessUndertakerName: this.business.proposerName,
+                  undertakerPhone: this.business.proposerTele,
+                  requester: this.business.institution,
+                  requesterPhone: this.business.institutionTele,
+                  reportPurpose: this.business.purpose,
+                  startTime: this.business.startTime,
+                  endTime: this.business.endTime,
+                  peopleNumber: this.business.peopleNum,
+                  enterpriseScale: this.business.institutionScale,
+                  contractAmount: this.business.amount,
+                  applicantOpinion: this.business.proposerOpinion,
+                  projectType: this.business.projectType,
+                  projectAmount: this.business.projectAmount,
+                  projectStatus: this.business.projectStatus,
+                  annexArray: this.business.files,
+                  projectApproverArray: this.business.projectApproverArray,
+                  projectSchduleArray: this.business.projectSchduleArray,
+                  projectBillingArray: this.business.projectBillingArray,
+                  projectOperatingArray: this.business.projectOperatingArray
+                }
+              };
+              return JSON.stringify(obj);
+            })()
+          })
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.business.id = rep.data.data.id;
+            this.$emit('submited', this.business);
+            resolve(rep);
+          }
+        }, (rep) => {});
+      });
+      return promise;
+    },
+    reSave(file) {
+      if (this.business.id==='') {
+        let promise = this.save();
+      }
+    },
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
     handlePreview(file) {
       console.log(file);
-    }
+    },
+
   }
 };
 </script>

@@ -76,9 +76,6 @@ p {
     &.fa {
       margin: 0 20px 0 40px;
     }
-    &.text-cont {
-
-    }
   }
 }
 </style>
