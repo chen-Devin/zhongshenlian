@@ -114,31 +114,27 @@
       </div>
     </div>
     <div class="form-group">
-      <!--<label class="col-sm-2 control-label">
+      <label class="col-sm-2 control-label">
         相关附件
       </label>
-      <el-upload class="col-sm-9"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        v-bind:before-upload="reSave"
-        http-request=""
-        v-bind:on-preview="handlePreview"
-        v-bind:on-remove="handleRemove"
-        v-bind:file-list="business.files">
-        <el-button size="small" type="primary" v-if="editable">点击上传</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-      </el-upload>-->
-      <!--<div class="col-sm-9 text-right">
-        <button class="btn btn-primary pull-right">上传文件</button>
+      <el-upload class="col-sm-10"
+                 v-bind:multiple="false"
+                 v-bind:action="uploadURL"
+                 v-bind:before-upload="reSave"
+                 v-bind:on-success="uploadSuccess"
+                 v-bind:show-file-list="false">
+        <button class="btn btn-info btn-sm" type="button" v-if="editable">点击上传</button>
+        <span slot="tip" class="text-info" v-if="editable">&emsp;文件大小建议不超过3Mb</span>
+      </el-upload>
+      <div class="col-sm-offset-2 col-sm-9">
+        <ul class="attachment-list list-group">
+          <li class="list-group-item" v-for="FILE in business.files">
+            <span class="fa fa-file-text-o"></span>
+            <a class="text-primary title" v-bind:href="FILE.url" target="_blank">{{FILE.name}}</a>
+            <a class="text-danger pull-right" v-on:click="delFile(FILE)" v-if="editable"><i class="fa fa-times"></i></a>
+          </li>
+        </ul>
       </div>
-      <div class="col-sm-offset-3 col-sm-9">
-        <p class="form-control-static">
-          <ul class="attachment-list">
-            <li v-for="FILE in business.files">
-              <a v-bind:href="FILE.addr" target="_blank"></a>
-            </li>
-          </ul>
-        </p>
-      </div>-->
     </div>
   </form>
 </template>
@@ -158,13 +154,21 @@ export default {
   name: 'businessEditor',
   data() {
     return {
-      business: this.initBusiness
+      business: this.initBusiness,
+      uploadURL: ''
     };
   },
   props: ['initBusiness', 'editable'],
   created() {
     bus.$on('subBusiness', ()=>{this.sub()});
     bus.$on('savBusiness', ()=>{this.save()});
+    let data = {
+      command: 'handlerBusiness',
+      platform: 'web',
+      id: this.business.id,
+      type: 'projectAnnex'
+    };
+    this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data='+JSON.stringify(data);
   },
   methods: {
     save() {
@@ -219,7 +223,6 @@ export default {
     },
     sub() {
       let promise = new Promise((resolve, reject) => {
-        this.business.projectStatus = '2';
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
           method: 'post',
@@ -227,7 +230,7 @@ export default {
           data: qs.stringify({
             data: (() => {
               let obj = {
-                command: 'addTempData',
+                command: 'addBusniessInfo',
                 platform: 'web',
                 data: {
                   id: this.business.id,
@@ -270,16 +273,58 @@ export default {
     },
     reSave(file) {
       if (this.business.id==='') {
-        let promise = this.save();
+        return this.save().then((rep)=>{
+          let data = {
+            command: 'handlerBusiness',
+            platform: 'web',
+            id: this.business.id,
+            type: 'projectAnnex'
+          };
+          this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data='+JSON.stringify(data);
+        },(rep)=>{});
+      } else {
+        return true;
       }
     },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
+    uploadSuccess(responseData, file, fileList) {
+      if(responseData.statusCode === '10001') {
+        let obj = {
+          id: responseData.data.id,
+          name: file.name,
+          url: responseData.data.path
+        };
+        this.business.files.push(obj);
+        this.$emit('uploaded', this.business);
+      }
     },
-    handlePreview(file) {
-      console.log(file);
-    },
-
+    delFile(FILE) {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'post',
+        url: '/service',
+        params: {
+          data: (() => {
+            let obj = {
+              command: 'delFile',
+              platform: 'web',
+              delFileId: FILE.id,
+              type: 'projectAnnex'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then( (rep) => {
+        if (rep.data.statusCode === '10001') {
+          for(let i=0; i < this.business.files.length; i++) {
+            if (this.business.files[i].id === FILE.id) {
+              this.business.files.splice(i, 1);
+              break;
+            }
+          }
+          this.$emit('deletedFile', this.business);
+        }
+      }, (rep) => {});
+    }
   }
 };
 </script>
@@ -292,6 +337,29 @@ form.form-horizontal {
   margin-right: auto;
   textarea {
     resize: vertical;
+  }
+  .attachment-list {
+    margin-top: 10px;
+    > li.list-group-item {
+      border-right: 0;
+      border-left: 0;
+      // height: 50px;
+      // line-height: 30px;
+      > a.title {
+        margin-left: 7px;
+      }
+      > a.text-danger {
+        cursor: pointer;
+      }
+    }
+    > li.list-group-item:first-child {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+    > li.list-group-item:last-child {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   }
 }
 </style>

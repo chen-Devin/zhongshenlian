@@ -20,5 +20,14 @@
     "customer": "客户",
     "staff": "职员",
     "approver": "审批人",
-    "advice": "意见"
+    "advice": "意见",
+    "approve": "批准",
+    "refuse": "拒绝",
+    "profile": "概况",
+    "conduct": "开展",
+    "infor": "信息",
+    "modal": "弹窗",
+    "operatHistory": "操作历史",
+    "billing": "发票",
+    "report": "报告"
 }

@@ -157,7 +157,6 @@ export default {
               let Y = t.getFullYear();
               let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
               let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
-              console.log(`${Y}-${M+1}-${D}`);
               return `${Y}-${M}-${D}`;
             })(),
             ver: true

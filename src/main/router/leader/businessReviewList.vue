@@ -7,17 +7,17 @@
         </h3>
       <div class="business-list-review list-group">
         <router-link class="list-group-item"
-                     v-bind:to="businessRoute(BUSINESS)"
+                     v-bind:to="'/business-review-detail-leader/'+BUSINESS.id"
                      v-for="(BUSINESS, index) in businesses"
                      v-bind:key="index">
           <span class="label label-warning"
-                v-if="BUSINESS.state==='1'">尚未完成</span>
+                v-if="BUSINESS.projectStatus==='1'">尚未完成</span>
           <span class="label label-info"
-                v-else-if="BUSINESS.state==='2'">已提交待审核</span>
+                v-else-if="BUSINESS.projectStatus==='2'||BUSINESS.projectStatus==='4'">已提交待审核</span>
           <span class="label label-danger"
-                v-else-if="BUSINESS.state==='3'">已审核未通过</span>
+                v-else-if="BUSINESS.projectStatus==='3'||BUSINESS.projectStatus==='5'">已审核未通过</span>
           <span class="label label-success"
-                v-else-if="BUSINESS.state==='4'">待发合同编号</span>
+                v-else-if="BUSINESS.projectStatus==='6'">待发合同编号</span>
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime}}</span>
         </router-link>
@@ -41,11 +41,6 @@ export default {
       ],
       businesses: []
     };
-  },
-  computed: {
-    businessRoute(BUSINESS) {
-      return `/business-review-detail-leader/${BUSINESS.id}`;
-    }
   },
   created() {
     this.getInfo();
@@ -75,9 +70,9 @@ export default {
               id: rep.data.data.businessArray[i].id,
               businessName: rep.data.data.businessArray[i].businessName,
               finishTime: rep.data.data.businessArray[i].finishTime,
-              state: rep.data.data.customerArray[i].state
+              projectStatus: rep.data.data.businessArray[i].projectStatus
             };
-            this.customers.push(obj);
+            this.businesses.push(obj);
           }
         }
       }, (rep) => { });

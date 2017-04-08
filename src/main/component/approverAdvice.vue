@@ -1,14 +1,14 @@
 <template>
-  <div class="col-sm-12">
-    <h4 class="strong">
+  <div class="col-sm-12 approver-advice">
+    <h4>
       <slot>error</slot>
     </h4>
     <ul class="list-group approver-list">
       <li class="list-group-item" v-for="(ADVICE, index) in advices" v-bind:key="index">
         <span>{{ADVICE.approverName}}</span>
-        <span class="label label-success" v-if="ADVICE.approverResult==='1'">已通过</span>
-        <span class="label label-danger" v-else-if="ADVICE.approverResult==='2'"  v-on:click="open(ADVICE.approverOpinion)">未通过</span>
-        <span class="label label-info" v-else>未审核</span>
+        <span class="label label-success pull-right" v-if="ADVICE.approverResult==='通过'">已通过</span>
+        <span class="label label-danger pull-right" v-else-if="ADVICE.approverResult==='不通过'"  v-on:click="open(ADVICE.approverOpinion)">未通过</span>
+        <span class="label label-info pull-right" v-else>未审核</span>
       </li>
     </ul>
     <modal v-if="showModal">
@@ -49,27 +49,29 @@ export default {
 
 <style lang="sass" scoped>
 @import '../../scss/_variables.scss';
-
-.approver-list {
-  margin-top: 30px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  > li.list-group-item {
-    border-right: 0;
-    border-left: 0;
-    span.label-danger:hover {
-      cursor: pointer;
-      background-color: darken($btn-danger-bg, 5%);
+.approver-advice {
+  padding: 0 50px;
+  .approver-list {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    > li.list-group-item {
+      border-right: 0;
+      border-left: 0;
+      span.label-danger:hover {
+        cursor: pointer;
+        background-color: darken($btn-danger-bg, 5%);
+      }
     }
-  }
-  > li.list-group-item:first-child {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-  }
-  > li.list-group-item:last-child {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+    > li.list-group-item:first-child {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+    > li.list-group-item:last-child {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   }
 }
 </style>

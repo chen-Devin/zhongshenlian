@@ -79,12 +79,14 @@
         <p class="form-control-static">{{business.proposerOpinion}}</p>
       </div>
     </div>
-    <hr>
     <div class="form-group">
       <label class="col-sm-2 control-label">相关附件</label>
-      <div class="col-sm-12 attachment-list list-group">
-        <a class="list-group-item" v-bind:href="FILE.addr" target="_blank" v-for="(FILE, index) in business.files" v-bind:key="index">{{FILE.name}}</a>
-      </div>
+      <ul class="col-sm-9 attachment-list list-group">
+        <li class="list-group-item" v-for="FILE in business.files">
+          <span class="fa fa-file-text-o"></span>
+          <a class="text-primary title" v-bind:href="FILE.url" target="_blank">{{FILE.name}}</a>
+        </li>
+      </ul>
     </div>
   </form>
 </template>
@@ -112,19 +114,27 @@ form.form-horizontal {
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
-  > a.list-group-item {
-    border-right: 0;
-    border-left: 0;
-    // height: 50px;
-    // line-height: 30px;
-  }
-  > a.list-group-item:first-child {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-  }
-  > a.list-group-item:last-child {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+  .attachment-list {
+    > li.list-group-item {
+      border-right: 0;
+      border-left: 0;
+      // height: 50px;
+      // line-height: 30px;
+      > a.title {
+        margin-left: 7px;
+      }
+      > a.text-danger {
+        cursor: pointer;
+      }
+    }
+    > li.list-group-item:first-child {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+    > li.list-group-item:last-child {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   }
 }
 </style>
