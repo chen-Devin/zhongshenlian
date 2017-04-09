@@ -10,11 +10,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _comHeader = __webpack_require__(24);
+var _comHeader = __webpack_require__(25);
 
 var _comHeader2 = _interopRequireDefault(_comHeader);
 
-var _comFooter = __webpack_require__(23);
+var _comFooter = __webpack_require__(24);
 
 var _comFooter2 = _interopRequireDefault(_comFooter);
 
@@ -143,35 +143,6 @@ var app = new _vue2.default({
 
 /***/ }),
 
-/***/ 15:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  name: 'comFooter',
-  data: function data() {
-    return {
-      msg: 'this is footer'
-    };
-  }
-};
-
-/***/ }),
-
 /***/ 152:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -219,6 +190,35 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+
+exports.default = {
+  name: 'comFooter',
+  data: function data() {
+    return {
+      msg: 'this is footer'
+    };
+  }
+};
+
+/***/ }),
+
+/***/ 17:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -240,7 +240,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 18:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(true);
@@ -255,7 +255,7 @@ exports.push([module.i, "\nfooter[data-v-032a2e43] {\n  display: flex;\n  flex-d
 
 /***/ }),
 
-/***/ 19:
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(true);
@@ -270,18 +270,18 @@ exports.push([module.i, "\n.navbar[data-v-245c9235] {\n  background-color: rgba(
 
 /***/ }),
 
-/***/ 23:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(28)
+__webpack_require__(29)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(15),
+  __webpack_require__(16),
   /* template */
-  __webpack_require__(26),
+  __webpack_require__(27),
   /* scopeId */
   "data-v-032a2e43",
   /* cssModules */
@@ -309,18 +309,18 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(29)
+__webpack_require__(30)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(16),
+  __webpack_require__(17),
   /* template */
-  __webpack_require__(27),
+  __webpack_require__(28),
   /* scopeId */
   "data-v-245c9235",
   /* cssModules */
@@ -387,7 +387,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 26:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -400,42 +400,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-032a2e43", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 27:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('header', [_c('nav', {
-    staticClass: "navbar navbar-default navbar-fixed-top"
-  }, [_c('div', {
-    staticClass: "container-fluid"
-  }, [_c('div', {
-    staticClass: "navbar-header"
-  }, [_c('a', {
-    staticClass: "navbar-brand",
-    attrs: {
-      "href": "#"
-    }
-  }, [_c('img', {
-    attrs: {
-      "alt": "Brand",
-      "src": __webpack_require__(22)
-    }
-  })])]), _vm._v(" "), _c('h4', {
-    staticClass: "navbar-text brand-name"
-  }, [_vm._v("\n        天津中审联会计师管理系统\n      ")])])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-245c9235", module.exports)
   }
 }
 
@@ -489,10 +453,46 @@ if (false) {
 /***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('header', [_c('nav', {
+    staticClass: "navbar navbar-default navbar-fixed-top"
+  }, [_c('div', {
+    staticClass: "container-fluid"
+  }, [_c('div', {
+    staticClass: "navbar-header"
+  }, [_c('a', {
+    staticClass: "navbar-brand",
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('img', {
+    attrs: {
+      "alt": "Brand",
+      "src": __webpack_require__(23)
+    }
+  })])]), _vm._v(" "), _c('h4', {
+    staticClass: "navbar-text brand-name"
+  }, [_vm._v("\n        天津中审联会计师管理系统\n      ")])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-245c9235", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(18);
+var content = __webpack_require__(19);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -513,13 +513,13 @@ if(false) {
 
 /***/ }),
 
-/***/ 29:
+/***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(19);
+var content = __webpack_require__(20);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -661,4 +661,4 @@ module.exports = Component.exports
 /***/ })
 
 },[130]);
-//# sourceMappingURL=signIn.edbe7b3630884bfe51fd.js.map
+//# sourceMappingURL=signIn.7caf7ad68c7dd2cd980e.js.map

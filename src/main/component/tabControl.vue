@@ -8,10 +8,10 @@
       </li>
     </ul>
     <div class="tab-content">
-      <div class="tab-pane"
-           v-for="(PART, index) in parts"
+      <div v-for="(PART, index) in parts"
            v-show="PART.disp"
            v-bind:is="PART.content"
+           v-bind:initBusiness="business"
            v-bind:key="index">
       </div>
     </div>
@@ -19,26 +19,16 @@
 </template>
 
 <script>
-import businessProfile from './buinessProfile.vue';
-import businessConduct from './businessConduct.vue';
-import billingInfor from './billingInfor.vue';
-import businessReport from './businessReport.vue';
-import operatHistory from './operatHistory.vue';
-
 export default {
   name: 'tabControl',
   data() {
     return {
-      parts: [
-        {name: '业务概况', content: businessProfile, disp: true},
-        {name: '业务开展', content: businessConduct, disp: false},
-        {name: '开票信息', content: billingInfor, disp: false},
-        {name: '业务报告', content: businessReport, disp: false},
-        {name: '操作历史', content: operatHistory, disp: false}
-      ]
+      business: this.initBusiness,
+      parts: this.initParts
     }
   },
-  method: {
+  props: ['initBusiness', 'initParts'],
+  methods: {
     tabSel(PART) {
       for(let i=0; i < this.parts.length; i++) {
         this.parts[i].disp = false;

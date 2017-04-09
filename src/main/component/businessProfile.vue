@@ -1,7 +1,7 @@
 <template>
   <form class="form-horizontal">
     <div class="form-group"
-         v-if="passed">
+         v-if="business.contractNo!==''">
       <label class="col-sm-2 control-label">合同编号</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.contractNo}}</p>
@@ -82,9 +82,12 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">相关附件</label>
       <ul class="col-sm-9 attachment-list list-group">
-        <li class="list-group-item" v-for="FILE in business.files">
+        <li class="list-group-item"
+            v-for="FILE in business.files">
           <span class="fa fa-file-text-o"></span>
-          <a class="text-primary title" v-bind:href="FILE.url" target="_blank">{{FILE.name}}</a>
+          <a class="text-primary title"
+             v-bind:href="FILE.url"
+             target="_blank">{{FILE.name}}</a>
         </li>
       </ul>
     </div>
@@ -98,11 +101,6 @@ export default {
     return {
       business: this.initBusiness
     };
-  },
-  computed: {
-    passed() {
-      return (parseInt(this.business.projectStatus) >= 7) ? true : false;
-    }
   },
   props: ['initBusiness']
 };

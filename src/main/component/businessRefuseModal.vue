@@ -64,7 +64,7 @@ export default {
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
           this.subBtn.cont = '已提交';
-          this.$emit('approved', rep.data.data.id, this.reason);
+          this.$emit('refused', rep.data.data.id, this.reason);
         }
       }, (rep) => { });
     },
