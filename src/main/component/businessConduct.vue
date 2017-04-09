@@ -34,9 +34,16 @@
 </template>
 
 <script>
-
+export default {
+  name: 'businessConduct'
+};
 </script>
 
 <style lang="sass" scoped>
-
+form.form-horizontal {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>

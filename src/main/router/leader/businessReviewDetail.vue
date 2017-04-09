@@ -3,16 +3,16 @@
     <crumbs v-bind:paths="paths"></crumbs>
     <card>
       <h3>
-        业务详情
-        <div class="pull-right">
-          <template v-if="decide==='undecide'">
-            <button class="btn btn-success" v-on:click="approve()">通过</button>
-            <button class="btn btn-danger" v-on:click="refuse()">不通过</button>
-          </template>
-          <span class="label label-success" v-else-if="decide==='approve'">已通过</span>
-          <span class="label label-danger" v-else-if="decide==='refuse'">未通过</span>
-        </div>
-      </h3>
+          业务详情
+          <div class="pull-right">
+            <template v-if="decide==='undecide'">
+              <button class="btn btn-success" v-on:click="approve()">通过</button>
+              <button class="btn btn-danger" v-on:click="refuse()">不通过</button>
+            </template>
+            <span class="label label-success" v-else-if="decide==='approve'">已选择通过</span>
+            <span class="label label-danger" v-else-if="decide==='refuse'">已选择未通过</span>
+          </div>
+        </h3>
       <business-profile v-bind:initBusiness="business"></business-profile>
       <hr>
       <div class="row">
@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import axios from 'axios';
 
 import router from '../index.js';
@@ -61,18 +60,18 @@ export default {
         institution: '',
         institutionTele: '',
         purpose: '',
-        startTime: (()=>{
+        startTime: (() => {
           let t = new Date();
           let Y = t.getFullYear();
-          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
-          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
+          let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+          let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
           return `${Y}-${M}-${D}`;
         })(),
-        endTime: (()=>{
+        endTime: (() => {
           let t = new Date();
           let Y = t.getFullYear();
-          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
-          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
+          let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+          let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
           return `${Y}-${M}-${D}`;
         })(),
         peopleNum: 0,
@@ -98,7 +97,7 @@ export default {
   props: ['user'],
   computed: {
     decide() {
-      if(this.user.department === '风险评估部') {
+      if (this.user.department === '风险评估部') {
         if (this.business.projectStatus === '2') {
           return 'undecide';
         } else if (this.business.projectStatus === '3') {
@@ -106,7 +105,7 @@ export default {
         } else if (this.business.projectStatus === '4') {
           return 'approve';
         }
-      } else if(this.user.department === '所长') {
+      } else if (this.user.department === '所长') {
         if (this.business.projectStatus === '4') {
           return 'undecide';
         } else if (this.business.projectStatus === '5') {
@@ -159,7 +158,7 @@ export default {
           this.business.projectType = rep.data.data.projectType;
           this.business.projectAmount = rep.data.data.projectAmount;
           this.business.projectStatus = rep.data.data.projectStatus;
-          for(let i=0; i < rep.data.data.annexArray.length; i++) {
+          for (let i = 0; i < rep.data.data.annexArray.length; i++) {
             let obj = {
               id: rep.data.data.annexArray[i].id,
               name: rep.data.data.annexArray[i].annexName,
@@ -173,13 +172,13 @@ export default {
           this.business.projectOperatingArray = rep.data.data.projectOperatingArray;
           this.adviceClassify();
         }
-      }, (rep) => {});
+      }, (rep) => { });
     },
     adviceClassify() {
       this.riskAdvices = [];
       this.leaderAdivces = [];
-      for(let i=0; i < this.business.projectApproverArray.length; i++) {
-        if(this.business.projectApproverArray[i].department === '风险评估部') {
+      for (let i = 0; i < this.business.projectApproverArray.length; i++) {
+        if (this.business.projectApproverArray[i].department === '风险评估部') {
           this.riskAdvices.push(this.business.projectApproverArray[i]);
         } else {
           this.leaderAdivces.push(this.business.projectApproverArray[i]);
@@ -195,13 +194,13 @@ export default {
         approverId: this.user.id,
         approverName: this.user.name,
         department: this.user.department,
-        approverResult: '1',
+        approveResult: '通过',
         approverOpinion: '',
-        updateAt: (()=>{
+        updateAt: (() => {
           let t = new Date();
           let Y = t.getFullYear();
-          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
-          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
+          let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+          let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
           return `${Y}-${M}-${D}`;
         })()
       };
@@ -223,13 +222,13 @@ export default {
         approverId: this.user.id,
         approverName: this.user.name,
         department: this.user.department,
-        approverResult: '0',
+        approveResult: '不通过',
         approverOpinion: reason,
-        updateAt: (()=>{
+        updateAt: (() => {
           let t = new Date();
           let Y = t.getFullYear();
-          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
-          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
+          let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+          let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
           return `${Y}-${M}-${D}`;
         })()
       };

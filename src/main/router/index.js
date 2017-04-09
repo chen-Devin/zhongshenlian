@@ -87,11 +87,11 @@ const router = new VueRouter({
             component: businessHandleListOffice
         },
         {
-            path: '/business-handle-detail-office',
+            path: '/business-handle-detail-office/:id',
             component: businessHandleDetailOffice
         },
         {
-            path: '/business-handle-detail-sales',
+            path: '/business-handle-detail-sales/:id',
             component: businessHandleDetailSales
         },
         {
@@ -127,7 +127,7 @@ const router = new VueRouter({
             component: businessReviewDetailRisk
         },
         {
-            path: '/business-handle-detail-archives',
+            path: '/business-handle-detail-archives/:id',
             component: businessHandleDetailArchives
         },
         {
@@ -135,7 +135,7 @@ const router = new VueRouter({
             component: businessHandleListArchives
         },
         {
-            path: '/business-handle-detail-financial',
+            path: '/business-handle-detail-financial/:id',
             component: businessHandleDetailFinancial
         },
         {

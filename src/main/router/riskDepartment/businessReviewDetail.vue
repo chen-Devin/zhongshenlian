@@ -9,8 +9,8 @@
             <button class="btn btn-success" v-on:click="approve()">通过</button>
             <button class="btn btn-danger" v-on:click="refuse()">不通过</button>
           </template>
-          <span class="label label-success" v-else-if="decide==='approve'">已通过</span>
-          <span class="label label-danger" v-else-if="decide==='refuse'">未通过</span>
+          <span class="label label-success" v-else-if="decide==='approve'">已选择通过</span>
+          <span class="label label-danger" v-else-if="decide==='refuse'">已选择未通过</span>
         </div>
       </h3>
       <business-profile v-bind:initBusiness="business"></business-profile>
@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import axios from 'axios';
 
 import router from '../index.js';
@@ -195,7 +194,7 @@ export default {
         approverId: this.user.id,
         approverName: this.user.name,
         department: this.user.department,
-        approverResult: '1',
+        approveResult: '通过',
         approverOpinion: '',
         updateAt: (()=>{
           let t = new Date();
@@ -223,7 +222,7 @@ export default {
         approverId: this.user.id,
         approverName: this.user.name,
         department: this.user.department,
-        approverResult: '0',
+        approveResult: '不通过',
         approverOpinion: reason,
         updateAt: (()=>{
           let t = new Date();

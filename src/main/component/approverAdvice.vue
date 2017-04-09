@@ -6,8 +6,8 @@
     <ul class="list-group approver-list">
       <li class="list-group-item" v-for="(ADVICE, index) in advices" v-bind:key="index">
         <span>{{ADVICE.approverName}}</span>
-        <span class="label label-success pull-right" v-if="ADVICE.approverResult==='通过'">已通过</span>
-        <span class="label label-danger pull-right" v-else-if="ADVICE.approverResult==='不通过'"  v-on:click="open(ADVICE.approverOpinion)">未通过</span>
+        <span class="label label-success pull-right" v-if="ADVICE.approveResult==='通过'">已通过</span>
+        <span class="label label-danger pull-right" v-else-if="ADVICE.approveResult==='不通过'"  v-on:click="open(ADVICE.approveOpinion)">未通过</span>
         <span class="label label-info pull-right" v-else>未审核</span>
       </li>
     </ul>
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import modal from './modal.vue';
+
 export default {
   name: 'approverAdvice',
   data() {
@@ -35,7 +37,7 @@ export default {
     };
   },
   props: ['advices'],
-  method: {
+  methods: {
     open(REA) {
       this.reason = REA;
       this.showModal = true;
@@ -43,6 +45,9 @@ export default {
     close() {
       this.showModal = false;
     }
+  },
+  components: {
+    modal
   }
 };
 </script>

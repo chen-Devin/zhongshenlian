@@ -11,7 +11,7 @@
         </h3>
       <div class="business-list-review list-group">
         <router-link class="list-group-item"
-                     v-bind:to="'/business-review-edit/'+BUSINESS.id"
+                     v-bind:to="businessRoute(BUSINESS)"
                      v-for="(BUSINESS, index) in businesses"
                      v-bind:key="index">
           <span class="label label-warning"
@@ -80,6 +80,13 @@ export default {
           }
         }
       }, (rep) => { });
+    },
+    businessRoute(BUSINESS) {
+      if(BUSINESS.projectStatus==='6') {
+        return '/business-review-detail-sales/'+BUSINESS.id;
+      }else{
+        return '/business-review-edit/'+BUSINESS.id;
+      }
     }
   },
   components: {

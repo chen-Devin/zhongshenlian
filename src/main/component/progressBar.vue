@@ -1,14 +1,13 @@
 <template>
   <div>
     <div class="progressBar">
-      <template v-for="(PRO, index) in progress"
-                v-bind:key="index">
+      <template v-for="(PRO, index) in progress">
         <div class="circle"
              v-bind:class="{passed: PRO.passed, active: PRO.active}"
              v-bind:style="{order: index}"></div>
         <div class="line"
              v-bind:class="{passed: PRO.passed}"
-             v-if="progress.length!==index"
+             v-if="index!==(progress.length-1)"
              v-bind:style="{order: index}"></div>
       </template>
     </div>
@@ -31,10 +30,9 @@ export default {
         { name: 'bbb', passed: true, active: false },
         { name: 'ccc', passed: true, active: false },
         { name: 'ccc', passed: true, active: false },
-        { name: 'ddd', passed: true, active: true },
+        { name: 'ddd', passed: false, active: true },
         { name: 'eee', passed: false, active: false },
-        { name: 'fff', passed: false, active: false },
-        { name: 'ggg', passed: false, active: false }
+        { name: 'fff', passed: false, active: false }
       ]
     };
   }
@@ -42,6 +40,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import '../../scss/_variables.scss';
+
 .progressBar {
   display: flex;
   height: 28px;
@@ -52,31 +52,31 @@ export default {
   div {
     margin: 0 5px;
     &.circle {
-      width: 20px;
-      height: 20px;
-      border-radius: 10px;
-      background-color: gray;
-      box-shadow: 0 0 1px 2px rgba(128, 128, 128, 0.6);
+      width: 10px;
+      height: 10px;
+      border-radius: 5px;
+      background-color: $gray-light;
+      box-shadow: 0 0 1px 2px rgba($gray-light, 0.6);
       &.passed {
-        background-color: red;
-        box-shadow: 0 0 1px 2px rgba(255, 0, 0, 0.6);
-        &.active {
-          width: 28px;
-          height: 28px;
-          border-radius: 143px;
-          background-color: red;
-          box-shadow: 0 0 1px 2px rgba(255, 0, 0, 0.6);
-        }
+        background-color: $brand-primary;
+        box-shadow: 0 0 1px 2px rgba($brand-primary, 0.6);
+      }
+      &.active {
+        width: 14px;
+        height: 14px;
+        border-radius: 7px;
+        background-color: $brand-primary;
+        box-shadow: 0 0 1px 2px rgba($brand-primary, 0.6);
       }
     }
     &.line {
-      width: 100px;
+      width: 90px;
       height: 0;
-      border-top: 1px solid gray;
-      border-bottom: 1px solid gray;
+      border-top: 1px solid $gray-light;
+      // border-bottom: 1px solid $gray-light;
       &.passed {
-        border-top: 1px solid rgba(255, 0, 0, 0.6);
-        border-bottom: 1px solid rgba(255, 0, 0, 0.6);
+        border-top: 1px solid rgba($brand-primary, 0.6);
+        // border-bottom: 1px solid rgba($brand-primary, 0.6);
       }
     }
   }
@@ -92,11 +92,11 @@ export default {
   margin-top: 20px;
   .content {
     margin: 0 5px;
-    width: 130px;
+    width: 110px;
     overflow-y: visible;
     &.active {
-      width: 138px;
-      color: red;
+      width: 118px;
+      color: $brand-primary;
     }
   }
 }
