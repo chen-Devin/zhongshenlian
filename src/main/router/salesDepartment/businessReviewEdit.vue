@@ -3,20 +3,20 @@
     <crumbs v-bind:paths="paths"></crumbs>
     <card>
       <h3>
-            业务详情
-            <div class="pull-right">
-              <template v-if="editStat">
-                <template v-if="!editable">
-                  <button class="btn btn-primary" v-on:click="edi()">编辑</button>
+              业务详情
+              <div class="pull-right">
+                <template v-if="editStat">
+                  <template v-if="!editable">
+                    <button class="btn btn-primary" v-on:click="edi()">编辑</button>
+                  </template>
+                  <template v-if="editable">
+                    <button class="btn btn-success" v-on:click="sub()">提交</button>
+                    <button class="btn btn-warning" v-on:click="sav()" v-if="business.projectStatus==='1'">暂存</button>
+                    <button class="btn btn-danger" v-on:click="del()">撤销</button>
+                  </template>
                 </template>
-                <template v-if="editable">
-                  <button class="btn btn-success" v-on:click="sub()">提交</button>
-                  <button class="btn btn-warning" v-on:click="sav()" v-if="business.projectStatus==='1'">暂存</button>
-                  <button class="btn btn-danger" v-on:click="del()">撤销</button>
-                </template>
-              </template>
-            </div>
-          </h3>
+              </div>
+            </h3>
       <business-editor v-bind:initBusiness="business"
                        v-bind:editable="editable"
                        v-on:saved="saved"
@@ -107,7 +107,7 @@ export default {
   },
   computed: {
     editStat() {
-      return business.projectStatus === '1' || business.projectStatus === '3' || business.projectStatus === '5';
+      return this.business.projectStatus === '1' || this.business.projectStatus === '3' || this.business.projectStatus === '5';
     }
   },
   created() {
