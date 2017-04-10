@@ -17,12 +17,7 @@
 
 <script>
 export default {
-  name: 'comHeader',
-  data() {
-    return {
-      msg: 'this is header'
-    }
-  }
+  name: 'comHeader'
 }
 </script>
 
@@ -41,5 +36,4 @@ export default {
     color: rgba(240,240,240,0.9);
   }
 }
-
 </style>

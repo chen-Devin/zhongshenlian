@@ -12,7 +12,7 @@
         </h4>
         <p class="navbar-text navbar-right">
           <span>{{user.name}} 欢迎您</span>
-          <a class="navbar-link">退出</a>
+          <a class="navbar-link" v-on:click="signOut()">退出</a>
         </p>
         <img v-bind:src="userHead" alt="头像" class="img-circle img-head navbar-right">
       </div><!-- /.container-fluid -->
@@ -21,12 +21,36 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'comHeader',
   props: ['user'],
   computed: {
     userHead() {
       return this.user.wechatHeadImg || require('../../img/head.jpg');
+    }
+  },
+  methods: {
+    signOut() {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'post',
+        url: '/service',
+        params: {
+          data: (() => {
+            let obj = {
+              command: 'logOut',
+              platform: 'web'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then( (rep) => {
+        if (rep.data.statusCode === '10001') {
+          window.location.href = './signUp.html'; //signIn.html
+        }
+      }, (rep) => {});
     }
   }
 }
@@ -67,6 +91,7 @@ export default {
       line-height: 1em;
       padding: 0 10px;
       border-left: 1px solid rgba(255,255,255,1);
+      cursor: pointer;
     }
   }
 }

@@ -17,6 +17,6 @@ export default {
 <style lang="sass" scoped>
 ol.breadcrumb {
   margin-top: 20px;
-  background-color: transparent
+  background-color: transparent;
 }
 </style>
