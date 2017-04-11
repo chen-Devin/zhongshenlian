@@ -3,10 +3,13 @@
     <crumbs v-bind:paths="paths"></crumbs>
     <card>
       <h3>
-        {{business.name}}
-      </h3>
+          {{business.name}}
+          <button class="btn btn-primary pull-right" v-on:click="sel()" v-if="business.contractNo===''">发放合同编号</button>
+          <span class="label label-success pull-right" v-if="business.contractNo!==''">合同编号已经发放</span>
+        </h3>
       <div class="business-wrap">
-        <business v-bind:initBusiness="business" v-bind:user="user"></business>
+        <business v-bind:initBusiness="business"
+                  v-bind:user="user"></business>
         <hr>
         <div class="row">
           <approver-advice v-bind:advices="riskAdvices">风险评估部意见</approver-advice>
@@ -14,6 +17,10 @@
         </div>
       </div>
     </card>
+    <contract-num-modal v-if="showModal"
+                        v-bind:business="business"
+                        v-on:submited="submited"
+                        v-on:canceled="canceled"></contract-num-modal>
   </div>
 </template>
 
@@ -26,6 +33,7 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
+import contractNumModal from './component/contractNumModal.vue';
 
 export default {
   name: 'businessHandleDetailOffice',
@@ -75,8 +83,7 @@ export default {
       },
       riskAdvices: [],
       leaderAdivces: [],
-      showApproveModal: false,
-      showRefuseModal: false
+      showModal: false
     };
   },
   props: ['user'],
@@ -150,12 +157,23 @@ export default {
         }
       }
     },
+    sel() {
+      this.showModal = true;
+    },
+    submited(contNum) {
+      this.business.contractNo = contNum;
+      this.showModal = false;
+    },
+    canceled() {
+      this.showModal = false;
+    }
   },
   components: {
     crumbs,
     card,
     business,
-    approverAdvice
+    approverAdvice,
+    contractNumModal
   }
 }
 </script>
