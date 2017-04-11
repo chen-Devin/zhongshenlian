@@ -13,15 +13,15 @@
       <table class="table ruleTable">
         <tbody>
           <tr>
-            <td>关于作息时间的规定</td>
+            <td>关于作息时间的规定1</td>
             <td class="text-right">2017/03/12</td>
           </tr>
           <tr>
-            <td>关于作息时间的规定</td>
+            <td>关于作息时间的规定2</td>
             <td class="text-right">2017/03/12</td>
           </tr>
           <tr>
-            <td>关于作息时间的规定</td>
+            <td>关于作息时间的规定3</td>
             <td class="text-right">2017/03/12</td>
           </tr>
         </tbody>
