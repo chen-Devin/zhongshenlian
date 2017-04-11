@@ -15,14 +15,28 @@
 			<input type="radio" name="RuWei">已入围
 		</p>
 		<button class="btn btn-primary type-btn">录入</button>
-		<table class="table table-hover">
-			<thead>项目名称 上传日期 截止日期</thead>
+		<table class="table table-hover projectList">
+			<thead>
+				<tr>
+					<td>项目名称</td>
+				</tr>
+			</thead>
 			<tbody>
-				<tr>project1</tr>
-				<tr>project2</tr>
-				<tr>project3</tr>
-				<tr>project4</tr>
-				<tr>project5</tr>
+				<tr>
+					<td>project1</td>
+				</tr>
+				<tr>
+					<td>project2</td>
+				</tr>
+				<tr>
+					<td>project3</td>
+				</tr>
+				<tr>
+					<td>project4</td>
+				</tr>
+				<tr>
+					<td>project5</td>
+				</tr>
 			</tbody>
 		</table>	
 	</div>
@@ -74,6 +88,10 @@ export default {
 		position: absolute;
 		top: 150px;
 		right: 50px;
+	}
+	.projectList {
+		background-color: #fff;
+		width: 95%;
 	}
 }
 </style>
