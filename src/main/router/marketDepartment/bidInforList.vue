@@ -17,7 +17,7 @@
 			<input type="date" v-model="bidStartDate">
 			<input type="date" name="" v-model="bidEndDate">
 			<p>
-				<input type="checkbox" name="ZhongBiao">已中标
+				<input type="checkbox" name="ZhongBiao" >已中标
 				<input type="checkbox" name="RuWei">已入围
 				<input type="checkbox" name="ZhaiPai">已摘牌
 				<input type="checkbox" name="weiZhaiPai">未摘牌
@@ -33,11 +33,19 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="project in biddingArray">
+					<tr v-for="project in businessArray">
 						<td>{{project.biddingName}}</td>
 						<td class="blank"></td>
-						<td>{{project.uploadDate}}</td>
-						<td>{{project.endDate}}</td>
+						<td v-show="project.showTime">{{project.uploadDate}}</td>
+						<td v-show="project.showTime">{{project.endDate}}</td>
+						<td v-show="project.showBade"></td>
+						<td v-show="project.showBade">已中标</td>
+						<td v-show="project.showBrand"></td>
+						<td v-show="project.showBrand">已摘牌</td>
+						<td v-show="project.showOver"></td>
+						<td v-show="project.showOver">已过期</td>
+						<td v-show="project.showCheck"></td>
+						<td v-show="project.showCheck">已审批</td>
 					</tr>
 				</tbody>
 			</table>	
@@ -63,14 +71,58 @@ export default {
       		searchContent: '',
       		bidStartDate: '',
       		bidEndDate: '',
-      		biddingArray: [{id:"信息id",biddingName:"标名",uploadDate:"上传时间",endDate:"截止时间",biddingState:"中标状态，1表示中标，0表示未中",shortlistedState:"入围状态，1表示入围，0表示未入围"},
-      			{id:"信息id",biddingName:"标名",uploadDate:"上传时间",endDate:"截止时间",biddingState:"中标状态，1表示中标，0表示未中",shortlistedState:"入围状态，1表示入围，0表示未入围"},
-      			{id:"信息id",biddingName:"标名",uploadDate:"上传时间",endDate:"截止时间",biddingState:"中标状态，1表示中标，0表示未中",shortlistedState:"入围状态，1表示入围，0表示未入围"}
-      			]
+      		businessArray: [{
+				      			id:"0",
+				      			biddingName:"标名",
+				      			uploadDate:"2017-04-03 23:31:19",
+				      			endDate:"2017-04-15 23:31:19",
+				      			biddingState:"中标状态，1表示中标，0表示未中",
+				      			shortlistedState:"入围状态，1表示入围，0表示未入围",
+				      			delipotentState:"0", //摘牌
+				      			reviewState:"3"
+	      					},{
+				      			id:"1",
+				      			biddingName:"标名",
+				      			uploadDate:"2017-04-03 23:31:19",
+				      			endDate:"2017-04-09 23:31:19",
+				      			biddingState:"1",
+				      			shortlistedState:"入围状态，1表示入围，0表示未入围",
+				      			delipotentState:"1",
+				      			reviewState:"1"
+	      					},{
+				      			id:"2",
+				      			biddingName:"标名",
+				      			uploadDate:"2017-04-03 23:31:19",
+				      			endDate:"2017-04-09 23:31:19",
+				      			biddingState:"0",
+				      			shortlistedState:"入围状态，1表示入围，0表示未入围",
+				      			delipotentState:"0",
+				      			reviewState:"3"
+	      					},{
+				      			id:"3",
+				      			biddingName:"标名",
+				      			uploadDate:"2017-04-03 23:31:19",
+				      			endDate:"2017-04-15 23:31:19",
+				      			biddingState:"中标状态，1表示中标，0表示未中",
+				      			shortlistedState:"入围状态，1表示入围，0表示未入围",
+				      			delipotentState:"1",
+				      			reviewState:"3"
+	      					},{
+				      			id:"4",
+				      			biddingName:"标名",
+				      			uploadDate:"2017-04-03 23:31:19",
+				      			endDate:"2017-04-15 23:31:19",
+				      			biddingState:"中标状态，1表示中标，0表示未中",
+				      			shortlistedState:"入围状态，1表示入围，0表示未入围",
+				      			delipotentState:"1",
+				      			reviewState:"0"
+	      					}]
     	};
     },
     created() {
       this.getInfo();
+      this.judgeDate();
+      this.judgeShow();
     },
     methods: {
     	getInfo() {
@@ -89,7 +141,7 @@ export default {
     		  }
     		}).then((rep) => {
         		if (rep.data.statusCode === '10001') {
-					this.biddingArray = rep.data.data.biddingArray;
+					// this.businessArray = rep.data.data.businessArray;
         		}
       		}, (rep) => {});
     	},
@@ -112,9 +164,81 @@ export default {
     		  }
     		}).then((rep) => {
         		if (rep.data.statusCode === '10001') {
-					this.biddingArray = rep.data.data.biddingArray;
+					this.businessArray = rep.data.data.businessArray;
         		}
       		}, (rep) => {});
+    	},
+    	getNowFormDate () {
+    		var date = new Date();
+    		var seperator1 = "-";
+    		var seperator2 = ":";
+    		var month = date.getMonth() + 1;
+    		var strDate = date.getDate();
+    		if (month>=1&&month<=9) {
+    			month = "0" + month;
+    		}
+    		if (strDate>=1&&strDate<=9) {
+    			strDate = "0" + strDate;
+    		}
+    		var currentDate = date.getFullYear() + seperator1 + month +seperator1 + strDate
+    				+ " " + date.getHours() + seperator2 + date.getMinutes()
+    				+ seperator2 + date.getSeconds();
+    		return currentDate;
+    	},
+    	handleDate (dateString) {
+    		let ymd = dateString.slice(0,10);
+    		let ymdArr = ymd.split("-");
+    		let year = ymdArr[0];
+    		let month = ymdArr[1];
+    		let date = ymdArr[2];
+    		let ymdObj = {
+    			year: year,
+    			month: month,
+    			date: date
+    		};
+    		return ymdObj;
+    	},
+    	judgeDate() {
+    		var now = this.getNowFormDate();
+    		var nowObj = this.handleDate(now);
+    		for (let i = 0; i < this.businessArray.length; i++) {
+    			if(this.businessArray[i].delipotentState === "0") {
+    				 var endObj =  this.handleDate(this.businessArray[i].endDate);
+    				 if (endObj.year < nowObj.year) {
+    				 	//过期
+    				 	this.businessArray[i].over = '是';
+    				 } else if (endObj.year === nowObj.year) {
+    				 	if (endObj.month < nowObj.month) {
+    				 		this.businessArray[i].over = '是';
+    				 	} else {
+    				 		if (endObj.date < nowObj.date) {
+    				 			this.businessArray[i].over = '是';
+    				 		}
+    				 	}
+    				 }
+    			}
+    		}
+    	},
+    	judgeShow() {
+    		for (var i = 0; i < this.businessArray.length; i++) {
+    			if (this.businessArray[i].biddingState === "1") { //已中标
+    				this.businessArray[i].showBade = 1;
+    			} else {
+    				if(this.businessArray[i].reviewState === "0"||this.businessArray[i].reviewState === "1") { //已审批
+    					this.businessArray[i].showCheck = 1;
+    				} else {
+    					if (this.businessArray[i].delipotentState === "1") { //已摘牌
+    						this.businessArray[i].showBrand = 1;
+    					} else {
+    						if (this.businessArray[i].over === '是') { //已过期
+    							this.businessArray[i].showOver = 1;
+    						} else {
+    							this.businessArray[i].showTime = 1;
+    						}
+    					}
+    				}
+    			}	
+    		}
     	}
     },
     components: {
@@ -155,7 +279,7 @@ export default {
 				text-align: center;
 			}
 			.blank {
-				width:60%;
+				width:50%;
 			}
 		}
 	}
