@@ -1,6 +1,7 @@
 <template>
 	<div class="main">
 		<crumbs v-bind:paths="paths"></crumbs>
+<<<<<<< HEAD
 		<card>
 			<form class="form-inline">
 				<div class="form-group keyword-btn">
@@ -27,6 +28,46 @@
 				</tbody>
 			</table>	
 		</card>
+=======
+		<form class="form-inline">
+			<div class="form-group keyword-btn">
+    			<input type="text" class="form-control" placeholder="请输入关键字">
+  			</div>
+  			<button type="submit" class="btn btn-primary">搜索</button>
+		</form>
+		<p class="bid-time">招标时间</p>
+		<input type="date" name="">
+		<input type="date" name="">
+		<p>
+			<input type="radio" name="ZhongBiao">已中标
+			<input type="radio" name="RuWei">已入围
+		</p>
+		<button class="btn btn-primary type-btn">录入</button>
+		<table class="table table-hover projectList">
+			<thead>
+				<tr>
+					<td>项目名称</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>project1</td>
+				</tr>
+				<tr>
+					<td>project2</td>
+				</tr>
+				<tr>
+					<td>project3</td>
+				</tr>
+				<tr>
+					<td>project4</td>
+				</tr>
+				<tr>
+					<td>project5</td>
+				</tr>
+			</tbody>
+		</table>	
+>>>>>>> 06a0661983fac386b0979547917c022dfa9a9862
 	</div>
 </template>
 
@@ -77,6 +118,10 @@ export default {
 		position: absolute;
 		top: 150px;
 		right: 50px;
+	}
+	.projectList {
+		background-color: #fff;
+		width: 95%;
 	}
 }
 </style>
