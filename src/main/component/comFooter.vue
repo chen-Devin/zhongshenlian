@@ -8,12 +8,7 @@
 
 <script>
 export default {
-  name: 'comFooter',
-  data() {
-    return {
-      msg: 'this is footer'
-    }
-  }
+  name: 'comFooter'
 }
 </script>
 
