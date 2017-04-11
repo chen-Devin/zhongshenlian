@@ -1,73 +1,47 @@
 <template>
 	<div class="main">
 		<crumbs v-bind:paths="paths"></crumbs>
-<<<<<<< HEAD
 		<card>
 			<form class="form-inline">
-				<div class="form-group keyword-btn">
-	    			<input type="text" class="form-control" placeholder="请输入关键字">
-	  			</div>
-	  			<button type="submit" class="btn btn-primary">搜索</button>
+				<div class="row">
+					<div class="form-group keyword-btn col-md-11">
+		    			<input type="text" class="form-control" placeholder="请输入关键字" v-model.trim="searchContent">
+		    			<p>{{searchContent}}</p>
+		  			</div>
+		  			<button type="submit" class="btn btn-primary" @click="search()">搜索</button>
+				</div>
+				
+	  			
 			</form>
 			<p class="bid-time">招标时间</p>
-			<input type="date" name="">
-			<input type="date" name="">
+			<input type="date" v-model="bidStartDate">
+			<input type="date" name="" v-model="bidEndDate">
 			<p>
-				<input type="radio" name="ZhongBiao">已中标
-				<input type="radio" name="RuWei">已入围
+				<input type="checkbox" name="ZhongBiao">已中标
+				<input type="checkbox" name="RuWei">已入围
+				<input type="checkbox" name="ZhaiPai">已摘牌
+				<input type="checkbox" name="weiZhaiPai">未摘牌
 			</p>
 			<button class="btn btn-primary type-btn">录入</button>
-			<table class="table table-hover">
-				<thead>项目名称 上传日期 截止日期</thead>
+			<table class="table table-hover projectList">
+				<thead>
+					<tr>
+						<td>项目名称</td>
+						<td class="blank"></td>
+						<td>上传日期</td>
+						<td>截止日期</td>
+					</tr>
+				</thead>
 				<tbody>
-					<tr>project1</tr>
-					<tr>project2</tr>
-					<tr>project3</tr>
-					<tr>project4</tr>
-					<tr>project5</tr>
+					<tr v-for="project in biddingArray">
+						<td>{{project.biddingName}}</td>
+						<td class="blank"></td>
+						<td>{{project.uploadDate}}</td>
+						<td>{{project.endDate}}</td>
+					</tr>
 				</tbody>
 			</table>	
 		</card>
-=======
-		<form class="form-inline">
-			<div class="form-group keyword-btn">
-    			<input type="text" class="form-control" placeholder="请输入关键字">
-  			</div>
-  			<button type="submit" class="btn btn-primary">搜索</button>
-		</form>
-		<p class="bid-time">招标时间</p>
-		<input type="date" name="">
-		<input type="date" name="">
-		<p>
-			<input type="radio" name="ZhongBiao">已中标
-			<input type="radio" name="RuWei">已入围
-		</p>
-		<button class="btn btn-primary type-btn">录入</button>
-		<table class="table table-hover projectList">
-			<thead>
-				<tr>
-					<td>项目名称</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>project1</td>
-				</tr>
-				<tr>
-					<td>project2</td>
-				</tr>
-				<tr>
-					<td>project3</td>
-				</tr>
-				<tr>
-					<td>project4</td>
-				</tr>
-				<tr>
-					<td>project5</td>
-				</tr>
-			</tbody>
-		</table>	
->>>>>>> 06a0661983fac386b0979547917c022dfa9a9862
 	</div>
 </template>
 
@@ -85,8 +59,63 @@ export default {
     	return {
     		paths: [
         		{name: '招投标信息看板', url: '/customer-infor-list-leader', present: true}
-      		]
+      		],
+      		searchContent: '',
+      		bidStartDate: '',
+      		bidEndDate: '',
+      		biddingArray: [{id:"信息id",biddingName:"标名",uploadDate:"上传时间",endDate:"截止时间",biddingState:"中标状态，1表示中标，0表示未中",shortlistedState:"入围状态，1表示入围，0表示未入围"},
+      			{id:"信息id",biddingName:"标名",uploadDate:"上传时间",endDate:"截止时间",biddingState:"中标状态，1表示中标，0表示未中",shortlistedState:"入围状态，1表示入围，0表示未入围"},
+      			{id:"信息id",biddingName:"标名",uploadDate:"上传时间",endDate:"截止时间",biddingState:"中标状态，1表示中标，0表示未中",shortlistedState:"入围状态，1表示入围，0表示未入围"}
+      			]
     	};
+    },
+    created() {
+      this.getInfo();
+    },
+    methods: {
+    	getInfo() {
+    		axios({
+    		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+    		  method: 'get',
+    		  url: '/service',
+    		  params: {
+    		    data: (() => {
+    		      let obj = {
+    		        command: 'getBiddingList',
+    		        platform: 'web'
+    		      }
+    		      return JSON.stringify(obj);
+    		    })()
+    		  }
+    		}).then((rep) => {
+        		if (rep.data.statusCode === '10001') {
+					this.biddingArray = rep.data.data.biddingArray;
+        		}
+      		}, (rep) => {});
+    	},
+    	search() {
+    		axios({
+    		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+    		  method: 'get',
+    		  url: '/service',
+    		  params: {
+    		    data: (() => {
+    		      let obj = {
+    		        command: 'searchBiddingList',
+    		        platform: 'web',
+    		        searchContent: this.searchContent,
+    		        bidStartDate: this.bidStartDate,
+    		        bidEndDate: this.bidEndDate
+    		      }
+    		      return JSON.stringify(obj);
+    		    })()
+    		  }
+    		}).then((rep) => {
+        		if (rep.data.statusCode === '10001') {
+					this.biddingArray = rep.data.data.biddingArray;
+        		}
+      		}, (rep) => {});
+    	}
     },
     components: {
     	crumbs,
@@ -107,7 +136,6 @@ export default {
 
 	}
 	.keyword-btn {
-		width: 92%;
 		input {
 			width: 100%;
 		}
@@ -116,12 +144,20 @@ export default {
 	}
 	.type-btn {
 		position: absolute;
-		top: 150px;
-		right: 50px;
+		top: 90px;
+		right: 30px;
 	}
 	.projectList {
-		background-color: #fff;
+		background-color: #eee;
 		width: 95%;
+		tr {
+			td {
+				text-align: center;
+			}
+			.blank {
+				width:60%;
+			}
+		}
 	}
 }
 </style>
