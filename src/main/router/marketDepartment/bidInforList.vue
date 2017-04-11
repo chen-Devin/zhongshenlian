@@ -1,32 +1,33 @@
 <template>
 	<div class="main">
 		<crumbs v-bind:paths="paths"></crumbs>
-		<form class="form-inline">
-			<div class="form-group keyword-btn">
-    			<input type="text" class="form-control" placeholder="请输入关键字">
-  			</div>
-  			<button type="submit" class="btn btn-primary">搜索</button>
-		</form>
-		<p class="bid-time">招标时间</p>
-		<input type="date" name="">
-		<input type="date" name="">
-		<p>
-			<input type="radio" name="ZhongBiao">已中标
-			<input type="radio" name="RuWei">已入围
-		</p>
-		<button class="btn btn-primary type-btn">录入</button>
-		<table class="table table-hover">
-			<thead>项目名称 上传日期 截止日期</thead>
-			<tbody>
-				<tr>project1</tr>
-				<tr>project2</tr>
-				<tr>project3</tr>
-				<tr>project4</tr>
-				<tr>project5</tr>
-			</tbody>
-		</table>	
+		<card>
+			<form class="form-inline">
+				<div class="form-group keyword-btn">
+	    			<input type="text" class="form-control" placeholder="请输入关键字">
+	  			</div>
+	  			<button type="submit" class="btn btn-primary">搜索</button>
+			</form>
+			<p class="bid-time">招标时间</p>
+			<input type="date" name="">
+			<input type="date" name="">
+			<p>
+				<input type="radio" name="ZhongBiao">已中标
+				<input type="radio" name="RuWei">已入围
+			</p>
+			<button class="btn btn-primary type-btn">录入</button>
+			<table class="table table-hover">
+				<thead>项目名称 上传日期 截止日期</thead>
+				<tbody>
+					<tr>project1</tr>
+					<tr>project2</tr>
+					<tr>project3</tr>
+					<tr>project4</tr>
+					<tr>project5</tr>
+				</tbody>
+			</table>	
+		</card>
 	</div>
-	
 </template>
 
 <script>
@@ -35,6 +36,7 @@ import axios from 'axios';
 import qs from 'qs';
 
 import crumbs from '../../component/crumbs.vue';
+import card from '../../component/card.vue';
 
 export default {
     name: 'bidInforListMarket',
@@ -46,7 +48,8 @@ export default {
     	};
     },
     components: {
-    	crumbs
+    	crumbs,
+    	card
     }
 }
 </script>
@@ -63,7 +66,7 @@ export default {
 
 	}
 	.keyword-btn {
-		width: 90%;
+		width: 92%;
 		input {
 			width: 100%;
 		}
