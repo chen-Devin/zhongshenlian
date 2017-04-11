@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待审核业务', url: '/business-handle-list-sales', present: true }
+        { name: '待处理业务', url: '/business-handle-list-sales', present: true }
       ],
       businesses: []
     };
@@ -40,7 +40,7 @@ export default {
   watch: {
     $route: 'getInfo'
   },
-    methods: {
+  methods: {
     getInfo() {
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },

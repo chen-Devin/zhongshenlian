@@ -145,7 +145,7 @@ const config = {
         inline: true,
         proxy: {
             "/service": {
-                target: "http://tzucpa.lovecampus.cn",
+                target: "http://101.201.149.112:8081",
                 changeOrigin: true,
                 secure: false
             }

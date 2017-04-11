@@ -13,7 +13,7 @@
             <span class="label label-danger" v-else-if="decide==='refuse'">已选择未通过</span>
           </div>
         </h3>
-      <business-profile v-bind:initBusiness="business"></business-profile>
+      <business-profile v-bind:initBusiness="business" v-bind:user="user"></business-profile>
       <hr>
       <div class="row">
         <approver-advice v-bind:advices="riskAdvices">风险评估部意见</approver-advice>

@@ -143,11 +143,10 @@
 import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
-import { Button, Upload } from 'element-ui';
+import { Upload } from 'element-ui';
 
 import bus from '../../../bus.js';
 
-Vue.use(Button);
 Vue.use(Upload);
 
 export default {

@@ -6,7 +6,7 @@
         {{business.name}}
       </h3>
       <div class="business-wrap">
-        <business v-bind:initBusiness="business"></business>
+        <business v-bind:initBusiness="business" v-bind:user="user"></business>
         <hr>
         <div class="row">
           <approver-advice v-bind:advices="riskAdvices">风险评估部意见</approver-advice>
@@ -67,6 +67,7 @@ export default {
         projectType: '',
         projectAmount: '',
         projectStatus: '',
+        contractAnnexArray: [],
         projectApproverArray: [],
         projectSchduleArray: [],
         projectBillingArray: [],
@@ -129,6 +130,7 @@ export default {
             }
             this.business.files.push(obj);
           }
+          this.business.contractAnnexArray = rep.data.data.contractAnnexArray;
           this.business.projectApproverArray = rep.data.data.projectApproverArray;
           this.business.projectSchduleArray = rep.data.data.projectSchduleArray;
           this.business.projectBillingArray = rep.data.data.projectBillingArray;

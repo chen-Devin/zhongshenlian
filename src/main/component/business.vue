@@ -2,7 +2,8 @@
   <div>
     <progress-bar></progress-bar>
     <tab-control v-bind:initParts="parts"
-                 v-bind:initBusiness="business"></tab-control>
+                 v-bind:initBusiness="business"
+                 v-bind:user="user"></tab-control>
   </div>
 </template>
 

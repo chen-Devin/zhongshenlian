@@ -5,7 +5,7 @@
       <h3>
           业务详情
         </h3>
-      <business-profile v-bind:initBusiness="business"></business-profile>
+      <business-profile v-bind:initBusiness="business" v-bind:user="user"></business-profile>
       <hr>
       <div class="row">
         <approver-advice v-bind:advices="riskAdvices">风险评估部意见</approver-advice>
@@ -61,6 +61,7 @@ export default {
         amount: 0,
         proposerOpinion: '',
         files: [],
+        contractAnnexArray: [],  //add contract
         contractNo: '',
         projectType: '',
         projectAmount: '',
@@ -127,6 +128,7 @@ export default {
             }
             this.business.files.push(obj);
           }
+          this.business.contractAnnexArray = rep.data.data.contractAnnexArray;     //add contract
           this.business.projectApproverArray = rep.data.data.projectApproverArray;
           this.business.projectSchduleArray = rep.data.data.projectSchduleArray;
           this.business.projectBillingArray = rep.data.data.projectBillingArray;
