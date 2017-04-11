@@ -2,12 +2,12 @@
 <div class="main">
     <crumbs v-bind:paths="paths"></crumbs>
     <card id="searchCard">
-      <form class="form-inline">
+      <from class="form-inline">
         <div class="form-group searchItem">
           <input type="text" class="text-center form-control" placeholder="请输入关键词、制度编号"/>
         </div>
           <button type="submit" class="btn btn-primary ">搜索</button>
-      </form>
+      </from>
     </card>
     <card id="tableCard">
       <table class="table ruleTable">
