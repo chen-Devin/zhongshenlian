@@ -4,30 +4,24 @@
     <card id="searchCard">
       <from class="form-inline">
         <div class="form-group searchItem">
-          <input type="text" class="text-center form-control" placeholder="请输入关键词、制度编号"/>
+          <input type="text" class="text-center form-control" placeholder="请输入关键词、制度编号" @keyup.enter="searchRuleBtn" v-model.trim="searchKeyRule"/>
         </div>
-          <button type="submit" class="btn btn-primary ">搜索</button>
+          <button type="submit" class="btn btn-primary" @click="searchRuleBtn">搜索</button>
       </from>
     </card>
     <card id="tableCard">
       <table class="table ruleTable">
         <tbody>
-          <tr>
-            <td>关于作息时间的规定1</td>
-            <td class="text-right">2017/03/12</td>
-          </tr>
-          <tr>
-            <td>关于作息时间的规定2</td>
-            <td class="text-right">2017/03/12</td>
-          </tr>
-          <tr>
-            <td>关于作息时间的规定3</td>
-            <td class="text-right">2017/03/12</td>
-          </tr>
-          <tr>
-            <td>关于作息时间的规定4</td>
-            <td class="text-right">2017/03/12</td>
-          </tr>
+          <tr class="editRule">
+            <td></td>
+            <td>
+              <button type="button" class="btn btn-primary pull-right">录入</button>
+            </td>
+        </tr>
+        <tr v-for="rule in rules">
+          <td>{{rule.title}}</td>
+          <td class="text-right">{{rule.releaseTime}}</td>
+        </tr>
         </tbody>
       </table>
    </card>
@@ -47,9 +41,74 @@ export default {
     	return {
     		paths: [
         		{name: '规章制度', url: '/rule-regulation', present: true}
-      		]
+      		],
+          rules: [],
+          searchKeyRule: ""
     	};
     },
+    //页面初始状态：获取到规章制度列表
+    created(){
+      this.getRuleLists();
+    },
+    methods: {
+      getRuleLists(){
+         axios({
+        method: 'get',
+        url: '/service',
+        params: {
+            data: (()=>{
+            var obj = {
+                command: 'getRegulationsList',
+                platform: 'web',
+            }
+            return JSON.stringify(obj);
+            })()
+        }
+    }).then((rep) => {
+            if (rep.data.statusCode === '10001') {
+              for(let i=0; i < rep.data.data.regulationsArray.length; i++) {
+                let obj = {
+                  id: rep.data.data.regulationsArray[i].id,
+                  title: rep.data.data.regulationsArray[i].title,
+                  releaseTime: rep.data.data.regulationsArray[i].releaseTime
+                };
+                this.rules.push(obj);
+              }
+            }
+          }, (rep) =>{})
+      },
+      //搜索关键词得到相应列表
+      searchRuleBtn(){
+         axios({
+        method: 'get',
+        url: '/service',
+        params: {
+            data: (()=>{
+            var obj = {
+                command: 'searchRegulationsList',
+                platform: 'web',
+                searchContent: this.searchKeyRule
+            }
+            return JSON.stringify(obj);
+            })()
+        }
+    }).then((rep) => {
+            if (rep.data.statusCode === '10001') {
+             this.rules.length = 0; //请求搜索成功后清空列表
+             this.searchKeyRule = "";  //请求成功后清空搜索内容
+              for(let i=0; i < rep.data.data.regulationsArray.length; i++) {
+                let obj = {
+                  id: rep.data.data.regulationsArray[i].id,
+                  title: rep.data.data.regulationsArray[i].title,
+                  releaseTime: rep.data.data.regulationsArray[i].releaseTime
+                };
+                this.rules.push(obj);
+              }
+            }
+          }, (rep) =>{})
+      }
+    },
+    //引入的组件部分
     components: {
     	crumbs,
     	card
@@ -63,6 +122,7 @@ export default {
     padding-left: 0;
     background: none;
     border: none;
+    margin-top: -20px;
     box-shadow: none;
       .searchItem{
       width: 90%;
@@ -85,6 +145,15 @@ export default {
     td{
       border-top: none;
       border-bottom: 1px solid #ddd;
+    }
+  }
+  .editRule td{
+    margin-top: -10px;
+    border-bottom: none;
+    button{
+      width: 75px;
+      height: 40px;
+      font-size: 16px;
     }
   }
  }
