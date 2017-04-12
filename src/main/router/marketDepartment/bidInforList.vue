@@ -9,20 +9,20 @@
 		    			<p>{{searchContent}}</p>
 		  			</div>
 		  			<button type="submit" class="btn btn-primary" @click="search()">搜索</button>
-				</div>
-				
-	  			
+				</div>	
 			</form>
 			<p class="bid-time">招标时间</p>
-			<input type="date" v-model="bidStartDate">
-			<input type="date" name="" v-model="bidEndDate">
+			<input type="date" v-model="bidStartDate1">
+			<input type="date" v-model="bidEndDate1">
 			<p>
-				<input type="checkbox" name="ZhongBiao" >已中标
-				<input type="checkbox" name="RuWei">已入围
-				<input type="checkbox" name="ZhaiPai">已摘牌
-				<input type="checkbox" name="weiZhaiPai">未摘牌
+				<input type="checkbox" value="ZhongBiao" v-model="checkedAttr">已中标
+				<input type="checkbox" value="RuWei" v-model="checkedAttr">已入围
+				<input type="checkbox" value="ZhaiPai" v-model="checkedAttr">已摘牌
+				<input type="checkbox" value="weiZhaiPai" v-model="checkedAttr">未摘牌
 			</p>
-			<button class="btn btn-primary type-btn">录入</button>
+			<router-link to="/bid-infor-detail">
+				<button class="btn btn-primary type-btn">录入</button>
+			</router-link>
 			<table class="table table-hover projectList">
 				<thead>
 					<tr>
@@ -33,13 +33,15 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="project in businessArray">
+					<tr v-for="project in bidArray">
 						<td>{{project.biddingName}}</td>
 						<td class="blank"></td>
 						<td v-show="project.showTime">{{project.uploadDate}}</td>
 						<td v-show="project.showTime">{{project.endDate}}</td>
 						<td v-show="project.showBade"></td>
 						<td v-show="project.showBade">已中标</td>
+						<td v-show="project.showRuWei"></td>
+						<td v-show="project.showRuWei">已入围</td>
 						<td v-show="project.showBrand"></td>
 						<td v-show="project.showBrand">已摘牌</td>
 						<td v-show="project.showOver"></td>
@@ -66,19 +68,23 @@ export default {
     data() {
     	return {
     		paths: [
-        		{name: '招投标信息看板', url: '/customer-infor-list-leader', present: true}
+        		{name: '招投标信息看板', url: '/bid-infor-list-market', present: true}
       		],
+      		checked: '',
       		searchContent: '',
-      		bidStartDate: '',
-      		bidEndDate: '',
+      		bidStartDate1: '',
+      		bidEndDate1: '',
+      		checkedAttr: [],
+      		bidArray: [],
+      		checkedAttrArr: [],
       		businessArray: [{
 				      			id:"0",
 				      			biddingName:"标名",
 				      			uploadDate:"2017-04-03 23:31:19",
 				      			endDate:"2017-04-15 23:31:19",
 				      			biddingState:"中标状态，1表示中标，0表示未中",
-				      			shortlistedState:"入围状态，1表示入围，0表示未入围",
-				      			delipotentState:"0", //摘牌
+				      			shortlistedState:"0", //已入围
+				      			delipotentState:"0", //摘牌 
 				      			reviewState:"3"
 	      					},{
 				      			id:"1",
@@ -86,7 +92,7 @@ export default {
 				      			uploadDate:"2017-04-03 23:31:19",
 				      			endDate:"2017-04-09 23:31:19",
 				      			biddingState:"1",
-				      			shortlistedState:"入围状态，1表示入围，0表示未入围",
+				      			shortlistedState:"1",
 				      			delipotentState:"1",
 				      			reviewState:"1"
 	      					},{
@@ -94,18 +100,18 @@ export default {
 				      			biddingName:"标名",
 				      			uploadDate:"2017-04-03 23:31:19",
 				      			endDate:"2017-04-09 23:31:19",
-				      			biddingState:"0",
-				      			shortlistedState:"入围状态，1表示入围，0表示未入围",
-				      			delipotentState:"0",
-				      			reviewState:"3"
+				      			biddingState:"1",
+				      			shortlistedState:"1",
+				      			delipotentState:"1",
+				      			reviewState:"1"
 	      					},{
 				      			id:"3",
 				      			biddingName:"标名",
 				      			uploadDate:"2017-04-03 23:31:19",
-				      			endDate:"2017-04-15 23:31:19",
-				      			biddingState:"中标状态，1表示中标，0表示未中",
-				      			shortlistedState:"入围状态，1表示入围，0表示未入围",
-				      			delipotentState:"1",
+				      			endDate:"2017-04-09 23:31:19",
+				      			biddingState:"0",
+				      			shortlistedState:"0",
+				      			delipotentState:"0",
 				      			reviewState:"3"
 	      					},{
 				      			id:"4",
@@ -113,16 +119,50 @@ export default {
 				      			uploadDate:"2017-04-03 23:31:19",
 				      			endDate:"2017-04-15 23:31:19",
 				      			biddingState:"中标状态，1表示中标，0表示未中",
-				      			shortlistedState:"入围状态，1表示入围，0表示未入围",
+				      			shortlistedState:"0",
+				      			delipotentState:"1",
+				      			reviewState:"3"
+	      					},{
+				      			id:"5",
+				      			biddingName:"标名",
+				      			uploadDate:"2017-04-03 23:31:19",
+				      			endDate:"2017-04-15 23:31:19",
+				      			biddingState:"中标状态，1表示中标，0表示未中",
+				      			shortlistedState:"0",
 				      			delipotentState:"1",
 				      			reviewState:"0"
+	      					},{
+				      			id:"6",
+				      			biddingName:"标名",
+				      			uploadDate:"2017-04-03 23:31:19",
+				      			endDate:"2017-04-15 23:31:19",
+				      			biddingState:"0",
+				      			shortlistedState:"1",
+				      			delipotentState:"1",
+				      			reviewState:"1"
 	      					}]
     	};
+    },
+    computed: {
+    	bidStartDate: function() {
+    		let str = this.bidStartDate1 + " 00:00:00";
+    		return str;
+    	},
+    	bidEndDate: function() {
+    		let str = this.bidEndDate1 + " 00:00:00";
+    		return str;
+    	}
     },
     created() {
       this.getInfo();
       this.judgeDate();
       this.judgeShow();
+      this.filterList();
+      this.$watch('checkedAttr', function(newVal,oldVal){
+      	if (newVal !== oldVal) {
+      		this.filterList(newVal);
+      	};
+      });
     },
     methods: {
     	getInfo() {
@@ -165,6 +205,7 @@ export default {
     		}).then((rep) => {
         		if (rep.data.statusCode === '10001') {
 					this.businessArray = rep.data.data.businessArray;
+					this.bidArray = this.businessArray;
         		}
       		}, (rep) => {});
     	},
@@ -223,23 +264,99 @@ export default {
     		for (var i = 0; i < this.businessArray.length; i++) {
     			if (this.businessArray[i].biddingState === "1") { //已中标
     				this.businessArray[i].showBade = 1;
+    				this.businessArray[i].isZhongbiao = true;
+    				this.businessArray[i].isRuwei = true;
+    				this.businessArray[i].isShenPi = true;
+    				this.businessArray[i].isZhaiPai = true;
     			} else {
-    				if(this.businessArray[i].reviewState === "0"||this.businessArray[i].reviewState === "1") { //已审批
-    					this.businessArray[i].showCheck = 1;
+    				if (this.businessArray[i].shortlistedState === "1") {
+    					this.businessArray[i].showRuWei = 1; //已入围
+    					this.businessArray[i].isRuwei = true;
+	    				this.businessArray[i].isShenPi = true;
+	    				this.businessArray[i].isZhaiPai = true;
     				} else {
-    					if (this.businessArray[i].delipotentState === "1") { //已摘牌
-    						this.businessArray[i].showBrand = 1;
+    					if(this.businessArray[i].reviewState === "0"||this.businessArray[i].reviewState === "1") { //已审批
+    						this.businessArray[i].showCheck = 1;
+    						this.businessArray[i].isShenPi = true;
+    						this.businessArray[i].isZhaiPai = true;
     					} else {
-    						if (this.businessArray[i].over === '是') { //已过期
-    							this.businessArray[i].showOver = 1;
+    						if (this.businessArray[i].delipotentState === "1") { //已摘牌
+    							this.businessArray[i].showBrand = 1;
+    							this.businessArray[i].isZhaiPai = true;
     						} else {
-    							this.businessArray[i].showTime = 1;
+    							if (this.businessArray[i].over === '是') { //已过期
+    								this.businessArray[i].showOver = 1;
+    							} else {
+    								this.businessArray[i].showTime = 1;
+    							}
     						}
     					}
-    				}
+    				}		
     			}	
     		}
-    	}
+    	},
+    	filterList(newVal) {
+    		this.checkedAttrArr = [];
+    		this.showBadeItem = false;
+    		this.showRuWeiItem = false;
+    		this.showBrandItem = false;
+    		this.showNoBrandItem = false;
+    		this.bidArray = this.businessArray;
+    		if(newVal) {
+    			this.checkedAttrArr = newVal;
+    		}
+    		this.bidArray = this.businessArray;
+    		for (let i = 0; i < this.checkedAttrArr.length; i++) {
+    			if(this.checkedAttrArr[i] == "ZhongBiao") {
+    				this.showBadeItem = true;
+    			} else {
+    				if(this.checkedAttrArr[i] == "RuWei") {
+    					this.showRuWeiItem = true;
+    				}
+    				else {
+    					if(this.checkedAttrArr[i] == "ZhaiPai") {
+    						this.showBrandItem = true;
+    					}
+    					else {
+    						this.showNoBrandItem = true;
+    					}
+    				}
+    			}
+    		}
+    		if (this.showBadeItem) {
+    			this.bidArray = [];
+    			for (let i = 0; i < this.businessArray.length; i++) {
+    				if(this.businessArray[i].isZhongbiao) {
+    					this.bidArray.push(this.businessArray[i]);
+    				}
+    			}
+    		} else if (this.showRuWeiItem) {
+				this.bidArray = [];
+				for (let i = 0; i < this.businessArray.length; i++) {
+					if(this.businessArray[i].isRuwei) {
+						this.bidArray.push(this.businessArray[i]);
+					}
+				}
+    		} else if (this.showBrandItem) {
+    			this.bidArray = [];
+    			for (let i = 0; i < this.businessArray.length; i++) {
+    				if(this.businessArray[i].isZhaiPai) {
+    					this.bidArray.push(this.businessArray[i]);
+    				}
+    			}
+    		}
+    		if(this.showNoBrandItem&&this.checkedAttr.length>1) {
+    			this.bidArray = [];
+    		}
+    		if (this.showNoBrandItem&&this.checkedAttr.length===1) {
+    			this.bidArray = [];
+    			for (var i = 0; i < this.businessArray.length; i++) {
+    				if(this.businessArray[i].delipotentState === "0") {
+    					this.bidArray.push(this.businessArray[i]);
+    				}
+    			}
+    		}
+    	},
     },
     components: {
     	crumbs,
