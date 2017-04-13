@@ -6,6 +6,7 @@ import bidInforList from './commonUse/bidInforList.vue';
 import businessCompleteList from './commonUse/businessCompleteList.vue';
 import businessCompleteDetail from './commonUse/businessCompleteDetail.vue';
 import ruleRegulation from './commonUse/ruleRegulation.vue';
+import billingInforDetail from '../component/billingInforDetail.vue';
 //所长
 import businessAnalysis from './leader/businessAnalysis.vue';
 import businessReviewDetailLeader from './leader/businessReviewDetail.vue';
@@ -24,6 +25,7 @@ import businessReviewDetailSales from './salesDepartment/businessReviewDetail.vu
 import businessReviewEdit from './salesDepartment/businessReviewEdit.vue';
 import businessReviewListSales from './salesDepartment/businessReviewList.vue';
 import customerInforListSales from './salesDepartment/customerInforList.vue';
+import billingInforEditor from './salesDepartment/component/billingInforEditor.vue';
 //风险评估部
 import businessReviewListRisk from './riskDepartment/businessReviewList.vue';
 import businessReviewDetailRisk from './riskDepartment/businessReviewDetail.vue';
@@ -88,11 +90,23 @@ const router = new VueRouter({
         },
         {
             path: '/business-handle-detail-office/:id',
-            component: businessHandleDetailOffice
+            component: businessHandleDetailOffice,
+            children: [
+                {
+                    path: 'billing-infor-detail/:billId',
+                    component: billingInforDetail
+                }
+            ]
         },
         {
             path: '/business-handle-detail-sales/:id',
-            component: businessHandleDetailSales
+            component: businessHandleDetailSales,
+            children: [
+                {
+                    path: 'billing-infor-editor/:billId',
+                    component: billingInforEditor
+                }
+            ]
         },
         {
             path: '/business-handle-list-sales',
@@ -128,7 +142,13 @@ const router = new VueRouter({
         },
         {
             path: '/business-handle-detail-archives/:id',
-            component: businessHandleDetailArchives
+            component: businessHandleDetailArchives,
+            children: [
+                {
+                    path: 'billing-infor-detail/:billId',
+                    component: billingInforDetail
+                }
+            ]
         },
         {
             path: '/business-handle-list-archives',
@@ -136,7 +156,13 @@ const router = new VueRouter({
         },
         {
             path: '/business-handle-detail-financial/:id',
-            component: businessHandleDetailFinancial
+            component: businessHandleDetailFinancial,
+            children: [
+                {
+                    path: 'billing-infor-detail/:billId',
+                    component: billingInforDetail
+                }
+            ]
         },
         {
             path: '/business-handle-list-financial',

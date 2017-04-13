@@ -19,7 +19,7 @@ export default {
     comHeader,
     index
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
