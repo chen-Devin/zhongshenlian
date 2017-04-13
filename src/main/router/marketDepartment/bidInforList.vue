@@ -20,7 +20,7 @@
 				<input type="checkbox" value="ZhaiPai" v-model="checkedAttr">已摘牌
 				<input type="checkbox" value="weiZhaiPai" v-model="checkedAttr">未摘牌
 			</p>
-			<router-link to="/bid-infor-detail">
+			<router-link to="/bid-info-input">
 				<button class="btn btn-primary type-btn">录入</button>
 			</router-link>
 			<table class="table table-hover projectList">
@@ -33,7 +33,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="project in bidArray">
+					<tr v-for="project in bidArray" @click="checkMessage(project)">
 						<td>{{project.biddingName}}</td>
 						<td class="blank"></td>
 						<td v-show="project.showTime">{{project.uploadDate}}</td>
@@ -48,6 +48,7 @@
 						<td v-show="project.showOver">已过期</td>
 						<td v-show="project.showCheck"></td>
 						<td v-show="project.showCheck">已审批</td>
+						
 					</tr>
 				</tbody>
 			</table>	
@@ -357,6 +358,10 @@ export default {
     			}
     		}
     	},
+    	checkMessage(project) {
+    		console.log(project);
+    		this.$router.push('/bid-infor-detail');
+    	}
     },
     components: {
     	crumbs,
@@ -397,6 +402,11 @@ export default {
 			}
 			.blank {
 				width:50%;
+			}
+		}
+		tbody {
+			tr {
+				cursor: pointer;
 			}
 		}
 	}

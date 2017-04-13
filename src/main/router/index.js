@@ -38,6 +38,7 @@ import businessHandleListFinancial from './archivesDepartment/businessHandleList
 //市场部
 import bidInforListMarket from './marketDepartment/bidInforList.vue';
 import bidInforDetail from './marketDepartment/bidInforDetail.vue';
+import bidInfoInput from './marketDepartment/bidInfoInput.vue';
 import bidInforEdit from './marketDepartment/bidInforEdit.vue';
 
 Vue.use(VueRouter);
@@ -179,6 +180,10 @@ const router = new VueRouter({
         {
             path: '/bid-infor-edit',
             component: bidInforEdit
+        },
+        {
+            path: '/bid-info-Input',
+            component: bidInfoInput
         }
     ]
 });
