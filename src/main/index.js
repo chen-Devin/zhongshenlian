@@ -29,8 +29,8 @@ var app = new Vue({
     template: '<App v-bind:user="user"></App>',
     components: {
         App
-    }
-    // render: (h) => h(App)
+    },
+    // render: (h) => h(App, {props: {user: 'user'}})
 }).$mount('#app');
 
 axios({

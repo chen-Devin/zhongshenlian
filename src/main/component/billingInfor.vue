@@ -15,8 +15,6 @@ import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
 
-Vue.use(Upload);
-
 export default {
   name: 'billingInfor',
 
