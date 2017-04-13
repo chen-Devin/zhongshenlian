@@ -158,13 +158,16 @@
 	  </div>
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
-	      <button type="submit" class="btn btn-primary">保存</button>
+	      <button type="submit" class="btn btn-primary" @click="submit()">保存</button>
 	    </div>
 	  </div>
 	</form>
 </template>
 
 <script>
+import axios from 'axios';
+import qs from 'qs';
+
 export default {
 	name: 'bidInfoEdit',
 	data() {
@@ -172,6 +175,30 @@ export default {
 			project: this.iniProject
 		}
 	},
-	props: ['iniProject']
+	props: ['iniProject'],
+	methods: {
+		submit() {
+			axios({
+				headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+				method: 'post',
+				url: '/service',
+				data: qs.stringify({
+				  data: (() => {
+				    var obj = {
+				      command: 'addBiddingInfo',
+				      platform: 'web',
+				      bid: this.project
+				    };
+				    return JSON.stringify(obj);
+				  })()
+				})
+			}).then((rep)=>{
+          if (rep.data.statusCode === '10001') {
+            alert('保存成功');
+            //加一个弹出框，然后加一个跳转
+          }
+        }, (rep)=>{});
+		}
+	}
 };
 </script>
