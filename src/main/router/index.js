@@ -11,6 +11,7 @@ import businessConduct from '../component/businessConduct.vue';
 import businessProfile from '../component/businessProfile.vue';
 import businessReport from '../component/businessReport.vue';
 import operatHistory from '../component/operatHistory.vue';
+import ruleRegulationDetail from './commonUse/ruleRegulationDetail.vue';
 import billingInforDetail from '../component/billingInforDetail.vue';
 //所长
 import businessAnalysis from './leader/businessAnalysis.vue';
@@ -65,6 +66,10 @@ const router = new VueRouter({
         {
             path: '/rule-regulation',
             component: ruleRegulation
+        },
+         {
+            path: '/rule-regulation-detail/:id',
+            component: ruleRegulationDetail
         },
         {
             path: '/business-analysis',
