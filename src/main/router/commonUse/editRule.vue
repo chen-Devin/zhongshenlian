@@ -1,33 +1,9 @@
 <template>
 <div class="main">
     <crumbs v-bind:paths="paths"></crumbs>
-    <card id="searchCard">
-      <form class="form-inline">
-        <div class="form-group searchItem">
-          <input type="text" class="text-center form-control" placeholder="请输入关键词、制度编号" @keyup.enter="searchRuleBtn" v-model.trim="searchKeyRule"/>
-        </div>
-          <button type="submit" class="btn btn-primary" @click="searchRuleBtn">搜索</button>
-      </form>
+    <card>
+
     </card>
-    <card id="tableCard">
-      <table class="table ruleTable">
-        <tbody>
-          <tr class="editRule">
-            <td></td>
-            <td>
-              <!-- 所长录入模块-->
-              <router-link to="/editRule">
-                 <button type="button" class="btn btn-primary pull-right">录入</button>
-              </router-link>
-            </td>
-        </tr>
-          <tr v-for="rule in rules" @click="showRuleDetail(rule.id)">
-            <td>{{rule.title}}</td>
-            <td class="text-right">{{rule.releaseTime}}</td>
-          </tr>
-        </tbody>
-      </table>
-   </card>
 </div>
 </template>
 
@@ -43,7 +19,8 @@ export default {
     data() {
     	return {
     		paths: [
-        		{name: '规章制度', url: '/rule-regulation', present: true}
+        	 { name: '录入制度', url: '/editRule', present: false },
+           { name: '规章制度', url: `/rule-regulation/${this.$route.params.id}`, present: true },
       		],
           rules: [],
           searchKeyRule: ""
@@ -109,9 +86,6 @@ export default {
               }
             }
           }, (rep) =>{})
-      },
-      showRuleDetail(ruleId){
-        this.$router.push("/rule-regulation-detail/"+ruleId);
       }
     },
     //引入的组件部分

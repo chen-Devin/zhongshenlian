@@ -6,6 +6,7 @@ import bidInforList from './commonUse/bidInforList.vue';
 import businessCompleteList from './commonUse/businessCompleteList.vue';
 import businessCompleteDetail from './commonUse/businessCompleteDetail.vue';
 import ruleRegulation from './commonUse/ruleRegulation.vue';
+import ruleRegulationDetail from './commonUse/ruleRegulationDetail.vue';
 import billingInforDetail from '../component/billingInforDetail.vue';
 //所长
 import businessAnalysis from './leader/businessAnalysis.vue';
@@ -60,6 +61,10 @@ const router = new VueRouter({
         {
             path: '/rule-regulation',
             component: ruleRegulation
+        },
+         {
+            path: '/rule-regulation-detail/:id',
+            component: ruleRegulationDetail
         },
         {
             path: '/business-analysis',
