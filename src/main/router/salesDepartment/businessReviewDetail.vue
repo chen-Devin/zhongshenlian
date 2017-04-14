@@ -3,9 +3,18 @@
     <crumbs v-bind:paths="paths"></crumbs>
     <card>
       <h3>
-          业务详情
-        </h3>
-      <business-profile v-bind:initBusiness="business" v-bind:user="user"></business-profile>
+        业务详情
+        <div class="pull-right">
+          <button class="btn btn-primary"
+                  v-on:click="sub()"
+                  v-bind:disabled="subBtn.dis"
+                  v-if="!submited">{{subBtn.cont}}</button>
+          <span class="label label-primary"
+                v-if="submited">已申请合同编号</span>
+        </div>
+      </h3>
+      <business-profile v-bind:initBusiness="business"
+                        v-bind:user="user"></business-profile>
       <hr>
       <div class="row">
         <approver-advice v-bind:advices="riskAdvices">风险评估部意见</approver-advice>
@@ -74,10 +83,23 @@ export default {
       riskAdvices: [],
       leaderAdivces: [],
       showApproveModal: false,
-      showRefuseModal: false
+      showRefuseModal: false,
+      subBtn: {
+        dis: false,
+        cont: '申请合同编号'
+      }
     };
   },
   props: ['user'],
+  computed: {
+    submited() {
+      if (this.business.projectStatus === '6') {
+        return false;
+      } else if (this.business.projectStatus === '7') {
+        return true;
+      }
+    }
+  },
   created() {
     this.getInfo();
   },
@@ -148,6 +170,30 @@ export default {
         }
       }
     },
+    sub() {
+      this.subBtn.dis = true;
+      this.subBtn.cont = '申请中...';
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'post',
+        url: '/service',
+        data: qs.stringify({
+          data: (() => {
+            let obj = {
+              command: 'uploadContractFinished',
+              platform: 'web',
+              id: this.business.id
+            }
+            return JSON.stringify(obj);
+          })()
+        })
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.subBtn.cont = '申请成功';
+          this.business.projectStatus = '7';
+        }
+      }, (rep) => { });
+    }
   },
   components: {
     crumbs,

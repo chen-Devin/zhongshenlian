@@ -33,7 +33,7 @@ export default {
     return {
       paths: [
         { name: '待处理业务', url: '/business-handle-list-sales', present: false },
-        { name: '业务详情', url: `/business-handle-detail-sales/${this.$route.params.id}`, present: true },
+        { name: '业务详情', url: `/business-handle-detail-sales/${this.$route.params.id}`, present: false }
       ],
       business: {
         id: this.$route.params.id,

@@ -3,10 +3,10 @@
     <crumbs v-bind:paths="paths"></crumbs>
     <card>
       <h3>
-          {{business.name}}
-          <button class="btn btn-primary pull-right" v-on:click="sel()" v-if="business.contractNo===''">发放合同编号</button>
-          <span class="label label-success pull-right" v-if="business.contractNo!==''">合同编号已经发放</span>
-        </h3>
+        {{business.name}}
+        <button class="btn btn-primary pull-right" v-on:click="sel()" v-if="!sended">发放合同编号</button>
+        <span class="label label-success pull-right" v-if="sended">合同编号已经发放</span>
+      </h3>
       <div class="business-wrap">
         <business v-bind:initBusiness="business"
                   v-bind:user="user"></business>
@@ -87,6 +87,15 @@ export default {
     };
   },
   props: ['user'],
+  computed: {
+    sended() {
+      if (parseInt(this.business.projectStatus) <= 7) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  },
   created() {
     this.getInfo();
   },
@@ -162,6 +171,7 @@ export default {
     },
     submited(contNum) {
       this.business.contractNo = contNum;
+      this.business.projectStatus = '8';
       this.showModal = false;
     },
     canceled() {

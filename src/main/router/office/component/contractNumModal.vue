@@ -4,9 +4,9 @@
           slot="body">
       <div class="form-group" v-for="(PLA, index) in contNumRule" v-bind:key="index">
         <label>PLA.name</label>
-        <div class="radio" v-for="(VAL, index) in PLA.value" v-bind:key="index">
+        <div class="checkbox" v-for="(VAL, index) in PLA.value" v-bind:key="index">
           <label>
-            <input type="radio"
+            <input type="checkbox"
                    v-bind:value="VAL"
                    v-model="contType"> VAL.value
           </label>

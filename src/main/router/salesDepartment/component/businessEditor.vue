@@ -53,33 +53,63 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">开始时间</label>
+      <label class="col-sm-2 control-label">项目开始时间</label>
       <div class="col-sm-9">
         <input type="date"
                class="form-control"
-               placeholder="请输入开始时间"
+               placeholder="请输入项目开始时间"
                v-model="business.startTime"
                v-bind:readonly="!editable">
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">结束时间</label>
+      <label class="col-sm-2 control-label">项目结束时间</label>
       <div class="col-sm-9">
         <input type="date"
                class="form-control"
-               placeholder="请输入结束时间"
+               placeholder="请输入项目结束时间"
                v-model="business.endTime"
                v-bind:readonly="!editable">
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">现场人数</label>
+      <label class="col-sm-2 control-label">合同体制</label>
       <div class="col-sm-9">
+        <label class="radio-inline">
+          <input type="radio" name="contractSystem" value="联合体"> 联合体
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="contractSystem" value="非联合体"> 非联合体
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">基本取费</label>
+      <div class="col-sm-4">
+
+      </div>
+      <div class="col-sm-4">
+
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">效益取费</label>
+      <div class="col-sm-4">
+
+      </div>
+      <div class="col-sm-4">
+
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">现场人数</label>
+      <div class="col-sm-9 input-group">
         <input type="number"
                class="form-control"
                placeholder="请输入现场人数"
                v-model="business.peopleNum"
                v-bind:readonly="!editable">
+        <div class="input-group-addon">人</div>
       </div>
     </div>
     <div class="form-group">
@@ -94,12 +124,13 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">合同金额</label>
-      <div class="col-sm-9">
+      <div class="col-sm-9 input-group">
         <input type="number"
                class="form-control"
                placeholder="请输入合同金额"
                v-model="business.amount"
                v-bind:readonly="!editable">
+        <div class="input-group-addon">元</div>
       </div>
     </div>
     <div class="form-group">

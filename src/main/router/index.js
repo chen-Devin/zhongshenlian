@@ -6,6 +6,11 @@ import bidInforList from './commonUse/bidInforList.vue';
 import businessCompleteList from './commonUse/businessCompleteList.vue';
 import businessCompleteDetail from './commonUse/businessCompleteDetail.vue';
 import ruleRegulation from './commonUse/ruleRegulation.vue';
+import billingInfor from '../component/billingInfor.vue';
+import businessConduct from '../component/businessConduct.vue';
+import businessProfile from '../component/businessProfile.vue';
+import businessReport from '../component/businessReport.vue';
+import operatHistory from '../component/operatHistory.vue';
 import billingInforDetail from '../component/billingInforDetail.vue';
 //所长
 import businessAnalysis from './leader/businessAnalysis.vue';
@@ -92,20 +97,66 @@ const router = new VueRouter({
         {
             path: '/business-handle-detail-office/:id',
             component: businessHandleDetailOffice,
+            redirect: '/business-handle-detail-office/:id/business-profile',
             children: [
                 {
-                    path: 'billing-infor-detail/:billId',
-                    component: billingInforDetail
+                    path: 'business-profile',
+                    component: businessProfile
+                },
+                {
+                    path: 'business-conduct',
+                    component: businessConduct
+                },
+                {
+                    path: 'billing-infor',
+                    component: billingInfor,
+                    children: [
+                        {
+                            path: 'billing-infor-detail/:id',
+                            component: billingInforDetail
+                        }
+                    ]
+                },
+                {
+                    path: 'business-report',
+                    component: businessReport
+                },
+                {
+                    path: 'operat-history',
+                    component: operatHistory
                 }
             ]
         },
         {
             path: '/business-handle-detail-sales/:id',
             component: businessHandleDetailSales,
+            redirect: '/business-handle-detail-sales/:id/business-profile',
             children: [
                 {
-                    path: 'billing-infor-editor/:billId',
-                    component: billingInforEditor
+                    path: 'business-profile',
+                    component: businessProfile
+                },
+                {
+                    path: 'business-conduct',
+                    component: businessConduct
+                },
+                {
+                    path: 'billing-infor',
+                    component: billingInfor,
+                    children: [
+                        {
+                            path: 'billing-infor-editor/:id',
+                            component: billingInforEditor
+                        }
+                    ]
+                },
+                {
+                    path: 'business-report',
+                    component: businessReport
+                },
+                {
+                    path: 'operat-history',
+                    component: operatHistory
                 }
             ]
         },
@@ -144,10 +195,33 @@ const router = new VueRouter({
         {
             path: '/business-handle-detail-archives/:id',
             component: businessHandleDetailArchives,
+            redirect: '/business-handle-detail-archives/:id/business-profile',
             children: [
                 {
-                    path: 'billing-infor-detail/:billId',
-                    component: billingInforDetail
+                    path: 'business-profile',
+                    component: businessProfile
+                },
+                {
+                    path: 'business-conduct',
+                    component: businessConduct
+                },
+                {
+                    path: 'billing-infor',
+                    component: billingInfor,
+                    children: [
+                        {
+                            path: 'billing-infor-detail/:id',
+                            component: billingInforDetail
+                        }
+                    ]
+                },
+                {
+                    path: 'business-report',
+                    component: businessReport
+                },
+                {
+                    path: 'operat-history',
+                    component: operatHistory
                 }
             ]
         },
@@ -158,10 +232,33 @@ const router = new VueRouter({
         {
             path: '/business-handle-detail-financial/:id',
             component: businessHandleDetailFinancial,
+            redirect: '/business-handle-detail-financial/:id/business-profile',
             children: [
                 {
-                    path: 'billing-infor-detail/:billId',
-                    component: billingInforDetail
+                    path: 'business-profile',
+                    component: businessProfile
+                },
+                {
+                    path: 'business-conduct',
+                    component: businessConduct
+                },
+                {
+                    path: 'billing-infor',
+                    component: billingInfor,
+                    children: [
+                        {
+                            path: 'billing-infor-detail/:id',
+                            component: billingInforDetail
+                        }
+                    ]
+                },
+                {
+                    path: 'business-report',
+                    component: businessReport
+                },
+                {
+                    path: 'operat-history',
+                    component: operatHistory
                 }
             ]
         },

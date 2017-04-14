@@ -92,9 +92,7 @@
       </ul>
     </div>
     <div class="form-group" v-if="contractUploadShow">
-      <label class="col-sm-2 control-label">
-        正式合同
-      </label>
+      <label class="col-sm-2 control-label">正式合同</label>
       <el-upload class="col-sm-10"
                  v-bind:multiple="false"
                  v-bind:action="uploadURL"
