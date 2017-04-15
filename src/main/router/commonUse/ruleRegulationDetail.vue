@@ -1,6 +1,7 @@
 <template>
 <div class="main">
     <crumbs v-bind:paths="paths"></crumbs>
+    <button class="btn btn-primary pull-right" type="button" @click="editRule">编辑</button>
     <card>
       <ul class="list-group" v-bind="detail">
         <li class="list-group-item"><h3 class="text-center">{{detail.title}}</h3></li>
@@ -76,6 +77,10 @@ export default {
 
 <style lang="sass" scoped>
 .main{
+  button{
+    margin-top: -54px;
+    margin-right: 50px;
+  }
   ul li{
     border: none;
   }
