@@ -12,18 +12,17 @@
     <card id="tableCard">
       <table class="table ruleTable">
         <tbody>
-          <tr class="editRule">
+          <tr class="addRule">
             <td></td>
             <td>
-              <!-- 所长录入模块-->
-              <router-link to="/editRule">
-                 <button type="button" class="btn btn-primary pull-right">录入</button>
+              <router-link to="/rule-regulation-edit">
+                 <button type="button" class="btn btn-primary pull-right">添加</button>
               </router-link>
             </td>
         </tr>
           <tr v-for="rule in rules" @click="showRuleDetail(rule.id)">
             <td>{{rule.title}}</td>
-            <td class="text-right">{{rule.releaseTime}}</td>
+            <td></td>
           </tr>
         </tbody>
       </table>
@@ -128,8 +127,8 @@ export default {
     padding-left: 0;
     background: none;
     border: none;
-    margin-top: -20px;
     box-shadow: none;
+    margin-top: 10px;
       .searchItem{
       width: 90%;
       input{
@@ -146,16 +145,18 @@ export default {
     }
   }
  #tableCard{
-   margin-top: -15px;
-    .ruleTable{
+   margin-top: -25px;
+  .ruleTable{
     td{
+      font-size: 16px;
       border-top: none;
       border-bottom: 1px solid #ddd;
     }
   }
-  .editRule td{
-    margin-top: -10px;
-    border-bottom: none;
+  .addRule td{
+    .addRuleTitle{
+        font-size: 16px;
+    }
     button{
       width: 75px;
       height: 40px;

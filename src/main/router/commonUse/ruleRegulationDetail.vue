@@ -1,14 +1,14 @@
 <template>
 <div class="main">
     <crumbs v-bind:paths="paths"></crumbs>
-    <card>
-      <ul class="list-group" v-bind="detail">
-        <li class="list-group-item"><h3 class="text-center">{{detail.title}}</h3></li>
-        <li class="list-group-item">{{detail.content}}</li>
-        <li class="list-group-item text-right">{{detail.releaseDepartment}}</li>
-        <li class="list-group-item text-right">{{detail.releaseTime}}</li>
-        <li class="list-group-item text-right">{{detail.numbering}}</li>
-      </ul>
+    <button class="btn btn-primary pull-right" type="button" @click="editRule">编辑</button>
+    <card id="ruleDetailSection">
+      <div class="ruleDetail" v-bind="detail">
+        <h3 class="ruleTitle">{{detail.title}}</h3>
+        <p>{{detail.content}}</p>
+        <p class="text-right releaseDepartment text-muted">{{detail.releaseDepartment}}</p>
+        <p class="text-right releaseTime text-muted">{{detail.releaseTime}}</p>
+      </div>
    </card>
 </div>
 </template>
@@ -33,8 +33,8 @@ export default {
            title: "",
            content: "",
            releaseDepartment: "",
-           releaseTime: "",
-           numbering: ""
+           releaseTime: ""
+           //numbering: ""
         }
       }
     },
@@ -61,10 +61,13 @@ export default {
               this.detail.title =  rep.data.data.title,
               this.detail.content =  rep.data.data.content,
               this.detail.releaseDepartment = rep.data.data.releaseDepartment,
-              this.detail.releaseTime = rep.data.data.releaseTime,
-              this.detail.numbering = rep.data.data.numbering
+              this.detail.releaseTime = rep.data.data.releaseTime
+             // this.detail.numbering = rep.data.data.numbering
             }
           }, (rep) =>{})
+      },
+      editRule(){
+        this.$router.push("/rule-regulation-edit");
       }
     },
     components: {
@@ -76,8 +79,26 @@ export default {
 
 <style lang="sass" scoped>
 .main{
-  ul li{
-    border: none;
+   #ruleDetailSection{
+    div{
+    .ruleTitle{
+        margin-bottom: 30px;
+      }
+    .releaseDepartment{
+        font-size: 16px;
+        margin-top: 40px;
+    }
+    .releaseTime{
+        font-size: 16px;
+      }
+    }
+  }
+    button{
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    margin-top: -54px;
+    margin-right: 30px;
   }
 }
 </style>
