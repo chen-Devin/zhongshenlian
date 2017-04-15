@@ -138,6 +138,11 @@ export default {
   name: 'businessProfile',
   data() {
     return {
+      paths: [
+        { name: '待处理业务', url: '/business-handle-list-sales', present: false },
+        { name: '业务详情', url: `/business-handle-detail-sales/${this.$route.params.id}`, present: false },
+        { name: '业务概况', url: `/business-handle-detail-sales/${this.$route.params.id}/business-profile`, present: true }
+      ],
       business: this.initBusiness,
       uploadURL: ''
     };
@@ -170,6 +175,7 @@ export default {
       type: 'electronicContract'
     };
     this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data='+JSON.stringify(data);
+    this.$emit('pathsChan', this.paths);
   },
   methods: {
     uploadSuccess(responseData, file, fileList) {

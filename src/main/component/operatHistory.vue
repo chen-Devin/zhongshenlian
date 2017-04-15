@@ -71,7 +71,16 @@
 export default {
   name: 'operatHistory',
   data() {
-    return {};
+    return {
+      paths: [
+        { name: '待处理业务', url: '/business-handle-list-sales', present: false },
+        { name: '业务详情', url: `/business-handle-detail-sales/${this.$route.params.id}`, present: false },
+        { name: '操作历史', url: `/business-handle-detail-sales/${this.$route.params.id}/operat-history`, present: true }
+      ]
+    };
+  },
+  create() {
+    this.$emit('pathsChan', this.paths);
   }
 }
 </script>

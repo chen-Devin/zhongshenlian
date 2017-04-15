@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">联系电话</label>
+      <label class="col-sm-2 control-label">项目申请人电话</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.proposerTele}}</p>
       </div>
@@ -25,51 +25,194 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">委托单位</label>
       <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               placeholder="请输入委托单位"
-               v-model="business.institution"
-               v-bind:readonly="!editable">
+        <select class="form-control" v-model="business.institution" v-bind:readonly="!editable">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">联系人电话</label>
+      <label class="col-sm-2 control-label">客户名称</label>
       <div class="col-sm-9">
-        <input type="tel"
-               class="form-control"
-               placeholder="请输入联系人电话"
-               v-model="business.institutionTele"
-               v-bind:readonly="!editable">
+        <p class="form-control-static">{{business.proposerName}}</p>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">报告使用目的</label>
+      <label class="col-sm-2 control-label">业务类型</label>
       <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               placeholder="请输入报告使用目的"
-               v-model="business.purpose"
-               v-bind:readonly="!editable">
+        <select class="form-control" v-model="business.institution" v-bind:readonly="!editable">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">项目开始时间</label>
+      <label class="col-sm-2 control-label">项目经理</label>
       <div class="col-sm-9">
-        <input type="date"
-               class="form-control"
-               placeholder="请输入项目开始时间"
-               v-model="business.startTime"
-               v-bind:readonly="!editable">
+        <select class="form-control" v-model="business.institution" v-bind:readonly="!editable">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">项目结束时间</label>
+      <label class="col-sm-2 control-label">项目计划时间</label>
       <div class="col-sm-9">
-        <input type="date"
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">开始时间</div>
+              <input type="date"
+                  class="form-control"
+                  placeholder="请输入项目开始时间"
+                  v-model="business.startTime"
+                  v-bind:readonly="!editable">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">结束时间</div>
+              <input type="date"
+                     class="form-control"
+                     placeholder="请输入项目结束时间"
+                     v-model="business.endTime"
+                     v-bind:readonly="!editable">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">资产总额</label>
+      <div class="col-sm-9">
+        <div class="input-group">
+          <div class="input-group-addon">￥</div>
+          <input type="number"
                class="form-control"
-               placeholder="请输入项目结束时间"
-               v-model="business.endTime"
+               placeholder="请输入合同金额"
+               v-model="business.amount"
                v-bind:readonly="!editable">
+          <div class="input-group-addon">元</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">合同金额</label>
+      <div class="col-sm-9">
+        <div class="input-group">
+          <div class="input-group-addon">￥</div>
+          <input type="number"
+               class="form-control"
+               placeholder="请输入合同金额"
+               v-model="business.amount"
+               v-bind:readonly="!editable">
+          <div class="input-group-addon">元</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">合同单价</label>
+      <div class="col-sm-9">
+        <div class="input-group">
+          <div class="input-group-addon">￥</div>
+          <input type="number"
+               class="form-control"
+               placeholder="请输入合同单价"
+               v-model="business.amount"
+               v-bind:readonly="!editable">
+          <div class="input-group-addon">元</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">出据报告类型</label>
+      <div class="col-sm-9">
+        <h5>会计所</h5>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox1" value="option1"> 审字
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox2" value="option2"> 专字
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox3" value="option3"> 咨字
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox1" value="option1"> 基决审字
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox2" value="option2"> 外汇检字
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox3" value="option3"> 验字
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox2" value="option2"> 外审字
+        </label>
+        <hr>
+        <h5>评估所</h5>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox1" value="option1"> 评字
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox2" value="option2"> 评咨字
+        </label>
+        <hr>
+        <h5>税务所</h5>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox1" value="option1"> 税鉴字
+        </label>
+        <hr>
+        <h5>造价所</h5>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox1" value="option1"> 基结审字
+        </label>
+         <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox1" value="option1"> 评审字
+        </label>
+         <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox1" value="option1"> 概审字
+        </label>
+         <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox1" value="option1"> 咨字
+        </label>
+        <hr>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">审计时间</label>
+      <div class="col-sm-9">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">开始时间</div>
+              <input type="date"
+                  class="form-control"
+                  placeholder="请输入项目开始时间"
+                  v-model="business.startTime"
+                  v-bind:readonly="!editable">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">结束时间</div>
+              <input type="date"
+                     class="form-control"
+                     placeholder="请输入项目结束时间"
+                     v-model="business.endTime"
+                     v-bind:readonly="!editable">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="form-group">
@@ -85,63 +228,244 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">基本取费</label>
-      <div class="col-sm-4">
-
-      </div>
-      <div class="col-sm-4">
-
+      <div class="col-sm-9">
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">主体</div>
+              <input type="text"
+                  class="form-control"
+                  placeholder="请输入主体"
+                  v-model="business.startTime"
+                  v-bind:readonly="!editable">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">比例</div>
+              <input type="number"
+                     class="form-control"
+                     placeholder="请输入比例"
+                     v-model="business.endTime"
+                     v-bind:readonly="!editable">
+              <div class="input-group-addon">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">从属体</div>
+              <input type="text"
+                  class="form-control"
+                  placeholder="请输入从属体"
+                  v-model="business.startTime"
+                  v-bind:readonly="!editable">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">比例</div>
+              <input type="number"
+                     class="form-control"
+                     placeholder="请输入比例"
+                     v-model="business.endTime"
+                     v-bind:readonly="!editable">
+              <div class="input-group-addon">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <h4 class="col-sm-12"><a class="fa fa-plus-circle pull-right"></a></h4>
+        </div>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">效益取费</label>
-      <div class="col-sm-4">
-
-      </div>
-      <div class="col-sm-4">
-
+      <div class="col-sm-9">
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">主体</div>
+              <input type="text"
+                  class="form-control"
+                  placeholder="请输入主体"
+                  v-model="business.startTime"
+                  v-bind:readonly="!editable">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">比例</div>
+              <input type="number"
+                     class="form-control"
+                     placeholder="请输入比例"
+                     v-model="business.endTime"
+                     v-bind:readonly="!editable">
+              <div class="input-group-addon">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">从属体</div>
+              <input type="text"
+                  class="form-control"
+                  placeholder="请输入从属体"
+                  v-model="business.startTime"
+                  v-bind:readonly="!editable">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">比例</div>
+              <input type="number"
+                     class="form-control"
+                     placeholder="请输入比例"
+                     v-model="business.endTime"
+                     v-bind:readonly="!editable">
+              <div class="input-group-addon">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <h4 class="col-sm-12"><a class="fa fa-plus-circle pull-right"></a></h4>
+        </div>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">现场人数</label>
-      <div class="col-sm-9 input-group">
-        <input type="number"
-               class="form-control"
-               placeholder="请输入现场人数"
-               v-model="business.peopleNum"
-               v-bind:readonly="!editable">
-        <div class="input-group-addon">人</div>
+      <label class="col-sm-2 control-label">部门合作</label>
+      <div class="col-sm-9">
+        <label class="radio-inline">
+          <input type="radio" name="departmentCooperation" value="有部门合作"> 有部门合作
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="departmentCooperation" value="无部门合作"> 无部门合作
+        </label>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">企业规模</label>
+      <label class="col-sm-2 control-label">合作部门</label>
+      <div class="col-sm-9">
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <p class="form-control-static">主体</p>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">合作比例</div>
+              <input type="number"
+                     class="form-control"
+                     placeholder="请输入比例"
+                     v-model="business.endTime"
+                     v-bind:readonly="!editable">
+              <div class="input-group-addon">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">合作体</div>
+              <input type="text"
+                  class="form-control"
+                  placeholder="请输入合作体"
+                  v-model="business.startTime"
+                  v-bind:readonly="!editable">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">比例</div>
+              <input type="number"
+                     class="form-control"
+                     placeholder="请输入比例"
+                     v-model="business.endTime"
+                     v-bind:readonly="!editable">
+              <div class="input-group-addon">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <h4 class="col-sm-12"><a class="fa fa-plus-circle pull-right"></a></h4>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">参审注师</label>
+      <div class="col-sm-9">
+        <select class="form-control" v-model="business.institution" v-bind:readonly="!editable">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">参审助理</label>
+      <div class="col-sm-9">
+        <select class="form-control" v-model="business.institution" v-bind:readonly="!editable">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">报告数量</label>
+      <div class="col-sm-9">
+        <div class="input-group">
+          <input type="number"
+                 class="form-control"
+                 placeholder="请输入比例"
+                 v-model="business.endTime"
+                 v-bind:readonly="!editable">
+          <div class="input-group-addon">份（类）</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">报告用途</label>
+      <div class="col-sm-9">
+        <select class="form-control" v-model="business.institution" v-bind:readonly="!editable">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">上次报告事务所</label>
       <div class="col-sm-9">
         <input type="text"
                class="form-control"
-               placeholder="请输入企业规模"
-               v-model="business.institutionScale"
+               placeholder="请输入上次报告事务所"
+               v-model="business.name"
                v-bind:readonly="!editable">
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">合同金额</label>
-      <div class="col-sm-9 input-group">
-        <input type="number"
-               class="form-control"
-               placeholder="请输入合同金额"
-               v-model="business.amount"
-               v-bind:readonly="!editable">
-        <div class="input-group-addon">元</div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">申请人意见</label>
+      <label class="col-sm-2 control-label">项目取得方式</label>
       <div class="col-sm-9">
-        <textarea cols="30"
-                  rows="10"
-                  class="form-control"
-                  placeholder="请输入申请人意见"
-                  v-model="business.proposerOpinion"
-                  v-bind:readonly="!editable"></textarea>
+        <label class="checkbox-inline">
+          <input type="checkbox" name="gainingMethod" value="直接委托"> 直接委托
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" name="gainingMethod" value="中标委托"> 中标委托
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">项目编号</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.proposerName}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -365,6 +689,12 @@ form.form-horizontal {
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
+  a.fa-plus-circle {
+    text-decoration: none;
+    &:hover {
+      cursor: pointer;
+    }
+  }
   textarea {
     resize: vertical;
   }

@@ -6,7 +6,9 @@
         {{business.name}}
       </h3>
       <div class="business-wrap">
-        <business v-bind:initBusiness="business" v-bind:user="user"></business>
+        <business v-bind:initBusiness="business"
+                  v-bind:user="user"
+                  v-on:pathsChan="pathsChan"></business>
         <hr>
         <div class="row">
           <approver-advice v-bind:advices="riskAdvices">风险评估部意见</approver-advice>
@@ -150,6 +152,9 @@ export default {
         }
       }
     },
+    pathsChan(paths) {
+      this.paths = paths;
+    }
   },
   components: {
     crumbs,
