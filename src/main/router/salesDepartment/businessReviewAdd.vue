@@ -3,13 +3,13 @@
     <crumbs v-bind:paths="paths"></crumbs>
     <card>
       <h3>
-        新建业务
-        <div class="pull-right">
-          <button class="btn btn-success" v-on:click="sub()">提交</button>
-          <button class="btn btn-warning" v-on:click="sav()">暂存</button>
-          <button class="btn btn-danger" v-on:click="del()">撤销</button>
-        </div>
-      </h3>
+            新建业务
+            <div class="pull-right">
+              <button class="btn btn-success" v-on:click="sub()">提交</button>
+              <button class="btn btn-warning" v-on:click="sav()">暂存</button>
+              <button class="btn btn-danger" v-on:click="del()">撤销</button>
+            </div>
+          </h3>
       <business-editor v-bind:initBusiness="business"
                        v-bind:editable="editable"
                        v-on:saved="saved"
@@ -48,32 +48,193 @@ export default {
       business: {
         id: '',
         name: '',
-        proposerId: this.user.id,
-        proposerName: this.user.name,
-        proposerTele: this.user.telephone,
-        institution: '',
-        institutionTele: '',
-        purpose: '',
-        startTime: (()=>{
-          let t = new Date();
-          let Y = t.getFullYear();
-          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
-          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
-          return `${Y}-${M}-${D}`;
-        })(),
-        endTime: (()=>{
-          let t = new Date();
-          let Y = t.getFullYear();
-          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
-          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
-          return `${Y}-${M}-${D}`;
-        })(),
-        peopleNum: 0,
-        institutionScale: '',
-        amount: 0,
-        proposerOpinion: '',
+        proposer: {
+          id: this.user.id,
+          name: this.user.name,
+          tele: this.user.telephone
+        },
+        institution: {
+          name: '',
+          client: ''
+        },
+        type: '',
+        manager: '',
+        time: {
+          start: (() => {
+            let t = new Date();
+            let Y = t.getFullYear();
+            let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+            let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
+            return `${Y}-${M}-${D}`;
+          })(),
+          end: (() => {
+            let t = new Date();
+            let Y = t.getFullYear();
+            let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+            let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
+            return `${Y}-${M}-${D}`;
+          })(),
+        },
+        assetAmount: 0,
+        contractAmount: 0,
+        contractPrice: 0,
+        report: {
+          type: [
+            {
+              name: '会计所',
+              code: 'TZUk',
+              words: [
+                {
+                  name: '审字',
+                  code: '01',
+                  state: false
+                },{
+                  name: '专字',
+                  code: '02',
+                  state: false
+                },{
+                  name: '咨字',
+                  code: '03',
+                  state: false
+                },{
+                  name: '基决审字',
+                  code: '04',
+                  state: false
+                },{
+                  name: '外汇检字',
+                  code: '05',
+                  state: false
+                },{
+                  name: '验字',
+                  code: '06',
+                  state: false
+                },{
+                  name: '外审字',
+                  code: '07',
+                  state: false
+                }
+              ]
+            },{
+              name: '评估所',
+              code: 'TZUp',
+              words: [
+                {
+                  name: '评字',
+                  code: '01',
+                  state: false
+                },{
+                  name: '评咨字',
+                  code: '02',
+                  state: false
+                }
+              ]
+            },{
+              name: '税务所',
+              code: 'TZUs',
+              words: [
+                {
+                  name: '税鉴字',
+                  code: '01',
+                  state: false
+                }
+              ]
+            },{
+              name: '造价所',
+              code: 'TZUz',
+              words: [
+                {
+                  name: '基结审字',
+                  code: '01',
+                  state: false,
+                },{
+                  name: '评审字',
+                  code: '02',
+                  state: false,
+                },{
+                  name: '概审字',
+                  code: '03',
+                  state: false,
+                },{
+                  name: '咨字',
+                  code: '04',
+                  state: false
+                }
+              ]
+            },{
+              name: 'DX',
+              code: 'DX',
+              words: [
+                {
+                  name: 'DX',
+                  code: 'DX',
+                  state: false
+                }
+              ]
+            },{
+              name: 'BH',
+              code: 'BH',
+              words: [
+                {
+                  name: 'BH',
+                  code: 'BH',
+                  state: false
+                }
+              ]
+            }
+          ],
+          amount: 0,
+          usage: ''
+        },
+        number: '',
+        auditTime: {
+          exist: false,
+          start: (() => {
+            let t = new Date();
+            let Y = t.getFullYear();
+            let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+            let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
+            return `${Y}-${M}-${D}`;
+          })(),
+          end: (() => {
+            let t = new Date();
+            let Y = t.getFullYear();
+            let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+            let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
+            return `${Y}-${M}-${D}`;
+          })(),
+        },
+        contractType: {
+          name: '',
+          basicFee: {
+            main: { name: '', percentage: 0 },
+            depend: [{ name: '', percentage: 0 }]
+          },
+          benefitFee: {
+            main: { name: '', percentage: 0 },
+            depend: [{ name: '', percentage: 0 }]
+          }
+        },
+        departmentCoop: {
+          name: '',
+          departments: {
+            main: { name: '主体', percentage: 0 },
+            coop: [{ name: '', percentage: 0 }]
+          },
+        },
+        reviewCPA: '',
+        reviewAssistant: '',
+        lastoffice: '',
+        getWay: {
+          direct: {
+            name: '直接委托',
+            state: false
+          },
+          bid: {
+            name: '中标委托',
+            state: false
+          },
+        },
         files: [],
-        contractNo: '',
         projectType: '',
         projectAmount: '',
         projectStatus: '1',
@@ -97,7 +258,7 @@ export default {
         message: '提交成功，将返回待审核业务列表',
         type: 'success'
       });
-      setTimeout(()=>{
+      setTimeout(() => {
         router.push({ path: '/business-review-list-sales' });
       }, 1000);
     },

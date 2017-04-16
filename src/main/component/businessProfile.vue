@@ -2,9 +2,9 @@
   <form class="form-horizontal">
     <div class="form-group"
          v-if="contractNumShow">
-      <label class="col-sm-2 control-label">合同编号</label>
+      <label class="col-sm-2 control-label">项目编号</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.contractNo}}</p>
+        <p class="form-control-static">{{business.number}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -16,67 +16,232 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">提交申请人</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.proposerName}}</p>
+        <p class="form-control-static">{{business.proposer.name}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">联系电话</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.proposerTele}}</p>
+        <p class="form-control-static">{{business.proposer.tele}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">委托单位</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.institution}}</p>
+        <p class="form-control-static">{{business.institution.name}}</p>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">联系人电话</label>
+      <label class="col-sm-2 control-label">客户名称</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.institutionTele}}</p>
+        <p class="form-control-static">{{business.institution.client}}</p>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">报告使用目的</label>
+      <label class="col-sm-2 control-label">业务类型</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.purpose}}</p>
+        <p class="form-control-static">{{business.type}}</p>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">开始时间</label>
+      <label class="col-sm-2 control-label">项目经理</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.startTime}}</p>
+        <p class="form-control-static">{{business.manager}}</p>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">结束时间</label>
+      <label class="col-sm-2 control-label">项目计划时间</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.endTime}}</p>
+        <div class="row">
+          <div class="col-sm-6">
+            <p class="form-control-static">开始时间：{{business.time.start}}</p>
+          </div>
+          <div class="col-sm-6">
+            <p class="form-control-static">结束时间：{{business.time.end}}</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">现场人数</label>
+      <label class="col-sm-2 control-label">资产总额</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.peopleNum}}</p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">企业规模</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.institutionScale}}</p>
+        <p class="form-control-static">￥{{business.assetAmount}}元</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">合同金额</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.amount}}</p>
+        <p class="form-control-static">￥{{business.contractAmount}}元</p>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">申请人意见</label>
-      <div class="col-sm-2">
-        <p class="form-control-static">{{business.proposerOpinion}}</p>
+      <label class="col-sm-2 control-label">合同单价</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">￥{{business.contractPrice}}元</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">出据报告类型</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{JSON.stringify(business.report)}}</p>
+      </div>
+    </div>
+    <div class="form-group"
+         v-if="business.auditTime.exist">
+      <label class="col-sm-2 control-label">审计时间</label>
+      <div class="col-sm-9">
+        <div class="row">
+          <div class="col-sm-6">
+            <p class="form-control-static">开始时间：{{business.auditTime.start}}</p>
+          </div>
+          <div class="col-sm-6">
+            <p class="form-control-static">结束时间：{{business.auditTime.end}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">合同体制</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.contractType.name}}</p>
+      </div>
+    </div>
+    <div class="form-group"
+         v-if="contractTypeChan">
+      <label class="col-sm-2 control-label">基本取费</label>
+      <div class="col-sm-9">
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <p class="form-control-static">
+              主体：{{business.contractType.basicFee.main.name}}
+            </p>
+          </div>
+          <div class="col-sm-5">
+            <p class="form-control-static">
+              比例：{{business.contractType.basicFee.main.name}}%
+            </p>
+          </div>
+        </div>
+        <div class="row form-group"
+             v-for="(DEPEND, index) in business.contractType.basicFee.depend"
+             v-bind:key="index">
+          <div class="col-sm-6">
+            <p class="form-control-static">
+              从属体：{{DEPEND.name}}
+            </p>
+          </div>
+          <div class="col-sm-5">
+            <p class="form-control-static">
+              比例：{{DEPEND.percentage}}%
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group"
+         v-if="contractTypeChan">
+      <label class="col-sm-2 control-label">效益取费</label>
+      <div class="col-sm-9">
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <p class="form-control-static">
+              主体：{{business.contractType.benefitFee.main.name}}
+            </p>
+          </div>
+          <div class="col-sm-5">
+            <p class="form-control-static">
+              比例：{{business.contractType.benefitFee.main.percentage}}%
+            </p>
+          </div>
+        </div>
+        <div class="row form-group"
+             v-for="(DEPEND, index) in business.contractType.benefitFee.depend"
+             v-bind:key="index">
+          <div class="col-sm-6">
+            <p class="form-control-static">
+              从属体：{{DEPEND.name}}
+            </p>
+          </div>
+          <div class="col-sm-5">
+            <p class="form-control-static">
+              比例：{{DEPEND.percentage}}%
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">部门合作</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.departmentCoop.name}}</p>
+      </div>
+    </div>
+    <div class="form-group"
+         v-if="departmentCoopChan">
+      <label class="col-sm-2 control-label">合作部门</label>
+      <div class="col-sm-9">
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <p class="form-control-static">
+              主体
+            </p>
+          </div>
+          <div class="col-sm-5">
+            <p class="form-control-static">
+              比例：{{business.departmentCoop.departments.main.percentage}}%
+            </p>
+          </div>
+        </div>
+        <div class="row form-group"
+             v-for="(COOP, index) in business.departmentCoop.departments.coop"
+             v-bind:key="index">
+          <div class="col-sm-6">
+            <p class="form-control-static">
+              合作体：{{COOP.name}}
+            </p>
+          </div>
+          <div class="col-sm-5">
+            <p class="form-control-static">
+              比例：{{COOP.percentage}}%
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">参审注师</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.reviewCPA}}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">参审助理</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.reviewAssistant}}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">报告数量</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.report.amount}}份（类）</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">报告用途</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.report.usage}}份（类）</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">上次报告事务所</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.lastoffice}}份（类）</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">项目取得方式</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.getWay}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -146,6 +311,22 @@ export default {
       business: this.initBusiness,
       uploadURL: ''
     };
+  },
+  computed: {
+    contractTypeChan() {
+      if (this.business.contractType.name === '联合体') {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    departmentCoopChan() {
+      if (this.business.departmentCoop.name === '有部门合作') {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
   props: ['initBusiness', 'user'],
   computed: {
