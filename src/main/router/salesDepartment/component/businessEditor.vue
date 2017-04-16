@@ -583,21 +583,43 @@ export default {
   },
   methods: {
     reportTypeChan(TYPE, WORD) {
-      var flag = false;
-      outermost:
+      let flag = false;
+      outermost1:
       for (let i = 0; i < this.business.report.type.length; i++) {
         if (this.business.report.type[i].name === '会计所') {
           for (let j = 0; j < this.business.report.type[i].words.length; j++) {
             if (this.business.report.type[i].words[j].state) {
               flag = true;
-              break outermost;
+              break outermost1;
             }
           }
         }
       }
       this.business.auditTime.exist = flag;
 
-      this.business.number += JSON.stringify(WORD);
+      flag = false;
+      let type = '';
+      let word = '';
+      let t = new Date();
+      let year = t.getFullYear();
+      outermost2:
+      for(let i = 0; i < this.business.report.type.length; i++) {
+        for (let j = 0; j < this.business.report.type[i].words.length; j++) {
+          if (this.business.report.type[i].words[j].state) {
+            flag = true;
+            type = this.business.report.type[i].code;
+            word = this.business.report.type[i].words[j].code;
+            break outermost2;
+          }
+        }
+      }
+
+      if (flag) {
+        this.business.number = `${type}-${word}-${year}-XXX`;
+      } else {
+        this.business.number = '';
+      }
+
     },
     save() {
       let promise = new Promise((resolve, reject) => {
