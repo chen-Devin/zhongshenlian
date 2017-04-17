@@ -29,7 +29,7 @@ export default {
           show: false,
           sub: [
             {name: '已完成业务', link: '/business-complete-list', active: false},
-            {name: '招投标信息看板', link: '/bid-infor-list', active: false},
+            {name: '招投标信息看板', link: '/bid-info-list', active: false},
             {name: '规章制度', link: '/rule-regulation', active: false}
           ]
         },
@@ -92,7 +92,7 @@ export default {
           flag: '',
           show: false,
           sub: [
-            {name: '招投标信息', link: '/bid-infor-list-market', active: false}
+            {name: '招投标信息', link: '/bid-info-list', active: false}
           ]
         }
       ]
