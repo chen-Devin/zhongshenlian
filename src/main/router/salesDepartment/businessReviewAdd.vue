@@ -3,13 +3,13 @@
     <crumbs v-bind:paths="paths"></crumbs>
     <card>
       <h3>
-            新建业务
-            <div class="pull-right">
-              <button class="btn btn-success" v-on:click="sub()">提交</button>
-              <button class="btn btn-warning" v-on:click="sav()">暂存</button>
-              <button class="btn btn-danger" v-on:click="del()">撤销</button>
-            </div>
-          </h3>
+        新建业务
+        <div class="pull-right">
+          <button class="btn btn-success" v-on:click="sub()">提交</button>
+          <button class="btn btn-warning" v-on:click="sav()">暂存</button>
+          <button class="btn btn-danger" v-on:click="del()">撤销</button>
+        </div>
+      </h3>
       <business-editor v-bind:initBusiness="business"
                        v-bind:editable="editable"
                        v-on:saved="saved"
@@ -53,12 +53,9 @@ export default {
           name: this.user.name,
           tele: this.user.telephone
         },
-        institution: {
-          name: '',
-          client: ''
-        },
+        institution: null,
         type: '',
-        manager: '',
+        manager: null,
         time: {
           start: (() => {
             let t = new Date();
@@ -204,7 +201,7 @@ export default {
           })(),
         },
         contractType: {
-          name: '',
+          name: '非联合体',
           basicFee: {
             main: { name: '', percentage: 0 },
             depend: [{ name: '', percentage: 0 }]
@@ -215,29 +212,27 @@ export default {
           }
         },
         departmentCoop: {
-          name: '',
+          name: '无部门合作',
           departments: {
             main: { name: '主体', percentage: 0 },
             coop: [{ name: '', percentage: 0 }]
           },
         },
-        reviewCPA: '',
-        reviewAssistant: '',
+        reviewCPA: null,
+        reviewAssistant: null,
         lastoffice: '',
-        getWay: {
-          direct: {
+        getWay: [
+          {
             name: '直接委托',
             state: false
-          },
-          bid: {
+          },{
             name: '中标委托',
             state: false
           },
-        },
+        ],
         files: [],
-        projectType: '',
-        projectAmount: '',
-        projectStatus: '1',
+        projectStatus: 1,
+        contractAnnexArray: [],
         projectApproverArray: [],
         projectSchduleArray: [],
         projectBillingArray: [],

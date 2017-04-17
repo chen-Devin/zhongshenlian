@@ -67,6 +67,7 @@ export default {
       showDelModal: false,
       delCustomer: {},
       showAddModal: false,
+      addCustomer: {}
     };
   },
   props: ['customers', 'user'],
@@ -140,7 +141,7 @@ export default {
     },
     addCanceled() {
       this.showAddModal = false;
-    },
+    }
   },
   components: {
     card,
