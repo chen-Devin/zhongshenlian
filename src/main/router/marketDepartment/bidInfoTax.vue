@@ -1,5 +1,5 @@
 <template>
-	<bid-info-list-body :office="office" :bidArray="bidArray"></bid-info-list-body>
+	<bid-info-list-body :office="office" :bidArray="bidArray" @input="input"></bid-info-list-body>
 </template>
 
 <script>
@@ -17,11 +17,18 @@ export default {
 			default: []
 		}
 	},
+	methods: {
+		input() {
+			console.log('input');
+			this.$router.push('/bid-info-input-sws');
+		}
+	},
 	components: {
 		bidInfoListBody
 	},
 	created() {
 		this.$emit('tellOffice',this.office);
+		this.$emit('queryList',this.office);
 	}
 }
 </script>
