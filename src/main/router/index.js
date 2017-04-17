@@ -2,7 +2,6 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 //通用
-import bidInforList from './commonUse/bidInforList.vue';
 import businessCompleteList from './commonUse/businessCompleteList.vue';
 import businessCompleteDetail from './commonUse/businessCompleteDetail.vue';
 import ruleRegulation from './commonUse/ruleRegulation.vue';
@@ -43,19 +42,19 @@ import businessHandleListArchives from './archivesDepartment/businessHandleList.
 import businessHandleDetailFinancial from './archivesDepartment/businessHandleDetail.vue';
 import businessHandleListFinancial from './archivesDepartment/businessHandleList.vue';
 //市场部
-import bidInforListMarket from './marketDepartment/bidInforList.vue';
+import bidInfoList from './marketDepartment/bidInfoList.vue';
 import bidInforDetail from './marketDepartment/bidInforDetail.vue';
 import bidInfoInput from './marketDepartment/bidInfoInput.vue';
 import bidInforEdit from './marketDepartment/bidInforEdit.vue';
+import bidInfoAccounting from './marketDepartment/bidInfoAccounting.vue';
+import bidInfoAssessment from './marketDepartment/bidInfoAssessment.vue';
+import bidInfoTax from './marketDepartment/bidInfoTax.vue';
+import bidInfoCost from './marketDepartment/bidInfoCost.vue';
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes: [
-        {
-            path: '/bid-infor-list',
-            component: bidInforList
-        },
         {
             path: '/business-complete-list',
             component: businessCompleteList
@@ -277,8 +276,27 @@ const router = new VueRouter({
             component: businessHandleListFinancial
         },
         {
-            path: '/bid-infor-list-market',
-            component: bidInforListMarket
+            path: '/bid-info-list',
+            component: bidInfoList,
+            // redirect: '/bid-info-list/bid-info-list-body/accounting',
+            children: [
+                {
+                    path: 'accounting',
+                    component: bidInfoAccounting
+                },
+                {
+                    path: 'assessment',
+                    component: bidInfoAssessment
+                },
+                {
+                    path: 'tax',
+                    component: bidInfoTax
+                },
+                {
+                    path: 'cost',
+                    component: bidInfoCost
+                }
+            ]
         },
         {
             path: '/bid-infor-detail',

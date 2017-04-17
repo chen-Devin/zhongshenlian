@@ -2,56 +2,9 @@
 	<div class="main">
 		<crumbs v-bind:paths="paths"></crumbs>
 		<card>
-			<form class="form-inline">
-				<div class="row">
-					<div class="form-group keyword-btn col-md-11">
-		    			<input type="text" class="form-control" placeholder="请输入关键字" v-model.trim="searchContent">
-		    			<p>{{searchContent}}</p>
-		  			</div>
-		  			<button type="submit" class="btn btn-primary" @click="search()">搜索</button>
-				</div>	
-			</form>
-			<p class="bid-time">招标时间</p>
-			<input type="date" v-model="bidStartDate1">
-			<input type="date" v-model="bidEndDate1">
-			<p>
-				<input type="checkbox" value="ZhongBiao" v-model="checkedAttr">已中标
-				<input type="checkbox" value="RuWei" v-model="checkedAttr">已入围
-				<input type="checkbox" value="ZhaiPai" v-model="checkedAttr">已摘牌
-				<input type="checkbox" value="weiZhaiPai" v-model="checkedAttr">未摘牌
-			</p>
-			<router-link to="/bid-info-input">
-				<button class="btn btn-primary type-btn">录入</button>
-			</router-link>
-			<table class="table table-hover projectList">
-				<thead>
-					<tr>
-						<td>项目名称</td>
-						<td class="blank"></td>
-						<td>上传日期</td>
-						<td>截止日期</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="project in bidArray" @click="checkMessage(project)">
-						<td>{{project.biddingName}}</td>
-						<td class="blank"></td>
-						<td v-show="project.showTime">{{project.uploadDate}}</td>
-						<td v-show="project.showTime">{{project.endDate}}</td>
-						<td v-show="project.showBade"></td>
-						<td v-show="project.showBade">已中标</td>
-						<td v-show="project.showRuWei"></td>
-						<td v-show="project.showRuWei">已入围</td>
-						<td v-show="project.showBrand"></td>
-						<td v-show="project.showBrand">已摘牌</td>
-						<td v-show="project.showOver"></td>
-						<td v-show="project.showOver">已过期</td>
-						<td v-show="project.showCheck"></td>
-						<td v-show="project.showCheck">已审批</td>
-						
-					</tr>
-				</tbody>
-			</table>	
+            <bid-classification :office="office"></bid-classification>
+            <router-view :bidArray="bidArray" @tellOffice="getOffice"></router-view>
+            <!-- <bid-info-list-body></bid-info-list-body> -->
 		</card>
 	</div>
 </template>
@@ -63,6 +16,8 @@ import qs from 'qs';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
+import bidClassification from './component/bidClassification.vue';
+import bidInfoListBody from './bidInfoListBody.vue';
 
 export default {
     name: 'bidInforListMarket',
@@ -141,7 +96,8 @@ export default {
 				      			shortlistedState:"1",
 				      			delipotentState:"1",
 				      			reviewState:"1"
-	      					}]
+	      					}],
+            office: ''
     	};
     },
     computed: {
@@ -166,6 +122,10 @@ export default {
       });
     },
     methods: {
+        getOffice(office) {
+            console.log('office is' + office);
+            this.office = office;
+        },
     	getInfo() {
     		axios({
     		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -365,14 +325,16 @@ export default {
     },
     components: {
     	crumbs,
-    	card
+    	card,
+        bidClassification,
+        bidInfoListBody
     }
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 
-.main {
+/*.main {
 	position: relative;
 	.bid-time {
 		padding: 8px 10px 8px 10px;
@@ -410,5 +372,5 @@ export default {
 			}
 		}
 	}
-}
+}*/
 </style>
