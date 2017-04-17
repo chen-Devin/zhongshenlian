@@ -16,7 +16,7 @@ import card from '../../component/card.vue';
 import bidInfoEdit from './component/bidInfoEdit.vue';
 
 export default {
-    name: 'bidInfoInput',
+    name: 'bidInfoInputKJS',
     data() {
     	return {
 			paths: [

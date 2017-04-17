@@ -19,7 +19,8 @@ export default {
 	},
 	methods: {
 		input() {
-			
+			console.log('input');
+			this.$router.push('/bid-info-input-kjs');
 		}
 	},
 	components: {
@@ -27,6 +28,7 @@ export default {
 	},
 	created() {
 		this.$emit('tellOffice',this.office);
+		this.$emit('queryList',this.office);
 	}
 }
 </script>

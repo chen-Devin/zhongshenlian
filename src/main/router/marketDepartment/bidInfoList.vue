@@ -3,7 +3,7 @@
 		<crumbs v-bind:paths="paths"></crumbs>
 		<card>
             <bid-classification :office="office"></bid-classification>
-            <router-view :bidArray="bidArray" @tellOffice="getOffice"></router-view>
+            <router-view :bidArray="biddingArray" @tellOffice="getOffice" @queryList="queryList"></router-view>
             <!-- <bid-info-list-body></bid-info-list-body> -->
 		</card>
 	</div>
@@ -97,21 +97,21 @@ export default {
 				      			delipotentState:"1",
 				      			reviewState:"1"
 	      					}],
-            office: ''
+            office: '',
+            biddingArray: []
     	};
     },
     computed: {
-    	bidStartDate: function() {
+    	bidStartDate() {
     		let str = this.bidStartDate1 + " 00:00:00";
     		return str;
     	},
-    	bidEndDate: function() {
+    	bidEndDate() {
     		let str = this.bidEndDate1 + " 00:00:00";
     		return str;
     	}
     },
     created() {
-      this.getInfo();
       this.judgeDate();
       this.judgeShow();
       this.filterList();
@@ -126,26 +126,6 @@ export default {
             console.log('office is' + office);
             this.office = office;
         },
-    	getInfo() {
-    		axios({
-    		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-    		  method: 'get',
-    		  url: '/service',
-    		  params: {
-    		    data: (() => {
-    		      let obj = {
-    		        command: 'getBiddingList',
-    		        platform: 'web'
-    		      }
-    		      return JSON.stringify(obj);
-    		    })()
-    		  }
-    		}).then((rep) => {
-        		if (rep.data.statusCode === '10001') {
-					// this.businessArray = rep.data.data.businessArray;
-        		}
-      		}, (rep) => {});
-    	},
     	search() {
     		axios({
     		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -321,7 +301,97 @@ export default {
     	checkMessage(project) {
     		console.log(project);
     		this.$router.push('/bid-infor-detail');
-    	}
+    	},
+        queryList(office) {
+            if(office === "会计所") {
+                this.biddingArray = [];
+                axios({
+                  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+                  method: 'get',
+                  url: '/service',
+                  params: {
+                    data: (() => {
+                      let obj = {
+                        command: 'getBiddingList',
+                        platform: 'web',
+                        type: 'kjs'
+                      }
+                      return JSON.stringify(obj);
+                    })()
+                  }
+                }).then((rep) => {
+                    if (rep.data.statusCode === '10001') {
+                        this.biddingArray = rep.data.data.businessArray;
+                    }
+                    }, (rep) => {});
+            }
+            if(office === "评估所") {
+                this.biddingArray = [];
+                axios({
+                  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+                  method: 'get',
+                  url: '/service',
+                  params: {
+                    data: (() => {
+                      let obj = {
+                        command: 'getBiddingList',
+                        platform: 'web',
+                        type: 'pgs'
+                      }
+                      return JSON.stringify(obj);
+                    })()
+                  }
+                }).then((rep) => {
+                    if (rep.data.statusCode === '10001') {
+                        this.biddingArray = rep.data.data.businessArray;
+                    }
+                    }, (rep) => {});
+            }
+            if(office === "税务所") {
+                this.biddingArray = [];
+                axios({
+                  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+                  method: 'get',
+                  url: '/service',
+                  params: {
+                    data: (() => {
+                      let obj = {
+                        command: 'getBiddingList',
+                        platform: 'web',
+                        type: 'sws'
+                      }
+                      return JSON.stringify(obj);
+                    })()
+                  }
+                }).then((rep) => {
+                    if (rep.data.statusCode === '10001') {
+                        this.biddingArray = rep.data.data.businessArray;
+                    }
+                    }, (rep) => {});
+            }
+            if(office === "造价所") {
+                this.biddingArray = [];
+                axios({
+                  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+                  method: 'get',
+                  url: '/service',
+                  params: {
+                    data: (() => {
+                      let obj = {
+                        command: 'getBiddingList',
+                        platform: 'web',
+                        type: 'zjs'
+                      }
+                      return JSON.stringify(obj);
+                    })()
+                  }
+                }).then((rep) => {
+                    if (rep.data.statusCode === '10001') {
+                        this.biddingArray = rep.data.data.businessArray;
+                    }
+                    }, (rep) => {});
+            }
+        }
     },
     components: {
     	crumbs,

@@ -40,7 +40,7 @@
 				<label class="checkbox-inline">
 				  <input type="checkbox" id="inlineCheckbox3" value="option3"> 未摘牌
 				</label>
-				<button class="btn btn-primary type-btn f-r" ng-click="input()">录入</button>
+				<button class="btn btn-primary type-btn f-r" @click="input()">录入</button>
 			</p>
 		</div>
 		<table class="table table-hover projectList">
@@ -51,10 +51,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="project in bidArray" @click="checkMessage(project)">
-					<td>{{project.biddingName}}</td>
+				<tr v-for="project in biddingArray" @click="checkMessage(project)">
+					<td><span class="state-wrap">{{project.biddingState}}</span>{{project.biddingName}}</td>
 					<td class="ta-r">
-						{{project.uploadDate}}
+						{{project.openBidDate}}
 					</td>
 				</tr>
 			</tbody>
@@ -67,8 +67,36 @@ export default {
 	name: 'bidInfoListBody',
 	data() {
 		return {
-
+			state: ''
 		};
+	},
+	computed: {
+		biddingArray() {
+			for (var i = 0; i < this.bidArray.length; i++) {
+				if(this.bidArray[i].biddingState === "0") {
+					this.bidArray[i].biddingState = '未摘牌';
+				}
+				if(this.bidArray[i].biddingState === "1") {
+					this.bidArray[i].biddingState = '已摘牌';
+				}
+				if(this.bidArray[i].biddingState === "2") {
+					this.bidArray[i].biddingState = '已入围';
+				}
+				if(this.bidArray[i].biddingState === "3") {
+					this.bidArray[i].biddingState = '已中标';
+				}
+				if(this.bidArray[i].biddingState === "4") {
+					this.bidArray[i].biddingState = '已过期';
+				}
+				if (this.bidArray[i].reviewState === "1") {
+					this.bidArray[i].reviewState = "通过";
+				}
+				if (this.bidArray[i].reviewState === "0") {
+					this.bidArray[i].reviewState = "不通过";
+				}
+			}
+			return this.bidArray;
+		}
 	},
 	props: {
 		office: {
@@ -83,6 +111,7 @@ export default {
 			console.log(this.office);
 		},
 		input() {
+			console.log('input');
 			this.$emit('input');
 		}
 	},
@@ -120,5 +149,13 @@ export default {
 	label {
 		margin-top: 7px;
 	}
+}
+.state-wrap {
+	display: inline-block;
+	background-color: #fff;
+	border: 1px solid #000;
+	margin-right: 5px;
+	padding: 1px 3px;
+	font-size: 11px;
 }
 </style>
