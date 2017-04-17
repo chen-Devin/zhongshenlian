@@ -11,7 +11,8 @@
     </ul>
     <div class="tab-content">
       <router-view v-bind:initBusiness="business"
-                   v-bind:user="user"></router-view>
+                   v-bind:user="user"
+                   v-on:pathsChan="pathsChan"></router-view>
     </div>
   </div>
 </template>
@@ -25,7 +26,12 @@ export default {
       parts: this.initParts
     }
   },
-  props: ['initBusiness', 'initParts', 'user']
+  props: ['initBusiness', 'initParts', 'user'],
+  methods: {
+    pathsChan(paths) {
+      this.$emit('pathsChan', paths);
+    }
+  }
 };
 </script>
 

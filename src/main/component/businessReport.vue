@@ -35,7 +35,19 @@
 
 <script>
 export default {
-  name: 'businessReport'
+  name: 'businessReport',
+  data() {
+    return {
+      paths: [
+        { name: '待处理业务', url: '/business-handle-list-sales', present: false },
+        { name: '业务详情', url: `/business-handle-detail-sales/${this.$route.params.id}`, present: false },
+        { name: '业务报告', url: `/business-handle-detail-sales/${this.$route.params.id}/business-report`, present: true }
+      ]
+    };
+  },
+  create() {
+    this.$emit('pathsChan', this.paths);
+  }
 };
 </script>
 

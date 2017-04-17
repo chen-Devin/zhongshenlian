@@ -1,13 +1,12 @@
 <template>
   <div class="billing-list list-group">
-    <router-link to="">billing 1</router-link>
-    <router-link to="">billing 2</router-link>
-    <router-link to="">billing 3</router-link>
-    <router-link to="">billing 4</router-link>
-    <router-link to="">billing 5</router-link>
-    <router-link to="">billing 6</router-link>
+    <router-link class="list-group-item" to="">billing 1</router-link>
+    <router-link class="list-group-item" to="">billing 2</router-link>
+    <router-link class="list-group-item" to="">billing 3</router-link>
+    <router-link class="list-group-item" to="">billing 4</router-link>
+    <router-link class="list-group-item" to="">billing 5</router-link>
+    <router-link class="list-group-item" to="">billing 6</router-link>
   </div>
-
 </template>
 
 <script>
@@ -17,7 +16,18 @@ import qs from 'qs';
 
 export default {
   name: 'billingInfor',
-
+  data() {
+    return {
+      paths: [
+        { name: '待处理业务', url: '/business-handle-list-sales', present: false },
+        { name: '业务详情', url: `/business-handle-detail-sales/${this.$route.params.id}`, present: false },
+        { name: '开票信息', url: `/business-handle-detail-sales/${this.$route.params.id}/billing-infor`, present: true }
+      ]
+    };
+  },
+  create() {
+    this.$emit('pathsChan', this.paths);
+  }
 };
 </script>
 

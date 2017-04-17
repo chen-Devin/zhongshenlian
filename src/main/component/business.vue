@@ -3,7 +3,8 @@
     <progress-bar></progress-bar>
     <tab-control v-bind:initParts="parts"
                  v-bind:initBusiness="business"
-                 v-bind:user="user"></tab-control>
+                 v-bind:user="user"
+                 v-on:pathsChan="pathsChan"></tab-control>
   </div>
 </template>
 
@@ -26,6 +27,11 @@ export default {
     };
   },
   props: ['initBusiness', 'user'],
+  methods: {
+    pathsChan(paths) {
+      this.$emit('pathsChan', paths);
+    }
+  },
   components: {
     progressBar,
     tabControl
