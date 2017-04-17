@@ -13,7 +13,10 @@
       <business-editor v-bind:initBusiness="business"
                        v-bind:editable="editable"
                        v-on:saved="saved"
-                       v-on:submited="submited"></business-editor>
+                       v-on:submited="submited"
+                       v-on:uploaded="uploaded"
+                       v-on:deletedFile="deletedFile"
+                       v-on:refuseSub="refuseSub"></business-editor>
     </card>
     <business-del-modal v-if="showDelModal"
                         v-bind:initalBusiness="business"
@@ -273,6 +276,18 @@ export default {
     },
     delCanceled() {
       this.showDelModal = false;
+    },
+    uploaded(uploadedBusiness) {
+      this.business = uploadedBusiness;
+    },
+    deletedFile(deletedFileBusiness) {
+      this.business = deletedFileBusiness;
+    },
+    refuseSub(msg) {
+      this.$message({
+        message: msg,
+        type: 'danger'
+      });
     }
   },
   components: {

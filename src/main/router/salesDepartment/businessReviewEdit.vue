@@ -22,7 +22,8 @@
                        v-on:saved="saved"
                        v-on:submited="submited"
                        v-on:uploaded="uploaded"
-                       v-on:deletedFile="deletedFile"></business-editor>
+                       v-on:deletedFile="deletedFile"
+                       v-on:refuseSub="refuseSub"></business-editor>
       <template v-if="business.projectStatus!==1">
         <hr>
         <div class="row">
@@ -297,6 +298,7 @@ export default {
           this.business.proposer.name = rep.data.data.applicantName;
           this.business.proposer.tele = rep.data.data.applicantPhone;
 
+          //TODO
           this.business.institution.name = rep.data.data.requester;
           this.business.institution.client = rep.data.data.requesterName;
 
@@ -445,6 +447,12 @@ export default {
     },
     deletedFile(deletedFileBusiness) {
       this.business = deletedFileBusiness;
+    },
+    refuseSub(msg) {
+      this.$message({
+        message: msg,
+        type: 'danger'
+      });
     }
   },
   components: {

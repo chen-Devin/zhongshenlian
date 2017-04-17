@@ -572,7 +572,7 @@ export default {
       return (this.business.departmentCoop.name === '有部门合作') ? true : false;
     },
     institutionName() {
-      return this.business.institution ? this.business.institution.name:'';
+      return this.business.institution ? this.business.institution.name : '';
     }
   },
   props: ['initBusiness', 'editable'],
@@ -841,123 +841,131 @@ export default {
       return promise;
     },
     sub() {
-      let promise = new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-          method: 'post',
-          url: '/service',
-          data: qs.stringify({
-            data: (() => {
-              let obj = {
-                command: 'addBusniessInfo',
-                platform: 'web',
-                data: {
-                  id: this.business.id,
-                  projectName: this.business.name,
-                  contractNo: this.business.number,
-                  //TODO
-                  requester: this.business.institution.name,
-                  requesterId: this.business.institution.id,
-                  requesterName: this.business.institution.name,
-                  reportPurpose: this.business.report.usage,
-                  startTime: this.business.time.start,
-                  endTime: this.business.time.end,
-                  totalAssets: this.business.assetAmount,
-                  contractAmount: this.business.contractAmount,
-                  contractPrice: this.business.contractPrice,
-                  reportCopies: this.business.report.amount,
-                  reportType: (() => {
-                    let out = [];
-                    for (let i=0; i<this.business.report.type.length; i++) {
-                      let flag = false;
-                      let typeArray = [];
-                      for (let j=0; j<this.business.report.type[i].words.length; j++) {
-                        if (this.business.report.type[i].words[j].state) {
-                          flag = true;
-                          typeArray.push({
-                            name: this.business.report.type[i].words[j].name
+      if (!this.basicFeeCheck()) {
+        return false;
+      } else if (!this.benefitFeeCheck()) {
+        return false;
+      } else if (!this.departmentsCheck()) {
+        return false;
+      } else {
+        let promise = new Promise((resolve, reject) => {
+          axios({
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+            method: 'post',
+            url: '/service',
+            data: qs.stringify({
+              data: (() => {
+                let obj = {
+                  command: 'addBusniessInfo',
+                  platform: 'web',
+                  data: {
+                    id: this.business.id,
+                    projectName: this.business.name,
+                    contractNo: this.business.number,
+                    //TODO
+                    requester: this.business.institution.name,
+                    requesterId: this.business.institution.id,
+                    requesterName: this.business.institution.name,
+                    reportPurpose: this.business.report.usage,
+                    startTime: this.business.time.start,
+                    endTime: this.business.time.end,
+                    totalAssets: this.business.assetAmount,
+                    contractAmount: this.business.contractAmount,
+                    contractPrice: this.business.contractPrice,
+                    reportCopies: this.business.report.amount,
+                    reportType: (() => {
+                      let out = [];
+                      for (let i=0; i<this.business.report.type.length; i++) {
+                        let flag = false;
+                        let typeArray = [];
+                        for (let j=0; j<this.business.report.type[i].words.length; j++) {
+                          if (this.business.report.type[i].words[j].state) {
+                            flag = true;
+                            typeArray.push({
+                              name: this.business.report.type[i].words[j].name
+                            });
+                          }
+                        }
+                        if (flag) {
+                          out.push({
+                            department: this.business.report.type[i].name,
+                            typeArray
                           });
                         }
                       }
-                      if (flag) {
-                        out.push({
-                          department: this.business.report.type[i].name,
-                          typeArray
+                      return out;
+                    })(),
+                    businessType: this.business.type,
+                    projectStatus: this.business.projectStatus,
+                    projectManagerId: this.business.manager.id,
+                    projectManagerName: this.business.manager.name,
+                    checkStartTime: this.business.auditTime.start,
+                    checkEndTime: this.business.auditTime.end,
+                    cooperationDepartment: (() => {
+                      let out = {};
+                      if (this.business.departmentCoop.name === '有部门合作') {
+                        out.mainRate = this.business.departmentCoop.departments.main.percentage;
+                        out.otherArray = [];
+                        for (let i=0; i<this.business.departmentCoop.departments.coop.length; i++) {
+                          out.otherArray.push({
+                            cooperation: this.business.departmentCoop.departments.coop[i].name,
+                            cooperationRate: this.business.departmentCoop.departments.coop[i].percentage
+                          });
+                        }
+                      }
+                      return out;
+                    })(),
+                    trialTeacherId: this.business.reviewCPA.id,
+                    trialTeacherName: this.business.reviewCPA.name,
+                    trialAssistantId: this.business.reviewAssistant.id,
+                    trialAssistantName: this.business.reviewAssistant.name,
+                    lastOffice: this.business.lastoffice,
+                    getWay: this.business.getWay,
+                    contractType: (() => {
+                      let out = {
+                        type: this.business.contractType.name,
+                        mainBasicName: this.business.contractType.basicFee.main.name,
+                        mainBasicRate: this.business.contractType.basicFee.main.percentage,
+                        mainEfficiencyName: this.business.contractType.benefitFee.main.name,
+                        mainEfficiencyRate: this.business.contractType.benefitFee.main.percentage,
+                        subBasicArray: [],
+                        subEfficiencyArray: []
+                      };
+                      for (let i=0; i<this.business.contractType.basicFee.depend.length; i++) {
+                        out.subBasicArray.push({
+                          name: this.business.contractType.basicFee.depend[i].name,
+                          rate: this.business.contractType.basicFee.depend[i].percentage
                         });
                       }
-                    }
-                    return out;
-                  })(),
-                  businessType: this.business.type,
-                  projectStatus: this.business.projectStatus,
-                  projectManagerId: this.business.manager.id,
-                  projectManagerName: this.business.manager.name,
-                  checkStartTime: this.business.auditTime.start,
-                  checkEndTime: this.business.auditTime.end,
-                  cooperationDepartment: (() => {
-                    let out = {};
-                    if (this.business.departmentCoop.name === '有部门合作') {
-                      out.mainRate = this.business.departmentCoop.departments.main.percentage;
-                      out.otherArray = [];
-                      for (let i=0; i<this.business.departmentCoop.departments.coop.length; i++) {
-                        out.otherArray.push({
-                          cooperation: this.business.departmentCoop.departments.coop[i].name,
-                          cooperationRate: this.business.departmentCoop.departments.coop[i].percentage
+                      for (let i=0; i<this.business.contractType.benefitFee.depend.length; i++) {
+                        out.subEfficiencyArray.push({
+                          name: this.business.contractType.benefitFee.depend[i].name,
+                          rate: this.business.contractType.benefitFee.depend[i].percentage
                         });
                       }
-                    }
-                    return out;
-                  })(),
-                  trialTeacherId: this.business.reviewCPA.id,
-                  trialTeacherName: this.business.reviewCPA.name,
-                  trialAssistantId: this.business.reviewAssistant.id,
-                  trialAssistantName: this.business.reviewAssistant.name,
-                  lastOffice: this.business.lastoffice,
-                  getWay: this.business.getWay,
-                  contractType: (() => {
-                    let out = {
-                      type: this.business.contractType.name,
-                      mainBasicName: this.business.contractType.basicFee.main.name,
-                      mainBasicRate: this.business.contractType.basicFee.main.percentage,
-                      mainEfficiencyName: this.business.contractType.benefitFee.main.name,
-                      mainEfficiencyRate: this.business.contractType.benefitFee.main.percentage,
-                      subBasicArray: [],
-                      subEfficiencyArray: []
-                    };
-                    for (let i=0; i<this.business.contractType.basicFee.depend.length; i++) {
-                      out.subBasicArray.push({
-                        name: this.business.contractType.basicFee.depend[i].name,
-                        rate: this.business.contractType.basicFee.depend[i].percentage
-                      });
-                    }
-                    for (let i=0; i<this.business.contractType.benefitFee.depend.length; i++) {
-                      out.subEfficiencyArray.push({
-                        name: this.business.contractType.benefitFee.depend[i].name,
-                        rate: this.business.contractType.benefitFee.depend[i].percentage
-                      });
-                    }
-                    return out;
-                  })(),
-                  annexArray: this.business.files,
-                  contractAnnexArray: this.business.contractAnnexArray,
-                  projectApproverArray: this.business.projectApproverArray,
-                  projectSchduleArray: this.business.projectSchduleArray,
-                  projectBillingArray: this.business.projectBillingArray,
-                  projectOperatingArray: this.business.projectOperatingArray
-                }
-              };
-              return JSON.stringify(obj);
-            })()
-          })
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.business.id = rep.data.data.id;
-            this.$emit('submited', this.business);
-            resolve(rep);
-          }
-        }, (rep) => { });
-      });
-      return promise;
+                      return out;
+                    })(),
+                    annexArray: this.business.files,
+                    contractAnnexArray: this.business.contractAnnexArray,
+                    projectApproverArray: this.business.projectApproverArray,
+                    projectSchduleArray: this.business.projectSchduleArray,
+                    projectBillingArray: this.business.projectBillingArray,
+                    projectOperatingArray: this.business.projectOperatingArray
+                  }
+                };
+                return JSON.stringify(obj);
+              })()
+            })
+          }).then((rep) => {
+            if (rep.data.statusCode === '10001') {
+              this.business.id = rep.data.data.id;
+              this.$emit('submited', this.business);
+              resolve(rep);
+            }
+          }, (rep) => { });
+        });
+        return promise;
+      }
     },
     reSave(file) {
       if (this.business.id === '') {
@@ -990,7 +998,7 @@ export default {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
         method: 'post',
         url: '/service',
-        params: {
+        data: qs.stringify({
           data: (() => {
             let obj = {
               command: 'delFile',
@@ -1000,7 +1008,7 @@ export default {
             }
             return JSON.stringify(obj);
           })()
-        }
+        })
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
           for (let i = 0; i < this.business.files.length; i++) {
@@ -1019,18 +1027,66 @@ export default {
     addBasicFee() {
       this.business.contractType.basicFee.depend.push({ name: '', percentage: 0 });
     },
+    basicFeeCheck() {
+      if (this.business.contractType.name === '联合体') {
+        let total = this.business.contractType.basicFee.main.percentage;
+        for (let i=0; i<this.business.contractType.basicFee.depend.length; i++) {
+          total += this.business.contractType.basicFee.depend[i].percentage;
+        }
+        if (total === 100) {
+          return true;
+        } else {
+          this.$emit('refuseSub', '基本取费比例之和不为100%，请检查');
+          return false;
+        }
+      } else {
+        return true;
+      }
+    },
     delBenefitFee(index) {
       this.business.contractType.benefitFee.depend.splice(index, 1);
     },
     addBenefitFee() {
       this.business.contractType.benefitFee.depend.push({ name: '', percentage: 0 });
     },
+    benefitFeeCheck() {
+      if (this.business.contractType.name === '联合体') {
+        let total = this.business.contractType.benefitFee.main.percentage;
+        for (let i=0; i<this.business.contractType.benefitFee.depend.length; i++) {
+          total += this.business.contractType.benefitFee.depend[i].percentage;
+        }
+        if (total === 100) {
+          return true;
+        } else {
+          this.$emit('refuseSub', '基本取费比例之和不为100%，请检查');
+          return false;
+        }
+      } else {
+        return true;
+      }
+    },
     delDepartments(index) {
       this.business.departmentCoop.departments.coop.splice(index, 1);
     },
     addDepartments() {
       this.business.departmentCoop.departments.coop.push({ name: '', percentage: 0 });
-    }
+    },
+    departmentsCheck() {
+      if (this.business.departmentCoop.name === '有部门合作') {
+        let total = this.business.departmentCoop.departments.main.percentage;
+        for (let i=0; i<this.business.departmentCoop.departments.coop.length; i++) {
+          total += this.business.departmentCoop.departments.coop[i].percentage;
+        }
+        if (total === 100) {
+          return true;
+        } else {
+          this.$emit('refuseSub', '部门合作比例之和不为100%，请检查');
+          return false;
+        }
+      } else {
+        return true;
+      }
+    },
   }
 };
 </script>
