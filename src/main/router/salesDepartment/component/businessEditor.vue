@@ -26,20 +26,18 @@
       <label class="col-sm-2 control-label">委托单位</label>
       <div class="col-sm-9">
         <select class="form-control"
-                v-model="business.institution.name"
+                v-model="business.institution"
                 v-bind:readonly="!editable">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+          <option v-for="(CUS, index) in customers"
+                  v-bind:value="CUS"
+                  v-bind:key="index">{{CUS.name}}</option>
         </select>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">客户名称</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.institution.client}}</p>
+        <p class="form-control-static">{{institutionName}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -48,11 +46,9 @@
         <select class="form-control"
                 v-model="business.type"
                 v-bind:readonly="!editable">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+          <option v-for="(TYPE, index) in businessType"
+                  v-bind:value="TYPE"
+                  v-bind:key="index">{{TYPE}}</option>
         </select>
       </div>
     </div>
@@ -62,11 +58,9 @@
         <select class="form-control"
                 v-model="business.manager"
                 v-bind:readonly="!editable">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+          <option v-for="(STA, index) in staffs"
+                  v-bind:value="STA"
+                  v-bind:key="index">{{STA.name}}</option>
         </select>
       </div>
     </div>
@@ -262,16 +256,16 @@
           </div>
           <h4 class="col-sm-1"
               v-if="editable">
-            <a class="fa fa-times-circle text-danger"
-               v-on:click="delBasicFee(index)"></a>
-          </h4>
+              <a class="fa fa-times-circle text-danger"
+                 v-on:click="delBasicFee(index)"></a>
+            </h4>
         </div>
         <div class="row form-group">
           <h4 class="col-sm-1 col-sm-offset-11"
               v-if="editable">
-            <a class="fa fa-plus-circle text-success"
-               v-on:click="addBasicFee()"></a>
-          </h4>
+              <a class="fa fa-plus-circle text-success"
+                 v-on:click="addBasicFee()"></a>
+            </h4>
         </div>
       </div>
     </div>
@@ -328,16 +322,16 @@
           </div>
           <h4 class="col-sm-1"
               v-if="editable">
-            <a class="fa fa-times-circle text-danger"
-               v-on:click="delBenefitFee(index)"></a>
-          </h4>
+              <a class="fa fa-times-circle text-danger"
+                 v-on:click="delBenefitFee(index)"></a>
+            </h4>
         </div>
         <div class="row form-group">
           <h4 class="col-sm-1 col-sm-offset-11"
               v-if="editable">
-            <a class="fa fa-plus-circle text-success"
-               v-on:click="addBenefitFee()"></a>
-          </h4>
+              <a class="fa fa-plus-circle text-success"
+                 v-on:click="addBenefitFee()"></a>
+            </h4>
         </div>
       </div>
     </div>
@@ -405,16 +399,16 @@
           </div>
           <h4 class="col-sm-1"
               v-if="editable">
-            <a class="fa fa-times-circle text-danger"
-               v-on:click="delDepartments(index)"></a>
-          </h4>
+              <a class="fa fa-times-circle text-danger"
+                 v-on:click="delDepartments(index)"></a>
+            </h4>
         </div>
         <div class="row form-group">
           <h4 class="col-sm-1 col-sm-offset-11"
               v-if="editable">
-            <a class="fa fa-plus-circle text-success"
-               v-on:click="addDepartments()"></a>
-          </h4>
+              <a class="fa fa-plus-circle text-success"
+                 v-on:click="addDepartments()"></a>
+            </h4>
         </div>
       </div>
     </div>
@@ -424,11 +418,9 @@
         <select class="form-control"
                 v-model="business.reviewCPA"
                 v-bind:readonly="!editable">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+          <option v-for="(STA, index) in staffs"
+                  v-bind:value="STA"
+                  v-bind:key="index">{{STA.name}}</option>
         </select>
       </div>
     </div>
@@ -438,11 +430,9 @@
         <select class="form-control"
                 v-model="business.reviewAssistant"
                 v-bind:readonly="!editable">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+          <option v-for="(STA, index) in staffs"
+                  v-bind:value="STA"
+                  v-bind:key="index">{{STA.name}}</option>
         </select>
       </div>
     </div>
@@ -465,11 +455,9 @@
         <select class="form-control"
                 v-model="business.report.usage"
                 v-bind:readonly="!editable">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+          <option v-for="(TYPE, index) in businessType"
+                  v-bind:value="TYPE"
+                  v-bind:key="index">{{TYPE}}</option>
         </select>
       </div>
     </div>
@@ -486,17 +474,13 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">项目取得方式</label>
       <div class="col-sm-9">
-        <label class="checkbox-inline">
+        <label class="checkbox-inline"
+               v-for="(WAY, index) in business.getWay"
+               v-bind:key="index">
           <input type="checkbox"
                  name="gainingMethod"
-                 v-model="business.getWay.direct.state"
-                 v-bind:readonly="!editable"> {{business.getWay.direct.name}}
-        </label>
-        <label class="checkbox-inline">
-          <input type="checkbox"
-                 name="gainingMethod"
-                 v-model="business.getWay.bid.state"
-                 v-bind:readonly="!editable"> {{business.getWay.bid.name}}
+                 v-model="WAY.state"
+                 v-bind:readonly="!editable"> {{WAY.name}}
         </label>
       </div>
     </div>
@@ -550,29 +534,52 @@ export default {
   data() {
     return {
       business: this.initBusiness,
-      uploadURL: ''
+      uploadURL: '',
+      staffs: [],
+      customers: [],
+      businessType: [
+        '年度报告审计',
+        '中期报告审计',
+        '专项资金收支使用情况审计',
+        '经济责任审计',
+        '资产清查、清产核资审计',
+        '财务收支审计',
+        '高新、软件企业审计',
+        '金融企业审计',
+        '改组、股权转让审计',
+        '发债申报审计',
+        '并购重组审计',
+        '内部制度审计',
+        '评估前审计',
+        '收入、支出、成本等专项审计',
+        '外资权益确认审计',
+        '工程决算',
+        '验资',
+        '审阅',
+        '咨询',
+        '评估',
+        '税审',
+        '工程结算',
+        '其他'
+      ]
     };
   },
   computed: {
     contractTypeChan() {
-      if (this.business.contractType.name === '联合体') {
-        return true;
-      } else {
-        return false;
-      }
+      return (this.business.contractType.name === '联合体') ? true : false;
     },
     departmentCoopChan() {
-      if (this.business.departmentCoop.name === '有部门合作') {
-        return true;
-      } else {
-        return false;
-      }
+      return (this.business.departmentCoop.name === '有部门合作') ? true : false;
+    },
+    institutionName() {
+      return this.business.institution ? this.business.institution.name:'';
     }
   },
   props: ['initBusiness', 'editable'],
   created() {
     bus.$on('subBusiness', () => { this.sub() });
     bus.$on('savBusiness', () => { this.save() });
+
     let data = {
       command: 'handlerBusiness',
       platform: 'web',
@@ -580,6 +587,32 @@ export default {
       type: 'projectAnnex'
     };
     this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
+
+    this.getStaffs().then(() => {
+      if (this.business.manager === null) {
+        this.business.manager = this.staffs[0];
+      }
+      if (this.business.reviewCPA === null) {
+        this.business.reviewCPA = this.staffs[0];
+      }
+      if (this.business.reviewAssistant === null) {
+        this.business.reviewAssistant = this.staffs[0];
+      }
+    }, () => {});
+
+    this.getCustomers().then(() => {
+      if (this.business.institution === null) {
+        this.business.institution = this.customers[0];
+      }
+    }, () => {});
+
+    if (this.business.type === '') {
+      this.business.type = this.businessType[0];
+    }
+
+    if (this.business.report.usage === '') {
+      this.business.report.usage = this.businessType[0];
+    }
   },
   methods: {
     reportTypeChan(TYPE, WORD) {
@@ -603,7 +636,7 @@ export default {
       let t = new Date();
       let year = t.getFullYear();
       outermost2:
-      for(let i = 0; i < this.business.report.type.length; i++) {
+      for (let i = 0; i < this.business.report.type.length; i++) {
         for (let j = 0; j < this.business.report.type[i].words.length; j++) {
           if (this.business.report.type[i].words[j].state) {
             flag = true;
@@ -615,11 +648,79 @@ export default {
       }
 
       if (flag) {
-        this.business.number = `${type}-${word}-${year}-XXX`;
+        this.business.number = `${type}-${word}-${year}-XXXX`;
       } else {
         this.business.number = '';
       }
 
+    },
+    getStaffs() {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'staffManagement',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            for (let i = 0; i < rep.data.data.departmentArray.length; i++) {
+              for (let j = 0; j < rep.data.data.departmentArray[i].staffArray.length; j++) {
+                this.staffs.push(rep.data.data.departmentArray[i].staffArray[j])
+              }
+            }
+            resolve(rep);
+          }
+        }, (rep) => { });
+      });
+      return promise;
+    },
+    getCustomers() {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'getCustomerList',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            for (let i = 0; i < rep.data.data.customerArray.length; i++) {
+              let obj = {
+                id: rep.data.data.customerArray[i].id,
+                name: rep.data.data.customerArray[i].name,
+                telephone: rep.data.data.customerArray[i].telephone,
+                departmentName: rep.data.data.customerArray[i].departmentName,
+                businessLicenseNumber: rep.data.data.customerArray[i].businessLicenseNumber,
+                registeredCapital: rep.data.data.customerArray[i].registeredCapital,
+                customerNature: rep.data.data.customerArray[i].customerNature,
+                assetSize: rep.data.data.customerArray[i].assetSize,
+                industry: rep.data.data.customerArray[i].industry,
+                setUpTime: rep.data.data.customerArray[i].setUpTime,
+                founderId: rep.data.data.customerArray[i].founderId,
+                founderName: rep.data.data.customerArray[i].founderName
+              };
+              this.customers.push(obj);
+            }
+            resolve(rep);
+          }
+        }, (rep) => { });
+      });
+      return promise;
     },
     save() {
       let promise = new Promise((resolve, reject) => {
@@ -635,23 +736,91 @@ export default {
                 data: {
                   id: this.business.id,
                   projectName: this.business.name,
-                  contractNo: this.business.contractNo,
-                  businessUndertakerId: this.business.proposerId,
-                  businessUndertakerName: this.business.proposerName,
-                  undertakerPhone: this.business.proposerTele,
-                  requester: this.business.institution,
-                  requesterPhone: this.business.institutionTele,
-                  reportPurpose: this.business.purpose,
-                  startTime: this.business.startTime,
-                  endTime: this.business.endTime,
-                  peopleNumber: this.business.peopleNum,
-                  enterpriseScale: this.business.institutionScale,
-                  contractAmount: this.business.amount,
-                  applicantOpinion: this.business.proposerOpinion,
-                  projectType: this.business.projectType,
-                  projectAmount: this.business.projectAmount,
+                  contractNo: this.business.number,
+                  //TODO
+                  requester: this.business.institution.name,
+                  requesterId: this.business.institution.id,
+                  requesterName: this.business.institution.name,
+                  reportPurpose: this.business.report.usage,
+                  startTime: this.business.time.start,
+                  endTime: this.business.time.end,
+                  totalAssets: this.business.assetAmount,
+                  contractAmount: this.business.contractAmount,
+                  contractPrice: this.business.contractPrice,
+                  reportCopies: this.business.report.amount,
+                  reportType: (() => {
+                    let out = [];
+                    for (let i=0; i<this.business.report.type.length; i++) {
+                      let flag = false;
+                      let typeArray = [];
+                      for (let j=0; j<this.business.report.type[i].words.length; j++) {
+                        if (this.business.report.type[i].words[j].state) {
+                          flag = true;
+                          typeArray.push({
+                            name: this.business.report.type[i].words[j].name
+                          });
+                        }
+                      }
+                      if (flag) {
+                        out.push({
+                          department: this.business.report.type[i].name,
+                          typeArray
+                        });
+                      }
+                    }
+                    return out;
+                  })(),
+                  businessType: this.business.type,
                   projectStatus: this.business.projectStatus,
+                  projectManagerId: this.business.manager.id,
+                  projectManagerName: this.business.manager.name,
+                  checkStartTime: this.business.auditTime.start,
+                  checkEndTime: this.business.auditTime.end,
+                  cooperationDepartment: (() => {
+                    let out = {};
+                    if (this.business.departmentCoop.name === '有部门合作') {
+                      out.mainRate = this.business.departmentCoop.departments.main.percentage;
+                      out.otherArray = [];
+                      for (let i=0; i<this.business.departmentCoop.departments.coop.length; i++) {
+                        out.otherArray.push({
+                          cooperation: this.business.departmentCoop.departments.coop[i].name,
+                          cooperationRate: this.business.departmentCoop.departments.coop[i].percentage
+                        });
+                      }
+                    }
+                    return out;
+                  })(),
+                  trialTeacherId: this.business.reviewCPA.id,
+                  trialTeacherName: this.business.reviewCPA.name,
+                  trialAssistantId: this.business.reviewAssistant.id,
+                  trialAssistantName: this.business.reviewAssistant.name,
+                  lastOffice: this.business.lastoffice,
+                  getWay: this.business.getWay,
+                  contractType: (() => {
+                    let out = {
+                      type: this.business.contractType.name,
+                      mainBasicName: this.business.contractType.basicFee.main.name,
+                      mainBasicRate: this.business.contractType.basicFee.main.percentage,
+                      mainEfficiencyName: this.business.contractType.benefitFee.main.name,
+                      mainEfficiencyRate: this.business.contractType.benefitFee.main.percentage,
+                      subBasicArray: [],
+                      subEfficiencyArray: []
+                    };
+                    for (let i=0; i<this.business.contractType.basicFee.depend.length; i++) {
+                      out.subBasicArray.push({
+                        name: this.business.contractType.basicFee.depend[i].name,
+                        rate: this.business.contractType.basicFee.depend[i].percentage
+                      });
+                    }
+                    for (let i=0; i<this.business.contractType.benefitFee.depend.length; i++) {
+                      out.subEfficiencyArray.push({
+                        name: this.business.contractType.benefitFee.depend[i].name,
+                        rate: this.business.contractType.benefitFee.depend[i].percentage
+                      });
+                    }
+                  })(),
                   annexArray: this.business.files,
+                  contractAnnexArray: this.business.contractAnnexArray,
                   projectApproverArray: this.business.projectApproverArray,
                   projectSchduleArray: this.business.projectSchduleArray,
                   projectBillingArray: this.business.projectBillingArray,
@@ -685,23 +854,92 @@ export default {
                 data: {
                   id: this.business.id,
                   projectName: this.business.name,
-                  contractNo: this.business.contractNo,
-                  businessUndertakerId: this.business.proposerId,
-                  businessUndertakerName: this.business.proposerName,
-                  undertakerPhone: this.business.proposerTele,
-                  requester: this.business.institution,
-                  requesterPhone: this.business.institutionTele,
-                  reportPurpose: this.business.purpose,
-                  startTime: this.business.startTime,
-                  endTime: this.business.endTime,
-                  peopleNumber: this.business.peopleNum,
-                  enterpriseScale: this.business.institutionScale,
-                  contractAmount: this.business.amount,
-                  applicantOpinion: this.business.proposerOpinion,
-                  projectType: this.business.projectType,
-                  projectAmount: this.business.projectAmount,
+                  contractNo: this.business.number,
+                  //TODO
+                  requester: this.business.institution.name,
+                  requesterId: this.business.institution.id,
+                  requesterName: this.business.institution.name,
+                  reportPurpose: this.business.report.usage,
+                  startTime: this.business.time.start,
+                  endTime: this.business.time.end,
+                  totalAssets: this.business.assetAmount,
+                  contractAmount: this.business.contractAmount,
+                  contractPrice: this.business.contractPrice,
+                  reportCopies: this.business.report.amount,
+                  reportType: (() => {
+                    let out = [];
+                    for (let i=0; i<this.business.report.type.length; i++) {
+                      let flag = false;
+                      let typeArray = [];
+                      for (let j=0; j<this.business.report.type[i].words.length; j++) {
+                        if (this.business.report.type[i].words[j].state) {
+                          flag = true;
+                          typeArray.push({
+                            name: this.business.report.type[i].words[j].name
+                          });
+                        }
+                      }
+                      if (flag) {
+                        out.push({
+                          department: this.business.report.type[i].name,
+                          typeArray
+                        });
+                      }
+                    }
+                    return out;
+                  })(),
+                  businessType: this.business.type,
                   projectStatus: this.business.projectStatus,
+                  projectManagerId: this.business.manager.id,
+                  projectManagerName: this.business.manager.name,
+                  checkStartTime: this.business.auditTime.start,
+                  checkEndTime: this.business.auditTime.end,
+                  cooperationDepartment: (() => {
+                    let out = {};
+                    if (this.business.departmentCoop.name === '有部门合作') {
+                      out.mainRate = this.business.departmentCoop.departments.main.percentage;
+                      out.otherArray = [];
+                      for (let i=0; i<this.business.departmentCoop.departments.coop.length; i++) {
+                        out.otherArray.push({
+                          cooperation: this.business.departmentCoop.departments.coop[i].name,
+                          cooperationRate: this.business.departmentCoop.departments.coop[i].percentage
+                        });
+                      }
+                    }
+                    return out;
+                  })(),
+                  trialTeacherId: this.business.reviewCPA.id,
+                  trialTeacherName: this.business.reviewCPA.name,
+                  trialAssistantId: this.business.reviewAssistant.id,
+                  trialAssistantName: this.business.reviewAssistant.name,
+                  lastOffice: this.business.lastoffice,
+                  getWay: this.business.getWay,
+                  contractType: (() => {
+                    let out = {
+                      type: this.business.contractType.name,
+                      mainBasicName: this.business.contractType.basicFee.main.name,
+                      mainBasicRate: this.business.contractType.basicFee.main.percentage,
+                      mainEfficiencyName: this.business.contractType.benefitFee.main.name,
+                      mainEfficiencyRate: this.business.contractType.benefitFee.main.percentage,
+                      subBasicArray: [],
+                      subEfficiencyArray: []
+                    };
+                    for (let i=0; i<this.business.contractType.basicFee.depend.length; i++) {
+                      out.subBasicArray.push({
+                        name: this.business.contractType.basicFee.depend[i].name,
+                        rate: this.business.contractType.basicFee.depend[i].percentage
+                      });
+                    }
+                    for (let i=0; i<this.business.contractType.benefitFee.depend.length; i++) {
+                      out.subEfficiencyArray.push({
+                        name: this.business.contractType.benefitFee.depend[i].name,
+                        rate: this.business.contractType.benefitFee.depend[i].percentage
+                      });
+                    }
+                    return out;
+                  })(),
                   annexArray: this.business.files,
+                  contractAnnexArray: this.business.contractAnnexArray,
                   projectApproverArray: this.business.projectApproverArray,
                   projectSchduleArray: this.business.projectSchduleArray,
                   projectBillingArray: this.business.projectBillingArray,
@@ -779,19 +1017,19 @@ export default {
       this.business.contractType.basicFee.depend.splice(index, 1);
     },
     addBasicFee() {
-      this.business.contractType.basicFee.depend.push({name:'',percentage:0});
+      this.business.contractType.basicFee.depend.push({ name: '', percentage: 0 });
     },
     delBenefitFee(index) {
       this.business.contractType.benefitFee.depend.splice(index, 1);
     },
     addBenefitFee() {
-      this.business.contractType.benefitFee.depend.push({name:'',percentage:0});
+      this.business.contractType.benefitFee.depend.push({ name: '', percentage: 0 });
     },
     delDepartments(index) {
       this.business.departmentCoop.departments.coop.splice(index, 1);
     },
     addDepartments() {
-      this.business.departmentCoop.departments.coop.push({name:'',percentage:0});
+      this.business.departmentCoop.departments.coop.push({ name: '', percentage: 0 });
     }
   }
 };

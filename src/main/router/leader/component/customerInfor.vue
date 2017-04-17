@@ -1,6 +1,12 @@
 <template>
   <card>
-    <h3>客户列表</h3>
+    <h3>
+      客户列表
+      <button class="btn btn-primary pull-right"
+              v-on:click="add()">
+        添加客户
+      </button>
+    </h3>
     <table class="table table-striped table-hover">
       <tbody>
         <tr>
@@ -36,6 +42,10 @@
                         v-bind:initalCustomer="delCustomer"
                         v-on:deleted="deleted"
                         v-on:canceled="delCanceled"></customer-del-modal>
+    <customer-add-modal v-if="showAddModal"
+                        v-bind:user="user"
+                        v-on:added="added"
+                        v-on:canceled="addCanceled"></customer-add-modal>
   </card>
 </template>
 
@@ -45,6 +55,7 @@ import axios from 'axios';
 import card from '../../../component/card.vue';
 import customerModModal from './customerModModal.vue';
 import customerDelModal from './customerDelModal.vue';
+import customerAddModal from './customerAddModal.vue';
 
 export default {
   name: 'customerInfor',
@@ -55,9 +66,11 @@ export default {
       modCustomer: {},
       showDelModal: false,
       delCustomer: {},
+      showAddModal: false,
+      addCustomer: {}
     };
   },
-  props: ['customers'],
+  props: ['customers', 'user'],
   methods: {
     mod(CUSTOMER) {
       this.modCustomer = CUSTOMER;
@@ -66,6 +79,10 @@ export default {
     del(CUSTOMER) {
       this.delCustomer = CUSTOMER;
       this.showDelModal = true;
+    },
+    add() {
+      this.addCustomer = {};
+      this.showAddModal = true;
     },
     saved(modedCustomer) {
       for (let i=0; i < this.thisCustomers.length; i++) {
@@ -105,11 +122,32 @@ export default {
       this.delCustomer = {};
       this.showDelModal = false;
     },
+    added(addedCustomer) {
+      let cus = {};
+      cus.id = addedCustomer.id.val;
+      cus.name = addedCustomer.name.val;
+      cus.telephone = addedCustomer.telephone.val;
+      cus.businessLicenseNumber = addedCustomer.businessLicenseNumber.val;
+      cus.registeredCapital = addedCustomer.registeredCapital.val;
+      cus.customerNature = addedCustomer.customerNature.val;
+      cus.assetSize = addedCustomer.assetSize.val;
+      cus.industry = addedCustomer.industry.val;
+      cus.setUpTime = addedCustomer.setUpTime.val;
+      cus.founderId = addedCustomer.founderId.val;
+      cus.founderName = addedCustomer.founderName.val;
+      cus.departmentName = addedCustomer.departmentName.val;
+      this.thisCustomers.push(cus);
+      this.showAddModal = false;
+    },
+    addCanceled() {
+      this.showAddModal = false;
+    }
   },
   components: {
     card,
     customerModModal,
-    customerDelModal
+    customerDelModal,
+    customerAddModal
   }
 };
 </script>

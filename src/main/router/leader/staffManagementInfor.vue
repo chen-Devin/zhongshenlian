@@ -44,15 +44,11 @@ export default {
             return JSON.stringify(obj);
           })()
         }
-      }).then(
-        (rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.departments = rep.data.data.departmentArray;
-          }
-        }, (rep) => {
-
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.departments = rep.data.data.departmentArray;
         }
-        );
+      }, (rep) => {});
     }
   },
   components: {

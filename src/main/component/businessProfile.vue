@@ -83,7 +83,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">出据报告类型</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{JSON.stringify(business.report)}}</p>
+        <p class="form-control-static" v-html="reportFormat"></p>
       </div>
     </div>
     <div class="form-group"
@@ -118,7 +118,7 @@
           </div>
           <div class="col-sm-5">
             <p class="form-control-static">
-              比例：{{business.contractType.basicFee.main.name}}%
+              比例：{{business.contractType.basicFee.main.percentage}}%
             </p>
           </div>
         </div>
@@ -241,7 +241,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">项目取得方式</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.getWay}}</p>
+        <p class="form-control-static">{{getWayFormat}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -326,19 +326,45 @@ export default {
       } else {
         return false;
       }
-    }
-  },
-  props: ['initBusiness', 'user'],
-  computed: {
+    },
+    getWayFormat() {
+      let out = '';
+      for (let i=0; i<this.business.getWay.length; i++) {
+        if (this.business.getWay[i].state) {
+          out += ' ' + this.business.getWay[i].name;
+        }
+      }
+    },
+    reportFormat() {
+      let out = '';
+      let typeEx = false;
+      let wordsFormat = '';
+      for (let i=0; i<this.business.report.type.length; i++) {
+        typeEx = false;
+        wordsFormat = '';
+        for (let j=0; j<this.business.report.type[i].words.length; j++) {
+          if (this.business.report.type[i].words[j].state) {
+            typeEx = ture;
+            wordsFormat += this.business.report.type[i].words[j].name + ' ';
+          }
+        }
+        if (typeEx) {
+          out += `<h4>${this.business.report.type[i].name}</h4>
+                    <p class="form-control-static">${wordsFormat}</p>
+                  <hr>`;
+        }
+      }
+      return out;
+    },
     contractUploadShow() {
-      if (this.user.department === '业务部' && this.business.projectStatus === '6') {
+      if (this.user.department === '业务部' && this.business.projectStatus === 6) {
         return true;
       } else {
         return false;
       }
     },
     contractFileShow() {
-      if (parseInt(this.business.projectStatus) > 6) {
+      if (this.business.projectStatus > 6) {
         return true;
       }
     },
@@ -348,6 +374,7 @@ export default {
       }
     }
   },
+  props: ['initBusiness', 'user'],
   created() {
     let data = {
       command: 'handlerBusiness',

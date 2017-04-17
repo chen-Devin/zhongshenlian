@@ -62,7 +62,7 @@ export default {
               id: rep.data.data.businessArray[i].id,
               businessName: rep.data.data.businessArray[i].businessName,
               finishTime: rep.data.data.businessArray[i].finishTime,
-              projectStatus: rep.data.data.businessArray[i].projectStatus
+              projectStatus: parseInt(rep.data.data.businessArray[i].projectStatus)
             };
             this.businesses.push(obj);
           }
