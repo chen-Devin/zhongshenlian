@@ -30,7 +30,7 @@
                 v-bind:disabled="!editable">
           <option v-for="(CUS, index) in customers"
                   v-bind:value="CUS"
-                  v-bind:key="index">{{CUS.name}}</option>
+                  v-bind:key="index">{{CUS.customerName}}</option>
         </select>
       </div>
     </div>
@@ -681,61 +681,6 @@ export default {
         this.business.number = '';
       }
     },
-    init(business) {
-      this.getStaffs().then(() => {
-        if (this.business.manager === null) {
-          this.business.manager = this.staffs[0];
-        } else {
-          for (let i=0; i<this.staffs.length; i++) {
-            if (this.business.manager.id === this.staffs[i].id) {
-              this.business.manager = this.staffs[i];
-              break;
-            }
-          }
-        }
-        if (this.business.reviewCPA === null) {
-          this.business.reviewCPA = this.staffs[0];
-        } else {
-          for (let i=0; i<this.staffs.length; i++) {
-            if (this.business.reviewCPA.id === this.staffs[i].id) {
-              this.business.reviewCPA = this.staffs[i];
-              break;
-            }
-          }
-        }
-        if (this.business.reviewAssistant === null) {
-          this.business.reviewAssistant = this.staffs[0];
-        } else {
-          for (let i=0; i<this.staffs.length; i++) {
-            if (this.business.reviewAssistant.id === this.staffs[i].id) {
-              this.business.reviewAssistant = this.staffs[i];
-              break;
-            }
-          }
-        }
-      }, () => {});
-
-      this.getCustomers().then(() => {
-        if (this.business.institution === null) {
-          this.business.institution = this.customers[0];
-        } else {
-          for (let i=0; i<this.customers.length; i++) {
-            if (this.business.institution.id === this.customers[i].id) {
-              this.business.institution = this.customers[i];
-              break;
-            }
-          }
-        }
-      }, () => {});
-
-      if (this.business.type === '') {
-        this.business.type = this.businessType[0];
-      }
-
-      if (this.business.report.usage === '') {
-        this.business.report.usage = this.businessType[0];
-      }
-    },
     getStaffs() {
       let promise = new Promise((resolve, reject) => {
         axios({
@@ -784,9 +729,13 @@ export default {
             for (let i = 0; i < rep.data.data.customerArray.length; i++) {
               let obj = {
                 id: rep.data.data.customerArray[i].id,
+                customerName: rep.data.data.customerArray[i].customerName,
                 name: rep.data.data.customerArray[i].name,
                 telephone: rep.data.data.customerArray[i].telephone,
-                founderDepartment: rep.data.data.customerArray[i].founderDepartment,
+                duty: rep.data.data.customerArray[i].duty,
+                department: rep.data.data.customerArray[i].department,
+                registeredAddress: rep.data.data.customerArray[i].registeredAddress,
+                mailingAddress: rep.data.data.customerArray[i].mailingAddress,
                 businessLicenseNumber: rep.data.data.customerArray[i].businessLicenseNumber,
                 registeredCapital: rep.data.data.customerArray[i].registeredCapital,
                 customerNature: rep.data.data.customerArray[i].customerNature,
@@ -794,7 +743,8 @@ export default {
                 industry: rep.data.data.customerArray[i].industry,
                 setUpTime: rep.data.data.customerArray[i].setUpTime,
                 founderId: rep.data.data.customerArray[i].founderId,
-                founderName: rep.data.data.customerArray[i].founderName
+                founderName: rep.data.data.customerArray[i].founderName,
+                founderDepartment: rep.data.data.customerArray[i].founderDepartment
               };
               this.customers.push(obj);
             }
@@ -819,10 +769,10 @@ export default {
                   id: this.business.id,
                   projectName: this.business.name,
                   contractNo: this.business.number,
-                  //TODO
-                  requester: this.business.institution.name,
+                  requester: this.business.institution.customerName,
                   requesterId: this.business.institution.id,
                   requesterName: this.business.institution.name,
+                  requesterPhone: this.business.institution.telephone,
                   reportPurpose: this.business.report.usage,
                   startTime: this.business.time.start,
                   endTime: this.business.time.end,
@@ -945,10 +895,10 @@ export default {
                     id: this.business.id,
                     projectName: this.business.name,
                     contractNo: this.business.number,
-                    //TODO
-                    requester: this.business.institution.name,
+                    requester: this.business.institution.customerName,
                     requesterId: this.business.institution.id,
                     requesterName: this.business.institution.name,
+                    requesterPhone: this.business.institution.telephone,
                     reportPurpose: this.business.report.usage,
                     startTime: this.business.time.start,
                     endTime: this.business.time.end,

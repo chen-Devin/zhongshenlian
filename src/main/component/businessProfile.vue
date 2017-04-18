@@ -28,7 +28,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">委托单位</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.institution.name}}</p>
+        <p class="form-control-static">{{business.institution.customerName}}</p>
       </div>
     </div>
     <div class="form-group">

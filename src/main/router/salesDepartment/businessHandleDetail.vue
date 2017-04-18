@@ -269,10 +269,11 @@ export default {
             this.business.proposer.name = rep.data.data.applicantName;
             this.business.proposer.tele = rep.data.data.applicantPhone;
 
-            //TODO
             this.business.institution = {
               id: rep.data.data.requesterId,
-              name: rep.data.data.requesterName
+              customerName: rep.data.data.requester,
+              name: rep.data.data.requesterName,
+              telephone: rep.data.data.requesterPhone
             };
 
             this.business.type = rep.data.data.businessType;

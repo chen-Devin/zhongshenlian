@@ -73,7 +73,10 @@ export default {
         },
         institution: null,
         type: '',
-        manager: null,
+        manager: {
+          id: '',
+          name: ''
+        },
         time: {
           start: (() => {
             let t = new Date();
@@ -299,18 +302,27 @@ export default {
             this.business.proposer.name = rep.data.data.applicantName;
             this.business.proposer.tele = rep.data.data.applicantPhone;
 
-            //TODO
             this.business.institution = {
               id: rep.data.data.requesterId,
-              name: rep.data.data.requesterName
+              customerName: rep.data.data.requester,
+              name: rep.data.data.requesterName,
+              telephone: rep.data.data.requesterPhone
             };
 
             this.business.type = rep.data.data.businessType;
 
-            this.business.manager = {
-              id: rep.data.data.projectManagerId,
-              name: rep.data.data.projectManagerName
-            };
+            console.log(this.business.manager);
+            console.log(typeof this.business.manager);
+
+            this.business.manager.id = rep.data.data.projectManagerId,
+            this.business.manager.name = rep.data.data.projectManagerName
+
+            console.log(this.business.manager);
+            console.log(typeof this.business.manager);
+            console.log(this.business);
+            console.log(typeof this.business);
+            console.log(this.business.manager);
+            console.log(typeof this.business.manager);
 
             this.business.time.start = rep.data.data.startTime;
             this.business.time.end = rep.data.data.endTime;
