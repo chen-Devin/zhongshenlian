@@ -2,7 +2,7 @@
 	<div class="main">
 		<crumbs v-bind:paths="paths"></crumbs>
 		<card>
-			<bid-info-edit :iniProject="project"></bid-info-edit>
+			<bid-info-edit :iniProject="project" :office="office"></bid-info-edit>
 		</card>
 	</div>
 </template>
@@ -20,10 +20,11 @@ export default {
     data() {
     	return {
 			paths: [
-	    		{name: '招投标信息看板', url: '/bid-infor-list-market', present: false},
-	    		{name: '招投标详情', url: '/bid-infor-detail', present: true}
+	    		{name: '招投标信息看板', url: '/bid-info-list/cost', present: false},
+	    		{name: '造价所招投标信息录入', url: '/bid-info-input-zjs', present: true}
 	  		],
-	  		project: {}
+	  		project: {},
+	  		office: "造价所"
     	}
     },
     components: {

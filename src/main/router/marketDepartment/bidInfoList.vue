@@ -3,7 +3,7 @@
 		<crumbs v-bind:paths="paths"></crumbs>
 		<card>
             <bid-classification :office="office"></bid-classification>
-            <router-view :bidArray="biddingArray" @tellOffice="getOffice" @queryList="queryList"></router-view>
+            <router-view :bidArray="biddingArray" @tellOffice="getOffice" @queryList="queryList" @checkMessage="checkMessage"></router-view>
             <!-- <bid-info-list-body></bid-info-list-body> -->
 		</card>
 	</div>
@@ -24,7 +24,7 @@ export default {
     data() {
     	return {
     		paths: [
-        		{name: '招投标信息看板', url: '/bid-infor-list-market', present: true}
+        		{name: '招投标信息看板', url: '/bid-info-list', present: true}
       		],
       		checked: '',
       		searchContent: '',
@@ -33,70 +33,6 @@ export default {
       		checkedAttr: [],
       		bidArray: [],
       		checkedAttrArr: [],
-      		businessArray: [{
-				      			id:"0",
-				      			biddingName:"标名",
-				      			uploadDate:"2017-04-03 23:31:19",
-				      			endDate:"2017-04-15 23:31:19",
-				      			biddingState:"中标状态，1表示中标，0表示未中",
-				      			shortlistedState:"0", //已入围
-				      			delipotentState:"0", //摘牌 
-				      			reviewState:"3"
-	      					},{
-				      			id:"1",
-				      			biddingName:"标名",
-				      			uploadDate:"2017-04-03 23:31:19",
-				      			endDate:"2017-04-09 23:31:19",
-				      			biddingState:"1",
-				      			shortlistedState:"1",
-				      			delipotentState:"1",
-				      			reviewState:"1"
-	      					},{
-				      			id:"2",
-				      			biddingName:"标名",
-				      			uploadDate:"2017-04-03 23:31:19",
-				      			endDate:"2017-04-09 23:31:19",
-				      			biddingState:"1",
-				      			shortlistedState:"1",
-				      			delipotentState:"1",
-				      			reviewState:"1"
-	      					},{
-				      			id:"3",
-				      			biddingName:"标名",
-				      			uploadDate:"2017-04-03 23:31:19",
-				      			endDate:"2017-04-09 23:31:19",
-				      			biddingState:"0",
-				      			shortlistedState:"0",
-				      			delipotentState:"0",
-				      			reviewState:"3"
-	      					},{
-				      			id:"4",
-				      			biddingName:"标名",
-				      			uploadDate:"2017-04-03 23:31:19",
-				      			endDate:"2017-04-15 23:31:19",
-				      			biddingState:"中标状态，1表示中标，0表示未中",
-				      			shortlistedState:"0",
-				      			delipotentState:"1",
-				      			reviewState:"3"
-	      					},{
-				      			id:"5",
-				      			biddingName:"标名",
-				      			uploadDate:"2017-04-03 23:31:19",
-				      			endDate:"2017-04-15 23:31:19",
-				      			biddingState:"中标状态，1表示中标，0表示未中",
-				      			shortlistedState:"0",
-				      			delipotentState:"1",
-				      			reviewState:"0"
-	      					},{
-				      			id:"6",
-				      			biddingName:"标名",
-				      			uploadDate:"2017-04-03 23:31:19",
-				      			endDate:"2017-04-15 23:31:19",
-				      			biddingState:"0",
-				      			shortlistedState:"1",
-				      			delipotentState:"1",
-				      			reviewState:"1"
-	      					}],
             office: '',
             biddingArray: []
     	};
@@ -236,71 +172,8 @@ export default {
     			}	
     		}
     	},
-    	filterList(newVal) {
-    		this.checkedAttrArr = [];
-    		this.showBadeItem = false;
-    		this.showRuWeiItem = false;
-    		this.showBrandItem = false;
-    		this.showNoBrandItem = false;
-    		this.bidArray = this.businessArray;
-    		if(newVal) {
-    			this.checkedAttrArr = newVal;
-    		}
-    		this.bidArray = this.businessArray;
-    		for (let i = 0; i < this.checkedAttrArr.length; i++) {
-    			if(this.checkedAttrArr[i] == "ZhongBiao") {
-    				this.showBadeItem = true;
-    			} else {
-    				if(this.checkedAttrArr[i] == "RuWei") {
-    					this.showRuWeiItem = true;
-    				}
-    				else {
-    					if(this.checkedAttrArr[i] == "ZhaiPai") {
-    						this.showBrandItem = true;
-    					}
-    					else {
-    						this.showNoBrandItem = true;
-    					}
-    				}
-    			}
-    		}
-    		if (this.showBadeItem) {
-    			this.bidArray = [];
-    			for (let i = 0; i < this.businessArray.length; i++) {
-    				if(this.businessArray[i].isZhongbiao) {
-    					this.bidArray.push(this.businessArray[i]);
-    				}
-    			}
-    		} else if (this.showRuWeiItem) {
-				this.bidArray = [];
-				for (let i = 0; i < this.businessArray.length; i++) {
-					if(this.businessArray[i].isRuwei) {
-						this.bidArray.push(this.businessArray[i]);
-					}
-				}
-    		} else if (this.showBrandItem) {
-    			this.bidArray = [];
-    			for (let i = 0; i < this.businessArray.length; i++) {
-    				if(this.businessArray[i].isZhaiPai) {
-    					this.bidArray.push(this.businessArray[i]);
-    				}
-    			}
-    		}
-    		if(this.showNoBrandItem&&this.checkedAttr.length>1) {
-    			this.bidArray = [];
-    		}
-    		if (this.showNoBrandItem&&this.checkedAttr.length===1) {
-    			this.bidArray = [];
-    			for (var i = 0; i < this.businessArray.length; i++) {
-    				if(this.businessArray[i].delipotentState === "0") {
-    					this.bidArray.push(this.businessArray[i]);
-    				}
-    			}
-    		}
-    	},
     	checkMessage(project) {
-    		console.log(project);
-    		this.$router.push('/bid-infor-detail');
+    		this.$router.push('/bid-infor-detail/'+project.id);
     	},
         queryList(office) {
             if(office === "会计所") {
