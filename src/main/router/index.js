@@ -281,7 +281,7 @@ const router = new VueRouter({
         {
             path: '/bid-info-list',
             component: bidInfoList,
-            // redirect: '/bid-info-list/bid-info-list-body/accounting',
+            redirect: '/bid-info-list/accounting',
             children: [
                 {
                     path: 'accounting',
@@ -301,14 +301,14 @@ const router = new VueRouter({
                 }
             ]
         },
-        {
-            path: '/bid-infor-detail',
-            component: bidInforDetail
-        },
-        {
-            path: '/bid-infor-edit',
-            component: bidInforEdit
-        },
+        // {
+        //     path: '/bid-infor-detail',
+        //     component: bidInforDetail
+        // },
+        // {
+        //     path: '/bid-infor-edit',
+        //     component: bidInforEdit
+        // },
         {
             path: '/bid-info-Input-kjs',
             component: bidInfoInputKJS

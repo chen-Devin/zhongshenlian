@@ -28,17 +28,17 @@
 		</form>
 		<div class="row">
 			<p class="col-xs-12 check-wrap">
-				<label class="checkbox-inline">
-				  <input type="checkbox" id="inlineCheckbox1" value="option1"> 已中标
+				<label class="radio-inline">
+				  <input type="radio" name="filterState" id="inlineradio1" value="已中标" v-model="filterState"> 已中标
 				</label>
-				<label class="checkbox-inline">
-				  <input type="checkbox" id="inlineCheckbox2" value="option2"> 已入围
+				<label class="radio-inline">
+				  <input type="radio" name="filterState" id="inlineradio2" value="已入围" v-model="filterState"> 已入围
 				</label>
-				<label class="checkbox-inline">
-				  <input type="checkbox" id="inlineCheckbox3" value="option3"> 已摘牌
+				<label class="radio-inline">
+				  <input type="radio" name="filterState" id="inlineradio3" value="已摘牌" v-model="filterState"> 已摘牌
 				</label>
-				<label class="checkbox-inline">
-				  <input type="checkbox" id="inlineCheckbox3" value="option3"> 未摘牌
+				<label class="radio-inline">
+				  <input type="radio" name="filterState" id="inlineradio3" value="未摘牌" v-model="filterState"> 未摘牌
 				</label>
 				<button class="btn btn-primary type-btn f-r" @click="input()">录入</button>
 			</p>
@@ -67,35 +67,57 @@ export default {
 	name: 'bidInfoListBody',
 	data() {
 		return {
-			state: ''
+			state: '',
+			weiZhaiPai: [],
+			yiZhaiPai: [],
+			yiZhongBiao: [],
+			yiRuWei: [],
+			filterState: ''
 		};
 	},
 	computed: {
 		biddingArray() {
-			for (var i = 0; i < this.bidArray.length; i++) {
-				if(this.bidArray[i].biddingState === "0") {
-					this.bidArray[i].biddingState = '未摘牌';
+			this.bidArrayConnect = this.bidArray;
+			for (var i = 0; i < this.bidArrayConnect.length; i++) {
+				if(this.bidArrayConnect[i].biddingState === "0") {
+					this.bidArrayConnect[i].biddingState = '未摘牌';
+					this.weiZhaiPai.push(this.bidArrayConnect[i]);
 				}
-				if(this.bidArray[i].biddingState === "1") {
-					this.bidArray[i].biddingState = '已摘牌';
+				if(this.bidArrayConnect[i].biddingState === "1") {
+					this.bidArrayConnect[i].biddingState = '已摘牌';
+					this.yiZhaiPai.push(this.bidArrayConnect[i]);
 				}
-				if(this.bidArray[i].biddingState === "2") {
-					this.bidArray[i].biddingState = '已入围';
+				if(this.bidArrayConnect[i].biddingState === "2") {
+					this.bidArrayConnect[i].biddingState = '已入围';
+					this.yiRuWei.push(this.bidArrayConnect[i]);
 				}
-				if(this.bidArray[i].biddingState === "3") {
-					this.bidArray[i].biddingState = '已中标';
+				if(this.bidArrayConnect[i].biddingState === "3") {
+					this.bidArrayConnect[i].biddingState = '已中标';
+					this.yiZhongBiao.push(this.bidArrayConnect[i]);
 				}
-				if(this.bidArray[i].biddingState === "4") {
-					this.bidArray[i].biddingState = '已过期';
+				if(this.bidArrayConnect[i].biddingState === "4") {
+					this.bidArrayConnect[i].biddingState = '已过期';
 				}
-				if (this.bidArray[i].reviewState === "1") {
-					this.bidArray[i].reviewState = "通过";
+				if (this.bidArrayConnect[i].reviewState === "1") {
+					this.bidArrayConnect[i].reviewState = "通过";
 				}
-				if (this.bidArray[i].reviewState === "0") {
-					this.bidArray[i].reviewState = "不通过";
+				if (this.bidArrayConnect[i].reviewState === "0") {
+					this.bidArrayConnect[i].reviewState = "不通过";
 				}
 			}
-			return this.bidArray;
+			if (this.filterState === "未摘牌") {
+				this.bidArrayConnect = this.weiZhaiPai;
+			}
+			if (this.filterState === "已摘牌") {
+				this.bidArrayConnect = this.yiZhaiPai;
+			}
+			if (this.filterState === "已中标") {
+				this.bidArrayConnect = this.yiZhongBiao;
+			}
+			if (this.filterState === "已入围") {
+				this.bidArrayConnect = this.yiRuWei;
+			}
+			return this.bidArrayConnect;
 		}
 	},
 	props: {
@@ -108,11 +130,13 @@ export default {
 	},
 	methods: {
 		getOffice() {
-			console.log(this.office);
+			
 		},
 		input() {
-			console.log('input');
 			this.$emit('input');
+		},
+		checkMessage(project) {
+			this.$emit('checkMessage',project);
 		}
 	},
 	created() {
