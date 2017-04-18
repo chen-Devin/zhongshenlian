@@ -39,7 +39,7 @@ export default {
           show: false,
           sub: [
             {name: '待审核业务', link: '/business-review-list-leader', active: false},
-            {name: '客户信息', link: '/customer-infor-list-leader', active: false},
+            {name: '客户信息', link: '/customer-infor-list', active: false},
             {name: '职员权限管理', link: '/staff-management-author', active: false},
             {name: '职员资料管理', link: '/staff-management-infor', active: false},
             {name: '业务分析', link: '/business-analysis', active: false}
@@ -60,7 +60,7 @@ export default {
           sub: [
             {name: '待审核业务', link: '/business-review-list-sales', active: false},
             {name: '待处理业务', link: '/business-handle-list-sales', active: false},
-            {name: '客户信息', link: '/customer-infor-list-sales', active: false}
+            {name: '客户信息', link: '/customer-infor-list', active: false}
           ]
         },
         {

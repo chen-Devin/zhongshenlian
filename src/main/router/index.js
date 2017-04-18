@@ -7,6 +7,7 @@ import businessCompleteDetail from './commonUse/businessCompleteDetail.vue';
 import ruleRegulation from './commonUse/ruleRegulation.vue';
 import ruleRegulationDetail from './commonUse/ruleRegulationDetail.vue';
 // import ruleRegulationEdit from './commonUse/ruleRegulationEdit.vue';
+import customerInforList from './commonUse/customerInforList.vue';
 import billingInfor from '../component/billingInfor.vue';
 import businessConduct from '../component/businessConduct.vue';
 import businessProfile from '../component/businessProfile.vue';
@@ -17,7 +18,6 @@ import billingInforDetail from '../component/billingInforDetail.vue';
 import businessAnalysis from './leader/businessAnalysis.vue';
 import businessReviewDetailLeader from './leader/businessReviewDetail.vue';
 import businessReviewListLeader from './leader/businessReviewList.vue';
-import customerInforListLeader from './leader/customerInforList.vue';
 import staffManagementAuthor from './leader/staffManagementAuthor.vue';
 import staffManagementInfor from './leader/staffManagementInfor.vue';
 //办公室
@@ -30,7 +30,6 @@ import businessReviewAdd from './salesDepartment/businessReviewAdd.vue';
 import businessReviewDetailSales from './salesDepartment/businessReviewDetail.vue';
 import businessReviewEdit from './salesDepartment/businessReviewEdit.vue';
 import businessReviewListSales from './salesDepartment/businessReviewList.vue';
-import customerInforListSales from './salesDepartment/customerInforList.vue';
 import billingInforEditor from './salesDepartment/component/billingInforEditor.vue';
 //风险评估部
 import businessReviewListRisk from './riskDepartment/businessReviewList.vue';
@@ -70,7 +69,7 @@ const router = new VueRouter({
             path: '/rule-regulation',
             component: ruleRegulation
         },
-         {
+        {
             path: '/rule-regulation-detail/:id',
             component: ruleRegulationDetail
         },
@@ -78,6 +77,10 @@ const router = new VueRouter({
         //     path: '/rule-regulation-edit',
         //     component: ruleRegulationEdit
         // },
+        {
+            path: '/customer-infor-list',
+            component: customerInforList
+        },
         {
             path: '/business-analysis',
             component: businessAnalysis
@@ -89,10 +92,6 @@ const router = new VueRouter({
         {
             path: '/business-review-list-leader',
             component: businessReviewListLeader
-        },
-        {
-            path: '/customer-infor-list-leader',
-            component: customerInforListLeader
         },
         {
             path: '/staff-management-author',
@@ -191,10 +190,6 @@ const router = new VueRouter({
         {
             path: '/business-review-list-sales',
             component: businessReviewListSales
-        },
-        {
-            path: '/customer-infor-list-sales',
-            component: customerInforListSales
         },
         {
             path: '/business-review-list-risk',

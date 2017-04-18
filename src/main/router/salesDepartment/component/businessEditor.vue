@@ -786,7 +786,7 @@ export default {
                 id: rep.data.data.customerArray[i].id,
                 name: rep.data.data.customerArray[i].name,
                 telephone: rep.data.data.customerArray[i].telephone,
-                departmentName: rep.data.data.customerArray[i].departmentName,
+                founderDepartment: rep.data.data.customerArray[i].founderDepartment,
                 businessLicenseNumber: rep.data.data.customerArray[i].businessLicenseNumber,
                 registeredCapital: rep.data.data.customerArray[i].registeredCapital,
                 customerNature: rep.data.data.customerArray[i].customerNature,
@@ -1142,7 +1142,7 @@ export default {
         if (total === 100) {
           return true;
         } else {
-          this.$emit('refuseSub', '基本取费比例之和不为100%，请检查');
+          this.$emit('refuseSub', '效益取费比例之和不为100%，请检查');
           return false;
         }
       } else {
