@@ -275,128 +275,146 @@ export default {
   },
   methods: {
     getInfo() {
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-        method: 'get',
-        url: '/service',
-        params: {
-          data: (() => {
-            let obj = {
-              command: 'getBusinessInfo',
-              platform: 'web',
-              id: this.$route.params.id
-            }
-            return JSON.stringify(obj);
-          })()
-        }
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          this.business.id = rep.data.data.id;
-          this.business.name = rep.data.data.projectName;
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getBusinessInfo',
+                platform: 'web',
+                id: this.$route.params.id
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.business.id = rep.data.data.id;
+            this.business.name = rep.data.data.projectName;
 
-          this.business.proposer.id = rep.data.data.applicantId;
-          this.business.proposer.name = rep.data.data.applicantName;
-          this.business.proposer.tele = rep.data.data.applicantPhone;
+            this.business.proposer.id = rep.data.data.applicantId;
+            this.business.proposer.name = rep.data.data.applicantName;
+            this.business.proposer.tele = rep.data.data.applicantPhone;
 
-          //TODO
-          this.business.institution.name = rep.data.data.requester;
-          this.business.institution.client = rep.data.data.requesterName;
+            //TODO
+            this.business.institution = {
+              id: rep.data.data.requesterId,
+              name: rep.data.data.requesterName
+            };
 
-          this.business.type = rep.data.data.businessType;
-          this.business.manager = rep.data.data.projectManager;
+            this.business.type = rep.data.data.businessType;
 
-          this.business.time.start = rep.data.data.startTime;
-          this.business.time.end = rep.data.data.endTime;
+            this.business.manager = {
+              id: rep.data.data.projectManagerId,
+              name: rep.data.data.projectManagerName
+            };
 
-          this.business.assetAmount = rep.data.data.totalAssets;
-          this.business.contractAmount = rep.data.data.contractAmount;
-          this.business.contractPrice = rep.data.data.contractPrice;
+            this.business.time.start = rep.data.data.startTime;
+            this.business.time.end = rep.data.data.endTime;
 
-          let flag = false;
-          for (let i=0; i<rep.data.data.reportType.length; i++) {
-            for (let j=0; j<this.business.report.type.length; j++) {
-              if (rep.data.data.reportType[i].department === this.business.report.type[j].name) {
-                for (let m=0; m<rep.data.data.reportType[i].typeArray.length; m++) {
-                  for (let n=0; n<this.business.report.type[j].words.length; n++) {
-                    if (rep.data.data.reportType[i].typeArray[m].name === this.business.report.type[j].words[n].name) {
-                      this.business.report.type[j].words[n].state = true;
+            this.business.assetAmount = rep.data.data.totalAssets;
+            this.business.contractAmount = rep.data.data.contractAmount;
+            this.business.contractPrice = rep.data.data.contractPrice;
+
+            let flag = false;
+            for (let i=0; i<rep.data.data.reportType.length; i++) {
+              for (let j=0; j<this.business.report.type.length; j++) {
+                if (rep.data.data.reportType[i].department === this.business.report.type[j].name) {
+                  for (let m=0; m<rep.data.data.reportType[i].typeArray.length; m++) {
+                    for (let n=0; n<this.business.report.type[j].words.length; n++) {
+                      if (rep.data.data.reportType[i].typeArray[m].name === this.business.report.type[j].words[n].name) {
+                        this.business.report.type[j].words[n].state = true;
+                      }
                     }
                   }
                 }
               }
+              if(rep.data.data.reportType[i].department === '会计所') {
+                flag = true;
+              }
             }
-            if(rep.data.data.reportType[i].department === '会计所') {
-              flag = true;
-            }
-          }
-          this.business.report.amount = rep.data.data.reportCopies;
-          this.business.report.usage = rep.data.data.reportPurpose;
+            this.business.report.amount = rep.data.data.reportCopies;
+            this.business.report.usage = rep.data.data.reportPurpose;
 
-          this.business.number = rep.data.data.contractNo;
+            this.business.number = rep.data.data.contractNo;
 
-          this.business.auditTime.exist = flag;
-          this.business.auditTime.start = rep.data.data.checkStartTime;
-          this.business.auditTime.end = rep.data.data.checkEndTime;
+            this.business.auditTime.exist = flag;
+            this.business.auditTime.start = rep.data.data.checkStartTime;
+            this.business.auditTime.end = rep.data.data.checkEndTime;
 
-          this.business.contractType.name = rep.data.data.contractType.type;
-          this.business.contractType.basicFee.main.name = rep.data.data.contractType.mainBasicName;
-          this.business.contractType.basicFee.main.percentage = rep.data.data.contractType.mainBasicRate;
-          this.business.contractType.benefitFee.main.name = rep.data.data.contractType.mainEfficiencyName;
-          this.business.contractType.benefitFee.main.percentage = rep.data.data.contractType.mainEfficiencyRate;
-          this.business.contractType.basicFee.depend = [];
-          for (let i=0; i<rep.data.data.contractType.subBasicArray.length; i++) {
-            this.business.contractType.basicFee.depend.push({
-              name: rep.data.data.contractType.subBasicArray[i].name,
-              percentage: parseInt(rep.data.data.contractType.subBasicArray[i].rate)
-            });
-          }
-          this.business.contractType.benefitFee.depend = [];
-          for (let i=0; i<rep.data.data.contractType.subEfficiencyArray.length; i++) {
-            this.business.contractType.benefitFee.depend.push({
-              name: rep.data.data.contractType.subEfficiencyArray[i].name,
-              percentage: parseInt(rep.data.data.contractType.subEfficiencyArray[i].rate)
-            });
-          }
-
-          if (rep.data.data.contractType.cooperationDepartment.hasOwnProperty('mainRate')) {
-            this.business.departmentCoop.name = '有部门合作';
-            this.business.departmentCoop.departments.main.percentage = rep.data.data.contractType.cooperationDepartment.mainRate;
-            this.business.departmentCoop.departments.coop = [];
-            for (let i=0; i<rep.data.data.contractType.cooperationDepartment.otherArray.length; i++) {
-              this.business.departmentCoop.departments.coop.push({
-                name: rep.data.data.contractType.cooperationDepartment.otherArray[i].cooperation,
-                percentage: rep.data.data.contractType.cooperationDepartment.otherArray[i].cooperationRate
+            this.business.contractType.name = rep.data.data.contractType.type;
+            this.business.contractType.basicFee.main.name = rep.data.data.contractType.mainBasicName;
+            this.business.contractType.basicFee.main.percentage = rep.data.data.contractType.mainBasicRate;
+            this.business.contractType.benefitFee.main.name = rep.data.data.contractType.mainEfficiencyName;
+            this.business.contractType.benefitFee.main.percentage = rep.data.data.contractType.mainEfficiencyRate;
+            this.business.contractType.basicFee.depend = [];
+            for (let i=0; i<rep.data.data.contractType.subBasicArray.length; i++) {
+              this.business.contractType.basicFee.depend.push({
+                name: rep.data.data.contractType.subBasicArray[i].name,
+                percentage: parseInt(rep.data.data.contractType.subBasicArray[i].rate)
               });
             }
-          } else {
-            this.business.departmentCoop.name = '无部门合作';
-          }
-
-          this.business.reviewCPA = rep.data.data.trialTeacher;
-          this.business.reviewAssistant = rep.data.data.trialAssistant;
-          this.business.lastoffice = rep.data.data.lastoffice;
-          this.business.getWay = rep.data.data.getWay;
-          this.business.projectAmount = rep.data.data.projectAmount;
-
-          this.business.projectStatus = parseInt(rep.data.data.projectStatus);
-
-          for (let i = 0; i < rep.data.data.annexArray.length; i++) {
-            let obj = {
-              id: rep.data.data.annexArray[i].id,
-              name: rep.data.data.annexArray[i].annexName,
-              url: rep.data.data.annexArray[i].annexUrl
+            this.business.contractType.benefitFee.depend = [];
+            for (let i=0; i<rep.data.data.contractType.subEfficiencyArray.length; i++) {
+              this.business.contractType.benefitFee.depend.push({
+                name: rep.data.data.contractType.subEfficiencyArray[i].name,
+                percentage: parseInt(rep.data.data.contractType.subEfficiencyArray[i].rate)
+              });
             }
-            this.business.files.push(obj);
-          }
 
-          this.business.contractAnnexArray = rep.data.data.contractAnnexArray;
-          this.business.projectApproverArray = rep.data.data.projectApproverArray;
-          this.business.projectSchduleArray = rep.data.data.projectSchduleArray;
-          this.business.projectBillingArray = rep.data.data.projectBillingArray;
-          this.business.projectOperatingArray = rep.data.data.projectOperatingArray;
-          this.adviceClassify();
-        }
-      }, (rep) => { });
+            if (rep.data.data.cooperationDepartment.hasOwnProperty('mainRate')) {
+              this.business.departmentCoop.name = '有部门合作';
+              this.business.departmentCoop.departments.main.percentage = rep.data.data.cooperationDepartment.mainRate;
+              this.business.departmentCoop.departments.coop = [];
+              for (let i=0; i<rep.data.data.cooperationDepartment.otherArray.length; i++) {
+                this.business.departmentCoop.departments.coop.push({
+                  name: rep.data.data.cooperationDepartment.otherArray[i].cooperation,
+                  percentage: rep.data.data.cooperationDepartment.otherArray[i].cooperationRate
+                });
+              }
+            } else {
+              this.business.departmentCoop.name = '无部门合作';
+            }
+
+            this.business.reviewCPA = {
+              id: rep.data.data.trialTeacherId,
+              name: rep.data.data.trialTeacherName
+            };
+            this.business.reviewAssistant = {
+              id: rep.data.data.trialAssistantId,
+              name: rep.data.data.trialAssistantName
+            };
+
+            this.business.lastoffice = rep.data.data.lastoffice;
+            this.business.getWay = rep.data.data.getWay;
+
+            this.business.projectStatus = parseInt(rep.data.data.projectStatus);
+
+            for (let i = 0; i < rep.data.data.annexArray.length; i++) {
+              let obj = {
+                id: rep.data.data.annexArray[i].id,
+                name: rep.data.data.annexArray[i].annexName,
+                url: rep.data.data.annexArray[i].annexUrl
+              }
+              this.business.files.push(obj);
+            }
+
+            this.business.contractAnnexArray = rep.data.data.contractAnnexArray;
+            this.business.projectApproverArray = rep.data.data.projectApproverArray;
+            this.business.projectSchduleArray = rep.data.data.projectSchduleArray;
+            this.business.projectBillingArray = rep.data.data.projectBillingArray;
+            this.business.projectOperatingArray = rep.data.data.projectOperatingArray;
+
+            this.adviceClassify();
+
+            resolve(this.business);
+          }
+        }, (rep) => { });
+      });
+      return promise;
     },
     adviceClassify() {
       this.riskAdvices = [];
@@ -451,7 +469,7 @@ export default {
     refuseSub(msg) {
       this.$message({
         message: msg,
-        type: 'danger'
+        type: 'warning'
       });
     }
   },

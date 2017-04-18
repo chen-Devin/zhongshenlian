@@ -53,7 +53,7 @@
         <input type="number"
                class="form-control"
                placeholder="请输入客户注册资本"
-               v-model="customer.registeredCapital.val">
+               v-model.number="customer.registeredCapital.val">
       </div>
       <div class="form-group"
            v-bind:class="{'has-error': !customer.assetSize.ver}">
@@ -62,7 +62,7 @@
         <input type="number"
                class="form-control"
                placeholder="请输入客户资产规模"
-               v-model="customer.assetSize.val">
+               v-model.number="customer.assetSize.val">
       </div>
       <div class="form-group"
            v-bind:class="{'has-error': !customer.industry.ver}">

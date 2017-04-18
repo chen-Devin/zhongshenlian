@@ -34,7 +34,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">客户名称</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.institution.client}}</p>
+        <p class="form-control-static">{{business.institution.name}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -46,7 +46,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">项目经理</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.manager}}</p>
+        <p class="form-control-static">{{business.manager.name}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -211,13 +211,13 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">参审注师</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.reviewCPA}}</p>
+        <p class="form-control-static">{{business.reviewCPA.name}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">参审助理</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.reviewAssistant}}</p>
+        <p class="form-control-static">{{business.reviewAssistant.name}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -297,6 +297,8 @@ import axios from 'axios';
 import qs from 'qs';
 import { Upload } from 'element-ui';
 
+import bus from '../bus.js';
+
 Vue.use(Upload);
 
 export default {
@@ -331,7 +333,7 @@ export default {
       let out = '';
       for (let i=0; i<this.business.getWay.length; i++) {
         if (this.business.getWay[i].state) {
-          out += ' ' + this.business.getWay[i].name;
+          out += this.business.getWay[i].name + ' ';
         }
       }
     },
@@ -357,19 +359,30 @@ export default {
       return out;
     },
     contractUploadShow() {
-      if (this.user.department === '业务部' && this.business.projectStatus === 6) {
+      if (this.user.department === '业务部' && this.business.projectStatus >= 6 && this.business.projectStatus <= 7) {
         return true;
       } else {
         return false;
       }
     },
     contractFileShow() {
-      if (this.business.projectStatus > 6) {
-        return true;
+      if (this.user.department === '业务部') {
+        if (this.business.projectStatus > 7) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        if (this.business.projectStatus > 6) {
+          return true;
+        } else {
+          return false;
+        }
       }
+
     },
     contractNumShow() {
-      if (this.business.contractNo !== '') {
+      if (this.business.projectStatus > 7) {
         return true;
       }
     }
@@ -383,7 +396,12 @@ export default {
       type: 'electronicContract'
     };
     this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data='+JSON.stringify(data);
+
     this.$emit('pathsChan', this.paths);
+
+    bus.$on('projectStatusUpdate', (projectStatus) => {
+      this.business.projectStatus = projectStatus;
+    });
   },
   methods: {
     uploadSuccess(responseData, file, fileList) {

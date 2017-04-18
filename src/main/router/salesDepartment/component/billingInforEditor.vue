@@ -82,13 +82,13 @@
         <input type="number"
                class="form-control"
                placeholder="请输入开票金额"
-               v-model="business.name">
+               v-model.number="business.name">
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">单位名称</label>
       <div class="col-sm-9">
-        <input type="number"
+        <input type="text"
                class="form-control"
                placeholder="请输入单位名称"
                v-model="business.name">
@@ -154,7 +154,7 @@
         <input type="number"
                class="form-control"
                placeholder="请输入累计开票金额"
-               v-model="business.name">
+               v-model.number="business.name">
       </div>
     </div>
     <div class="form-group">
@@ -208,7 +208,7 @@
         <input type="number"
                class="form-control"
                placeholder="请输入签订合同金额"
-               v-model="business.name">
+               v-model.number="business.name">
       </div>
     </div>
     <div class="form-group">

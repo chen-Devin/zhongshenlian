@@ -286,7 +286,7 @@ export default {
     refuseSub(msg) {
       this.$message({
         message: msg,
-        type: 'danger'
+        type: 'warning'
       });
     }
   },

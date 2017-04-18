@@ -7,7 +7,7 @@
                class="form-control"
                placeholder="请输入项目名称"
                v-model="business.name"
-               v-bind:readonly="!editable">
+               v-bind:disabled="!editable">
       </div>
     </div>
     <div class="form-group">
@@ -27,7 +27,7 @@
       <div class="col-sm-9">
         <select class="form-control"
                 v-model="business.institution"
-                v-bind:readonly="!editable">
+                v-bind:disabled="!editable">
           <option v-for="(CUS, index) in customers"
                   v-bind:value="CUS"
                   v-bind:key="index">{{CUS.name}}</option>
@@ -45,7 +45,7 @@
       <div class="col-sm-9">
         <select class="form-control"
                 v-model="business.type"
-                v-bind:readonly="!editable">
+                v-bind:disabled="!editable">
           <option v-for="(TYPE, index) in businessType"
                   v-bind:value="TYPE"
                   v-bind:key="index">{{TYPE}}</option>
@@ -57,7 +57,7 @@
       <div class="col-sm-9">
         <select class="form-control"
                 v-model="business.manager"
-                v-bind:readonly="!editable">
+                v-bind:disabled="!editable">
           <option v-for="(STA, index) in staffs"
                   v-bind:value="STA"
                   v-bind:key="index">{{STA.name}}</option>
@@ -75,7 +75,7 @@
                      class="form-control"
                      placeholder="请输入项目开始时间"
                      v-model="business.time.start"
-                     v-bind:readonly="!editable">
+                     v-bind:disabled="!editable">
             </div>
           </div>
           <div class="col-sm-6">
@@ -85,7 +85,7 @@
                      class="form-control"
                      placeholder="请输入项目结束时间"
                      v-model="business.time.end"
-                     v-bind:readonly="!editable">
+                     v-bind:disabled="!editable">
             </div>
           </div>
         </div>
@@ -99,8 +99,8 @@
           <input type="number"
                  class="form-control"
                  placeholder="请输入资产总额"
-                 v-model="business.assetAmount"
-                 v-bind:readonly="!editable">
+                 v-model.number="business.assetAmount"
+                 v-bind:disabled="!editable">
           <div class="input-group-addon">元</div>
         </div>
       </div>
@@ -113,8 +113,8 @@
           <input type="number"
                  class="form-control"
                  placeholder="请输入合同金额"
-                 v-model="business.contractAmount"
-                 v-bind:readonly="!editable">
+                 v-model.number="business.contractAmount"
+                 v-bind:disabled="!editable">
           <div class="input-group-addon">元</div>
         </div>
       </div>
@@ -127,8 +127,8 @@
           <input type="number"
                  class="form-control"
                  placeholder="请输入合同单价"
-                 v-model="business.contractPrice"
-                 v-bind:readonly="!editable">
+                 v-model.number="business.contractPrice"
+                 v-bind:disabled="!editable">
           <div class="input-group-addon">元</div>
         </div>
       </div>
@@ -144,7 +144,7 @@
             <input type="checkbox"
                    v-model="WORD.state"
                    v-on:change="reportTypeChan(TYPE, WORD)"
-                   v-bind:readonly="!editable"> {{WORD.name}}
+                   v-bind:disabled="!editable"> {{WORD.name}}
           </label>
           <hr>
         </template>
@@ -168,7 +168,7 @@
                      class="form-control"
                      placeholder="请输入项目开始时间"
                      v-model="business.auditTime.start"
-                     v-bind:readonly="!editable">
+                     v-bind:disabled="!editable">
             </div>
           </div>
           <div class="col-sm-6">
@@ -178,7 +178,7 @@
                      class="form-control"
                      placeholder="请输入项目结束时间"
                      v-model="business.auditTime.end"
-                     v-bind:readonly="!editable">
+                     v-bind:disabled="!editable">
             </div>
           </div>
         </div>
@@ -192,14 +192,14 @@
                  name="contractSystem"
                  value="联合体"
                  v-model="business.contractType.name"
-                 v-bind:readonly="!editable"> 联合体
+                 v-bind:disabled="!editable"> 联合体
         </label>
         <label class="radio-inline">
           <input type="radio"
                  name="contractSystem"
                  value="非联合体"
                  v-model="business.contractType.name"
-                 v-bind:readonly="!editable"> 非联合体
+                 v-bind:disabled="!editable"> 非联合体
         </label>
       </div>
     </div>
@@ -215,7 +215,7 @@
                      class="form-control"
                      placeholder="请输入主体"
                      v-model="business.contractType.basicFee.main.name"
-                     v-bind:readonly="!editable">
+                     v-bind:disabled="!editable">
             </div>
           </div>
           <div class="col-sm-5">
@@ -224,8 +224,8 @@
               <input type="number"
                      class="form-control"
                      placeholder="请输入比例"
-                     v-model="business.contractType.basicFee.main.percentage"
-                     v-bind:readonly="!editable">
+                     v-model.number="business.contractType.basicFee.main.percentage"
+                     v-bind:disabled="!editable">
               <div class="input-group-addon">%</div>
             </div>
           </div>
@@ -240,7 +240,7 @@
                      class="form-control"
                      placeholder="请输入从属体"
                      v-model="DEPEND.name"
-                     v-bind:readonly="!editable">
+                     v-bind:disabled="!editable">
             </div>
           </div>
           <div class="col-sm-5">
@@ -249,8 +249,8 @@
               <input type="number"
                      class="form-control"
                      placeholder="请输入比例"
-                     v-model="DEPEND.percentage"
-                     v-bind:readonly="!editable">
+                     v-model.number="DEPEND.percentage"
+                     v-bind:disabled="!editable">
               <div class="input-group-addon">%</div>
             </div>
           </div>
@@ -281,7 +281,7 @@
                      class="form-control"
                      placeholder="请输入主体"
                      v-model="business.contractType.benefitFee.main.name"
-                     v-bind:readonly="!editable">
+                     v-bind:disabled="!editable">
             </div>
           </div>
           <div class="col-sm-5">
@@ -290,8 +290,8 @@
               <input type="number"
                      class="form-control"
                      placeholder="请输入比例"
-                     v-model="business.contractType.benefitFee.main.percentage"
-                     v-bind:readonly="!editable">
+                     v-model.number="business.contractType.benefitFee.main.percentage"
+                     v-bind:disabled="!editable">
               <div class="input-group-addon">%</div>
             </div>
           </div>
@@ -306,7 +306,7 @@
                      class="form-control"
                      placeholder="请输入从属体"
                      v-model="DEPEND.name"
-                     v-bind:readonly="!editable">
+                     v-bind:disabled="!editable">
             </div>
           </div>
           <div class="col-sm-5">
@@ -315,8 +315,8 @@
               <input type="number"
                      class="form-control"
                      placeholder="请输入比例"
-                     v-model="DEPEND.percentage"
-                     v-bind:readonly="!editable">
+                     v-model.number="DEPEND.percentage"
+                     v-bind:disabled="!editable">
               <div class="input-group-addon">%</div>
             </div>
           </div>
@@ -343,14 +343,14 @@
                  name="departmentCooperation"
                  value="有部门合作"
                  v-model="business.departmentCoop.name"
-                 v-bind:readonly="!editable"> 有部门合作
+                 v-bind:disabled="!editable"> 有部门合作
         </label>
         <label class="radio-inline">
           <input type="radio"
                  name="departmentCooperation"
                  value="无部门合作"
                  v-model="business.departmentCoop.name"
-                 v-bind:readonly="!editable"> 无部门合作
+                 v-bind:disabled="!editable"> 无部门合作
         </label>
       </div>
     </div>
@@ -368,8 +368,8 @@
               <input type="number"
                      class="form-control"
                      placeholder="请输入比例"
-                     v-model="business.departmentCoop.departments.main.percentage"
-                     v-bind:readonly="!editable">
+                     v-model.number="business.departmentCoop.departments.main.percentage"
+                     v-bind:disabled="!editable">
               <div class="input-group-addon">%</div>
             </div>
           </div>
@@ -383,7 +383,7 @@
                      class="form-control"
                      placeholder="请输入合作体"
                      v-model="COOP.name"
-                     v-bind:readonly="!editable">
+                     v-bind:disabled="!editable">
             </div>
           </div>
           <div class="col-sm-5">
@@ -392,8 +392,8 @@
               <input type="number"
                      class="form-control"
                      placeholder="请输入比例"
-                     v-model="COOP.percentage"
-                     v-bind:readonly="!editable">
+                     v-model.number="COOP.percentage"
+                     v-bind:disabled="!editable">
               <div class="input-group-addon">%</div>
             </div>
           </div>
@@ -417,7 +417,7 @@
       <div class="col-sm-9">
         <select class="form-control"
                 v-model="business.reviewCPA"
-                v-bind:readonly="!editable">
+                v-bind:disabled="!editable">
           <option v-for="(STA, index) in staffs"
                   v-bind:value="STA"
                   v-bind:key="index">{{STA.name}}</option>
@@ -429,7 +429,7 @@
       <div class="col-sm-9">
         <select class="form-control"
                 v-model="business.reviewAssistant"
-                v-bind:readonly="!editable">
+                v-bind:disabled="!editable">
           <option v-for="(STA, index) in staffs"
                   v-bind:value="STA"
                   v-bind:key="index">{{STA.name}}</option>
@@ -443,8 +443,8 @@
           <input type="number"
                  class="form-control"
                  placeholder="请输入比例"
-                 v-model="business.report.amount"
-                 v-bind:readonly="!editable">
+                 v-model.number="business.report.amount"
+                 v-bind:disabled="!editable">
           <div class="input-group-addon">份（类）</div>
         </div>
       </div>
@@ -454,7 +454,7 @@
       <div class="col-sm-9">
         <select class="form-control"
                 v-model="business.report.usage"
-                v-bind:readonly="!editable">
+                v-bind:disabled="!editable">
           <option v-for="(TYPE, index) in businessType"
                   v-bind:value="TYPE"
                   v-bind:key="index">{{TYPE}}</option>
@@ -468,7 +468,7 @@
                class="form-control"
                placeholder="请输入上次报告事务所"
                v-model="business.lastoffice"
-               v-bind:readonly="!editable">
+               v-bind:disabled="!editable">
       </div>
     </div>
     <div class="form-group">
@@ -480,7 +480,7 @@
           <input type="checkbox"
                  name="gainingMethod"
                  v-model="WAY.state"
-                 v-bind:readonly="!editable"> {{WAY.name}}
+                 v-bind:disabled="!editable"> {{WAY.name}}
         </label>
       </div>
     </div>
@@ -591,18 +591,46 @@ export default {
     this.getStaffs().then(() => {
       if (this.business.manager === null) {
         this.business.manager = this.staffs[0];
+      } else {
+        for (let i=0; i<this.staffs.length; i++) {
+          if (this.business.manager.id === this.staffs[i].id) {
+            this.business.manager = this.staffs[i];
+            break;
+          }
+        }
       }
       if (this.business.reviewCPA === null) {
         this.business.reviewCPA = this.staffs[0];
+      } else {
+        for (let i=0; i<this.staffs.length; i++) {
+          if (this.business.reviewCPA.id === this.staffs[i].id) {
+            this.business.reviewCPA = this.staffs[i];
+            break;
+          }
+        }
       }
       if (this.business.reviewAssistant === null) {
         this.business.reviewAssistant = this.staffs[0];
+      } else {
+        for (let i=0; i<this.staffs.length; i++) {
+          if (this.business.reviewAssistant.id === this.staffs[i].id) {
+            this.business.reviewAssistant = this.staffs[i];
+            break;
+          }
+        }
       }
     }, () => {});
 
     this.getCustomers().then(() => {
       if (this.business.institution === null) {
         this.business.institution = this.customers[0];
+      } else {
+        for (let i=0; i<this.customers.length; i++) {
+          if (this.business.institution.id === this.customers[i].id) {
+            this.business.institution = this.customers[i];
+            break;
+          }
+        }
       }
     }, () => {});
 
@@ -652,7 +680,61 @@ export default {
       } else {
         this.business.number = '';
       }
+    },
+    init(business) {
+      this.getStaffs().then(() => {
+        if (this.business.manager === null) {
+          this.business.manager = this.staffs[0];
+        } else {
+          for (let i=0; i<this.staffs.length; i++) {
+            if (this.business.manager.id === this.staffs[i].id) {
+              this.business.manager = this.staffs[i];
+              break;
+            }
+          }
+        }
+        if (this.business.reviewCPA === null) {
+          this.business.reviewCPA = this.staffs[0];
+        } else {
+          for (let i=0; i<this.staffs.length; i++) {
+            if (this.business.reviewCPA.id === this.staffs[i].id) {
+              this.business.reviewCPA = this.staffs[i];
+              break;
+            }
+          }
+        }
+        if (this.business.reviewAssistant === null) {
+          this.business.reviewAssistant = this.staffs[0];
+        } else {
+          for (let i=0; i<this.staffs.length; i++) {
+            if (this.business.reviewAssistant.id === this.staffs[i].id) {
+              this.business.reviewAssistant = this.staffs[i];
+              break;
+            }
+          }
+        }
+      }, () => {});
 
+      this.getCustomers().then(() => {
+        if (this.business.institution === null) {
+          this.business.institution = this.customers[0];
+        } else {
+          for (let i=0; i<this.customers.length; i++) {
+            if (this.business.institution.id === this.customers[i].id) {
+              this.business.institution = this.customers[i];
+              break;
+            }
+          }
+        }
+      }, () => {});
+
+      if (this.business.type === '') {
+        this.business.type = this.businessType[0];
+      }
+
+      if (this.business.report.usage === '') {
+        this.business.report.usage = this.businessType[0];
+      }
     },
     getStaffs() {
       let promise = new Promise((resolve, reject) => {
@@ -818,6 +900,7 @@ export default {
                         rate: this.business.contractType.benefitFee.depend[i].percentage
                       });
                     }
+                    return out;
                   })(),
                   annexArray: this.business.files,
                   contractAnnexArray: this.business.contractAnnexArray,
@@ -1028,6 +1111,7 @@ export default {
       this.business.contractType.basicFee.depend.push({ name: '', percentage: 0 });
     },
     basicFeeCheck() {
+      console.log(this.business.contractType);
       if (this.business.contractType.name === '联合体') {
         let total = this.business.contractType.basicFee.main.percentage;
         for (let i=0; i<this.business.contractType.basicFee.depend.length; i++) {
