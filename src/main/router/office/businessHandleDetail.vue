@@ -1,26 +1,26 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <card>
       <h3>
         {{business.name}}
-        <button class="btn btn-primary pull-right" v-on:click="sel()" v-if="!sended">发放合同编号</button>
+        <button class="btn btn-primary pull-right" @click="sel()" v-if="!sended">发放合同编号</button>
         <span class="label label-success pull-right" v-if="sended">合同编号已经发放</span>
       </h3>
       <div class="business-wrap">
-        <business v-bind:initBusiness="business"
-                  v-bind:user="user"></business>
+        <business :initBusiness="business"
+                  :user="user"></business>
         <hr>
         <div class="row">
-          <approver-advice v-bind:advices="riskAdvices">风险评估部意见</approver-advice>
-          <approver-advice v-bind:advices="leaderAdivces">审批人意见</approver-advice>
+          <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
+          <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
         </div>
       </div>
     </card>
     <contract-num-modal v-if="showModal"
-                        v-bind:business="business"
-                        v-on:submited="submited"
-                        v-on:canceled="canceled"></contract-num-modal>
+                        :business="business"
+                        @submited="submited"
+                        @canceled="canceled"></contract-num-modal>
   </div>
 </template>
 
@@ -220,7 +220,7 @@ export default {
         departmentCoop: {
           name: '无部门合作',
           departments: {
-            main: { name: '主体', percentage: 0 },
+            main: { name: '主要部门', percentage: 0 },
             coop: [{ name: '', percentage: 0 }]
           },
         },

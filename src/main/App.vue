@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <com-header v-bind:user="user"></com-header>
-    <index v-bind:user="user"></index>
+    <com-header :user="user"></com-header>
+    <index :user="user"></index>
     <!--<com-footer></com-footer>-->
   </div>
 </template>

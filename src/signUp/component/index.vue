@@ -3,12 +3,12 @@
     <section class="section">
       <form>
         <div class="form-group">
-          <img v-bind:src="userHead"
+          <img :src="userHead"
                alt="头像"
                class="img-responsive img-rounded center-block">
         </div>
         <div class="form-group"
-             v-bind:class="{focus: tel.foc, error: tel.err}">
+             :class="{focus: tel.foc, error: tel.err}">
           <div class="input-group input-group-lg">
             <div class="input-group-addon"><span class="fa fa-phone"></span></div>
             <input type="tel"
@@ -16,17 +16,17 @@
                    id="telephone"
                    placeholder="请输入手机号"
                    maxlength="11"
-                   v-on:focus="inputFocus('telephone')"
-                   v-on:blur="inputBlur('telephone')"
-                   v-on:input="judgeTel()"
+                   @focus="inputFocus('telephone')"
+                   @blur="inputBlur('telephone')"
+                   @input="judgeTel()"
                    v-model="tel.val">
             <span class="input-group-btn">
-                <button class="btn text-primary" type="button" v-bind:disabled="getBtn.dis" v-on:click="getBtnTog()">{{getBtn.cont}}</button>
+                <button class="btn text-primary" type="button" :disabled="getBtn.dis" @click="getBtnTog()">{{getBtn.cont}}</button>
               </span>
           </div>
         </div>
         <div class="form-group"
-             v-bind:class="{focus: ver.foc, error: ver.err}">
+             :class="{focus: ver.foc, error: ver.err}">
           <div class="input-group input-group-lg">
             <div class="input-group-addon"><span class="fa fa-shield"></span></div>
             <input type="text"
@@ -34,9 +34,9 @@
                    id="verCode"
                    placeholder="请输入验证码"
                    maxlength="6"
-                   v-on:focus="inputFocus('verCode')"
-                   v-on:blur="inputBlur('verCode')"
-                   v-on:input="judgeVer()"
+                   @focus="inputFocus('verCode')"
+                   @blur="inputBlur('verCode')"
+                   @input="judgeVer()"
                    v-model="ver.val">
           </div>
         </div>
@@ -47,8 +47,8 @@
         <div class="form-group">
           <button class="btn btn-primary btn-block btn-lg"
                   type="button"
-                  v-bind:disabled="subBtn.dis"
-                  v-on:click="subBtnTog()">{{subBtn.cont}}</button>
+                  :disabled="subBtn.dis"
+                  @click="subBtnTog()">{{subBtn.cont}}</button>
         </div>
       </form>
     </section>

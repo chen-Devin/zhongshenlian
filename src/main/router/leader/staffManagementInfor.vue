@@ -1,9 +1,9 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <department-infor v-for="(DEP, index) in departments"
-                           v-bind:department="DEP"
-                           v-bind:key="index"></department-infor>
+                           :department="DEP"
+                           :key="index"></department-infor>
   </div>
 </template>
 

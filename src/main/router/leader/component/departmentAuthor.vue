@@ -3,11 +3,11 @@
     <h3>{{thisDepart.department}}</h3>
     <form class="form-inline clearfix">
       <staff-search-bar v-model="searchVal"
-                  v-on:search="search"></staff-search-bar>
+                  @search="search"></staff-search-bar>
       <button type="button"
             class="btn btn-default btn-sm pull-right"
-            v-on:click="ediBtnTog()"
-            v-bind:disabled="ediBtn.dis">&nbsp;{{ediBtn.cont}}&nbsp;</button>
+            @click="ediBtnTog()"
+            :disabled="ediBtn.dis">&nbsp;{{ediBtn.cont}}&nbsp;</button>
     </form>
     <table class="table table-striped table-hover">
       <tbody>
@@ -15,17 +15,17 @@
           <th class="text-center">职员</th>
           <th class="text-center"
               v-for="(AUTH, index) in thisDepart.authorityArray"
-              v-bind:key="index">{{AUTH.name}}</th>
+              :key="index">{{AUTH.name}}</th>
         </tr>
         <tr v-for="STAFF in thisDepart.staffArray"
-            v-bind:key="STAFF.id">
+            :key="STAFF.id">
           <td class="text-center">{{STAFF.name}}</td>
           <td class="text-center"
               v-for="STAFF_AUTH in STAFF.authority"
-              v-bind:key="STAFF.authName">
+              :key="STAFF.authName">
             <input type="checkbox"
                    v-model="STAFF_AUTH.stat"
-                   v-bind:disabled="!ediBtn.ediStat">
+                   :disabled="!ediBtn.ediStat">
           </td>
         </tr>
       </tbody>

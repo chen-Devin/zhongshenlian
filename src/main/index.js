@@ -26,7 +26,7 @@ var app = new Vue({
         }
     },
     router,
-    template: '<App v-bind:user="user"></App>',
+    template: '<App :user="user"></App>',
     components: {
         App
     },

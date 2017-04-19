@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <card>
       <h3>
         业务列表
@@ -11,9 +11,9 @@
       </h3>
       <div class="business-list-review list-group">
         <router-link class="list-group-item"
-                     v-bind:to="businessRoute(BUSINESS)"
+                     :to="businessRoute(BUSINESS)"
                      v-for="(BUSINESS, index) in businesses"
-                     v-bind:key="index">
+                     :key="index">
           <span class="label label-warning"
                 v-if="BUSINESS.projectStatus===1">尚未完成</span>
           <span class="label label-info"
@@ -105,8 +105,6 @@ export default {
   > a.list-group-item {
     border-right: 0;
     border-left: 0;
-    // height: 50px;
-    // line-height: 30px;
     > span.title {
       margin-left: 7px;
     }

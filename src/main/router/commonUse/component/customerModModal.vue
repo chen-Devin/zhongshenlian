@@ -3,7 +3,7 @@
     <form class="form-horizontal clearfix"
           slot="body">
       <div class="form-group"
-           v-bind:class="{'has-error': !customer.customerName.ver}">
+           :class="{'has-error': !customer.customerName.ver}">
         <label class="col-sm-3 control-label">客户名称</label>
         <div class="col-sm-9">
           <input type="text"
@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="form-group"
-           v-bind:class="{'has-error': !customer.name.ver}">
+           :class="{'has-error': !customer.name.ver}">
         <label class="col-sm-3 control-label">客户联系人</label>
         <div class="col-sm-9">
           <input type="text"
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="form-group"
-           v-bind:class="{'has-error': !customer.duty.ver}">
+           :class="{'has-error': !customer.duty.ver}">
         <label class="col-sm-3 control-label">联系人职位</label>
         <div class="col-sm-9">
           <input type="text"
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="form-group"
-           v-bind:class="{'has-error': !customer.telephone.ver}">
+           :class="{'has-error': !customer.telephone.ver}">
         <label class="col-sm-3 control-label">联系人电话</label>
         <div class="col-sm-9">
           <input type="tel"
@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="form-group"
-           v-bind:class="{'has-error': !customer.department.ver}">
+           :class="{'has-error': !customer.department.ver}">
         <label class="col-sm-3 control-label">联系人部门</label>
         <div class="col-sm-9">
           <input type="text"
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="form-group"
-           v-bind:class="{'has-error': !customer.registeredAddress.ver}">
+           :class="{'has-error': !customer.registeredAddress.ver}">
         <label class="col-sm-3 control-label">注册地址</label>
         <div class="col-sm-9">
           <input type="text"
@@ -63,7 +63,7 @@
         </div>
       </div>
       <div class="form-group"
-           v-bind:class="{'has-error': !customer.mailingAddress.ver}">
+           :class="{'has-error': !customer.mailingAddress.ver}">
         <label class="col-sm-3 control-label">邮寄地址</label>
         <div class="col-sm-9">
           <input type="text"
@@ -73,7 +73,7 @@
         </div>
       </div>
       <div class="form-group"
-           v-bind:class="{'has-error': !customer.businessLicenseNumber.ver}">
+           :class="{'has-error': !customer.businessLicenseNumber.ver}">
         <label class="col-sm-3 control-label">营业执照号码</label>
         <div class="col-sm-9">
           <input type="text"
@@ -83,7 +83,7 @@
         </div>
       </div>
       <div class="form-group"
-           v-bind:class="{'has-error': !customer.registeredCapital.ver}">
+           :class="{'has-error': !customer.registeredCapital.ver}">
         <label class="col-sm-3 control-label">注册资本</label>
         <div class="col-sm-9">
           <input type="number"
@@ -97,14 +97,14 @@
         <div class="col-sm-9">
           <label class="checkbox-inline"
                  v-for="(NAT, index) in customer.customerNature"
-                 v-bind:key="index">
+                 :key="index">
             <input type="checkbox"
                    v-model="NAT.state"> {{NAT.val}}
           </label>
         </div>
       </div>
       <div class="form-group"
-           v-bind:class="{'has-error': !customer.assetSize.ver}">
+           :class="{'has-error': !customer.assetSize.ver}">
         <label class="col-sm-3 control-label">资产规模</label>
         <div class="col-sm-9">
           <input type="number"
@@ -114,7 +114,7 @@
         </div>
       </div>
       <div class="form-group"
-           v-bind:class="{'has-error': !customer.setUpTime.ver}">
+           :class="{'has-error': !customer.setUpTime.ver}">
         <label class="col-sm-3 control-label">成立日期</label>
         <div class="col-sm-9">
           <input type="date"
@@ -129,8 +129,8 @@
           <select class="form-control"
                   v-model="customer.industry.val">
             <option v-for="(IND, index) in indClassify"
-                    v-bind:value="IND"
-                    v-bind:key="index">{{IND}}</option>
+                    :value="IND"
+                    :key="index">{{IND}}</option>
           </select>
         </div>
       </div>
@@ -157,12 +157,12 @@
     </form>
     <div slot="footer">
       <button class="btn btn-primary modal-default-button"
-              v-on:click="save()"
-              v-bind:disabled="subBtn.dis">
+              @click="save()"
+              :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
       <button class="btn btn-default modal-default-button"
-              v-on:click="cancel()">
+              @click="cancel()">
         取消
       </button>
     </div>
@@ -250,7 +250,7 @@ export default {
           founderDepartment: {
             val: this.initalCustomer.founderDepartment
           }
-        }
+        };
       })(),
       alert: {
         show: false,

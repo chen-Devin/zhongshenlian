@@ -1,27 +1,27 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <card>
       <h3>
         新建业务
         <div class="pull-right">
-          <button class="btn btn-success" v-on:click="sub()">提交</button>
-          <button class="btn btn-warning" v-on:click="sav()">暂存</button>
-          <button class="btn btn-danger" v-on:click="del()">撤销</button>
+          <button class="btn btn-success" @click="sub()">提交</button>
+          <button class="btn btn-warning" @click="sav()">暂存</button>
+          <button class="btn btn-danger" @click="del()">撤销</button>
         </div>
       </h3>
-      <business-editor v-bind:initBusiness="business"
-                       v-bind:editable="editable"
-                       v-on:saved="saved"
-                       v-on:submited="submited"
-                       v-on:uploaded="uploaded"
-                       v-on:deletedFile="deletedFile"
-                       v-on:refuseSub="refuseSub"></business-editor>
+      <business-editor :initBusiness="business"
+                       :editable="editable"
+                       @saved="saved"
+                       @submited="submited"
+                       @uploaded="uploaded"
+                       @deletedFile="deletedFile"
+                       @refuseSub="refuseSub"></business-editor>
     </card>
     <business-del-modal v-if="showDelModal"
-                        v-bind:initalBusiness="business"
-                        v-on:deleted="deleted"
-                        v-on:canceled="delCanceled"></business-del-modal>
+                        :initalBusiness="business"
+                        @deleted="deleted"
+                        @canceled="delCanceled"></business-del-modal>
   </div>
 </template>
 
@@ -225,7 +225,7 @@ export default {
         departmentCoop: {
           name: '无部门合作',
           departments: {
-            main: { name: '主体', percentage: 0 },
+            main: { name: '主要部门', percentage: 0 },
             coop: [{ name: '', percentage: 0 }]
           },
         },

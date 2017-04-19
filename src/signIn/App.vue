@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-bind:class="bgImg">
+  <div id="app" :class="bgImg">
     <com-header></com-header>
     <index></index>
     <com-footer></com-footer>

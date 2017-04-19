@@ -1,15 +1,15 @@
 <template>
   <div class="sidebar">
     <ul class="nav nav-sidebar">
-      <li v-for="(ROU, index) in routes" v-bind:key="index">
-        <div class="inside-div" v-bind:class="{active: ROU.show}" v-on:click="showChange(ROU)">
-          <span class="fa module-icon" v-bind:class="ROU.flag"></span>
+      <li v-for="(ROU, index) in routes" :key="index">
+        <div class="inside-div" :class="{active: ROU.show}" @click="showChange(ROU)">
+          <span class="fa module-icon" :class="ROU.flag"></span>
             {{ROU.name}}
-          <span class="" v-bind:class="{selected: ROU.show}"></span>
+          <span class="" :class="{selected: ROU.show}"></span>
         </div>
         <ul class="inside-ul" v-show="ROU.show">
-          <li v-for="(SUB, index) in ROU.sub" v-bind:class="{active: SUB.active}" v-bind:key="index" v-on:click="actived(SUB)">
-            <router-link v-bind:to="SUB.link">{{SUB.name}}</router-link>
+          <li v-for="(SUB, index) in ROU.sub" :class="{active: SUB.active}" :key="index" @click="actived(SUB)">
+            <router-link :to="SUB.link">{{SUB.name}}</router-link>
           </li>
         </ul>
       </li>

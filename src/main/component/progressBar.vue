@@ -3,19 +3,19 @@
     <div class="progressBar">
       <template v-for="(PRO, index) in progress">
         <div class="circle"
-             v-bind:class="{passed: PRO.passed, active: PRO.active}"
-             v-bind:style="{order: index}"></div>
+             :class="{passed: PRO.passed, active: PRO.active}"
+             :style="{order: index}"></div>
         <div class="line"
-             v-bind:class="{passed: PRO.passed}"
+             :class="{passed: PRO.passed}"
              v-if="index!==(progress.length-1)"
-             v-bind:style="{order: index}"></div>
+             :style="{order: index}"></div>
       </template>
     </div>
     <div class="progressContent">
       <div class="content"
-           v-bind:class="{active: PRO.active}"
+           :class="{active: PRO.active}"
            v-for="(PRO, index) in progress"
-           v-bind:key="index">{{PRO.name}}</div>
+           :key="index">{{PRO.name}}</div>
     </div>
   </div>
 </template>

@@ -1,26 +1,26 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <card>
       <h3>
         业务详情
         <div class="pull-right">
           <button class="btn btn-primary"
-                  v-on:click="sub()"
-                  v-bind:disabled="subBtn.dis"
+                  @click="sub()"
+                  :disabled="subBtn.dis"
                   v-if="!submited">{{subBtn.cont}}</button>
           <span class="label label-primary"
                 v-if="submited">已申请合同编号</span>
         </div>
       </h3>
-      <business-profile v-bind:initBusiness="business"
-                        v-bind:user="user"
-                        v-on:uploaded="uploaded"
-                        v-on:deletedFile="deletedFile"></business-profile>
+      <business-profile :initBusiness="business"
+                        :user="user"
+                        @uploaded="uploaded"
+                        @deletedFile="deletedFile"></business-profile>
       <hr>
       <div class="row">
-        <approver-advice v-bind:advices="riskAdvices">风险评估部意见</approver-advice>
-        <approver-advice v-bind:advices="leaderAdivces">审批人意见</approver-advice>
+        <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
+        <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
       </div>
     </card>
   </div>
@@ -28,6 +28,7 @@
 
 <script>
 import axios from 'axios';
+import qs from 'qs';
 
 import router from '../index.js';
 import bus from '../../bus.js';
@@ -222,7 +223,7 @@ export default {
         departmentCoop: {
           name: '无部门合作',
           departments: {
-            main: { name: '主体', percentage: 0 },
+            main: { name: '主要部门', percentage: 0 },
             coop: [{ name: '', percentage: 0 }]
           },
         },

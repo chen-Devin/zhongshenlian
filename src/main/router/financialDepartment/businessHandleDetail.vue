@@ -1,16 +1,16 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <card>
       <h3>
         {{business.name}}
       </h3>
       <div class="business-wrap">
-        <business v-bind:initBusiness="business" v-bind:user="user"></business>
+        <business :initBusiness="business" :user="user"></business>
         <hr>
         <div class="row">
-          <approver-advice v-bind:advices="riskAdvices">风险评估部意见</approver-advice>
-          <approver-advice v-bind:advices="leaderAdivces">审批人意见</approver-advice>
+          <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
+          <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
         </div>
       </div>
     </card>
@@ -212,7 +212,7 @@ export default {
         departmentCoop: {
           name: '无部门合作',
           departments: {
-            main: { name: '主体', percentage: 0 },
+            main: { name: '主要部门', percentage: 0 },
             coop: [{ name: '', percentage: 0 }]
           },
         },

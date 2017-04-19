@@ -2,12 +2,12 @@
   <modal>
     <form class="clearfix"
           slot="body">
-      <div class="form-group" v-for="(PLA, index) in contNumRule" v-bind:key="index">
+      <div class="form-group" v-for="(PLA, index) in contNumRule" :key="index">
         <label>PLA.name</label>
-        <div class="checkbox" v-for="(VAL, index) in PLA.value" v-bind:key="index">
+        <div class="checkbox" v-for="(VAL, index) in PLA.value" :key="index">
           <label>
             <input type="checkbox"
-                   v-bind:value="VAL"
+                   :value="VAL"
                    v-model="contType"> VAL.value
           </label>
         </div>
@@ -15,12 +15,12 @@
     </form>
     <div class="footer">
       <button class="btn btn-primary modal-default-button"
-              v-on:click="sub()"
-              v-bind:disabled="subBtn.dis">
+              @click="sub()"
+              :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
       <button class="btn btn-default modal-default-button"
-              v-on:click="cancel()">
+              @click="cancel()">
         取消
       </button>
     </div>

@@ -3,7 +3,7 @@
     <h3>
       客户列表
       <button class="btn btn-primary pull-right"
-              v-on:click="add()">
+              @click="add()">
         添加客户
       </button>
     </h3>
@@ -18,36 +18,36 @@
           <th class="text-center">&nbsp;</th>
         </tr>
         <tr v-for="(CUSTOMER, index) in thisCustomers"
-            v-bind:key="index">
+            :key="index">
           <td class="text-center">{{CUSTOMER.customerName}}</td>
           <td class="text-center">{{CUSTOMER.name}}</td>
           <td class="text-center">{{CUSTOMER.duty}}</td>
           <td class="text-center">{{CUSTOMER.telephone}}</td>
           <td class="text-center link-wrap">
             <a class="text-primary"
-               v-on:click.prevent="mod(CUSTOMER)">修改</a>
+               @click.prevent="mod(CUSTOMER)">修改</a>
           </td>
           <td class="text-center link-wrap">
             <a class="text-danger"
-               v-on:click.prevent="del(CUSTOMER)">删除</a>
+               @click.prevent="del(CUSTOMER)">删除</a>
           </td>
         </tr>
       </tbody>
     </table>
     <customer-mod-modal v-if="showModModal"
-                        v-bind:initalCustomer="modCustomer"
-                        v-bind:indClassify="indClassify"
-                        v-on:saved="saved"
-                        v-on:canceled="modCanceled"></customer-mod-modal>
+                        :initalCustomer="modCustomer"
+                        :indClassify="indClassify"
+                        @saved="saved"
+                        @canceled="modCanceled"></customer-mod-modal>
     <customer-del-modal v-if="showDelModal"
-                        v-bind:initalCustomer="delCustomer"
-                        v-on:deleted="deleted"
-                        v-on:canceled="delCanceled"></customer-del-modal>
+                        :initalCustomer="delCustomer"
+                        @deleted="deleted"
+                        @canceled="delCanceled"></customer-del-modal>
     <customer-add-modal v-if="showAddModal"
-                        v-bind:user="user"
-                        v-bind:indClassify="indClassify"
-                        v-on:added="added"
-                        v-on:canceled="addCanceled"></customer-add-modal>
+                        :user="user"
+                        :indClassify="indClassify"
+                        @added="added"
+                        @canceled="addCanceled"></customer-add-modal>
   </card>
 </template>
 

@@ -1,15 +1,15 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <card>
       <h3>
         业务列表
       </h3>
       <div class="business-list-handle list-group">
         <router-link class="list-group-item"
-                     v-bind:to="businessRoute(BUSINESS)"
+                     :to="businessRoute(BUSINESS)"
                      v-for="(BUSINESS, index) in businesses"
-                     v-bind:key="index">
+                     :key="index">
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime}}</span>
         </router-link>

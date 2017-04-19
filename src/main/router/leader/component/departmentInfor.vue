@@ -3,10 +3,10 @@
     <h3>{{thisDepart.department}}</h3>
     <form class="form-inline clearfix">
       <staff-search-bar v-model="searchVal"
-                        v-on:search="search"></staff-search-bar>
+                        @search="search"></staff-search-bar>
       <button type="button"
               class="btn btn-default btn-sm pull-right"
-              v-on:click="add()">&nbsp;录入&nbsp;</button>
+              @click="add()">&nbsp;录入&nbsp;</button>
     </form>
     <table class="table table-striped table-hover">
       <tbody>
@@ -21,7 +21,7 @@
           <th class="text-center">&nbsp;</th>
         </tr>
         <tr v-for="STAFF in thisDepart.staffArray"
-            v-bind:key="STAFF.id">
+            :key="STAFF.id">
           <td class="text-center">{{STAFF.name}}</td>
           <td class="text-center">{{STAFF.gender}}</td>
           <td class="text-center">{{STAFF.telephone}}</td>
@@ -30,27 +30,27 @@
           <td class="text-center">{{STAFF.department}}</td>
           <td class="text-center link-wrap">
             <a class="text-primary"
-               v-on:click.prevent="mod(STAFF)">修改</a>
+               @click.prevent="mod(STAFF)">修改</a>
           </td>
           <td class="text-center link-wrap">
             <a class="text-danger"
-               v-on:click.prevent="del(STAFF)">删除</a>
+               @click.prevent="del(STAFF)">删除</a>
           </td>
         </tr>
       </tbody>
     </table>
     <staff-mod-modal v-if="showModModal"
-                     v-bind:initalStaff="modStaff"
-                     v-on:saved="saved"
-                     v-on:canceled="modCanceled"></staff-mod-modal>
+                     :initalStaff="modStaff"
+                     @saved="saved"
+                     @canceled="modCanceled"></staff-mod-modal>
     <staff-del-modal v-if="showDelModal"
-                     v-bind:initalStaff="delStaff"
-                     v-on:deleted="deleted"
-                     v-on:canceled="delCanceled"></staff-del-modal>
+                     :initalStaff="delStaff"
+                     @deleted="deleted"
+                     @canceled="delCanceled"></staff-del-modal>
     <staff-add-modal v-if="showAddModal"
-                     v-bind:thisDepart="thisDepart"
-                     v-on:added="added"
-                     v-on:canceled="addCanceled"></staff-add-modal>
+                     :thisDepart="thisDepart"
+                     @added="added"
+                     @canceled="addCanceled"></staff-add-modal>
   </card>
 </template>
 

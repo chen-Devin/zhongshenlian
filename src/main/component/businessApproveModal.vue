@@ -8,12 +8,12 @@
     </div>
     <div slot="footer">
       <button class="btn btn-success modal-default-button"
-              v-on:click="sub()"
-              v-bind:disabled="subBtn.dis">
+              @click="sub()"
+              :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
       <button class="btn btn-default modal-default-button"
-              v-on:click="cancel()">
+              @click="cancel()">
         取消
       </button>
     </div>

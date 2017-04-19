@@ -1,7 +1,7 @@
 <template>
   <modal>
     <form slot="body">
-      <div class="form-group" v-bind:class="{'has-error': !staff.name.ver}">
+      <div class="form-group" :class="{'has-error': !staff.name.ver}">
         <label for="staff-name" class="control-label">姓名</label>
         <input type="text" class="form-control" placeholder="请输入职员姓名" v-model="staff.name.val">
       </div>
@@ -14,19 +14,19 @@
           <input type="radio" name="staff-sex" value="女" v-model="staff.gender.val"> 女
         </label>
       </div>
-      <div class="form-group" v-bind:class="{'has-error': !staff.telephone.ver}">
+      <div class="form-group" :class="{'has-error': !staff.telephone.ver}">
         <label for="staff-telephone" class="control-label">手机号</label>
         <input type="tel" class="form-control" placeholder="请输入职员手机号码" v-model="staff.telephone.val">
       </div>
-      <div class="form-group" v-bind:class="{'has-error': !staff.jobNumber.ver}">
+      <div class="form-group" :class="{'has-error': !staff.jobNumber.ver}">
         <label for="staff-job-number" class="control-label">工号</label>
         <input type="text" class="form-control" placeholder="请输入工号" v-model="staff.jobNumber.val">
       </div>
-      <div class="form-group" v-bind:class="{'has-error': !staff.duties.ver}">
+      <div class="form-group" :class="{'has-error': !staff.duties.ver}">
         <label for="staff-duty" class="control-label">职务</label>
         <input type="text" class="form-control" placeholder="请输入职务" v-model="staff.duties.val">
       </div>
-      <div class="form-group" v-bind:class="{'has-error': !staff.department.ver}">
+      <div class="form-group" :class="{'has-error': !staff.department.ver}">
         <label for="staff-duty" class="control-label">所属部门</label>
         <input type="text" class="form-control" placeholder="请输入所属部门" readonly v-model="staff.department.val">
       </div>
@@ -40,10 +40,10 @@
       </div>
     </form>
     <div slot="footer">
-      <button class="btn btn-primary modal-default-button" v-on:click="save()" v-bind:disabled="subBtn.dis">
+      <button class="btn btn-primary modal-default-button" @click="save()" :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
-      <button class="btn btn-default modal-default-button" v-on:click="cancel()">
+      <button class="btn btn-default modal-default-button" @click="cancel()">
         取消
       </button>
     </div>

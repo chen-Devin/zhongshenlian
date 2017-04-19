@@ -1,6 +1,6 @@
 <template>
 	<div class="main">
-		<crumbs v-bind:paths="paths"></crumbs>
+		<crumbs :paths="paths"></crumbs>
 		<card>
             <bid-classification :office="office"></bid-classification>
             <router-view :bidArray="biddingArray" @tellOffice="getOffice" @queryList="queryList" @checkMessage="checkMessage"></router-view>
@@ -168,8 +168,8 @@ export default {
     							}
     						}
     					}
-    				}		
-    			}	
+    				}
+    			}
     		}
     	},
     	checkMessage(project) {

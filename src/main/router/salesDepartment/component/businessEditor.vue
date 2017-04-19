@@ -7,7 +7,7 @@
                class="form-control"
                placeholder="请输入项目名称"
                v-model="business.name"
-               v-bind:disabled="!editable">
+               :disabled="!editable">
       </div>
     </div>
     <div class="form-group">
@@ -27,10 +27,10 @@
       <div class="col-sm-9">
         <select class="form-control"
                 v-model="business.institution"
-                v-bind:disabled="!editable">
+                :disabled="!editable">
           <option v-for="(CUS, index) in customers"
-                  v-bind:value="CUS"
-                  v-bind:key="index">{{CUS.customerName}}</option>
+                  :value="CUS"
+                  :key="index">{{CUS.customerName}}</option>
         </select>
       </div>
     </div>
@@ -45,10 +45,10 @@
       <div class="col-sm-9">
         <select class="form-control"
                 v-model="business.type"
-                v-bind:disabled="!editable">
+                :disabled="!editable">
           <option v-for="(TYPE, index) in businessType"
-                  v-bind:value="TYPE"
-                  v-bind:key="index">{{TYPE}}</option>
+                  :value="TYPE"
+                  :key="index">{{TYPE}}</option>
         </select>
       </div>
     </div>
@@ -57,10 +57,10 @@
       <div class="col-sm-9">
         <select class="form-control"
                 v-model="business.manager"
-                v-bind:disabled="!editable">
+                :disabled="!editable">
           <option v-for="(STA, index) in staffs"
-                  v-bind:value="STA"
-                  v-bind:key="index">{{STA.name}}</option>
+                  :value="STA"
+                  :key="index">{{STA.name}}</option>
         </select>
       </div>
     </div>
@@ -75,7 +75,7 @@
                      class="form-control"
                      placeholder="请输入项目开始时间"
                      v-model="business.time.start"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
             </div>
           </div>
           <div class="col-sm-6">
@@ -85,7 +85,7 @@
                      class="form-control"
                      placeholder="请输入项目结束时间"
                      v-model="business.time.end"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
             </div>
           </div>
         </div>
@@ -100,7 +100,7 @@
                  class="form-control"
                  placeholder="请输入资产总额"
                  v-model.number="business.assetAmount"
-                 v-bind:disabled="!editable">
+                 :disabled="!editable">
           <div class="input-group-addon">元</div>
         </div>
       </div>
@@ -114,7 +114,7 @@
                  class="form-control"
                  placeholder="请输入合同金额"
                  v-model.number="business.contractAmount"
-                 v-bind:disabled="!editable">
+                 :disabled="!editable">
           <div class="input-group-addon">元</div>
         </div>
       </div>
@@ -128,7 +128,7 @@
                  class="form-control"
                  placeholder="请输入合同单价"
                  v-model.number="business.contractPrice"
-                 v-bind:disabled="!editable">
+                 :disabled="!editable">
           <div class="input-group-addon">元</div>
         </div>
       </div>
@@ -140,11 +140,11 @@
           <h5>{{TYPE.name}}</h5>
           <label class="checkbox-inline"
                  v-for="(WORD, index) in TYPE.words"
-                 v-bind:key="index">
+                 :key="index">
             <input type="checkbox"
                    v-model="WORD.state"
-                   v-on:change="reportTypeChan(TYPE, WORD)"
-                   v-bind:disabled="!editable"> {{WORD.name}}
+                   @change="reportTypeChan(TYPE, WORD)"
+                   :disabled="!editable"> {{WORD.name}}
           </label>
           <hr>
         </template>
@@ -168,7 +168,7 @@
                      class="form-control"
                      placeholder="请输入项目开始时间"
                      v-model="business.auditTime.start"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
             </div>
           </div>
           <div class="col-sm-6">
@@ -178,7 +178,7 @@
                      class="form-control"
                      placeholder="请输入项目结束时间"
                      v-model="business.auditTime.end"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
             </div>
           </div>
         </div>
@@ -192,14 +192,14 @@
                  name="contractSystem"
                  value="联合体"
                  v-model="business.contractType.name"
-                 v-bind:disabled="!editable"> 联合体
+                 :disabled="!editable"> 联合体
         </label>
         <label class="radio-inline">
           <input type="radio"
                  name="contractSystem"
                  value="非联合体"
                  v-model="business.contractType.name"
-                 v-bind:disabled="!editable"> 非联合体
+                 :disabled="!editable"> 非联合体
         </label>
       </div>
     </div>
@@ -210,12 +210,12 @@
         <div class="row form-group">
           <div class="col-sm-6">
             <div class="input-group">
-              <div class="input-group-addon">主体</div>
+              <div class="input-group-addon">主办方</div>
               <input type="text"
                      class="form-control"
-                     placeholder="请输入主体"
+                     placeholder="请输入主办方"
                      v-model="business.contractType.basicFee.main.name"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
             </div>
           </div>
           <div class="col-sm-5">
@@ -225,22 +225,22 @@
                      class="form-control"
                      placeholder="请输入比例"
                      v-model.number="business.contractType.basicFee.main.percentage"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
               <div class="input-group-addon">%</div>
             </div>
           </div>
         </div>
         <div class="row form-group"
              v-for="(DEPEND, index) in business.contractType.basicFee.depend"
-             v-bind:key="index">
+             :key="index">
           <div class="col-sm-6">
             <div class="input-group">
-              <div class="input-group-addon">从属体</div>
+              <div class="input-group-addon">协办方</div>
               <input type="text"
                      class="form-control"
-                     placeholder="请输入从属体"
+                     placeholder="请输入协办方"
                      v-model="DEPEND.name"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
             </div>
           </div>
           <div class="col-sm-5">
@@ -250,21 +250,21 @@
                      class="form-control"
                      placeholder="请输入比例"
                      v-model.number="DEPEND.percentage"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
               <div class="input-group-addon">%</div>
             </div>
           </div>
           <h4 class="col-sm-1"
               v-if="editable">
               <a class="fa fa-times-circle text-danger"
-                 v-on:click="delBasicFee(index)"></a>
+                 @click="delBasicFee(index)"></a>
             </h4>
         </div>
         <div class="row form-group">
           <h4 class="col-sm-1 col-sm-offset-11"
               v-if="editable">
               <a class="fa fa-plus-circle text-success"
-                 v-on:click="addBasicFee()"></a>
+                 @click="addBasicFee()"></a>
             </h4>
         </div>
       </div>
@@ -276,12 +276,12 @@
         <div class="row form-group">
           <div class="col-sm-6">
             <div class="input-group">
-              <div class="input-group-addon">主体</div>
+              <div class="input-group-addon">主办方</div>
               <input type="text"
                      class="form-control"
-                     placeholder="请输入主体"
+                     placeholder="请输入主办方"
                      v-model="business.contractType.benefitFee.main.name"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
             </div>
           </div>
           <div class="col-sm-5">
@@ -291,22 +291,22 @@
                      class="form-control"
                      placeholder="请输入比例"
                      v-model.number="business.contractType.benefitFee.main.percentage"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
               <div class="input-group-addon">%</div>
             </div>
           </div>
         </div>
         <div class="row form-group"
              v-for="(DEPEND, index) in business.contractType.benefitFee.depend"
-             v-bind:key="index">
+             :key="index">
           <div class="col-sm-6">
             <div class="input-group">
-              <div class="input-group-addon">从属体</div>
+              <div class="input-group-addon">协办方</div>
               <input type="text"
                      class="form-control"
-                     placeholder="请输入从属体"
+                     placeholder="请输入协办方"
                      v-model="DEPEND.name"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
             </div>
           </div>
           <div class="col-sm-5">
@@ -316,21 +316,21 @@
                      class="form-control"
                      placeholder="请输入比例"
                      v-model.number="DEPEND.percentage"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
               <div class="input-group-addon">%</div>
             </div>
           </div>
           <h4 class="col-sm-1"
               v-if="editable">
               <a class="fa fa-times-circle text-danger"
-                 v-on:click="delBenefitFee(index)"></a>
+                 @click="delBenefitFee(index)"></a>
             </h4>
         </div>
         <div class="row form-group">
           <h4 class="col-sm-1 col-sm-offset-11"
               v-if="editable">
               <a class="fa fa-plus-circle text-success"
-                 v-on:click="addBenefitFee()"></a>
+                 @click="addBenefitFee()"></a>
             </h4>
         </div>
       </div>
@@ -343,14 +343,14 @@
                  name="departmentCooperation"
                  value="有部门合作"
                  v-model="business.departmentCoop.name"
-                 v-bind:disabled="!editable"> 有部门合作
+                 :disabled="!editable"> 有部门合作
         </label>
         <label class="radio-inline">
           <input type="radio"
                  name="departmentCooperation"
                  value="无部门合作"
                  v-model="business.departmentCoop.name"
-                 v-bind:disabled="!editable"> 无部门合作
+                 :disabled="!editable"> 无部门合作
         </label>
       </div>
     </div>
@@ -360,7 +360,7 @@
       <div class="col-sm-9">
         <div class="row form-group">
           <div class="col-sm-6">
-            <p class="form-control-static">主体</p>
+            <p class="form-control-static">主要部门</p>
           </div>
           <div class="col-sm-5">
             <div class="input-group">
@@ -369,7 +369,7 @@
                      class="form-control"
                      placeholder="请输入比例"
                      v-model.number="business.departmentCoop.departments.main.percentage"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
               <div class="input-group-addon">%</div>
             </div>
           </div>
@@ -378,12 +378,12 @@
              v-for="(COOP, index) in business.departmentCoop.departments.coop">
           <div class="col-sm-6">
             <div class="input-group">
-              <div class="input-group-addon">合作体</div>
+              <div class="input-group-addon">合作部门</div>
               <input type="text"
                      class="form-control"
-                     placeholder="请输入合作体"
+                     placeholder="请输入合作部门"
                      v-model="COOP.name"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
             </div>
           </div>
           <div class="col-sm-5">
@@ -393,21 +393,21 @@
                      class="form-control"
                      placeholder="请输入比例"
                      v-model.number="COOP.percentage"
-                     v-bind:disabled="!editable">
+                     :disabled="!editable">
               <div class="input-group-addon">%</div>
             </div>
           </div>
           <h4 class="col-sm-1"
               v-if="editable">
               <a class="fa fa-times-circle text-danger"
-                 v-on:click="delDepartments(index)"></a>
+                 @click="delDepartments(index)"></a>
             </h4>
         </div>
         <div class="row form-group">
           <h4 class="col-sm-1 col-sm-offset-11"
               v-if="editable">
               <a class="fa fa-plus-circle text-success"
-                 v-on:click="addDepartments()"></a>
+                 @click="addDepartments()"></a>
             </h4>
         </div>
       </div>
@@ -417,10 +417,10 @@
       <div class="col-sm-9">
         <select class="form-control"
                 v-model="business.reviewCPA"
-                v-bind:disabled="!editable">
+                :disabled="!editable">
           <option v-for="(STA, index) in staffs"
-                  v-bind:value="STA"
-                  v-bind:key="index">{{STA.name}}</option>
+                  :value="STA"
+                  :key="index">{{STA.name}}</option>
         </select>
       </div>
     </div>
@@ -429,10 +429,10 @@
       <div class="col-sm-9">
         <select class="form-control"
                 v-model="business.reviewAssistant"
-                v-bind:disabled="!editable">
+                :disabled="!editable">
           <option v-for="(STA, index) in staffs"
-                  v-bind:value="STA"
-                  v-bind:key="index">{{STA.name}}</option>
+                  :value="STA"
+                  :key="index">{{STA.name}}</option>
         </select>
       </div>
     </div>
@@ -444,7 +444,7 @@
                  class="form-control"
                  placeholder="请输入比例"
                  v-model.number="business.report.amount"
-                 v-bind:disabled="!editable">
+                 :disabled="!editable">
           <div class="input-group-addon">份（类）</div>
         </div>
       </div>
@@ -454,10 +454,10 @@
       <div class="col-sm-9">
         <select class="form-control"
                 v-model="business.report.usage"
-                v-bind:disabled="!editable">
+                :disabled="!editable">
           <option v-for="(TYPE, index) in businessType"
-                  v-bind:value="TYPE"
-                  v-bind:key="index">{{TYPE}}</option>
+                  :value="TYPE"
+                  :key="index">{{TYPE}}</option>
         </select>
       </div>
     </div>
@@ -468,7 +468,7 @@
                class="form-control"
                placeholder="请输入上次报告事务所"
                v-model="business.lastoffice"
-               v-bind:disabled="!editable">
+               :disabled="!editable">
       </div>
     </div>
     <div class="form-group">
@@ -476,11 +476,11 @@
       <div class="col-sm-9">
         <label class="checkbox-inline"
                v-for="(WAY, index) in business.getWay"
-               v-bind:key="index">
+               :key="index">
           <input type="checkbox"
                  name="gainingMethod"
                  v-model="WAY.state"
-                 v-bind:disabled="!editable"> {{WAY.name}}
+                 :disabled="!editable"> {{WAY.name}}
         </label>
       </div>
     </div>
@@ -489,11 +489,11 @@
         相关附件
       </label>
       <el-upload class="col-sm-10"
-                 v-bind:multiple="false"
-                 v-bind:action="uploadURL"
-                 v-bind:before-upload="reSave"
-                 v-bind:on-success="uploadSuccess"
-                 v-bind:show-file-list="false">
+                 :multiple="false"
+                 :action="uploadURL"
+                 :before-upload="reSave"
+                 :on-success="uploadSuccess"
+                 :show-file-list="false">
         <button class="btn btn-info btn-sm"
                 type="button"
                 v-if="editable">点击上传</button>
@@ -507,10 +507,10 @@
               v-for="FILE in business.files">
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title"
-               v-bind:href="FILE.url"
+               :href="FILE.url"
                target="_blank">{{FILE.name}}</a>
             <a class="text-danger pull-right"
-               v-on:click="delFile(FILE)"
+               @click="delFile(FILE)"
                v-if="editable"><i class="fa fa-times"></i></a>
           </li>
         </ul>
@@ -638,6 +638,7 @@ export default {
     if (this.business.report.usage === '') {
       this.business.report.usage = this.businessType[0];
     }
+
   },
   methods: {
     reportTypeChan(TYPE, WORD) {
@@ -663,6 +664,7 @@ export default {
       outermost2:
       for (let i = 0; i < this.business.report.type.length; i++) {
         for (let j = 0; j < this.business.report.type[i].words.length; j++) {
+          console.log(this.business.report.type[i].words[j].state);
           if (this.business.report.type[i].words[j].state) {
             flag = true;
             type = this.business.report.type[i].code;
@@ -1141,8 +1143,6 @@ form.form-horizontal {
     > li.list-group-item {
       border-right: 0;
       border-left: 0;
-      // height: 50px;
-      // line-height: 30px;
       > a.title {
         margin-left: 7px;
       }

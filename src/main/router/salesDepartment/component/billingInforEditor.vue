@@ -2,10 +2,10 @@
   <form class="form-horizontal">
     <div class="form-group">
       <div class="col-sm-12">
-        <el-upload v-bind:multiple="false"
-                   v-bind:action="uploadURL"
-                   v-bind:on-success="uploadSuccess"
-                   v-bind:show-file-list="false">
+        <el-upload :multiple="false"
+                   :action="uploadURL"
+                   :on-success="uploadSuccess"
+                   :show-file-list="false">
           <button class="btn btn-primary" type="button">上传已经收款到账截图</button>
         </el-upload>
         <button class="btn btn-primary" type="button">确认开票</button>
@@ -16,8 +16,8 @@
         <ul class="contract-list list-group">
           <li class="list-group-item" v-for="FILE in business.contractAnnexArray">
             <span class="fa fa-file-text-o"></span>
-            <a class="text-primary title" v-bind:href="FILE.url" target="_blank">{{FILE.name}}</a>
-            <a class="text-danger pull-right" v-on:click="delFile(FILE)" v-if="editable"><i class="fa fa-times"></i></a>
+            <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
+            <a class="text-danger pull-right" @click="delFile(FILE)" v-if="editable"><i class="fa fa-times"></i></a>
           </li>
         </ul>
       </div>

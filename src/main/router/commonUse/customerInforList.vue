@@ -1,9 +1,9 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
-    <customer-infor v-bind:customers="customers"
-                    v-bind:user="user"
-                    v-bind:indClassify="indClassify"></customer-infor>
+    <crumbs :paths="paths"></crumbs>
+    <customer-infor :customers="customers"
+                    :user="user"
+                    :indClassify="indClassify"></customer-infor>
   </div>
 </template>
 

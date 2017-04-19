@@ -1,41 +1,41 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <card>
       <h3>
         业务详情
         <div class="pull-right">
           <template v-if="editStat">
             <template v-if="!editable">
-              <button class="btn btn-primary" v-on:click="edi()">编辑</button>
+              <button class="btn btn-primary" @click="edi()">编辑</button>
             </template>
             <template v-if="editable">
-              <button class="btn btn-success" v-on:click="sub()">提交</button>
-              <button class="btn btn-warning" v-on:click="sav()" v-if="business.projectStatus===1">暂存</button>
-              <button class="btn btn-danger" v-on:click="del()">撤销</button>
+              <button class="btn btn-success" @click="sub()">提交</button>
+              <button class="btn btn-warning" @click="sav()" v-if="business.projectStatus===1">暂存</button>
+              <button class="btn btn-danger" @click="del()">撤销</button>
             </template>
           </template>
         </div>
       </h3>
-      <business-editor v-bind:initBusiness="business"
-                       v-bind:editable="editable"
-                       v-on:saved="saved"
-                       v-on:submited="submited"
-                       v-on:uploaded="uploaded"
-                       v-on:deletedFile="deletedFile"
-                       v-on:refuseSub="refuseSub"></business-editor>
+      <business-editor :initBusiness="business"
+                       :editable="editable"
+                       @saved="saved"
+                       @submited="submited"
+                       @uploaded="uploaded"
+                       @deletedFile="deletedFile"
+                       @refuseSub="refuseSub"></business-editor>
       <template v-if="business.projectStatus!==1">
         <hr>
         <div class="row">
-          <approver-advice v-bind:advices="riskAdvices">风险评估部意见</approver-advice>
-          <approver-advice v-bind:advices="leaderAdivces">审批人意见</approver-advice>
+          <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
+          <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
         </div>
       </template>
     </card>
     <business-del-modal v-if="showDelModal"
-                        v-bind:initalBusiness="business"
-                        v-on:deleted="deleted"
-                        v-on:canceled="delCanceled"></business-del-modal>
+                        :initalBusiness="business"
+                        @deleted="deleted"
+                        @canceled="delCanceled"></business-del-modal>
   </div>
 </template>
 
@@ -240,7 +240,7 @@ export default {
         departmentCoop: {
           name: '无部门合作',
           departments: {
-            main: { name: '主体', percentage: 0 },
+            main: { name: '主要部门', percentage: 0 },
             coop: [{ name: '', percentage: 0 }]
           },
         },

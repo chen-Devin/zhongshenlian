@@ -1,33 +1,33 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <card>
       <h3>
         业务详情
         <div class="pull-right">
           <template v-if="decide==='undecide'">
-            <button class="btn btn-success" v-on:click="approve()">通过</button>
-            <button class="btn btn-danger" v-on:click="refuse()">不通过</button>
+            <button class="btn btn-success" @click="approve()">通过</button>
+            <button class="btn btn-danger" @click="refuse()">不通过</button>
           </template>
           <span class="label label-success" v-else-if="decide==='approve'">已选择通过</span>
           <span class="label label-danger" v-else-if="decide==='refuse'">已选择未通过</span>
         </div>
       </h3>
-      <business-profile v-bind:initBusiness="business" v-bind:user="user"></business-profile>
+      <business-profile :initBusiness="business" :user="user"></business-profile>
       <hr>
       <div class="row">
-        <approver-advice v-bind:advices="riskAdvices">风险评估部意见</approver-advice>
-        <approver-advice v-bind:advices="leaderAdivces">审批人意见</approver-advice>
+        <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
+        <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
       </div>
     </card>
     <business-approve-modal v-if="showApproveModal"
-                            v-bind:initalBusiness="business"
-                            v-on:approved="approved"
-                            v-on:canceled="appCanceled"></business-approve-modal>
+                            :initalBusiness="business"
+                            @approved="approved"
+                            @canceled="appCanceled"></business-approve-modal>
     <business-refuse-modal v-if="showRefuseModal"
-                           v-bind:initalBusiness="business"
-                           v-on:refused="refused"
-                           v-on:canceled="refCanceled"></business-refuse-modal>
+                           :initalBusiness="business"
+                           @refused="refused"
+                           @canceled="refCanceled"></business-refuse-modal>
   </div>
 </template>
 
@@ -228,7 +228,7 @@ export default {
         departmentCoop: {
           name: '无部门合作',
           departments: {
-            main: { name: '主体', percentage: 0 },
+            main: { name: '主要部门', percentage: 0 },
             coop: [{ name: '', percentage: 0 }]
           },
         },

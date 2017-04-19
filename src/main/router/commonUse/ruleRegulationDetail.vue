@@ -1,6 +1,6 @@
 <template>
 <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <button class="btn btn-primary pull-right" type="button" @click="editRule">编辑</button>
     <card id="ruleDetailSection">
       <div class="ruleDetail" v-bind="detail">

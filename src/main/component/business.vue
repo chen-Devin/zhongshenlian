@@ -1,10 +1,10 @@
 <template>
   <div>
     <progress-bar></progress-bar>
-    <tab-control v-bind:initParts="parts"
-                 v-bind:initBusiness="business"
-                 v-bind:user="user"
-                 v-on:pathsChan="pathsChan"></tab-control>
+    <tab-control :initParts="parts"
+                 :initBusiness="business"
+                 :user="user"
+                 @pathsChan="pathsChan"></tab-control>
   </div>
 </template>
 

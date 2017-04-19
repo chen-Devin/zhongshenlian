@@ -1,6 +1,6 @@
 <template>
 <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <card id="searchCard">
       <form class="form-inline">
         <div class="form-group searchItem">
