@@ -338,12 +338,12 @@ export default {
         wordsFormat = '';
         for (let j=0; j<this.business.report.type[i].words.length; j++) {
           if (this.business.report.type[i].words[j].state) {
-            typeEx = ture;
+            typeEx = true;
             wordsFormat += this.business.report.type[i].words[j].name + ' ';
           }
         }
         if (typeEx) {
-          out += `<h4>${this.business.report.type[i].name}</h4>
+          out += `<h5>${this.business.report.type[i].name}</h5>
                     <p class="form-control-static">${wordsFormat}</p>
                   <hr>`;
         }
