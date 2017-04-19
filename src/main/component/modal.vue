@@ -1,7 +1,7 @@
 <template>
   <transition name="modal">
     <div class="modal-mask">
-      <div class="modal-wrapper">
+      <div class="modal-wrapper" :style="{alignSelf: alignSelf}">
         <div class="modal-container">
           <div class="modal-body">
             <slot name="body">
@@ -21,7 +21,8 @@
 
 <script>
 export default {
-  name: 'modal'
+  name: 'modal',
+  props: ['alignSelf']
 }
 </script>
 
@@ -34,13 +35,16 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, .5);
-  display: table;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
   transition: opacity .3s ease;
 }
 
 .modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
+  // display: table-cell;
+  // vertical-align: middle;
 }
 
 .modal-container {

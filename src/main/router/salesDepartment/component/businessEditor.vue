@@ -256,16 +256,16 @@
           </div>
           <h4 class="col-sm-1"
               v-if="editable">
-              <a class="fa fa-times-circle text-danger"
-                 @click="delBasicFee(index)"></a>
-            </h4>
+                <a class="fa fa-times-circle text-danger"
+                   @click="delBasicFee(index)"></a>
+              </h4>
         </div>
         <div class="row form-group">
           <h4 class="col-sm-1 col-sm-offset-11"
               v-if="editable">
-              <a class="fa fa-plus-circle text-success"
-                 @click="addBasicFee()"></a>
-            </h4>
+                <a class="fa fa-plus-circle text-success"
+                   @click="addBasicFee()"></a>
+              </h4>
         </div>
       </div>
     </div>
@@ -322,16 +322,16 @@
           </div>
           <h4 class="col-sm-1"
               v-if="editable">
-              <a class="fa fa-times-circle text-danger"
-                 @click="delBenefitFee(index)"></a>
-            </h4>
+                <a class="fa fa-times-circle text-danger"
+                   @click="delBenefitFee(index)"></a>
+              </h4>
         </div>
         <div class="row form-group">
           <h4 class="col-sm-1 col-sm-offset-11"
               v-if="editable">
-              <a class="fa fa-plus-circle text-success"
-                 @click="addBenefitFee()"></a>
-            </h4>
+                <a class="fa fa-plus-circle text-success"
+                   @click="addBenefitFee()"></a>
+              </h4>
         </div>
       </div>
     </div>
@@ -399,16 +399,16 @@
           </div>
           <h4 class="col-sm-1"
               v-if="editable">
-              <a class="fa fa-times-circle text-danger"
-                 @click="delDepartments(index)"></a>
-            </h4>
+                <a class="fa fa-times-circle text-danger"
+                   @click="delDepartments(index)"></a>
+              </h4>
         </div>
         <div class="row form-group">
           <h4 class="col-sm-1 col-sm-offset-11"
               v-if="editable">
-              <a class="fa fa-plus-circle text-success"
-                 @click="addDepartments()"></a>
-            </h4>
+                <a class="fa fa-plus-circle text-success"
+                   @click="addDepartments()"></a>
+              </h4>
         </div>
       </div>
     </div>
@@ -467,7 +467,7 @@
         <input type="text"
                class="form-control"
                placeholder="请输入上次报告事务所"
-               v-model="business.lastoffice"
+               v-model="business.lastOffice"
                :disabled="!editable">
       </div>
     </div>
@@ -589,7 +589,7 @@ export default {
       if (this.business.manager.id === '') {
         this.business.manager = this.staffs[0];
       } else {
-        for (let i=0; i<this.staffs.length; i++) {
+        for (let i = 0; i < this.staffs.length; i++) {
           if (this.business.manager.id === this.staffs[i].id) {
             this.business.manager = this.staffs[i];
             break;
@@ -599,7 +599,7 @@ export default {
       if (this.business.reviewCPA.id === '') {
         this.business.reviewCPA = this.staffs[0];
       } else {
-        for (let i=0; i<this.staffs.length; i++) {
+        for (let i = 0; i < this.staffs.length; i++) {
           if (this.business.reviewCPA.id === this.staffs[i].id) {
             this.business.reviewCPA = this.staffs[i];
             break;
@@ -609,27 +609,27 @@ export default {
       if (this.business.reviewAssistant.id === '') {
         this.business.reviewAssistant = this.staffs[0];
       } else {
-        for (let i=0; i<this.staffs.length; i++) {
+        for (let i = 0; i < this.staffs.length; i++) {
           if (this.business.reviewAssistant.id === this.staffs[i].id) {
             this.business.reviewAssistant = this.staffs[i];
             break;
           }
         }
       }
-    }, () => {});
+    }, () => { });
 
     this.getCustomers().then(() => {
       if (this.business.institution.id === '') {
         this.business.institution = this.customers[0];
       } else {
-        for (let i=0; i<this.customers.length; i++) {
+        for (let i = 0; i < this.customers.length; i++) {
           if (this.business.institution.id === this.customers[i].id) {
             this.business.institution = this.customers[i];
             break;
           }
         }
       }
-    }, () => {});
+    }, () => { });
 
     if (this.business.type === '') {
       this.business.type = this.businessType[0];
@@ -664,7 +664,6 @@ export default {
       outermost2:
       for (let i = 0; i < this.business.report.type.length; i++) {
         for (let j = 0; j < this.business.report.type[i].words.length; j++) {
-          console.log(this.business.report.type[i].words[j].state);
           if (this.business.report.type[i].words[j].state) {
             flag = true;
             type = this.business.report.type[i].code;
@@ -781,10 +780,10 @@ export default {
                   reportCopies: this.business.report.amount,
                   reportType: (() => {
                     let out = [];
-                    for (let i=0; i<this.business.report.type.length; i++) {
+                    for (let i = 0; i < this.business.report.type.length; i++) {
                       let flag = false;
                       let typeArray = [];
-                      for (let j=0; j<this.business.report.type[i].words.length; j++) {
+                      for (let j = 0; j < this.business.report.type[i].words.length; j++) {
                         if (this.business.report.type[i].words[j].state) {
                           flag = true;
                           typeArray.push({
@@ -812,7 +811,7 @@ export default {
                     if (this.business.departmentCoop.name === '有部门合作') {
                       out.mainRate = this.business.departmentCoop.departments.main.percentage;
                       out.otherArray = [];
-                      for (let i=0; i<this.business.departmentCoop.departments.coop.length; i++) {
+                      for (let i = 0; i < this.business.departmentCoop.departments.coop.length; i++) {
                         out.otherArray.push({
                           cooperation: this.business.departmentCoop.departments.coop[i].name,
                           cooperationRate: this.business.departmentCoop.departments.coop[i].percentage
@@ -825,7 +824,7 @@ export default {
                   trialTeacherName: this.business.reviewCPA.name,
                   trialAssistantId: this.business.reviewAssistant.id,
                   trialAssistantName: this.business.reviewAssistant.name,
-                  lastOffice: this.business.lastoffice,
+                  lastOffice: this.business.lastOffice,
                   getWay: this.business.getWay,
                   contractType: (() => {
                     let out = {
@@ -837,13 +836,13 @@ export default {
                       subBasicArray: [],
                       subEfficiencyArray: []
                     };
-                    for (let i=0; i<this.business.contractType.basicFee.depend.length; i++) {
+                    for (let i = 0; i < this.business.contractType.basicFee.depend.length; i++) {
                       out.subBasicArray.push({
                         name: this.business.contractType.basicFee.depend[i].name,
                         rate: this.business.contractType.basicFee.depend[i].percentage
                       });
                     }
-                    for (let i=0; i<this.business.contractType.benefitFee.depend.length; i++) {
+                    for (let i = 0; i < this.business.contractType.benefitFee.depend.length; i++) {
                       out.subEfficiencyArray.push({
                         name: this.business.contractType.benefitFee.depend[i].name,
                         rate: this.business.contractType.benefitFee.depend[i].percentage
@@ -907,10 +906,10 @@ export default {
                     reportCopies: this.business.report.amount,
                     reportType: (() => {
                       let out = [];
-                      for (let i=0; i<this.business.report.type.length; i++) {
+                      for (let i = 0; i < this.business.report.type.length; i++) {
                         let flag = false;
                         let typeArray = [];
-                        for (let j=0; j<this.business.report.type[i].words.length; j++) {
+                        for (let j = 0; j < this.business.report.type[i].words.length; j++) {
                           if (this.business.report.type[i].words[j].state) {
                             flag = true;
                             typeArray.push({
@@ -938,7 +937,7 @@ export default {
                       if (this.business.departmentCoop.name === '有部门合作') {
                         out.mainRate = this.business.departmentCoop.departments.main.percentage;
                         out.otherArray = [];
-                        for (let i=0; i<this.business.departmentCoop.departments.coop.length; i++) {
+                        for (let i = 0; i < this.business.departmentCoop.departments.coop.length; i++) {
                           out.otherArray.push({
                             cooperation: this.business.departmentCoop.departments.coop[i].name,
                             cooperationRate: this.business.departmentCoop.departments.coop[i].percentage
@@ -951,7 +950,7 @@ export default {
                     trialTeacherName: this.business.reviewCPA.name,
                     trialAssistantId: this.business.reviewAssistant.id,
                     trialAssistantName: this.business.reviewAssistant.name,
-                    lastOffice: this.business.lastoffice,
+                    lastOffice: this.business.lastOffice,
                     getWay: this.business.getWay,
                     contractType: (() => {
                       let out = {
@@ -963,13 +962,13 @@ export default {
                         subBasicArray: [],
                         subEfficiencyArray: []
                       };
-                      for (let i=0; i<this.business.contractType.basicFee.depend.length; i++) {
+                      for (let i = 0; i < this.business.contractType.basicFee.depend.length; i++) {
                         out.subBasicArray.push({
                           name: this.business.contractType.basicFee.depend[i].name,
                           rate: this.business.contractType.basicFee.depend[i].percentage
                         });
                       }
-                      for (let i=0; i<this.business.contractType.benefitFee.depend.length; i++) {
+                      for (let i = 0; i < this.business.contractType.benefitFee.depend.length; i++) {
                         out.subEfficiencyArray.push({
                           name: this.business.contractType.benefitFee.depend[i].name,
                           rate: this.business.contractType.benefitFee.depend[i].percentage
@@ -1062,7 +1061,7 @@ export default {
     basicFeeCheck() {
       if (this.business.contractType.name === '联合体') {
         let total = this.business.contractType.basicFee.main.percentage;
-        for (let i=0; i<this.business.contractType.basicFee.depend.length; i++) {
+        for (let i = 0; i < this.business.contractType.basicFee.depend.length; i++) {
           total += this.business.contractType.basicFee.depend[i].percentage;
         }
         if (total === 100) {
@@ -1084,7 +1083,7 @@ export default {
     benefitFeeCheck() {
       if (this.business.contractType.name === '联合体') {
         let total = this.business.contractType.benefitFee.main.percentage;
-        for (let i=0; i<this.business.contractType.benefitFee.depend.length; i++) {
+        for (let i = 0; i < this.business.contractType.benefitFee.depend.length; i++) {
           total += this.business.contractType.benefitFee.depend[i].percentage;
         }
         if (total === 100) {
@@ -1106,7 +1105,7 @@ export default {
     departmentsCheck() {
       if (this.business.departmentCoop.name === '有部门合作') {
         let total = this.business.departmentCoop.departments.main.percentage;
-        for (let i=0; i<this.business.departmentCoop.departments.coop.length; i++) {
+        for (let i = 0; i < this.business.departmentCoop.departments.coop.length; i++) {
           total += this.business.departmentCoop.departments.coop[i].percentage;
         }
         if (total === 100) {

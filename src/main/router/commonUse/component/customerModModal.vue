@@ -1,5 +1,5 @@
 <template>
-  <modal>
+  <modal alignSelf="flex-start">
     <form class="form-horizontal clearfix"
           slot="body">
       <div class="form-group"

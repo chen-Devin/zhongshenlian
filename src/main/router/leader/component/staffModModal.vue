@@ -1,38 +1,83 @@
 <template>
   <modal>
-    <form slot="body">
-      <div class="form-group" :class="{'has-error': !staff.name.ver}">
-        <label for="staff-name" class="control-label">姓名</label>
-        <input type="text" class="form-control" placeholder="请输入职员姓名" v-model="staff.name.val">
+    <form class="form-horizontal clearfix"
+          slot="body">
+      <div class="form-group"
+           :class="{'has-error': !staff.name.ver}">
+        <label class="col-sm-3 control-label">姓名</label>
+        <div class="col-sm-9">
+          <input type="text"
+                 class="form-control"
+                 placeholder="请输入职员姓名"
+                 v-model="staff.name.val">
+        </div>
       </div>
       <div class="form-group">
-        <label for="staff-sex" class="control-label staff-sex">性别</label>
-        <label class="radio-inline">
-          <input type="radio" name="staff-sex" value="男" v-model="staff.gender.val"> 男
-        </label>
-        <label class="radio-inline">
-          <input type="radio" name="staff-sex" value="女" v-model="staff.gender.val"> 女
-        </label>
+        <label class="col-sm-3 control-label">性别</label>
+        <div class="col-sm-9">
+          <label class="radio-inline">
+            <input type="radio"
+                   name="staff-sex"
+                   value="男"
+                   v-model="staff.gender.val"> 男
+          </label>
+          <label class="radio-inline">
+            <input type="radio"
+                   name="staff-sex"
+                   value="女"
+                   v-model="staff.gender.val"> 女
+          </label>
+        </div>
       </div>
-      <div class="form-group" :class="{'has-error': !staff.telephone.ver}">
-        <label for="staff-telephone" class="control-label">手机号</label>
-        <input type="tel" class="form-control" placeholder="请输入职员手机号码" v-model="staff.telephone.val">
+      <div class="form-group"
+           :class="{'has-error': !staff.telephone.ver}">
+        <label class="col-sm-3 control-label">手机号</label>
+        <div class="col-sm-9">
+          <input type="tel"
+                 class="form-control"
+                 placeholder="请输入职员手机号码"
+                 v-model="staff.telephone.val">
+        </div>
       </div>
-      <div class="form-group" :class="{'has-error': !staff.jobNumber.ver}">
-        <label for="staff-job-number" class="control-label">工号</label>
-        <input type="text" class="form-control" placeholder="请输入工号" v-model="staff.jobNumber.val">
+      <div class="form-group"
+           :class="{'has-error': !staff.jobNumber.ver}">
+        <label class="col-sm-3 control-label">工号</label>
+        <div class="col-sm-9">
+          <input type="text"
+                 class="form-control"
+                 placeholder="请输入工号"
+                 v-model="staff.jobNumber.val">
+        </div>
       </div>
-      <div class="form-group" :class="{'has-error': !staff.duties.ver}">
-        <label for="staff-duty" class="control-label">职务</label>
-        <input type="text" class="form-control" placeholder="请输入职务" v-model="staff.duties.val">
+      <div class="form-group"
+           :class="{'has-error': !staff.duties.ver}">
+        <label class="col-sm-3 control-label">职务</label>
+        <div class="col-sm-9">
+          <input type="text"
+                 class="form-control"
+                 placeholder="请输入职务"
+                 v-model="staff.duties.val">
+        </div>
       </div>
-      <div class="form-group" :class="{'has-error': !staff.department.ver}">
-        <label for="staff-duty" class="control-label">所属部门</label>
-        <input type="text" class="form-control" placeholder="请输入所属部门" readonly v-model="staff.department.val">
+      <div class="form-group"
+           :class="{'has-error': !staff.department.ver}">
+        <label class="col-sm-3 control-label">所属部门</label>
+        <div class="col-sm-9">
+          <input type="text"
+                 class="form-control"
+                 placeholder="请输入所属部门"
+                 readonly
+                 v-model="staff.department.val">
+        </div>
       </div>
       <div class="form-group">
-        <label for="staff-duty" class="control-label">备注</label>
-        <input type="text" class="form-control" placeholder="请输入备注" v-model="staff.remark.val">
+        <label class="col-sm-3 control-label">备注</label>
+        <div class="col-sm-9">
+          <input type="text"
+                 class="form-control"
+                 placeholder="请输入备注"
+                 v-model="staff.remark.val">
+        </div>
       </div>
       <div class="alert alert-danger well-sm"
            v-show="alert.show">
@@ -40,10 +85,13 @@
       </div>
     </form>
     <div slot="footer">
-      <button class="btn btn-primary modal-default-button" @click="save()" :disabled="subBtn.dis">
+      <button class="btn btn-primary modal-default-button"
+              @click="save()"
+              :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
-      <button class="btn btn-default modal-default-button" @click="cancel()">
+      <button class="btn btn-default modal-default-button"
+              @click="cancel()">
         取消
       </button>
     </div>
@@ -60,21 +108,21 @@ export default {
   name: 'staffModModal',
   data() {
     return {
-      staff: (()=>{
+      staff: (() => {
         return {
           id: {
             val: this.initalStaff.id
           },
           name: {
             val: this.initalStaff.name,
-            ver: this.initalStaff.name===''?false:true
+            ver: this.initalStaff.name === '' ? false : true
           },
           gender: {
-            val: this.initalStaff.gender===''?'男':this.initalStaff.gender
+            val: this.initalStaff.gender === '' ? '男' : this.initalStaff.gender
           },
           telephone: {
             val: this.initalStaff.telephone,
-            ver: (()=>{
+            ver: (() => {
               let reg = /^(1+\d{10})$/;
               if (this.initalStaff.telephone === '') {
                 return false;
@@ -87,15 +135,15 @@ export default {
           },
           jobNumber: {
             val: this.initalStaff.jobNumber,
-            ver: this.initalStaff.jobNumber===''?false:true
+            ver: this.initalStaff.jobNumber === '' ? false : true
           },
           duties: {
             val: this.initalStaff.duties,
-            ver: this.initalStaff.duties===''?false:true
+            ver: this.initalStaff.duties === '' ? false : true
           },
           department: {
             val: this.initalStaff.department,
-            ver: this.initalStaff.department===''?false:true
+            ver: this.initalStaff.department === '' ? false : true
           },
           remark: {
             val: this.initalStaff.remark
@@ -118,41 +166,41 @@ export default {
       let reg = /^(1+\d{10})$/;
       this.alert.show = false;
       this.alert.cont = '';
-      if (this.staff.name.val==='') {
+      if (this.staff.name.val === '') {
         this.staff.name.ver = false;
       } else {
         this.staff.name.ver = true;
       }
-      if (this.staff.telephone.val==='') {
+      if (this.staff.telephone.val === '') {
         this.staff.telephone.ver = false;
       } else if (!reg.test(this.staff.telephone.val)) {
         this.staff.telephone.ver = false;
       } else {
         this.staff.telephone.ver = true;
       }
-      if (this.staff.jobNumber.val==='') {
+      if (this.staff.jobNumber.val === '') {
         this.staff.jobNumber.ver = false;
       } else {
         this.staff.jobNumber.ver = true;
       }
-      if (this.staff.duties.val==='') {
+      if (this.staff.duties.val === '') {
         this.staff.duties.ver = false;
       } else {
         this.staff.duties.ver = true;
       }
-      if (this.staff.department.val==='') {
+      if (this.staff.department.val === '') {
         this.staff.department.ver = false;
       } else {
         this.staff.department.ver = true;
       }
-      if (!(this.staff.name.ver&&this.staff.telephone.ver&&this.staff.jobNumber.val&&this.staff.duties.ver&&this.staff.department.ver)) {
+      if (!(this.staff.name.ver && this.staff.telephone.ver && this.staff.jobNumber.val && this.staff.duties.ver && this.staff.department.ver)) {
         this.alert.show = true;
         this.alert.cont = '您有信息尚未输入或信息格式有误，请检查';
       } else {
         this.subBtn.dis = true;
         this.subBtn.cont = '保存中...';
         axios({
-          headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
           method: 'post',
           url: '/service',
           data: qs.stringify({
@@ -172,12 +220,12 @@ export default {
               return JSON.stringify(obj);
             })()
           })
-        }).then((rep)=>{
+        }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.subBtn.cont = '已保存';
             this.$emit('saved', this.staff);
           }
-        }, (rep)=>{});
+        }, (rep) => { });
       }
     },
     cancel() {
@@ -191,7 +239,5 @@ export default {
 </script>
 
 <style>
-.staff-sex {
-  display: block;
-}
+
 </style>

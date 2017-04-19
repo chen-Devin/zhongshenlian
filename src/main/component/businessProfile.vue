@@ -236,7 +236,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">上次报告事务所</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.lastoffice}}</p>
+        <p class="form-control-static">{{business.lastOffice}}</p>
       </div>
     </div>
     <div class="form-group">

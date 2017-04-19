@@ -240,7 +240,7 @@ export default {
           id: '',
           name: ''
         },
-        lastoffice: '',
+        lastOffice: '',
         getWay: [
           {
             name: '直接委托',
@@ -401,7 +401,7 @@ export default {
             this.business.reviewAssistant.id = rep.data.data.trialAssistantId;
             this.business.reviewAssistant.name = rep.data.data.trialAssistantName;
 
-            this.business.lastoffice = rep.data.data.lastoffice;
+            this.business.lastOffice = rep.data.data.lastOffice;
             this.business.getWay = rep.data.data.getWay;
 
             this.business.projectStatus = parseInt(rep.data.data.projectStatus);

@@ -237,7 +237,7 @@ export default {
           id: '',
           name: ''
         },
-        lastoffice: '',
+        lastOffice: '',
         getWay: [
           {
             name: '直接委托',
