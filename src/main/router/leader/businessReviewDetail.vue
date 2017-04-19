@@ -59,9 +59,17 @@ export default {
           name: '',
           tele: ''
         },
-        institution: null,
+        institution: {
+          id: '',
+          customerName: '',
+          name: '',
+          telephone: '',
+        },
         type: '',
-        manager: null,
+        manager: {
+          id: '',
+          name: ''
+        },
         time: {
           start: (() => {
             let t = new Date();
@@ -224,8 +232,14 @@ export default {
             coop: [{ name: '', percentage: 0 }]
           },
         },
-        reviewCPA: null,
-        reviewAssistant: null,
+        reviewCPA: {
+          id: '',
+          name: ''
+        },
+        reviewAssistant: {
+          id: '',
+          name: ''
+        },
         lastoffice: '',
         getWay: [
           {
@@ -304,19 +318,15 @@ export default {
             this.business.proposer.name = rep.data.data.applicantName;
             this.business.proposer.tele = rep.data.data.applicantPhone;
 
-            this.business.institution = {
-              id: rep.data.data.requesterId,
-              customerName: rep.data.data.requester,
-              name: rep.data.data.requesterName,
-              telephone: rep.data.data.requesterPhone
-            };
+            this.business.institution.id = rep.data.data.requesterId;
+            this.business.institution.customerName = rep.data.data.requester;
+            this.business.institution.name = rep.data.data.requesterName;
+            this.business.institution.telephone = rep.data.data.requesterPhone;
 
             this.business.type = rep.data.data.businessType;
 
-            this.business.manager = {
-              id: rep.data.data.projectManagerId,
-              name: rep.data.data.projectManagerName
-            };
+            this.business.manager.id = rep.data.data.projectManagerId,
+            this.business.manager.name = rep.data.data.projectManagerName
 
             this.business.time.start = rep.data.data.startTime;
             this.business.time.end = rep.data.data.endTime;
@@ -385,14 +395,11 @@ export default {
               this.business.departmentCoop.name = '无部门合作';
             }
 
-            this.business.reviewCPA = {
-              id: rep.data.data.trialTeacherId,
-              name: rep.data.data.trialTeacherName
-            };
-            this.business.reviewAssistant = {
-              id: rep.data.data.trialAssistantId,
-              name: rep.data.data.trialAssistantName
-            };
+            this.business.reviewCPA.id = rep.data.data.trialTeacherId;
+            this.business.reviewCPA.name = rep.data.data.trialTeacherName;
+
+            this.business.reviewAssistant.id = rep.data.data.trialAssistantId;
+            this.business.reviewAssistant.name = rep.data.data.trialAssistantName;
 
             this.business.lastoffice = rep.data.data.lastoffice;
             this.business.getWay = rep.data.data.getWay;

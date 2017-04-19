@@ -37,7 +37,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">客户名称</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{institutionName}}</p>
+        <p class="form-control-static">{{business.institution.name}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -570,9 +570,6 @@ export default {
     },
     departmentCoopChan() {
       return (this.business.departmentCoop.name === '有部门合作') ? true : false;
-    },
-    institutionName() {
-      return this.business.institution ? this.business.institution.name : '';
     }
   },
   props: ['initBusiness', 'editable'],
@@ -589,7 +586,7 @@ export default {
     this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
 
     this.getStaffs().then(() => {
-      if (this.business.manager === null) {
+      if (this.business.manager.id === '') {
         this.business.manager = this.staffs[0];
       } else {
         for (let i=0; i<this.staffs.length; i++) {
@@ -599,7 +596,7 @@ export default {
           }
         }
       }
-      if (this.business.reviewCPA === null) {
+      if (this.business.reviewCPA.id === '') {
         this.business.reviewCPA = this.staffs[0];
       } else {
         for (let i=0; i<this.staffs.length; i++) {
@@ -609,7 +606,7 @@ export default {
           }
         }
       }
-      if (this.business.reviewAssistant === null) {
+      if (this.business.reviewAssistant.id === '') {
         this.business.reviewAssistant = this.staffs[0];
       } else {
         for (let i=0; i<this.staffs.length; i++) {
@@ -622,7 +619,7 @@ export default {
     }, () => {});
 
     this.getCustomers().then(() => {
-      if (this.business.institution === null) {
+      if (this.business.institution.id === '') {
         this.business.institution = this.customers[0];
       } else {
         for (let i=0; i<this.customers.length; i++) {
@@ -1061,7 +1058,6 @@ export default {
       this.business.contractType.basicFee.depend.push({ name: '', percentage: 0 });
     },
     basicFeeCheck() {
-      console.log(this.business.contractType);
       if (this.business.contractType.name === '联合体') {
         let total = this.business.contractType.basicFee.main.percentage;
         for (let i=0; i<this.business.contractType.basicFee.depend.length; i++) {

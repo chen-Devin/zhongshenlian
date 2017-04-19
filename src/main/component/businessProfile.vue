@@ -229,13 +229,13 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">报告用途</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.report.usage}}份（类）</p>
+        <p class="form-control-static">{{business.report.usage}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">上次报告事务所</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.lastoffice}}份（类）</p>
+        <p class="form-control-static">{{business.lastoffice}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -316,18 +316,10 @@ export default {
   },
   computed: {
     contractTypeChan() {
-      if (this.business.contractType.name === '联合体') {
-        return true;
-      } else {
-        return false;
-      }
+      return (this.business.contractType.name === '联合体') ? true : false;
     },
     departmentCoopChan() {
-      if (this.business.departmentCoop.name === '有部门合作') {
-        return true;
-      } else {
-        return false;
-      }
+      return (this.business.departmentCoop.name === '有部门合作') ? true : false;
     },
     getWayFormat() {
       let out = '';

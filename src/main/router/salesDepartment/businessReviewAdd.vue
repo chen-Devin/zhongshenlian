@@ -56,9 +56,17 @@ export default {
           name: this.user.name,
           tele: this.user.telephone
         },
-        institution: null,
+        institution: {
+          id: '',
+          customerName: '',
+          name: '',
+          telephone: '',
+        },
         type: '',
-        manager: null,
+        manager: {
+          id: '',
+          name: ''
+        },
         time: {
           start: (() => {
             let t = new Date();
@@ -221,8 +229,14 @@ export default {
             coop: [{ name: '', percentage: 0 }]
           },
         },
-        reviewCPA: null,
-        reviewAssistant: null,
+        reviewCPA: {
+          id: '',
+          name: ''
+        },
+        reviewAssistant: {
+          id: '',
+          name: ''
+        },
         lastoffice: '',
         getWay: [
           {
