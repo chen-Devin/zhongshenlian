@@ -1,8 +1,8 @@
 <template>
 	<div class="main">
-		<crumbs v-bind:paths="paths"></crumbs>
+		<crumbs :paths="paths"></crumbs>
 		<card>
-			<bid-info-edit :iniProject="project"></bid-info-edit>
+			<bid-info-edit :iniProject="project" :office="office"></bid-info-edit>
 		</card>
 	</div>
 </template>
@@ -16,14 +16,15 @@ import card from '../../component/card.vue';
 import bidInfoEdit from './component/bidInfoEdit.vue';
 
 export default {
-    name: 'bidInfoInput',
+    name: 'bidInfoInputSWS',
     data() {
     	return {
 			paths: [
-	    		{name: '招投标信息看板', url: '/bid-infor-list-market', present: false},
-	    		{name: '招投标详情', url: '/bid-infor-detail', present: true}
+	    		{name: '招投标信息看板', url: '/bid-info-list/tax', present: false},
+	    		{name: '税务所招投标信息录入', url: '/bid-info-input-sws', present: true}
 	  		],
-	  		project: {}
+	  		project: {},
+	  		office: "税务所"
     	}
     },
     components: {

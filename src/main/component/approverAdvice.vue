@@ -4,10 +4,10 @@
       <slot>error</slot>
     </h4>
     <ul class="list-group approver-list">
-      <li class="list-group-item" v-for="(ADVICE, index) in advices" v-bind:key="index">
+      <li class="list-group-item" v-for="(ADVICE, index) in advices" :key="index">
         <span>{{ADVICE.approverName}}</span>
         <span class="label label-success pull-right" v-if="ADVICE.approveResult==='通过'">已通过</span>
-        <span class="label label-danger pull-right" v-else-if="ADVICE.approveResult==='不通过'"  v-on:click="open(ADVICE.approveOpinion)">未通过</span>
+        <span class="label label-danger pull-right" v-else-if="ADVICE.approveResult==='不通过'"  @click="open(ADVICE.approveOpinion)">未通过</span>
         <span class="label label-info pull-right" v-else>未审核</span>
       </li>
     </ul>
@@ -17,7 +17,7 @@
       </div>
       <div slot="footer">
         <button class="btn btn-primary modal-default-button"
-              v-on:click="close()">
+              @click="close()">
           确定
         </button>
       </div>

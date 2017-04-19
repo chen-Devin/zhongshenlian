@@ -2,10 +2,10 @@
   <form class="form-horizontal">
     <div class="form-group">
       <div class="col-sm-12">
-        <el-upload v-bind:multiple="false"
-                   v-bind:action="uploadURL"
-                   v-bind:on-success="uploadSuccess"
-                   v-bind:show-file-list="false">
+        <el-upload :multiple="false"
+                   :action="uploadURL"
+                   :on-success="uploadSuccess"
+                   :show-file-list="false">
           <button class="btn btn-primary" type="button">上传已经收款到账截图</button>
         </el-upload>
         <button class="btn btn-primary" type="button">确认开票</button>
@@ -16,8 +16,8 @@
         <ul class="contract-list list-group">
           <li class="list-group-item" v-for="FILE in business.contractAnnexArray">
             <span class="fa fa-file-text-o"></span>
-            <a class="text-primary title" v-bind:href="FILE.url" target="_blank">{{FILE.name}}</a>
-            <a class="text-danger pull-right" v-on:click="delFile(FILE)" v-if="editable"><i class="fa fa-times"></i></a>
+            <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
+            <a class="text-danger pull-right" @click="delFile(FILE)" v-if="editable"><i class="fa fa-times"></i></a>
           </li>
         </ul>
       </div>
@@ -82,13 +82,13 @@
         <input type="number"
                class="form-control"
                placeholder="请输入开票金额"
-               v-model="business.name">
+               v-model.number="business.name">
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">单位名称</label>
       <div class="col-sm-9">
-        <input type="number"
+        <input type="text"
                class="form-control"
                placeholder="请输入单位名称"
                v-model="business.name">
@@ -154,7 +154,7 @@
         <input type="number"
                class="form-control"
                placeholder="请输入累计开票金额"
-               v-model="business.name">
+               v-model.number="business.name">
       </div>
     </div>
     <div class="form-group">
@@ -208,7 +208,7 @@
         <input type="number"
                class="form-control"
                placeholder="请输入签订合同金额"
-               v-model="business.name">
+               v-model.number="business.name">
       </div>
     </div>
     <div class="form-group">

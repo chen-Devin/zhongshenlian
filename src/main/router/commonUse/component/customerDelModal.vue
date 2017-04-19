@@ -7,10 +7,10 @@
       </p>
     </div>
     <div slot="footer">
-      <button class="btn btn-danger modal-default-button" v-on:click="del()" v-bind:disabled="subBtn.dis">
+      <button class="btn btn-danger modal-default-button" @click="del()" :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
-      <button class="btn btn-default modal-default-button" v-on:click="cancel()">
+      <button class="btn btn-default modal-default-button" @click="cancel()">
         取消
       </button>
     </div>
@@ -75,9 +75,6 @@ p {
     display: inline-block;
     &.fa {
       margin: 0 20px 0 40px;
-    }
-    &.text-cont {
-
     }
   }
 }

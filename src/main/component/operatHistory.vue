@@ -2,65 +2,12 @@
   <div class="row timeline">
     <div class="col-sm-offset-4 col-sm-8">
       <ul class="list-group">
-        <li class="list-group-item">
-          <span class="time">2016-12-21 13:20:21</span>
-          <span class="content">创建业务</span>
-          <span class="operator">王野</span>
-        </li>
-        <li class="list-group-item">
-          <span class="time">2016-12-21 13:20:21</span>
-          <span class="content">创建业务</span>
-          <span class="operator">王野</span>
-        </li>
-        <li class="list-group-item">
-          <span class="time">2016-12-21 13:20:21</span>
-          <span class="content">创建业务</span>
-          <span class="operator">王野</span>
-        </li>
-        <li class="list-group-item">
-          <span class="time">2016-12-21 13:20:21</span>
-          <span class="content">创建业务</span>
-          <span class="operator">王野</span>
-        </li>
-        <li class="list-group-item">
-          <span class="time">2016-12-21 13:20:21</span>
-          <span class="content">创建业务</span>
-          <span class="operator">王野</span>
-        </li>
-        <li class="list-group-item">
-          <span class="time">2016-12-21 13:20:21</span>
-          <span class="content">创建业务</span>
-          <span class="operator">王野</span>
-        </li>
-        <li class="list-group-item">
-          <span class="time">2016-12-21 13:20:21</span>
-          <span class="content">创建业务</span>
-          <span class="operator">王野</span>
-        </li>
-        <li class="list-group-item">
-          <span class="time">2016-12-21 13:20:21</span>
-          <span class="content">创建业务</span>
-          <span class="operator">王野</span>
-        </li>
-        <li class="list-group-item">
-          <span class="time">2016-12-21 13:20:21</span>
-          <span class="content">创建业务</span>
-          <span class="operator">王野</span>
-        </li>
-        <li class="list-group-item">
-          <span class="time">2016-12-21 13:20:21</span>
-          <span class="content">创建业务</span>
-          <span class="operator">王野</span>
-        </li>
-        <li class="list-group-item">
-          <span class="time">2016-12-21 13:20:21</span>
-          <span class="content">创建业务</span>
-          <span class="operator">王野</span>
-        </li>
-        <li class="list-group-item">
-          <span class="time">2016-12-21 13:20:21</span>
-          <span class="content">创建业务</span>
-          <span class="operator">王野</span>
+        <li class="list-group-item"
+            v-for="(OPER, index) in business.projectOperatingArray"
+            :key="index">
+          <span class="time">{{OPER.updateAt}}</span>
+          <span class="content">{{OPER.content}}</span>
+          <span class="operator">{{OPER.operatorName}}</span>
         </li>
       </ul>
     </div>
@@ -76,9 +23,11 @@ export default {
         { name: '待处理业务', url: '/business-handle-list-sales', present: false },
         { name: '业务详情', url: `/business-handle-detail-sales/${this.$route.params.id}`, present: false },
         { name: '操作历史', url: `/business-handle-detail-sales/${this.$route.params.id}/operat-history`, present: true }
-      ]
+      ],
+      business: this.initBusiness
     };
   },
+  props: ['initBusiness'],
   create() {
     this.$emit('pathsChan', this.paths);
   }
@@ -124,9 +73,8 @@ export default {
     > span {
       display: inline-block;
       position: relative;
-      left: -170px;
-      &.content {
-        margin-left: 30px;
+      &.time {
+        margin-left: 15px;
       }
     }
   }

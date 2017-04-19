@@ -3,16 +3,16 @@
     <ul class="nav nav-tabs">
       <router-link tag="li"
                    active-class="active"
-                   v-bind:to="PART.path"
+                   :to="PART.path"
                    v-for="(PART, index) in parts"
-                   v-bind:key="index">
+                   :key="index">
         <a>{{PART.name}}</a>
       </router-link>
     </ul>
     <div class="tab-content">
-      <router-view v-bind:initBusiness="business"
-                   v-bind:user="user"
-                   v-on:pathsChan="pathsChan"></router-view>
+      <router-view :initBusiness="business"
+                   :user="user"
+                   @pathsChan="pathsChan"></router-view>
     </div>
   </div>
 </template>

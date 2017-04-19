@@ -1,24 +1,27 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <card>
       <h3>
-            新建业务
-            <div class="pull-right">
-              <button class="btn btn-success" v-on:click="sub()">提交</button>
-              <button class="btn btn-warning" v-on:click="sav()">暂存</button>
-              <button class="btn btn-danger" v-on:click="del()">撤销</button>
-            </div>
-          </h3>
-      <business-editor v-bind:initBusiness="business"
-                       v-bind:editable="editable"
-                       v-on:saved="saved"
-                       v-on:submited="submited"></business-editor>
+        新建业务
+        <div class="pull-right">
+          <button class="btn btn-success" @click="sub()">提交</button>
+          <button class="btn btn-warning" @click="sav()">暂存</button>
+          <button class="btn btn-danger" @click="del()">撤销</button>
+        </div>
+      </h3>
+      <business-editor :initBusiness="business"
+                       :editable="editable"
+                       @saved="saved"
+                       @submited="submited"
+                       @uploaded="uploaded"
+                       @deletedFile="deletedFile"
+                       @refuseSub="refuseSub"></business-editor>
     </card>
     <business-del-modal v-if="showDelModal"
-                        v-bind:initalBusiness="business"
-                        v-on:deleted="deleted"
-                        v-on:canceled="delCanceled"></business-del-modal>
+                        :initalBusiness="business"
+                        @deleted="deleted"
+                        @canceled="delCanceled"></business-del-modal>
   </div>
 </template>
 
@@ -54,11 +57,16 @@ export default {
           tele: this.user.telephone
         },
         institution: {
+          id: '',
+          customerName: '',
           name: '',
-          client: ''
+          telephone: '',
         },
         type: '',
-        manager: '',
+        manager: {
+          id: '',
+          name: ''
+        },
         time: {
           start: (() => {
             let t = new Date();
@@ -204,7 +212,7 @@ export default {
           })(),
         },
         contractType: {
-          name: '',
+          name: '非联合体',
           basicFee: {
             main: { name: '', percentage: 0 },
             depend: [{ name: '', percentage: 0 }]
@@ -215,29 +223,33 @@ export default {
           }
         },
         departmentCoop: {
-          name: '',
+          name: '无部门合作',
           departments: {
-            main: { name: '主体', percentage: 0 },
+            main: { name: '主要部门', percentage: 0 },
             coop: [{ name: '', percentage: 0 }]
           },
         },
-        reviewCPA: '',
-        reviewAssistant: '',
-        lastoffice: '',
-        getWay: {
-          direct: {
+        reviewCPA: {
+          id: '',
+          name: ''
+        },
+        reviewAssistant: {
+          id: '',
+          name: ''
+        },
+        lastOffice: '',
+        getWay: [
+          {
             name: '直接委托',
             state: false
-          },
-          bid: {
+          },{
             name: '中标委托',
             state: false
           },
-        },
+        ],
         files: [],
-        projectType: '',
-        projectAmount: '',
-        projectStatus: '1',
+        projectStatus: 1,
+        contractAnnexArray: [],
         projectApproverArray: [],
         projectSchduleArray: [],
         projectBillingArray: [],
@@ -278,6 +290,18 @@ export default {
     },
     delCanceled() {
       this.showDelModal = false;
+    },
+    uploaded(uploadedBusiness) {
+      this.business = uploadedBusiness;
+    },
+    deletedFile(deletedFileBusiness) {
+      this.business = deletedFileBusiness;
+    },
+    refuseSub(msg) {
+      this.$message({
+        message: msg,
+        type: 'warning'
+      });
     }
   },
   components: {

@@ -28,13 +28,13 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">委托单位</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.institution.name}}</p>
+        <p class="form-control-static">{{business.institution.customerName}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">客户名称</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.institution.client}}</p>
+        <p class="form-control-static">{{business.institution.name}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -46,7 +46,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">项目经理</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.manager}}</p>
+        <p class="form-control-static">{{business.manager.name}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -83,7 +83,8 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">出据报告类型</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{JSON.stringify(business.report)}}</p>
+        <p class="form-control-static"
+           v-html="reportFormat"></p>
       </div>
     </div>
     <div class="form-group"
@@ -113,21 +114,21 @@
         <div class="row form-group">
           <div class="col-sm-6">
             <p class="form-control-static">
-              主体：{{business.contractType.basicFee.main.name}}
+              主办方：{{business.contractType.basicFee.main.name}}
             </p>
           </div>
           <div class="col-sm-5">
             <p class="form-control-static">
-              比例：{{business.contractType.basicFee.main.name}}%
+              比例：{{business.contractType.basicFee.main.percentage}}%
             </p>
           </div>
         </div>
         <div class="row form-group"
              v-for="(DEPEND, index) in business.contractType.basicFee.depend"
-             v-bind:key="index">
+             :key="index">
           <div class="col-sm-6">
             <p class="form-control-static">
-              从属体：{{DEPEND.name}}
+              协办方：{{DEPEND.name}}
             </p>
           </div>
           <div class="col-sm-5">
@@ -145,7 +146,7 @@
         <div class="row form-group">
           <div class="col-sm-6">
             <p class="form-control-static">
-              主体：{{business.contractType.benefitFee.main.name}}
+              主办方：{{business.contractType.benefitFee.main.name}}
             </p>
           </div>
           <div class="col-sm-5">
@@ -156,10 +157,10 @@
         </div>
         <div class="row form-group"
              v-for="(DEPEND, index) in business.contractType.benefitFee.depend"
-             v-bind:key="index">
+             :key="index">
           <div class="col-sm-6">
             <p class="form-control-static">
-              从属体：{{DEPEND.name}}
+              协办方：{{DEPEND.name}}
             </p>
           </div>
           <div class="col-sm-5">
@@ -183,7 +184,7 @@
         <div class="row form-group">
           <div class="col-sm-6">
             <p class="form-control-static">
-              主体
+              主要部门
             </p>
           </div>
           <div class="col-sm-5">
@@ -194,10 +195,10 @@
         </div>
         <div class="row form-group"
              v-for="(COOP, index) in business.departmentCoop.departments.coop"
-             v-bind:key="index">
+             :key="index">
           <div class="col-sm-6">
             <p class="form-control-static">
-              合作体：{{COOP.name}}
+              合作部门：{{COOP.name}}
             </p>
           </div>
           <div class="col-sm-5">
@@ -211,13 +212,13 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">参审注师</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.reviewCPA}}</p>
+        <p class="form-control-static">{{business.reviewCPA.name}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">参审助理</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.reviewAssistant}}</p>
+        <p class="form-control-static">{{business.reviewAssistant.name}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -229,19 +230,19 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">报告用途</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.report.usage}}份（类）</p>
+        <p class="form-control-static">{{business.report.usage}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">上次报告事务所</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.lastoffice}}份（类）</p>
+        <p class="form-control-static">{{business.lastOffice}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">项目取得方式</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.getWay}}</p>
+        <p class="form-control-static">{{getWayFormat}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -251,40 +252,48 @@
             v-for="FILE in business.files">
           <span class="fa fa-file-text-o"></span>
           <a class="text-primary title"
-             v-bind:href="FILE.url"
+             :href="FILE.url"
              target="_blank">{{FILE.name}}</a>
         </li>
       </ul>
     </div>
-    <div class="form-group" v-if="contractUploadShow">
+    <div class="form-group"
+         v-if="contractUploadShow">
       <label class="col-sm-2 control-label">正式合同</label>
       <el-upload class="col-sm-10"
-                 v-bind:multiple="false"
-                 v-bind:action="uploadURL"
-                 v-bind:on-success="uploadSuccess"
-                 v-bind:show-file-list="false">
-        <button class="btn btn-info btn-sm" type="button">点击上传</button>
-        <span slot="tip" class="text-info">&emsp;文件大小建议不超过3Mb</span>
+                 :multiple="false"
+                 :action="uploadURL"
+                 :on-success="uploadSuccess"
+                 :show-file-list="false">
+        <button class="btn btn-info btn-sm"
+                type="button">点击上传</button>
+        <span slot="tip"
+              class="text-info">&emsp;文件大小建议不超过3Mb</span>
       </el-upload>
       <div class="col-sm-offset-2 col-sm-9">
         <ul class="attachment-list list-group">
-          <li class="list-group-item" v-for="FILE in business.contractAnnexArray">
+          <li class="list-group-item"
+              v-for="FILE in business.contractAnnexArray">
             <span class="fa fa-file-text-o"></span>
-            <a class="text-primary title" v-bind:href="FILE.url" target="_blank">{{FILE.name}}</a>
-            <a class="text-danger pull-right" v-on:click="delFile(FILE)" v-if="editable"><i class="fa fa-times"></i></a>
+            <a class="text-primary title"
+               :href="FILE.annexUrl"
+               target="_blank">{{FILE.annexName}}</a>
+            <a class="text-danger pull-right"
+               @click="delFile(FILE)"><i class="fa fa-times"></i></a>
           </li>
         </ul>
       </div>
     </div>
-    <div class="form-group" v-if="contractFileShow">
+    <div class="form-group"
+         v-if="contractFileShow">
       <label class="col-sm-2 control-label">正式合同</label>
       <ul class="col-sm-9 attachment-list list-group">
         <li class="list-group-item"
             v-for="FILE in business.contractAnnexArray">
           <span class="fa fa-file-text-o"></span>
           <a class="text-primary title"
-             v-bind:href="FILE.url"
-             target="_blank">{{FILE.name}}</a>
+             :href="FILE.annexUrl"
+             target="_blank">{{FILE.annexName}}</a>
         </li>
       </ul>
     </div>
@@ -296,6 +305,8 @@ import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
 import { Upload } from 'element-ui';
+
+import bus from '../bus.js';
 
 Vue.use(Upload);
 
@@ -314,40 +325,64 @@ export default {
   },
   computed: {
     contractTypeChan() {
-      if (this.business.contractType.name === '联合体') {
-        return true;
-      } else {
-        return false;
-      }
+      return (this.business.contractType.name === '联合体') ? true : false;
     },
     departmentCoopChan() {
-      if (this.business.departmentCoop.name === '有部门合作') {
-        return true;
-      } else {
-        return false;
+      return (this.business.departmentCoop.name === '有部门合作') ? true : false;
+    },
+    getWayFormat() {
+      let out = '';
+      for (let i = 0; i < this.business.getWay.length; i++) {
+        if (this.business.getWay[i].state) {
+          out += this.business.getWay[i].name + ' ';
+        }
       }
-    }
-  },
-  props: ['initBusiness', 'user'],
-  computed: {
+      return out;
+    },
+    reportFormat() {
+      let out = '';
+      let typeEx = false;
+      let wordsFormat = '';
+      for (let i = 0; i < this.business.report.type.length; i++) {
+        typeEx = false;
+        wordsFormat = '';
+        for (let j = 0; j < this.business.report.type[i].words.length; j++) {
+          if (this.business.report.type[i].words[j].state) {
+            typeEx = true;
+            wordsFormat += this.business.report.type[i].words[j].name + ' ';
+          }
+        }
+        if (typeEx) {
+          out += `<h5>${this.business.report.type[i].name}</h5>
+                    <p class="form-control-static">${wordsFormat}</p>
+                  <hr>`;
+        }
+      }
+      return out;
+    },
     contractUploadShow() {
-      if (this.user.department === '业务部' && this.business.projectStatus === '6') {
-        return true;
-      } else {
-        return false;
-      }
+      return (this.user.department === '业务部' && this.business.projectStatus >= 6 && this.business.projectStatus <= 7) ? true : false;
     },
     contractFileShow() {
-      if (parseInt(this.business.projectStatus) > 6) {
-        return true;
+      if (this.user.department === '业务部') {
+        if (this.business.projectStatus > 7) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        if (this.business.projectStatus > 6) {
+          return true;
+        } else {
+          return false;
+        }
       }
     },
     contractNumShow() {
-      if (this.business.contractNo !== '') {
-        return true;
-      }
+      return (this.business.projectStatus > 7) ? true : false;
     }
   },
+  props: ['initBusiness', 'user'],
   created() {
     let data = {
       command: 'handlerBusiness',
@@ -355,12 +390,20 @@ export default {
       id: this.business.id,
       type: 'electronicContract'
     };
-    this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data='+JSON.stringify(data);
+    this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
+
     this.$emit('pathsChan', this.paths);
+
+    /*
+    TODO
+    */
+    // bus.$on('projectStatusUpdate', (projectStatus) => {
+    //   this.business.projectStatus = projectStatus;
+    // });
   },
   methods: {
     uploadSuccess(responseData, file, fileList) {
-      if(responseData.statusCode === '10001') {
+      if (responseData.statusCode === '10001') {
         let obj = {
           id: responseData.data.id,
           name: file.name,
@@ -386,9 +429,9 @@ export default {
             return JSON.stringify(obj);
           })()
         }
-      }).then( (rep) => {
+      }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          for(let i=0; i < this.business.contractAnnexArray.length; i++) {
+          for (let i = 0; i < this.business.contractAnnexArray.length; i++) {
             if (this.business.contractAnnexArray[i].id === FILE.id) {
               this.business.contractAnnexArray.splice(i, 1);
               break;
@@ -396,7 +439,7 @@ export default {
           }
           this.$emit('deletedFile', this.business);
         }
-      }, (rep) => {});
+      }, (rep) => { });
     }
   }
 };
@@ -409,11 +452,10 @@ form.form-horizontal {
   margin-left: auto;
   margin-right: auto;
   .attachment-list {
+    margin-top: 10px;
     > li.list-group-item {
       border-right: 0;
       border-left: 0;
-      // height: 50px;
-      // line-height: 30px;
       > a.title {
         margin-left: 7px;
       }

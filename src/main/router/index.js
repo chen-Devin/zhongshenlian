@@ -2,12 +2,14 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 //通用
-import bidInforList from './commonUse/bidInforList.vue';
 import businessCompleteList from './commonUse/businessCompleteList.vue';
 import businessCompleteDetail from './commonUse/businessCompleteDetail.vue';
 import ruleRegulation from './commonUse/ruleRegulation.vue';
 import ruleRegulationDetail from './commonUse/ruleRegulationDetail.vue';
-// import ruleRegulationEdit from './commonUse/ruleRegulationEdit.vue';
+import ruleRegulationEdit from './commonUse/ruleRegulationEdit.vue';
+import ruleRegulationAdd from './commonUse/ruleRegulationAdd.vue';
+
+import customerInforList from './commonUse/customerInforList.vue';
 import billingInfor from '../component/billingInfor.vue';
 import businessConduct from '../component/businessConduct.vue';
 import businessProfile from '../component/businessProfile.vue';
@@ -18,7 +20,6 @@ import billingInforDetail from '../component/billingInforDetail.vue';
 import businessAnalysis from './leader/businessAnalysis.vue';
 import businessReviewDetailLeader from './leader/businessReviewDetail.vue';
 import businessReviewListLeader from './leader/businessReviewList.vue';
-import customerInforListLeader from './leader/customerInforList.vue';
 import staffManagementAuthor from './leader/staffManagementAuthor.vue';
 import staffManagementInfor from './leader/staffManagementInfor.vue';
 //办公室
@@ -31,7 +32,6 @@ import businessReviewAdd from './salesDepartment/businessReviewAdd.vue';
 import businessReviewDetailSales from './salesDepartment/businessReviewDetail.vue';
 import businessReviewEdit from './salesDepartment/businessReviewEdit.vue';
 import businessReviewListSales from './salesDepartment/businessReviewList.vue';
-import customerInforListSales from './salesDepartment/customerInforList.vue';
 import billingInforEditor from './salesDepartment/component/billingInforEditor.vue';
 //风险评估部
 import businessReviewListRisk from './riskDepartment/businessReviewList.vue';
@@ -43,19 +43,22 @@ import businessHandleListArchives from './archivesDepartment/businessHandleList.
 import businessHandleDetailFinancial from './archivesDepartment/businessHandleDetail.vue';
 import businessHandleListFinancial from './archivesDepartment/businessHandleList.vue';
 //市场部
-import bidInforListMarket from './marketDepartment/bidInforList.vue';
+import bidInfoList from './marketDepartment/bidInfoList.vue';
 import bidInforDetail from './marketDepartment/bidInforDetail.vue';
-import bidInfoInput from './marketDepartment/bidInfoInput.vue';
+import bidInfoInputKJS from './marketDepartment/bidInfoInputKJS.vue';
+import bidInfoInputPGS from './marketDepartment/bidInfoInputPGS.vue';
+import bidInfoInputZJS from './marketDepartment/bidInfoInputZJS.vue';
+import bidInfoInputSWS from './marketDepartment/bidInfoInputSWS.vue';
 import bidInforEdit from './marketDepartment/bidInforEdit.vue';
+import bidInfoAccounting from './marketDepartment/bidInfoAccounting.vue';
+import bidInfoAssessment from './marketDepartment/bidInfoAssessment.vue';
+import bidInfoTax from './marketDepartment/bidInfoTax.vue';
+import bidInfoCost from './marketDepartment/bidInfoCost.vue';
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes: [
-        {
-            path: '/bid-infor-list',
-            component: bidInforList
-        },
         {
             path: '/business-complete-list',
             component: businessCompleteList
@@ -68,14 +71,22 @@ const router = new VueRouter({
             path: '/rule-regulation',
             component: ruleRegulation
         },
-         {
+        {
             path: '/rule-regulation-detail/:id',
             component: ruleRegulationDetail
         },
-        // {
-        //     path: '/rule-regulation-edit',
-        //     component: ruleRegulationEdit
-        // },
+         {
+             path: '/rule-regulation-edit/:id',
+             component: ruleRegulationEdit
+         },
+         {
+             path: '/rule-regulation-add',
+             component: ruleRegulationAdd
+         },
+        {
+            path: '/customer-infor-list',
+            component: customerInforList
+        },
         {
             path: '/business-analysis',
             component: businessAnalysis
@@ -87,10 +98,6 @@ const router = new VueRouter({
         {
             path: '/business-review-list-leader',
             component: businessReviewListLeader
-        },
-        {
-            path: '/customer-infor-list-leader',
-            component: customerInforListLeader
         },
         {
             path: '/staff-management-author',
@@ -191,10 +198,6 @@ const router = new VueRouter({
             component: businessReviewListSales
         },
         {
-            path: '/customer-infor-list-sales',
-            component: customerInforListSales
-        },
-        {
             path: '/business-review-list-risk',
             component: businessReviewListRisk
         },
@@ -277,20 +280,51 @@ const router = new VueRouter({
             component: businessHandleListFinancial
         },
         {
-            path: '/bid-infor-list-market',
-            component: bidInforListMarket
+            path: '/bid-info-list',
+            component: bidInfoList,
+            redirect: '/bid-info-list/accounting',
+            children: [
+                {
+                    path: 'accounting',
+                    component: bidInfoAccounting
+                },
+                {
+                    path: 'assessment',
+                    component: bidInfoAssessment
+                },
+                {
+                    path: 'tax',
+                    component: bidInfoTax
+                },
+                {
+                    path: 'cost',
+                    component: bidInfoCost
+                }
+            ]
+        },
+        // {
+        //     path: '/bid-infor-detail',
+        //     component: bidInforDetail
+        // },
+        // {
+        //     path: '/bid-infor-edit',
+        //     component: bidInforEdit
+        // },
+        {
+            path: '/bid-info-Input-kjs',
+            component: bidInfoInputKJS
         },
         {
-            path: '/bid-infor-detail',
-            component: bidInforDetail
+            path: '/bid-info-Input-pgs',
+            component: bidInfoInputPGS
         },
         {
-            path: '/bid-infor-edit',
-            component: bidInforEdit
+            path: '/bid-info-Input-sws',
+            component: bidInfoInputSWS
         },
         {
-            path: '/bid-info-Input',
-            component: bidInfoInput
+            path: '/bid-info-Input-zjs',
+            component: bidInfoInputZJS
         }
     ]
 });

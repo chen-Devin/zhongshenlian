@@ -7,10 +7,10 @@
            v-model="valueInput">
     <button type="button"
             class="btn btn-primary btn-sm"
-            v-on:click="search()">&nbsp;搜索&nbsp;</button>
+            @click="search()">&nbsp;搜索&nbsp;</button>
     <button type="button"
             class="btn btn-warning btn-sm"
-            v-on:click="clear()">&nbsp;重置&nbsp;</button>
+            @click="clear()">&nbsp;重置&nbsp;</button>
   </div>
 </template>
 

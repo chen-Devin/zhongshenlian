@@ -1,6 +1,6 @@
 <template>
 <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <card>
 
     </card>

@@ -2,25 +2,39 @@
   <modal>
     <form class="clearfix"
           slot="body">
-      <div class="form-group" v-for="(PLA, index) in contNumRule" v-bind:key="index">
-        <label>PLA.name</label>
-        <div class="checkbox" v-for="(VAL, index) in PLA.value" v-bind:key="index">
-          <label>
-            <input type="checkbox"
-                   v-bind:value="VAL"
-                   v-model="contType"> VAL.value
-          </label>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">报告类型</label>
+        <div class="col-sm-10">
+          <template v-for="(TYPE, index) in type">
+            <h5>{{TYPE.name}}</h5>
+            <label class="checkbox-inline"
+                   v-for="(WORD, index) in TYPE.words"
+                   :key="index">
+              <input type="checkbox"
+                     v-model="WORD.state"
+                     @change="reportTypeChan(TYPE, WORD)"> {{WORD.name}}
+            </label>
+            <hr>
+          </template>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">编号样式</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">
+            {{number}}
+          </p>
         </div>
       </div>
     </form>
     <div class="footer">
       <button class="btn btn-primary modal-default-button"
-              v-on:click="sub()"
-              v-bind:disabled="subBtn.dis">
+              @click="sub()"
+              :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
       <button class="btn btn-default modal-default-button"
-              v-on:click="cancel()">
+              @click="cancel()">
         取消
       </button>
     </div>
@@ -37,21 +51,43 @@ export default {
   name: 'contractNumModal',
   data() {
     return {
-      contNumRule: [
-        { name: '会计所', value: [{ name: '会计所', value: '审字' }, { name: '会计所', value: '专字' }, { name: '会计所', value: '咨字' }, { name: '会计所', value: '基决审字' }, { name: '会计所', value: '外汇检字' }, { name: '会计所', value: '验字' }, { name: '会计所', value: '外审字' }] },
-        { name: '评估所', value: [{ name: '会计所', value: '评字' }, { name: '会计所', value: '评咨字' }] },
-        { name: '税务所', value: [{ name: '会计所', value: '税鉴字' }] },
-        { name: '造价所', value: [{ name: '会计所', value: '基结审字' }, { name: '会计所', value: '评审字' }, { name: '会计所', value: '概审字' }, { name: '会计所', value: '咨字' }] }
-      ],
-      contType: (() => this.contNumRule[0].value[0])(),
+      type: this.initBusiness.report.type,
       subBtn: {
         dis: false,
         cont: '确定'
-      }
+      },
+      number: ''
     };
   },
-  props: ['business'],
+  props: ['initBusiness'],
+  created() {
+    this.reportTypeChan();
+  },
   methods: {
+    reportTypeChan(TYPE, WORD) {
+      let flag = false;
+      let type = '';
+      let word = '';
+      let t = new Date();
+      let year = t.getFullYear();
+      outermost2:
+      for (let i = 0; i < this.type.length; i++) {
+        for (let j = 0; j < this.type[i].words.length; j++) {
+          if (this.type[i].words[j].state) {
+            flag = true;
+            type = this.type[i].code;
+            word = this.type[i].words[j].code;
+            break outermost2;
+          }
+        }
+      }
+
+      if (flag) {
+        this.number = `${type}-${word}-${year}-XXXX`;
+      } else {
+        this.number = '';
+      }
+    },
     sub() {
       this.subBtn.dis = true;
       this.subBtn.cont = '提交中...';
@@ -64,10 +100,29 @@ export default {
             var obj = {
               command: 'releaseContactNumber',
               platform: 'web',
-              id: business.id,
-              accounting: contType.value,
-              evaluation: contType.value,
-              costs: contType.value
+              id: this.initBusiness.id,
+              type: (() => {
+                let out = [];
+                for (let i = 0; i < this.type.length; i++) {
+                  let flag = false;
+                  let typeArray = [];
+                  for (let j = 0; j < this.type[i].words.length; j++) {
+                    if (this.type[i].words[j].state) {
+                      flag = true;
+                      typeArray.push({
+                        name: this.type[i].words[j].name
+                      });
+                    }
+                  }
+                  if (flag) {
+                    out.push({
+                      department: this.type[i].name,
+                      typeArray
+                    });
+                  }
+                }
+                return out;
+              })()
             };
             return JSON.stringify(obj);
           })()
@@ -78,7 +133,7 @@ export default {
           this.subBtn.cont = '已提交';
           this.$emit('submited', contNum);
         }
-      }, (rep) => {});
+      }, (rep) => { });
     },
     cancel() {
       this.$emit('canceled');

@@ -1,23 +1,23 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <card>
       <h3>
           业务列表
         </h3>
       <div class="business-list-review list-group">
         <router-link class="list-group-item"
-                     v-bind:to="'/business-review-detail-risk/'+BUSINESS.id"
+                     :to="'/business-review-detail-risk/'+BUSINESS.id"
                      v-for="(BUSINESS, index) in businesses"
-                     v-bind:key="index">
+                     :key="index">
           <span class="label label-warning"
-                v-if="BUSINESS.projectStatus==='1'">尚未完成</span>
+                v-if="BUSINESS.projectStatus===1">尚未完成</span>
           <span class="label label-info"
-                v-else-if="BUSINESS.projectStatus==='2'||BUSINESS.projectStatus==='4'">已提交待审核</span>
+                v-else-if="BUSINESS.projectStatus===2||BUSINESS.projectStatus===4">已提交待审核</span>
           <span class="label label-danger"
-                v-else-if="BUSINESS.projectStatus==='3'||BUSINESS.projectStatus==='5'">已审核未通过</span>
+                v-else-if="BUSINESS.projectStatus===3||BUSINESS.projectStatus===5">已审核未通过</span>
           <span class="label label-success"
-                v-else-if="BUSINESS.projectStatus==='6'">待发合同编号</span>
+                v-else-if="BUSINESS.projectStatus===6">待发合同编号</span>
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime}}</span>
         </router-link>
@@ -70,7 +70,7 @@ export default {
               id: rep.data.data.businessArray[i].id,
               businessName: rep.data.data.businessArray[i].businessName,
               finishTime: rep.data.data.businessArray[i].finishTime,
-              projectStatus: rep.data.data.businessArray[i].projectStatus
+              projectStatus: parseInt(rep.data.data.businessArray[i].projectStatus)
             };
             this.businesses.push(obj);
           }
@@ -94,8 +94,6 @@ export default {
   > a.list-group-item {
     border-right: 0;
     border-left: 0;
-    // height: 50px;
-    // line-height: 30px;
     > span.title {
       margin-left: 7px;
     }

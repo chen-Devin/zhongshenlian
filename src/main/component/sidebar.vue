@@ -1,15 +1,15 @@
 <template>
   <div class="sidebar">
     <ul class="nav nav-sidebar">
-      <li v-for="(ROU, index) in routes" v-bind:key="index">
-        <div class="inside-div" v-bind:class="{active: ROU.show}" v-on:click="showChange(ROU)">
-          <span class="fa module-icon" v-bind:class="ROU.flag"></span>
+      <li v-for="(ROU, index) in routes" :key="index">
+        <div class="inside-div" :class="{active: ROU.show}" @click="showChange(ROU)">
+          <span class="fa module-icon" :class="ROU.flag"></span>
             {{ROU.name}}
-          <span class="" v-bind:class="{selected: ROU.show}"></span>
+          <span class="" :class="{selected: ROU.show}"></span>
         </div>
         <ul class="inside-ul" v-show="ROU.show">
-          <li v-for="(SUB, index) in ROU.sub" v-bind:class="{active: SUB.active}" v-bind:key="index" v-on:click="actived(SUB)">
-            <router-link v-bind:to="SUB.link">{{SUB.name}}</router-link>
+          <li v-for="(SUB, index) in ROU.sub" :class="{active: SUB.active}" :key="index" @click="actived(SUB)">
+            <router-link :to="SUB.link">{{SUB.name}}</router-link>
           </li>
         </ul>
       </li>
@@ -29,7 +29,7 @@ export default {
           show: false,
           sub: [
             {name: '已完成业务', link: '/business-complete-list', active: false},
-            {name: '招投标信息看板', link: '/bid-infor-list', active: false},
+            {name: '招投标信息看板', link: '/bid-info-list', active: false},
             {name: '规章制度', link: '/rule-regulation', active: false}
           ]
         },
@@ -39,7 +39,7 @@ export default {
           show: false,
           sub: [
             {name: '待审核业务', link: '/business-review-list-leader', active: false},
-            {name: '客户信息', link: '/customer-infor-list-leader', active: false},
+            {name: '客户信息', link: '/customer-infor-list', active: false},
             {name: '职员权限管理', link: '/staff-management-author', active: false},
             {name: '职员资料管理', link: '/staff-management-infor', active: false},
             {name: '业务分析', link: '/business-analysis', active: false}
@@ -60,7 +60,7 @@ export default {
           sub: [
             {name: '待审核业务', link: '/business-review-list-sales', active: false},
             {name: '待处理业务', link: '/business-handle-list-sales', active: false},
-            {name: '客户信息', link: '/customer-infor-list-sales', active: false}
+            {name: '客户信息', link: '/customer-infor-list', active: false}
           ]
         },
         {
@@ -92,7 +92,7 @@ export default {
           flag: '',
           show: false,
           sub: [
-            {name: '招投标信息', link: '/bid-infor-list-market', active: false}
+            {name: '招投标信息', link: '/bid-info-list', active: false}
           ]
         }
       ]

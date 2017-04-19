@@ -12,9 +12,9 @@
         </h4>
         <p class="navbar-text navbar-right">
           <span>{{user.name}} 欢迎您</span>
-          <a class="navbar-link" v-on:click="signOut()">退出</a>
+          <a class="navbar-link" @click="signOut()">退出</a>
         </p>
-        <img v-bind:src="userHead" alt="头像" class="img-circle img-head navbar-right">
+        <img :src="userHead" alt="头像" class="img-circle img-head navbar-right">
       </div><!-- /.container-fluid -->
     </nav>
   </header>

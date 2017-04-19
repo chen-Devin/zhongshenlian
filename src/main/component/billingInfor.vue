@@ -40,8 +40,6 @@ div.billing-list {
   > a.list-group-item {
     border-right: 0;
     border-left: 0;
-    // height: 50px;
-    // line-height: 30px;
     > span.title {
       margin-left: 7px;
     }

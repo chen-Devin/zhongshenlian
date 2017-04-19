@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
-    <department-author v-for="(DEP, index) in departments" v-bind:department="DEP" v-bind:key="index"></department-author>
+    <crumbs :paths="paths"></crumbs>
+    <department-author v-for="(DEP, index) in departments" :department="DEP" :key="index"></department-author>
   </div>
 </template>
 

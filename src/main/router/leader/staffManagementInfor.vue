@@ -1,9 +1,9 @@
 <template>
   <div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+    <crumbs :paths="paths"></crumbs>
     <department-infor v-for="(DEP, index) in departments"
-                           v-bind:department="DEP"
-                           v-bind:key="index"></department-infor>
+                           :department="DEP"
+                           :key="index"></department-infor>
   </div>
 </template>
 
@@ -44,15 +44,11 @@ export default {
             return JSON.stringify(obj);
           })()
         }
-      }).then(
-        (rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.departments = rep.data.data.departmentArray;
-          }
-        }, (rep) => {
-
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.departments = rep.data.data.departmentArray;
         }
-        );
+      }, (rep) => {});
     }
   },
   components: {
