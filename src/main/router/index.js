@@ -6,7 +6,9 @@ import businessCompleteList from './commonUse/businessCompleteList.vue';
 import businessCompleteDetail from './commonUse/businessCompleteDetail.vue';
 import ruleRegulation from './commonUse/ruleRegulation.vue';
 import ruleRegulationDetail from './commonUse/ruleRegulationDetail.vue';
-// import ruleRegulationEdit from './commonUse/ruleRegulationEdit.vue';
+import ruleRegulationEdit from './commonUse/ruleRegulationEdit.vue';
+import ruleRegulationAdd from './commonUse/ruleRegulationAdd.vue';
+
 import customerInforList from './commonUse/customerInforList.vue';
 import billingInfor from '../component/billingInfor.vue';
 import businessConduct from '../component/businessConduct.vue';
@@ -73,10 +75,14 @@ const router = new VueRouter({
             path: '/rule-regulation-detail/:id',
             component: ruleRegulationDetail
         },
-        // {
-        //     path: '/rule-regulation-edit',
-        //     component: ruleRegulationEdit
-        // },
+         {
+             path: '/rule-regulation-edit/:id',
+             component: ruleRegulationEdit
+         },
+         {
+             path: '/rule-regulation-add',
+             component: ruleRegulationAdd
+         },
         {
             path: '/customer-infor-list',
             component: customerInforList

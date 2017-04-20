@@ -15,15 +15,15 @@
           <tr class="addRule">
             <td></td>
             <td>
-              <router-link to="/rule-regulation-edit">
+              <router-link to="/rule-regulation-add">
                  <button type="button" class="btn btn-primary pull-right">添加</button>
               </router-link>
             </td>
         </tr>
-          <tr v-for="rule in rules" @click="showRuleDetail(rule.id)">
-            <td>{{rule.title}}</td>
-            <td></td>
-          </tr>
+        <router-link tag="tr" v-bind:to="'/rule-regulation-detail/'+rule.id" v-for="(rule,index) in rules" v-bind:key="index">
+          <td>{{rule.title}}</td>
+          <td class="text-right">{{rule.releaseTime}}</td>
+        </router-link>
         </tbody>
       </table>
    </card>
@@ -109,9 +109,9 @@ export default {
             }
           }, (rep) =>{})
       },
-      showRuleDetail(ruleId){
-        this.$router.push("/rule-regulation-detail/"+ruleId);
-      }
+     //showRuleDetail(ruleId){
+        //this.$router.push("/rule-regulation-detail/"+ruleId);
+    // }
     },
     //引入的组件部分
     components: {
