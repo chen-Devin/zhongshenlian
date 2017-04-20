@@ -256,16 +256,16 @@
           </div>
           <h4 class="col-sm-1"
               v-if="editable">
-                <a class="fa fa-times-circle text-danger"
-                   @click="delBasicFee(index)"></a>
-              </h4>
+                  <a class="fa fa-times-circle text-danger"
+                     @click="delBasicFee(index)"></a>
+                </h4>
         </div>
         <div class="row form-group">
           <h4 class="col-sm-1 col-sm-offset-11"
               v-if="editable">
-                <a class="fa fa-plus-circle text-success"
-                   @click="addBasicFee()"></a>
-              </h4>
+                  <a class="fa fa-plus-circle text-success"
+                     @click="addBasicFee()"></a>
+                </h4>
         </div>
       </div>
     </div>
@@ -322,16 +322,16 @@
           </div>
           <h4 class="col-sm-1"
               v-if="editable">
-                <a class="fa fa-times-circle text-danger"
-                   @click="delBenefitFee(index)"></a>
-              </h4>
+                  <a class="fa fa-times-circle text-danger"
+                     @click="delBenefitFee(index)"></a>
+                </h4>
         </div>
         <div class="row form-group">
           <h4 class="col-sm-1 col-sm-offset-11"
               v-if="editable">
-                <a class="fa fa-plus-circle text-success"
-                   @click="addBenefitFee()"></a>
-              </h4>
+                  <a class="fa fa-plus-circle text-success"
+                     @click="addBenefitFee()"></a>
+                </h4>
         </div>
       </div>
     </div>
@@ -399,16 +399,16 @@
           </div>
           <h4 class="col-sm-1"
               v-if="editable">
-                <a class="fa fa-times-circle text-danger"
-                   @click="delDepartments(index)"></a>
-              </h4>
+                  <a class="fa fa-times-circle text-danger"
+                     @click="delDepartments(index)"></a>
+                </h4>
         </div>
         <div class="row form-group">
           <h4 class="col-sm-1 col-sm-offset-11"
               v-if="editable">
-                <a class="fa fa-plus-circle text-success"
-                   @click="addDepartments()"></a>
-              </h4>
+                  <a class="fa fa-plus-circle text-success"
+                     @click="addDepartments()"></a>
+                </h4>
         </div>
       </div>
     </div>
@@ -851,7 +851,7 @@ export default {
                     return out;
                   })(),
                   annexArray: this.business.files,
-                  contractAnnexArray: this.business.contractAnnexArray,
+                  contractAnnexArray: this.business.contracts,
                   projectApproverArray: this.business.projectApproverArray,
                   projectSchduleArray: this.business.projectSchduleArray,
                   projectBillingArray: this.business.projectBillingArray,
@@ -977,7 +977,7 @@ export default {
                       return out;
                     })(),
                     annexArray: this.business.files,
-                    contractAnnexArray: this.business.contractAnnexArray,
+                    contractAnnexArray: this.business.contracts,
                     projectApproverArray: this.business.projectApproverArray,
                     projectSchduleArray: this.business.projectSchduleArray,
                     projectBillingArray: this.business.projectBillingArray,

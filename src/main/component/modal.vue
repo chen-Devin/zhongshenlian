@@ -38,13 +38,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: scroll;
+  overflow-y: scroll;
   transition: opacity .3s ease;
-}
-
-.modal-wrapper {
-  // display: table-cell;
-  // vertical-align: middle;
 }
 
 .modal-container {

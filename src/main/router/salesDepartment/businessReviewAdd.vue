@@ -249,7 +249,7 @@ export default {
         ],
         files: [],
         projectStatus: 1,
-        contractAnnexArray: [],
+        contracts: [],
         projectApproverArray: [],
         projectSchduleArray: [],
         projectBillingArray: [],

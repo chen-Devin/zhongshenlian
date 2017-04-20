@@ -1,34 +1,44 @@
 <template>
   <form class="form-horizontal">
-    <div class="checkbox">
-      <label>
-        <input type="checkbox">
-        审前调查
-      </label>
+    <div class="form-group"
+         v-if="reportUploadShow">
+      <label class="col-sm-2 control-label">业务报告</label>
+      <el-upload class="col-sm-10"
+                 :multiple="false"
+                 :action="uploadURL"
+                 :on-success="uploadSuccess"
+                 :show-file-list="false">
+        <button class="btn btn-info btn-sm"
+                type="button">点击上传</button>
+        <span slot="tip"
+              class="text-info">&emsp;文件大小建议不超过3Mb</span>
+      </el-upload>
+      <div class="col-sm-offset-2 col-sm-9">
+        <ul class="attachment-list list-group">
+          <li class="list-group-item"
+              v-for="FILE in business.reports">
+            <span class="fa fa-file-text-o"></span>
+            <a class="text-primary title"
+               :href="FILE.url"
+               target="_blank">{{FILE.name}}</a>
+            <a class="text-danger pull-right"
+               @click="delFile(FILE)"><i class="fa fa-times"></i></a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox">
-        现场工作
-      </label>
-    </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox">
-        整理底稿
-      </label>
-    </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox">
-        客户通报
-      </label>
-    </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox">
-        报告初稿
-      </label>
+    <div class="form-group"
+         v-if="reportFileShow">
+      <label class="col-sm-2 control-label">业务报告</label>
+      <ul class="col-sm-9 attachment-list list-group">
+        <li class="list-group-item"
+            v-for="FILE in business.reports">
+          <span class="fa fa-file-text-o"></span>
+          <a class="text-primary title"
+             :href="FILE.url"
+             target="_blank">{{FILE.name}}</a>
+        </li>
+      </ul>
     </div>
   </form>
 </template>
@@ -42,11 +52,71 @@ export default {
         { name: '待处理业务', url: '/business-handle-list-sales', present: false },
         { name: '业务详情', url: `/business-handle-detail-sales/${this.$route.params.id}`, present: false },
         { name: '业务报告', url: `/business-handle-detail-sales/${this.$route.params.id}/business-report`, present: true }
-      ]
+      ],
+      business: this.initBusiness,
+      uploadURL: ''
     };
   },
+  computed: {
+    reportUploadShow() {
+      return (this.user.department === '业务部' && this.business.projectStatus > 7) ? true : false;
+    },
+    reportFileShow() {
+      return (this.user.department !== '业务部' && this.business.projectStatus > 7) ? true : false;
+    },
+  },
+  props: ['initBusiness', 'user'],
   create() {
+    let data = {
+      command: 'handlerBusiness',
+      platform: 'web',
+      id: this.business.id,
+      type: 'XXXXXXXXXXXX'
+    };
+    this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
+
     this.$emit('pathsChan', this.paths);
+  },
+  methods: {
+    uploadSuccess(responseData, file, fileList) {
+      if (responseData.statusCode === '10001') {
+        let obj = {
+          id: responseData.data.id,
+          name: file.name,
+          url: responseData.data.path
+        };
+        this.business.reports.push(obj);
+        this.$emit('uploaded', this.business);
+      }
+    },
+    delFile(FILE) {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'post',
+        url: '/service',
+        params: {
+          data: (() => {
+            let obj = {
+              command: 'delFile',
+              platform: 'web',
+              delFileId: FILE.id,
+              type: 'XXXXXXXXXXXX'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          for (let i = 0; i < this.business.reports.length; i++) {
+            if (this.business.reports[i].id === FILE.id) {
+              this.business.reports.splice(i, 1);
+              break;
+            }
+          }
+          this.$emit('deletedFile', this.business);
+        }
+      }, (rep) => { });
+    }
   }
 };
 </script>
@@ -57,5 +127,26 @@ form.form-horizontal {
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
+  .attachment-list {
+    margin-top: 10px;
+    > li.list-group-item {
+      border-right: 0;
+      border-left: 0;
+      > a.title {
+        margin-left: 7px;
+      }
+      > a.text-danger {
+        cursor: pointer;
+      }
+    }
+    > li.list-group-item:first-child {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+    > li.list-group-item:last-child {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
 }
 </style>

@@ -238,7 +238,7 @@ export default {
         ],
         files: [],
         projectStatus: 1,
-        contractAnnexArray: [],
+        contracts: [],
         projectApproverArray: [],
         projectSchduleArray: [],
         projectBillingArray: [],
@@ -380,7 +380,15 @@ export default {
               this.business.files.push(obj);
             }
 
-            this.business.contractAnnexArray = rep.data.data.contractAnnexArray;
+            for (let i = 0; i < rep.data.data.contractAnnexArray.length; i++) {
+              let obj = {
+                id: rep.data.data.contractAnnexArray[i].id,
+                name: rep.data.data.contractAnnexArray[i].annexName,
+                url: rep.data.data.contractAnnexArray[i].annexUrl
+              }
+              this.business.contracts.push(obj);
+            }
+
             this.business.projectApproverArray = rep.data.data.projectApproverArray;
             this.business.projectSchduleArray = rep.data.data.projectSchduleArray;
             this.business.projectBillingArray = rep.data.data.projectBillingArray;

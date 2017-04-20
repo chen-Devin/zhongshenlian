@@ -65,19 +65,19 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">资产总额</label>
       <div class="col-sm-9">
-        <p class="form-control-static">￥{{business.assetAmount}}元</p>
+        <p class="form-control-static">{{business.assetAmount===''?'':`￥ ${business.assetAmount}元`}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">合同金额</label>
       <div class="col-sm-9">
-        <p class="form-control-static">￥{{business.contractAmount}}元</p>
+        <p class="form-control-static">{{business.contractAmount===''?'':`￥ ${business.contractAmount}元`}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">合同单价</label>
       <div class="col-sm-9">
-        <p class="form-control-static">￥{{business.contractPrice}}元</p>
+        <p class="form-control-static">{{business.contractPrice===''?'':`￥ ${business.contractPrice}元`}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -224,7 +224,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">报告数量</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.report.amount}}份（类）</p>
+        <p class="form-control-static">{{business.report.amount===''?'':`${business.report.amount}份（类）`}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -273,11 +273,11 @@
       <div class="col-sm-offset-2 col-sm-9">
         <ul class="attachment-list list-group">
           <li class="list-group-item"
-              v-for="FILE in business.contractAnnexArray">
+              v-for="FILE in business.contracts">
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title"
-               :href="FILE.annexUrl"
-               target="_blank">{{FILE.annexName}}</a>
+               :href="FILE.url"
+               target="_blank">{{FILE.name}}</a>
             <a class="text-danger pull-right"
                @click="delFile(FILE)"><i class="fa fa-times"></i></a>
           </li>
@@ -289,11 +289,11 @@
       <label class="col-sm-2 control-label">正式合同</label>
       <ul class="col-sm-9 attachment-list list-group">
         <li class="list-group-item"
-            v-for="FILE in business.contractAnnexArray">
+            v-for="FILE in business.contracts">
           <span class="fa fa-file-text-o"></span>
           <a class="text-primary title"
-             :href="FILE.annexUrl"
-             target="_blank">{{FILE.annexName}}</a>
+             :href="FILE.url"
+             target="_blank">{{FILE.name}}</a>
         </li>
       </ul>
     </div>
@@ -409,7 +409,7 @@ export default {
           name: file.name,
           url: responseData.data.path
         };
-        this.business.contractAnnexArray.push(obj);
+        this.business.contracts.push(obj);
         this.$emit('uploaded', this.business);
       }
     },
@@ -431,9 +431,9 @@ export default {
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          for (let i = 0; i < this.business.contractAnnexArray.length; i++) {
-            if (this.business.contractAnnexArray[i].id === FILE.id) {
-              this.business.contractAnnexArray.splice(i, 1);
+          for (let i = 0; i < this.business.contracts.length; i++) {
+            if (this.business.contracts[i].id === FILE.id) {
+              this.business.contracts.splice(i, 1);
               break;
             }
           }

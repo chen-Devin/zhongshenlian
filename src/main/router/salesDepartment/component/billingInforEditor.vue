@@ -14,7 +14,7 @@
     <div class="form-group">
       <div class="col-sm-12">
         <ul class="contract-list list-group">
-          <li class="list-group-item" v-for="FILE in business.contractAnnexArray">
+          <li class="list-group-item" v-for="FILE in business.contracts">
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
             <a class="text-danger pull-right" @click="delFile(FILE)" v-if="editable"><i class="fa fa-times"></i></a>
