@@ -6,6 +6,7 @@
           <input class="inputTitle"  type="text" v-model="editRule.title"/>
           <textarea name="textarea" onpropertychange="this.style.height = this.scrollHeight + 'px';"
           oninput="this.style.height = this.scrollHeight + 'px';" class="inputContent" v-model="editRule.content"></textarea>
+          <!--<div class="contentArea" contenteditable="true" @keyup="changeData($event)">{{editRule.content}}</div>-->
           <div class="isSaveBtn text-right">
             <button type="button" class="btn btn-primary" @click="saveEdit()">保存</button>
             <button type="button" class="btn btn-defalt" @click="canceled()">取消</button>
@@ -20,6 +21,7 @@
     import qs from 'qs';
     import router from '../index.js';
 
+   // import vEditDiv from './component/vEditDiv.vue';
     import crumbs from '../../component/crumbs.vue';
     import card from '../../component/card.vue';
     export default {
@@ -65,6 +67,9 @@
                     }
                 }, (rep) => {})
             },
+            changeData: function(event) {
+                 this.editRule.content = event.srcElement.innerHTML;
+            },
             saveEdit(){
               axios({
                 headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
@@ -84,8 +89,7 @@
                 })
               }).then((rep)=>{
                   if (rep.data.statusCode === '10001') {
-                     alert(123)
-                      //this.$router.push('/rule-regulation-detail/'+this.editRule.id)
+                      this.$router.push('/rule-regulation-detail/'+this.editRule.id)
                   }
               }, (rep)=>{});
             },
@@ -104,10 +108,25 @@
     .main {
         .getDetail {
             margin-top: 10px;
+            /*.contentArea{
+                width: 95%;
+                min-height: 10px;
+                max-height: 800px;
+                _height: 10px;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 10px;
+                outline: 0;
+                border: 1px solid #ccc;
+                word-wrap: break-word;
+                overflow-x: hidden;
+                overflow-y: auto;
+                -webkit-user-modify: read-write-plaintext-only;
+            }*/
             .inputContent {
                 width: 95%;
                 overflow-y: hidden;
-                min-height: 50px;
+                min-height: 500px;
                 resize: none;
                 font-size: 16px;
             }

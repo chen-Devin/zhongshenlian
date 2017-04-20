@@ -5,7 +5,7 @@
       <div class="getDetail" v-bind="ruleAdd">
           <input class="inputTitle" type="text" v-model="ruleAdd.title"/>
           <textarea name="textarea" onpropertychange="this.style.height = this.scrollHeight + 'px';"
-          oninput="this.style.height = this.scrollHeight + 'px';" class="inputContent"  v-model="ruleAdd.content"></textarea>
+          oninput="this.style.height = this.scrollHeight + 'px';" class="inputContent" v-model="ruleAdd.content"></textarea>
           <div class="isSaveBtn text-right">
             <button type="button" class="btn btn-primary" @click="saveEdit()">保存</button>
             <button type="button" class="btn btn-defalt" @click="canceled()">取消</button>
@@ -48,7 +48,6 @@
                     var obj = {
                       command: 'addOrEditRegulations',
                       platform: 'web',
-                      regulationsId: this.ruleAdd.id,
                       title: this.ruleAdd.title,
                       content: this.ruleAdd.content
                     };
@@ -57,14 +56,10 @@
                 })
               }).then((rep)=>{
                   if (rep.data.statusCode === '10001') {
-                    //this.ruleAdd.id = rep.data.id
-                    alert('保存成功');
-                    //加一个弹出框，然后加一个跳转
+                    this.ruleAdd.id = rep.data.data.id;
+                    this.$router.push('/rule-regulation');
                   }
               }, (rep)=>{});
-            },
-            saveEdit(){
-              //alert(this.ruleAdd.title)
             },
             canceled() {
                 this.$router.push('/rule-regulation');

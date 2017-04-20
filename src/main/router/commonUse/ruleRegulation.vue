@@ -12,7 +12,7 @@
     <card id="tableCard">
       <table class="table ruleTable">
         <tbody>
-          <tr class="addRule">
+          <tr class="addRule" :user="user" v-if="this.user.department == '所长'">
             <td></td>
             <td>
               <router-link to="/rule-regulation-add">
@@ -52,6 +52,7 @@ export default {
     created(){
       this.getRuleLists();
     },
+    props: ['user'],
     methods: {
       getRuleLists(){
          axios({

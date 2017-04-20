@@ -1,12 +1,14 @@
 <template>
 <div class="main">
     <crumbs v-bind:paths="paths"></crumbs>
-    <button class="btn btn-primary pull-right" type="button" @click="editRule()">编辑</button>
+    <button class="btn btn-primary pull-right" :user="user" type="button" v-if="this.user.department == '所长'" @click="editRule()">编辑</button>
     <card>
       <div class="getDetail" v-bind="detail">
           <input class="inputTitle" type="text" v-model="detail.title" readonly/>
-          <textarea name="textarea" onpropertychange="this.style.height = this.scrollHeight + 'px';"
-          oninput="this.style.height = this.scrollHeight + 'px';" v-model="detail.content" class="inputContent" readonly></textarea>
+          <!--<textarea name="textarea" onpropertychange="this.style.height = this.scrollHeight + 'px';"
+           v-model="detail.content" class="inputContent" readonly v-if="edited"></textarea>
+           <p class="inputContent">{{detail.content}}</p>-->
+          <div class="contentArea" contenteditable="false"><pre>{{detail.content}}</pre></div>
           <div class="releasePart text-right">
              <p>{{detail.releaseDepartment}}</p>
             <p>{{detail.releaseTime}}</p>
@@ -41,6 +43,7 @@
               }
             }
         },
+        props: ['user'],
         created() {
             this.getRuleDetail();
         },
@@ -70,7 +73,6 @@
                 }, (rep) => {})
             },
             editRule() {
-                // alert(this.detail.id)
                 this.$router.push("/rule-regulation-edit/"+this.detail.id);
             }
         },
@@ -83,6 +85,16 @@
 
 <style lang="sass" scoped>
     .main {
+        pre{
+           white-space: pre-wrap;
+           white-space: -moz-pre-wrap;
+           white-space: -pre-wrap;
+           white-space: -o-pre-wrap;
+           word-wrap: break-word;
+           background: none;
+           border: none;
+           font-size: 14px;
+        }
         button {
             width: 75px;
             height: 40px;
@@ -92,16 +104,33 @@
         }
         .getDetail {
             margin-top: 10px;
-            .inputContent {
+            .contentArea{
                 width: 95%;
-                overflow-y: hidden;
-                min-height: 50px;
+                min-height: 10px;
+                max-height: 800px;
+                _height: 10px;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 10px;
+                outline: 0;
+                border: 1px solid #fff;
+                word-wrap: break-word;
+                overflow-x: hidden;
+                overflow-y: auto;
+                font-size: 14px;
+                //-webkit-user-modify: read-write-plaintext-only;
+            }
+            .inputContent {
+                height: 100%;
+                width: 95%;
+               // overflow-y: hidden;
+               // min-height: 400px;
                 resize: none;
                 font-size: 16px;
+                overflow-y:visible;
             }
             .inputTitle {
                 width: 50%;
-
                 font-size: 18px;
                 font-weight: bold;
             }
@@ -114,7 +143,6 @@
                 outline: none;
             }
             .releasePart {
-                //width: 70%;
                 font-size: 16px;
                 margin: 20px;
                 p {
