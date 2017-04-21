@@ -13,6 +13,7 @@
 
 import axios from 'axios';
 import qs from 'qs';
+import bus from '../../bus.js';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
@@ -172,8 +173,10 @@ export default {
     			}
     		}
     	},
-    	checkMessage(project) {
-    		this.$router.push('/bid-infor-detail/'+project.id);
+    	checkMessage(project,office) {
+            console.log("是：" + office);
+            bus.$emit('idAndOffice',project.id,office);
+    		this.$router.push('/bid-info-detail/'+project.id);
     	},
         queryList(office) {
             if(office === "会计所") {

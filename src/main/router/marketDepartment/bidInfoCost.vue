@@ -22,7 +22,7 @@ export default {
 			this.$router.push('/bid-info-input-zjs');
 		},
 		checkMessage(project) {
-			this.$emit('checkMessage',project);
+			this.$emit('checkMessage',project,this.office);
 		}
 	},
 	components: {
