@@ -2,7 +2,7 @@
 	<div class="main">
 		<crumbs :paths="paths"></crumbs>
 		<card>
-			<bid-info-edit :iniProject="project"></bid-info-edit>
+			<bid-info-check :iniProject="project"></bid-info-check>
 		</card>
 	</div>
 </template>
@@ -13,7 +13,7 @@ import qs from 'qs';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
-import bidInfoEdit from './component/bidInfoEdit.vue';
+import bidInfoEdit from './component/bidInfoCheck.vue';
 
 export default {
     name: 'bidInforDetail',
@@ -29,7 +29,7 @@ export default {
     components: {
     	crumbs,
     	card,
-    	bidInfoEdit
+    	bidInfoCheck
     }
 }
 </script>

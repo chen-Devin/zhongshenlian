@@ -45,7 +45,7 @@ import businessHandleDetailFinancial from './archivesDepartment/businessHandleDe
 import businessHandleListFinancial from './archivesDepartment/businessHandleList.vue';
 //市场部
 import bidInfoList from './marketDepartment/bidInfoList.vue';
-import bidInforDetail from './marketDepartment/bidInforDetail.vue';
+import bidInfoDetail from './marketDepartment/bidInfoDetail.vue';
 import bidInfoInputKJS from './marketDepartment/bidInfoInputKJS.vue';
 import bidInfoInputPGS from './marketDepartment/bidInfoInputPGS.vue';
 import bidInfoInputZJS from './marketDepartment/bidInfoInputZJS.vue';
@@ -303,10 +303,10 @@ const router = new VueRouter({
                 }
             ]
         },
-        // {
-        //     path: '/bid-infor-detail',
-        //     component: bidInforDetail
-        // },
+        {
+            path: '/bid-info-detail/:id',
+            component: bidInfoDetail
+        },
         // {
         //     path: '/bid-infor-edit',
         //     component: bidInforEdit
