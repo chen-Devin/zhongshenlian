@@ -92,7 +92,8 @@ export default {
           flag: '',
           show: false,
           sub: [
-            {name: '招投标信息', link: '/bid-info-list', active: false}
+            {name: '招投标信息', link: '/bid-info-list', active: false},
+            {name: '草稿箱', link: '/bid-info-draft', active: false}
           ]
         }
       ]

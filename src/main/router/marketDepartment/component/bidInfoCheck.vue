@@ -226,11 +226,10 @@ export default {
     name: 'bidInfoCheck',
     data() {
     	return {
-			project: this.iniProject,
+			project: {},
 			office: ''
     	}
     },
-    props: ['id'],
     computed: {
     	zjsBiddingContent() {
     		if (this.office === "zjs") {
@@ -316,17 +315,13 @@ export default {
     		}).then((rep) => {
         		if (rep.data.statusCode === '10001') {
 					this.project = rep.data.data;
-					this.iniProject = this.project;
         		}
       		}, (rep) => {});
-    	},
-    	isEdit() {
-    		this.editShow = true;
-    		this.checkShow = false;
     	}
     },
     
     created() {
+    	console.log(this);
     	this.id = this.$route.params.id;
     	this.office = this.$route.params.office;
     	this.getInfo();
