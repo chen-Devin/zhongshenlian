@@ -175,8 +175,19 @@ export default {
     	},
     	checkMessage(project,office) {
             console.log("是：" + office);
-            bus.$emit('idAndOffice',project.id,office);
-    		this.$router.push('/bid-info-detail/'+project.id);
+            if (office === "会计所") {
+                office = "kjs"
+            }
+            if (office === "评估所") {
+                office = "pgs"
+            }
+            if (office === "税务所") {
+                office = "sws"
+            }
+            if (office === "造价所") {
+                office = "zjs"
+            }
+    		this.$router.push('/bid-info-detail/'+project.id+"&"+office);
     	},
         queryList(office) {
             if(office === "会计所") {

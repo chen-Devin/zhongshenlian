@@ -1,105 +1,46 @@
 <template>
 	<form class="form-horizontal">
+		<button class="btn btn-primary f-r" @click="isEdit">编辑</button>
 		<div class="form-group">
 		  <label for="projectName" class="col-sm-2 control-label">项目名称：</label>
-		  <div class="col-sm-10">
-		    <input type="text" class="form-control" id="projectName" v-model="project.projectName" name="projectName" placeholder="请输入项目名称">
+		  <div class="col-sm-6">
+		  	  {{project.projectName}}
 		  </div>
 		</div>
 		<div class="form-group">
 			<label for="tenderPerson" class="col-sm-2 control-label">招标人：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="tenderPerson" v-model="project.tenderPerson" name="tenderPerson" placeholder="请输入招标人">
+			  {{ project.tenderPerson }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="agency" class="col-sm-2 control-label">招标代理机构：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="agency" v-model="project.agency" name="agency" placeholder="请输入招标代理机构">
+			  {{ project.agency }}
 			</div>
 		</div>
 		<div class="form-group" v-if="zjsBiddingContent">
 			<label class="col-sm-2 control-label">招标内容：</label>
 			<div class="col-sm-10">
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent1" value="概算"> 概算
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent2" value="预算"> 预算
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent3" value="结算"> 结算
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent4" value="全过程造价控制"> 全过程造价控制
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent5" value="入围"> 入围
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent6" value="一审"> 一审
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent7" value="二审"> 二审
-				</label>
-				<div class="checkbox">
-				  <label for="other">
-				    <input type="checkbox" name="biddingContent" v-model="project.biddingContent" value="其他">
-				    其他：
-				  </label>
-				  <input type="text" v-model="project.biddingContent" id="other" class="form-control" placeholder="限15字">
-				</div>
+				{{ project.biddingContent }}
 			</div>
 		</div>
 		<div class="form-group" v-if="kjsBiddingContent">
 			<label class="col-sm-2 control-label">招标内容：</label>
 			<div class="col-sm-10">
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent1" value="年审"> 年审
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent2" value="专项"> 专项
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent3" value="咨询"> 咨询
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent4" value="决算"> 决算
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent5" value="外汇年检"> 外汇年检
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent6" value="验资"> 验资
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent7" value="外资审计"> 外资审计
-				</label>
+				{{ project.biddingContent }}
 			</div>
 		</div>
 		<div class="form-group" v-if="pgsBiddingContent">
 			<label class="col-sm-2 control-label">招标内容：</label>
 			<div class="col-sm-10">
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent1" value="股改"> 股改
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent2" value="专项"> 专项
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent3" value="咨询"> 咨询
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent4" value="清产核资"> 清产核资
-				</label>
+				{{ project.biddingContent }}
 			</div>
 		</div>
 		<div class="form-group" v-if="swsBiddingContent"> 
 			<label class="col-sm-2 control-label">招标内容：</label>
 			<div class="col-sm-10">
-				<label class="checkbox-inline">
-					<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent1" value="税鉴"> 税鉴
-				</label>
+				{{ project.biddingContent }}
 			</div>
 		</div>
 	  <!-- <div class="form-group">
@@ -111,37 +52,16 @@
 		<div class="form-group" v-if="zjsFundSourceShow">
 			<label for="zjsFundSource" class="col-sm-2 control-label">资金来源及比例：</label>
 			<div class="col-sm-10">
-				<label class="checkbox-inline">
-					<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" id="zjsFundSource1" value="财政"> 财政
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" id="zjsFundSource2" value="自筹"> 自筹
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" id="zjsFundSource3" value="贷款"> 贷款
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" id="zjsFundSource4" value="BT等"> BT等
-				</label>
+				{{ project.zjsFundSource }}
 			</div>
 		</div>
 		<div class="form-group" v-if="OwnershipStructure">
 			<label for="zjsOwnershipStructure" class="col-sm-2 control-label">股权结构：</label>
 			<div class="col-sm-10">
-				<label class="radio-inline">
-					<input type="radio" name="zjsOwnershipStructure" v-model="project.zjsOwnershipStructure" id="zjsOwnershipStructure1" value="国有"> 国有
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="zjsOwnershipStructure" v-model="project.zjsOwnershipStructure" id="zjsOwnershipStructure2" value="民营"> 民营
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="zjsOwnershipStructure" v-model="project.zjsOwnershipStructure" id="zjsOwnershipStructure3" value="外资"> 外资
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="zjsOwnershipStructure" v-model="project.zjsOwnershipStructure" id="zjsOwnershipStructure4" value="混合"> 混合
-				</label>
+				{{project.zjsOwnershipStructure}}
 			</div>
 		</div>
+		<!--问豆腐-->
 		<div class="form-group" v-if="scale">
 			<label for="scale" class="col-sm-2 control-label">建设规模：</label>
 			<div class="col-sm-10">
@@ -161,115 +81,110 @@
 		<div class="form-group" v-if="scale">
 			<label for="location" class="col-sm-2 control-label">建设地点：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="location" v-model="project.location" name="location" placeholder="请输入建设地点">
+			    {{ project.location }}
 			</div>
 		</div>
 		<div class="form-group" v-if="scale">
 			<label for="serviceTerm" class="col-sm-2 control-label">服务期限：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="serviceTerm" v-model="project.serviceTerm" name="serviceTerm" placeholder="请输入服务期限">
+			  {{ project.serviceTerm }}
 			</div>
 		</div>
 		<div class="form-group" v-if="scaleOther">
 			<label for="totalAssets" class="col-sm-2 control-label">资产总额：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="totalAssets" v-model="project.totalAssets" name="totalAssets" placeholder="请输入资产总额">
+			    {{ project.totalAssets }}
 			</div>
 		</div>
 		<div class="form-group" v-if="scaleOther">
 			<label for="location" class="col-sm-2 control-label">坐落地点：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="location" v-model="project.location" name="location" placeholder="请输入坐落地点">
+			    {{ project.location }}
 			</div>
 		</div>
 		<div class="form-group" v-if="scaleOther">
 			<label for="serviceTerm" class="col-sm-2 control-label">审计期限：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="serviceTerm" v-model="project.serviceTerm" name="serviceTerm" placeholder="请输入审计期限">
+			    {{ project.serviceTerm }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="investmentConditions" class="col-sm-2 control-label">投资人资质条件、能力：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="investmentConditions" v-model="project.investmentConditions" name="investmentConditions" placeholder="请输入投资人资质条件及能力">
+			    {{ project.investmentConditions }}
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-offset-2">
-				<label class="radio-inline">
-					<input type="radio" name="commonwealth" v-model="project.commonwealth" id="commonwealth1" value="联合体"> 联合体
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="commonwealth" v-model="project.commonwealth" id="commonwealth2" value="非联合体"> 非联合体
-				</label>
+				{{ project.commonwealth }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="biddingNumber" class="col-sm-2 control-label">中标单位数量：</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="biddingNumber" v-model="project.biddingNumber" name="biddingNumber" placeholder="请输入中标单位数量">
+				{{ project.biddingNumber }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="controlPrice" class="col-sm-2 control-label">招标控制价：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="controlPrice" v-model="project.controlPrice" name="controlPrice" placeholder="请输入招标控制价">
+			    {{ project.controlPrice }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="bidStartTime" class="col-sm-2 control-label">招标报名时间：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="bidStartTime" v-model="project.bidStartTime" name="bidStartTime">
+			    {{ project.bidStartTime }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="bidDocumentPrice" class="col-sm-2 control-label">招标文件价格：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="bidDocumentPrice" v-model="project.bidDocumentPrice" name="bidDocumentPrice" placeholder="请输入招标文件价格">
+			    {{project.bidDocumentPrice}}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="quotations" class="col-sm-2 control-label">报价方式：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="quotations" v-model="project.quotations" name="quotations" placeholder="请输入报价方式">
+			    {{ project.quotations }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="tenderValidityPeriod" class="col-sm-2 control-label">投标有效期：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="tenderValidityPeriod" v-model="project.tenderValidityPeriod" name="tenderValidityPeriod" placeholder="请输入投标有限期">
+			    {{ project.tenderValidityPeriod }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="bidBond" class="col-sm-2 control-label">投标保证金：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="bidBond" v-model="project.bidBond" name="bidBond" placeholder="请输入投标保证金">
+			    {{ project.bidBond }}
 			</div>
 		</div>
 		<!--标书费-->
 		<div class="form-group">
 			<label for="tenderFee" class="col-sm-2 control-label">标书费：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="tenderFee" v-model="project.tenderFee" name="tenderFee" placeholder="请输入标书费">
+			    {{ project.tenderFee }}
 			</div>
 		</div>
 		<!--中标服务费-->
 		<div class="form-group">
 			<label for="winningServiceFee" class="col-sm-2 control-label">中标服务费：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="winningServiceFee" v-model="project.winningServiceFee" name="winningServiceFee" placeholder="请输入中标服务费">
+			    {{ project.winningServiceFee }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="openBidDate" class="col-sm-2 control-label">开标时间：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="openBidDate" v-model="project.openBidDate" name="openBidDate" placeholder="请输入开标时间">
+			    {{ project.openBidDate }}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="openBidPlace" class="col-sm-2 control-label">开标地点：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="openBidPlace" v-model="project.openBidPlace" name="openBidPlace" placeholder="请输入开标地点">
+			    {{ project.openBidPlace }}
 			</div>
 		</div>
 		<hr>
@@ -292,48 +207,97 @@
 	      <input type="file" name="ruweitongzhishu" value="上传">
 	    </div>
 	  </div> -->
-	  <div class="form-group">
-	    <div class="col-sm-offset-2 col-sm-10">
-	      <button type="submit" class="btn btn-primary" @click="submit()">提交</button>
-	      <button type="button" class="btn btn-default">存为草稿</button>
-	      <button type="button" class="btn btn-danger">撤销</button>
-	    </div>
-	  </div>
 	</form>
 </template>
 
 <style lang="sass" scoped>
-	
+	.control-label {
+		padding-top: 1px;
+	}
+	.f-r {
+		float: right;
+	}
 </style>
 
 <script>
 import axios from 'axios';
-import bus from '../../../bus.js'
 
 export default {
     name: 'bidInfoCheck',
     data() {
     	return {
-			project: {}
+			project: this.iniProject,
+			office: ''
     	}
     },
-    methods: {
+    props: ['id'],
+    computed: {
+    	zjsBiddingContent() {
+    		if (this.office === "zjs") {
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	},
+    	zjsFundSourceShow() {
+    		if (this.office === "zjs") {
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	},
+    	kjsBiddingContent() {
+    		if (this.office === "kjs") {
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	},
+    	pgsBiddingContent() {
+    		if (this.office === "pgs") {
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	},
+    	swsBiddingContent() {
+    		if (this.office === "sws") {
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	},
+    	OwnershipStructure() {
+    		if (this.office === "zjs") {
+    			return false;
+    		} 
+    		if (this.office === "kjs") {
+    			return true;
+    		} 
+    		if (this.office === "pgs") {
+    			return true;
+    		} 
+    		if (this.office === "sws") {
+    			return true;
+    		} 
+    	},
+    	scale() {
+    		if (this.office === "zjs") {
+    			return true;
+    		}
+    	},
+    	scaleOther() {
+    		if (this.office !== "zjs") {
+    			return true;
+    		}
+    	}
     	
     },
-    created() {
-    	bus.$on('idAndOffice',function(id,office){
-    		if (office === "会计所") {
-    			office = "kjs"
-    		}
-    		if (office === "评估所") {
-    			office = "pgs"
-    		}
-    		if (office === "税务所") {
-    			office = "sws"
-    		}
-    		if (office === "造价所") {
-    			office = "zjs"
-    		}
+    methods: {
+    	isEdit() {
+    		this.$emit('isEdit');
+    	},
+    	getInfo() {
     		axios({
     		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
     		  method: 'get',
@@ -343,18 +307,29 @@ export default {
     		      let obj = {
     		        command: 'getBiddingInfo',
     		        platform: 'web',
-    		        id: id
-    		        type: office
+    		        id: this.$route.params.id,
+    		        type: this.$route.params.office,
     		      }
     		      return JSON.stringify(obj);
     		    })()
     		  }
     		}).then((rep) => {
-    		    if (rep.data.statusCode === '10001') {
-    		        console.log(rep.data);
-    		    }
-    		    }, (rep) => {});
-    	})
+        		if (rep.data.statusCode === '10001') {
+					this.project = rep.data.data;
+					this.iniProject = this.project;
+        		}
+      		}, (rep) => {});
+    	},
+    	isEdit() {
+    		this.editShow = true;
+    		this.checkShow = false;
+    	}
+    },
+    
+    created() {
+    	this.id = this.$route.params.id;
+    	this.office = this.$route.params.office;
+    	this.getInfo();
     },
     components: {
 

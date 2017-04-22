@@ -304,7 +304,7 @@ const router = new VueRouter({
             ]
         },
         {
-            path: '/bid-info-detail/:id',
+            path: '/bid-info-detail/:id&:office',
             component: bidInfoDetail
         },
         // {
