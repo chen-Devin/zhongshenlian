@@ -20,8 +20,9 @@
   			<div class="row">
 				<div class="form-group col-xs-12">
 					<label>招标时间</label>
-					<input type="date" class="form-control" v-model="bidStartDate1">
-					<input type="date" class="form-control" v-model="bidEndDate1">
+					<input type="date" class="form-control" v-model="bidStartDate">
+					<input type="date" class="form-control" v-model="bidEndDate">
+					<button class="btn btn-default f-r" @click="clear()">清除搜索条件</button>
 					<button type="submit" class="btn btn-primary f-r" @click="search()">搜索</button>
 	  			</div>
   			</div>
@@ -68,6 +69,11 @@ export default {
 	data() {
 		return {
 			state: '',
+			bidMan: '',
+			bidAgency: '',
+			projectName: '',
+			bidStartDate: new Date(),
+			bidEndDate: new Date(),
 			weiZhaiPai: [],
 			yiZhaiPai: [],
 			yiZhongBiao: [],
@@ -137,6 +143,13 @@ export default {
 		},
 		checkMessage(project) {
 			this.$emit('checkMessage',project);
+		},
+		clear() {
+			this.bidMan = '';
+			this.bidAgency = '';
+			this.projectName = '';
+			this.bidStartDate = new Date();
+			this.bidEndDate = new Date();
 		}
 	},
 	created() {
@@ -181,5 +194,12 @@ export default {
 	margin-right: 5px;
 	padding: 1px 3px;
 	font-size: 11px;
+}
+table {
+	tbody {
+		tr {
+			cursor: pointer;
+		}
+	}
 }
 </style>

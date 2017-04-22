@@ -2,8 +2,8 @@
 	<div class="main">
 		<crumbs :paths="paths"></crumbs>
 		<card>
-			<bid-info-check @isEdit="isEdit" v-show="checkShow"></bid-info-check>
-			<bid-info-edit :iniProject="project" :office="office" v-show="editShow"></bid-info-edit>
+			<bid-info-check @isEdit="isEdit" v-if="checkShow"></bid-info-check>
+			<bid-info-edit :iniProject="project" :office="office" v-if="editShow" @submit="submit"></bid-info-edit>
 		</card>
 	</div>
 </template>
@@ -29,7 +29,7 @@ export default {
 	  		iniProject: {},
 	  		office: '会计所',
 	  		editShow: false,
-	  		checkShow: false
+	  		checkShow: true
     	}
     },
     methods: {
@@ -59,7 +59,29 @@ export default {
     	isEdit() {
     		this.editShow = true;
     		this.checkShow = false;
-    	}
+    	},
+        submit() {
+            axios({
+                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                method: 'post',
+                url: '/service',
+                data: qs.stringify({
+                  data: (() => {
+                    var obj = {
+                      command: 'addBiddingInfo',
+                      platform: 'web',
+                      bid: this.project
+                    };
+                    return JSON.stringify(obj);
+                  })()
+                })
+            }).then((rep)=>{
+          if (rep.data.statusCode === '10001') {
+            alert('保存成功');
+            //加一个弹出框，然后加一个跳转
+          }
+        }, (rep)=>{});
+        }
     },
     created() {
     	this.getInfo();

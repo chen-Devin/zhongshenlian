@@ -55,6 +55,7 @@ import bidInfoAccounting from './marketDepartment/bidInfoAccounting.vue';
 import bidInfoAssessment from './marketDepartment/bidInfoAssessment.vue';
 import bidInfoTax from './marketDepartment/bidInfoTax.vue';
 import bidInfoCost from './marketDepartment/bidInfoCost.vue';
+import bidInfoDraft from './marketDepartment/bidInfoDraft.vue';
 
 Vue.use(VueRouter);
 
@@ -306,6 +307,10 @@ const router = new VueRouter({
                     component: bidInfoCost
                 }
             ]
+        },
+        {
+            path: '/bid-info-draft/',
+            component: bidInfoDraft
         },
         {
             path: '/bid-info-detail/:id&:office',
