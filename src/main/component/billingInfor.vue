@@ -1,11 +1,17 @@
 <template>
+  <h3>
+    <router-link class="btn btn-primary pull-right"
+                 to="billing-infor-editor">
+      新增开票申请
+    </router-link>
+  </h3>
   <div class="billing-list list-group">
-    <router-link class="list-group-item" to="">billing 1</router-link>
-    <router-link class="list-group-item" to="">billing 2</router-link>
-    <router-link class="list-group-item" to="">billing 3</router-link>
-    <router-link class="list-group-item" to="">billing 4</router-link>
-    <router-link class="list-group-item" to="">billing 5</router-link>
-    <router-link class="list-group-item" to="">billing 6</router-link>
+    <router-link class="list-group-item" to="billing-infor-detail/">billing 1</router-link>
+    <router-link class="list-group-item" to="billing-infor-detail/">billing 2</router-link>
+    <router-link class="list-group-item" to="billing-infor-detail/">billing 3</router-link>
+    <router-link class="list-group-item" to="billing-infor-detail/">billing 4</router-link>
+    <router-link class="list-group-item" to="billing-infor-detail/">billing 5</router-link>
+    <router-link class="list-group-item" to="billing-infor-detail/">billing 6</router-link>
   </div>
 </template>
 

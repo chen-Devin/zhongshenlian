@@ -163,9 +163,13 @@ const router = new VueRouter({
                     component: billingInfor,
                     children: [
                         {
-                            path: 'billing-infor-editor/:id',
+                            path: 'billing-infor-detail/:id',
+                            component: billingInforDetail
+                        },
+                        {
+                            path: 'billing-infor-editor',
                             component: billingInforEditor
-                        }
+                        },
                     ]
                 },
                 {
