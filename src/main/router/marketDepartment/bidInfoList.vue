@@ -13,6 +13,7 @@
 
 import axios from 'axios';
 import qs from 'qs';
+import bus from '../../bus.js';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
@@ -172,8 +173,21 @@ export default {
     			}
     		}
     	},
-    	checkMessage(project) {
-    		this.$router.push('/bid-infor-detail/'+project.id);
+    	checkMessage(project,office) {
+            console.log("是：" + office);
+            if (office === "会计所") {
+                office = "kjs"
+            }
+            if (office === "评估所") {
+                office = "pgs"
+            }
+            if (office === "税务所") {
+                office = "sws"
+            }
+            if (office === "造价所") {
+                office = "zjs"
+            }
+    		this.$router.push('/bid-info-detail/'+project.id+"&"+office);
     	},
         queryList(office) {
             if(office === "会计所") {

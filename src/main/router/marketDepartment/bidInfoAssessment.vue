@@ -1,5 +1,5 @@
 <template>
-	<bid-info-list-body :office="office" :bidArray="bidArray" @input="input"></bid-info-list-body>
+	<bid-info-list-body :office="office" :bidArray="bidArray" @input="input" @checkMessage="checkMessage"></bid-info-list-body>
 </template>
 
 <script>
@@ -21,6 +21,9 @@ export default {
 		input() {
 			console.log('input');
 			this.$router.push('/bid-info-input-pgs');
+		},
+		checkMessage(project) {
+			this.$emit('checkMessage',project,this.office);
 		}
 	},
 	components: {
