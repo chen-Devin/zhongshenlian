@@ -2,19 +2,19 @@
 	<div>
 		<form class="form-inline">
 			<div class="row">
-				<div class="form-group col-xs-6">
+				<div class="form-group col-xs-6">	
 					<label for="bidMan" class="bidMan">招标人</label>
-	    			<input type="text" class="form-control" placeholder="请输入招标人" v-model.trim="bidMan" id="bidMan">
+					<input type="text" class="form-control bidMan-input" placeholder="请输入招标人" v-model.trim="bidMan" id="bidMan">	
 	  			</div>
 				<div class="form-group col-xs-6">
 					<label for="bidAgency">招标代理机构</label>
-	    			<input type="text" class="form-control" placeholder="请输入招标代理机构" v-model.trim="bidAgency" id="bidAgency">
+	    			<input type="text" class="form-control angency-input" placeholder="请输入招标代理机构" v-model.trim="bidAgency" id="bidAgency">
 	  			</div>
 			</div>
   			<div class="row">
 				<div class="form-group col-xs-12">
 					<label for="projectName">项目名称</label>
-	    			<input type="text" class="form-control" placeholder="请输入项目名称" v-model.trim="projectName" id="projectName">
+	    			<input type="text" class="form-control name-input" placeholder="请输入项目名称" v-model.trim="projectName" id="projectName">
 	  			</div>
   			</div>
   			<div class="row">
@@ -22,7 +22,7 @@
 					<label>招标时间</label>
 					<input type="date" class="form-control" v-model="bidStartDate">
 					<input type="date" class="form-control" v-model="bidEndDate">
-					<button class="btn btn-default f-r" @click="clear()">清除搜索条件</button>
+					<button class="btn btn-default f-r left-move" @click="clear()">清除搜索条件</button>
 					<button type="submit" class="btn btn-primary f-r" @click="search()">搜索</button>
 	  			</div>
   			</div>
@@ -201,5 +201,17 @@ table {
 			cursor: pointer;
 		}
 	}
+}
+.bidMan-input {
+	width: 330px;
+}
+.angency-input {
+	width: 330px;
+}
+.name-input {
+	width: 815px;
+}
+.left-move {
+	margin-left: 10px;
 }
 </style>
