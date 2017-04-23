@@ -31,9 +31,7 @@ export default {
       		searchContent: '',
       		bidStartDate1: '',
       		bidEndDate1: '',
-      		checkedAttr: [],
       		bidArray: [],
-      		checkedAttrArr: [],
             office: '',
             biddingArray: []
     	};
@@ -60,50 +58,8 @@ export default {
     },
     methods: {
         getOffice(office) {
-            console.log('office is' + office);
             this.office = office;
         },
-    	search() {
-    		axios({
-    		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-    		  method: 'get',
-    		  url: '/service',
-    		  params: {
-    		    data: (() => {
-    		      let obj = {
-    		        command: 'searchBiddingList',
-    		        platform: 'web',
-    		        searchContent: this.searchContent,
-    		        bidStartDate: this.bidStartDate,
-    		        bidEndDate: this.bidEndDate
-    		      }
-    		      return JSON.stringify(obj);
-    		    })()
-    		  }
-    		}).then((rep) => {
-        		if (rep.data.statusCode === '10001') {
-					this.businessArray = rep.data.data.businessArray;
-					this.bidArray = this.businessArray;
-        		}
-      		}, (rep) => {});
-    	},
-    	getNowFormDate () {
-    		var date = new Date();
-    		var seperator1 = "-";
-    		var seperator2 = ":";
-    		var month = date.getMonth() + 1;
-    		var strDate = date.getDate();
-    		if (month>=1&&month<=9) {
-    			month = "0" + month;
-    		}
-    		if (strDate>=1&&strDate<=9) {
-    			strDate = "0" + strDate;
-    		}
-    		var currentDate = date.getFullYear() + seperator1 + month +seperator1 + strDate
-    				+ " " + date.getHours() + seperator2 + date.getMinutes()
-    				+ seperator2 + date.getSeconds();
-    		return currentDate;
-    	},
     	handleDate (dateString) {
     		let ymd = dateString.slice(0,10);
     		let ymdArr = ymd.split("-");
@@ -116,62 +72,6 @@ export default {
     			date: date
     		};
     		return ymdObj;
-    	},
-    	judgeDate() {
-    		var now = this.getNowFormDate();
-    		var nowObj = this.handleDate(now);
-    		for (let i = 0; i < this.businessArray.length; i++) {
-    			if(this.businessArray[i].delipotentState === "0") {
-    				 var endObj =  this.handleDate(this.businessArray[i].endDate);
-    				 if (endObj.year < nowObj.year) {
-    				 	//过期
-    				 	this.businessArray[i].over = '是';
-    				 } else if (endObj.year === nowObj.year) {
-    				 	if (endObj.month < nowObj.month) {
-    				 		this.businessArray[i].over = '是';
-    				 	} else {
-    				 		if (endObj.date < nowObj.date) {
-    				 			this.businessArray[i].over = '是';
-    				 		}
-    				 	}
-    				 }
-    			}
-    		}
-    	},
-    	judgeShow() {
-    		for (var i = 0; i < this.businessArray.length; i++) {
-    			if (this.businessArray[i].biddingState === "1") { //已中标
-    				this.businessArray[i].showBade = 1;
-    				this.businessArray[i].isZhongbiao = true;
-    				this.businessArray[i].isRuwei = true;
-    				this.businessArray[i].isShenPi = true;
-    				this.businessArray[i].isZhaiPai = true;
-    			} else {
-    				if (this.businessArray[i].shortlistedState === "1") {
-    					this.businessArray[i].showRuWei = 1; //已入围
-    					this.businessArray[i].isRuwei = true;
-	    				this.businessArray[i].isShenPi = true;
-	    				this.businessArray[i].isZhaiPai = true;
-    				} else {
-    					if(this.businessArray[i].reviewState === "0"||this.businessArray[i].reviewState === "1") { //已审批
-    						this.businessArray[i].showCheck = 1;
-    						this.businessArray[i].isShenPi = true;
-    						this.businessArray[i].isZhaiPai = true;
-    					} else {
-    						if (this.businessArray[i].delipotentState === "1") { //已摘牌
-    							this.businessArray[i].showBrand = 1;
-    							this.businessArray[i].isZhaiPai = true;
-    						} else {
-    							if (this.businessArray[i].over === '是') { //已过期
-    								this.businessArray[i].showOver = 1;
-    							} else {
-    								this.businessArray[i].showTime = 1;
-    							}
-    						}
-    					}
-    				}
-    			}
-    		}
     	},
     	checkMessage(project,office) {
             console.log("是：" + office);

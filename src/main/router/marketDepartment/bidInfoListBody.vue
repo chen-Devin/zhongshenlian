@@ -135,15 +135,38 @@ export default {
 		}
 	},
 	methods: {
-		getOffice() {
-			
-		},
 		input() {
 			this.$emit('input');
 		},
 		checkMessage(project) {
 			this.$emit('checkMessage',project);
 		},
+    	search() { //搜索
+    		this.bidStartDate = this.bidStartDate + " 00:00:00";
+    		this.bidEndDate = this.bidEndDate + " 00:00:00";
+    		axios({
+    		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+    		  method: 'get',
+    		  url: '/service',
+    		  params: {
+    		    data: (() => {
+    		      let obj = {
+    		        command: 'searchBiddingList',
+    		        platform: 'web',
+    		        // searchContent: this.searchContent, 要换
+    		        // bidStartDate: this.bidStartDate,
+    		        // bidEndDate: this.bidEndDate
+    		      }
+    		      return JSON.stringify(obj);
+    		    })()
+    		  }
+    		}).then((rep) => {
+        		if (rep.data.statusCode === '10001') {
+					this.businessArray = rep.data.data.businessArray;
+					this.bidArray = this.businessArray;
+        		}
+      		}, (rep) => {});
+    	},
 		clear() {
 			this.bidMan = '';
 			this.bidAgency = '';
@@ -153,7 +176,7 @@ export default {
 		}
 	},
 	created() {
-		this.getOffice();
+		
 	}
 }
 </script>
