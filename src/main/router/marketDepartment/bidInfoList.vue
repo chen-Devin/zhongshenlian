@@ -21,7 +21,7 @@ import bidClassification from './component/bidClassification.vue';
 import bidInfoListBody from './bidInfoListBody.vue';
 
 export default {
-    name: 'bidInforListMarket',
+    name: 'bidInfoList',
     data() {
     	return {
     		paths: [
@@ -101,7 +101,8 @@ export default {
                       let obj = {
                         command: 'getBiddingList',
                         platform: 'web',
-                        type: 'kjs'
+                        departmentType: 'kjs',
+                        type: 'other'
                       }
                       return JSON.stringify(obj);
                     })()
@@ -123,7 +124,8 @@ export default {
                       let obj = {
                         command: 'getBiddingList',
                         platform: 'web',
-                        type: 'pgs'
+                        departmentType: 'pgs',
+                        type: 'other'
                       }
                       return JSON.stringify(obj);
                     })()
@@ -145,7 +147,8 @@ export default {
                       let obj = {
                         command: 'getBiddingList',
                         platform: 'web',
-                        type: 'sws'
+                        departmentType: 'sws',
+                        type: 'other'
                       }
                       return JSON.stringify(obj);
                     })()
@@ -167,7 +170,8 @@ export default {
                       let obj = {
                         command: 'getBiddingList',
                         platform: 'web',
-                        type: 'zjs'
+                        departmentType: 'zjs',
+                        type: 'other'
                       }
                       return JSON.stringify(obj);
                     })()

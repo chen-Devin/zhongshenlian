@@ -296,7 +296,7 @@
 		  <div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
 		      <button type="submit" class="btn btn-primary" @click="submit()">提交</button>
-		      <button type="button" class="btn btn-default">存为草稿</button>
+		      <button type="button" class="btn btn-default" @click="saveDraft()">存为草稿</button>
 		      <button type="button" class="btn btn-danger" @click="cancel()">撤销</button>
 		    </div>
 		  </div>
@@ -407,6 +407,9 @@ export default {
 	methods: {
 		submit() {
 			this.$emit('submit');
+		},
+		saveDraft() {
+			this.$emit('saveDraft');
 		},
 		cancel() {
 			this.cancelModal = true;
