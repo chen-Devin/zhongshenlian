@@ -10,12 +10,12 @@
 					</tr>
 				</thead>
 				<tbody>
-					<!-- <tr v-for="project in biddingArray" @click="checkMessage(project)">
+					<tr v-for="project in unfinishedList" @click="checkMessage(project)">
 						<td><span class="state-wrap">{{project.biddingState}}</span>{{project.biddingName}}</td>
 						<td class="ta-r">
 							{{project.openBidDate}}
 						</td>
-					</tr> -->
+					</tr>
 				</tbody>
 			</table>
 		</card>
@@ -52,8 +52,10 @@ export default {
 			  params: {
 			    data: (() => {
 			      let obj = {
-			        command: 'getBusinessUnFinished',
-			        platform: 'web'
+			        command: 'getBiddingList',
+			        platform: 'web',
+			        departmentType: '',
+			        type: 'temp'
 			      }
 			      return JSON.stringify(obj);
 			    })()
