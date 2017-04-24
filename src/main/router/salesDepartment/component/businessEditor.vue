@@ -95,13 +95,12 @@
       <label class="col-sm-2 control-label">资产总额</label>
       <div class="col-sm-9">
         <div class="input-group">
-          <div class="input-group-addon">￥</div>
           <input type="number"
                  class="form-control"
                  placeholder="请输入资产总额"
                  v-model.number="business.assetAmount"
                  :disabled="!editable">
-          <div class="input-group-addon">元</div>
+          <div class="input-group-addon">万元</div>
         </div>
       </div>
     </div>
@@ -109,13 +108,12 @@
       <label class="col-sm-2 control-label">合同金额</label>
       <div class="col-sm-9">
         <div class="input-group">
-          <div class="input-group-addon">￥</div>
           <input type="number"
                  class="form-control"
                  placeholder="请输入合同金额"
                  v-model.number="business.contractAmount"
                  :disabled="!editable">
-          <div class="input-group-addon">元</div>
+          <div class="input-group-addon">万元</div>
         </div>
       </div>
     </div>
@@ -123,13 +121,12 @@
       <label class="col-sm-2 control-label">合同单价</label>
       <div class="col-sm-9">
         <div class="input-group">
-          <div class="input-group-addon">￥</div>
           <input type="number"
                  class="form-control"
                  placeholder="请输入合同单价"
                  v-model.number="business.contractPrice"
                  :disabled="!editable">
-          <div class="input-group-addon">元</div>
+          <div class="input-group-addon">万元</div>
         </div>
       </div>
     </div>
@@ -452,13 +449,11 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">报告用途</label>
       <div class="col-sm-9">
-        <select class="form-control"
-                v-model="business.report.usage"
-                :disabled="!editable">
-          <option v-for="(TYPE, index) in businessType"
-                  :value="TYPE"
-                  :key="index">{{TYPE}}</option>
-        </select>
+        <input type="text"
+               class="form-control"
+               placeholder="请输入报告用途"
+               v-model="business.report.usage"
+               :disabled="!editable">
       </div>
     </div>
     <div class="form-group">
@@ -633,10 +628,6 @@ export default {
 
     if (this.business.type === '') {
       this.business.type = this.businessType[0];
-    }
-
-    if (this.business.report.usage === '') {
-      this.business.report.usage = this.businessType[0];
     }
 
   },
