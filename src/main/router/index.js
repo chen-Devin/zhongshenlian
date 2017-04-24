@@ -130,7 +130,7 @@ const router = new VueRouter({
                     component: billingInfor,
                     children: [
                         {
-                            path: 'billing-infor-detail/:id',
+                            path: 'billing-infor-detail/:billId',
                             component: billingInforDetail
                         }
                     ]
@@ -163,7 +163,7 @@ const router = new VueRouter({
                     component: billingInfor,
                     children: [
                         {
-                            path: 'billing-infor-detail/:id',
+                            path: 'billing-infor-detail/:billId',
                             component: billingInforDetail
                         },
                         {
@@ -228,7 +228,7 @@ const router = new VueRouter({
                     component: billingInfor,
                     children: [
                         {
-                            path: 'billing-infor-detail/:id',
+                            path: 'billing-infor-detail/:billId',
                             component: billingInforDetail
                         }
                     ]
@@ -265,7 +265,7 @@ const router = new VueRouter({
                     component: billingInfor,
                     children: [
                         {
-                            path: 'billing-infor-detail/:id',
+                            path: 'billing-infor-detail/:billId',
                             component: billingInforDetail
                         }
                     ]
