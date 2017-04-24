@@ -5,8 +5,8 @@
       <div class="getDetail" v-bind="editRule">
           <input class="inputTitle"  type="text" v-model="editRule.title"/>
           <textarea name="textarea" onpropertychange="this.style.height = this.scrollHeight + 'px';"
-          oninput="this.style.height = this.scrollHeight + 'px';" class="inputContent" v-model="editRule.content"></textarea>
-          <!--<div class="contentArea" contenteditable="true" @keyup="changeData($event)">{{editRule.content}}</div>-->
+          onfocus="this.style.height = this.scrollHeight + 'px';" class="inputContent" v-model="editRule.content"></textarea>
+          <!--<vEditDiv class="contentArea" v-model="editRule.content"></vEditDiv>-->
           <div class="isSaveBtn text-right">
             <button type="button" class="btn btn-primary" @click="saveEdit()">保存</button>
             <button type="button" class="btn btn-defalt" @click="canceled()">取消</button>
@@ -21,7 +21,7 @@
     import qs from 'qs';
     import router from '../index.js';
 
-   // import vEditDiv from './component/vEditDiv.vue';
+    import vEditDiv from './component/vEditDiv.vue';
     import crumbs from '../../component/crumbs.vue';
     import card from '../../component/card.vue';
     export default {
@@ -67,10 +67,11 @@
                     }
                 }, (rep) => {})
             },
-            changeData: function(event) {
-                 this.editRule.content = event.srcElement.innerHTML;
-            },
+            //changeData: function(event) {
+              //   this.editRule.content = event.srcElement.innerHTML;
+           // },
             saveEdit(){
+              if(this.editRule.title!==""&&this.editRule.content!==""){
               axios({
                 headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
                 method: 'post',
@@ -92,6 +93,7 @@
                       this.$router.push('/rule-regulation-detail/'+this.editRule.id)
                   }
               }, (rep)=>{});
+            }
             },
             canceled(){
               this.$router.push('/rule-regulation-detail/'+this.editRule.id)
@@ -125,7 +127,7 @@
             }*/
             .inputContent {
                 width: 95%;
-                overflow-y: hidden;
+                overflow-y: auto;
                 min-height: 500px;
                 resize: none;
                 font-size: 16px;

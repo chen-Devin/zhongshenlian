@@ -2,7 +2,7 @@
 	<div class="main">
 		<crumbs :paths="paths"></crumbs>
 		<card>
-			<bid-info-edit :iniProject="project" :office="office"></bid-info-edit>
+			<bid-info-edit :iniProject="project" :office="office" @submit="submit" @></bid-info-edit>
 		</card>
 	</div>
 </template>
