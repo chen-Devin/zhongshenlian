@@ -21,7 +21,7 @@ import bidClassification from './component/bidClassification.vue';
 import bidInfoListBody from './bidInfoListBody.vue';
 
 export default {
-    name: 'bidInforListMarket',
+    name: 'bidInfoList',
     data() {
     	return {
     		paths: [

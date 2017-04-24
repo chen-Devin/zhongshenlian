@@ -2,6 +2,7 @@
 	<div class="main">
 		<crumbs :paths="paths"></crumbs>
 		<card>
+			<bid-classification :office="office"></bid-classification>
 			<table class="table table-hover projectList">
 				<thead>
 					<tr>
@@ -33,6 +34,7 @@ import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
+import bidClassification from './component/bidClassification.vue';
 
 export default {
 	name: 'bidInfoDraft',
@@ -71,6 +73,7 @@ export default {
 	components: {
 		crumbs,
 		card,
+		bidClassification
 	}
 }
 </script>
