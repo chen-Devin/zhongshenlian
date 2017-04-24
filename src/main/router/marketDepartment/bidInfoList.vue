@@ -4,7 +4,6 @@
 		<card>
             <bid-classification :office="office"></bid-classification>
             <router-view :bidArray="biddingArray" @tellOffice="getOffice" @queryList="queryList" @checkMessage="checkMessage"></router-view>
-            <!-- <bid-info-list-body></bid-info-list-body> -->
 		</card>
 	</div>
 </template>
@@ -47,9 +46,6 @@ export default {
     	}
     },
     created() {
-      this.judgeDate();
-      this.judgeShow();
-      this.filterList();
       this.$watch('checkedAttr', function(newVal,oldVal){
       	if (newVal !== oldVal) {
       		this.filterList(newVal);

@@ -2,7 +2,7 @@
 	<div class="main">
 		<crumbs :paths="paths"></crumbs>
 		<card>
-			<bid-info-edit :iniProject="project" :office="office"></bid-info-edit>
+			<bid-info-edit :iniProject="project" :office="office" @submit="submit" @saveDraft="saveDraft"></bid-info-edit>
 		</card>
 	</div>
 </template>
@@ -24,7 +24,58 @@ export default {
 	    		{name: '造价所招投标信息录入', url: '/bid-info-input-zjs', present: true}
 	  		],
 	  		project: {},
-	  		office: "造价所"
+	  		office: "造价所",
+	  		departmentType: 'zjs'
+    	}
+    },
+    methods: {
+    	saveDraft(project) {
+    		project.departmentType = this.departmentType;
+		    axios({
+		        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+		        method: 'post',
+		        url: '/service',
+		        data: qs.stringify({
+		          data: (() => {
+		            var obj = {
+		              command: 'addOrEditBiddingInfo',
+		              platform: 'web',
+		              type: 'temp',
+		              data: project
+		            };
+		            return JSON.stringify(obj);
+		          })()
+		        })
+		    }).then((rep)=>{
+			  if (rep.data.statusCode === '10001') {
+			    alert('保存草稿成功');
+			    //加一个弹出框，然后加一个跳转
+			  }
+			}, (rep)=>{});
+    	},
+    	submit(project) {
+    		project.departmentType = this.departmentType;
+		    axios({
+		        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+		        method: 'post',
+		        url: '/service',
+		        data: qs.stringify({
+		          data: (() => {
+		            var obj = {
+		              command: 'addOrEditBiddingInfo',
+		              platform: 'web',
+		              type: 'add',
+		              data: project
+		            };
+		            return JSON.stringify(obj);
+		          })()
+		        })
+		    }).then((rep)=>{
+			  if (rep.data.statusCode === '10001') {
+			    alert('保存录入成功');
+			    //加一个弹出框，然后加一个跳转
+			  }
+			}, (rep)=>{});
     	}
     },
     components: {

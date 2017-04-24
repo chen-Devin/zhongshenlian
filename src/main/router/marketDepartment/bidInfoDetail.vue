@@ -32,6 +32,9 @@ export default {
 	  		checkShow: true
     	}
     },
+    // computed() {
+
+    // },
     methods: {
     	getInfo() {
     		axios({
@@ -60,7 +63,7 @@ export default {
     		this.editShow = true;
     		this.checkShow = false;
     	},
-        submit() {
+        submit(project) {
             axios({
                 headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
                 method: 'post',
@@ -68,9 +71,9 @@ export default {
                 data: qs.stringify({
                   data: (() => {
                     var obj = {
-                      command: 'addBiddingInfo',
+                      command: 'addOrEditBiddingInfo',
                       platform: 'web',
-                      bid: this.project
+                      data: ''
                     };
                     return JSON.stringify(obj);
                   })()

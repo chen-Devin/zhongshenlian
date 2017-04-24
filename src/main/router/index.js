@@ -50,7 +50,6 @@ import bidInfoInputKJS from './marketDepartment/bidInfoInputKJS.vue';
 import bidInfoInputPGS from './marketDepartment/bidInfoInputPGS.vue';
 import bidInfoInputZJS from './marketDepartment/bidInfoInputZJS.vue';
 import bidInfoInputSWS from './marketDepartment/bidInfoInputSWS.vue';
-import bidInforEdit from './marketDepartment/bidInforEdit.vue';
 import bidInfoAccounting from './marketDepartment/bidInfoAccounting.vue';
 import bidInfoAssessment from './marketDepartment/bidInfoAssessment.vue';
 import bidInfoTax from './marketDepartment/bidInfoTax.vue';
