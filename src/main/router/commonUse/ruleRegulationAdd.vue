@@ -3,7 +3,7 @@
     <crumbs v-bind:paths="paths"></crumbs>
     <card class="detailCard">
       <div class="getDetail" v-bind="ruleAdd">
-          <input class="inputTitle" type="text" v-model="ruleAdd.title"/>
+          <input class="inputTitle" type="text" ref="input" v-model="ruleAdd.title"/>
           <textarea name="textarea" onpropertychange="this.style.height = this.scrollHeight + 'px';"
           oninput="this.style.height = this.scrollHeight + 'px';" class="inputContent" v-model="ruleAdd.content"></textarea>
           <div class="isSaveBtn text-right">
@@ -39,6 +39,7 @@
         },
         methods: {
             saveEdit() {
+              if(this.ruleAdd.title!==""&&this.ruleAdd.content!==""){
                 axios({
                 headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
                 method: 'post',
@@ -60,6 +61,7 @@
                     this.$router.push('/rule-regulation');
                   }
               }, (rep)=>{});
+            }
             },
             canceled() {
                 this.$router.push('/rule-regulation');

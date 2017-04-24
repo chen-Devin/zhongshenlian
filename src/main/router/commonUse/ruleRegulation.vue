@@ -12,7 +12,7 @@
     <card id="tableCard">
       <table class="table ruleTable">
         <tbody>
-          <tr class="addRule" :user="user" v-if="this.user.department == '所长'">
+          <tr class="addRule" :user="user" v-if="this.user.department =='所长'">
             <td></td>
             <td>
               <router-link to="/rule-regulation-add">
