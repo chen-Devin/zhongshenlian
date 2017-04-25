@@ -45,7 +45,6 @@ import axios from 'axios';
 import { Message } from 'element-ui';
 
 import bus from '../../bus.js';
-import router from '../index.js';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
@@ -267,7 +266,7 @@ export default {
         contracts: [],
         projectApproverArray: [],
         projectSchduleArray: [],
-        projectBillingArray: [],
+        bills: [],
         projectOperatingArray: []
       },
       riskAdvices: [],
@@ -421,7 +420,65 @@ export default {
 
             this.business.projectApproverArray = rep.data.data.projectApproverArray;
             this.business.projectSchduleArray = rep.data.data.projectSchduleArray;
-            this.business.projectBillingArray = rep.data.data.projectBillingArray;
+
+            for (let i = 0; i < rep.data.data.projectBillingArray.length; i++) {
+              let obj = {
+                id: rep.data.data.projectBillingArray[i].id,
+                proposer: {
+                  id: rep.data.data.projectBillingArray[i].billingApplicantId,
+                  name: rep.data.data.projectBillingArray[i].billingApplicantName,
+                  tele: rep.data.data.projectBillingArray[i].applicantPhone
+                },
+                addUpAmount: rep.data.data.projectBillingArray[i].totalBillingAmount,
+                amount: rep.data.data.projectBillingArray[i].billingAmount,
+                billingUnit: rep.data.data.projectBillingArray[i].billingUnit,
+                type: rep.data.data.projectBillingArray[i].billingType,
+                unit: {
+                  name: rep.data.data.projectBillingArray[i].companyName,
+                  address: rep.data.data.projectBillingArray[i].companyAddress,
+                  tele: rep.data.data.projectBillingArray[i].companyPhone,
+                  depositBank: rep.data.data.projectBillingArray[i].openCountBank,
+                  account: rep.data.data.projectBillingArray[i].openBankNumber
+                },
+                taxpayerID: rep.data.data.projectBillingArray[i].taxpayerNumber,
+                filingDate: rep.data.data.projectBillingArray[i].applicationDate,
+                billingDate: rep.data.data.projectBillingArray[i].billingDate,
+                way: rep.data.data.projectBillingArray[i].deliveryMethod,
+                receiver: rep.data.data.projectBillingArray[i].recipientName,
+                content: rep.data.data.projectBillingArray[i].serviceContent,
+                billFiles: (() => {
+                  let arr = [];
+                  for (let j = 0; j < rep.data.data.projectBillingArray[i].annexArray.length; j++) {
+                    if (rep.data.data.projectBillingArray[i].annexArray[j].annexType === 'billingOthers') {
+                      let obj = {
+                        id: rep.data.data.projectBillingArray[i].annexArray[j].id,
+                        name: rep.data.data.projectBillingArray[i].annexArray[j].annexName,
+                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl
+                      };
+                      arr.push(obj);
+                    }
+                  }
+                  return arr;
+                })(),
+                receiptFiles: (() => {
+                  let arr = [];
+                  for (let j = 0; j < rep.data.data.projectBillingArray[i].annexArray.length; j++) {
+                    if (rep.data.data.projectBillingArray[i].annexArray[j].annexType === 'receivables') {
+                      let obj = {
+                        id: rep.data.data.projectBillingArray[i].annexArray[j].id,
+                        name: rep.data.data.projectBillingArray[i].annexArray[j].annexName,
+                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl
+                      };
+                      arr.push(obj);
+                    }
+                  }
+                  return arr;
+                })(),
+                state: parseInt(rep.data.data.contractAnnexArray[i].financeHandleStatus)
+              };
+              this.business.bills.push(obj);
+            }
+
             this.business.projectOperatingArray = rep.data.data.projectOperatingArray;
 
             this.adviceClassify();
@@ -456,7 +513,7 @@ export default {
         type: 'success'
       });
       setTimeout(() => {
-        router.push({ path: '/business-review-list-sales' });
+        this.$router.push({ path: '/business-review-list-sales' });
       }, 1000);
     },
     sav() {
@@ -471,7 +528,7 @@ export default {
     },
     deleted() {
       this.showDelModal = false;
-      router.push({ path: '/business-review-list-sales' });
+      this.$router.push({ path: '/business-review-list-sales' });
     },
     delCanceled() {
       this.showDelModal = false;

@@ -1,70 +1,68 @@
 <template>
   <form class="form-horizontal">
-    <div class="form-group">
+    <div class="form-group" v-if="uploadEnabled">
       <label class="col-sm-2 control-label">
-        发票照片
+        发票图片
       </label>
       <el-upload class="col-sm-10"
                  :multiple="false"
-                 :action="uploadURL"
-                 :on-success="uploadSuccess"
+                 :action="uploadBillURL"
+                 :on-success="uploadBillSuccess"
                  :show-file-list="false">
-        <button class="btn btn-primary btn-sm" type="button">上传发票照片</button>
+        <button class="btn btn-info btn-sm" type="button">上传发票图片</button>
         <span slot="tip"
-              class="text-info"
-              v-if="editable">&emsp;文件大小建议不超过3Mb</span>
+              class="text-info">&emsp;文件大小建议不超过3Mb</span>
       </el-upload>
       <div class="col-sm-offset-2 col-sm-9">
         <ul class="attachment-list list-group">
-          <li class="list-group-item" v-for="FILE in business.contracts">
+          <li class="list-group-item" v-for="FILE in bill.billFiles">
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
-            <a class="text-danger pull-right" @click="delFile(FILE)" v-if="editable"><i class="fa fa-times"></i></a>
+            <a class="text-danger pull-right" @click="delBillFile(FILE)"><i class="fa fa-times"></i></a>
           </li>
         </ul>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" v-if="uploadEnabled">
       <label class="col-sm-2 control-label">
-        发票照片
+        收款图片
       </label>
       <el-upload class="col-sm-10"
                  :multiple="false"
-                 :action="uploadURL"
-                 :on-success="uploadSuccess"
+                 :action="uploadReceiptURL"
+                 :on-success="uploadReceiptSuccess"
                  :show-file-list="false">
-        <button class="btn btn-primary btn-sm" type="button">上传已收款截图</button>
+        <button class="btn btn-info btn-sm" type="button">上传收款图片</button>
         <span slot="tip"
-              class="text-info"
-              v-if="editable">&emsp;文件大小建议不超过3Mb</span>
+              class="text-info">&emsp;文件大小建议不超过3Mb</span>
       </el-upload>
       <div class="col-sm-offset-2 col-sm-9">
         <ul class="attachment-list list-group">
-          <li class="list-group-item" v-for="FILE in business.contracts">
+          <li class="list-group-item" v-for="FILE in bill.receiptFiles">
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
-            <a class="text-danger pull-right" @click="delFile(FILE)" v-if="editable"><i class="fa fa-times"></i></a>
+            <a class="text-danger pull-right" @click="delReceiptFile(FILE)"><i class="fa fa-times"></i></a>
           </li>
         </ul>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" v-if="!uploadEnabled">
       <label class="col-sm-2 control-label">
-        发票照片
+        发票图片
       </label>
       <ul class="col-sm-9 attachment-list list-group">
-        <li class="list-group-item" v-for="FILE in business.contracts">
+        <li class="list-group-item" v-for="FILE in bill.billFiles">
           <span class="fa fa-file-text-o"></span>
           <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
         </li>
       </ul>
     </div>
-    <div class="form-group">
+    <div class="form-group" v-if="!uploadEnabled">
       <label class="col-sm-2 control-label">
-        已收款截图
+        收款图片
       </label>
       <ul class="col-sm-9 attachment-list list-group">
-        <li class="list-group-item" v-for="FILE in business.contracts">
+        <li class="list-group-item" v-for="FILE in bill.receiptFiles">
           <span class="fa fa-file-text-o"></span>
           <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
         </li>
@@ -91,13 +89,13 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">开票申请人</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.proposer.name}}</p>
+        <p class="form-control-static">{{bill.proposer.name}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">申请人电话</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.proposer.tele}}</p>
+        <p class="form-control-static">{{bill.proposer.tele}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -303,20 +301,128 @@ export default {
       paths: [
         { name: '待处理业务', url: '/business-handle-list-sales', present: false },
         { name: '业务详情', url: `/business-handle-detail-sales/${this.$route.params.id}`, present: false },
-        { name: '开票信息', url: `/business-handle-detail-sales/${this.$route.params.id}/billing-infor`, present: true },
+        { name: '开票信息', url: `/business-handle-detail-sales/${this.$route.params.id}/billing-infor`, present: false },
         { name: '开票详情', url: `/business-handle-detail-sales/${this.$route.params.id}/billing-infor/billing-infor-detail/${this.$route.params.billId}`, present: true }
       ],
-      business: this.initBusiness
+      business: this.initBusiness,
+      bill: (() => {
+        for (let i = 0; i < this.business.bills.length; i++) {
+          if (this.$route.params.billId === this.business.bills[i].id) {
+            return this.business.bills[i];
+          }
+        }
+      })(),
+      uploadBillURL: '',
+      uploadReceiptURL: ''
     };
   },
   computed: {
     contractTypeChan() {
       return (this.business.contractType.name === '联合体') ? true : false;
+    },
+    uploadEnabled() {
+      return (this.user.department === '财务部' && this.business.projectStatus > 7) ? true : false;
     }
   },
   props: ['initBusiness', 'user'],
   create() {
+    let data = {
+      command: 'handlerBusiness',
+      platform: 'web',
+      id: this.bill.id,
+      type: 'billingOthers'
+    };
+    this.uploadBillURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
+
+    data = {
+      command: 'handlerBusiness',
+      platform: 'web',
+      id: this.bill.id,
+      type: 'receivables'
+    };
+    this.uploadReceiptURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
+
     this.$emit('pathsChan', this.paths);
+  },
+  methods: {
+    uploadBillSuccess(responseData, file, fileList) {
+      if (responseData.statusCode === '10001') {
+        let obj = {
+          id: responseData.data.id,
+          name: file.name,
+          url: responseData.data.path
+        };
+        this.bill.billFiles.push(obj);
+        this.$emit('uploaded', this.bill);
+      }
+    },
+    delBillFile(FILE) {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'post',
+        url: '/service',
+        data: qs.stringify({
+          data: (() => {
+            let obj = {
+              command: 'delFile',
+              platform: 'web',
+              delFileId: FILE.id,
+              type: 'billingOthers'
+            }
+            return JSON.stringify(obj);
+          })()
+        })
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          for (let i = 0; i < this.bill.billFiles.length; i++) {
+            if (this.bill.billFiles[i].id === FILE.id) {
+              this.bill.billFiles.splice(i, 1);
+              break;
+            }
+          }
+          this.$emit('deletedFile', this.bill);
+        }
+      }, (rep) => { });
+    },
+    uploadReceiptSuccess(responseData, file, fileList) {
+      if (responseData.statusCode === '10001') {
+        let obj = {
+          id: responseData.data.id,
+          name: file.name,
+          url: responseData.data.path
+        };
+        this.bill.receiptFiles.push(obj);
+        this.$emit('uploaded', this.bill);
+      }
+    },
+    delReceiptFile(FILE) {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'post',
+        url: '/service',
+        data: qs.stringify({
+          data: (() => {
+            let obj = {
+              command: 'delFile',
+              platform: 'web',
+              delFileId: FILE.id,
+              type: 'receivables'
+            }
+            return JSON.stringify(obj);
+          })()
+        })
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          for (let i = 0; i < this.bill.receiptFiles.length; i++) {
+            if (this.bill.receiptFiles[i].id === FILE.id) {
+              this.bill.receiptFiles.splice(i, 1);
+              break;
+            }
+          }
+          this.$emit('deletedFile', this.business);
+        }
+      }, (rep) => { });
+    }
   }
 };
 </script>

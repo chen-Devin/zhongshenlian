@@ -31,7 +31,6 @@ import axios from 'axios';
 import { Message } from 'element-ui';
 
 import bus from '../../bus.js';
-import router from '../index.js';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
@@ -252,7 +251,7 @@ export default {
         contracts: [],
         projectApproverArray: [],
         projectSchduleArray: [],
-        projectBillingArray: [],
+        bills: [],
         projectOperatingArray: []
       },
       editable: true,
@@ -271,7 +270,7 @@ export default {
         type: 'success'
       });
       setTimeout(() => {
-        router.push({ path: '/business-review-list-sales' });
+        this.$router.push({ path: '/business-review-list-sales' });
       }, 1000);
     },
     sav() {
@@ -286,7 +285,7 @@ export default {
     },
     deleted() {
       this.showDelModal = false;
-      router.push({ path: '/business-review-list-sales' });
+      this.$router.push({ path: '/business-review-list-sales' });
     },
     delCanceled() {
       this.showDelModal = false;
