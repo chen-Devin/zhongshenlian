@@ -845,7 +845,7 @@ export default {
                   contractAnnexArray: this.business.contracts,
                   projectApproverArray: this.business.projectApproverArray,
                   projectSchduleArray: this.business.projectSchduleArray,
-                  projectBillingArray: this.business.projectBillingArray,
+                  projectBillingArray: this.business.bills,
                   projectOperatingArray: this.business.projectOperatingArray
                 }
               };
@@ -971,7 +971,7 @@ export default {
                     contractAnnexArray: this.business.contracts,
                     projectApproverArray: this.business.projectApproverArray,
                     projectSchduleArray: this.business.projectSchduleArray,
-                    projectBillingArray: this.business.projectBillingArray,
+                    projectBillingArray: this.business.bills,
                     projectOperatingArray: this.business.projectOperatingArray
                   }
                 };
