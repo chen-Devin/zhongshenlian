@@ -1,5 +1,11 @@
 <template>
 	<div>
+		<div class="page-header">
+			<h4>
+				{{ office }}招投标信息录入
+			</h4>
+		</div>
+		
 		<form class="form-horizontal">
 			<div class="form-group">
 			  <label for="projectName" class="col-sm-2 control-label">项目名称：</label>
@@ -174,7 +180,10 @@
 			<div class="form-group" v-if="scaleOther">
 				<label for="totalAssets" class="col-sm-2 control-label">资产总额：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="totalAssets" v-model="project.totalAssets" name="totalAssets" placeholder="请输入资产总额">
+					<div class="input-group">
+						<input type="text" class="form-control" id="totalAssets" v-model="project.totalAssets" name="totalAssets" placeholder="请输入资产总额">
+						<div class="input-group-addon">万元</div>
+					</div> 
 				</div>
 			</div>
 			<div class="form-group" v-if="scaleOther">
@@ -196,13 +205,137 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-10 col-sm-offset-2">
-					<label class="radio-inline">
-						<input type="radio" name="commonwealth" v-model="project.commonwealth" id="commonwealth1" value="联合体"> 联合体
+				<label class="col-sm-2 control-label">合同体制：</label>
+				<div class="col-sm-10">
+					<label class="radio-inline" @click="isCommonwealth()">
+						<input type="radio" name="commonwealth" v-model="project.contractType.type" value="联合体"> 联合体
 					</label>
-					<label class="radio-inline">
-						<input type="radio" name="commonwealth" v-model="project.commonwealth" id="commonwealth2" value="非联合体"> 非联合体
+					<label class="radio-inline" @click="notCommonwealth()">
+						<input type="radio" name="commonwealth" v-model="project.contractType.type" value="非联合体"> 非联合体
 					</label>
+				</div>
+			</div>
+			<div v-show="commonwealthShow">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">基本取费：</label>
+					<div class="col-sm-10">
+						<div class="row">
+							<div class="col-sm-5">
+								<div class="input-group">
+									<div class="input-group-addon">主办方</div>
+									<input type="text" class="form-control" v-model="project.contractType.mainBasicName" placeholder="请输入主办方">
+								</div>
+							</div>
+							<div class="col-sm-1"></div>
+							<div class="col-sm-5">
+								<div class="input-group">
+									<div class="input-group-addon">比例</div>
+									<input type="text" class="form-control" v-model="project.contractType.mainBasicRate">
+									<div class="input-group-addon">%</div>
+								</div>
+							</div>
+							<div class="col-sm-1">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" v-for="(item, index) in project.contractType.subBasicArray">
+					<label class="col-sm-2 control-label"></label>
+					<div class="col-sm-10">
+						<div class="row">
+							<div class="col-sm-5">
+								<div class="input-group">
+									<div class="input-group-addon">协办方</div>
+									<input type="text" class="form-control" v-model="item.name" placeholder="请输入协办方">
+								</div>
+							</div>
+							<div class="col-sm-1"></div>
+							<div class="col-sm-5">
+								<div class="input-group">
+									<div class="input-group-addon">比例</div>
+									<input type="text" class="form-control" v-model="item.rate">
+									<div class="input-group-addon">%</div>
+								</div>
+							</div>
+							<div class="col-sm-1">
+								<h4>
+									<a class="fa fa-times-circle text-danger" @click="delBasicFee(index)"></a>
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label"></label>
+					<div class="col-sm-10">
+						<div class="row">
+							<h4 class="col-sm-1 col-sm-offset-11">
+								<a class="fa fa-plus-circle text-danger" @click="addBasicFee()"></a>
+							</h4>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">效益取费：</label>
+					<div class="col-sm-10">
+						<div class="row">
+							<div class="col-sm-5">
+								<div class="input-group">
+									<div class="input-group-addon">主办方</div>
+									<input type="text" class="form-control" v-model="project.contractType.mainEfficiencyName" placeholder="请输入主办方">
+								</div>
+							</div>
+							<div class="col-sm-1"></div>
+							<div class="col-sm-5">
+								<div class="input-group">
+									<div class="input-group-addon">比例</div>
+									<input type="text" class="form-control" v-model="project.contractType.mainEfficiencyRate">
+									<div class="input-group-addon">%</div>
+								</div>
+							</div>
+							<div class="col-sm-1">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" v-for="(item, index) in project.contractType.subEfficiencyArray">
+					<label class="col-sm-2 control-label"></label>
+					<div class="col-sm-10">
+						<div class="row">
+							<div class="col-sm-5">
+								<div class="input-group">
+									<div class="input-group-addon">协办方</div>
+									<input type="text" class="form-control" v-model="item.name" placeholder="请输入协办方">
+								</div>
+							</div>
+							<div class="col-sm-1"></div>
+							<div class="col-sm-5">
+								<div class="input-group">
+									<div class="input-group-addon">比例</div>
+									<input type="text" class="form-control" v-model="item.rate">
+									<div class="input-group-addon">%</div>
+								</div>
+							</div>
+							<div class="col-sm-1">
+								<h4>
+									<a class="fa fa-times-circle text-danger" @click="delEfficiencyFee(index)"></a>
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label"></label>
+					<div class="col-sm-10">
+						<div class="row">
+							<h4 class="col-sm-1 col-sm-offset-11">
+								<a class="fa fa-plus-circle text-danger" @click="addEfficiencyFee()"></a>
+							</h4>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="form-group">
@@ -214,19 +347,27 @@
 			<div class="form-group">
 				<label for="controlPrice" class="col-sm-2 control-label">招标控制价：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="controlPrice" v-model="project.controlPrice" name="controlPrice" placeholder="请输入招标控制价">
+					<div class="input-group">
+						<input type="text" class="form-control" id="controlPrice" v-model="project.controlPrice" name="controlPrice" placeholder="请输入招标控制价">
+						<div class="input-group-addon">万元</div>
+					</div>
+				  
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="bidStartTime" class="col-sm-2 control-label">招标报名时间：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="bidStartTime" v-model="project.bidStartTime" name="bidStartTime">
+				  <input type="date" class="form-control" id="bidStartTime" v-model="project.bidStartTime" name="bidStartTime">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="bidDocumentPrice" class="col-sm-2 control-label">招标文件价格：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="bidDocumentPrice" v-model="project.bidDocumentPrice" name="bidDocumentPrice" placeholder="请输入招标文件价格">
+					<div class="input-group">
+						<input type="text" class="form-control" id="bidDocumentPrice" v-model="project.bidDocumentPrice" name="bidDocumentPrice" placeholder="请输入招标文件价格">
+						<div class="input-group-addon">万元</div>
+					</div>
+				  
 				</div>
 			</div>
 			<div class="form-group">
@@ -244,27 +385,36 @@
 			<div class="form-group">
 				<label for="bidBond" class="col-sm-2 control-label">投标保证金：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="bidBond" v-model="project.bidBond" name="bidBond" placeholder="请输入投标保证金">
+					<div class="input-group">
+						<input type="text" class="form-control" id="bidBond" v-model="project.bidBond" name="bidBond" placeholder="请输入投标保证金">
+						<div class="input-group-addon">万元</div>
+					</div>
 				</div>
 			</div>
 			<!--标书费-->
 			<div class="form-group">
 				<label for="tenderFee" class="col-sm-2 control-label">标书费：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="tenderFee" v-model="project.tenderFee" name="tenderFee" placeholder="请输入标书费">
+					<div class="input-group">
+						<input type="text" class="form-control" id="tenderFee" v-model="project.tenderFee" name="tenderFee" placeholder="请输入标书费">
+						<div class="input-group-addon">万元</div>
+					</div>	
 				</div>
 			</div>
 			<!--中标服务费-->
 			<div class="form-group">
 				<label for="winningServiceFee" class="col-sm-2 control-label">中标服务费：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="winningServiceFee" v-model="project.winningServiceFee" name="winningServiceFee" placeholder="请输入中标服务费">
+					<div class="input-group">
+						<input type="text" class="form-control" id="winningServiceFee" v-model="project.winningServiceFee" name="winningServiceFee" placeholder="请输入中标服务费">
+						<div class="input-group-addon">万元</div>
+					</div>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="openBidDate" class="col-sm-2 control-label">开标时间：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="openBidDate" v-model="project.openBidDate" name="openBidDate" placeholder="请输入开标时间">
+				  <input type="date" class="form-control" id="openBidDate" v-model="project.openBidDate" name="openBidDate" placeholder="请输入开标时间">
 				</div>
 			</div>
 			<div class="form-group">
@@ -295,7 +445,7 @@
 		  </div> -->
 		  <div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
-		      <button type="submit" class="btn btn-primary" @click="submit(project)">提交</button>
+		      <button type="button" class="btn btn-primary" @click="submit(project)">提交</button>
 		      <button type="button" class="btn btn-default" @click="saveDraft(project)">存为草稿</button>
 		      <button type="button" class="btn btn-danger" @click="cancel()">撤销</button>
 		    </div>
@@ -326,6 +476,10 @@
 	.cancel-word {
 		margin: 0;
 	}
+	.text-danger {
+		text-decoration: none;
+		cursor: pointer;
+	}
 </style>
 
 <script>
@@ -338,7 +492,8 @@ export default {
 	data() {
 		return {
 			project: this.iniProject,
-			cancelModal: false
+			cancelModal: false,
+			commonwealthShow: false
 		}
 	},
 	computed: {
@@ -401,7 +556,6 @@ export default {
 				return true;
 			}
 		}
-		
 	},
 	props: ['iniProject','office'],
 	methods: {
@@ -420,7 +574,28 @@ export default {
 		queding() {
 			//祥哥给
 			this.$router.push('/bid-info-list');
+		},
+		delBasicFee(index) {
+			this.$emit('delBasicFee',index);
+		},
+		addBasicFee() {
+			this.$emit('addBasicFee');
+		},
+		delEfficiencyFee(index) {
+			this.$emit('delEfficiencyFee',index);
+		},
+		addEfficiencyFee() {
+			this.$emit('addEfficiencyFee');
+		},
+		isCommonwealth() {
+			this.commonwealthShow = true;
+		},
+		notCommonwealth() {
+			this.commonwealthShow = false;
 		}
+	},
+	created() {
+
 	},
 	components: {
 		modal

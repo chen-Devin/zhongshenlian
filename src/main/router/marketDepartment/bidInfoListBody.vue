@@ -72,8 +72,34 @@ export default {
 			bidMan: '',
 			bidAgency: '',
 			projectName: '',
-			bidStartDate: new Date(),
-			bidEndDate: new Date(),
+			bidStartDate: (() => {
+				let dt = new Date();
+				let year = dt.getFullYear();
+				let month = dt.getMonth() + 1;
+				if (month < 10) {
+					month = "0" + month;
+				}
+				let date = dt.getDate();
+				if (date < 10) {
+					date = "0" + date;
+				}
+				let dateStr = year + "-" + month + "-" + date;
+			  return dateStr;
+			})(),
+			bidEndDate: (() => {
+				let dt = new Date();
+				let year = dt.getFullYear();
+				let month = dt.getMonth() + 1;
+				if (month < 10) {
+					month = "0" + month;
+				}
+				let date = dt.getDate();
+				if (date < 10) {
+					date = "0" + date;
+				}
+				let dateStr = year + "-" + month + "-" + date;
+			  return dateStr;
+			})(),
 			weiZhaiPai: [],
 			yiZhaiPai: [],
 			yiZhongBiao: [],
