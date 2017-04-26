@@ -9,8 +9,8 @@
             <button class="btn btn-success" @click="approve()">通过</button>
             <button class="btn btn-danger" @click="refuse()">不通过</button>
           </template>
-          <span class="label label-success" v-else-if="decide==='approve'">已选择通过</span>
-          <span class="label label-danger" v-else-if="decide==='refuse'">已选择未通过</span>
+          <small class="label label-success" v-else-if="decide==='approve'">已选择通过</small>
+          <small class="label label-danger" v-else-if="decide==='refuse'">已选择未通过</small>
         </div>
       </h3>
       <business-profile :initBusiness="business" :user="user"></business-profile>
@@ -256,7 +256,13 @@ export default {
         projectApproverArray: [],
         projectSchduleArray: [],
         bills: [],
-        projectOperatingArray: []
+        reports: [],
+        projectOperatingArray: [],
+        QRCode: {
+          id: '',
+          name: '',
+          url: ''
+        }
       },
       riskAdvices: [],
       leaderAdivces: [],
@@ -485,7 +491,22 @@ export default {
               this.business.bills.push(obj);
             }
 
+            for (let i = 0; i < rep.data.data.reportAnnexArray.length; i++) {
+              let obj = {
+                id: rep.data.data.reportAnnexArray[i].id,
+                name: rep.data.data.reportAnnexArray[i].annexName,
+                url: rep.data.data.reportAnnexArray[i].annexUrl
+              }
+              this.business.reports.push(obj);
+            }
+
             this.business.projectOperatingArray = rep.data.data.projectOperatingArray;
+
+            if (rep.data.data.reportAnnexArray.length) {
+              this.business.QRCode.id = rep.data.data.reportAnnexArray[0].id;
+              this.business.QRCode.name = rep.data.data.reportAnnexArray[0].annexName;
+              this.business.QRCode.url = rep.data.data.reportAnnexArray[0].annexUrl;
+            }
 
             this.adviceClassify();
 

@@ -297,6 +297,15 @@
         </li>
       </ul>
     </div>
+    <div class="form-group"
+         v-if="QRCodeShow">
+      <label class="col-sm-2 control-label">二维码</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">
+          <img :src="business.QRCode.url" alt="二维码" class="img-thumbnail QRCode">
+        </p>
+      </div>
+    </div>
   </form>
 </template>
 
@@ -471,6 +480,9 @@ form.form-horizontal {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
     }
+  }
+  img.QRCode {
+    width: 150px;
   }
 }
 </style>

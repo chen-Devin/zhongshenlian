@@ -5,11 +5,10 @@
       <h3>
         {{business.name}}
         <button class="btn btn-primary pull-right" @click="sel()" v-if="!sended">发放合同编号</button>
-        <span class="label label-success pull-right" v-if="sended">合同编号已经发放</span>
+        <small class="label label-success pull-right" v-if="sended">合同编号已经发放</small>
       </h3>
       <div class="business-wrap">
-        <business :initBusiness="business"
-                  :user="user"></business>
+        <business :initBusiness="business" :user="user" @pathsChan="pathsChan"></business>
         <hr>
         <div class="row">
           <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
@@ -40,8 +39,8 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待处理业务', url: '/business-handle-list-sales', present: false },
-        { name: '业务详情', url: `/business-handle-detail-sales/${this.$route.params.id}`, present: true },
+        { name: '待处理业务', url: '/business-handle-list-office', present: false },
+        { name: '业务详情', url: `/business-handle-detail-office/${this.$route.params.id}`, present: true },
       ],
       business: {
         id: this.$route.params.id,
@@ -248,7 +247,13 @@ export default {
         projectApproverArray: [],
         projectSchduleArray: [],
         bills: [],
-        projectOperatingArray: []
+        reports: [],
+        projectOperatingArray: [],
+        QRCode: {
+          id: '',
+          name: '',
+          url: ''
+        }
       },
       riskAdvices: [],
       leaderAdivces: [],
@@ -460,7 +465,22 @@ export default {
               this.business.bills.push(obj);
             }
 
+            for (let i = 0; i < rep.data.data.reportAnnexArray.length; i++) {
+              let obj = {
+                id: rep.data.data.reportAnnexArray[i].id,
+                name: rep.data.data.reportAnnexArray[i].annexName,
+                url: rep.data.data.reportAnnexArray[i].annexUrl
+              }
+              this.business.reports.push(obj);
+            }
+
             this.business.projectOperatingArray = rep.data.data.projectOperatingArray;
+
+            if (rep.data.data.reportAnnexArray.length) {
+              this.business.QRCode.id = rep.data.data.reportAnnexArray[0].id;
+              this.business.QRCode.name = rep.data.data.reportAnnexArray[0].annexName;
+              this.business.QRCode.url = rep.data.data.reportAnnexArray[0].annexUrl;
+            }
 
             this.adviceClassify();
 
@@ -480,6 +500,9 @@ export default {
           this.leaderAdivces.push(this.business.projectApproverArray[i]);
         }
       }
+    },
+    pathsChan(paths) {
+      this.paths = paths;
     },
     sel() {
       this.showModal = true;

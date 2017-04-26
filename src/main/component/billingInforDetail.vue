@@ -46,7 +46,7 @@
         </ul>
       </div>
     </div>
-    <div class="form-group" v-if="!uploadEnabled">
+    <div class="form-group" v-if="uploadDisabled">
       <label class="col-sm-2 control-label">
         发票图片
       </label>
@@ -57,7 +57,7 @@
         </li>
       </ul>
     </div>
-    <div class="form-group" v-if="!uploadEnabled">
+    <div class="form-group" v-if="uploadDisabled">
       <label class="col-sm-2 control-label">
         收款图片
       </label>
@@ -322,6 +322,9 @@ export default {
     },
     uploadEnabled() {
       return (this.user.department === '财务部' && this.business.projectStatus > 7) ? true : false;
+    },
+    uploadDisabled() {
+      return (this.user.department !== '财务部' && this.business.projectStatus > 7) ? true : false;
     }
   },
   props: ['initBusiness', 'user'],

@@ -3,24 +3,15 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3>
-        业务详情
-        <div class="pull-right">
-          <button class="btn btn-primary"
-                  @click="sub()"
-                  :disabled="subBtn.dis"
-                  v-if="!submited">{{subBtn.cont}}</button>
-          <span class="label label-primary"
-                v-if="submited">已申请合同编号</span>
-        </div>
+        {{business.name}}
       </h3>
-      <business-profile :initBusiness="business"
-                        :user="user"
-                        @uploaded="uploaded"
-                        @deletedFile="deletedFile"></business-profile>
-      <hr>
-      <div class="row">
-        <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
-        <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
+      <div class="business-wrap">
+        <business :initBusiness="business" :user="user" @pathsChan="pathsChan"></business>
+        <hr>
+        <div class="row">
+          <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
+          <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
+        </div>
       </div>
     </card>
   </div>
@@ -28,23 +19,21 @@
 
 <script>
 import axios from 'axios';
-import qs from 'qs';
 
 import router from '../index.js';
-import bus from '../../bus.js';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
-import businessProfile from '../../component/businessProfile.vue';
+import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
 
 export default {
-  name: 'businessReviewDetailSales',
+  name: 'businessHandleDetailLeader',
   data() {
     return {
       paths: [
-        { name: '待审核业务', url: '/business-review-list-sales', present: false },
-        { name: '业务详情', url: `/business-review-detail-sales/${this.$route.params.id}`, present: true },
+        { name: '待处理业务', url: '/business-handle-list-leader', present: false },
+        { name: '业务详情', url: `/business-handle-detail-leader/${this.$route.params.id}`, present: false }
       ],
       business: {
         id: this.$route.params.id,
@@ -94,33 +83,33 @@ export default {
                   name: '审字',
                   code: '01',
                   state: false
-                },{
+                }, {
                   name: '专字',
                   code: '02',
                   state: false
-                },{
+                }, {
                   name: '咨字',
                   code: '03',
                   state: false
-                },{
+                }, {
                   name: '基决审字',
                   code: '04',
                   state: false
-                },{
+                }, {
                   name: '外汇检字',
                   code: '05',
                   state: false
-                },{
+                }, {
                   name: '验字',
                   code: '06',
                   state: false
-                },{
+                }, {
                   name: '外审字',
                   code: '07',
                   state: false
                 }
               ]
-            },{
+            }, {
               name: '评估所',
               code: 'TZUp',
               words: [
@@ -128,13 +117,13 @@ export default {
                   name: '评字',
                   code: '01',
                   state: false
-                },{
+                }, {
                   name: '评咨字',
                   code: '02',
                   state: false
                 }
               ]
-            },{
+            }, {
               name: '税务所',
               code: 'TZUs',
               words: [
@@ -144,7 +133,7 @@ export default {
                   state: false
                 }
               ]
-            },{
+            }, {
               name: '造价所',
               code: 'TZUz',
               words: [
@@ -152,21 +141,21 @@ export default {
                   name: '基结审字',
                   code: '01',
                   state: false,
-                },{
+                }, {
                   name: '评审字',
                   code: '02',
                   state: false,
-                },{
+                }, {
                   name: '概审字',
                   code: '03',
                   state: false,
-                },{
+                }, {
                   name: '咨字',
                   code: '04',
                   state: false
                 }
               ]
-            },{
+            }, {
               name: 'DX',
               code: 'DX',
               words: [
@@ -176,7 +165,7 @@ export default {
                   state: false
                 }
               ]
-            },{
+            }, {
               name: 'BH',
               code: 'BH',
               words: [
@@ -240,7 +229,7 @@ export default {
           {
             name: '直接委托',
             state: false
-          },{
+          }, {
             name: '中标委托',
             state: false
           },
@@ -260,25 +249,10 @@ export default {
         }
       },
       riskAdvices: [],
-      leaderAdivces: [],
-      showApproveModal: false,
-      showRefuseModal: false,
-      subBtn: {
-        dis: false,
-        cont: '申请合同编号'
-      }
+      leaderAdivces: []
     };
   },
   props: ['user'],
-  computed: {
-    submited() {
-      if (this.business.projectStatus === 6) {
-        return false;
-      } else if (this.business.projectStatus === 7) {
-        return true;
-      }
-    }
-  },
   created() {
     this.getInfo();
   },
@@ -319,7 +293,7 @@ export default {
             this.business.type = rep.data.data.businessType;
 
             this.business.manager.id = rep.data.data.projectManagerId,
-            this.business.manager.name = rep.data.data.projectManagerName
+              this.business.manager.name = rep.data.data.projectManagerName
 
             this.business.time.start = rep.data.data.startTime;
             this.business.time.end = rep.data.data.endTime;
@@ -329,11 +303,11 @@ export default {
             this.business.contractPrice = rep.data.data.contractPrice;
 
             let flag = false;
-            for (let i=0; i<rep.data.data.reportType.length; i++) {
-              for (let j=0; j<this.business.report.type.length; j++) {
+            for (let i = 0; i < rep.data.data.reportType.length; i++) {
+              for (let j = 0; j < this.business.report.type.length; j++) {
                 if (rep.data.data.reportType[i].department === this.business.report.type[j].name) {
-                  for (let m=0; m<rep.data.data.reportType[i].typeArray.length; m++) {
-                    for (let n=0; n<this.business.report.type[j].words.length; n++) {
+                  for (let m = 0; m < rep.data.data.reportType[i].typeArray.length; m++) {
+                    for (let n = 0; n < this.business.report.type[j].words.length; n++) {
                       if (rep.data.data.reportType[i].typeArray[m].name === this.business.report.type[j].words[n].name) {
                         this.business.report.type[j].words[n].state = true;
                       }
@@ -341,7 +315,7 @@ export default {
                   }
                 }
               }
-              if(rep.data.data.reportType[i].department === '会计所') {
+              if (rep.data.data.reportType[i].department === '会计所') {
                 flag = true;
               }
             }
@@ -360,14 +334,14 @@ export default {
             this.business.contractType.benefitFee.main.name = rep.data.data.contractType.mainEfficiencyName;
             this.business.contractType.benefitFee.main.percentage = rep.data.data.contractType.mainEfficiencyRate;
             this.business.contractType.basicFee.depend = [];
-            for (let i=0; i<rep.data.data.contractType.subBasicArray.length; i++) {
+            for (let i = 0; i < rep.data.data.contractType.subBasicArray.length; i++) {
               this.business.contractType.basicFee.depend.push({
                 name: rep.data.data.contractType.subBasicArray[i].name,
                 percentage: parseInt(rep.data.data.contractType.subBasicArray[i].rate)
               });
             }
             this.business.contractType.benefitFee.depend = [];
-            for (let i=0; i<rep.data.data.contractType.subEfficiencyArray.length; i++) {
+            for (let i = 0; i < rep.data.data.contractType.subEfficiencyArray.length; i++) {
               this.business.contractType.benefitFee.depend.push({
                 name: rep.data.data.contractType.subEfficiencyArray[i].name,
                 percentage: parseInt(rep.data.data.contractType.subEfficiencyArray[i].rate)
@@ -378,7 +352,7 @@ export default {
               this.business.departmentCoop.name = '有部门合作';
               this.business.departmentCoop.departments.main.percentage = rep.data.data.cooperationDepartment.mainRate;
               this.business.departmentCoop.departments.coop = [];
-              for (let i=0; i<rep.data.data.cooperationDepartment.otherArray.length; i++) {
+              for (let i = 0; i < rep.data.data.cooperationDepartment.otherArray.length; i++) {
                 this.business.departmentCoop.departments.coop.push({
                   name: rep.data.data.cooperationDepartment.otherArray[i].cooperation,
                   percentage: rep.data.data.cooperationDepartment.otherArray[i].cooperationRate
@@ -514,47 +488,24 @@ export default {
         }
       }
     },
-    sub() {
-      this.subBtn.dis = true;
-      this.subBtn.cont = '申请中...';
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-        method: 'post',
-        url: '/service',
-        data: qs.stringify({
-          data: (() => {
-            let obj = {
-              command: 'uploadContractFinished',
-              platform: 'web',
-              id: this.business.id
-            }
-            return JSON.stringify(obj);
-          })()
-        })
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          this.subBtn.cont = '申请成功';
-          this.business.projectStatus = 7;
-          bus.$emit('projectStatusUpdate', this.business.projectStatus);
-        }
-      }, (rep) => { });
-    },
-    uploaded(uploadedBusiness) {
-      this.business = uploadedBusiness;
-    },
-    deletedFile(deletedFileBusiness) {
-      this.business = deletedFileBusiness;
-    },
+    pathsChan(paths) {
+      this.paths = paths;
+    }
   },
   components: {
     crumbs,
     card,
-    businessProfile,
+    business,
     approverAdvice
   }
 }
 </script>
 
 <style lang="sass" scoped>
-
+.business-wrap {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>

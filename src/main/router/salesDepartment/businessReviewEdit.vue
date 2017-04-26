@@ -267,7 +267,13 @@ export default {
         projectApproverArray: [],
         projectSchduleArray: [],
         bills: [],
-        projectOperatingArray: []
+        reports: [],
+        projectOperatingArray: [],
+        QRCode: {
+          id: '',
+          name: '',
+          url: ''
+        }
       },
       riskAdvices: [],
       leaderAdivces: [],
@@ -479,7 +485,22 @@ export default {
               this.business.bills.push(obj);
             }
 
+            for (let i = 0; i < rep.data.data.reportAnnexArray.length; i++) {
+              let obj = {
+                id: rep.data.data.reportAnnexArray[i].id,
+                name: rep.data.data.reportAnnexArray[i].annexName,
+                url: rep.data.data.reportAnnexArray[i].annexUrl
+              }
+              this.business.reports.push(obj);
+            }
+
             this.business.projectOperatingArray = rep.data.data.projectOperatingArray;
+
+            if (rep.data.data.reportAnnexArray.length) {
+              this.business.QRCode.id = rep.data.data.reportAnnexArray[0].id;
+              this.business.QRCode.name = rep.data.data.reportAnnexArray[0].annexName;
+              this.business.QRCode.url = rep.data.data.reportAnnexArray[0].annexUrl;
+            }
 
             this.adviceClassify();
 

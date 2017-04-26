@@ -44,6 +44,12 @@
 </template>
 
 <script>
+import Vue from 'vue';
+import axios from 'axios';
+import { Upload } from 'element-ui';
+
+Vue.use(Upload);
+
 export default {
   name: 'businessReport',
   data() {
@@ -71,7 +77,7 @@ export default {
       command: 'handlerBusiness',
       platform: 'web',
       id: this.business.id,
-      type: 'XXXXXXXXXXXX'
+      type: 'projectReport'
     };
     this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
 
@@ -100,7 +106,7 @@ export default {
               command: 'delFile',
               platform: 'web',
               delFileId: FILE.id,
-              type: 'XXXXXXXXXXXX'
+              type: 'projectReport'
             }
             return JSON.stringify(obj);
           })()

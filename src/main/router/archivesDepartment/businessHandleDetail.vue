@@ -4,12 +4,22 @@
     <card>
       <h3>
         {{business.name}}
+        <el-upload :multiple="false"
+                   :action="uploadURL"
+                   :on-success="uploadSuccess"
+                   :show-file-list="false"
+                   v-if="!submited">
+          <button class="btn btn-primary pull-right"
+                  type="button">上传二维码</button>
+        </el-upload>
+        <small class="label label-success pull-right"
+               v-if="submited">已上传二维码</small>
       </h3>
       <div class="business-wrap">
-        <business :initBusiness="business" :user="user"></business>
+        <business :initBusiness="business" :user="user" @pathsChan="pathsChan"></business>
         <hr>
         <div class="row">
-          <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
+          <approver-advice :advices="riskAdvices" @pathsChan="pathsChan">风险评估部意见</approver-advice>
           <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
         </div>
       </div>
@@ -18,9 +28,11 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios';
+import { Upload } from 'element-ui';
 
-import router from '../index.js';
+Vue.use(Upload);
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
@@ -240,17 +252,34 @@ export default {
         projectApproverArray: [],
         projectSchduleArray: [],
         bills: [],
-        projectOperatingArray: []
+        reports: [],
+        projectOperatingArray: [],
+        QRCode: {
+          id: '',
+          name: '',
+          url: ''
+        }
       },
       riskAdvices: [],
-      leaderAdivces: [],
-      showApproveModal: false,
-      showRefuseModal: false
+      leaderAdivces: []
     };
   },
   props: ['user'],
+  computed: {
+    submited() {
+      return (this.business.projectStatus < 16) ? false : true;
+    }
+  },
   created() {
-    this.getInfo();
+    this.getInfo().then(() => {
+      let data = {
+        command: 'handlerBusiness',
+        platform: 'web',
+        id: this.business.id,
+        type: 'projectQRcode'
+      };
+      this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
+    }, () => {});
   },
   watch: {
     $route: 'getInfo'
@@ -448,7 +477,22 @@ export default {
               this.business.bills.push(obj);
             }
 
+            for (let i = 0; i < rep.data.data.reportAnnexArray.length; i++) {
+              let obj = {
+                id: rep.data.data.reportAnnexArray[i].id,
+                name: rep.data.data.reportAnnexArray[i].annexName,
+                url: rep.data.data.reportAnnexArray[i].annexUrl
+              }
+              this.business.reports.push(obj);
+            }
+
             this.business.projectOperatingArray = rep.data.data.projectOperatingArray;
+
+            if (rep.data.data.reportAnnexArray.length) {
+              this.business.QRCode.id = rep.data.data.reportAnnexArray[0].id;
+              this.business.QRCode.name = rep.data.data.reportAnnexArray[0].annexName;
+              this.business.QRCode.url = rep.data.data.reportAnnexArray[0].annexUrl;
+            }
 
             this.adviceClassify();
 
@@ -469,6 +513,18 @@ export default {
         }
       }
     },
+    pathsChan(paths) {
+      this.paths = paths;
+    },
+    uploadSuccess(responseData, file, fileList) {
+      if (responseData.statusCode === '10001') {
+        this.business.QRCode.id = responseData.data.id;
+        this.business.QRCode.name = file.name;
+        this.business.QRCode.url = responseData.data.path;
+        this.business.projectStatus = 17;
+        this.$emit('uploaded', this.business);
+      }
+    }
   },
   components: {
     crumbs,
@@ -480,22 +536,10 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.business-list-handle {
-  margin-top: 30px;
+.business-wrap {
+  margin-top: 40px;
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
-  > a.list-group-item {
-    border-right: 0;
-    border-left: 0;
-  }
-  > a.list-group-item:first-child {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-  }
-  > a.list-group-item:last-child {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
 }
 </style>
