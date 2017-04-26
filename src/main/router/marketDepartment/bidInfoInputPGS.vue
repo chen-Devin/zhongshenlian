@@ -23,7 +23,36 @@ export default {
 	    		{name: '招投标信息看板', url: '/bid-info-list/assessment', present: false},
 	    		{name: '评估所招投标信息录入', url: '/bid-info-input-pgs', present: true}
 	  		],
-	  		project: {},
+	  		project: {
+	  			bidStartTime: (() => {
+	  				let dt = new Date();
+	  				let year = dt.getFullYear();
+	  				let month = dt.getMonth() + 1;
+	  				if (month < 10) {
+	  					month = "0" + month;
+	  				}
+	  				let date = dt.getDate();
+	  				if (date < 10) {
+	  					date = "0" + date;
+	  				}
+	  				let dateStr = year + "-" + month + "-" + date;
+	  			  return dateStr;
+	  			})(),
+	  			openBidDate: (() => {
+	  				let dt = new Date();
+	  				let year = dt.getFullYear();
+	  				let month = dt.getMonth() + 1;
+	  				if (month < 10) {
+	  					month = "0" + month;
+	  				}
+	  				let date = dt.getDate();
+	  				if (date < 10) {
+	  					date = "0" + date;
+	  				}
+	  				let dateStr = year + "-" + month + "-" + date;
+	  			  return dateStr;
+	  			})()
+	  		},
 	  		office: "评估所",
 	  		departmentType: 'pgs'
     	}
@@ -40,6 +69,7 @@ export default {
 		            var obj = {
 		              command: 'addOrEditBiddingInfo',
 		              platform: 'web',
+		              departmentType: 'pgs',
 		              type: 'temp',
 		              data: project
 		            };

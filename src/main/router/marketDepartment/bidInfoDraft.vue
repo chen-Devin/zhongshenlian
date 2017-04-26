@@ -51,37 +51,17 @@ export default {
 	  		isAccounting: true,
 	  		isAssessment: false,
 	  		isTax: false,
-	  		isCost: false
+	  		isCost: false,
+	  		unfinishedList: []
 		}
 	},
 	methods: {
-		getInfo() {
-			axios({
-			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-			  method: 'get',
-			  url: '/service',
-			  params: {
-			    data: (() => {
-			      let obj = {
-			        command: 'getBiddingList',
-			        platform: 'web',
-			        departmentType: '',
-			        type: 'temp'
-			      }
-			      return JSON.stringify(obj);
-			    })()
-			  }
-			}).then((rep) => {
-	    		if (rep.data.statusCode === '10001') {
-					this.unfinishedList = rep.data.data;
-	    		}
-	  		}, (rep) => {});
-		},
 		sel_kjs() {
 			this.isAccounting = true;
 			this.isAssessment= false;
 	  		this.isTax= false;
 	  		this.isCost= false;
+	  		this.unfinishedList = [];
 			axios({
 			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
 			  method: 'get',
@@ -99,7 +79,7 @@ export default {
 			  }
 			}).then((rep) => {
 	    		if (rep.data.statusCode === '10001') {
-					this.unfinishedList = rep.data.data;
+					this.unfinishedList = rep.data.data.businessArray;
 	    		}
 	  		}, (rep) => {});
 		},
@@ -108,6 +88,7 @@ export default {
 			this.isAssessment= true;
 			this.isTax= false;
 			this.isCost= false;
+			this.unfinishedList = [];
 			axios({
 			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
 			  method: 'get',
@@ -125,7 +106,7 @@ export default {
 			  }
 			}).then((rep) => {
 	    		if (rep.data.statusCode === '10001') {
-					this.unfinishedList = rep.data.data;
+					this.unfinishedList = rep.data.data.businessArray;
 	    		}
 	  		}, (rep) => {});
 		},
@@ -134,6 +115,7 @@ export default {
 			this.isAssessment= false;
 			this.isTax= true;
 			this.isCost= false;
+			this.unfinishedList = [];
 			axios({
 			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
 			  method: 'get',
@@ -151,7 +133,7 @@ export default {
 			  }
 			}).then((rep) => {
 	    		if (rep.data.statusCode === '10001') {
-					this.unfinishedList = rep.data.data;
+					this.unfinishedList = rep.data.data.businessArray;
 	    		}
 	  		}, (rep) => {});
 		},
@@ -160,6 +142,7 @@ export default {
 			this.isAssessment= false;
 			this.isTax= false;
 			this.isCost= true;
+			this.unfinishedList = [];
 			axios({
 			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
 			  method: 'get',
@@ -177,13 +160,13 @@ export default {
 			  }
 			}).then((rep) => {
 	    		if (rep.data.statusCode === '10001') {
-					this.unfinishedList = rep.data.data;
+					this.unfinishedList = rep.data.data.businessArray;
 	    		}
 	  		}, (rep) => {});
 		}
 	},
 	created() {
-		this.getInfo();
+		
 	},
 	components: {
 		crumbs,

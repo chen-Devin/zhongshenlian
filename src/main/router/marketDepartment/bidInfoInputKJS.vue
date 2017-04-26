@@ -2,7 +2,7 @@
 	<div class="main">
 		<crumbs :paths="paths"></crumbs>
 		<card>
-			<bid-info-edit :iniProject="project" :office="office" @submit="submit" @saveDraft="saveDraft"></bid-info-edit>
+			<bid-info-edit :iniProject="project" :office="office" @submit="submit" @saveDraft="saveDraft" @delBasicFee="delBasicFee" @addBasicFee="addBasicFee" @delEfficiencyFee="delEfficiencyFee" @addEfficiencyFee="addEfficiencyFee"></bid-info-edit>
 		</card>
 	</div>
 </template>
@@ -23,7 +23,42 @@ export default {
 	    		{name: '招投标信息看板', url: '/bid-info-list/accounting', present: false},
 	    		{name: '会计所招投标信息录入', url: '/bid-info-input-kjs', present: true}
 	  		],
-	  		project: {},
+	  		project: {
+	  			bidStartTime: (() => {
+	  				let dt = new Date();
+	  				let year = dt.getFullYear();
+	  				let month = dt.getMonth() + 1;
+	  				if (month < 10) {
+	  					month = "0" + month;
+	  				}
+	  				let date = dt.getDate();
+	  				if (date < 10) {
+	  					date = "0" + date;
+	  				}
+	  				let dateStr = year + "-" + month + "-" + date;
+	  			  return dateStr;
+	  			})(),
+	  			openBidDate: (() => {
+	  				let dt = new Date();
+	  				let year = dt.getFullYear();
+	  				let month = dt.getMonth() + 1;
+	  				if (month < 10) {
+	  					month = "0" + month;
+	  				}
+	  				let date = dt.getDate();
+	  				if (date < 10) {
+	  					date = "0" + date;
+	  				}
+	  				let dateStr = year + "-" + month + "-" + date;
+	  			  return dateStr;
+	  			})(),
+	  			contractType: {
+	  				mainBasicRate: 0,
+	  				mainEfficiencyRate: 0,
+	  				subBasicArray: [{"name":'',"rate": 0}],
+	  				subEfficiencyArray: [{"name":'',"rate": 0}]
+	  			}
+	  		},
 	  		office: "会计所",
 	  		departmentType: 'kjs'
     	}
@@ -40,6 +75,7 @@ export default {
 		            var obj = {
 		              command: 'addOrEditBiddingInfo',
 		              platform: 'web',
+		              departmentType: 'kjs',
 		              type: 'temp',
 		              data: project
 		            };
@@ -71,11 +107,24 @@ export default {
 		          })()
 		        })
 		    }).then((rep)=>{
+		    	console.log(rep.data);
 			  if (rep.data.statusCode === '10001') {
 			    alert('保存录入成功');
 			    //加一个弹出框，然后加一个跳转
 			  }
 			}, (rep)=>{});
+    	},
+    	delBasicFee(index) {
+    		this.project.contractType.subBasicArray.splice(index,1);
+    	},
+    	addBasicFee() {
+    		this.project.contractType.subBasicArray.push({"name":'',"rate": 0});
+    	},
+    	delEfficiencyFee(index) {
+    		this.project.contractType.subEfficiencyArray.splice(index,1);
+    	},
+    	addEfficiencyFee() {
+    		this.project.contractType.subEfficiencyArray.push({"name":'',"rate": 0});
     	}
     },
     components: {
