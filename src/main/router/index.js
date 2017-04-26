@@ -18,6 +18,8 @@ import businessReport from '../component/businessReport.vue';
 import operatHistory from '../component/operatHistory.vue';
 import billingInforDetail from '../component/billingInforDetail.vue';
 //所长
+import businessHandleDetailLeader from './salesDepartment/businessHandleDetail.vue';
+import businessHandleListLeader from './salesDepartment/businessHandleList.vue';
 import businessAnalysis from './leader/businessAnalysis.vue';
 import businessReviewDetailLeader from './leader/businessReviewDetail.vue';
 import businessReviewListLeader from './leader/businessReviewList.vue';
@@ -35,6 +37,8 @@ import businessReviewEdit from './salesDepartment/businessReviewEdit.vue';
 import businessReviewListSales from './salesDepartment/businessReviewList.vue';
 import billingInforEditor from './salesDepartment/component/billingInforEditor.vue';
 //风险评估部
+import businessHandleDetailRisk from './salesDepartment/businessHandleDetail.vue';
+import businessHandleListRisk from './salesDepartment/businessHandleList.vue';
 import businessReviewListRisk from './riskDepartment/businessReviewList.vue';
 import businessReviewDetailRisk from './riskDepartment/businessReviewDetail.vue';
 //档案部
@@ -91,6 +95,43 @@ const router = new VueRouter({
         {
             path: '/business-analysis',
             component: businessAnalysis
+        },
+        {
+            path: '/business-handle-list-leader',
+            component: businessHandleListLeader
+        },
+        {
+            path: '/business-handle-detail-leader/:id',
+            component: businessHandleDetailLeader,
+            redirect: '/business-handle-detail-leader/:id/business-profile',
+            children: [
+                {
+                    path: 'business-profile',
+                    component: businessProfile
+                },
+                {
+                    path: 'business-conduct',
+                    component: businessConduct
+                },
+                {
+                    path: 'billing-infor',
+                    component: billingInfor,
+                    children: [
+                        {
+                            path: 'billing-infor-detail/:billId',
+                            component: billingInforDetail
+                        }
+                    ]
+                },
+                {
+                    path: 'business-report',
+                    component: businessReport
+                },
+                {
+                    path: 'operat-history',
+                    component: operatHistory
+                }
+            ]
         },
         {
             path: '/business-review-detail-leader/:id',
@@ -201,6 +242,43 @@ const router = new VueRouter({
         {
             path: '/business-review-list-sales',
             component: businessReviewListSales
+        },
+        {
+            path: '/business-handle-list-risk',
+            component: businessHandleListRisk
+        },
+        {
+            path: '/business-handle-detail-risk/:id',
+            component: businessHandleDetailRisk,
+            redirect: '/business-handle-detail-risk/:id/business-profile',
+            children: [
+                {
+                    path: 'business-profile',
+                    component: businessProfile
+                },
+                {
+                    path: 'business-conduct',
+                    component: businessConduct
+                },
+                {
+                    path: 'billing-infor',
+                    component: billingInfor,
+                    children: [
+                        {
+                            path: 'billing-infor-detail/:billId',
+                            component: billingInforDetail
+                        }
+                    ]
+                },
+                {
+                    path: 'business-report',
+                    component: businessReport
+                },
+                {
+                    path: 'operat-history',
+                    component: operatHistory
+                }
+            ]
         },
         {
             path: '/business-review-list-risk',

@@ -252,7 +252,13 @@ export default {
         projectApproverArray: [],
         projectSchduleArray: [],
         bills: [],
-        projectOperatingArray: []
+        reports: [],
+        projectOperatingArray: [],
+        QRCode: {
+          id: '',
+          name: '',
+          url: ''
+        }
       },
       editable: true,
       showDelModal: false

@@ -38,6 +38,7 @@ export default {
           flag: '',
           show: false,
           sub: [
+            {name: '待处理业务', link: '/business-handle-list-leader', active: false},
             {name: '待审核业务', link: '/business-review-list-leader', active: false},
             {name: '客户信息', link: '/customer-infor-list', active: false},
             {name: '职员权限管理', link: '/staff-management-author', active: false},
@@ -68,6 +69,7 @@ export default {
           flag: '',
           show: false,
           sub: [
+            {name: '待处理业务', link: '/business-handle-list-risk', active: false},
             {name: '待审核业务', link: '/business-review-list-risk', active: false}
           ]
         },
