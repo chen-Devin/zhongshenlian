@@ -17,9 +17,9 @@
 				</thead>
 				<tbody>
 					<tr v-for="project in unfinishedList" @click="checkMessage(project)">
-						<td><span class="state-wrap">{{project.biddingState}}</span>{{project.biddingName}}</td>
+						<td>{{ project.biddingName }}</td>
 						<td class="ta-r">
-							{{project.openBidDate}}
+							{{ project.updateAt }}
 						</td>
 					</tr>
 				</tbody>
@@ -31,6 +31,13 @@
 <style lang="sass" scoped>
 .ta-r {
 	text-align: right;
+}
+table {
+	tbody {
+		tr {
+			cursor: pointer;
+		}
+	}
 }
 </style>
 
@@ -52,7 +59,8 @@ export default {
 	  		isAssessment: false,
 	  		isTax: false,
 	  		isCost: false,
-	  		unfinishedList: []
+	  		unfinishedList: [],
+	  		office: '会计所'
 		}
 	},
 	methods: {
@@ -62,6 +70,7 @@ export default {
 	  		this.isTax= false;
 	  		this.isCost= false;
 	  		this.unfinishedList = [];
+	  		this.office = '会计所';
 			axios({
 			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
 			  method: 'get',
@@ -72,7 +81,8 @@ export default {
 			        command: 'getBiddingList',
 			        platform: 'web',
 			        departmentType: 'kjs',
-			        type: 'temp'
+			        type: 'temp',
+			        updateAt: new Date()
 			      }
 			      return JSON.stringify(obj);
 			    })()
@@ -89,6 +99,7 @@ export default {
 			this.isTax= false;
 			this.isCost= false;
 			this.unfinishedList = [];
+			this.office = '评估所';
 			axios({
 			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
 			  method: 'get',
@@ -99,7 +110,8 @@ export default {
 			        command: 'getBiddingList',
 			        platform: 'web',
 			        departmentType: 'pgs',
-			        type: 'temp'
+			        type: 'temp',
+			        updateAt: new Date()
 			      }
 			      return JSON.stringify(obj);
 			    })()
@@ -116,6 +128,7 @@ export default {
 			this.isTax= true;
 			this.isCost= false;
 			this.unfinishedList = [];
+			this.office = '税务所';
 			axios({
 			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
 			  method: 'get',
@@ -126,7 +139,8 @@ export default {
 			        command: 'getBiddingList',
 			        platform: 'web',
 			        departmentType: 'sws',
-			        type: 'temp'
+			        type: 'temp',
+			        updateAt: new Date()
 			      }
 			      return JSON.stringify(obj);
 			    })()
@@ -143,6 +157,7 @@ export default {
 			this.isTax= false;
 			this.isCost= true;
 			this.unfinishedList = [];
+			this.office = '造价所';
 			axios({
 			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
 			  method: 'get',
@@ -153,7 +168,8 @@ export default {
 			        command: 'getBiddingList',
 			        platform: 'web',
 			        departmentType: 'zjs',
-			        type: 'temp'
+			        type: 'temp',
+			        updateAt: new Date()
 			      }
 			      return JSON.stringify(obj);
 			    })()
@@ -163,10 +179,13 @@ export default {
 					this.unfinishedList = rep.data.data.businessArray;
 	    		}
 	  		}, (rep) => {});
+		},
+		checkMessage(project) {
+			this.$router.push('/bid-info-detail/'+project.id+"&"+this.office);
 		}
 	},
 	created() {
-		
+		this.sel_kjs();
 	},
 	components: {
 		crumbs,

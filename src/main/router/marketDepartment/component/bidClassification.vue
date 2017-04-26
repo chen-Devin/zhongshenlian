@@ -1,9 +1,9 @@
 <template>
 	<ul class="nav nav-pills nav-justified">
-	  <li role="presentation"  :class="{ active: isAccounting }"><router-link to="/bid-info-list/accounting">会计所</router-link></li>
-	  <li role="presentation" :class="{ active: isAssessment }"><router-link to="/bid-info-list/assessment">评估所</router-link></li>
-	  <li role="presentation" :class="{ active: isTax }"><router-link to="/bid-info-list/tax" active-class="active">税务所</router-link></li>
-	  <li role="presentation" :class="{ active: isCost }"><router-link to="/bid-info-list/cost" active-class="active">造价所</router-link></li>
+	  <li role="presentation"  :class="{ active: isAccounting }"><router-link to="/bid-info-list/kjs">会计所</router-link></li>
+	  <li role="presentation" :class="{ active: isAssessment }"><router-link to="/bid-info-list/pgs">评估所</router-link></li>
+	  <li role="presentation" :class="{ active: isTax }"><router-link to="/bid-info-list/sws" active-class="active">税务所</router-link></li>
+	  <li role="presentation" :class="{ active: isCost }"><router-link to="/bid-info-list/zjs" active-class="active">造价所</router-link></li>
 	</ul>
 </template>
 

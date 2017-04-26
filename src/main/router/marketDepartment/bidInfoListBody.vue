@@ -197,8 +197,34 @@ export default {
 			this.bidMan = '';
 			this.bidAgency = '';
 			this.projectName = '';
-			this.bidStartDate = new Date();
-			this.bidEndDate = new Date();
+			this.bidStartDate = (() => {
+				let dt = new Date();
+				let year = dt.getFullYear();
+				let month = dt.getMonth() + 1;
+				if (month < 10) {
+					month = "0" + month;
+				}
+				let date = dt.getDate();
+				if (date < 10) {
+					date = "0" + date;
+				}
+				let dateStr = year + "-" + month + "-" + date;
+			  return dateStr;
+			})();
+			this.bidEndDate = (() => {
+				let dt = new Date();
+				let year = dt.getFullYear();
+				let month = dt.getMonth() + 1;
+				if (month < 10) {
+					month = "0" + month;
+				}
+				let date = dt.getDate();
+				if (date < 10) {
+					date = "0" + date;
+				}
+				let dateStr = year + "-" + month + "-" + date;
+			  return dateStr;
+			})();
 		}
 	},
 	created() {

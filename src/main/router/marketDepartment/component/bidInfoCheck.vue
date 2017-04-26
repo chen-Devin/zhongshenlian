@@ -22,33 +22,27 @@
 		<div class="form-group" v-if="zjsBiddingContent">
 			<label class="col-sm-2 control-label">招标内容：</label>
 			<div class="col-sm-10">
-				{{ project.biddingContent }}
+				<span v-for="item in project.biddingContent">{{ item + " " }}</span>
 			</div>
 		</div>
 		<div class="form-group" v-if="kjsBiddingContent">
 			<label class="col-sm-2 control-label">招标内容：</label>
 			<div class="col-sm-10">
-				{{ project.biddingContent }}
+				<span v-for="item in project.biddingContent">{{ item + " " }}</span>
 			</div>
 		</div>
 		<div class="form-group" v-if="pgsBiddingContent">
 			<label class="col-sm-2 control-label">招标内容：</label>
 			<div class="col-sm-10">
-				{{ project.biddingContent }}
+				<span v-for="item in project.biddingContent">{{ item + " " }}</span>
 			</div>
 		</div>
 		<div class="form-group" v-if="swsBiddingContent"> 
 			<label class="col-sm-2 control-label">招标内容：</label>
 			<div class="col-sm-10">
-				{{ project.biddingContent }}
+				<span v-for="item in project.biddingContent">{{ item + " " }}</span>
 			</div>
 		</div>
-	  <!-- <div class="form-group">
-	    <label for="concret" class="col-sm-2 control-label">具体内容：</label>
-	    <div class="col-sm-10">
-	      <input type="text" class="form-control" id="concret" v-model="project.ConcretContent" name="ConcretContent" placeholder="请输入具体内容">
-	    </div>
-	  </div> -->
 		<div class="form-group" v-if="zjsFundSourceShow">
 			<label for="zjsFundSource" class="col-sm-2 control-label">资金来源及比例：</label>
 			<div class="col-sm-10">
@@ -56,9 +50,9 @@
 			</div>
 		</div>
 		<div class="form-group" v-if="OwnershipStructure">
-			<label for="zjsOwnershipStructure" class="col-sm-2 control-label">股权结构：</label>
+			<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
 			<div class="col-sm-10">
-				{{project.zjsOwnershipStructure}}
+				{{project.ownershipStructure}}
 			</div>
 		</div>
 		<!--问豆腐-->
@@ -115,10 +109,108 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<div class="col-sm-10 col-sm-offset-2">
-				{{ project.commonwealth }}
+			<label for="investmentConditions" class="col-sm-2 control-label">合同体制：</label>
+			<div class="col-sm-10">
+				{{ project.contractType.type }}
 			</div>
 		</div>
+
+		<div v-show="commonwealthShow">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">基本取费：</label>
+				<div class="col-sm-10">
+					<div class="row">
+						<div class="col-sm-5">
+							<div class="row">
+								<div class="col-sm-4">主办方</div>
+								<div class="col-sm-8">{{ project.contractType.mainBasicName }}</div>
+							</div>
+						</div>
+						<div class="col-sm-1"></div>
+						<div class="col-sm-5">
+							<div class="row">
+								<div class="col-sm-4">比例</div>
+								<div class="col-sm-8">{{ project.contractType.mainBasicRate + "%"}}</div>
+							</div>
+						</div>
+						<div class="col-sm-1">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" v-for="(item, index) in project.contractType.subBasicArray">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-10">
+					<div class="row">
+						<div class="col-sm-5">
+							<div class="row">
+								<div class="col-sm-4">协办方</div>
+								<div class="col-sm-8">{{ item.name }}</div>
+							</div>
+						</div>
+						<div class="col-sm-1"></div>
+						<div class="col-sm-5">
+							<div class="row">
+								<div class="col-sm-4">比例</div>
+								<div class="col-sm-8">{{ item.rate + "%" }}</div>
+							</div>
+						</div>
+						<div class="col-sm-1">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">效益取费：</label>
+				<div class="col-sm-10">
+					<div class="row">
+						<div class="col-sm-5">
+							<div class="row">
+								<div class="col-sm-4">主办方</div>
+								<div class="col-sm-8">{{ project.contractType.mainEfficiencyName }}</div>
+							</div>
+						</div>
+						<div class="col-sm-1"></div>
+						<div class="col-sm-5">
+							<div class="row">
+								<div class="col-sm-4">比例</div>
+								<div class="col-sm-8">{{ project.contractType.mainEfficiencyRate + "%" }}</div>
+							</div>
+						</div>
+						<div class="col-sm-1">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" v-for="(item, index) in project.contractType.subEfficiencyArray">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-10">
+					<div class="row">
+						<div class="col-sm-5">
+							<div class="row">
+								<div class="col-sm-4">协办方</div>
+								<div class="col-sm-8">{{ item.name }}</div>
+							</div>
+						</div>
+						<div class="col-sm-1"></div>
+						<div class="col-sm-5">
+							<div class="row">
+								<div class="col-sm-4">比例</div>
+								<div class="col-sm-8">{{ item.rate + "%" }}</div>
+							</div>
+						</div>
+						<div class="col-sm-1">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="form-group">
 			<label for="biddingNumber" class="col-sm-2 control-label">中标单位数量：</label>
 			<div class="col-sm-10">
@@ -192,21 +284,9 @@
 		<div class="form-group">
 			<label for="remark" class="col-sm-2 control-label">备注：</label>
 			<div class="col-sm-10">
-			  <input type="text" class="form-control" id="remark" v-model="project.remark" name="remark" placeholder="请输入备注">
+				{{ project.remark }}
 			</div>
 		</div>
-	  <!-- <div class="form-group">
-	    <label for="biddingUrl" class="col-sm-2 control-label">原文链接：</label>
-	    <div class="col-sm-10">
-	      <input type="text" class="form-control" id="biddingUrl" v-model="project.biddingUrl" name="biddingUrl" placeholder="请输入原文链接">
-	    </div>
-	  </div> -->
-	  <!-- <div class="form-group">
-	    <label for="ruweitongzhishu" class="col-sm-2 control-label">入围通知书：</label>
-	    <div class="col-sm-10">
-	      <input type="file" name="ruweitongzhishu" value="上传">
-	    </div>
-	  </div> -->
 	</form>
 </template>
 
@@ -226,7 +306,14 @@ export default {
     name: 'bidInfoCheck',
     data() {
     	return {
-			project: {},
+			project: {
+				contractType: {
+					mainBasicRate: 0,
+					mainEfficiencyRate: 0,
+					subBasicArray: [{"name":'',"rate": 0}],
+					subEfficiencyArray: [{"name":'',"rate": 0}]
+				}
+			},
 			office: ''
     	}
     },
@@ -289,8 +376,15 @@ export default {
     		if (this.office !== "zjs") {
     			return true;
     		}
+    	},
+    	commonwealthShow() {
+    		if (this.project.contractType.type === "联合体") {
+    			return true;
+    		}
+    		else {
+    			return false;
+    		}
     	}
-    	
     },
     methods: {
     	isEdit() {
@@ -321,10 +415,11 @@ export default {
     },
     
     created() {
-    	console.log(this);
+    	this.getInfo();
+    	console.log(this.project);
     	this.id = this.$route.params.id;
     	this.office = this.$route.params.office;
-    	this.getInfo();
+
     },
     components: {
 

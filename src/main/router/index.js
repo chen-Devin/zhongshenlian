@@ -287,22 +287,22 @@ const router = new VueRouter({
         {
             path: '/bid-info-list',
             component: bidInfoList,
-            redirect: '/bid-info-list/accounting',
+            redirect: '/bid-info-list/kjs',
             children: [
                 {
-                    path: 'accounting',
+                    path: 'kjs',
                     component: bidInfoAccounting
                 },
                 {
-                    path: 'assessment',
+                    path: 'pgs',
                     component: bidInfoAssessment
                 },
                 {
-                    path: 'tax',
+                    path: 'sws',
                     component: bidInfoTax
                 },
                 {
-                    path: 'cost',
+                    path: 'zjs',
                     component: bidInfoCost
                 }
             ]
