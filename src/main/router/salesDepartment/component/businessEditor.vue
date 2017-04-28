@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">委托单位</label>
+      <label class="col-sm-2 control-label">委托单位（客户）</label>
       <div class="col-sm-9">
         <select class="form-control"
                 v-model="business.institution"
@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">客户名称</label>
+      <label class="col-sm-2 control-label">客户联系人</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.institution.name}}</p>
       </div>
@@ -55,13 +55,18 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">项目经理</label>
       <div class="col-sm-9">
-        <select class="form-control"
+        <input type="text"
+               class="form-control"
+               placeholder="请输入项目经理"
+               v-model="business.manager.name"
+               :disabled="!editable">
+        <!--<select class="form-control"
                 v-model="business.manager"
                 :disabled="!editable">
           <option v-for="(STA, index) in staffs"
                   :value="STA"
                   :key="index">{{STA.name}}</option>
-        </select>
+        </select>-->
       </div>
     </div>
     <div class="form-group">
@@ -412,25 +417,35 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">参审注师</label>
       <div class="col-sm-9">
-        <select class="form-control"
+        <input type="text"
+               class="form-control"
+               placeholder="请输入参审注师"
+               v-model="business.reviewCPA.name"
+               :disabled="!editable">
+        <!--<select class="form-control"
                 v-model="business.reviewCPA"
                 :disabled="!editable">
           <option v-for="(STA, index) in staffs"
                   :value="STA"
                   :key="index">{{STA.name}}</option>
-        </select>
+        </select>-->
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">参审助理</label>
       <div class="col-sm-9">
-        <select class="form-control"
+        <input type="text"
+               class="form-control"
+               placeholder="请输入参审助理"
+               v-model="business.reviewAssistant.name"
+               :disabled="!editable">
+        <!--<select class="form-control"
                 v-model="business.reviewAssistant"
                 :disabled="!editable">
           <option v-for="(STA, index) in staffs"
                   :value="STA"
                   :key="index">{{STA.name}}</option>
-        </select>
+        </select>-->
       </div>
     </div>
     <div class="form-group">
@@ -578,40 +593,43 @@ export default {
       id: this.business.id,
       type: 'projectAnnex'
     };
-    this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
+    this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);
 
-    this.getStaffs().then(() => {
-      if (this.business.manager.id === '') {
-        this.business.manager = this.staffs[0];
-      } else {
-        for (let i = 0; i < this.staffs.length; i++) {
-          if (this.business.manager.id === this.staffs[i].id) {
-            this.business.manager = this.staffs[i];
-            break;
-          }
-        }
-      }
-      if (this.business.reviewCPA.id === '') {
-        this.business.reviewCPA = this.staffs[0];
-      } else {
-        for (let i = 0; i < this.staffs.length; i++) {
-          if (this.business.reviewCPA.id === this.staffs[i].id) {
-            this.business.reviewCPA = this.staffs[i];
-            break;
-          }
-        }
-      }
-      if (this.business.reviewAssistant.id === '') {
-        this.business.reviewAssistant = this.staffs[0];
-      } else {
-        for (let i = 0; i < this.staffs.length; i++) {
-          if (this.business.reviewAssistant.id === this.staffs[i].id) {
-            this.business.reviewAssistant = this.staffs[i];
-            break;
-          }
-        }
-      }
-    }, () => { });
+    /*
+    暂时停用下拉菜单
+    */
+    // this.getStaffs().then(() => {
+    //   if (this.business.manager.id === '') {
+    //     this.business.manager = this.staffs[0];
+    //   } else {
+    //     for (let i = 0; i < this.staffs.length; i++) {
+    //       if (this.business.manager.id === this.staffs[i].id) {
+    //         this.business.manager = this.staffs[i];
+    //         break;
+    //       }
+    //     }
+    //   }
+    //   if (this.business.reviewCPA.id === '') {
+    //     this.business.reviewCPA = this.staffs[0];
+    //   } else {
+    //     for (let i = 0; i < this.staffs.length; i++) {
+    //       if (this.business.reviewCPA.id === this.staffs[i].id) {
+    //         this.business.reviewCPA = this.staffs[i];
+    //         break;
+    //       }
+    //     }
+    //   }
+    //   if (this.business.reviewAssistant.id === '') {
+    //     this.business.reviewAssistant = this.staffs[0];
+    //   } else {
+    //     for (let i = 0; i < this.staffs.length; i++) {
+    //       if (this.business.reviewAssistant.id === this.staffs[i].id) {
+    //         this.business.reviewAssistant = this.staffs[i];
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }, () => { });
 
     this.getCustomers().then(() => {
       if (this.business.institution.id === '') {
@@ -630,6 +648,7 @@ export default {
       this.business.type = this.businessType[0];
     }
 
+    this.reportTypeChan();
   },
   methods: {
     reportTypeChan(TYPE, WORD) {
@@ -795,6 +814,8 @@ export default {
                   projectStatus: this.business.projectStatus,
                   projectManagerId: this.business.manager.id,
                   projectManagerName: this.business.manager.name,
+                  //手动输入
+                  projectManager: this.business.manager.name,
                   checkStartTime: this.business.auditTime.start,
                   checkEndTime: this.business.auditTime.end,
                   cooperationDepartment: (() => {
@@ -813,8 +834,12 @@ export default {
                   })(),
                   trialTeacherId: this.business.reviewCPA.id,
                   trialTeacherName: this.business.reviewCPA.name,
+                  //手动输入
+                  trialTeacher: this.business.reviewCPA.name,
                   trialAssistantId: this.business.reviewAssistant.id,
                   trialAssistantName: this.business.reviewAssistant.name,
+                  //手动输入
+                  trialAssistant: this.business.reviewAssistant.name,
                   lastOffice: this.business.lastOffice,
                   getWay: this.business.getWay,
                   contractType: (() => {
@@ -921,6 +946,8 @@ export default {
                     projectStatus: this.business.projectStatus,
                     projectManagerId: this.business.manager.id,
                     projectManagerName: this.business.manager.name,
+                    //手动输入
+                    projectManager: this.business.manager.name,
                     checkStartTime: this.business.auditTime.start,
                     checkEndTime: this.business.auditTime.end,
                     cooperationDepartment: (() => {
@@ -939,8 +966,12 @@ export default {
                     })(),
                     trialTeacherId: this.business.reviewCPA.id,
                     trialTeacherName: this.business.reviewCPA.name,
+                    //手动输入
+                    trialTeacher: this.business.reviewCPA.name,
                     trialAssistantId: this.business.reviewAssistant.id,
                     trialAssistantName: this.business.reviewAssistant.name,
+                    //手动输入
+                    trialAssistant: this.business.reviewAssistant.name,
                     lastOffice: this.business.lastOffice,
                     getWay: this.business.getWay,
                     contractType: (() => {
@@ -998,7 +1029,7 @@ export default {
             id: this.business.id,
             type: 'projectAnnex'
           };
-          this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
+          this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);
         }, (rep) => { });
       } else {
         return true;

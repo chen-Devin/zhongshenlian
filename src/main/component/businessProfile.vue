@@ -26,13 +26,13 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">委托单位</label>
+      <label class="col-sm-2 control-label">委托单位（客户）</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.institution.customerName}}</p>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">客户名称</label>
+      <label class="col-sm-2 control-label">客户联系人</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.institution.name}}</p>
       </div>
@@ -389,6 +389,9 @@ export default {
     },
     contractNumShow() {
       return (this.business.projectStatus > 7) ? true : false;
+    },
+    QRCodeShow() {
+      return (this.business.projectStatus > 17) ? true : false;
     }
   },
   props: ['initBusiness', 'user'],
@@ -399,7 +402,7 @@ export default {
       id: this.business.id,
       type: 'electronicContract'
     };
-    this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
+    this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);
 
     this.$emit('pathsChan', this.paths);
 

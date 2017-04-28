@@ -79,7 +79,7 @@ export default {
       id: this.business.id,
       type: 'projectReport'
     };
-    this.uploadURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
+    this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);
 
     this.$emit('pathsChan', this.paths);
   },

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h4>
+    <h3>
       新增开票申请
       <div class="pull-right">
         <button class="btn btn-success" @click="add()">提交</button>
         <button class="btn btn-danger" @click="del()">撤销</button>
       </div>
-    </h4>
+    </h3>
     <form class="form-horizontal">
       <div class="form-group">
         <label class="col-sm-2 control-label">签订合同编号</label>
@@ -301,7 +301,7 @@ import billDelModal from './billDelModal.vue';
 Vue.prototype.$message = Message;
 
 export default {
-  name: 'billingInforDetail',
+  name: 'billingInforEditor',
   data() {
     return {
       paths: [
@@ -318,13 +318,7 @@ export default {
           name: this.user.name,
           tele: this.user.telephone
         },
-        addUpAmount: (() => {
-          var sum = 0;
-          for (let i = 0; i < this.business.bills.length; i++) {
-            sum += parseInt(this.business.bills[i].amount);
-          }
-          return sum;
-        })(),
+        addUpAmount: 0,
         amount: 0,
         billingUnit: '',
         type: '增值税普通发票',
@@ -356,7 +350,8 @@ export default {
         billFiles: [],
         receiptFiles: [],
         state: 0
-      }
+      },
+      showDelModal: false
     };
   },
   computed: {
@@ -365,8 +360,16 @@ export default {
     }
   },
   props: ['initBusiness', 'user'],
-  create() {
+  mounted() {
     this.$emit('pathsChan', this.paths);
+    this.business.addUpAmount = (() => {
+      var sum = 0;
+      for (let i = 0; i < this.business.bills.length; i++) {
+        sum += parseInt(this.business.bills[i].amount);
+      }
+      return sum;
+    })();
+    console.log(this.business.addUpAmount);
   },
   methods: {
     amountCheck() {
@@ -468,6 +471,9 @@ export default {
     delCanceled() {
       this.showDelModal = false;
     },
+  },
+  components: {
+    billDelModal
   }
 };
 </script>

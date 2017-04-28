@@ -1,6 +1,6 @@
 <template>
   <div class="row timeline">
-    <div class="col-sm-offset-4 col-sm-8">
+    <div class="col-sm-offset-2 col-sm-10">
       <ul class="list-group">
         <li class="list-group-item"
             v-for="(OPER, index) in business.projectOperatingArray"
@@ -47,7 +47,7 @@ export default {
     border-top: 0;
     border-bottom: 0;
     border-left: 1px solid $gray-light;
-    padding-left: 15px;
+    padding-left: 0;
     padding-top: 12px;
     padding-bottom: 12px;
     margin-left: 5px;

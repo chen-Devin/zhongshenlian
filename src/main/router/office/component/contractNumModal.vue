@@ -1,10 +1,10 @@
 <template>
   <modal>
-    <form class="clearfix"
+    <form class="form-horizontal clearfix"
           slot="body">
       <div class="form-group">
-        <label class="col-sm-2 control-label">报告类型</label>
-        <div class="col-sm-10">
+        <label class="col-sm-3 control-label">报告类型</label>
+        <div class="col-sm-9">
           <template v-for="(TYPE, index) in type">
             <h5>{{TYPE.name}}</h5>
             <label class="checkbox-inline"
@@ -19,15 +19,15 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">编号样式</label>
-        <div class="col-sm-10">
+        <label class="col-sm-3 control-label">编号样式</label>
+        <div class="col-sm-9">
           <p class="form-control-static">
             {{number}}
           </p>
         </div>
       </div>
     </form>
-    <div class="footer">
+    <div slot="footer">
       <button class="btn btn-primary modal-default-button"
               @click="sub()"
               :disabled="subBtn.dis">
@@ -101,7 +101,7 @@ export default {
               command: 'releaseContactNumber',
               platform: 'web',
               id: this.initBusiness.id,
-              type: (() => {
+              reportType: (() => {
                 let out = [];
                 for (let i = 0; i < this.type.length; i++) {
                   let flag = false;
@@ -138,6 +138,9 @@ export default {
     cancel() {
       this.$emit('canceled');
     }
+  },
+  components: {
+    modal
   }
 };
 </script>

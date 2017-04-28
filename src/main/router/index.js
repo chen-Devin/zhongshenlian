@@ -201,17 +201,15 @@ const router = new VueRouter({
                 },
                 {
                     path: 'billing-infor',
-                    component: billingInfor,
-                    children: [
-                        {
-                            path: 'billing-infor-detail/:billId',
-                            component: billingInforDetail
-                        },
-                        {
-                            path: 'billing-infor-editor',
-                            component: billingInforEditor
-                        },
-                    ]
+                    component: billingInfor
+                },
+                {
+                    path: 'billing-infor-detail/:billId',
+                    component: billingInforDetail
+                },
+                {
+                    path: 'billing-infor-editor',
+                    component: billingInforEditor
                 },
                 {
                     path: 'business-report',

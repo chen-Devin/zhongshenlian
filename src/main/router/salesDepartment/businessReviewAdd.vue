@@ -167,26 +167,6 @@ export default {
                   state: false
                 }
               ]
-            },{
-              name: 'DX',
-              code: 'DX',
-              words: [
-                {
-                  name: 'DX',
-                  code: 'DX',
-                  state: false
-                }
-              ]
-            },{
-              name: 'BH',
-              code: 'BH',
-              words: [
-                {
-                  name: 'BH',
-                  code: 'BH',
-                  state: false
-                }
-              ]
             }
           ],
           amount: 0,

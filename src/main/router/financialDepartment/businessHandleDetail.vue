@@ -155,26 +155,6 @@ export default {
                   state: false
                 }
               ]
-            },{
-              name: 'DX',
-              code: 'DX',
-              words: [
-                {
-                  name: 'DX',
-                  code: 'DX',
-                  state: false
-                }
-              ]
-            },{
-              name: 'BH',
-              code: 'BH',
-              words: [
-                {
-                  name: 'BH',
-                  code: 'BH',
-                  state: false
-                }
-              ]
             }
           ],
           amount: 0,
@@ -292,8 +272,10 @@ export default {
 
             this.business.type = rep.data.data.businessType;
 
-            this.business.manager.id = rep.data.data.projectManagerId,
-            this.business.manager.name = rep.data.data.projectManagerName
+            //手动输入
+            // this.business.manager.id = rep.data.data.projectManagerId;
+            // this.business.manager.name = rep.data.data.projectManagerName;
+            this.business.manager.name = rep.data.data.projectManager;
 
             this.business.time.start = rep.data.data.startTime;
             this.business.time.end = rep.data.data.endTime;
@@ -362,11 +344,15 @@ export default {
               this.business.departmentCoop.name = '无部门合作';
             }
 
-            this.business.reviewCPA.id = rep.data.data.trialTeacherId;
-            this.business.reviewCPA.name = rep.data.data.trialTeacherName;
+            //手动输入
+            // this.business.reviewCPA.id = rep.data.data.trialTeacherId;
+            // this.business.reviewCPA.name = rep.data.data.trialTeacherName;
+            this.business.reviewCPA.name = rep.data.data.trialTeacher;
 
-            this.business.reviewAssistant.id = rep.data.data.trialAssistantId;
-            this.business.reviewAssistant.name = rep.data.data.trialAssistantName;
+            //手动输入
+            // this.business.reviewAssistant.id = rep.data.data.trialAssistantId;
+            // this.business.reviewAssistant.name = rep.data.data.trialAssistantName;
+            this.business.reviewAssistant.name = rep.data.data.trialAssistant;
 
             this.business.lastOffice = rep.data.data.lastOffice;
             this.business.getWay = rep.data.data.getWay;
@@ -387,7 +373,7 @@ export default {
                 id: rep.data.data.contractAnnexArray[i].id,
                 name: rep.data.data.contractAnnexArray[i].annexName,
                 url: rep.data.data.contractAnnexArray[i].annexUrl
-              }
+              };
               this.business.contracts.push(obj);
             }
 

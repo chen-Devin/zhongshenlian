@@ -1,12 +1,13 @@
 <template>
-  <div>
+  <div class="billing-list">
     <h3>
+      开票列表
       <router-link class="btn btn-primary pull-right"
                    to="billing-infor-editor">
         新增开票申请
       </router-link>
     </h3>
-    <div class="billing-list list-group">
+    <div class="list-group">
       <router-link class="list-group-item"
                    :to="billRoute(BILL)"
                    v-for="(BILL, index) in business.bills"
@@ -29,10 +30,10 @@ export default {
         { name: '业务详情', url: `/business-handle-detail-sales/${this.$route.params.id}`, present: false },
         { name: '开票信息', url: `/business-handle-detail-sales/${this.$route.params.id}/billing-infor`, present: true }
       ],
-      business: this.initBusiness,
-      props: ['initBusiness', 'user']
+      business: this.initBusiness
     };
   },
+  props: ['initBusiness', 'user'],
   create() {
     this.$emit('pathsChan', this.paths);
   },

@@ -335,7 +335,7 @@ export default {
       id: this.bill.id,
       type: 'billingOthers'
     };
-    this.uploadBillURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
+    this.uploadBillURL = '/fileUpload?data=' + JSON.stringify(data);
 
     data = {
       command: 'handlerBusiness',
@@ -343,7 +343,7 @@ export default {
       id: this.bill.id,
       type: 'receivables'
     };
-    this.uploadReceiptURL = 'http://tzucpa.lovecampus.cn/fileUpload?data=' + JSON.stringify(data);
+    this.uploadReceiptURL = '/fileUpload?data=' + JSON.stringify(data);
 
     this.$emit('pathsChan', this.paths);
   },

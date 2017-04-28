@@ -173,26 +173,6 @@ export default {
                   state: false
                 }
               ]
-            }, {
-              name: 'DX',
-              code: 'DX',
-              words: [
-                {
-                  name: 'DX',
-                  code: 'DX',
-                  state: false
-                }
-              ]
-            }, {
-              name: 'BH',
-              code: 'BH',
-              words: [
-                {
-                  name: 'BH',
-                  code: 'BH',
-                  state: false
-                }
-              ]
             }
           ],
           amount: 0,
@@ -333,8 +313,10 @@ export default {
 
             this.business.type = rep.data.data.businessType;
 
-            this.business.manager.id = rep.data.data.projectManagerId,
-              this.business.manager.name = rep.data.data.projectManagerName
+            //手动输入
+            // this.business.manager.id = rep.data.data.projectManagerId;
+            // this.business.manager.name = rep.data.data.projectManagerName;
+            this.business.manager.name = rep.data.data.projectManager;
 
             this.business.time.start = rep.data.data.startTime;
             this.business.time.end = rep.data.data.endTime;
@@ -344,11 +326,11 @@ export default {
             this.business.contractPrice = rep.data.data.contractPrice;
 
             let flag = false;
-            for (let i = 0; i < rep.data.data.reportType.length; i++) {
-              for (let j = 0; j < this.business.report.type.length; j++) {
+            for (let i=0; i<rep.data.data.reportType.length; i++) {
+              for (let j=0; j<this.business.report.type.length; j++) {
                 if (rep.data.data.reportType[i].department === this.business.report.type[j].name) {
-                  for (let m = 0; m < rep.data.data.reportType[i].typeArray.length; m++) {
-                    for (let n = 0; n < this.business.report.type[j].words.length; n++) {
+                  for (let m=0; m<rep.data.data.reportType[i].typeArray.length; m++) {
+                    for (let n=0; n<this.business.report.type[j].words.length; n++) {
                       if (rep.data.data.reportType[i].typeArray[m].name === this.business.report.type[j].words[n].name) {
                         this.business.report.type[j].words[n].state = true;
                       }
@@ -356,7 +338,7 @@ export default {
                   }
                 }
               }
-              if (rep.data.data.reportType[i].department === '会计所') {
+              if(rep.data.data.reportType[i].department === '会计所') {
                 flag = true;
               }
             }
@@ -375,14 +357,14 @@ export default {
             this.business.contractType.benefitFee.main.name = rep.data.data.contractType.mainEfficiencyName;
             this.business.contractType.benefitFee.main.percentage = rep.data.data.contractType.mainEfficiencyRate;
             this.business.contractType.basicFee.depend = [];
-            for (let i = 0; i < rep.data.data.contractType.subBasicArray.length; i++) {
+            for (let i=0; i<rep.data.data.contractType.subBasicArray.length; i++) {
               this.business.contractType.basicFee.depend.push({
                 name: rep.data.data.contractType.subBasicArray[i].name,
                 percentage: parseInt(rep.data.data.contractType.subBasicArray[i].rate)
               });
             }
             this.business.contractType.benefitFee.depend = [];
-            for (let i = 0; i < rep.data.data.contractType.subEfficiencyArray.length; i++) {
+            for (let i=0; i<rep.data.data.contractType.subEfficiencyArray.length; i++) {
               this.business.contractType.benefitFee.depend.push({
                 name: rep.data.data.contractType.subEfficiencyArray[i].name,
                 percentage: parseInt(rep.data.data.contractType.subEfficiencyArray[i].rate)
@@ -393,7 +375,7 @@ export default {
               this.business.departmentCoop.name = '有部门合作';
               this.business.departmentCoop.departments.main.percentage = rep.data.data.cooperationDepartment.mainRate;
               this.business.departmentCoop.departments.coop = [];
-              for (let i = 0; i < rep.data.data.cooperationDepartment.otherArray.length; i++) {
+              for (let i=0; i<rep.data.data.cooperationDepartment.otherArray.length; i++) {
                 this.business.departmentCoop.departments.coop.push({
                   name: rep.data.data.cooperationDepartment.otherArray[i].cooperation,
                   percentage: rep.data.data.cooperationDepartment.otherArray[i].cooperationRate
@@ -403,11 +385,15 @@ export default {
               this.business.departmentCoop.name = '无部门合作';
             }
 
-            this.business.reviewCPA.id = rep.data.data.trialTeacherId;
-            this.business.reviewCPA.name = rep.data.data.trialTeacherName;
+            //手动输入
+            // this.business.reviewCPA.id = rep.data.data.trialTeacherId;
+            // this.business.reviewCPA.name = rep.data.data.trialTeacherName;
+            this.business.reviewCPA.name = rep.data.data.trialTeacher;
 
-            this.business.reviewAssistant.id = rep.data.data.trialAssistantId;
-            this.business.reviewAssistant.name = rep.data.data.trialAssistantName;
+            //手动输入
+            // this.business.reviewAssistant.id = rep.data.data.trialAssistantId;
+            // this.business.reviewAssistant.name = rep.data.data.trialAssistantName;
+            this.business.reviewAssistant.name = rep.data.data.trialAssistant;
 
             this.business.lastOffice = rep.data.data.lastOffice;
             this.business.getWay = rep.data.data.getWay;
@@ -428,7 +414,7 @@ export default {
                 id: rep.data.data.contractAnnexArray[i].id,
                 name: rep.data.data.contractAnnexArray[i].annexName,
                 url: rep.data.data.contractAnnexArray[i].annexUrl
-              }
+              };
               this.business.contracts.push(obj);
             }
 

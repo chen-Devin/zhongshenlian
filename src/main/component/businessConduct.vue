@@ -1,7 +1,7 @@
 <template>
-  <form class="form">
+  <form class="form-horizontal">
     <div class="form-group">
-      <div class="checkbox  col-sm-offset-2 col-sm-9">
+      <div class="checkbox col-sm-offset-2 col-sm-10">
         <label>
           <input type="checkbox">
           审前调查
@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="form-group">
-      <div class="checkbox col-sm-offset-2 col-sm-9">
+      <div class="checkbox col-sm-offset-2 col-sm-10">
         <label>
           <input type="checkbox">
           现场工作
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="form-group">
-      <div class="checkbox col-sm-offset-2 col-sm-9">
+      <div class="checkbox col-sm-offset-2 col-sm-10">
         <label>
           <input type="checkbox">
           整理底稿
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="form-group">
-      <div class="checkbox col-sm-offset-2 col-sm-9">
+      <div class="checkbox col-sm-offset-2 col-sm-10">
         <label>
           <input type="checkbox">
           审前调查
@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="form-group">
-      <div class="checkbox col-sm-offset-2 col-sm-9">
+      <div class="checkbox col-sm-offset-2 col-sm-10">
         <label>
           <input type="checkbox">
           客户通报
