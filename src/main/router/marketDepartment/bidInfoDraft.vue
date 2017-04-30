@@ -32,6 +32,9 @@
 .ta-r {
 	text-align: right;
 }
+.dateMr {
+	padding-right: 32px;
+}
 table {
 	tbody {
 		tr {

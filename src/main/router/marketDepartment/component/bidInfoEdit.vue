@@ -109,12 +109,6 @@
 					</label>
 				</div>
 			</div>
-		  <!-- <div class="form-group">
-		    <label for="concret" class="col-sm-2 control-label">具体内容：</label>
-		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="concret" v-model="project.ConcretContent" name="ConcretContent" placeholder="请输入具体内容">
-		    </div>
-		  </div> -->
 			<div class="form-group" v-if="zjsFundSourceShow">
 				<label for="zjsFundSource" class="col-sm-2 control-label">资金来源及比例：</label>
 				<div class="col-sm-10">
@@ -435,18 +429,6 @@
 				  <input type="text" class="form-control" id="remark" v-model="project.remark" name="remark" placeholder="请输入备注">
 				</div>
 			</div>
-		  <!-- <div class="form-group">
-		    <label for="biddingUrl" class="col-sm-2 control-label">原文链接：</label>
-		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="biddingUrl" v-model="project.biddingUrl" name="biddingUrl" placeholder="请输入原文链接">
-		    </div>
-		  </div> -->
-		  <!-- <div class="form-group">
-		    <label for="ruweitongzhishu" class="col-sm-2 control-label">入围通知书：</label>
-		    <div class="col-sm-10">
-		      <input type="file" name="ruweitongzhishu" value="上传">
-		    </div>
-		  </div> -->
 		  <div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
 		      <button type="button" class="btn btn-primary" @click="submit(project)">提交</button>
