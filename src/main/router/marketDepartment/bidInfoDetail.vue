@@ -191,7 +191,7 @@ export default {
         },
         deleteFinish() {
             console.log(this.officeSX);
-            this.$router.push('/bid-info-list/' + this.officeSX);
+            this.$router.push('/bid-info-draft/');
         },
         inputFinish() {
             this.$router.push('/bid-info-list/' + this.officeSX);
@@ -206,7 +206,8 @@ export default {
     	this.editShow = false;
     	this.checkShow = true;
         this.id = this.$route.params.id;
-        this.officeSX = this.$route.params.office;  
+        this.officeSX = this.$route.params.office; 
+        console.log(this.$store); 
     },
     components: {
     	crumbs,

@@ -175,7 +175,7 @@
 				<label for="totalAssets" class="col-sm-2 control-label">资产总额：</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<input type="number" class="form-control" id="totalAssets" v-model="project.totalAssets" name="totalAssets" placeholder="请输入资产总额">
+						<input type="text" class="form-control" id="totalAssets" v-model="project.totalAssets" name="totalAssets" placeholder="请输入资产总额">
 						<div class="input-group-addon">万元</div>
 					</div> 
 				</div>
@@ -224,7 +224,7 @@
 							<div class="col-sm-5">
 								<div class="input-group">
 									<div class="input-group-addon">比例</div>
-									<input type="number" class="form-control" v-model="project.contractType.mainBasicRate">
+									<input type="text" class="form-control" v-model="project.contractType.mainBasicRate">
 									<div class="input-group-addon">%</div>
 								</div>
 							</div>
@@ -248,7 +248,7 @@
 							<div class="col-sm-5">
 								<div class="input-group">
 									<div class="input-group-addon">比例</div>
-									<input type="number" class="form-control" v-model="item.rate">
+									<input type="text" class="form-control" v-model="item.rate">
 									<div class="input-group-addon">%</div>
 								</div>
 							</div>
@@ -285,7 +285,7 @@
 							<div class="col-sm-5">
 								<div class="input-group">
 									<div class="input-group-addon">比例</div>
-									<input type="number" class="form-control" v-model="project.contractType.mainEfficiencyRate">
+									<input type="text" class="form-control" v-model="project.contractType.mainEfficiencyRate">
 									<div class="input-group-addon">%</div>
 								</div>
 							</div>
@@ -309,7 +309,7 @@
 							<div class="col-sm-5">
 								<div class="input-group">
 									<div class="input-group-addon">比例</div>
-									<input type="number" class="form-control" v-model="item.rate">
+									<input type="text" class="form-control" v-model="item.rate">
 									<div class="input-group-addon">%</div>
 								</div>
 							</div>
@@ -342,7 +342,7 @@
 				<label for="controlPrice" class="col-sm-2 control-label">招标控制价：</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<input type="number" class="form-control" id="controlPrice" v-model="project.controlPrice" name="controlPrice" placeholder="请输入招标控制价">
+						<input type="text" class="form-control" id="controlPrice" v-model="project.controlPrice" name="controlPrice" placeholder="请输入招标控制价">
 						<div class="input-group-addon">万元</div>
 					</div>
 				  
@@ -358,7 +358,7 @@
 				<label for="bidDocumentPrice" class="col-sm-2 control-label">招标文件价格：</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<input type="number" class="form-control" id="bidDocumentPrice" v-model="project.bidDocumentPrice" name="bidDocumentPrice" placeholder="请输入招标文件价格">
+						<input type="text" class="form-control" id="bidDocumentPrice" v-model="project.bidDocumentPrice" name="bidDocumentPrice" placeholder="请输入招标文件价格">
 						<div class="input-group-addon">万元</div>
 					</div>
 				  
@@ -374,7 +374,7 @@
 				<label for="tenderValidityPeriod" class="col-sm-2 control-label">投标有效期：</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<input type="number" class="form-control" id="tenderValidityPeriod" v-model="project.tenderValidityPeriod" name="tenderValidityPeriod" placeholder="请输入投标有限期">
+						<input type="text" class="form-control" id="tenderValidityPeriod" v-model="project.tenderValidityPeriod" name="tenderValidityPeriod" placeholder="请输入投标有限期">
 						<div class="input-group-addon">天</div>
 					</div>
 				  
@@ -384,7 +384,7 @@
 				<label for="bidBond" class="col-sm-2 control-label">投标保证金：</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<input type="number" class="form-control" id="bidBond" v-model="project.bidBond" name="bidBond" placeholder="请输入投标保证金">
+						<input type="text" class="form-control" id="bidBond" v-model="project.bidBond" name="bidBond" placeholder="请输入投标保证金">
 						<div class="input-group-addon">万元</div>
 					</div>
 				</div>
@@ -394,7 +394,7 @@
 				<label for="tenderFee" class="col-sm-2 control-label">标书费：</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<input type="number" class="form-control" id="tenderFee" v-model="project.tenderFee" name="tenderFee" placeholder="请输入标书费">
+						<input type="text" class="form-control" id="tenderFee" v-model="project.tenderFee" name="tenderFee" placeholder="请输入标书费">
 						<div class="input-group-addon">万元</div>
 					</div>	
 				</div>
@@ -404,7 +404,7 @@
 				<label for="winningServiceFee" class="col-sm-2 control-label">中标服务费：</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<input type="number" class="form-control" id="winningServiceFee" v-model="project.winningServiceFee" name="winningServiceFee" placeholder="请输入中标服务费">
+						<input type="text" class="form-control" id="winningServiceFee" v-model="project.winningServiceFee" name="winningServiceFee" placeholder="请输入中标服务费">
 						<div class="input-group-addon">万元</div>
 					</div>
 				</div>

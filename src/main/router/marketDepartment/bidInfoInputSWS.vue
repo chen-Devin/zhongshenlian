@@ -87,7 +87,8 @@ export default {
 	  				subEfficiencyArray: [{"name":'',"rate": 0}]
 	  			},
 	  			biddingContent: [],
-	  			zjsOwnershipStructure: ''
+	  			zjsOwnershipStructure: '',
+	  			tenderValidityPeriod: '60',
 	  		},
 	  		office: "税务所",
 	  		departmentType: 'sws',

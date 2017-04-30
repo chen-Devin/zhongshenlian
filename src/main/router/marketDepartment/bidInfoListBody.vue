@@ -107,7 +107,9 @@ export default {
 			departmentType: '',
 			tenderPerson: '',
 			agency: '',
-			projectName: ''
+			projectName: '',
+			bidStartTime: '',
+			bidEndTime: ''
 		};
 	},
 	computed: {
@@ -153,6 +155,9 @@ export default {
 				this.bidArrayConnect = this.yiRuWei;
 			}
 			return this.bidArrayConnect;
+		},
+		departmentType() {
+
 		}
 	},
 	props: {
@@ -172,8 +177,8 @@ export default {
 		},
     	search() { //搜索
     		this.officeTransformation();
-    		this.bidStartDate = this.bidStartDate + " 00:00:00";
-    		this.bidEndDate = this.bidEndDate + " 00:00:00";
+    		this.bidStartTime = this.bidStartDate + " 00:00:00";
+    		this.bidEndTime = this.bidEndDate + " 00:00:00";
     		axios({
     		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
     		  method: 'get',
@@ -183,8 +188,8 @@ export default {
     		      let obj = {
     		        command: 'searchBiddingList',
     		        platform: 'web',
-    		        bidStartDate: this.bidStartDate,
-    		        bidEndDate: this.bidEndDate,
+    		        bidStartDate: this.bidStartTime,
+    		        bidEndDate: this.bidEndTime,
     		        tenderPerson: this.tenderPerson,
     		        agency: this.agency,
     		        projectName: this.projectName,
@@ -197,6 +202,7 @@ export default {
         		if (rep.data.statusCode === '10001') {
 					this.businessArray = rep.data.data.businessArray;
 					this.bidArray = this.businessArray;
+					console.log(this.bidArray);
         		}
       		}, (rep) => {});
     	},
@@ -253,7 +259,8 @@ export default {
 		qs
 	},
 	created() {
-		
+		this.$store.dispatch('fetchUserInfo')
+		console.log(this.$store)
 	}
 }
 </script>

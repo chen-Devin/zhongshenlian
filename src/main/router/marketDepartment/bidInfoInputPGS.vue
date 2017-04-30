@@ -87,6 +87,7 @@ export default {
 	  				subEfficiencyArray: [{"name":'',"rate": 0}]
 	  			},
 	  			biddingContent: [],
+	  			tenderValidityPeriod: '60',
 	  			zjsOwnershipStructure: ''
 	  		},
 	  		office: "评估所",

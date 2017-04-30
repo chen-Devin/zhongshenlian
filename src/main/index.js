@@ -2,6 +2,7 @@ import Vue from 'vue';
 
 import App from './App.vue';
 import router from './router/index.js';
+import store from './store/index.js';
 
 import axios from 'axios';
 
@@ -26,6 +27,7 @@ var app = new Vue({
         }
     },
     router,
+    store,
     template: '<App :user="user"></App>',
     components: {
         App

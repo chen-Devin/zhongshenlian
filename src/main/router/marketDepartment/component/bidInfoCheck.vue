@@ -87,7 +87,7 @@
 		<div class="form-group" v-if="scaleOther">
 			<label for="totalAssets" class="col-sm-2 control-label">资产总额：</label>
 			<div class="col-sm-10">
-			    {{ project.totalAssets }}
+			    {{ project.totalAssets + "万元"}}
 			</div>
 		</div>
 		<div class="form-group" v-if="scaleOther">
@@ -220,7 +220,7 @@
 		<div class="form-group">
 			<label for="controlPrice" class="col-sm-2 control-label">招标控制价：</label>
 			<div class="col-sm-10">
-			    {{ project.controlPrice }}
+			    {{ project.controlPrice + "万元"}}
 			</div>
 		</div>
 		<div class="form-group">
@@ -232,7 +232,7 @@
 		<div class="form-group">
 			<label for="bidDocumentPrice" class="col-sm-2 control-label">招标文件价格：</label>
 			<div class="col-sm-10">
-			    {{project.bidDocumentPrice}}
+			    {{project.bidDocumentPrice + "万元"}}
 			</div>
 		</div>
 		<div class="form-group">
@@ -244,27 +244,27 @@
 		<div class="form-group">
 			<label for="tenderValidityPeriod" class="col-sm-2 control-label">投标有效期：</label>
 			<div class="col-sm-10">
-			    {{ project.tenderValidityPeriod }}
+			    {{ project.tenderValidityPeriod + "天"}}
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="bidBond" class="col-sm-2 control-label">投标保证金：</label>
 			<div class="col-sm-10">
-			    {{ project.bidBond }}
+			    {{ project.bidBond + "万元"}}
 			</div>
 		</div>
 		<!--标书费-->
 		<div class="form-group">
 			<label for="tenderFee" class="col-sm-2 control-label">标书费：</label>
 			<div class="col-sm-10">
-			    {{ project.tenderFee }}
+			    {{ project.tenderFee + "万元"}}
 			</div>
 		</div>
 		<!--中标服务费-->
 		<div class="form-group">
 			<label for="winningServiceFee" class="col-sm-2 control-label">中标服务费：</label>
 			<div class="col-sm-10">
-			    {{ project.winningServiceFee }}
+			    {{ project.winningServiceFee + "万元"}}
 			</div>
 		</div>
 		<div class="form-group">
