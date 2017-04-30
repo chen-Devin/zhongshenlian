@@ -1,12 +1,12 @@
 <template>
   <div>
     <h3>
-      新增开票申请
-      <div class="pull-right">
-        <button class="btn btn-success" @click="add()">提交</button>
-        <button class="btn btn-danger" @click="del()">撤销</button>
-      </div>
-    </h3>
+        新增开票申请
+        <div class="pull-right">
+          <button class="btn btn-success" @click="add()">提交</button>
+          <button class="btn btn-danger" @click="del()">撤销</button>
+        </div>
+      </h3>
     <form class="form-horizontal">
       <div class="form-group">
         <label class="col-sm-2 control-label">签订合同编号</label>
@@ -69,8 +69,7 @@
           <p class="form-control-static">{{business.contractType.name}}</p>
         </div>
       </div>
-      <div class="form-group"
-          v-if="contractTypeChan">
+      <div class="form-group" v-if="contractTypeChan">
         <label class="col-sm-2 control-label">基本取费</label>
         <div class="col-sm-9">
           <div class="row form-group">
@@ -85,9 +84,7 @@
               </p>
             </div>
           </div>
-          <div class="row form-group"
-              v-for="(DEPEND, index) in business.contractType.basicFee.depend"
-              :key="index">
+          <div class="row form-group" v-for="(DEPEND, index) in business.contractType.basicFee.depend" :key="index">
             <div class="col-sm-6">
               <p class="form-control-static">
                 协办方：{{DEPEND.name}}
@@ -101,8 +98,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group"
-          v-if="contractTypeChan">
+      <div class="form-group" v-if="contractTypeChan">
         <label class="col-sm-2 control-label">效益取费</label>
         <div class="col-sm-9">
           <div class="row form-group">
@@ -117,9 +113,7 @@
               </p>
             </div>
           </div>
-          <div class="row form-group"
-              v-for="(DEPEND, index) in business.contractType.benefitFee.depend"
-              :key="index">
+          <div class="row form-group" v-for="(DEPEND, index) in business.contractType.benefitFee.depend" :key="index">
             <div class="col-sm-6">
               <p class="form-control-static">
                 协办方：{{DEPEND.name}}
@@ -136,157 +130,109 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">累计开票金额</label>
         <div class="col-sm-9">
-          <p class="form-control-static">{{bill.addUpAmount}}</p>
+          <p class="form-control-static">{{bill.addUpAmount+'万元'}}</p>
         </div>
       </div>
       <hr>
       <div class="form-group">
         <label class="col-sm-2 control-label">本次开票金额</label>
         <div class="col-sm-9">
-          <input type="number"
-                class="form-control"
-                placeholder="请输入本次开票金额"
-                v-model.number="bill.amount">
+          <div class="input-group">
+            <input type="number" class="form-control" placeholder="请输入本次开票金额" v-model.number="bill.amount">
+            <div class="input-group-addon">万元</div>
+          </div>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">开票单位</label>
         <div class="col-sm-9">
-          <input type="text"
-                class="form-control"
-                placeholder="请输入开票单位"
-                v-model="bill.billingUnit">
+          <input type="text" class="form-control" placeholder="请输入开票单位" v-model="bill.billingUnit">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">申请开票种类</label>
         <div class="col-sm-9">
           <label class="radio-inline">
-            <input type="radio"
-                  name="contractSystem"
-                  value="增值税普通发票"
-                  v-model="bill.type"> 增值税普通发票
+            <input type="radio" name="billType" value="增值税普通发票" v-model="bill.type"> 增值税普通发票
           </label>
           <label class="radio-inline">
-            <input type="radio"
-                  name="contractSystem"
-                  value="增值税专用发票"
-                  v-model="bill.type"> 增值税专用发票
+            <input type="radio" name="billType" value="增值税专用发票" v-model="bill.type"> 增值税专用发票
           </label>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">单位名称</label>
         <div class="col-sm-9">
-          <input type="text"
-                class="form-control"
-                placeholder="请输入单位名称"
-                v-model="bill.unit.name">
+          <input type="text" class="form-control" placeholder="请输入单位名称" v-model="bill.unit.name">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">纳税人识别号</label>
         <div class="col-sm-9">
-          <input type="text"
-                class="form-control"
-                placeholder="请输入纳税人识别号"
-                v-model="bill.taxpayerID">
+          <input type="text" class="form-control" placeholder="请输入纳税人识别号" v-model="bill.taxpayerID">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">单位地址</label>
         <div class="col-sm-9">
-          <input type="text"
-                class="form-control"
-                placeholder="请输入单位地址"
-                v-model="bill.unit.address">
+          <input type="text" class="form-control" placeholder="请输入单位地址" v-model="bill.unit.address">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">单位电话</label>
         <div class="col-sm-9">
-          <input type="tel"
-                class="form-control"
-                placeholder="请输入单位电话"
-                v-model="bill.unit.tele">
+          <input type="tel" class="form-control" placeholder="请输入单位电话" v-model="bill.unit.tele">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">开户银行</label>
         <div class="col-sm-9">
-          <input type="text"
-                class="form-control"
-                placeholder="请输入开户银行"
-                v-model="bill.unit.depositBank">
+          <input type="text" class="form-control" placeholder="请输入开户银行" v-model="bill.unit.depositBank">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">开户账号</label>
         <div class="col-sm-9">
-          <input type="text"
-                class="form-control"
-                placeholder="请输入开户账号"
-                v-model="bill.unit.account">
+          <input type="text" class="form-control" placeholder="请输入开户账号" v-model="bill.unit.account">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">申请日期</label>
         <div class="col-sm-9">
-          <input type="date"
-                class="form-control"
-                placeholder="请输入申请日期"
-                v-model="bill.filingDate">
+          <input type="date" class="form-control" placeholder="请输入申请日期" v-model="bill.filingDate">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">开票日期</label>
         <div class="col-sm-9">
-          <input type="date"
-                class="form-control"
-                placeholder="请输入开票日期"
-                v-model="bill.billingDate">
+          <input type="date" class="form-control" placeholder="请输入开票日期" v-model="bill.billingDate">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">送达方式</label>
         <div class="col-sm-9">
           <label class="radio-inline">
-            <input type="radio"
-                  name="contractSystem"
-                  value="快递"
-                  v-model="bill.way"> 快递
+            <input type="radio" name="sendWay" value="快递" v-model="bill.way"> 快递
           </label>
           <label class="radio-inline">
-            <input type="radio"
-                  name="contractSystem"
-                  value="申请人送达"
-                  v-model="bill.way"> 申请人送达
+            <input type="radio" name="sendWay" value="申请人送达" v-model="bill.way"> 申请人送达
           </label>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">快递收件人</label>
         <div class="col-sm-9">
-          <input type="text"
-                class="form-control"
-                placeholder="请输入快递收件人"
-                v-model="bill.receiver">
+          <input type="text" class="form-control" placeholder="请输入快递收件人" v-model="bill.receiver">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">服务内容</label>
         <div class="col-sm-9">
-          <input type="text"
-                class="form-control"
-                placeholder="请输入服务内容"
-                v-model="bill.content">
+          <input type="text" class="form-control" placeholder="请输入服务内容" v-model="bill.content">
         </div>
       </div>
     </form>
-    <bill-del-modal v-if="showDelModal"
-                    :initalBill="bill"
-                    @deleted="deleted"
-                    @canceled="delCanceled"></bill-del-modal>
+    <bill-del-modal v-if="showDelModal" :initalBill="bill" @deleted="deleted" @canceled="delCanceled"></bill-del-modal>
   </div>
 </template>
 
