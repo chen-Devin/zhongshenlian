@@ -4,11 +4,11 @@
 			<div class="row">
 				<div class="form-group col-xs-6">	
 					<label for="bidMan" class="bidMan">招标人</label>
-					<input type="text" class="form-control bidMan-input" placeholder="请输入招标人" v-model.trim="bidMan" id="bidMan">	
+					<input type="text" class="form-control bidMan-input" placeholder="请输入招标人" v-model.trim="tenderPerson" id="bidMan">	
 	  			</div>
 				<div class="form-group col-xs-6">
 					<label for="bidAgency">招标代理机构</label>
-	    			<input type="text" class="form-control angency-input" placeholder="请输入招标代理机构" v-model.trim="bidAgency" id="bidAgency">
+	    			<input type="text" class="form-control angency-input" placeholder="请输入招标代理机构" v-model.trim="agency" id="bidAgency">
 	  			</div>
 			</div>
   			<div class="row">
@@ -64,14 +64,13 @@
 </template>
 
 <script>
+import axios from 'axios';
+import qs from 'qs';
+
 export default {
 	name: 'bidInfoListBody',
 	data() {
 		return {
-			state: '',
-			bidMan: '',
-			bidAgency: '',
-			projectName: '',
 			bidStartDate: (() => {
 				let dt = new Date();
 				let year = dt.getFullYear();
@@ -104,7 +103,11 @@ export default {
 			yiZhaiPai: [],
 			yiZhongBiao: [],
 			yiRuWei: [],
-			filterState: ''
+			filterState: '',
+			departmentType: '',
+			tenderPerson: '',
+			agency: '',
+			projectName: ''
 		};
 	},
 	computed: {
@@ -168,6 +171,7 @@ export default {
 			this.$emit('checkMessage',project);
 		},
     	search() { //搜索
+    		this.officeTransformation();
     		this.bidStartDate = this.bidStartDate + " 00:00:00";
     		this.bidEndDate = this.bidEndDate + " 00:00:00";
     		axios({
@@ -179,9 +183,12 @@ export default {
     		      let obj = {
     		        command: 'searchBiddingList',
     		        platform: 'web',
-    		        // searchContent: this.searchContent, 要换
-    		        // bidStartDate: this.bidStartDate,
-    		        // bidEndDate: this.bidEndDate
+    		        bidStartDate: this.bidStartDate,
+    		        bidEndDate: this.bidEndDate,
+    		        tenderPerson: this.tenderPerson,
+    		        agency: this.agency,
+    		        projectName: this.projectName,
+    		        type: this.departmentType
     		      }
     		      return JSON.stringify(obj);
     		    })()
@@ -225,7 +232,25 @@ export default {
 				let dateStr = year + "-" + month + "-" + date;
 			  return dateStr;
 			})();
+		},
+		officeTransformation() {
+			if (this.office === "会计所") {
+				this.departmentType = 'kjs';
+			}
+			if (this.office === "评估所") {
+				this.departmentType = 'pgs';
+			}
+			if (this.office === "税务所") {
+				this.departmentType = 'sws';
+			}
+			if (this.office === "造价所") {
+				this.departmentType = 'zjs';
+			}
 		}
+	},
+	components: {
+		axios,
+		qs
 	},
 	created() {
 		
@@ -241,7 +266,7 @@ export default {
 	text-align: right;
 }
 .dateMr {
-	padding-right: 45px;
+	padding-right: 18px;
 }
 .form-inline {
 	.form-group {

@@ -4,12 +4,12 @@
 		<card>
 			<bid-info-check @isEdit="isEdit" v-if="checkShow"></bid-info-check>
 			<bid-info-edit 
-            :iniProject="project" 
-            :office="office" 
+            :iniProject="project"
+            :office="office"
             @submit="submit"
             @saveDraft="saveDraft" 
             @delBasicFee="delBasicFee" 
-            @addBasicFee="addBasicFee" 
+            @addBasicFee="addBasicFee"
             @delEfficiencyFee="delEfficiencyFee" 
             @addEfficiencyFee="addEfficiencyFee"
             @quedingDelete="quedingDelete"
@@ -118,7 +118,7 @@ export default {
                     var obj = {
                       command: 'addOrEditBiddingInfo',
                       platform: 'web',
-                      type: 'add',
+                      type: 'edit',
                       data: project
                     };
                     return JSON.stringify(obj);
@@ -219,5 +219,18 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-
+    .icon {
+        vertical-align: middle;
+        color: #EFA844;
+    }
+    .ta-c {
+        text-align: center;
+    }
+    .cancel-word {
+        margin: 0;
+    }
+    .text-danger {
+        text-decoration: none;
+        cursor: pointer;
+    }
 </style>

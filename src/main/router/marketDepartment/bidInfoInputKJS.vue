@@ -5,7 +5,7 @@
 			<bid-info-edit 
 			:iniProject="project" 
 			:office="office" 
-			@submit="submit" 
+			@submit="submit"
 			@saveDraft="saveDraft" 
 			@delBasicFee="delBasicFee" 
 			@addBasicFee="addBasicFee" 
@@ -154,7 +154,7 @@ export default {
     	            var obj = {
     	              command: 'addOrEditBiddingInfo',
     	              platform: 'web',
-    	              type: 'add',
+    	              type: 'add', //增加或编辑操作
     	              data: project
     	            };
     	            return JSON.stringify(obj);
