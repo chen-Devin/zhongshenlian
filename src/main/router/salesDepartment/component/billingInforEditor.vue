@@ -1,12 +1,12 @@
 <template>
   <div>
     <h3>
-        新增开票申请
-        <div class="pull-right">
-          <button class="btn btn-success" @click="add()">提交</button>
-          <button class="btn btn-danger" @click="del()">撤销</button>
-        </div>
-      </h3>
+      新增开票申请
+      <div class="pull-right">
+        <button class="btn btn-success" @click="add()">提交</button>
+        <button class="btn btn-danger" @click="del()">撤销</button>
+      </div>
+    </h3>
     <form class="form-horizontal">
       <div class="form-group">
         <label class="col-sm-2 control-label">签订合同编号</label>
@@ -252,9 +252,9 @@ export default {
     return {
       paths: [
         { name: '待处理业务', url: '/business-handle-list-sales', present: false },
-        { name: '业务详情', url: `/business-handle-detail-sales/${this.$route.params.id}`, present: false },
-        { name: '开票信息', url: `/business-handle-detail-sales/${this.$route.params.id}/billing-infor`, present: false },
-        { name: '新增开票申请', url: `/business-handle-detail-sales/${this.$route.params.id}/billing-infor/billing-infor-editor`, present: true }
+        { name: '业务详情', url: `/business-handle-detail-sales-${this.$route.params.id}`, present: false },
+        { name: '开票信息', url: `/business-handle-detail-sales-${this.$route.params.id}/billing-infor`, present: false },
+        { name: '新增开票申请', url: `/business-handle-detail-sales-${this.$route.params.id}/billing-infor/billing-infor-editor`, present: true }
       ],
       business: this.initBusiness,
       bill: {
@@ -308,14 +308,14 @@ export default {
   props: ['initBusiness', 'user'],
   mounted() {
     this.$emit('pathsChan', this.paths);
-    this.business.addUpAmount = (() => {
+
+    this.bill.addUpAmount = (() => {
       var sum = 0;
       for (let i = 0; i < this.business.bills.length; i++) {
         sum += parseInt(this.business.bills[i].amount);
       }
       return sum;
     })();
-    console.log(this.business.addUpAmount);
   },
   methods: {
     amountCheck() {
@@ -370,6 +370,7 @@ export default {
                     requesterName: this.business.institution.name,
                     requesterPhone: this.business.institution.telephone,
                     billingType: this.bill.type,
+                    billingUnit: this.bill.billingUnit,
                     billingAmount: this.bill.amount,
                     companyName: this.bill.unit.name,
                     taxpayerNumber: this.bill.taxpayerID,
@@ -399,7 +400,7 @@ export default {
               this.bill.id = rep.data.data.id;
               this.business.bills.push(this.bill);
               this.$emit('submited', this.business);
-              this.$router.push({ path: '../billing-infor' });
+              this.$router.push({ path: 'billing-infor' });
               resolve(rep);
             }
           }, (rep) => { });
@@ -412,7 +413,7 @@ export default {
     },
     deleted() {
       this.showDelModal = false;
-      this.$router.push({ path: '../billing-infor' });
+      this.$router.push({ path: 'billing-infor' });
     },
     delCanceled() {
       this.showDelModal = false;

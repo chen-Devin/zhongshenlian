@@ -17,7 +17,7 @@
       </div>
       <div slot="footer">
         <button class="btn btn-primary modal-default-button"
-              @click="close()">
+                @click="close()">
           确定
         </button>
       </div>

@@ -17,11 +17,11 @@ export default {
   data() {
     return {
       parts: [
-        {name: '业务概况', path: 'business-profile'},
-        {name: '业务开展', path: 'business-conduct'},
-        {name: '开票信息', path: 'billing-infor'},
-        {name: '业务报告', path: 'business-report'},
-        {name: '操作历史', path: 'operat-history'}
+        {name: '业务概况', path: 'business-profile', state: true},
+        {name: '业务开展', path: 'business-conduct', state: false},
+        {name: '开票信息', path: 'billing-infor', state: false},
+        {name: '业务报告', path: 'business-report', state: false},
+        {name: '操作历史', path: 'operat-history', state: false}
       ],
       business: this.initBusiness
     };

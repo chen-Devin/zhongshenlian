@@ -83,9 +83,9 @@ export default {
     },
     businessRoute(BUSINESS) {
       if(BUSINESS.projectStatus===6) {
-        return '/business-review-detail-sales/'+BUSINESS.id;
+        return '/business-review-detail-sales-'+BUSINESS.id;
       }else{
-        return '/business-review-edit/'+BUSINESS.id;
+        return '/business-review-edit-'+BUSINESS.id;
       }
     }
   },

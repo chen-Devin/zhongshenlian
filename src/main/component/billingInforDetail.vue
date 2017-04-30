@@ -196,13 +196,13 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">累计开票金额</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{bill.addUpAmount}}</p>
+        <p class="form-control-static">{{bill.addUpAmount===''?'':`${bill.addUpAmount}万元`}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">本次开票金额</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{bill.amount}}</p>
+        <p class="form-control-static">{{bill.amount===''?'':`${bill.amount}万元`}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -298,20 +298,9 @@ export default {
   name: 'billingInforDetail',
   data() {
     return {
-      paths: [
-        { name: '待处理业务', url: '/business-handle-list-sales', present: false },
-        { name: '业务详情', url: `/business-handle-detail-sales/${this.$route.params.id}`, present: false },
-        { name: '开票信息', url: `/business-handle-detail-sales/${this.$route.params.id}/billing-infor`, present: false },
-        { name: '开票详情', url: `/business-handle-detail-sales/${this.$route.params.id}/billing-infor/billing-infor-detail/${this.$route.params.billId}`, present: true }
-      ],
+      paths: [],
       business: this.initBusiness,
-      bill: (() => {
-        for (let i = 0; i < this.business.bills.length; i++) {
-          if (this.$route.params.billId === this.business.bills[i].id) {
-            return this.business.bills[i];
-          }
-        }
-      })(),
+      bill: {},
       uploadBillURL: '',
       uploadReceiptURL: ''
     };
@@ -328,7 +317,15 @@ export default {
     }
   },
   props: ['initBusiness', 'user'],
-  create() {
+  mounted() {
+    this.bill = (() => {
+      for (let i = 0; i < this.business.bills.length; i++) {
+        if (parseInt(this.$route.params.billId) === this.business.bills[i].id) {
+          return this.business.bills[i];
+        }
+      }
+    })();
+
     let data = {
       command: 'handlerBusiness',
       platform: 'web',
@@ -345,6 +342,37 @@ export default {
     };
     this.uploadReceiptURL = '/fileUpload?data=' + JSON.stringify(data);
 
+    if (this.user.department === '业务部') {
+      this.paths.push({ name: '待处理业务', url: '/business-handle-list-sales', present: false });
+      this.paths.push({ name: '业务详情', url: `/business-handle-detail-sales-${this.$route.params.id}`, present: false });
+      this.paths.push({ name: '开票信息', url: `/business-handle-detail-sales-${this.$route.params.id}/billing-infor`, present: false });
+      this.paths.push({ name: '开票详情', url: `/business-handle-detail-sales-${this.$route.params.id}/billing-infor/billing-infor-detail-${this.$route.params.billId}`, present: true });
+    } else if (this.user.department === '风险评估部') {
+      this.paths.push({ name: '待处理业务', url: '/business-handle-list-risk', present: false });
+      this.paths.push({ name: '业务详情', url: `/business-handle-detail-risk-${this.$route.params.id}`, present: false });
+      this.paths.push({ name: '开票信息', url: `/business-handle-detail-risk-${this.$route.params.id}/billing-infor`, present: false });
+      this.paths.push({ name: '开票详情', url: `/business-handle-detail-risk-${this.$route.params.id}/billing-infor/billing-infor-detail-${this.$route.params.billId}`, present: true });
+    } else if (this.user.department === '所长') {
+      this.paths.push({ name: '待处理业务', url: '/business-handle-list-leader', present: false });
+      this.paths.push({ name: '业务详情', url: `/business-handle-detail-leader-${this.$route.params.id}`, present: false });
+      this.paths.push({ name: '开票信息', url: `/business-handle-detail-leader-${this.$route.params.id}/billing-infor`, present: false });
+      this.paths.push({ name: '开票详情', url: `/business-handle-detail-leader-${this.$route.params.id}/billing-infor/billing-infor-detail-${this.$route.params.billId}`, present: true });
+    } else if (this.user.department === '办公室') {
+      this.paths.push({ name: '待处理业务', url: '/business-handle-list-office', present: false });
+      this.paths.push({ name: '业务详情', url: `/business-handle-detail-office-${this.$route.params.id}`, present: false });
+      this.paths.push({ name: '开票信息', url: `/business-handle-detail-office-${this.$route.params.id}/billing-infor`, present: false });
+      this.paths.push({ name: '开票详情', url: `/business-handle-detail-office-${this.$route.params.id}/billing-infor/billing-infor-detail-${this.$route.params.billId}`, present: true });
+    } else if (this.user.department === '财务部') {
+      this.paths.push({ name: '待处理业务', url: '/business-handle-list-financial', present: false });
+      this.paths.push({ name: '业务详情', url: `/business-handle-detail-financial-${this.$route.params.id}`, present: false });
+      this.paths.push({ name: '开票信息', url: `/business-handle-detail-financial-${this.$route.params.id}/billing-infor`, present: false });
+      this.paths.push({ name: '开票详情', url: `/business-handle-detail-financial-${this.$route.params.id}/billing-infor/billing-infor-detail-${this.$route.params.billId}`, present: true });
+    } else if (this.user.department === '档案部') {
+      this.paths.push({ name: '待处理业务', url: '/business-handle-list-archives', present: false });
+      this.paths.push({ name: '业务详情', url: `/business-handle-detail-archives-${this.$route.params.id}`, present: false });
+      this.paths.push({ name: '开票信息', url: `/business-handle-detail-archives-${this.$route.params.id}/billing-infor`, present: false });
+      this.paths.push({ name: '开票详情', url: `/business-handle-detail-archives-${this.$route.params.id}/billing-infor/billing-infor-detail-${this.$route.params.billId}`, present: true });
+    }
     this.$emit('pathsChan', this.paths);
   },
   methods: {

@@ -40,7 +40,7 @@ export default {
     return {
       paths: [
         { name: '待处理业务', url: '/business-handle-list-office', present: false },
-        { name: '业务详情', url: `/business-handle-detail-office/${this.$route.params.id}`, present: true },
+        { name: '业务详情', url: `/business-handle-detail-office-${this.$route.params.id}`, present: true },
       ],
       business: {
         id: this.$route.params.id,
@@ -372,6 +372,7 @@ export default {
 
             this.business.projectStatus = parseInt(rep.data.data.projectStatus);
 
+            this.business.files = [];
             for (let i = 0; i < rep.data.data.annexArray.length; i++) {
               let obj = {
                 id: rep.data.data.annexArray[i].id,
@@ -381,6 +382,7 @@ export default {
               this.business.files.push(obj);
             }
 
+            this.business.contracts = [];
             for (let i = 0; i < rep.data.data.contractAnnexArray.length; i++) {
               let obj = {
                 id: rep.data.data.contractAnnexArray[i].id,
@@ -393,6 +395,7 @@ export default {
             this.business.projectApproverArray = rep.data.data.projectApproverArray;
             this.business.projectSchduleArray = rep.data.data.projectSchduleArray;
 
+            this.business.bills = [];
             for (let i = 0; i < rep.data.data.projectBillingArray.length; i++) {
               let obj = {
                 id: rep.data.data.projectBillingArray[i].id,
@@ -446,11 +449,12 @@ export default {
                   }
                   return arr;
                 })(),
-                state: parseInt(rep.data.data.contractAnnexArray[i].financeHandleStatus)
+                state: parseInt(rep.data.data.projectBillingArray[i].financeHandleStatus)
               };
               this.business.bills.push(obj);
             }
 
+            this.business.reports = [];
             for (let i = 0; i < rep.data.data.reportAnnexArray.length; i++) {
               let obj = {
                 id: rep.data.data.reportAnnexArray[i].id,
