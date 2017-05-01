@@ -41,7 +41,7 @@
 				<label class="radio-inline">
 				  <input type="radio" name="filterState" id="inlineradio3" value="未摘牌" v-model="filterState"> 未摘牌
 				</label>
-				<button class="btn btn-primary type-btn f-r" @click="input()">录入</button>
+				<button class="btn btn-primary type-btn f-r" @click="input()" v-if="inputBtn">录入</button>
 			</p>
 		</div>
 		<table class="table table-hover projectList">
@@ -109,7 +109,8 @@ export default {
 			agency: '',
 			projectName: '',
 			bidStartTime: '',
-			bidEndTime: ''
+			bidEndTime: '',
+			inputBtn: false
 		};
 	},
 	computed: {
@@ -260,7 +261,6 @@ export default {
 	},
 	created() {
 		this.$store.dispatch('fetchUserInfo')
-		console.log(this.$store)
 	}
 }
 </script>
