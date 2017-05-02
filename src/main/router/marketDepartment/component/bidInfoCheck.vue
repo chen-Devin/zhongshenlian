@@ -317,9 +317,31 @@
 			</div>	
 		</div>
 		<!-- 入围或中标通知书-->
-		<div>
-			<p>123</p>
-			<input type="file" value="浏览" />
+		<div class="row">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">中标通知书：</label>
+				<div class="col-sm-8"></div>
+				<div class="col-sm-2">
+					<upload-report :type="bidNotice" ></upload-report>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">入围通知书：</label>
+				<div class="col-sm-8"></div>
+				<div class="col-sm-2">
+					<upload-report :type="shortlistedNotice"></upload-report>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<label class="col-sm-2 control-label"></label>
+				<div class="col-sm-10">
+					<button class="btn btn-default">上传完成</button>
+				</div>
+			</div>
 		</div>
 	</form>
 </template>
@@ -331,10 +353,14 @@
 	.f-r {
 		float: right;
 	}
+	.el-upload-list {
+        margin-left: 20px;
+    }
 </style>
 
 <script>
 import axios from 'axios';
+import uploadReport from './uploadReport.vue';
 
 export default {
     name: 'bidInfoCheck',
@@ -356,6 +382,9 @@ export default {
 			user: {},
 			delipotentShow: true,
 			directorAgreeShow: false,
+			bidNotice: 'bidNotice',
+			shortlistedNotice: 'shortlistedNotice',
+			projectId: this.$route.params.id
     	}
     },
     computed: {
@@ -485,7 +514,6 @@ export default {
     		}
     	},
     	showDirectorAgree() {
-    		console.log('test');
     		if (this.project.biddingStatus === "1" && this.user.department === "所长" && this.project.directorHandleStatus === "3") {
     			this.directorAgreeShow = true;
     		}
@@ -557,7 +585,7 @@ export default {
     	this.user = this.$store.getters.getUser;
     },
     components: {
-
+    	uploadReport
     }
 }
 </script>
