@@ -1,6 +1,7 @@
 <template>
 	<form class="form-horizontal">
-		<button class="btn btn-primary f-r" @click="isEdit">编辑</button>
+		<button class="btn btn-primary f-r" @click="isEdit" v-if="editBtn">编辑</button>
+		<button class="btn btn-primary f-r" @click="delisting" v-if="brandBtn">摘牌</button>
 		<div class="form-group">
 		  <label for="projectName" class="col-sm-2 control-label">项目名称：</label>
 		  <div class="col-sm-6">
@@ -279,13 +280,46 @@
 			    {{ project.openBidPlace }}
 			</div>
 		</div>
-		<hr>
 		<!--备注-->
 		<div class="form-group">
 			<label for="remark" class="col-sm-2 control-label">备注：</label>
 			<div class="col-sm-10">
 				{{ project.remark }}
 			</div>
+		</div>
+		<hr>
+		<!-- 摘牌信息 一会加上-->
+		<div v-if="delipotentShow">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">摘牌部门：</label>
+				<div class="col-sm-10">
+					{{ project.delipotentDepartment }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="remark" class="col-sm-2 control-label">摘牌人员：</label>
+				<div class="col-sm-10">
+					{{ project.delipotentName }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="remark" class="col-sm-3 control-label">{{ project.delipotentTime }}</label>
+			</div>
+		</div>
+		<!-- 所长通过不通过-->
+		<div v-if="directorAgreeShow">
+			<div class="form-group">
+				<label for="remark" class="col-sm-2 control-label"></label>
+				<div class="col-sm-10">
+					<button class="btn btn-success" @click="approve()">通过</button>
+					<button class="btn btn-danger">不通过</button>
+				</div>
+			</div>	
+		</div>
+		<!-- 入围或中标通知书-->
+		<div>
+			<p>123</p>
+			<input type="file" value="浏览" />
 		</div>
 	</form>
 </template>
@@ -307,6 +341,7 @@ export default {
     data() {
     	return {
 			project: {
+				biddingStatus: '',
 				contractType: {
 					mainBasicRate: 0,
 					mainEfficiencyRate: 0,
@@ -314,7 +349,13 @@ export default {
 					subEfficiencyArray: [{"name":'',"rate": 0}]
 				}
 			},
-			office: ''
+			office: '',
+			editBtn: false,
+			brandBtn: false,
+			checkBtn: false,
+			user: {},
+			delipotentShow: true,
+			directorAgreeShow: false,
     	}
     },
     computed: {
@@ -384,6 +425,9 @@ export default {
     		else {
     			return false;
     		}
+    	},
+    	biddingStatus() {
+    		return this.project.biddingStatus;
     	}
     },
     methods: {
@@ -391,35 +435,126 @@ export default {
     		this.$emit('isEdit');
     	},
     	getInfo() {
-    		axios({
+    		let pro = new Promise((resolve, reject) => {
+    			axios({
+	    		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+	    		  method: 'get',
+	    		  url: '/service',
+	    		  params: {
+	    		    data: (() => {
+	    		      let obj = {
+	    		        command: 'getBiddingInfo',
+	    		        platform: 'web',
+	    		        id: this.$route.params.id,
+	    		        type: this.$route.params.office,
+	    		      }
+	    		      return JSON.stringify(obj);
+	    		    })()
+	    		  }
+	    		}).then((rep) => {
+	        		if (rep.data.statusCode === '10001') {
+						this.project = rep.data.data;
+						resolve('done');
+	        		} else {
+	        			
+	        		}
+	      		}, (rep) => {
+	      			
+	      		});
+	    	});
+	    	return pro;
+    	},
+    	showEditBtn() {
+    		if (this.user.department === "市场部" && this.project.biddingStatus === "0") {
+    			this.editBtn = true;
+    		}
+    	},
+    	showBrandBtn() {
+    		if (this.user.department === "业务部" && this.project.biddingStatus === "0") {
+    			this.brandBtn = true;
+    		}
+    	},
+    	showCheckBtn() {
+    		if (this.user.department === "所长") {
+    			this.checkBtn = true;
+    		}
+    	},
+    	showDelipotent() {
+    		if (this.project.biddingStatus === "0") {
+    			this.delipotentShow = false;
+    		}
+    	},
+    	showDirectorAgree() {
+    		console.log('test');
+    		if (this.project.biddingStatus === "1" && this.user.department === "所长" && this.project.directorHandleStatus === "3") {
+    			this.directorAgreeShow = true;
+    		}
+    	},
+    	delisting() {
+			axios({
     		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
     		  method: 'get',
     		  url: '/service',
     		  params: {
     		    data: (() => {
     		      let obj = {
-    		        command: 'getBiddingInfo',
+    		        command: 'delisting',
     		        platform: 'web',
-    		        id: this.$route.params.id,
-    		        type: this.$route.params.office,
+    		        biddingId: this.project.id
     		      }
     		      return JSON.stringify(obj);
     		    })()
     		  }
     		}).then((rep) => {
         		if (rep.data.statusCode === '10001') {
-					this.project = rep.data.data;
+					console.log('摘牌成功');
+        		} else {
+        			
         		}
-      		}, (rep) => {});
+      		}, (rep) => {
+      			
+      		});
+    	},
+    	approve() {
+			axios({
+    		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+    		  method: 'get',
+    		  url: '/service',
+    		  params: {
+    		    data: (() => {
+    		      let obj = {
+    		        command: 'reviewBiddingInfo',
+    		        platform: 'web',
+    		        id: this.project.id,
+    		        result: "通过",
+    		        reason: ""
+    		      }
+    		      return JSON.stringify(obj);
+    		    })()
+    		  }
+    		}).then((rep) => {
+        		if (rep.data.statusCode === '10001') {
+					console.log('审核通过');
+        		} else {
+        			
+        		}
+      		}, (rep) => {
+      			
+      		});
     	}
     },
-    
+    props: ['biddingState'],
     created() {
-    	this.getInfo();
-    	console.log(this.project);
+    	this.getInfo().then(() => {
+    		this.showEditBtn();
+    		this.showDelipotent();
+    		this.showDirectorAgree();
+    		this.showBrandBtn();
+    	}, () => { });
     	this.id = this.$route.params.id;
     	this.office = this.$route.params.office;
-
+    	this.$store.dispatch('fetchUserInfo');
+    	this.user = this.$store.getters.getUser;
     },
     components: {
 
