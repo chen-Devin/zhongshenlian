@@ -869,7 +869,17 @@ export default {
                   annexArray: this.business.files,
                   contractAnnexArray: this.business.contracts,
                   projectApproverArray: this.business.projectApproverArray,
-                  projectSchduleArray: this.business.projectSchduleArray,
+                  projectSchduleArray: (() => {
+                    let arr = [];
+                    for (let i = 0; i < this.business.schdules.length; i++) {
+                      let obj = {
+                        name: this.business.schdules[i].name,
+                        state: this.business.schdules[i].state === true ? '0' : '1'
+                      };
+                      arr.push(obj);
+                    }
+                    return arr;
+                  })(),
                   projectBillingArray: this.business.bills,
                   projectOperatingArray: this.business.projectOperatingArray
                 }
@@ -1001,7 +1011,17 @@ export default {
                     annexArray: this.business.files,
                     contractAnnexArray: this.business.contracts,
                     projectApproverArray: this.business.projectApproverArray,
-                    projectSchduleArray: this.business.projectSchduleArray,
+                    projectSchduleArray: (() => {
+                      let arr = [];
+                      for (let i = 0; i < this.business.schdules.length; i++) {
+                        let obj = {
+                          name: this.business.schdules[i].name,
+                          state: this.business.schdules[i].state === true ? '0' : '1'
+                        };
+                        arr.push(obj);
+                      }
+                      return arr;
+                    })(),
                     projectBillingArray: this.business.bills,
                     projectOperatingArray: this.business.projectOperatingArray
                   }

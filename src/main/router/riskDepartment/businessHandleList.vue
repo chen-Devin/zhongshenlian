@@ -49,7 +49,7 @@ export default {
         params: {
           data: (() => {
             var obj = {
-              command: 'getBusinessReviewing',
+              command: 'getBusinessReviewingAgain',
               platform: 'web'
             }
             return JSON.stringify(obj);

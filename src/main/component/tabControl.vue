@@ -33,7 +33,6 @@ export default {
       this.$emit('pathsChan', paths);
     },
     sel(index) {
-      console.log('it works');
       for (let i = 0; i < this.parts.length; i++) {
         this.parts[i].state = false;
       }

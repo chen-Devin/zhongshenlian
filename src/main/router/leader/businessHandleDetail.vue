@@ -218,7 +218,7 @@ export default {
         projectStatus: 1,
         contracts: [],
         projectApproverArray: [],
-        projectSchduleArray: [],
+        schdules: [],
         bills: [],
         reports: [],
         projectOperatingArray: [],
@@ -380,7 +380,14 @@ export default {
             }
 
             this.business.projectApproverArray = rep.data.data.projectApproverArray;
-            this.business.projectSchduleArray = rep.data.data.projectSchduleArray;
+
+            for (let i = 0; i < rep.data.data.projectSchduleArray.length; i++) {
+              let obj = {
+                name: rep.data.data.projectSchduleArray[i].name,
+                state: rep.data.data.projectSchduleArray[i].state === '0' ? true : false
+              };
+              this.business.schdules.push(obj);
+            }
 
             this.business.bills = [];
             for (let i = 0; i < rep.data.data.projectBillingArray.length; i++) {

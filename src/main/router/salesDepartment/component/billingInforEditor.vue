@@ -252,7 +252,7 @@ export default {
     return {
       paths: [
         { name: '待处理业务', url: '/business-handle-list-sales', present: false },
-        { name: '业务详情', url: `/business-handle-detail-sales-${this.$route.params.id}`, present: false },
+        { name: '业务详情', url: `/business-handle-detail-sales-${this.$route.params.id}/billing-infor`, present: false },
         { name: '开票信息', url: `/business-handle-detail-sales-${this.$route.params.id}/billing-infor`, present: false },
         { name: '新增开票申请', url: `/business-handle-detail-sales-${this.$route.params.id}/billing-infor/billing-infor-editor`, present: true }
       ],

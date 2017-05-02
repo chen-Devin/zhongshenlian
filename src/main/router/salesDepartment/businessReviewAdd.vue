@@ -230,7 +230,24 @@ export default {
         projectStatus: 1,
         contracts: [],
         projectApproverArray: [],
-        projectSchduleArray: [],
+        schdules: [
+          {
+            name: '审前调查',
+            state: false
+          },{
+            name: '现场工作',
+            state: false
+          },{
+            name: '整理底稿',
+            state: false
+          },{
+            name: '客户沟通',
+            state: false
+          },{
+            name: '报告初稿',
+            state: false
+          }
+        ],
         bills: [],
         reports: [],
         projectOperatingArray: [],
