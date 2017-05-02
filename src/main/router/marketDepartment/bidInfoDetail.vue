@@ -6,6 +6,7 @@
 			<bid-info-edit 
             :iniProject="project"
             :office="office"
+            :isTempDetail="isTempDetail"
             @submit="submit"
             @saveDraft="saveDraft" 
             @delBasicFee="delBasicFee" 
@@ -191,7 +192,7 @@ export default {
         },
         deleteFinish() {
             console.log(this.officeSX);
-            this.$router.push('/bid-info-draft/');
+            this.$router.push('/bid-info-list/' + this.officeSX);
         },
         inputFinish() {
             this.$router.push('/bid-info-list/' + this.officeSX);
@@ -206,8 +207,7 @@ export default {
     	this.editShow = false;
     	this.checkShow = true;
         this.id = this.$route.params.id;
-        this.officeSX = this.$route.params.office; 
-        console.log(this.$store); 
+        this.officeSX = this.$route.params.office;  
     },
     components: {
     	crumbs,

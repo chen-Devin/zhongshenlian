@@ -110,7 +110,8 @@ export default {
 			projectName: '',
 			bidStartTime: '',
 			bidEndTime: '',
-			inputBtn: false
+			inputBtn: false,
+			user: {}
 		};
 	},
 	computed: {
@@ -253,6 +254,11 @@ export default {
 			if (this.office === "造价所") {
 				this.departmentType = 'zjs';
 			}
+		},
+		showInputBtn() {
+			if (this.user.department === "市场部") {
+				this.inputBtn = true;
+			}
 		}
 	},
 	components: {
@@ -260,7 +266,9 @@ export default {
 		qs
 	},
 	created() {
-		this.$store.dispatch('fetchUserInfo')
+		this.$store.dispatch('fetchUserInfo');
+		this.user = this.$store.getters.getUser;
+		this.showInputBtn();
 	}
 }
 </script>
