@@ -7,7 +7,7 @@
         </h3>
       <div class="business-list-review list-group">
         <router-link class="list-group-item"
-                     :to="'/business-review-detail-risk/'+BUSINESS.id"
+                     :to="'/business-review-detail-risk-'+BUSINESS.id"
                      v-for="(BUSINESS, index) in businesses"
                      :key="index">
           <span class="label label-warning"
