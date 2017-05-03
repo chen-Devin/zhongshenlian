@@ -7,7 +7,8 @@
       :file-list="fileList"
       :show-file-list="false"
       :on-success="uploadSuccess"
-      :type="type">
+      :type="type"
+      >
       <slot>
           <a>上传</a>
             <!-- <el-button size="small" type="primary">上传</el-button> -->
@@ -21,7 +22,7 @@
       text-align: center;
     }
 </style>
-  
+
 <script>
 import Vue from 'vue';
 import axios from 'axios';
@@ -51,8 +52,13 @@ export default {
           name: file.name,
           url: responseData.data.path
         };
-        this.business.reports.push(obj);
+        this.fileList = [];
+        this.fileList.push(obj);
+        this.$emit('uploadList',this.fileList);
       }
+      console.log(responseData);
+      console.log(file);
+      console.log(fileList);
     }
   },
   mounted() {

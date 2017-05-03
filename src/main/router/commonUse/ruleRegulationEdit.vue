@@ -21,7 +21,6 @@
     import qs from 'qs';
     import router from '../index.js';
 
-    import vEditDiv from './component/vEditDiv.vue';
     import crumbs from '../../component/crumbs.vue';
     import card from '../../component/card.vue';
     export default {

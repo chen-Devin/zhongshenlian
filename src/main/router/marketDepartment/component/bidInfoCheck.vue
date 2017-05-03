@@ -38,7 +38,7 @@
 				<span v-for="item in project.biddingContent">{{ item + " " }}</span>
 			</div>
 		</div>
-		<div class="form-group" v-if="swsBiddingContent"> 
+		<div class="form-group" v-if="swsBiddingContent">
 			<label class="col-sm-2 control-label">招标内容：</label>
 			<div class="col-sm-10">
 				<span v-for="item in project.biddingContent">{{ item + " " }}</span>
@@ -135,7 +135,7 @@
 							</div>
 						</div>
 						<div class="col-sm-1">
-							
+
 						</div>
 					</div>
 				</div>
@@ -158,7 +158,7 @@
 							</div>
 						</div>
 						<div class="col-sm-1">
-							
+
 						</div>
 					</div>
 				</div>
@@ -182,7 +182,7 @@
 							</div>
 						</div>
 						<div class="col-sm-1">
-							
+
 						</div>
 					</div>
 				</div>
@@ -205,7 +205,7 @@
 							</div>
 						</div>
 						<div class="col-sm-1">
-							
+
 						</div>
 					</div>
 				</div>
@@ -314,26 +314,28 @@
 					<button class="btn btn-success" @click="approve()">通过</button>
 					<button class="btn btn-danger">不通过</button>
 				</div>
-			</div>	
+			</div>
 		</div>
 		<!-- 入围或中标通知书-->
 		<div class="row">
 			<div class="form-group">
 				<label class="col-sm-2 control-label">中标通知书：</label>
 				<div class="col-sm-8">
-					123
+            <a :href="zhongbiaoDoc.url" target="_blank">{{ zhongbiaoDoc.name }}</a>
 				</div>
 				<div class="col-sm-2">
-					<upload-report :type="bidNotice" :id="projectId"></upload-report>
+					<upload-report :type="bidNotice" :id="projectId" @uploadList="recZhongbiaoDoc"></upload-report>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="form-group">
 				<label class="col-sm-2 control-label">入围通知书：</label>
-				<div class="col-sm-8"></div>
+				<div class="col-sm-8">
+            <a :href="ruweiDoc.url" target="_blank">{{ ruweiDoc.name }}</a>
+        </div>
 				<div class="col-sm-2">
-					<upload-report :type="shortlistedNotice" :id="projectId"></upload-report>
+					<upload-report :type="shortlistedNotice" :id="projectId" @uploadList="recRuweiDoc"></upload-report>
 				</div>
 			</div>
 		</div>
@@ -341,7 +343,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label"></label>
 				<div class="col-sm-10">
-					<button class="btn btn-default">上传完成</button>
+					<button class="btn btn-default" @click="uploadFinish()" v-if="finishBtn">上传完成</button>
 				</div>
 			</div>
 		</div>
@@ -384,9 +386,12 @@ export default {
 			user: {},
 			delipotentShow: true,
 			directorAgreeShow: false,
+      finishBtn: false,
 			bidNotice: 'bidNotice',
 			shortlistedNotice: 'shortlistedNotice',
-			projectId: this.$route.params.id
+			projectId: this.$route.params.id,
+      ruweiDoc: {},
+      zhongbiaoDoc: {}
     	}
     },
     computed: {
@@ -428,16 +433,16 @@ export default {
     	OwnershipStructure() {
     		if (this.office === "zjs") {
     			return false;
-    		} 
+    		}
     		if (this.office === "kjs") {
     			return true;
-    		} 
+    		}
     		if (this.office === "pgs") {
     			return true;
-    		} 
+    		}
     		if (this.office === "sws") {
     			return true;
-    		} 
+    		}
     	},
     	scale() {
     		if (this.office === "zjs") {
@@ -487,10 +492,10 @@ export default {
 						this.project = rep.data.data;
 						resolve('done');
 	        		} else {
-	        			
+
 	        		}
 	      		}, (rep) => {
-	      			
+
 	      		});
 	    	});
 	    	return pro;
@@ -520,6 +525,11 @@ export default {
     			this.directorAgreeShow = true;
     		}
     	},
+      showFinishBtn() {
+          if (this.project.biddingStatus === "1" && this.project.confirmAnnex === "0") {
+              this.finishBtn = true;
+          }
+      },
     	delisting() {
 			axios({
     		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -539,10 +549,10 @@ export default {
         		if (rep.data.statusCode === '10001') {
 					console.log('摘牌成功');
         		} else {
-        			
+
         		}
       		}, (rep) => {
-      			
+
       		});
     	},
     	approve() {
@@ -566,12 +576,57 @@ export default {
         		if (rep.data.statusCode === '10001') {
 					console.log('审核通过');
         		} else {
-        			
+
         		}
       		}, (rep) => {
-      			
+
       		});
-    	}
+    	},
+      recRuweiDoc(fileList) {
+          this.ruweiDoc = fileList[0];
+      },
+      recZhongbiaoDoc(fileList) {
+          this.zhongbiaoDoc = fileList[0];
+      },
+      distributeDoc() {
+        for (var i = 0; i < this.project.biddingAnnexArray.length; i++) {
+            if (this.project.biddingAnnexArray[i].annexType === "bidNotice") {
+                this.zhongbiaoDoc.name = this.project.biddingAnnexArray[i].annexName;
+                this.zhongbiaoDoc.url = this.project.biddingAnnexArray[i].annexUrl;
+                this.zhongbiaoDoc.id = this.project.biddingAnnexArray[i].id;
+            } else if (this.project.biddingAnnexArray[i].annexType === "shortlistedNotice") {
+                this.ruweiDoc.name = this.project.biddingAnnexArray[i].annexName;
+                this.ruweiDoc.url = this.project.biddingAnnexArray[i].annexUrl;
+                this.ruweiDoc.id = this.project.biddingAnnexArray[i].id;
+            }
+        }
+      },
+      uploadFinish() {
+          axios({
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+              method: 'get',
+              url: '/service',
+              params: {
+                data: (() => {
+                  let obj = {
+                    command: 'confirmBiddingAnnex',
+                    platform: 'web',
+                    id: this.project.id
+                  }
+                  return JSON.stringify(obj);
+                })()
+              }
+            }).then((rep) => {
+                if (rep.data.statusCode === '10001') {
+                    console.log('上传完成');
+                    this.showFinishBtn = false;
+                } else {
+
+                }
+              }, (rep) => {
+
+              });
+      }
     },
     props: ['biddingState'],
     created() {
@@ -580,6 +635,8 @@ export default {
     		this.showDelipotent();
     		this.showDirectorAgree();
     		this.showBrandBtn();
+        this.distributeDoc();
+        this.showFinishBtn();
     	}, () => { });
     	this.id = this.$route.params.id;
     	this.office = this.$route.params.office;
