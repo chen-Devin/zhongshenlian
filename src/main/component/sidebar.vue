@@ -38,8 +38,8 @@ export default {
           flag: '',
           show: false,
           sub: [
-            {name: '待处理业务', link: '/business-handle-list-leader', active: false},
             {name: '待审核业务', link: '/business-review-list-leader', active: false},
+            {name: '待处理业务', link: '/business-handle-list-leader', active: false},
             {name: '客户信息', link: '/customer-infor-list', active: false},
             {name: '职员权限管理', link: '/staff-management-author', active: false},
             {name: '职员资料管理', link: '/staff-management-infor', active: false},
@@ -51,7 +51,8 @@ export default {
           flag: '',
           show: false,
           sub: [
-            {name: '待发合同编号', link: '/business-handle-list-office', active: false}
+            {name: '待发合同编号', link: '/business-review-list-office', active: false},
+            {name: '待完结业务', link: '/business-handle-list-office', active: false}
           ]
         },
         {
@@ -69,8 +70,8 @@ export default {
           flag: '',
           show: false,
           sub: [
-            {name: '待处理业务', link: '/business-handle-list-risk', active: false},
-            {name: '待审核业务', link: '/business-review-list-risk', active: false}
+            {name: '待审核业务', link: '/business-review-list-risk', active: false},
+            {name: '待复审业务', link: '/business-handle-list-risk', active: false}
           ]
         },
         {

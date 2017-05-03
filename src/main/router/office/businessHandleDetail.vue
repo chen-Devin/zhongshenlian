@@ -4,8 +4,8 @@
     <card>
       <h3>
         {{business.name}}
-        <button class="btn btn-primary pull-right" @click="sel()" v-if="!sended">发放合同编号</button>
-        <small class="label label-success pull-right" v-if="sended">合同编号已经发放</small>
+        <button class="btn btn-primary pull-right" @click="sub()" v-if="!sended">完结业务</button>
+        <small class="label label-success pull-right" v-if="sended">业务已完结</small>
       </h3>
       <div class="business-wrap">
         <business :initBusiness="business" :user="user" @pathsChan="pathsChan"></business>
@@ -16,10 +16,10 @@
         </div>
       </div>
     </card>
-    <contract-num-modal v-if="showModal"
-                        :initBusiness="business"
-                        @submited="submited"
-                        @canceled="canceled"></contract-num-modal>
+    <complete-modal v-if="showModal"
+                    :initBusiness="business"
+                    @submited="submited"
+                    @canceled="canceled"></complete-modal>
   </div>
 </template>
 
@@ -32,15 +32,15 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
-import contractNumModal from './component/contractNumModal.vue';
+import completeModal from './component/completeModal.vue';
 
 export default {
   name: 'businessHandleDetailOffice',
   data() {
     return {
       paths: [
-        { name: '待处理业务', url: '/business-handle-list-office', present: false },
-        { name: '业务详情', url: `/business-handle-detail-office-${this.$route.params.id}`, present: true },
+        { name: '待完结业务', url: '/business-handle-list-office', present: false },
+        { name: '业务详情', url: `/business-handle-detail-office-${this.$route.params.id}`, present: true }
       ],
       business: {
         id: this.$route.params.id,
@@ -243,7 +243,7 @@ export default {
   props: ['user'],
   computed: {
     sended() {
-      return (this.business.projectStatus < 8) ? false : true;
+      return (this.business.projectStatus < 16) ? false : true;
     }
   },
   created() {
@@ -504,9 +504,8 @@ export default {
     sel() {
       this.showModal = true;
     },
-    submited(contNum) {
-      this.business.number = contNum;
-      this.business.projectStatus = 8;
+    submited() {
+      this.business.projectStatus = 16;
       this.showModal = false;
     },
     canceled() {
@@ -518,7 +517,7 @@ export default {
     card,
     business,
     approverAdvice,
-    contractNumModal
+    completeModal
   }
 }
 </script>

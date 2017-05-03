@@ -16,7 +16,6 @@
 <script>
 import axios from 'axios';
 import qs from 'qs';
-import router from '../index.js';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
@@ -27,7 +26,7 @@ export default {
     return {
       paths: [
         { name: '规章制度', url: '/rule-regulation', present: false },
-        { name: '制度详情', url: `/rule-regulation-detail/${this.$route.params.id}`, present: true }
+        { name: '制度详情', url: `/rule-regulation-detail-${this.$route.params.id}`, present: true }
       ],
       detail: {
         id: this.$route.params.id,
@@ -72,7 +71,7 @@ export default {
       }, (rep) => { });
     },
     editRule() {
-      this.$router.push("/rule-regulation-edit/" + this.detail.id);
+      this.$router.push("/rule-regulation-edit-" + this.detail.id);
     }
   },
   components: {

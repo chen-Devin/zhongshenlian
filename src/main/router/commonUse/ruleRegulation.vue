@@ -20,11 +20,11 @@
         制度列表
         <router-link class="btn btn-primary pull-right"
                      to="/rule-regulation-add">
-            新建制度
+          新建制度
         </router-link>
       </h3>
       <div class="rule-list list-group">
-        <router-link class="list-group-item" :to="'/rule-regulation-detail/'+RULE.id" v-for="(RULE,index) in rules" :key="index">
+        <router-link class="list-group-item" :to="'/rule-regulation-detail-'+RULE.id" v-for="(RULE,index) in rules" :key="index">
           <span class="title">{{RULE.title}}</span>
           <span class="date pull-right">{{RULE.releaseTime}}</span>
         </router-link>
@@ -36,7 +36,6 @@
 <script>
 import axios from 'axios';
 import qs from 'qs';
-import router from '../index.js';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';

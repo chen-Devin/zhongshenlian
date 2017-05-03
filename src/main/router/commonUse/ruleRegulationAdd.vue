@@ -38,7 +38,6 @@
 <script>
 import axios from 'axios';
 import qs from 'qs';
-import router from '../index.js';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';

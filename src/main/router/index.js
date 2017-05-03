@@ -8,8 +8,8 @@ import ruleRegulation from './commonUse/ruleRegulation.vue';
 import ruleRegulationDetail from './commonUse/ruleRegulationDetail.vue';
 import ruleRegulationEdit from './commonUse/ruleRegulationEdit.vue';
 import ruleRegulationAdd from './commonUse/ruleRegulationAdd.vue';
-
 import customerInforList from './commonUse/customerInforList.vue';
+
 import billingInfor from '../component/billingInfor.vue';
 import businessConduct from '../component/businessConduct.vue';
 import businessProfile from '../component/businessProfile.vue';
@@ -17,14 +17,16 @@ import businessReport from '../component/businessReport.vue';
 import operatHistory from '../component/operatHistory.vue';
 import billingInforDetail from '../component/billingInforDetail.vue';
 //所长
-import businessHandleDetailLeader from './salesDepartment/businessHandleDetail.vue';
-import businessHandleListLeader from './salesDepartment/businessHandleList.vue';
+import businessHandleDetailLeader from './leader/businessHandleDetail.vue';
+import businessHandleListLeader from './leader/businessHandleList.vue';
 import businessAnalysis from './leader/businessAnalysis.vue';
 import businessReviewDetailLeader from './leader/businessReviewDetail.vue';
 import businessReviewListLeader from './leader/businessReviewList.vue';
 import staffManagementAuthor from './leader/staffManagementAuthor.vue';
 import staffManagementInfor from './leader/staffManagementInfor.vue';
 //办公室
+import businessReviewListOffice from './office/businessReviewList.vue';
+import businessReviewDetailOffice from './office/businessReviewDetail.vue';
 import businessHandleListOffice from './office/businessHandleList.vue';
 import businessHandleDetailOffice from './office/businessHandleDetail.vue';
 //业务部
@@ -36,8 +38,8 @@ import businessReviewEdit from './salesDepartment/businessReviewEdit.vue';
 import businessReviewListSales from './salesDepartment/businessReviewList.vue';
 import billingInforEditor from './salesDepartment/component/billingInforEditor.vue';
 //风险评估部
-import businessHandleDetailRisk from './salesDepartment/businessHandleDetail.vue';
-import businessHandleListRisk from './salesDepartment/businessHandleList.vue';
+import businessHandleDetailRisk from './riskDepartment/businessHandleDetail.vue';
+import businessHandleListRisk from './riskDepartment/businessHandleList.vue';
 import businessReviewListRisk from './riskDepartment/businessReviewList.vue';
 import businessReviewDetailRisk from './riskDepartment/businessReviewDetail.vue';
 //档案部
@@ -76,11 +78,11 @@ const router = new VueRouter({
             component: ruleRegulation
         },
         {
-            path: '/rule-regulation-detail/:id',
+            path: '/rule-regulation-detail-:id',
             component: ruleRegulationDetail
         },
         {
-            path: '/rule-regulation-edit/:id',
+            path: '/rule-regulation-edit-:id',
             component: ruleRegulationEdit
         },
         {
@@ -92,8 +94,12 @@ const router = new VueRouter({
             component: customerInforList
         },
         {
-            path: '/business-analysis',
-            component: businessAnalysis
+            path: '/business-review-list-leader',
+            component: businessReviewListLeader
+        },
+        {
+            path: '/business-review-detail-leader-:id',
+            component: businessReviewDetailLeader
         },
         {
             path: '/business-handle-list-leader',
@@ -131,20 +137,24 @@ const router = new VueRouter({
             ]
         },
         {
-            path: '/business-review-detail-leader-:id',
-            component: businessReviewDetailLeader
-        },
-        {
-            path: '/business-review-list-leader',
-            component: businessReviewListLeader
-        },
-        {
             path: '/staff-management-author',
             component: staffManagementAuthor
         },
         {
             path: '/staff-management-infor',
             component: staffManagementInfor
+        },
+        {
+            path: '/business-analysis',
+            component: businessAnalysis
+        },
+        {
+            path: '/business-review-list-office',
+            component: businessReviewListOffice
+        },
+        {
+            path: '/business-review-detail-office-:id',
+            component: businessReviewDetailOffice
         },
         {
             path: '/business-handle-list-office',
@@ -182,6 +192,26 @@ const router = new VueRouter({
             ]
         },
         {
+            path: '/business-review-list-sales',
+            component: businessReviewListSales
+        },
+        {
+            path: '/business-review-add',
+            component: businessReviewAdd
+        },
+        {
+            path: '/business-review-edit-:id',
+            component: businessReviewEdit
+        },
+        {
+            path: '/business-review-detail-sales-:id',
+            component: businessReviewDetailSales
+        },
+        {
+            path: '/business-handle-list-sales',
+            component: businessHandleListSales
+        },
+        {
             path: '/business-handle-detail-sales-:id',
             component: businessHandleDetailSales,
             redirect: '/business-handle-detail-sales-:id/business-profile',
@@ -217,24 +247,12 @@ const router = new VueRouter({
             ]
         },
         {
-            path: '/business-handle-list-sales',
-            component: businessHandleListSales
+            path: '/business-review-list-risk',
+            component: businessReviewListRisk
         },
         {
-            path: '/business-review-add',
-            component: businessReviewAdd
-        },
-        {
-            path: '/business-review-detail-sales-:id',
-            component: businessReviewDetailSales
-        },
-        {
-            path: '/business-review-edit-:id',
-            component: businessReviewEdit
-        },
-        {
-            path: '/business-review-list-sales',
-            component: businessReviewListSales
+            path: '/business-review-detail-risk-:id',
+            component: businessReviewDetailRisk
         },
         {
             path: '/business-handle-list-risk',
@@ -272,12 +290,8 @@ const router = new VueRouter({
             ]
         },
         {
-            path: '/business-review-list-risk',
-            component: businessReviewListRisk
-        },
-        {
-            path: '/business-review-detail-risk-:id',
-            component: businessReviewDetailRisk
+            path: '/business-handle-list-archives',
+            component: businessHandleListArchives
         },
         {
             path: '/business-handle-detail-archives-:id',
@@ -311,8 +325,8 @@ const router = new VueRouter({
             ]
         },
         {
-            path: '/business-handle-list-archives',
-            component: businessHandleListArchives
+            path: '/business-handle-list-financial',
+            component: businessHandleListFinancial
         },
         {
             path: '/business-handle-detail-financial-:id',
@@ -344,10 +358,6 @@ const router = new VueRouter({
                     component: operatHistory
                 }
             ]
-        },
-        {
-            path: '/business-handle-list-financial',
-            component: businessHandleListFinancial
         },
         {
             path: '/bid-info-list',

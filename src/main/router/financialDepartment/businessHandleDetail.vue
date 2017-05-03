@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待处理业务', url: '/business-handle-list-financial', present: false },
+        { name: '代开发票', url: '/business-handle-list-financial', present: false },
         { name: '业务详情', url: `/business-handle-detail-financial-${this.$route.params.id}`, present: true },
       ],
       business: {

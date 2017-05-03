@@ -3,7 +3,7 @@
     <h3>
       新增开票申请
       <div class="pull-right">
-        <button class="btn btn-success" @click="add()">提交</button>
+        <button class="btn btn-success" @click="sub()">提交</button>
         <button class="btn btn-danger" @click="del()">撤销</button>
       </div>
     </h3>
@@ -232,7 +232,8 @@
         </div>
       </div>
     </form>
-    <bill-del-modal v-if="showDelModal" :initalBill="bill" @deleted="deleted" @canceled="delCanceled"></bill-del-modal>
+    <bill-sub-modal v-if="showSubModal" :initBill="bill" :initBusiness="business" @submited="submited" @canceled="subCanceled"></bill-sub-modal>
+    <bill-del-modal v-if="showDelModal" :initBill="bill" @deleted="deleted" @canceled="delCanceled"></bill-del-modal>
   </div>
 </template>
 
@@ -242,6 +243,7 @@ import axios from 'axios';
 import qs from 'qs';
 import { Message } from 'element-ui';
 
+import billSubModal from './billSubModal.vue';
 import billDelModal from './billDelModal.vue';
 
 Vue.prototype.$message = Message;
@@ -297,7 +299,8 @@ export default {
         receiptFiles: [],
         state: 0
       },
-      showDelModal: false
+      showSubModal: false,
+      showDelModal: false,
     };
   },
   computed: {
@@ -344,69 +347,24 @@ export default {
         return true;
       }
     },
-    add() {
+    sub() {
       if (!this.amountCheck()) {
         return false;
       } else if (!this.typeCheck()) {
         return false;
       } else {
-        let promise = new Promise((resolve, reject) => {
-          axios({
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-            method: 'post',
-            url: '/service',
-            data: qs.stringify({
-              data: (() => {
-                let obj = {
-                  command: 'createBillingInfo',
-                  platform: 'web',
-                  id: this.business.id,
-                  data: {
-                    projectId: this.business.id,
-                    billingApplicantId: this.bill.proposer.id,
-                    billingApplicantName: this.bill.proposer.name,
-                    applicantPhone: this.bill.proposer.tele,
-                    requesterId: this.business.institution.id,
-                    requesterName: this.business.institution.name,
-                    requesterPhone: this.business.institution.telephone,
-                    billingType: this.bill.type,
-                    billingUnit: this.bill.billingUnit,
-                    billingAmount: this.bill.amount,
-                    companyName: this.bill.unit.name,
-                    taxpayerNumber: this.bill.taxpayerID,
-                    companyAddress: this.bill.unit.address,
-                    companyPhone: this.bill.unit.tele,
-                    openCountBank: this.bill.unit.depositBank,
-                    openBankNumber: this.bill.unit.account,
-                    applicationDate: this.bill.filingDate,
-                    totalBillingAmount: this.bill.addUpAmount,
-                    billingDate: this.bill.billingDate,
-                    deliveryMethod: this.bill.way,
-                    recipientName: this.bill.receiver,
-                    recipientId: '',
-                    signContractNumber: this.business.number,
-                    serviceContent: this.bill.content,
-                    signContractAmount: this.business.contractAmount,
-                    startServiceTime: this.business.time.start,
-                    endServiceTime: this.business.time.end,
-                    annexArray: []
-                  }
-                };
-                return JSON.stringify(obj);
-              })()
-            })
-          }).then((rep) => {
-            if (rep.data.statusCode === '10001') {
-              this.bill.id = rep.data.data.id;
-              this.business.bills.push(this.bill);
-              this.$emit('submited', this.business);
-              this.$router.push({ path: 'billing-infor' });
-              resolve(rep);
-            }
-          }, (rep) => { });
-        });
-        return promise;
+        this.showSubModal = true;
       }
+    },
+    submited(id) {
+      this.bill.id = id;
+      this.business.bills.push(this.bill);
+      this.$emit('submited', this.business);
+      this.showSubModal = false;
+      this.$router.push({ path: 'billing-infor' });
+    },
+    subCanceled() {
+      this.showSubModal = false;
     },
     del() {
       this.showDelModal = true;
@@ -420,6 +378,7 @@ export default {
     },
   },
   components: {
+    billSubModal,
     billDelModal
   }
 };

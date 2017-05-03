@@ -3,35 +3,42 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3>
-        {{business.name}}
+        业务详情
+        <button class="btn btn-primary pull-right" @click="sel()" v-if="!sended">发放合同编号</button>
+        <small class="label label-success pull-right" v-if="sended">合同编号已经发放</small>
       </h3>
-      <div class="business-wrap">
-        <business :initBusiness="business" :user="user" @pathsChan="pathsChan"></business>
-        <hr>
-        <div class="row">
-          <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
-          <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
-        </div>
+      <business-profile :initBusiness="business" :user="user"></business-profile>
+      <hr>
+      <div class="row">
+        <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
+        <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
       </div>
     </card>
+    <contract-num-modal v-if="showModal"
+                        :initBusiness="business"
+                        @submited="submited"
+                        @canceled="canceled"></contract-num-modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 
+import router from '../index.js';
+
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
-import business from '../../component/business.vue';
+import businessProfile from '../../component/businessProfile.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
+import contractNumModal from './component/contractNumModal.vue';
 
 export default {
-  name: 'businessCompleteDetail',
+  name: 'businessReviewDetailOffice',
   data() {
     return {
       paths: [
-        { name: '已完成业务', url: '/business-complete-list', present: false },
-        { name: '业务详情', url: `/business-complete-detail-${this.$route.params.id}`, present: false }
+        { name: '待发合同编号', url: '/business-review-list-office', present: false },
+        { name: '业务详情', url: `/business-review-detail-office-${this.$route.params.id}`, present: true }
       ],
       business: {
         id: this.$route.params.id,
@@ -81,33 +88,33 @@ export default {
                   name: '审字',
                   code: '01',
                   state: false
-                }, {
+                },{
                   name: '专字',
                   code: '02',
                   state: false
-                }, {
+                },{
                   name: '咨字',
                   code: '03',
                   state: false
-                }, {
+                },{
                   name: '基决审字',
                   code: '04',
                   state: false
-                }, {
+                },{
                   name: '外汇检字',
                   code: '05',
                   state: false
-                }, {
+                },{
                   name: '验字',
                   code: '06',
                   state: false
-                }, {
+                },{
                   name: '外审字',
                   code: '07',
                   state: false
                 }
               ]
-            }, {
+            },{
               name: '评估所',
               code: 'TZUp',
               words: [
@@ -115,13 +122,13 @@ export default {
                   name: '评字',
                   code: '01',
                   state: false
-                }, {
+                },{
                   name: '评咨字',
                   code: '02',
                   state: false
                 }
               ]
-            }, {
+            },{
               name: '税务所',
               code: 'TZUs',
               words: [
@@ -131,7 +138,7 @@ export default {
                   state: false
                 }
               ]
-            }, {
+            },{
               name: '造价所',
               code: 'TZUz',
               words: [
@@ -139,15 +146,15 @@ export default {
                   name: '基结审字',
                   code: '01',
                   state: false,
-                }, {
+                },{
                   name: '评审字',
                   code: '02',
                   state: false,
-                }, {
+                },{
                   name: '概审字',
                   code: '03',
                   state: false,
-                }, {
+                },{
                   name: '咨字',
                   code: '04',
                   state: false
@@ -207,7 +214,7 @@ export default {
           {
             name: '直接委托',
             state: false
-          }, {
+          },{
             name: '中标委托',
             state: false
           },
@@ -227,10 +234,16 @@ export default {
         }
       },
       riskAdvices: [],
-      leaderAdivces: []
+      leaderAdivces: [],
+      showModal: false
     };
   },
   props: ['user'],
+  computed: {
+    sended() {
+      return (this.business.projectStatus < 8) ? false : true;
+    }
+  },
   created() {
     this.getInfo();
   },
@@ -485,13 +498,25 @@ export default {
     },
     pathsChan(paths) {
       this.paths = paths;
+    },
+    sel() {
+      this.showModal = true;
+    },
+    submited(contNum) {
+      this.business.number = contNum;
+      this.business.projectStatus = 8;
+      this.showModal = false;
+    },
+    canceled() {
+      this.showModal = false;
     }
   },
   components: {
     crumbs,
     card,
-    business,
-    approverAdvice
+    businessProfile,
+    approverAdvice,
+    contractNumModal
   }
 }
 </script>

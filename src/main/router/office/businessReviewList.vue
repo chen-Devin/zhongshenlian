@@ -5,7 +5,7 @@
       <h3>
         业务列表
       </h3>
-      <div class="business-list-handle list-group">
+      <div class="business-list-review list-group">
         <router-link class="list-group-item"
                      :to="businessRoute(BUSINESS)"
                      v-for="(BUSINESS, index) in businesses"
@@ -25,11 +25,11 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 
 export default {
-  name: 'businessHandleListOffice',
+  name: 'businessReviewListOffice',
   data() {
     return {
       paths: [
-        { name: '待完结业务', url: '/business-handle-list-office', present: true }
+        { name: '待发合同编号', url: '/business-review-list-office', present: true }
       ],
       businesses: []
     };
@@ -49,7 +49,7 @@ export default {
         params: {
           data: (() => {
             var obj = {
-              command: 'getBusinessReviewingAgain',
+              command: 'getBusinessReviewing',
               platform: 'web'
             }
             return JSON.stringify(obj);
@@ -70,7 +70,7 @@ export default {
       }, (rep) => { });
     },
     businessRoute(BUSINESS) {
-      return '/business-handle-detail-office-'+BUSINESS.id;
+      return '/business-review-detail-office-'+BUSINESS.id;
     }
   },
   components: {
@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.business-list-handle {
+.business-list-review {
   margin-top: 30px;
   margin-bottom: 20px;
   margin-left: auto;

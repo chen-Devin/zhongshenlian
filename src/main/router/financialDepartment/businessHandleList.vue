@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待处理业务', url: '/business-handle-list-financial', present: true }
+        { name: '代开发票', url: '/business-handle-list-financial', present: true }
       ],
       businesses: []
     };

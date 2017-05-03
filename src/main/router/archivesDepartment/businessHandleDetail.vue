@@ -247,7 +247,7 @@ export default {
   props: ['user'],
   computed: {
     submited() {
-      return (this.business.projectStatus < 16) ? false : true;
+      return (this.business.projectStatus < 15) ? false : true;
     }
   },
   created() {
@@ -518,8 +518,7 @@ export default {
         this.business.QRCode.id = responseData.data.id;
         this.business.QRCode.name = file.name;
         this.business.QRCode.url = responseData.data.path;
-        this.business.projectStatus = 17;
-        this.$emit('uploaded', this.business);
+        this.business.projectStatus = 15;
       }
     }
   },

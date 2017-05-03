@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待处理业务', url: '/business-handle-list-risk', present: true }
+        { name: '待复审业务', url: '/business-handle-list-risk', present: true }
       ],
       businesses: []
     };
@@ -70,7 +70,7 @@ export default {
       }, (rep) => { });
     },
     businessRoute(BUSINESS) {
-      return '/business-handle-detail-sales-'+BUSINESS.id;
+      return '/business-handle-detail-risk-'+BUSINESS.id;
     }
   },
   components: {

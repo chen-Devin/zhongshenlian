@@ -33,7 +33,7 @@ export default {
       }
     };
   },
-  props: ['initalBill'],
+  props: ['initBill'],
   methods: {
     del() {
       this.subBtn.cont = '已删除';

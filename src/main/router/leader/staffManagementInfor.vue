@@ -2,8 +2,8 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <department-infor v-for="(DEP, index) in departments"
-                           :department="DEP"
-                           :key="index"></department-infor>
+                      :department="DEP"
+                      :key="index"></department-infor>
   </div>
 </template>
 

@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待处理业务', url: '/business-handle-list-risk', present: false },
+        { name: '待复审业务', url: '/business-handle-list-risk', present: false },
         { name: '业务详情', url: `/business-handle-detail-risk-${this.$route.params.id}`, present: false }
       ],
       business: {
@@ -255,22 +255,12 @@ export default {
   props: ['user'],
   computed: {
     decide() {
-      if(this.user.department === '风险评估部') {
-        if (this.business.projectStatus === 2) {
-          return 'undecide';
-        } else if (this.business.projectStatus === 3) {
-          return 'refuse';
-        } else if (this.business.projectStatus === 4) {
-          return 'approve';
-        }
-      } else if(this.user.department === '所长') {
-        if (this.business.projectStatus === 4) {
-          return 'undecide';
-        } else if (this.business.projectStatus === 5) {
-          return 'refuse';
-        } else if (this.business.projectStatus === 6) {
-          return 'approve';
-        }
+      if (this.business.projectStatus === 13) {
+        return 'undecide';
+      } else if (this.business.projectStatus === 'XXXX') {
+        return 'refuse';
+      } else if (this.business.projectStatus === 14) {
+        return 'approve';
       }
     }
   },

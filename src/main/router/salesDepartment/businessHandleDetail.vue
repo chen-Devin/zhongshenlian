@@ -9,7 +9,7 @@
                 :disabled="subBtn.dis"
                 v-if="!submited">{{subBtn.cont}}</button>
         <small class="label label-success pull-right"
-              v-if="submited">已提交风评复审</small>
+               v-if="submited">已提交风评复审</small>
       </h3>
       <div class="business-wrap">
         <business :initBusiness="business" :user="user" @pathsChan="pathsChan"></business>
@@ -514,16 +514,16 @@ export default {
         data: qs.stringify({
           data: (() => {
             var obj = {
-              command: 'releaseContactNumber',
+              command: 'submitReview',
               platform: 'web',
-              id: this.initBusiness.id
+              id: this.business.id
             };
             return JSON.stringify(obj);
           })()
         })
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          this.business.projectStatus = 14;
+          this.business.projectStatus = 13;
           this.subBtn.cont = '已提交';
         }
       }, (rep) => { });

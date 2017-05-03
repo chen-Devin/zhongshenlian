@@ -38,7 +38,6 @@
 <script>
 import axios from 'axios';
 import qs from 'qs';
-import router from '../index.js';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
@@ -49,8 +48,8 @@ export default {
     return {
       paths: [
         { name: '规章制度', url: '/rule-regulation', present: false },
-        { name: '制度详情', url: `/rule-regulation-detail/${this.$route.params.id}`, present: false },
-        { name: '编辑制度', url: `/rule-regulation-edit/${this.$route.params.id}`, present: true }
+        { name: '制度详情', url: `/rule-regulation-detail-${this.$route.params.id}`, present: false },
+        { name: '编辑制度', url: `/rule-regulation-edit-${this.$route.params.id}`, present: true }
       ],
       editRule: {
         id: this.$route.params.id,
@@ -106,13 +105,13 @@ export default {
           })
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.$router.push('/rule-regulation-detail/' + this.editRule.id)
+            this.$router.push('/rule-regulation-detail-' + this.editRule.id)
           }
         }, (rep) => { });
       }
     },
     canceled() {
-      this.$router.push('/rule-regulation-detail/' + this.editRule.id)
+      this.$router.push('/rule-regulation-detail-' + this.editRule.id)
     }
   },
   components: {

@@ -70,7 +70,7 @@ export default {
       }, (rep) => { });
     },
     businessRoute(BUSINESS) {
-      return '/business-handle-detail-sales-'+BUSINESS.id;
+      return '/business-handle-detail-archives-'+BUSINESS.id;
     }
   },
   components: {
