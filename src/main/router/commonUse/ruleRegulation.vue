@@ -1,15 +1,13 @@
 <template>
 <div class="main">
     <crumbs :paths="paths"></crumbs>
-    <card id="searchCard">
+    <card>
       <form class="form-inline">
         <div class="form-group searchItem">
-          <input type="text" class="text-center form-control" placeholder="请输入关键词、制度编号" @keyup.enter="searchRuleBtn" v-model.trim="searchKeyRule"/>
+          <input type="text" class="text-center form-control" placeholder="请输入关键词、制度编号" @keyup.enter="searchRuleBtn" v-model.trim="searchKeyRule">
         </div>
           <button type="submit" class="btn btn-primary" @click="searchRuleBtn">搜索</button>
       </form>
-    </card>
-    <card id="tableCard">
       <table class="table ruleTable">
         <tbody>
           <tr class="addRule" :user="user" v-if="this.user.department =='所长'">
