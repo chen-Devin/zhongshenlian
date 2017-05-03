@@ -320,9 +320,11 @@
 		<div class="row">
 			<div class="form-group">
 				<label class="col-sm-2 control-label">中标通知书：</label>
-				<div class="col-sm-8"></div>
+				<div class="col-sm-8">
+					123
+				</div>
 				<div class="col-sm-2">
-					<upload-report :type="bidNotice" ></upload-report>
+					<upload-report :type="bidNotice" :id="projectId"></upload-report>
 				</div>
 			</div>
 		</div>
@@ -331,7 +333,7 @@
 				<label class="col-sm-2 control-label">入围通知书：</label>
 				<div class="col-sm-8"></div>
 				<div class="col-sm-2">
-					<upload-report :type="shortlistedNotice"></upload-report>
+					<upload-report :type="shortlistedNotice" :id="projectId"></upload-report>
 				</div>
 			</div>
 		</div>

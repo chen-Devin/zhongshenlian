@@ -1,7 +1,7 @@
 <template>
     <el-upload
       class="upload-demo ta-c"
-      action="https://jsonplaceholder.typicode.com/posts/"
+      :action="uploadURL"
       :on-preview="handlePreview"
       :on-remove="handleRemove"
       :file-list="fileList"
@@ -9,9 +9,8 @@
       :on-success="uploadSuccess"
       :type="type">
       <slot>
-          <a>
-            <el-button size="small" type="primary">上传</el-button>
-          </a>
+          <a>上传</a>
+            <!-- <el-button size="small" type="primary">上传</el-button> -->
       </slot>
       <span></span>
     </el-upload>
@@ -34,7 +33,8 @@ export default {
   name: 'uploadReport',
   data() {
     return {
-      fileList: []
+      fileList: [],
+      uploadURL: ''
     };
   },
   methods: {
@@ -55,16 +55,16 @@ export default {
       }
     }
   },
-  created() {
-    console.log(this.type);
+  mounted() {
       let data = {
         command: 'handlerBusiness',
         platform: 'web',
-        id: this.business.id,
-        type: 'shortlistedNotice' //入围通知书 中标通知书bidNotice
+        id: this.id,
+        type: this.type
       };
       this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);
+      console.log(this.uploadURL);
   },
-  props: ['type']
+  props: ['type','id']
 }
 </script>
