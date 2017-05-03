@@ -2,7 +2,7 @@
 	<div class="main">
 		<crumbs :paths="paths"></crumbs>
 		<card>
-          <bid-info-list-body></bid-info-list-body>
+        <bid-info-list-body></bid-info-list-body>
 		</card>
 	</div>
 </template>

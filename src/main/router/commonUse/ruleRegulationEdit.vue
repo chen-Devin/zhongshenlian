@@ -40,83 +40,83 @@ import axios from 'axios';
 import qs from 'qs';
 import router from '../index.js';
 
-<<<<<<< HEAD
-    import crumbs from '../../component/crumbs.vue';
-    import card from '../../component/card.vue';
-    export default {
-        name: 'ruleRegulationEdit',
-         data() {
-            return {
-              paths: [
-                { name: '制度详情', url: `/rule-regulation-detail/${this.$route.params.id}`, present: false },
-                { name: '修改制度', url: `/rule-regulation-edit/${this.$route.params.id}`, present: true }
-              ],
-              editRule: {
-                id: this.$route.params.id,
-                title: "",
-                content: ""
-              }
-            }
-          },
-          created(){
-            this.getEditDetail();
-          },
-          methods: {
-            getEditDetail() {
-                axios({
-                    method: 'get',
-                    url: '/service',
-                    params: {
-                        data: (() => {
-                            var obj = {
-                                command: 'getRegulationsInfo',
-                                platform: 'web',
-                                regulationsId: this.editRule.id
-                            }
-                            return JSON.stringify(obj);
-                        })()
-                    },
-                }).then((rep) => {
-                    if (rep.data.statusCode === '10001') {
-                            this.editRule.title = rep.data.data.title,
-                            this.editRule.content = rep.data.data.content,
-                            this.editRule.releaseDepartment = rep.data.data.releaseDepartment,
-                            this.editRule.releaseTime = rep.data.data.releaseTime
-                            // this.editRule.numbering = rep.data.data.numbering
-                    }
-                }, (rep) => {})
-            },
-            //changeData: function(event) {
-              //   this.editRule.content = event.srcElement.innerHTML;
-           // },
-            saveEdit(){
-              if(this.editRule.title!==""&&this.editRule.content!==""){
-              axios({
-                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-                method: 'post',
-                url: '/service',
-                data: qs.stringify({
-                  data: (() => {
-                    var obj = {
-                      command: 'addOrEditRegulations',
-                      platform: 'web',
-                      regulationsId: this.$route.params.id,
-                      title: this.editRule.title,
-                      content: this.editRule.content
-                    };
-                    return JSON.stringify(obj);
-                  })()
-                })
-              }).then((rep)=>{
-                  if (rep.data.statusCode === '10001') {
-                      this.$router.push('/rule-regulation-detail/'+this.editRule.id)
-                  }
-              }, (rep)=>{});
-            }
-            },
-            canceled(){
-              this.$router.push('/rule-regulation-detail/'+this.editRule.id)
-=======
+// <<<<<<< HEAD
+//     import crumbs from '../../component/crumbs.vue';
+//     import card from '../../component/card.vue';
+//     export default {
+//         name: 'ruleRegulationEdit',
+//          data() {
+//             return {
+//               paths: [
+//                 { name: '制度详情', url: `/rule-regulation-detail/${this.$route.params.id}`, present: false },
+//                 { name: '修改制度', url: `/rule-regulation-edit/${this.$route.params.id}`, present: true }
+//               ],
+//               editRule: {
+//                 id: this.$route.params.id,
+//                 title: "",
+//                 content: ""
+//               }
+//             }
+//           },
+//           created(){
+//             this.getEditDetail();
+//           },
+//           methods: {
+//             getEditDetail() {
+//                 axios({
+//                     method: 'get',
+//                     url: '/service',
+//                     params: {
+//                         data: (() => {
+//                             var obj = {
+//                                 command: 'getRegulationsInfo',
+//                                 platform: 'web',
+//                                 regulationsId: this.editRule.id
+//                             }
+//                             return JSON.stringify(obj);
+//                         })()
+//                     },
+//                 }).then((rep) => {
+//                     if (rep.data.statusCode === '10001') {
+//                             this.editRule.title = rep.data.data.title,
+//                             this.editRule.content = rep.data.data.content,
+//                             this.editRule.releaseDepartment = rep.data.data.releaseDepartment,
+//                             this.editRule.releaseTime = rep.data.data.releaseTime
+//                             // this.editRule.numbering = rep.data.data.numbering
+//                     }
+//                 }, (rep) => {})
+//             },
+//             //changeData: function(event) {
+//               //   this.editRule.content = event.srcElement.innerHTML;
+//            // },
+//             saveEdit(){
+//               if(this.editRule.title!==""&&this.editRule.content!==""){
+//               axios({
+//                 headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+//                 method: 'post',
+//                 url: '/service',
+//                 data: qs.stringify({
+//                   data: (() => {
+//                     var obj = {
+//                       command: 'addOrEditRegulations',
+//                       platform: 'web',
+//                       regulationsId: this.$route.params.id,
+//                       title: this.editRule.title,
+//                       content: this.editRule.content
+//                     };
+//                     return JSON.stringify(obj);
+//                   })()
+//                 })
+//               }).then((rep)=>{
+//                   if (rep.data.statusCode === '10001') {
+//                       this.$router.push('/rule-regulation-detail/'+this.editRule.id)
+//                   }
+//               }, (rep)=>{});
+//             }
+//             },
+//             canceled(){
+//               this.$router.push('/rule-regulation-detail/'+this.editRule.id)
+// =======
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 
@@ -150,7 +150,7 @@ export default {
               command: 'getRegulationsInfo',
               platform: 'web',
               regulationsId: this.editRule.id
->>>>>>> b1d2016aedd5404defc47caea19c8505d20dd4a6
+// >>>>>>> b1d2016aedd5404defc47caea19c8505d20dd4a6
             }
             return JSON.stringify(obj);
           })()
