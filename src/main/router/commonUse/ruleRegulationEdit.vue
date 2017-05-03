@@ -1,26 +1,46 @@
 <template>
-<div class="main">
-    <crumbs v-bind:paths="paths"></crumbs>
+  <div class="main">
+    <crumbs :paths="paths"></crumbs>
     <card>
-      <div class="getDetail" v-bind="editRule">
-          <input class="inputTitle"  type="text" v-model="editRule.title"/>
-          <textarea name="textarea" onpropertychange="this.style.height = this.scrollHeight + 'px';"
-          onfocus="this.style.height = this.scrollHeight + 'px';" class="inputContent" v-model="editRule.content"></textarea>
-          <!--<vEditDiv class="contentArea" v-model="editRule.content"></vEditDiv>-->
-          <div class="isSaveBtn text-right">
-            <button type="button" class="btn btn-primary" @click="saveEdit()">保存</button>
-            <button type="button" class="btn btn-defalt" @click="canceled()">取消</button>
+      <h3>
+        编辑制度
+        <div class="pull-right">
+          <button type="button" class="btn btn-primary" @click="saveEdit()">保存</button>
+          <button type="button" class="btn btn-default" @click="canceled()">取消</button>
+        </div>
+      </h3>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">标题</label>
+          <div class="col-sm-9">
+            <input type="text"
+                   class="form-control"
+                   placeholder="请输入标题"
+                   v-model="editRule.title">
           </div>
-      </div>
-   </card>
-</div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">正文</label>
+          <div class="col-sm-9">
+            <textarea cols="50"
+                      rows="30"
+                      class="form-control"
+                      placeholder="请输入正文"
+                      v-model="editRule.content">
+            </textarea>
+          </div>
+        </div>
+      </form>
+    </card>
+  </div>
 </template>
 
 <script>
-    import axios from 'axios';
-    import qs from 'qs';
-    import router from '../index.js';
+import axios from 'axios';
+import qs from 'qs';
+import router from '../index.js';
 
+<<<<<<< HEAD
     import crumbs from '../../component/crumbs.vue';
     import card from '../../component/card.vue';
     export default {
@@ -96,66 +116,98 @@
             },
             canceled(){
               this.$router.push('/rule-regulation-detail/'+this.editRule.id)
+=======
+import crumbs from '../../component/crumbs.vue';
+import card from '../../component/card.vue';
+
+export default {
+  name: 'ruleRegulationEdit',
+  data() {
+    return {
+      paths: [
+        { name: '规章制度', url: '/rule-regulation', present: false },
+        { name: '制度详情', url: `/rule-regulation-detail/${this.$route.params.id}`, present: false },
+        { name: '编辑制度', url: `/rule-regulation-edit/${this.$route.params.id}`, present: true }
+      ],
+      editRule: {
+        id: this.$route.params.id,
+        title: '',
+        content: ''
+      }
+    };
+  },
+  created() {
+    this.getEditDetail();
+  },
+  methods: {
+    getEditDetail() {
+      axios({
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            var obj = {
+              command: 'getRegulationsInfo',
+              platform: 'web',
+              regulationsId: this.editRule.id
+>>>>>>> b1d2016aedd5404defc47caea19c8505d20dd4a6
             }
-          },
-        components: {
-            crumbs,
-            card
+            return JSON.stringify(obj);
+          })()
+        },
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.editRule.title = rep.data.data.title;
+          this.editRule.content = rep.data.data.content;
+          this.editRule.releaseDepartment = rep.data.data.releaseDepartment;
+          this.editRule.releaseTime = rep.data.data.releaseTime;
         }
+      }, (rep) => { });
+    },
+    saveEdit() {
+      if (this.editRule.title !== ''&& this.editRule.content !== '') {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+          method: 'post',
+          url: '/service',
+          data: qs.stringify({
+            data: (() => {
+              var obj = {
+                command: 'addOrEditRegulations',
+                platform: 'web',
+                regulationsId: this.$route.params.id,
+                title: this.editRule.title,
+                content: this.editRule.content
+              };
+              return JSON.stringify(obj);
+            })()
+          })
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$router.push('/rule-regulation-detail/' + this.editRule.id)
+          }
+        }, (rep) => { });
+      }
+    },
+    canceled() {
+      this.$router.push('/rule-regulation-detail/' + this.editRule.id)
     }
+  },
+  components: {
+    crumbs,
+    card
+  }
+}
 </script>
 
 <style lang="sass" scoped>
-    .main {
-        .getDetail {
-            margin-top: 10px;
-            /*.contentArea{
-                width: 95%;
-                min-height: 10px;
-                max-height: 800px;
-                _height: 10px;
-                margin-left: auto;
-                margin-right: auto;
-                padding: 10px;
-                outline: 0;
-                border: 1px solid #ccc;
-                word-wrap: break-word;
-                overflow-x: hidden;
-                overflow-y: auto;
-                -webkit-user-modify: read-write-plaintext-only;
-            }*/
-            .inputContent {
-                width: 95%;
-                overflow-y: auto;
-                min-height: 500px;
-                resize: none;
-                font-size: 16px;
-            }
-            .inputTitle {
-                width: 50%;
-                font-size: 18px;
-                font-weight: bold;
-            }
-            .inputTitle,
-            .inputContent {
-                padding: 10px;
-                display: block;
-                margin: 20px;
-                border: 1px solid #ccc;
-                outline: none;
-            }
-            .isSaveBtn {
-                margin-top: 40px;
-                margin-left: 20px;
-                margin-bottom: 20px;
-               // width: 70%;
-                button {
-                    margin-right: 20px;
-                    width: 75px;
-                    height: 40px;
-                    font-size: 16px;
-                }
-            }
-        }
-    }
+form.form-horizontal {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  textarea {
+    resize: vertical;
+  }
+}
 </style>
