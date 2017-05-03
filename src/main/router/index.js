@@ -8,7 +8,6 @@ import ruleRegulation from './commonUse/ruleRegulation.vue';
 import ruleRegulationDetail from './commonUse/ruleRegulationDetail.vue';
 import ruleRegulationEdit from './commonUse/ruleRegulationEdit.vue';
 import ruleRegulationAdd from './commonUse/ruleRegulationAdd.vue';
-import vEditDiv from './commonUse/component/vEditDiv.vue';
 
 import customerInforList from './commonUse/customerInforList.vue';
 import billingInfor from '../component/billingInfor.vue';

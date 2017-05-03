@@ -1,31 +1,36 @@
 <template>
-<div class="main">
+  <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <form class="form-inline">
-        <div class="form-group searchItem">
-          <input type="text" class="text-center form-control" placeholder="请输入关键词、制度编号" @keyup.enter="searchRuleBtn" v-model.trim="searchKeyRule">
-        </div>
-          <button type="submit" class="btn btn-primary" @click="searchRuleBtn">搜索</button>
-      </form>
-      <table class="table ruleTable">
-        <tbody>
-          <tr class="addRule" :user="user" v-if="this.user.department =='所长'">
-            <td></td>
-            <td>
-              <router-link to="/rule-regulation-add">
-                 <button type="button" class="btn btn-primary pull-right">添加</button>
-              </router-link>
-            </td>
-        </tr>
-        <router-link tag="tr" v-bind:to="'/rule-regulation-detail/'+rule.id" v-for="(rule,index) in rules" v-bind:key="index">
-          <td>{{rule.title}}</td>
-          <td class="text-right">{{rule.releaseTime}}</td>
+      <div class="search-wrap">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <div class="col-sm-12">
+              <div class="input-group">
+                <input type="text" class="text-center form-control" placeholder="请输入关键词、制度编号" v-model.trim="searchKeyRule">
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" type="button" @click="searchRuleBtn">搜索</button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <h3>
+        制度列表
+        <router-link class="btn btn-primary pull-right"
+                     to="/rule-regulation-add">
+            新建制度
         </router-link>
-        </tbody>
-      </table>
-   </card>
-</div>
+      </h3>
+      <div class="rule-list list-group">
+        <router-link class="list-group-item" :to="'/rule-regulation-detail/'+RULE.id" v-for="(RULE,index) in rules" :key="index">
+          <span class="title">{{RULE.title}}</span>
+          <span class="date pull-right">{{RULE.releaseTime}}</span>
+        </router-link>
+      </div>
+    </card>
+  </div>
 </template>
 
 <script>
@@ -36,132 +41,109 @@ import router from '../index.js';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 export default {
-    name: 'ruleRegulation',
-    data() {
-    	return {
-    		paths: [
-        		{name: '规章制度', url: '/rule-regulation', present: true}
-      		],
-          rules: [],
-          searchKeyRule: ""
-    	};
-    },
-    //页面初始状态：获取到规章制度列表
-    created(){
-      this.getRuleLists();
-    },
-    props: ['user'],
-    methods: {
-      getRuleLists(){
-         axios({
+  name: 'ruleRegulation',
+  data() {
+    return {
+      paths: [
+        { name: '规章制度', url: '/rule-regulation', present: true }
+      ],
+      rules: [],
+      searchKeyRule: ''
+    };
+  },
+  created() {
+    this.getRuleLists();
+  },
+  props: ['user'],
+  methods: {
+    getRuleLists() {
+      axios({
         method: 'get',
         url: '/service',
         params: {
-            data: (()=>{
+          data: (() => {
             var obj = {
-                command: 'getRegulationsList',
-                platform: 'web',
+              command: 'getRegulationsList',
+              platform: 'web',
             }
             return JSON.stringify(obj);
-            })()
+          })()
         }
-    }).then((rep) => {
-            if (rep.data.statusCode === '10001') {
-              for(let i=0; i < rep.data.data.regulationsArray.length; i++) {
-                let obj = {
-                  id: rep.data.data.regulationsArray[i].id,
-                  title: rep.data.data.regulationsArray[i].title,
-                  releaseTime: rep.data.data.regulationsArray[i].releaseTime
-                };
-                this.rules.push(obj);
-              }
-            }
-          }, (rep) =>{})
-      },
-      //搜索关键词得到相应列表
-      searchRuleBtn(){
-         axios({
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          for (let i = 0; i < rep.data.data.regulationsArray.length; i++) {
+            let obj = {
+              id: rep.data.data.regulationsArray[i].id,
+              title: rep.data.data.regulationsArray[i].title,
+              releaseTime: rep.data.data.regulationsArray[i].releaseTime
+            };
+            this.rules.push(obj);
+          }
+        }
+      }, (rep) => { })
+    },
+    searchRuleBtn() {
+      axios({
         method: 'get',
         url: '/service',
         params: {
-            data: (()=>{
+          data: (() => {
             var obj = {
-                command: 'searchRegulationsList',
-                platform: 'web',
-                searchContent: this.searchKeyRule
+              command: 'searchRegulationsList',
+              platform: 'web',
+              searchContent: this.searchKeyRule
             }
             return JSON.stringify(obj);
-            })()
+          })()
         }
-    }).then((rep) => {
-            if (rep.data.statusCode === '10001') {
-             this.rules.length = 0; //请求搜索成功后清空列表
-             this.searchKeyRule = "";  //请求成功后清空搜索内容
-              for(let i=0; i < rep.data.data.regulationsArray.length; i++) {
-                let obj = {
-                  id: rep.data.data.regulationsArray[i].id,
-                  title: rep.data.data.regulationsArray[i].title,
-                  releaseTime: rep.data.data.regulationsArray[i].releaseTime
-                };
-                this.rules.push(obj);
-              }
-            }
-          }, (rep) =>{})
-      },
-     //showRuleDetail(ruleId){
-        //this.$router.push("/rule-regulation-detail/"+ruleId);
-    // }
-    },
-    //引入的组件部分
-    components: {
-    	crumbs,
-    	card
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.rules.length = 0;
+          for (let i = 0; i < rep.data.data.regulationsArray.length; i++) {
+            let obj = {
+              id: rep.data.data.regulationsArray[i].id,
+              title: rep.data.data.regulationsArray[i].title,
+              releaseTime: rep.data.data.regulationsArray[i].releaseTime
+            };
+            this.rules.push(obj);
+          }
+        }
+      }, (rep) => { });
     }
+  },
+  components: {
+    crumbs,
+    card
+  }
 }
 </script>
 
 <style lang="sass" scoped>
-.main{
-  #searchCard{
-    padding-left: 0;
-    background: none;
-    border: none;
-    box-shadow: none;
-    margin-top: 10px;
-      .searchItem{
-      width: 90%;
-      input{
-        width: 100%;
-        height: 50px;
-        font-size: 16px;
-      }
-    }
-    button{
-      width: 75px;
-      height: 40px;
-      margin-left: 10px;
-      font-size: 16px;
+.search-wrap {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.rule-list {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  > a.list-group-item {
+    border-right: 0;
+    border-left: 0;
+    > span.title {
+      margin-left: 7px;
     }
   }
- #tableCard{
-   margin-top: -25px;
-  .ruleTable{
-    td{
-      font-size: 16px;
-      border-top: none;
-      border-bottom: 1px solid #ddd;
-    }
+  > a.list-group-item:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
   }
-  .addRule td{
-    .addRuleTitle{
-        font-size: 16px;
-    }
-    button{
-      width: 75px;
-      height: 40px;
-      font-size: 16px;
-    }
+  > a.list-group-item:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
   }
- }
 }
 </style>

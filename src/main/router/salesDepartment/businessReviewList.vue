@@ -5,7 +5,7 @@
       <h3>
         业务列表
         <router-link class="btn btn-primary pull-right"
-                      to="/business-review-add">
+                     to="/business-review-add">
           新建业务
         </router-link>
       </h3>

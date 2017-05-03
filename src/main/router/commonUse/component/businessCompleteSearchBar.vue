@@ -5,7 +5,7 @@
         <div class="col-sm-12">
           <div class="input-group">
             <input type="text"
-                   class="form-control"
+                   class="text-center form-control"
                    placeholder="请输入委托单位、委托单位联系人或提交申请人进行搜索"
                    v-model="sea.cont">
             <span class="input-group-btn">
