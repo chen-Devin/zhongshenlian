@@ -1,30 +1,30 @@
 <template>
 	<div>
 		<form class="form-inline">
-			<div class="row">
-				<div class="form-group col-xs-6">	
-					<label for="bidMan" class="bidMan">招标人</label>
-					<input type="text" class="form-control bidMan-input" placeholder="请输入招标人" v-model.trim="tenderPerson" id="bidMan">	
-	  			</div>
-				<div class="form-group col-xs-6">
-					<label for="bidAgency">招标代理机构</label>
-	    			<input type="text" class="form-control angency-input" placeholder="请输入招标代理机构" v-model.trim="agency" id="bidAgency">
-	  			</div>
-			</div>
   			<div class="row">
-				<div class="form-group col-xs-12">
-					<label for="projectName">项目名称</label>
-	    			<input type="text" class="form-control name-input" placeholder="请输入项目名称" v-model.trim="projectName" id="projectName">
-	  			</div>
+    				<div class="form-group col-xs-12">
+    	    			<input type="text" class="form-control name-input" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" v-model.trim="searchContent">
+                		<button type="submit" class="btn btn-primary f-r" @click="search()">搜索</button>
+    	  		</div>
   			</div>
   			<div class="row">
-				<div class="form-group col-xs-12">
-					<label>招标时间</label>
-					<input type="date" class="form-control" v-model="bidStartDate">
-					<input type="date" class="form-control" v-model="bidEndDate">
-					<button class="btn btn-default f-r left-move" @click="clear()">清除搜索条件</button>
-					<button type="submit" class="btn btn-primary f-r" @click="search()">搜索</button>
+				<div class="form-group timeWidth">
+					   <label>招标时间</label>
+					   <input type="date" class="form-control" v-model="bidStartDate">
+             		   <span>-</span>
+					   <input type="date" class="form-control" v-model="bidEndDate">
 	  			</div>
+				<div class="form-group typeWidth">
+				  <label>所属类型</label>
+				  <el-select v-model="value5" multiple placeholder="所有" class="selectBox">
+				      <el-option
+				        v-for="item in options"
+				        :key="item.value"
+				        :label="item.label"
+				        :value="item.value">
+				      </el-option>
+				    </el-select>
+				</div>
   			</div>
 		</form>
 		<div class="row">
@@ -64,8 +64,14 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
+import { Select } from 'element-ui';
+import { Option } from 'element-ui';
+
+Vue.use(Select);
+Vue.use(Option);
 
 export default {
 	name: 'bidInfoListBody',
@@ -111,7 +117,22 @@ export default {
 			bidStartTime: '',
 			bidEndTime: '',
 			inputBtn: false,
-			user: {}
+			user: {},
+      		searchContent: '',
+      		options: [{
+      		          value: 'kjs',
+      		          label: '会计所'
+      		        }, {
+      		          value: 'pgs',
+      		          label: '评估所'
+      		        }, {
+      		          value: 'sws',
+      		          label: '税务所'
+      		        }, {
+      		          value: 'zjs',
+      		          label: '造价所'
+      		        }],
+      		value5: []
 		};
 	},
 	computed: {
@@ -175,97 +196,67 @@ export default {
 			this.$emit('input');
 		},
 		checkMessage(project) {
-			this.$emit('checkMessage',project);
+			this.$emit('checkMessage',this.searchContent);
 		},
-    	search() { //搜索
-    		this.officeTransformation();
-    		this.bidStartTime = this.bidStartDate + " 00:00:00";
-    		this.bidEndTime = this.bidEndDate + " 00:00:00";
-    		axios({
-    		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-    		  method: 'get',
-    		  url: '/service',
-    		  params: {
-    		    data: (() => {
-    		      let obj = {
-    		        command: 'searchBiddingList',
-    		        platform: 'web',
-    		        bidStartDate: this.bidStartTime,
-    		        bidEndDate: this.bidEndTime,
-    		        tenderPerson: this.tenderPerson,
-    		        agency: this.agency,
-    		        projectName: this.projectName,
-    		        type: this.departmentType
-    		      }
-    		      return JSON.stringify(obj);
-    		    })()
-    		  }
-    		}).then((rep) => {
-        		if (rep.data.statusCode === '10001') {
-					this.businessArray = rep.data.data.businessArray;
-					this.bidArray = this.businessArray;
-					console.log(this.bidArray);
-        		}
-      		}, (rep) => {});
+    	search() {
+    	    axios({
+    	      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+    	      method: 'get',
+    	      url: '/service',
+    	      params: {
+    	        data: (() => {
+    	          let obj = {
+    	            command: 'searchBiddingList',
+    	            platform: 'web',
+    	            searchContent: this.searchContent
+    	          }
+    	          return JSON.stringify(obj);
+    	        })()
+    	      }
+    	    }).then((rep) => {
+    	        if (rep.data.statusCode === '10001') {
+    	          this.businessArray = rep.data.data.businessArray;
+    	          this.bidArray = this.businessArray;
+    	        }
+    	      }, (rep) => {});
     	},
-		clear() {
-			this.bidMan = '';
-			this.bidAgency = '';
-			this.projectName = '';
-			this.bidStartDate = (() => {
-				let dt = new Date();
-				let year = dt.getFullYear();
-				let month = dt.getMonth() + 1;
-				if (month < 10) {
-					month = "0" + month;
-				}
-				let date = dt.getDate();
-				if (date < 10) {
-					date = "0" + date;
-				}
-				let dateStr = year + "-" + month + "-" + date;
-			  return dateStr;
-			})();
-			this.bidEndDate = (() => {
-				let dt = new Date();
-				let year = dt.getFullYear();
-				let month = dt.getMonth() + 1;
-				if (month < 10) {
-					month = "0" + month;
-				}
-				let date = dt.getDate();
-				if (date < 10) {
-					date = "0" + date;
-				}
-				let dateStr = year + "-" + month + "-" + date;
-			  return dateStr;
-			})();
-		},
-		officeTransformation() {
-			if (this.office === "会计所") {
-				this.departmentType = 'kjs';
-			}
-			if (this.office === "评估所") {
-				this.departmentType = 'pgs';
-			}
-			if (this.office === "税务所") {
-				this.departmentType = 'sws';
-			}
-			if (this.office === "造价所") {
-				this.departmentType = 'zjs';
-			}
-		},
 		showInputBtn() {
 			if (this.user.department === "市场部") {
 				this.inputBtn = true;
 			}
-		}
+		},
+		getAllList() {
+			axios({
+			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+			  method: 'get',
+			  url: '/service',
+			  params: {
+			    data: (() => {
+			      let obj = {
+			        command: 'getBiddingList',
+			        platform: 'web',
+			        type: 'other'
+			      }
+			      return JSON.stringify(obj);
+			    })()
+			  }
+			}).then((rep) => {
+			    if (rep.data.statusCode === '10001') {
+			      this.businessArray = rep.data.data.businessArray;
+			      this.bidArray = this.businessArray;
+			    }
+			  }, (rep) => {});
+		},
+		checkMessage() { //还是要知道是哪个所，再做详情页面
+			this.$router.push('/bid-info-detail/'+project.id+"&"+office);
+		},
 	},
 	components: {
 		axios,
 		qs
 	},
 	created() {
+		this.getAllList();
 		this.$store.dispatch('fetchUserInfo');
 		this.user = this.$store.getters.getUser;
 		this.showInputBtn();
@@ -328,5 +319,18 @@ table {
 }
 .left-move {
 	margin-left: 10px;
+}
+input::-ms-input-placeholder{text-align: center;}
+input::-webkit-input-placeholder{text-align: center;}
+.selectBox {
+	width: 330px;
+}
+.timeWidth {
+	width: 50%;
+	padding-left: 20px;
+}
+.typeWidth {
+	width: 48%;
+	padding-left: 25px;
 }
 </style>

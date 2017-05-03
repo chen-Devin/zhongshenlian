@@ -2,8 +2,7 @@
 	<div class="main">
 		<crumbs :paths="paths"></crumbs>
 		<card>
-            <bid-classification :office="office"></bid-classification>
-            <router-view :bidArray="biddingArray" @tellOffice="getOffice" @queryList="queryList" @checkMessage="checkMessage"></router-view>
+        <bid-info-list-body></bid-info-list-body>
 		</card>
 	</div>
 </template>
@@ -12,11 +11,9 @@
 
 import axios from 'axios';
 import qs from 'qs';
-import bus from '../../bus.js';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
-import bidClassification from './component/bidClassification.vue';
 import bidInfoListBody from './bidInfoListBody.vue';
 
 export default {
@@ -183,8 +180,7 @@ export default {
     components: {
     	crumbs,
     	card,
-        bidClassification,
-        bidInfoListBody
+      bidInfoListBody
     }
 }
 </script>

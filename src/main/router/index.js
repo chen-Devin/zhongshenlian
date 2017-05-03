@@ -51,10 +51,6 @@ import businessHandleListFinancial from './financialDepartment/businessHandleLis
 //市场部
 import bidInfoList from './marketDepartment/bidInfoList.vue';
 import bidInfoDetail from './marketDepartment/bidInfoDetail.vue';
-import bidInfoInputKJS from './marketDepartment/bidInfoInputKJS.vue';
-import bidInfoInputPGS from './marketDepartment/bidInfoInputPGS.vue';
-import bidInfoInputZJS from './marketDepartment/bidInfoInputZJS.vue';
-import bidInfoInputSWS from './marketDepartment/bidInfoInputSWS.vue';
 import bidInfoAccounting from './marketDepartment/bidInfoAccounting.vue';
 import bidInfoAssessment from './marketDepartment/bidInfoAssessment.vue';
 import bidInfoTax from './marketDepartment/bidInfoTax.vue';
@@ -361,26 +357,7 @@ const router = new VueRouter({
         },
         {
             path: '/bid-info-list',
-            component: bidInfoList,
-            redirect: '/bid-info-list/kjs',
-            children: [
-                {
-                    path: 'kjs',
-                    component: bidInfoAccounting
-                },
-                {
-                    path: 'pgs',
-                    component: bidInfoAssessment
-                },
-                {
-                    path: 'sws',
-                    component: bidInfoTax
-                },
-                {
-                    path: 'zjs',
-                    component: bidInfoCost
-                }
-            ]
+            component: bidInfoList
         },
         {
             path: '/bid-info-draft/',
@@ -389,26 +366,6 @@ const router = new VueRouter({
         {
             path: '/bid-info-detail/:id&:office',
             component: bidInfoDetail
-        },
-        // {
-        //     path: '/bid-infor-edit',
-        //     component: bidInforEdit
-        // },
-        {
-            path: '/bid-info-Input-kjs',
-            component: bidInfoInputKJS
-        },
-        {
-            path: '/bid-info-Input-pgs',
-            component: bidInfoInputPGS
-        },
-        {
-            path: '/bid-info-Input-sws',
-            component: bidInfoInputSWS
-        },
-        {
-            path: '/bid-info-Input-zjs',
-            component: bidInfoInputZJS
         }
     ]
 });
