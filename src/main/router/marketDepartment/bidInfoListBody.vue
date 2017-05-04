@@ -16,7 +16,7 @@
 	  			</div>
 				<div class="form-group typeWidth">
 				  <label>所属类型</label>
-				  <el-select v-model="value5" multiple placeholder="所有" class="selectBox">
+				  <el-select v-model="officeList" multiple placeholder="所有" class="selectBox">
 				      <el-option
 				        v-for="item in options"
 				        :key="item.value"
@@ -132,7 +132,7 @@ export default {
       		          value: 'zjs',
       		          label: '造价所'
       		        }],
-      		value5: []
+      		officeList: []
 		};
 	},
 	computed: {
@@ -177,6 +177,14 @@ export default {
 			if (this.filterState === "已入围") {
 				this.bidArrayConnect = this.yiRuWei;
 			}
+      for (var i = 0; i < this.officeList.length; i++) {
+          this.bidArrayConnect = this.bidArrayConnect.filter((item,index,array) => {
+              let isContain = item.departmentType.some((jtem,index,array) => {
+                  return jtem === this.officeList[i];
+              })
+              return isContain;
+          });
+      }
 			return this.bidArrayConnect;
 		},
 		departmentType() {
@@ -198,32 +206,33 @@ export default {
 		checkMessage(project) {
 			this.$emit('checkMessage',this.searchContent);
 		},
-    	search() {
-    	    axios({
-    	      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-    	      method: 'get',
-    	      url: '/service',
-    	      params: {
-    	        data: (() => {
-    	          let obj = {
-    	            command: 'searchBiddingList',
-    	            platform: 'web',
-    	            searchContent: this.searchContent
-    	          }
-    	          return JSON.stringify(obj);
-    	        })()
-    	      }
-    	    }).then((rep) => {
-    	        if (rep.data.statusCode === '10001') {
-    	          this.businessArray = rep.data.data.businessArray;
-    	          this.bidArray = this.businessArray;
-    	        }
-    	      }, (rep) => {});
-    	},
+  	search() {
+  	    axios({
+  	      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+  	      method: 'get',
+  	      url: '/service',
+  	      params: {
+  	        data: (() => {
+  	          let obj = {
+  	            command: 'searchBiddingList',
+  	            platform: 'web',
+  	            searchContent: this.searchContent
+  	          }
+  	          return JSON.stringify(obj);
+  	        })()
+  	      }
+  	    }).then((rep) => {
+  	        if (rep.data.statusCode === '10001') {
+  	          this.businessArray = rep.data.data.businessArray;
+  	          this.bidArray = this.businessArray;
+  	        }
+  	      }, (rep) => {});
+  	},
 		showInputBtn() {
 			if (this.user.department === "市场部") {
 				this.inputBtn = true;
 			}
+      console.log('test');
 		},
 		getAllList() {
 			axios({
@@ -250,11 +259,26 @@ export default {
 		checkMessage() { //还是要知道是哪个所，再做详情页面
 			this.$router.push('/bid-info-detail/'+project.id+"&"+office);
 		},
+    timeSelect() {
+
+    }
 	},
 	components: {
 		axios,
 		qs
 	},
+  watch: {
+      bidStartDate(curVal,oldVal){
+          if(curVal !== oldVal) {
+              //调用筛选函数
+          }
+      },
+      bidEndDate(curVal,oldVal){
+          if(curVal !== oldVal) {
+              console.log('时间筛选2');
+          }
+      }
+  },
 	created() {
 		this.getAllList();
 		this.$store.dispatch('fetchUserInfo');
