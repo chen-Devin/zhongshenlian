@@ -3,9 +3,8 @@
 		<crumbs :paths="paths"></crumbs>
 		<card>
 			<bid-info-edit 
-			:iniProject="project" 
-			:office="office" 
-			@submit="submit" 
+			:iniProject="project"  
+			@submit="submit"
 			@saveDraft="saveDraft" 
 			@delBasicFee="delBasicFee" 
 			@addBasicFee="addBasicFee" 
@@ -44,12 +43,12 @@ import bidInfoEdit from './component/bidInfoEdit.vue';
 import modal from '../../component/modal.vue'
 
 export default {
-    name: 'bidInfoInputZJS',
+    name: 'bidInfoInput',
     data() {
     	return {
 			paths: [
-	    		{name: '招投标信息看板', url: '/bid-info-list/zjs', present: false},
-	    		{name: '造价所招投标信息录入', url: '/bid-info-input-zjs', present: true}
+	    		{name: '招投标信息看板', url: '/bid-info-list', present: false},
+	    		{name: '招投标信息录入', url: '/bid-info-input', present: true}
 	  		],
 	  		project: {
 	  			bidStartTime: (() => {
@@ -88,17 +87,15 @@ export default {
 	  			},
 	  			biddingContent: [],
 	  			zjsOwnershipStructure: '',
-	  			tenderValidityPeriod: '60'
+	  			tenderValidityPeriod: '60',
+	  			departmentType: []
 	  		},
-	  		office: "造价所",
-	  		departmentType: 'zjs',
 	  		draftSussessShow: false,
 	  		inputSussessShow: false
     	}
     },
     methods: {
     	saveDraft(project) {
-    		project.departmentType = this.departmentType;
 		    axios({
 		        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
 		        method: 'post',
@@ -108,7 +105,6 @@ export default {
 		            var obj = {
 		              command: 'addOrEditBiddingInfo',
 		              platform: 'web',
-		              departmentType: 'zjs',
 		              type: 'temp',
 		              data: project
 		            };
@@ -135,17 +131,15 @@ export default {
     		this.project.contractType.subEfficiencyArray.push({"name":'',"rate": 0});
     	},
     	inputFinish() {
-    		this.$router.push('/bid-info-list/zjs');
+    		this.$router.push('/bid-info-list');
     	},
     	draftFinish() {
-    		//close
     		this.$router.push('/bid-info-draft');
     	},
     	quedingDelete(id) {
-    		this.$router.push('/bid-info-list/zjs');
+    		this.$router.push('/bid-info-list');
     	},
     	submit(project) {
-    	    project.departmentType = this.departmentType;
     	    axios({
     	        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
     	        method: 'post',
@@ -155,7 +149,7 @@ export default {
     	            var obj = {
     	              command: 'addOrEditBiddingInfo',
     	              platform: 'web',
-    	              type: 'add',
+    	              type: 'add', //增加或编辑操作
     	              data: project
     	            };
     	            return JSON.stringify(obj);
@@ -165,7 +159,6 @@ export default {
     	        console.log(rep.data);
     	      if (rep.data.statusCode === '10001') {
     	        this.inputSussessShow = true;
-    	        //加一个弹出框，然后加一个跳转
     	      }
     	    }, (rep)=>{});
     	}

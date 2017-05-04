@@ -2,7 +2,7 @@
 	<div>
 		<div class="page-header">
 			<h4>
-				{{ office }}招投标信息录入
+				招投标信息录入
 			</h4>
 		</div>
 		
@@ -25,168 +25,249 @@
 				  <input type="text" class="form-control" id="agency" v-model="project.agency" name="agency" placeholder="请输入招标代理机构">
 				</div>
 			</div>
-			<div class="form-group" v-if="zjsBiddingContent">
-				<label class="col-sm-2 control-label">招标内容：</label>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">业务类型：</label>
 				<div class="col-sm-10">
 					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent1" value="概算"> 概算
+						<input type="checkbox" v-model="project.departmentType" value="kjs"> 会计所
 					</label>
 					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent2" value="预算"> 预算
+						<input type="checkbox" v-model="project.departmentType" value="pgs"> 评估所
 					</label>
 					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent3" value="结算"> 结算
+						<input type="checkbox" v-model="project.departmentType" value="sws"> 税务所
 					</label>
 					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent4" value="全过程造价控制"> 全过程造价控制
+						<input type="checkbox" v-model="project.departmentType" value="zjs"> 造价所
 					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent5" value="入围"> 入围
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent6" value="一审"> 一审
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent7" value="二审"> 二审
-					</label>
-					<div class="checkbox">
-					  <label for="other">
-					    <input type="checkbox" name="biddingContent" v-model="project.biddingContent" value="其他">
-					    其他：
-					  </label>
-					  <input type="text" v-model="project.biddingContent" id="other" class="form-control" placeholder="限15字">
+				</div>
+			</div>
+			<hr>
+			<!--会计所单独内容-->
+			<div v-if="kjsContentShow">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">会计所：</label>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">招标内容：</label>
+					<div class="col-sm-10">
+						<label class="checkbox-inline">
+							<input type="checkbox" v-model="project.kjsBiddingContent" value="年审"> 年审
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" v-model="project.kjsBiddingContent" value="专项"> 专项
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" v-model="project.kjsBiddingContent" value="咨询"> 咨询
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" v-model="project.kjsBiddingContent" value="决算"> 决算
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" v-model="project.kjsBiddingContent" value="外汇年检"> 外汇年检
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" v-model="project.kjsBiddingContent" value="验资"> 验资
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" v-model="project.kjsBiddingContent" value="外资审计"> 外资审计
+						</label>
 					</div>
 				</div>
-			</div>
-			<div class="form-group" v-if="kjsBiddingContent">
-				<label class="col-sm-2 control-label">招标内容：</label>
-				<div class="col-sm-10">
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent1" value="年审"> 年审
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent2" value="专项"> 专项
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent3" value="咨询"> 咨询
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent4" value="决算"> 决算
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent5" value="外汇年检"> 外汇年检
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent6" value="验资"> 验资
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent7" value="外资审计"> 外资审计
-					</label>
+				<div class="form-group">
+					<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
+					<div class="col-sm-10">
+						<label class="radio-inline">
+							<input type="radio" v-model="project.kjsOwnershipStructure" value="国有"> 国有
+						</label>
+						<label class="radio-inline">
+							<input type="radio" v-model="project.kjsOwnershipStructure" value="民营"> 民营
+						</label>
+						<label class="radio-inline">
+							<input type="radio" v-model="project.kjsOwnershipStructure" value="外资"> 外资
+						</label>
+						<label class="radio-inline">
+							<input type="radio" v-model="project.kjsOwnershipStructure" value="混合"> 混合
+						</label>
+					</div>
 				</div>
-			</div>
-			<div class="form-group" v-if="pgsBiddingContent">
-				<label class="col-sm-2 control-label">招标内容：</label>
-				<div class="col-sm-10">
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent1" value="股改"> 股改
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent2" value="专项"> 专项
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent3" value="咨询"> 咨询
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent4" value="清产核资"> 清产核资
-					</label>
+				<div class="form-group">
+					<label for="totalAssets" class="col-sm-2 control-label">资产总额：</label>
+					<div class="col-sm-10">
+						<div class="input-group">
+							<input type="text" class="form-control" id="totalAssets" v-model="project.totalAssets" name="totalAssets" placeholder="请输入资产总额">
+							<div class="input-group-addon">万元</div>
+						</div> 
+					</div>
 				</div>
-			</div>
-			<div class="form-group" v-if="swsBiddingContent"> 
-				<label class="col-sm-2 control-label">招标内容：</label>
-				<div class="col-sm-10">
-					<label class="checkbox-inline">
-						<input type="checkbox" name="biddingContent" v-model="project.biddingContent" id="biddingContent1" value="税鉴"> 税鉴
-					</label>
+				<div class="form-group">
+					<label for="location" class="col-sm-2 control-label">坐落地点：</label>
+					<div class="col-sm-10">
+					  <input type="text" class="form-control" id="location" v-model="project.location" name="location" placeholder="请输入坐落地点">
+					</div>
 				</div>
+				<hr>
 			</div>
-			<div class="form-group" v-if="zjsFundSourceShow">
-				<label for="zjsFundSource" class="col-sm-2 control-label">资金来源及比例：</label>
-				<div class="col-sm-10">
-					<label class="checkbox-inline">
-						<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" id="zjsFundSource1" value="财政"> 财政
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" id="zjsFundSource2" value="自筹"> 自筹
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" id="zjsFundSource3" value="贷款"> 贷款
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" id="zjsFundSource4" value="BT等"> BT等
-					</label>
+			<!--评估所单独内容-->
+			<div v-if="pgsContentShow">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">评估所：</label>
 				</div>
-			</div>
-			<div class="form-group" v-if="OwnershipStructure">
-				<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
-				<div class="col-sm-10">
-					<label class="radio-inline">
-						<input type="radio" name="ownershipStructure" v-model="project.ownershipStructure" id="ownershipStructure1" value="国有"> 国有
-					</label>
-					<label class="radio-inline">
-						<input type="radio" name="ownershipStructure" v-model="project.ownershipStructure" id="ownershipStructure2" value="民营"> 民营
-					</label>
-					<label class="radio-inline">
-						<input type="radio" name="ownershipStructure" v-model="project.ownershipStructure" id="ownershipStructure3" value="外资"> 外资
-					</label>
-					<label class="radio-inline">
-						<input type="radio" name="ownershipStructure" v-model="project.ownershipStructure" id="ownershipStructure4" value="混合"> 混合
-					</label>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">招标内容：</label>
+					<div class="col-sm-10">
+						<label class="checkbox-inline">
+							<input type="checkbox" v-model="project.pgsBiddingContent" id="biddingContent1" value="股改"> 股改
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" v-model="project.pgsBiddingContent" id="biddingContent2" value="专项"> 专项
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" v-model="project.pgsBiddingContent" id="biddingContent3" value="咨询"> 咨询
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" v-model="project.pgsBiddingContent" id="biddingContent4" value="清产核资"> 清产核资
+						</label>
+					</div>
 				</div>
+				<div class="form-group">
+					<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
+					<div class="col-sm-10">
+						<label class="radio-inline">
+							<input type="radio" name="ownershipStructure" v-model="project.pgsOwnershipStructure" value="国有"> 国有
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="ownershipStructure" v-model="project.pgsOwnershipStructure" value="民营"> 民营
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="ownershipStructure" v-model="project.pgsOwnershipStructure" value="外资"> 外资
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="ownershipStructure" v-model="project.pgsOwnershipStructure" value="混合"> 混合
+						</label>
+					</div>
+				</div>
+				<hr>
 			</div>
-			<div class="form-group" v-if="scale">
-				<label for="scale" class="col-sm-2 control-label">建设规模：</label>
-				<div class="col-sm-10">
-					<div class="row">
-						<div class="col-sm-4">
-							<input type="text" class="form-control" id="scale" v-model="project.zjsArea" name="zjsArea" placeholder="请输入建设面积">
-						</div>
-						<div class="col-sm-4">
-							<input type="text" class="form-control" id="scale" v-model="project.zjsLength" name="zjsLength" placeholder="请输入长度">
-						</div>
-						<div class="col-sm-4">
-							<input type="text" class="form-control" id="scale" v-model="project.totalAssets" name="totalAssets" placeholder="请输入总投资额">
+			<!--税务所单独内容-->
+			<div v-if="swsContentShow">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">税务所：</label>
+				</div>
+				<div class="form-group"> 
+					<label class="col-sm-2 control-label">招标内容：</label>
+					<div class="col-sm-10">
+						<label class="checkbox-inline">
+							<input type="checkbox" name="biddingContent" v-model="project.swsBiddingContent" id="biddingContent1" value="税鉴"> 税鉴
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
+					<div class="col-sm-10">
+						<label class="radio-inline">
+							<input type="radio" name="ownershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure1" value="国有"> 国有
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="ownershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure2" value="民营"> 民营
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="ownershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure3" value="外资"> 外资
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="ownershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure4" value="混合"> 混合
+						</label>
+					</div>
+				</div>
+				<hr>
+			</div>			
+			<!--造价所单独内容-->
+			<div v-if="zjsContentShow">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">造价所：</label>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">招标内容：</label>
+					<div class="col-sm-10">
+						<label class="checkbox-inline">
+							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="概算"> 概算
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="预算"> 预算
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="结算"> 结算
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="全过程造价控制"> 全过程造价控制
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="入围"> 入围
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="一审"> 一审
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="二审"> 二审
+						</label>
+						<div class="checkbox">
+						  <label for="other">
+						    <input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="其他">
+						    其他：
+						  </label>
+						  <input type="text" v-model="project.zjsBiddingContent" id="other" class="form-control" placeholder="限15字">
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="form-group" v-if="scale">
-				<label for="location" class="col-sm-2 control-label">建设地点：</label>
-				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="location" v-model="project.location" name="location" placeholder="请输入建设地点">
+				<div class="form-group">
+					<label for="zjsFundSource" class="col-sm-2 control-label">资金来源及比例：</label>
+					<div class="col-sm-10">
+						<label class="checkbox-inline">
+							<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" value="财政"> 财政
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" value="自筹"> 自筹
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" value="贷款"> 贷款
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" value="BT等"> BT等
+						</label>
+					</div>
 				</div>
-			</div>
-			<div class="form-group" v-if="scale">
-				<label for="serviceTerm" class="col-sm-2 control-label">服务期限：</label>
-				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="serviceTerm" v-model="project.serviceTerm" name="serviceTerm" placeholder="请输入服务期限">
+				<div class="form-group">
+					<label for="scale" class="col-sm-2 control-label">建设规模：</label>
+					<div class="col-sm-10">
+						<div class="row">
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="scale" v-model="project.zjsArea" name="zjsArea" placeholder="请输入建设面积">
+							</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="scale" v-model="project.zjsLength" name="zjsLength" placeholder="请输入长度">
+							</div>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="scale" v-model="project.totalAssets" name="totalAssets" placeholder="请输入总投资额">
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div class="form-group" v-if="scaleOther">
-				<label for="totalAssets" class="col-sm-2 control-label">资产总额：</label>
-				<div class="col-sm-10">
-					<div class="input-group">
-						<input type="text" class="form-control" id="totalAssets" v-model="project.totalAssets" name="totalAssets" placeholder="请输入资产总额">
-						<div class="input-group-addon">万元</div>
-					</div> 
+				<div class="form-group">
+					<label for="location" class="col-sm-2 control-label">建设地点：</label>
+					<div class="col-sm-10">
+					  <input type="text" class="form-control" id="location" v-model="project.location" name="location" placeholder="请输入建设地点">
+					</div>
 				</div>
-			</div>
-			<div class="form-group" v-if="scaleOther">
-				<label for="location" class="col-sm-2 control-label">坐落地点：</label>
-				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="location" v-model="project.location" name="location" placeholder="请输入坐落地点">
+				<div class="form-group">
+					<label for="serviceTerm" class="col-sm-2 control-label">服务期限：</label>
+					<div class="col-sm-10">
+					  <input type="text" class="form-control" id="serviceTerm" v-model="project.serviceTerm" name="serviceTerm" placeholder="请输入服务期限">
+					</div>
 				</div>
+				<hr>
 			</div>
-			<div class="form-group" v-if="scaleOther">
+			<!--共有内容-->
+			<div class="form-group">
 				<label for="serviceTerm" class="col-sm-2 control-label">审计期限：</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="serviceTerm" v-model="project.serviceTerm" name="serviceTerm" placeholder="请输入审计期限">
@@ -483,67 +564,40 @@ export default {
 		}
 	},
 	computed: {
-		zjsBiddingContent() {
-			if (this.office === "造价所") {
-				return true;
-			} else {
-				return false;
-			}
-		},
-		zjsFundSourceShow() {
-			if (this.office === "造价所") {
-				return true;
-			} else {
-				return false;
-			}
-		},
-		kjsBiddingContent() {
-			if (this.office === "会计所") {
-				return true;
-			} else {
-				return false;
-			}
-		},
-		pgsBiddingContent() {
-			if (this.office === "评估所") {
-				return true;
-			} else {
-				return false;
-			}
-		},
-		swsBiddingContent() {
-			if (this.office === "税务所") {
-				return true;
-			} else {
-				return false;
-			}
-		},
-		OwnershipStructure() {
-			if (this.office === "造价所") {
-				return false;
-			} 
-			if (this.office === "会计所") {
-				return true;
-			} 
-			if (this.office === "评估所") {
-				return true;
-			} 
-			if (this.office === "税务所") {
-				return true;
-			} 
-		},
-		scale() {
-			if (this.office === "造价所") {
+		kjsContentShow() {
+			let kjs = this.project.departmentType.some((item,index,array)=> {
+				return item === 'kjs';
+			})
+			if (kjs) {
 				return true;
 			}
 		},
-		scaleOther() {
-			if (this.office !== "造价所") {
+		pgsContentShow() {
+			let pgs = this.project.departmentType.some((item,index,array)=> {
+				return item === 'pgs';
+			})
+			if (pgs) {
+				return true;
+			}
+		},
+		swsContentShow() {
+			let sws = this.project.departmentType.some((item,index,array)=> {
+				return item === 'sws';
+			})
+			if (sws) {
+				return true;
+			}
+		},
+		zjsContentShow() {
+			let zjs = this.project.departmentType.some((item,index,array)=> {
+				return item === 'zjs';
+			})
+			if (zjs) {
 				return true;
 			}
 		}
 	},
-	props: ['iniProject','office'],
+	props: ['iniProject'],
 	methods: {
 		submit(project) {
 			this.$emit('submit',project);

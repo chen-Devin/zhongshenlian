@@ -132,12 +132,13 @@ export default {
       		          value: 'zjs',
       		          label: '造价所'
       		        }],
-      		officeList: []
+      		officeList: [],
+      	 	bidArrayTimeResult: []
 		};
 	},
 	computed: {
 		biddingArray() {
-			this.bidArrayConnect = this.bidArray;
+			this.bidArrayConnect = this.bidArrayTimeResult;
 			for (var i = 0; i < this.bidArrayConnect.length; i++) {
 				if(this.bidArrayConnect[i].biddingState === "0") {
 					this.bidArrayConnect[i].biddingState = '未摘牌';
@@ -201,10 +202,10 @@ export default {
 	},
 	methods: {
 		input() {
-			this.$emit('input');
+			this.$router.push('/bid-info-input/');
 		},
 		checkMessage(project) {
-			this.$emit('checkMessage',this.searchContent);
+			this.$router.push('/bid-info-detail/'+project.id);
 		},
   	search() {
   	    axios({
@@ -232,7 +233,6 @@ export default {
 			if (this.user.department === "市场部") {
 				this.inputBtn = true;
 			}
-      console.log('test');
 		},
 		getAllList() {
 			axios({
@@ -253,14 +253,20 @@ export default {
 			    if (rep.data.statusCode === '10001') {
 			      this.businessArray = rep.data.data.businessArray;
 			      this.bidArray = this.businessArray;
+			      this.bidArrayTimeResult = this.bidArray;
 			    }
 			  }, (rep) => {});
 		},
-		checkMessage() { //还是要知道是哪个所，再做详情页面
-			this.$router.push('/bid-info-detail/'+project.id+"&"+office);
-		},
     timeSelect() {
-
+    	this.bidArrayTimeResult = this.bidArray.filter((item,index,array) => {
+    		let openStrArray = item.openBidDate.split("-");
+    		let startStrArray = this.bidStartDate.split("-");
+    		let endStrArray = this.bidEndDate.split("-");
+    		let startDateObj = new Date(startStrArray[0],Number(startStrArray[1])-1,startStrArray[2]);
+    		let endDateObj = new Date(endStrArray[0],Number(endStrArray[1])-1,endStrArray[2]);
+    		let openDateObj = new Date(openStrArray[0],Number(openStrArray[1])-1,openStrArray[2]);
+    		return ( openDateObj <= endDateObj && openDateObj >= startDateObj );
+    	});
     }
 	},
 	components: {
@@ -271,6 +277,7 @@ export default {
       bidStartDate(curVal,oldVal){
           if(curVal !== oldVal) {
               //调用筛选函数
+              this.timeSelect();
           }
       },
       bidEndDate(curVal,oldVal){
