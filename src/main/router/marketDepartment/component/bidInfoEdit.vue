@@ -78,16 +78,16 @@
 					<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
 					<div class="col-sm-10">
 						<label class="radio-inline">
-							<input type="radio" v-model="project.kjsOwnershipStructure" value="国有"> 国有
+							<input type="radio" v-model="project.kjsOwnershipStructure" name="kjsOwnershipStructure" value="国有"> 国有
 						</label>
 						<label class="radio-inline">
-							<input type="radio" v-model="project.kjsOwnershipStructure" value="民营"> 民营
+							<input type="radio" v-model="project.kjsOwnershipStructure" name="kjsOwnershipStructure" value="民营"> 民营
 						</label>
 						<label class="radio-inline">
-							<input type="radio" v-model="project.kjsOwnershipStructure" value="外资"> 外资
+							<input type="radio" v-model="project.kjsOwnershipStructure" name="kjsOwnershipStructure" value="外资"> 外资
 						</label>
 						<label class="radio-inline">
-							<input type="radio" v-model="project.kjsOwnershipStructure" value="混合"> 混合
+							<input type="radio" v-model="project.kjsOwnershipStructure" name="kjsOwnershipStructure" value="混合"> 混合
 						</label>
 					</div>
 				</div>
@@ -134,16 +134,16 @@
 					<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
 					<div class="col-sm-10">
 						<label class="radio-inline">
-							<input type="radio" name="ownershipStructure" v-model="project.pgsOwnershipStructure" value="国有"> 国有
+							<input type="radio" name="pgsOwnershipStructure" v-model="project.pgsOwnershipStructure" value="国有"> 国有
 						</label>
 						<label class="radio-inline">
-							<input type="radio" name="ownershipStructure" v-model="project.pgsOwnershipStructure" value="民营"> 民营
+							<input type="radio" name="pgsOwnershipStructure" v-model="project.pgsOwnershipStructure" value="民营"> 民营
 						</label>
 						<label class="radio-inline">
-							<input type="radio" name="ownershipStructure" v-model="project.pgsOwnershipStructure" value="外资"> 外资
+							<input type="radio" name="pgsOwnershipStructure" v-model="project.pgsOwnershipStructure" value="外资"> 外资
 						</label>
 						<label class="radio-inline">
-							<input type="radio" name="ownershipStructure" v-model="project.pgsOwnershipStructure" value="混合"> 混合
+							<input type="radio" name="pgsOwnershipStructure" v-model="project.pgsOwnershipStructure" value="混合"> 混合
 						</label>
 					</div>
 				</div>
@@ -166,16 +166,16 @@
 					<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
 					<div class="col-sm-10">
 						<label class="radio-inline">
-							<input type="radio" name="ownershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure1" value="国有"> 国有
+							<input type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure1" value="国有"> 国有
 						</label>
 						<label class="radio-inline">
-							<input type="radio" name="ownershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure2" value="民营"> 民营
+							<input type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure2" value="民营"> 民营
 						</label>
 						<label class="radio-inline">
-							<input type="radio" name="ownershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure3" value="外资"> 外资
+							<input type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure3" value="外资"> 外资
 						</label>
 						<label class="radio-inline">
-							<input type="radio" name="ownershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure4" value="混合"> 混合
+							<input type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure4" value="混合"> 混合
 						</label>
 					</div>
 				</div>

@@ -20,82 +20,130 @@
 			  {{ project.agency }}
 			</div>
 		</div>
-		<div class="form-group" v-if="zjsBiddingContent">
-			<label class="col-sm-2 control-label">招标内容：</label>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">业务类型：</label>
 			<div class="col-sm-10">
-				<span v-for="item in project.biddingContent">{{ item + " " }}</span>
+				<span v-for="item in project.departmentType">{{ item + " " }}</span>
 			</div>
 		</div>
-		<div class="form-group" v-if="kjsBiddingContent">
-			<label class="col-sm-2 control-label">招标内容：</label>
-			<div class="col-sm-10">
-				<span v-for="item in project.biddingContent">{{ item + " " }}</span>
+		<!--会计所单独内容-->
+		<div v-if="kjsContentShow">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">会计所：</label>
 			</div>
-		</div>
-		<div class="form-group" v-if="pgsBiddingContent">
-			<label class="col-sm-2 control-label">招标内容：</label>
-			<div class="col-sm-10">
-				<span v-for="item in project.biddingContent">{{ item + " " }}</span>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">招标内容：</label>
+				<div class="col-sm-10">
+					<span v-for="item in project.kjsBiddingContent">{{ item + " " }}</span>
+				</div>
 			</div>
-		</div>
-		<div class="form-group" v-if="swsBiddingContent">
-			<label class="col-sm-2 control-label">招标内容：</label>
-			<div class="col-sm-10">
-				<span v-for="item in project.biddingContent">{{ item + " " }}</span>
+			<div class="form-group">
+				<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
+				<div class="col-sm-10">
+					{{ project.kjsOwnershipStructure }}
+				</div>
 			</div>
-		</div>
-		<div class="form-group" v-if="zjsFundSourceShow">
-			<label for="zjsFundSource" class="col-sm-2 control-label">资金来源及比例：</label>
-			<div class="col-sm-10">
-				{{ project.zjsFundSource }}
+			<div class="form-group">
+				<label for="totalAssets" class="col-sm-2 control-label">资产总额：</label>
+				<div class="col-sm-10">
+					<div class="input-group">
+						{{ project.totalAssets + "万元" }}
+					</div> 
+				</div>
 			</div>
-		</div>
-		<div class="form-group" v-if="OwnershipStructure">
-			<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
-			<div class="col-sm-10">
-				{{project.ownershipStructure}}
+			<div class="form-group">
+				<label for="location" class="col-sm-2 control-label">坐落地点：</label>
+				<div class="col-sm-10">
+					{{ project.location }}
+				</div>
 			</div>
+			<hr>
 		</div>
-		<!--问豆腐-->
-		<div class="form-group" v-if="scale">
-			<label for="scale" class="col-sm-2 control-label">建设规模：</label>
-			<div class="col-sm-10">
-				<div class="row">
-					<div class="col-sm-4">
-						<input type="text" class="form-control" id="scale" v-model="project.zjsArea" name="zjsArea" placeholder="请输入建设面积">
-					</div>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" id="scale" v-model="project.zjsLength" name="zjsLength" placeholder="请输入长度">
-					</div>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" id="scale" v-model="project.totalAssets" name="totalAssets" placeholder="请输入总投资额">
+		<!--评估所单独内容-->
+		<div v-if="pgsContentShow">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">评估所：</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">招标内容：</label>
+				<div class="col-sm-10">
+					<span v-for="item in project.pgsBiddingContent">{{ item + " " }}</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
+				<div class="col-sm-10">
+					{{ project.pgsOwnershipStructure }}
+				</div>
+			</div>
+			<hr>
+		</div>
+		<!--税务所单独内容-->
+		<div v-if="swsContentShow">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">税务所：</label>
+			</div>
+			<div class="form-group"> 
+				<label class="col-sm-2 control-label">招标内容：</label>
+				<div class="col-sm-10">
+					<span v-for="item in project.swsBiddingContent">{{ item + " " }}</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
+				<div class="col-sm-10">
+					{{ project.swsOwnershipStructure }}
+				</div>
+			</div>
+			<hr>
+		</div>			
+		<!--造价所单独内容-->
+		<div v-if="zjsContentShow">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">造价所：</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">招标内容：</label>
+				<div class="col-sm-10">
+					<span v-for="item in project.zjsBiddingContent">{{ item + " " }}</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="zjsFundSource" class="col-sm-2 control-label">资金来源及比例：</label>
+				<div class="col-sm-10">
+					<span v-for="item in project.zjsFundSource">{{ item + " " }}</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="scale" class="col-sm-2 control-label">建设规模：</label>
+				<div class="col-sm-10">
+					<div class="row">
+						<div class="col-sm-4">
+							{{ project.zjsArea }}
+						</div>
+						<div class="col-sm-4">
+							{{ project.zjsLength }}
+						</div>
+						<div class="col-sm-4">
+							{{ project.totalAssets }}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="form-group" v-if="scale">
-			<label for="location" class="col-sm-2 control-label">建设地点：</label>
-			<div class="col-sm-10">
-			    {{ project.location }}
+			<!-- 建设地点坐落地点重复-->
+			<div class="form-group">
+				<label for="location" class="col-sm-2 control-label">建设地点：</label>
+				<div class="col-sm-10">
+				  <input type="text" class="form-control" id="location" v-model="project.location" name="location" placeholder="请输入建设地点">
+				</div>
 			</div>
-		</div>
-		<div class="form-group" v-if="scale">
-			<label for="serviceTerm" class="col-sm-2 control-label">服务期限：</label>
-			<div class="col-sm-10">
-			  {{ project.serviceTerm }}
+			<div class="form-group">
+				<label for="serviceTerm" class="col-sm-2 control-label">服务期限：</label>
+				<div class="col-sm-10">
+				  {{ project.serviceTerm }}
+				</div>
 			</div>
-		</div>
-		<div class="form-group" v-if="scaleOther">
-			<label for="totalAssets" class="col-sm-2 control-label">资产总额：</label>
-			<div class="col-sm-10">
-			    {{ project.totalAssets + "万元"}}
-			</div>
-		</div>
-		<div class="form-group" v-if="scaleOther">
-			<label for="location" class="col-sm-2 control-label">坐落地点：</label>
-			<div class="col-sm-10">
-			    {{ project.location }}
-			</div>
+			<hr>
 		</div>
 		<div class="form-group" v-if="scaleOther">
 			<label for="serviceTerm" class="col-sm-2 control-label">审计期限：</label>
@@ -211,7 +259,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="form-group">
 			<label for="biddingNumber" class="col-sm-2 control-label">中标单位数量：</label>
 			<div class="col-sm-10">
@@ -395,71 +442,36 @@ export default {
     	}
     },
     computed: {
-    	zjsBiddingContent() {
-    		if (this.office === "zjs") {
-    			return true;
-    		} else {
-    			return false;
-    		}
-    	},
-    	zjsFundSourceShow() {
-    		if (this.office === "zjs") {
-    			return true;
-    		} else {
-    			return false;
-    		}
-    	},
-    	kjsBiddingContent() {
-    		if (this.office === "kjs") {
-    			return true;
-    		} else {
-    			return false;
-    		}
-    	},
-    	pgsBiddingContent() {
-    		if (this.office === "pgs") {
-    			return true;
-    		} else {
-    			return false;
-    		}
-    	},
-    	swsBiddingContent() {
-    		if (this.office === "sws") {
-    			return true;
-    		} else {
-    			return false;
-    		}
-    	},
-    	OwnershipStructure() {
-    		if (this.office === "zjs") {
-    			return false;
-    		}
-    		if (this.office === "kjs") {
-    			return true;
-    		}
-    		if (this.office === "pgs") {
-    			return true;
-    		}
-    		if (this.office === "sws") {
+    	kjsContentShow() {
+    		let kjs = this.project.departmentType.some((item,index,array)=> {
+    			return item === 'kjs';
+    		})
+    		if (kjs) {
     			return true;
     		}
     	},
-    	scale() {
-    		if (this.office === "zjs") {
+    	pgsContentShow() {
+    		let pgs = this.project.departmentType.some((item,index,array)=> {
+    			return item === 'pgs';
+    		})
+    		if (pgs) {
     			return true;
     		}
     	},
-    	scaleOther() {
-    		if (this.office !== "zjs") {
+    	swsContentShow() {
+    		let sws = this.project.departmentType.some((item,index,array)=> {
+    			return item === 'sws';
+    		})
+    		if (sws) {
     			return true;
     		}
     	},
-    	commonwealthShow() {
-    		if (this.project.contractType.type === "联合体") {
+    	zjsContentShow() {
+    		let zjs = this.project.departmentType.some((item,index,array)=> {
+    			return item === 'zjs';
+    		})
+    		if (zjs) {
     			return true;
-    		}
-    		else {
-    			return false;
     		}
     	},
     	biddingStatus() {
@@ -635,8 +647,8 @@ export default {
     		this.showDelipotent();
     		this.showDirectorAgree();
     		this.showBrandBtn();
-        this.distributeDoc();
-        this.showFinishBtn();
+        	this.distributeDoc();
+        	this.showFinishBtn();
     	}, () => { });
     	this.id = this.$route.params.id;
     	this.office = this.$route.params.office;

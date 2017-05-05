@@ -235,27 +235,31 @@ export default {
 			}
 		},
 		getAllList() {
-			axios({
-			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-			  method: 'get',
-			  url: '/service',
-			  params: {
-			    data: (() => {
-			      let obj = {
-			        command: 'getBiddingList',
-			        platform: 'web',
-			        type: 'other'
-			      }
-			      return JSON.stringify(obj);
-			    })()
-			  }
-			}).then((rep) => {
-			    if (rep.data.statusCode === '10001') {
-			      this.businessArray = rep.data.data.businessArray;
-			      this.bidArray = this.businessArray;
-			      this.bidArrayTimeResult = this.bidArray;
-			    }
-			  }, (rep) => {});
+			let pro = new Promise((resolve, reject) => {
+				axios({
+				  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+				  method: 'get',
+				  url: '/service',
+				  params: {
+				    data: (() => {
+				      let obj = {
+				        command: 'getBiddingList',
+				        platform: 'web',
+				        type: 'other'
+				      }
+				      return JSON.stringify(obj);
+				    })()
+				  }
+				}).then((rep) => {
+				    if (rep.data.statusCode === '10001') {
+				      this.businessArray = rep.data.data.businessArray;
+				      this.bidArray = this.businessArray;
+				      this.bidArrayTimeResult = this.bidArray;
+				      resolve('done');
+				    }
+				  }, (rep) => {});
+			});
+			return pro;
 		},
     timeSelect() {
     	this.bidArrayTimeResult = this.bidArray.filter((item,index,array) => {
@@ -287,10 +291,11 @@ export default {
       }
   },
 	created() {
-		this.getAllList();
+		this.getAllList().then(() => {
+			this.showInputBtn();
+		},() => {});
 		this.$store.dispatch('fetchUserInfo');
 		this.user = this.$store.getters.getUser;
-		this.showInputBtn();
 	}
 }
 </script>

@@ -85,8 +85,11 @@ export default {
 	  				subBasicArray: [{"name":'',"rate": 0}],
 	  				subEfficiencyArray: [{"name":'',"rate": 0}]
 	  			},
-	  			biddingContent: [],
-	  			zjsOwnershipStructure: '',
+	  			kjsBiddingContent: [],
+	  			pgsBiddingContent: [],
+	  			swsBiddingContent: [],
+	  			zjsBiddingContent: [],
+	  			zjsFundSource: [],
 	  			tenderValidityPeriod: '60',
 	  			departmentType: []
 	  		},
