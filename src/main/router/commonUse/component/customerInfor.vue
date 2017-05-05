@@ -15,7 +15,6 @@
           <th class="text-center">联系人职位</th>
           <th class="text-center">联系人电话</th>
           <th class="text-center">&nbsp;</th>
-          <th class="text-center">&nbsp;</th>
         </tr>
         <tr v-for="(CUSTOMER, index) in thisCustomers"
             :key="index">
@@ -27,16 +26,13 @@
             <a class="text-primary"
                @click.prevent="mod(CUSTOMER)">修改</a>
           </td>
-          <td class="text-center link-wrap">
-            <a class="text-danger"
-               @click.prevent="del(CUSTOMER)">删除</a>
-          </td>
         </tr>
       </tbody>
     </table>
     <customer-mod-modal v-if="showModModal"
                         :initalCustomer="modCustomer"
                         :indClassify="indClassify"
+                        @del="del"
                         @saved="saved"
                         @canceled="modCanceled"></customer-mod-modal>
     <customer-del-modal v-if="showDelModal"
@@ -80,6 +76,7 @@ export default {
     },
     del(CUSTOMER) {
       this.delCustomer = CUSTOMER;
+      this.showModModal = false;
       this.showDelModal = true;
     },
     add() {
@@ -128,6 +125,7 @@ export default {
     delCanceled() {
       this.delCustomer = {};
       this.showDelModal = false;
+      this.showModModal = true;
     },
     added(addedCustomer) {
       let cus = {};

@@ -2,12 +2,10 @@
   <card>
     <h3>{{thisDepart.department}}</h3>
     <form class="form-inline clearfix">
-      <staff-search-bar v-model="searchVal"
-                  @search="search"></staff-search-bar>
       <button type="button"
-            class="btn btn-default btn-sm pull-right"
-            @click="ediBtnTog()"
-            :disabled="ediBtn.dis">&nbsp;{{ediBtn.cont}}&nbsp;</button>
+              class="btn btn-default btn-sm pull-right"
+              @click="ediBtnTog()"
+              :disabled="ediBtn.dis">&nbsp;{{ediBtn.cont}}&nbsp;</button>
     </form>
     <table class="table table-striped table-hover">
       <tbody>
@@ -38,14 +36,12 @@ import axios from 'axios';
 import qs from 'qs';
 
 import card from '../../../component/card.vue';
-import staffSearchBar from './staffSearchBar.vue';
 
 export default {
   name: 'departmentAuthor',
   data() {
     return {
-      thisDepart: _.cloneDeep(this.department),
-      searchVal: '',
+      thisDepart: this.department,
       ediBtn: {
         dis: false,
         cont: '编辑',
@@ -55,45 +51,6 @@ export default {
   },
   props: ['department'],
   methods: {
-    search(val) {
-      this.searchVal = val;
-      axios({
-        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'},
-        method: 'get',
-        url: '/service',
-        params: {
-            data: (()=>{
-            var obj = {
-                command: 'staffSearch',
-                platform: 'web',
-                searchContent: val,
-                department: this.thisDepart.department
-            }
-            return JSON.stringify(obj);
-            })()
-        }
-      }).then((rep)=>{
-          if(rep.data.statusCode === '10001') {
-            this.thisDepart.staffArray = rep.data.data.userArray;
-            for(let j=0; j < this.thisDepart.staffArray.length; j++) {
-              let arr = [];
-              for(let k=0; k < this.thisDepart.authorityArray.length; k++) {
-                for(let m=0; m < this.thisDepart.staffArray[j].authority.length; m++) {
-                  if (this.thisDepart.authorityArray[k].name === this.thisDepart.staffArray[j].authority[m].name) {
-                    let obj = {
-                      authName: this.thisDepart.staffArray[j].authority[m].name,
-                      stat: this.thisDepart.staffArray[j].authority[m].authority === '0' ? false : true,
-                    };
-                    arr.push(obj);
-                    break;
-                  }
-                }
-              }
-              this.thisDepart.staffArray[j].authority = arr;
-            }
-          }
-        },(rep)=>{});
-    },
     ediBtnTog() {
       if (this.ediBtn.ediStat) {
         this.ediBtn.dis = true;
@@ -148,7 +105,6 @@ export default {
     }
   },
   components: {
-    staffSearchBar,
     card
   }
 };

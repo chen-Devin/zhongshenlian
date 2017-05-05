@@ -36,11 +36,16 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
+import { Message } from 'element-ui';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
+
+Vue.prototype.$message = Message;
+
 export default {
   name: 'ruleRegulationAdd',
   data() {
@@ -80,6 +85,11 @@ export default {
             this.$router.push('/rule-regulation');
           }
         }, (rep) => { });
+      } else {
+        this.$message({
+          message: '请输入标题和正文',
+          type: 'warning'
+        });
       }
     },
     canceled() {

@@ -94,6 +94,10 @@
               @click="cancel()">
         取消
       </button>
+      <button class="btn btn-danger modal-default-button"
+              @click="del()">
+        删除
+      </button>
     </div>
   </modal>
 </template>
@@ -230,6 +234,9 @@ export default {
     },
     cancel() {
       this.$emit('canceled');
+    },
+    del() {
+      this.$emit('del', this.initalStaff);
     }
   },
   components: {
