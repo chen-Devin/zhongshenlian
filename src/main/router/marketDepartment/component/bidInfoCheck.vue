@@ -382,7 +382,8 @@
                 <button class="btn btn-default" @click="adviceCancel">取消</button>
             </div>
         </modal>
-        <div v-if="">
+        <!-- 审核意见 -->
+        <div v-if="checkAdviceShow">
             <h5>审核意见</h5>
             <hr>
             <div class="row">
@@ -398,6 +399,7 @@
                 </div>
             </div>
         </div>
+
         <modal v-if="checkAdviceModal">
             <textarea slot="body" class="form-control" rows="8" placeholder="请填写修改意见，不超过500个字" v-model="adviceContent"></textarea>
             <button class="btn btn-default" slot="footer" @click="closeAdviceContent()">完成</button>
@@ -488,6 +490,7 @@ export default {
       noticeUpload: false,
       adviceShow: false,
       checkAdviceModal: false,
+      checkAdviceShow: false,
 			bidNotice: 'bidNotice',
 			shortlistedNotice: 'shortlistedNotice',
 			projectId: this.$route.params.id,
@@ -634,6 +637,11 @@ export default {
           if (this.user.department === "业务部" && this.project.directorHandleStatus === "1") {
               this.noticePanel = true;
           }
+      },
+      showCheckAdvice() {
+      	  if (this.project.directorHandleStatus === "0" || this.project.directorHandleStatus === "1") {
+      	  	this.checkAdviceShow = true;
+      	  }
       },
       adviceCancel() {
           this.adviceShow = false;
@@ -787,6 +795,7 @@ export default {
     		this.showBrandBtn();
         	this.distributeDoc();
         	this.showFinishBtn();
+        	this.showCheckAdvice();
     	}, () => { });
     	this.id = this.$route.params.id;
     	this.office = this.$route.params.office;
