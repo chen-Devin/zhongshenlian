@@ -81,5 +81,22 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-
+.business-list-handle {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  > a.list-group-item {
+    border-right: 0;
+    border-left: 0;
+  }
+  > a.list-group-item:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
+  > a.list-group-item:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
 </style>

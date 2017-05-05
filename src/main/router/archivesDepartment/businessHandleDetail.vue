@@ -245,7 +245,8 @@ export default {
         }
       },
       riskAdvices: [],
-      leaderAdivces: []
+      leaderAdivces: [],
+      uploadURL: ''
     };
   },
   props: ['user'],
