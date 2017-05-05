@@ -19,7 +19,6 @@ import qs from 'qs';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
-
 export default {
   name: 'ruleRegulationDetail',
   data() {

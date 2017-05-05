@@ -89,6 +89,7 @@ export default {
             {
               name: '会计所',
               code: 'TZUk',
+              state: false,
               words: [
                 {
                   name: '审字',
@@ -123,6 +124,7 @@ export default {
             },{
               name: '评估所',
               code: 'TZUp',
+              state: false,
               words: [
                 {
                   name: '评字',
@@ -137,6 +139,7 @@ export default {
             },{
               name: '税务所',
               code: 'TZUs',
+              state: false,
               words: [
                 {
                   name: '税鉴字',
@@ -147,6 +150,7 @@ export default {
             },{
               name: '造价所',
               code: 'TZUz',
+              state: false,
               words: [
                 {
                   name: '基结审字',

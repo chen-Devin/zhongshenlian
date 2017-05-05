@@ -2,8 +2,6 @@
   <card>
     <h3>{{thisDepart.department}}</h3>
     <form class="form-inline clearfix">
-      <staff-search-bar v-model="searchVal"
-                        @search="search"></staff-search-bar>
       <button type="button"
               class="btn btn-default btn-sm pull-right"
               @click="add()">&nbsp;录入&nbsp;</button>
@@ -18,7 +16,6 @@
           <th class="text-center">职务</th>
           <th class="text-center">所属部门</th>
           <th class="text-center">&nbsp;</th>
-          <th class="text-center">&nbsp;</th>
         </tr>
         <tr v-for="STAFF in thisDepart.staffArray"
             :key="STAFF.id">
@@ -32,17 +29,14 @@
             <a class="text-primary"
                @click.prevent="mod(STAFF)">修改</a>
           </td>
-          <td class="text-center link-wrap">
-            <a class="text-danger"
-               @click.prevent="del(STAFF)">删除</a>
-          </td>
         </tr>
       </tbody>
     </table>
     <staff-mod-modal v-if="showModModal"
                      :initalStaff="modStaff"
                      @saved="saved"
-                     @canceled="modCanceled"></staff-mod-modal>
+                     @canceled="modCanceled"
+                     @del="del"></staff-mod-modal>
     <staff-del-modal v-if="showDelModal"
                      :initalStaff="delStaff"
                      @deleted="deleted"
@@ -55,7 +49,6 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import axios from 'axios';
 
 import card from '../../../component/card.vue';
@@ -68,8 +61,7 @@ export default {
   name: 'departmentInfor',
   data() {
     return {
-      thisDepart: _.cloneDeep(this.department),
-      searchVal: '',
+      thisDepart: this.department,
       showModModal: false,
       modStaff: {},
       showDelModal: false,
@@ -79,51 +71,13 @@ export default {
   },
   props: ['department'],
   methods: {
-    search(val) {
-      this.searchVal = val;
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-        method: 'get',
-        url: '/service',
-        params: {
-          data: (() => {
-            var obj = {
-              command: 'staffSearch',
-              platform: 'web',
-              searchContent: val,
-              department: this.thisDepart.department
-            }
-            return JSON.stringify(obj);
-          })()
-        }
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          this.thisDepart.staffArray = rep.data.data.userArray;
-          for (let j = 0; j < this.thisDepart.staffArray.length; j++) {
-            let arr = [];
-            for (let k = 0; k < this.thisDepart.authorityArray.length; k++) {
-              for (let m = 0; m < this.thisDepart.staffArray[j].authority.length; m++) {
-                if (this.thisDepart.authorityArray[k].name === this.thisDepart.staffArray[j].authority[m].name) {
-                  let obj = {
-                    authName: this.thisDepart.staffArray[j].authority[m].name,
-                    stat: this.thisDepart.staffArray[j].authority[m].authority === '0' ? false : true,
-                  };
-                  arr.push(obj);
-                  break;
-                }
-              }
-            }
-            this.thisDepart.staffArray[j].authority = arr;
-          }
-        }
-      }, (rep) => { });
-    },
     mod(STAFF) {
       this.modStaff = STAFF;
       this.showModModal = true;
     },
     del(STAFF) {
       this.delStaff = STAFF;
+      this.showModModal = false;
       this.showDelModal = true;
     },
     add() {
@@ -161,6 +115,7 @@ export default {
     delCanceled() {
       this.delStaff = {};
       this.showDelModal = false;
+      this.showModModal = true;
     },
     added(addStaff) {
       let newStaff = {
@@ -181,7 +136,6 @@ export default {
     },
   },
   components: {
-    staffSearchBar,
     card,
     staffModModal,
     staffDelModal,

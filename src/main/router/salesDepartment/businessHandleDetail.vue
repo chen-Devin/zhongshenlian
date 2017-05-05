@@ -8,7 +8,7 @@
                 @click="sub()"
                 :disabled="subBtn.dis"
                 v-if="!submited">{{subBtn.cont}}</button>
-        <small class="label label-success pull-right"
+        <small class="label label-primary pull-right"
                v-if="submited">已提交风评复审</small>
       </h3>
       <div class="business-wrap">
@@ -85,54 +85,57 @@ export default {
             {
               name: '会计所',
               code: 'TZUk',
+              state: false,
               words: [
                 {
                   name: '审字',
                   code: '01',
                   state: false
-                }, {
+                },{
                   name: '专字',
                   code: '02',
                   state: false
-                }, {
+                },{
                   name: '咨字',
                   code: '03',
                   state: false
-                }, {
+                },{
                   name: '基决审字',
                   code: '04',
                   state: false
-                }, {
+                },{
                   name: '外汇检字',
                   code: '05',
                   state: false
-                }, {
+                },{
                   name: '验字',
                   code: '06',
                   state: false
-                }, {
+                },{
                   name: '外审字',
                   code: '07',
                   state: false
                 }
               ]
-            }, {
+            },{
               name: '评估所',
               code: 'TZUp',
+              state: false,
               words: [
                 {
                   name: '评字',
                   code: '01',
                   state: false
-                }, {
+                },{
                   name: '评咨字',
                   code: '02',
                   state: false
                 }
               ]
-            }, {
+            },{
               name: '税务所',
               code: 'TZUs',
+              state: false,
               words: [
                 {
                   name: '税鉴字',
@@ -140,23 +143,24 @@ export default {
                   state: false
                 }
               ]
-            }, {
+            },{
               name: '造价所',
               code: 'TZUz',
+              state: false,
               words: [
                 {
                   name: '基结审字',
                   code: '01',
                   state: false,
-                }, {
+                },{
                   name: '评审字',
                   code: '02',
                   state: false,
-                }, {
+                },{
                   name: '概审字',
                   code: '03',
                   state: false,
-                }, {
+                },{
                   name: '咨字',
                   code: '04',
                   state: false

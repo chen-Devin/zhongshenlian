@@ -48,11 +48,9 @@ export default {
         data: qs.stringify({
           data: (() => {
             var obj = {
-              command: 'XXXXXXXX',
+              command: 'finishedBusiness',
               platform: 'web',
-              id: this.initalBusiness.id,
-              result: '通过',
-              reason: ''
+              id: this.initalBusiness.id
             };
             return JSON.stringify(obj);
           })()

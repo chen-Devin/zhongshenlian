@@ -138,7 +138,15 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">出据报告类型</label>
       <div class="col-sm-9">
-        <template v-for="(TYPE, index) in business.report.type">
+        <label class="checkbox-inline"
+               v-for="(TYPE, index) in business.report.type"
+               :key="index">
+          <input type="checkbox"
+                 v-model="TYPE.state"
+                 :disabled="!editable"> {{TYPE.name}}
+        </label>
+        <hr>
+        <template v-for="(TYPE, index) in business.report.type" v-if="TYPE.state">
           <h5>{{TYPE.name}}</h5>
           <label class="checkbox-inline"
                  v-for="(WORD, index) in TYPE.words"
