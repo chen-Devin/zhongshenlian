@@ -2,13 +2,14 @@
 	<div class="main">
 		<crumbs :paths="paths"></crumbs>
 		<card>
-			<bid-info-edit 
-			:iniProject="project"  
+			<bid-info-edit
+			:iniProject="project"
+      inputType="录入"
 			@submit="submit"
-			@saveDraft="saveDraft" 
-			@delBasicFee="delBasicFee" 
-			@addBasicFee="addBasicFee" 
-			@delEfficiencyFee="delEfficiencyFee" 
+			@saveDraft="saveDraft"
+			@delBasicFee="delBasicFee"
+			@addBasicFee="addBasicFee"
+			@delEfficiencyFee="delEfficiencyFee"
 			@addEfficiencyFee="addEfficiencyFee"
 			@quedingDelete="quedingDelete"></bid-info-edit>
 			<modal v-show="inputSussessShow">
@@ -120,7 +121,7 @@ export default {
 			  }
 			}, (rep)=>{});
     	},
-    	
+
     	delBasicFee(index) {
     		this.project.contractType.subBasicArray.splice(index,1);
     	},

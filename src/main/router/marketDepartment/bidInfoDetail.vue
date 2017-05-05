@@ -3,17 +3,18 @@
 		<crumbs :paths="paths"></crumbs>
 		<card>
 			<bid-info-check @isEdit="isEdit" v-if="checkShow"></bid-info-check>
-			<bid-info-edit 
+			<bid-info-edit
             :iniProject="project"
             :isTempDetail="isTempDetail"
+            inputType="编辑"
             @submit="submit"
-            @saveDraft="saveDraft" 
-            @delBasicFee="delBasicFee" 
+            @saveDraft="saveDraft"
+            @delBasicFee="delBasicFee"
             @addBasicFee="addBasicFee"
-            @delEfficiencyFee="delEfficiencyFee" 
+            @delEfficiencyFee="delEfficiencyFee"
             @addEfficiencyFee="addEfficiencyFee"
             @quedingDelete="quedingDelete"
-            v-if="editShow" 
+            v-if="editShow"
             ></bid-info-edit>
             <modal v-show="inputSussessShow">
                 <p slot="body" class="ta-c cancel-word">
@@ -183,7 +184,7 @@ export default {
               if (rep.data.statusCode === '10001') {
                 this.deleteSussessShow = true;
               }
-            }, (rep)=>{}); 
+            }, (rep)=>{});
         },
         deleteFinish() {
             this.$router.push('/bid-info-list');
@@ -200,7 +201,7 @@ export default {
     	this.getInfo();
     	this.editShow = false;
     	this.checkShow = true;
-        this.id = this.$route.params.id;  
+        this.id = this.$route.params.id;
     },
     components: {
     	crumbs,

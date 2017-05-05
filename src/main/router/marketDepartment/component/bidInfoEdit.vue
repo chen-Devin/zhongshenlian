@@ -2,10 +2,9 @@
 	<div>
 		<div class="page-header">
 			<h4>
-				招投标信息录入
+				招投标信息{{ inputType }}
 			</h4>
 		</div>
-		
 		<form class="form-horizontal">
 			<div class="form-group">
 			  <label for="projectName" class="col-sm-2 control-label">项目名称：</label>
@@ -97,7 +96,7 @@
 						<div class="input-group">
 							<input type="text" class="form-control" id="totalAssets" v-model="project.totalAssets" name="totalAssets" placeholder="请输入资产总额">
 							<div class="input-group-addon">万元</div>
-						</div> 
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -154,7 +153,7 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">税务所：</label>
 				</div>
-				<div class="form-group"> 
+				<div class="form-group">
 					<label class="col-sm-2 control-label">招标内容：</label>
 					<div class="col-sm-10">
 						<label class="checkbox-inline">
@@ -180,7 +179,7 @@
 					</div>
 				</div>
 				<hr>
-			</div>			
+			</div>
 			<!--造价所单独内容-->
 			<div v-if="zjsContentShow">
 				<div class="form-group">
@@ -210,13 +209,14 @@
 						<label class="checkbox-inline">
 							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="二审"> 二审
 						</label>
-						<div class="checkbox">
+            <!--其他 还不会做-->
+						<!-- <div class="checkbox">
 						  <label for="other">
 						    <input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="其他">
 						    其他：
 						  </label>
 						  <input type="text" v-model="project.zjsBiddingContent" id="other" class="form-control" placeholder="限15字">
-						</div>
+						</div> -->
 					</div>
 				</div>
 				<div class="form-group">
@@ -247,15 +247,15 @@
 								<input type="text" class="form-control" id="scale" v-model="project.zjsLength" name="zjsLength" placeholder="请输入长度">
 							</div>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="scale" v-model="project.totalAssets" name="totalAssets" placeholder="请输入总投资额">
+								<input type="text" class="form-control" id="scale" v-model="project.zjsTotalInvestment" name="zjsTotalInvestment" placeholder="请输入总投资额">
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="location" class="col-sm-2 control-label">建设地点：</label>
+					<label for="zjsLocation" class="col-sm-2 control-label">建设地点：</label>
 					<div class="col-sm-10">
-					  <input type="text" class="form-control" id="location" v-model="project.location" name="location" placeholder="请输入建设地点">
+					  <input type="text" class="form-control" id="zjsLocation" v-model="project.zjsLocation" name="zjsLocation" placeholder="请输入建设地点">
 					</div>
 				</div>
 				<div class="form-group">
@@ -310,7 +310,7 @@
 								</div>
 							</div>
 							<div class="col-sm-1">
-								
+
 							</div>
 						</div>
 					</div>
@@ -371,7 +371,7 @@
 								</div>
 							</div>
 							<div class="col-sm-1">
-								
+
 							</div>
 						</div>
 					</div>
@@ -426,7 +426,7 @@
 						<input type="text" class="form-control" id="controlPrice" v-model="project.controlPrice" name="controlPrice" placeholder="请输入招标控制价">
 						<div class="input-group-addon">万元</div>
 					</div>
-				  
+
 				</div>
 			</div>
 			<div class="form-group">
@@ -442,7 +442,7 @@
 						<input type="text" class="form-control" id="bidDocumentPrice" v-model="project.bidDocumentPrice" name="bidDocumentPrice" placeholder="请输入招标文件价格">
 						<div class="input-group-addon">万元</div>
 					</div>
-				  
+
 				</div>
 			</div>
 			<div class="form-group">
@@ -458,7 +458,7 @@
 						<input type="text" class="form-control" id="tenderValidityPeriod" v-model="project.tenderValidityPeriod" name="tenderValidityPeriod" placeholder="请输入投标有限期">
 						<div class="input-group-addon">天</div>
 					</div>
-				  
+
 				</div>
 			</div>
 			<div class="form-group">
@@ -477,7 +477,7 @@
 					<div class="input-group">
 						<input type="text" class="form-control" id="tenderFee" v-model="project.tenderFee" name="tenderFee" placeholder="请输入标书费">
 						<div class="input-group-addon">万元</div>
-					</div>	
+					</div>
 				</div>
 			</div>
 			<!--中标服务费-->
@@ -529,7 +529,7 @@
 			</p>
 		</modal>
 	</div>
-	
+
 </template>
 
 <style lang="sass" scoped>
@@ -560,7 +560,8 @@ export default {
 		return {
 			project: this.iniProject,
 			cancelModal: false,
-			commonwealthShow: false
+			commonwealthShow: false,
+      inputType: '录入'
 		}
 	},
 	computed: {
@@ -597,7 +598,7 @@ export default {
 			}
 		}
 	},
-	props: ['iniProject'],
+	props: ['iniProject','inputType'],
 	methods: {
 		submit(project) {
 			this.$emit('submit',project);

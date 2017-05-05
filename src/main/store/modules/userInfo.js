@@ -12,33 +12,37 @@ const state = {
 		authority: [],
 		gender: '',
 		wechatName: '',
-		wechatHeadImg: ''	
+		wechatHeadImg: ''
 	}
 };
 
 const getters = {
-	getUser: state => state.user 
+	getUser: state => state.user
 };
 
 const actions = {
 	fetchUserInfo ({ commit, state }) {
-		axios({
-		    method: 'get',
-		    url: '/service',
-		    params: {
-		        data: (()=>{
-		        var obj = {
-		            command: 'getUserInfo',
-		            platform: 'web'
-		        }
-		        return JSON.stringify(obj);
-		        })()
-		    }
-		}).then((rep)=>{
-		        if(rep.data.statusCode === '10001') {
-		        	commit('updateUserInfo',rep.data.data)
-		        }
-		    },(rep)=>{});
+        let pro = new Promise((resolve,reject) => {
+            axios({
+                method: 'get',
+                url: '/service',
+                params: {
+                    data: (()=>{
+                    var obj = {
+                        command: 'getUserInfo',
+                        platform: 'web'
+                    }
+                    return JSON.stringify(obj);
+                    })()
+                }
+            }).then((rep)=>{
+                if(rep.data.statusCode === '10001') {
+                    commit('updateUserInfo',rep.data.data);
+                    resolve('done');
+                }
+            },(rep)=>{});
+        });
+        return pro;
 	}
 };
 
