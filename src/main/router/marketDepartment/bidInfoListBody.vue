@@ -292,10 +292,12 @@ export default {
   },
 	created() {
 		this.getAllList().then(() => {
-			this.showInputBtn();
+
 		},() => {});
-		this.$store.dispatch('fetchUserInfo');
-		this.user = this.$store.getters.getUser;
+		this.$store.dispatch('fetchUserInfo').then(( )=>{
+        this.user = this.$store.getters.getUser;
+        this.showInputBtn();
+    }, ( )=>{ });
 	}
 }
 </script>
@@ -352,6 +354,7 @@ table {
 }
 .name-input {
 	width: 815px;
+  text-align: center;
 }
 .left-move {
 	margin-left: 10px;
