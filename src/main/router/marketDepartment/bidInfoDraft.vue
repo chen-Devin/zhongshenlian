@@ -2,12 +2,6 @@
 	<div class="main">
 		<crumbs :paths="paths"></crumbs>
 		<card>
-			<ul class="nav nav-pills nav-justified">
-			  <li role="presentation" :class="{ active: isAccounting }" @click="sel_kjs()"><a href="javascript:void(0);">会计所</a></li>
-			  <li role="presentation" :class="{ active: isAssessment }" @click="sel_pgs()"><a href="javascript:void(0);">评估所</a></li>
-			  <li role="presentation" :class="{ active: isTax }" @click="sel_sws()"><a href="javascript:void(0);">税务所</a></li>
-			  <li role="presentation" :class="{ active: isCost }" @click="sel_zjs()"><a href="javascript:void(0);">造价所</a></li>
-			</ul>
 			<table class="table table-hover projectList">
 				<thead>
 					<tr>
@@ -49,7 +43,6 @@ import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
-import bidClassification from './component/bidClassification.vue';
 
 export default {
 	name: 'bidInfoDraft',
@@ -192,8 +185,7 @@ export default {
 	},
 	components: {
 		crumbs,
-		card,
-		bidClassification
+		card
 	}
 }
 </script>

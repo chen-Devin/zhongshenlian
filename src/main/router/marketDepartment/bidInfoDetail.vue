@@ -5,7 +5,6 @@
 			<bid-info-check @isEdit="isEdit" v-if="checkShow"></bid-info-check>
 			<bid-info-edit 
             :iniProject="project"
-            :office="office"
             :isTempDetail="isTempDetail"
             @submit="submit"
             @saveDraft="saveDraft" 
@@ -67,8 +66,6 @@ export default {
 	  		],
 	  		project: {},
 	  		iniProject: {},
-	  		office: '会计所',
-            officeSX: '',
 	  		editShow: false,
 	  		checkShow: true,
             id: '',
@@ -91,8 +88,7 @@ export default {
     		      let obj = {
     		        command: 'getBiddingInfo',
     		        platform: 'web',
-    		        id: this.$route.params.id,
-    		        type: this.$route.params.officeSX,
+    		        id: this.$route.params.id
     		      }
     		      return JSON.stringify(obj);
     		    })()
@@ -144,7 +140,6 @@ export default {
                     var obj = {
                       command: 'addOrEditBiddingInfo',
                       platform: 'web',
-                      departmentType: this.officeSX,
                       type: 'temp',
                       data: project
                     };
@@ -191,11 +186,10 @@ export default {
             }, (rep)=>{}); 
         },
         deleteFinish() {
-            console.log(this.officeSX);
-            this.$router.push('/bid-info-list/' + this.officeSX);
+            this.$router.push('/bid-info-list');
         },
         inputFinish() {
-            this.$router.push('/bid-info-list/' + this.officeSX);
+            this.$router.push('/bid-info-list');
         },
         draftFinish() {
             //close
@@ -206,8 +200,7 @@ export default {
     	this.getInfo();
     	this.editShow = false;
     	this.checkShow = true;
-        this.id = this.$route.params.id;
-        this.officeSX = this.$route.params.office;  
+        this.id = this.$route.params.id;  
     },
     components: {
     	crumbs,
