@@ -60,6 +60,7 @@
 				</tr>
 			</tbody>
 		</table>
+		<my-pagination :iniTotalPage="totalPage"></my-pagination>
 	</div>
 </template>
 
@@ -69,6 +70,7 @@ import axios from 'axios';
 import qs from 'qs';
 import { Select } from 'element-ui';
 import { Option } from 'element-ui';
+import myPagination from '../../component/pagination.vue';
 
 Vue.use(Select);
 Vue.use(Option);
@@ -117,7 +119,7 @@ export default {
 			bidStartTime: '',
 			bidEndTime: '',
 			inputBtn: false,
-      bidArray: {},
+      		bidArray: {},
 			user: {},
       		searchContent: '',
       		options: [{
@@ -133,7 +135,8 @@ export default {
       		          value: 'zjs',
       		          label: '造价所'
       		        }],
-      		officeList: []
+      		officeList: [],
+      		totalPage: ''
 		};
 	},
 	computed: {
@@ -238,7 +241,7 @@ export default {
 				        command: 'getBiddingList',
 				        platform: 'web',
 				        type: 'other',
-                pageNum: "1"
+                		pageNum: "1"
 				      }
 				      return JSON.stringify(obj);
 				    })()
@@ -246,6 +249,7 @@ export default {
 				}).then((rep) => {
 				    if (rep.data.statusCode === '10001') {
 				      this.bidArray = rep.data.data.businessArray;
+					  this.totalPage = 10; //祥哥周一给 
 				      resolve('done');
 				    }
 				  }, (rep) => {});
@@ -266,7 +270,8 @@ export default {
 	},
 	components: {
 		axios,
-		qs
+		qs,
+		myPagination
 	},
   watch: {
       bidStartDate(curVal,oldVal){
@@ -282,7 +287,6 @@ export default {
   },
 	created() {
 		this.getAllList().then(() => {
-
 		},() => {});
 		this.$store.dispatch('fetchUserInfo').then(( )=>{
         this.user = this.$store.getters.getUser;

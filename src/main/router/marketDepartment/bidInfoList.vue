@@ -3,13 +3,6 @@
 		<crumbs :paths="paths"></crumbs>
 		<card>
         <bid-info-list-body></bid-info-list-body>
-        <!-- <div class="block">
-          <span class="demonstration">大于 7 页时的效果</span>
-          <el-pagination
-            layout="prev, pager, next"
-            :total="1000">
-          </el-pagination>
-        </div> -->
 		</card>
 	</div>
 </template>
@@ -22,6 +15,7 @@ import qs from 'qs';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import bidInfoListBody from './bidInfoListBody.vue';
+
 
 export default {
     name: 'bidInfoList',
@@ -57,22 +51,6 @@ export default {
       });
     },
     methods: {
-        getOffice(office) {
-            this.office = office;
-        },
-    	handleDate (dateString) {
-    		let ymd = dateString.slice(0,10);
-    		let ymdArr = ymd.split("-");
-    		let year = ymdArr[0];
-    		let month = ymdArr[1];
-    		let date = ymdArr[2];
-    		let ymdObj = {
-    			year: year,
-    			month: month,
-    			date: date
-    		};
-    		return ymdObj;
-    	},
     	checkMessage(project,office) {
     		this.$router.push('/bid-info-detail/'+project.id+"&"+office);
     	},
