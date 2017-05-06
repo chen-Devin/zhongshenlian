@@ -48,7 +48,8 @@ export default {
           data: (() => {
             var obj = {
               command: 'getCustomerList',
-              platform: 'web'
+              platform: 'web',
+              pageNum: 1
             }
             return JSON.stringify(obj);
           })()

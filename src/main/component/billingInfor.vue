@@ -12,7 +12,7 @@
       <router-link class="list-group-item"
                    :to="billRoute(BILL)"
                    v-for="(BILL, index) in business.bills"
-                   :key="index">{{BILL.amount+'万元'}}</router-link>
+                   :key="index">{{BILL.amount+'元'}}</router-link>
     </div>
   </div>
 </template>

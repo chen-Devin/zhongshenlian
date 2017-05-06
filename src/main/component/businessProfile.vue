@@ -65,19 +65,19 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">资产总额</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.assetAmount===''?'':`${business.assetAmount}万元`}}</p>
+        <p class="form-control-static">{{business.institution.assetSize===''?'':`${business.institution.assetSize}元`}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">合同金额</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}万元`}}</p>
+        <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">合同单价</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.contractPrice===''?'':`${business.contractPrice}万元`}}</p>
+        <p class="form-control-static">{{business.contractPrice===''?'':`${business.contractPrice}元`}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -366,17 +366,17 @@ export default {
       return out;
     },
     contractUploadShow() {
-      return (this.user.department === '业务部' && this.business.projectStatus >= 6 && this.business.projectStatus <= 7) ? true : false;
+      return (this.user.department === '业务部' && this.business.projectStatus >= 60 && this.business.projectStatus < 80) ? true : false;
     },
     contractFileShow() {
       if (this.user.department === '业务部') {
-        if (this.business.projectStatus > 7) {
+        if (this.business.projectStatus >= 80) {
           return true;
         } else {
           return false;
         }
       } else {
-        if (this.business.projectStatus > 6) {
+        if (this.business.projectStatus >= 70) {
           return true;
         } else {
           return false;
@@ -384,10 +384,10 @@ export default {
       }
     },
     contractNumShow() {
-      return (this.business.projectStatus > 7) ? true : false;
+      return (this.business.projectStatus >= 80) ? true : false;
     },
     QRCodeShow() {
-      return (this.business.projectStatus > 17) ? true : false;
+      return (this.business.projectStatus >= 150) ? true : false;
     }
   },
   props: ['initBusiness', 'user'],

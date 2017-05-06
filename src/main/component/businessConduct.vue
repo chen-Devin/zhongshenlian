@@ -80,7 +80,7 @@ export default {
                   reportPurpose: this.business.report.usage,
                   startTime: this.business.time.start,
                   endTime: this.business.time.end,
-                  totalAssets: this.business.assetAmount,
+                  totalAssets: this.business.institution.assetSize,
                   contractAmount: this.business.contractAmount,
                   contractPrice: this.business.contractPrice,
                   reportCopies: this.business.report.amount,

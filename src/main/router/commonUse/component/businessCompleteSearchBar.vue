@@ -44,7 +44,7 @@
             <select class="form-control" v-model="sea.amount" @change="search()">
               <option :value="AMO" v-for="(AMO, index) in amounts" :key="index">{{AMO}}</option>
             </select>
-            <div class="input-group-addon">万元</div>
+            <div class="input-group-addon">元</div>
           </div>
         </div>
         <div class="col-sm-6">

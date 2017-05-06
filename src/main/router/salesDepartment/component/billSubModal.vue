@@ -73,6 +73,7 @@ export default {
                   billingDate: this.bill.billingDate,
                   deliveryMethod: this.bill.way,
                   recipientName: this.bill.receiver,
+                  deliverAddress: this.bill.receiveAdd,
                   recipientId: '',
                   signContractNumber: this.business.number,
                   serviceContent: this.bill.content,

@@ -27,8 +27,10 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
+import { Message } from 'element-ui';
 
 import router from '../index.js';
 import bus from '../../bus.js';
@@ -37,6 +39,8 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import businessProfile from '../../component/businessProfile.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
+
+Vue.prototype.$message = Message;
 
 export default {
   name: 'businessReviewDetailSales',
@@ -59,6 +63,7 @@ export default {
           customerName: '',
           name: '',
           telephone: '',
+          assetSize: 0
         },
         type: '',
         manager: {
@@ -81,7 +86,6 @@ export default {
             return `${Y}-${M}-${D}`;
           })(),
         },
-        assetAmount: 0,
         contractAmount: 0,
         contractPrice: 0,
         report: {
@@ -230,7 +234,7 @@ export default {
           },
         ],
         files: [],
-        projectStatus: 1,
+        projectStatus: 0,
         contracts: [],
         projectApproverArray: [],
         schdules: [],
@@ -256,11 +260,7 @@ export default {
   props: ['user'],
   computed: {
     submited() {
-      if (this.business.projectStatus === 6) {
-        return false;
-      } else if (this.business.projectStatus === 7) {
-        return true;
-      }
+      return (this.business.projectStatus < 70) ? false : true;
     }
   },
   created() {
@@ -299,6 +299,7 @@ export default {
             this.business.institution.customerName = rep.data.data.requester;
             this.business.institution.name = rep.data.data.requesterName;
             this.business.institution.telephone = rep.data.data.requesterPhone;
+            this.business.institution.assetSize = rep.data.data.totalAssets;
 
             this.business.type = rep.data.data.businessType;
 
@@ -310,7 +311,6 @@ export default {
             this.business.time.start = rep.data.data.startTime;
             this.business.time.end = rep.data.data.endTime;
 
-            this.business.assetAmount = rep.data.data.totalAssets;
             this.business.contractAmount = rep.data.data.contractAmount;
             this.business.contractPrice = rep.data.data.contractPrice;
 
@@ -321,6 +321,7 @@ export default {
                   for (let m=0; m<rep.data.data.reportType[i].typeArray.length; m++) {
                     for (let n=0; n<this.business.report.type[j].words.length; n++) {
                       if (rep.data.data.reportType[i].typeArray[m].name === this.business.report.type[j].words[n].name) {
+                        this.business.report.type[j].state = true;
                         this.business.report.type[j].words[n].state = true;
                       }
                     }
@@ -444,6 +445,7 @@ export default {
                 billingDate: rep.data.data.projectBillingArray[i].billingDate,
                 way: rep.data.data.projectBillingArray[i].deliveryMethod,
                 receiver: rep.data.data.projectBillingArray[i].recipientName,
+                receiveAdd: rep.data.data.projectBillingArray[i].deliverAddress,
                 content: rep.data.data.projectBillingArray[i].serviceContent,
                 billFiles: (() => {
                   let arr = [];
@@ -490,10 +492,10 @@ export default {
 
             this.business.projectOperatingArray = rep.data.data.projectOperatingArray;
 
-            if (rep.data.data.reportAnnexArray.length) {
-              this.business.QRCode.id = rep.data.data.reportAnnexArray[0].id;
-              this.business.QRCode.name = rep.data.data.reportAnnexArray[0].annexName;
-              this.business.QRCode.url = rep.data.data.reportAnnexArray[0].annexUrl;
+            if (rep.data.data.qrcodeAnnexArray.length) {
+              this.business.QRCode.id = rep.data.data.qrcodeAnnexArray[0].id;
+              this.business.QRCode.name = rep.data.data.qrcodeAnnexArray[0].annexName;
+              this.business.QRCode.url = rep.data.data.qrcodeAnnexArray[0].annexUrl;
             }
 
             this.adviceClassify();
@@ -516,29 +518,36 @@ export default {
       }
     },
     sub() {
-      this.subBtn.dis = true;
-      this.subBtn.cont = '申请中...';
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-        method: 'post',
-        url: '/service',
-        data: qs.stringify({
-          data: (() => {
-            let obj = {
-              command: 'uploadContractFinished',
-              platform: 'web',
-              id: this.business.id
-            }
-            return JSON.stringify(obj);
-          })()
-        })
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          this.subBtn.cont = '申请成功';
-          this.business.projectStatus = 7;
-          bus.$emit('projectStatusUpdate', this.business.projectStatus);
-        }
-      }, (rep) => { });
+      if (this.business.contracts.length) {
+        this.subBtn.dis = true;
+        this.subBtn.cont = '申请中...';
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'post',
+          url: '/service',
+          data: qs.stringify({
+            data: (() => {
+              let obj = {
+                command: 'uploadContractFinished',
+                platform: 'web',
+                id: this.business.id
+              }
+              return JSON.stringify(obj);
+            })()
+          })
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.subBtn.cont = '申请成功';
+            this.business.projectStatus = 70;
+            bus.$emit('projectStatusUpdate', this.business.projectStatus);
+          }
+        }, (rep) => { });
+      } else {
+        this.$message({
+          message: '请上传电子合同',
+          type: 'warning'
+        });
+      }
     },
     uploaded(uploadedBusiness) {
       this.business = uploadedBusiness;

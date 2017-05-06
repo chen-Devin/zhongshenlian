@@ -83,7 +83,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">签订合同金额</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}万元`}}</p>
+        <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -196,13 +196,13 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">累计开票金额</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{bill.addUpAmount===''?'':`${bill.addUpAmount}万元`}}</p>
+        <p class="form-control-static">{{bill.addUpAmount===''?'':`${bill.addUpAmount}元`}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">本次开票金额</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{bill.amount===''?'':`${bill.amount}万元`}}</p>
+        <p class="form-control-static">{{bill.amount===''?'':`${bill.amount}元`}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -271,10 +271,16 @@
         <p class="form-control-static">{{bill.way}}</p>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" v-show="bill.way==='快递'">
       <label class="col-sm-2 control-label">快递收件人</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{bill.receiver}}</p>
+      </div>
+    </div>
+    <div class="form-group" v-show="bill.way==='快递'">
+      <label class="col-sm-2 control-label">收件地址</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{bill.receiveAdd}}</p>
       </div>
     </div>
     <div class="form-group">
@@ -310,10 +316,10 @@ export default {
       return (this.business.contractType.name === '联合体') ? true : false;
     },
     uploadEnabled() {
-      return (this.user.department === '财务部' && this.business.projectStatus > 7) ? true : false;
+      return (this.user.department === '财务部' && this.business.projectStatus >= 80) ? true : false;
     },
     uploadDisabled() {
-      return (this.user.department !== '财务部' && this.business.projectStatus > 7) ? true : false;
+      return (this.user.department !== '财务部' && this.business.projectStatus >= 80) ? true : false;
     }
   },
   props: ['initBusiness', 'user'],

@@ -60,6 +60,7 @@ export default {
           customerName: '',
           name: '',
           telephone: '',
+          assetSize: 0
         },
         type: '',
         manager: {
@@ -82,7 +83,6 @@ export default {
             return `${Y}-${M}-${D}`;
           })(),
         },
-        assetAmount: 0,
         contractAmount: 0,
         contractPrice: 0,
         report: {
@@ -231,7 +231,7 @@ export default {
           },
         ],
         files: [],
-        projectStatus: 1,
+        projectStatus: 0,
         contracts: [],
         projectApproverArray: [],
         schdules: [

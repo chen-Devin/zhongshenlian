@@ -11,13 +11,15 @@
                      v-for="(BUSINESS, index) in businesses"
                      :key="index">
           <span class="label label-warning"
-                v-if="BUSINESS.projectStatus===1">尚未完成</span>
+                v-if="BUSINESS.projectStatus===10">尚未完成</span>
           <span class="label label-info"
-                v-else-if="BUSINESS.projectStatus===2||BUSINESS.projectStatus===4">已提交待审核</span>
+                v-else-if="BUSINESS.projectStatus===20||BUSINESS.projectStatus===40">已提交待审核</span>
           <span class="label label-danger"
-                v-else-if="BUSINESS.projectStatus===3||BUSINESS.projectStatus===5">已审核未通过</span>
+                v-else-if="BUSINESS.projectStatus===30||BUSINESS.projectStatus===50">已审核未通过</span>
           <span class="label label-success"
-                v-else-if="BUSINESS.projectStatus===6">待发合同编号</span>
+                v-else-if="BUSINESS.projectStatus===60">待上传合同</span>
+          <span class="label label-primary"
+                v-else-if="BUSINESS.projectStatus===70">待发合同编号</span>
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime}}</span>
         </router-link>
@@ -58,7 +60,8 @@ export default {
           data: (() => {
             var obj = {
               command: 'getBusinessChecking',
-              platform: 'web'
+              platform: 'web',
+              pageNum: 1
             }
             return JSON.stringify(obj);
           })()

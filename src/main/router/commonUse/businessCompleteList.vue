@@ -11,6 +11,18 @@
                      :to="businessRoute(BUSINESS)"
                      v-for="(BUSINESS, index) in businesses"
                      :key="index">
+          <span class="label label-warning"
+                v-if="BUSINESS.projectStatus<130">未复审</span>
+          <span class="label label-info"
+                v-else-if="BUSINESS.projectStatus===130">待复审</span>
+          <span class="label label-danger"
+                v-else-if="BUSINESS.projectStatus===131">未通过</span>
+          <span class="label label-success"
+                v-else-if="BUSINESS.projectStatus===140">已通过</span>
+          <span class="label label-primary"
+                v-else-if="BUSINESS.projectStatus===150">已上传二维码</span>
+          <span class="label label-default"
+                v-else-if="BUSINESS.projectStatus===180">已完成</span>
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime}}</span>
         </router-link>
@@ -37,6 +49,38 @@ export default {
     };
   },
   methods: {
+    get() {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'getBusinessFinished',
+                platform: 'web',
+                pageNum: 1
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            for (let i = 0; i < rep.data.data.businessArray.length; i++) {
+              let obj = {
+                id: rep.data.data.businessArray[i].id,
+                businessName: rep.data.data.businessArray[i].businessName,
+                finishTime: rep.data.data.businessArray[i].finishTime,
+                projectStatus: parseInt(rep.data.data.businessArray[i].projectStatus)
+              };
+              this.businesses.push(obj);
+            }
+          }
+        }, (rep) => { });
+      });
+      return promise;
+    },
     search(sea) {
       let promise = new Promise((resolve, reject) => {
         axios({
@@ -52,7 +96,8 @@ export default {
                 beginTime: sea.time.start === '' ? null : sea.time.start,
                 endTime: sea.time.end === '' ? null : sea.time.end,
                 businessAmount: sea.amount === '所有' ? null : sea.amount,
-                businessType: sea.type === '所有' ? null : sea.type
+                businessType: sea.type === '所有' ? null : sea.type,
+                pageNum: 1
               }
               return JSON.stringify(obj);
             })()

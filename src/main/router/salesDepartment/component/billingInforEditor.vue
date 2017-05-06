@@ -23,7 +23,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">签订合同金额</label>
         <div class="col-sm-9">
-          <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}万元`}}</p>
+          <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</p>
         </div>
       </div>
       <div class="form-group">
@@ -130,7 +130,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">累计开票金额</label>
         <div class="col-sm-9">
-          <p class="form-control-static">{{bill.addUpAmount+'万元'}}</p>
+          <p class="form-control-static">{{bill.addUpAmount+'元'}}</p>
         </div>
       </div>
       <hr>
@@ -139,7 +139,7 @@
         <div class="col-sm-9">
           <div class="input-group">
             <input type="number" class="form-control" placeholder="请输入本次开票金额" v-model.number="bill.amount">
-            <div class="input-group-addon">万元</div>
+            <div class="input-group-addon">元</div>
           </div>
         </div>
       </div>
@@ -173,25 +173,25 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">单位地址</label>
+        <label class="col-sm-2 control-label"><span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>单位地址</label>
         <div class="col-sm-9">
           <input type="text" class="form-control" placeholder="请输入单位地址" v-model="bill.unit.address">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">单位电话</label>
+        <label class="col-sm-2 control-label"><span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>单位电话</label>
         <div class="col-sm-9">
           <input type="tel" class="form-control" placeholder="请输入单位电话" v-model="bill.unit.tele">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">开户银行</label>
+        <label class="col-sm-2 control-label"><span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>开户银行</label>
         <div class="col-sm-9">
           <input type="text" class="form-control" placeholder="请输入开户银行" v-model="bill.unit.depositBank">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">开户账号</label>
+        <label class="col-sm-2 control-label"><span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>开户账号</label>
         <div class="col-sm-9">
           <input type="text" class="form-control" placeholder="请输入开户账号" v-model="bill.unit.account">
         </div>
@@ -219,10 +219,16 @@
           </label>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" v-show="bill.way==='快递'">
         <label class="col-sm-2 control-label">快递收件人</label>
         <div class="col-sm-9">
           <input type="text" class="form-control" placeholder="请输入快递收件人" v-model="bill.receiver">
+        </div>
+      </div>
+      <div class="form-group" v-show="bill.way==='快递'">
+        <label class="col-sm-2 control-label">收件地址</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" placeholder="请输入收件地址" v-model="bill.receiveAdd">
         </div>
       </div>
       <div class="form-group">
@@ -294,6 +300,7 @@ export default {
         })(),
         way: '快递',
         receiver: '',
+        receiveAdd: '',
         content: '',
         billFiles: [],
         receiptFiles: [],

@@ -3,7 +3,7 @@
     <div slot="body">
       <p>
         <span class="fa fa-exclamation-circle fa-5x text-danger"></span>
-        <span class="text-cont">确定删除客户{{initalCustomer.name}}吗？</span>
+        <span class="text-cont">确定删除客户{{initalCustomer.customerName}}吗？</span>
       </p>
     </div>
     <div slot="footer">

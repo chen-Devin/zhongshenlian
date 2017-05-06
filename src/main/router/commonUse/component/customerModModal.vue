@@ -91,7 +91,7 @@
                    class="form-control"
                    placeholder="请输入注册资本"
                    v-model.number="customer.registeredCapital.val">
-            <div class="input-group-addon">万元</div>
+            <div class="input-group-addon">元</div>
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@
                    class="form-control"
                    placeholder="请输入资产规模"
                    v-model.number="customer.assetSize.val">
-            <div class="input-group-addon">万元</div>
+            <div class="input-group-addon">元</div>
           </div>
         </div>
       </div>
@@ -129,15 +129,14 @@
                  v-model="customer.setUpTime.val">
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group"
+           :class="{'has-error': !customer.industry.ver}">
         <label class="col-sm-3 control-label">所属行业</label>
         <div class="col-sm-9">
-          <select class="form-control"
-                  v-model="customer.industry.val">
-            <option v-for="(IND, index) in indClassify"
-                    :value="IND"
-                    :key="index">{{IND}}</option>
-          </select>
+          <input type="text"
+                 class="form-control"
+                 placeholder="请输入所属行业"
+                 v-model="customer.industry.val">
         </div>
       </div>
       <div class="form-group">
@@ -245,7 +244,8 @@ export default {
             ver: this.initalCustomer.assetSize === '' ? false : true
           },
           industry: {
-            val: this.initalCustomer.industry
+            val: this.initalCustomer.industry,
+            ver: this.initalCustomer.industry === '' ? false : true
           },
           setUpTime: {
             val: this.initalCustomer.setUpTime,
@@ -335,7 +335,12 @@ export default {
       } else {
         this.customer.setUpTime.ver = true;
       }
-      if (!(this.customer.customerName.ver && this.customer.name.ver && this.customer.telephone.ver && this.customer.duty.ver && this.customer.department.ver && this.customer.registeredAddress.ver && this.customer.mailingAddress.ver && this.customer.businessLicenseNumber.val && this.customer.registeredCapital.ver && this.customer.assetSize.ver && this.customer.setUpTime.ver)) {
+      if (this.customer.industry.val === '') {
+        this.customer.industry.ver = false;
+      } else {
+        this.customer.industry.ver = true;
+      }
+      if (!(this.customer.customerName.ver && this.customer.name.ver && this.customer.telephone.ver && this.customer.duty.ver && this.customer.department.ver && this.customer.registeredAddress.ver && this.customer.mailingAddress.ver && this.customer.businessLicenseNumber.val && this.customer.registeredCapital.ver && this.customer.assetSize.ver && this.customer.setUpTime.ver && this.customer.industry.ver)) {
         this.alert.show = true;
         this.alert.cont = '您有信息尚未输入或信息格式有误，请检查';
       } else {

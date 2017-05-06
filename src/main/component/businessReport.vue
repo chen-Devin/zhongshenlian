@@ -61,10 +61,10 @@ export default {
   },
   computed: {
     reportUploadShow() {
-      return (this.user.department === '业务部' && this.business.projectStatus > 7) ? true : false;
+      return (this.user.department === '业务部' && this.business.projectStatus >= 80) ? true : false;
     },
     reportFileShow() {
-      return (this.user.department !== '业务部' && this.business.projectStatus > 7) ? true : false;
+      return (this.user.department !== '业务部' && this.business.projectStatus >= 80) ? true : false;
     },
   },
   props: ['initBusiness', 'user'],
