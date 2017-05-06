@@ -382,7 +382,8 @@
                 <button class="btn btn-default" @click="adviceCancel">取消</button>
             </div>
         </modal>
-        <div v-if="">
+        <!-- 审核意见 -->
+        <div v-if="checkAdviceShow">
             <h5>审核意见</h5>
             <hr>
             <div class="row">
@@ -398,12 +399,25 @@
                 </div>
             </div>
         </div>
+
         <modal v-if="checkAdviceModal">
             <textarea slot="body" class="form-control" rows="8" placeholder="请填写修改意见，不超过500个字" v-model="adviceContent"></textarea>
             <button class="btn btn-default" slot="footer" @click="closeAdviceContent()">完成</button>
         </modal>
         <!-- 入围或中标通知书-->
         <div v-if="noticePanel">
+        	<hr>
+	        <div class="row">
+	          <div class="form-group">
+	            <label class="col-sm-2 control-label">入围通知书：</label>
+	            <div class="col-sm-8">
+	                <a :href="ruweiDoc.url" target="_blank">{{ ruweiDoc.name }}</a>
+	            </div>
+	            <div class="col-sm-2">
+	              <upload-report :type="shortlistedNotice" :id="projectId" @uploadList="recRuweiDoc" v-if="noticeUpload"></upload-report>
+	            </div>
+	          </div>
+	        </div>
             <div class="row">
               <div class="form-group">
                 <label class="col-sm-2 control-label">中标通知书：</label>
@@ -415,23 +429,12 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="form-group">
-                <label class="col-sm-2 control-label">入围通知书：</label>
-                <div class="col-sm-8">
-                    <a :href="ruweiDoc.url" target="_blank">{{ ruweiDoc.name }}</a>
-                </div>
-                <div class="col-sm-2">
-                  <upload-report :type="shortlistedNotice" :id="projectId" @uploadList="recRuweiDoc" v-if="noticeUpload"></upload-report>
-                </div>
-              </div>
-            </div>
         </div>
-        <div class="row" v-if="noticeBtn">
+        <div class="row" v-if="finishBtn">
           <div class="form-group">
             <label class="col-sm-2 control-label"></label>
             <div class="col-sm-10">
-              <button class="btn btn-default" @click="uploadFinish()" v-if="finishBtn">上传完成</button>
+              <button class="btn btn-default" @click="uploadFinish()">上传完成</button>
             </div>
           </div>
         </div>
@@ -484,10 +487,10 @@ export default {
 			directorAgreeShow: false,
       finishBtn: false,
       noticePanel: false,
-      noticeBtn: false,
       noticeUpload: false,
       adviceShow: false,
       checkAdviceModal: false,
+      checkAdviceShow: false,
 			bidNotice: 'bidNotice',
 			shortlistedNotice: 'shortlistedNotice',
 			projectId: this.$route.params.id,
@@ -625,15 +628,24 @@ export default {
     			this.directorAgreeShow = true;
     		}
     	},
-      showFinishBtn() {
-          if (this.project.biddingStatus === "1" && this.project.confirmAnnex === "0") {
-              this.finishBtn = true;
-          }
-      },
       showNoticePanel() {
           if (this.user.department === "业务部" && this.project.directorHandleStatus === "1") {
               this.noticePanel = true;
           }
+          if (this.project.biddingStatus === "3") {
+          	  this.noticePanel = true;
+          }
+      },
+      showCheckAdvice() {
+      	  if (this.project.directorHandleStatus === "0" || this.project.directorHandleStatus === "1") {
+      	  	this.checkAdviceShow = true;
+      	  }
+      },
+      showNoticeUpload() {
+      		if (this.user.department === "业务部" && this.project.confirmAnnex === "0" && this.project.directorHandleStatus === "1") {
+      			this.noticeUpload = true;
+      			this.finishBtn = true;
+      		}
       },
       adviceCancel() {
           this.adviceShow = false;
@@ -762,7 +774,7 @@ export default {
             }).then((rep) => {
                 if (rep.data.statusCode === '10001') {
                     console.log('上传完成');
-                    this.showFinishBtn = false;
+                    this.finishBtn = false;
                 } else {
 
                 }
@@ -786,7 +798,9 @@ export default {
     		this.showDirectorAgree();
     		this.showBrandBtn();
         	this.distributeDoc();
-        	this.showFinishBtn();
+        	this.showCheckAdvice();
+        	this.showNoticePanel();
+        	this.showNoticeUpload();
     	}, () => { });
     	this.id = this.$route.params.id;
     	this.office = this.$route.params.office;

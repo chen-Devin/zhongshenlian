@@ -3,6 +3,13 @@
 		<crumbs :paths="paths"></crumbs>
 		<card>
         <bid-info-list-body></bid-info-list-body>
+        <!-- <div class="block">
+          <span class="demonstration">大于 7 页时的效果</span>
+          <el-pagination
+            layout="prev, pager, next"
+            :total="1000">
+          </el-pagination>
+        </div> -->
 		</card>
 	</div>
 </template>
@@ -66,7 +73,7 @@ export default {
     		};
     		return ymdObj;
     	},
-    	checkMessage(project,office) {       
+    	checkMessage(project,office) {
     		this.$router.push('/bid-info-detail/'+project.id+"&"+office);
     	},
         queryList(office) {
