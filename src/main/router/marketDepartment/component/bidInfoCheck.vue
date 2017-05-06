@@ -632,7 +632,7 @@ export default {
           if (this.user.department === "业务部" && this.project.directorHandleStatus === "1") {
               this.noticePanel = true;
           }
-          if (this.user.department !== "业务部" && (this.project.directorHandleStatus === "1" || this.project.directorHandleStatus === "0")) {
+          if (this.project.biddingStatus === "3") {
           	  this.noticePanel = true;
           }
       },
@@ -642,7 +642,7 @@ export default {
       	  }
       },
       showNoticeUpload() {
-      		if (this.user.department === "业务部" && this.project.confirmAnnex === "") { //后边改成0
+      		if (this.user.department === "业务部" && this.project.confirmAnnex === "0" && this.project.directorHandleStatus === "1") {
       			this.noticeUpload = true;
       			this.finishBtn = true;
       		}

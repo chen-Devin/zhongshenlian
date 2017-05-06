@@ -117,6 +117,7 @@ export default {
 			bidStartTime: '',
 			bidEndTime: '',
 			inputBtn: false,
+      bidArray: {},
 			user: {},
       		searchContent: '',
       		options: [{
@@ -132,13 +133,12 @@ export default {
       		          value: 'zjs',
       		          label: '造价所'
       		        }],
-      		officeList: [],
-      	 	bidArrayTimeResult: []
+      		officeList: []
 		};
 	},
 	computed: {
 		biddingArray() {
-			this.bidArrayConnect = this.bidArrayTimeResult;
+			this.bidArrayConnect = this.bidArray;
 			for (var i = 0; i < this.bidArrayConnect.length; i++) {
 				if(this.bidArrayConnect[i].biddingState === "0") {
 					this.bidArrayConnect[i].biddingState = '未摘牌';
@@ -192,14 +192,6 @@ export default {
 
 		}
 	},
-	props: {
-		office: {
-			default: ""
-		},
-		bidArray: {
-			default: []
-		}
-	},
 	methods: {
 		input() {
 			this.$router.push('/bid-info-input/');
@@ -217,15 +209,15 @@ export default {
   	          let obj = {
   	            command: 'searchBiddingList',
   	            platform: 'web',
-  	            searchContent: this.searchContent
+  	            searchContent: this.searchContent,
+                pageNum: "1"
   	          }
   	          return JSON.stringify(obj);
   	        })()
   	      }
   	    }).then((rep) => {
   	        if (rep.data.statusCode === '10001') {
-  	          this.businessArray = rep.data.data.businessArray;
-  	          this.bidArray = this.businessArray;
+  	          this.bidArray = rep.data.data.businessArray;
   	        }
   	      }, (rep) => {});
   	},
@@ -245,23 +237,22 @@ export default {
 				      let obj = {
 				        command: 'getBiddingList',
 				        platform: 'web',
-				        type: 'other'
+				        type: 'other',
+                pageNum: "1"
 				      }
 				      return JSON.stringify(obj);
 				    })()
 				  }
 				}).then((rep) => {
 				    if (rep.data.statusCode === '10001') {
-				      this.businessArray = rep.data.data.businessArray;
-				      this.bidArray = this.businessArray;
-				      this.bidArrayTimeResult = this.bidArray;
+				      this.bidArray = rep.data.data.businessArray;
 				      resolve('done');
 				    }
 				  }, (rep) => {});
 			});
 			return pro;
 		},
-    timeSelect() {
+    timeSelect() { //祥哥写
     	this.bidArrayTimeResult = this.bidArray.filter((item,index,array) => {
     		let openStrArray = item.openBidDate.split("-");
     		let startStrArray = this.bidStartDate.split("-");
@@ -280,13 +271,12 @@ export default {
   watch: {
       bidStartDate(curVal,oldVal){
           if(curVal !== oldVal) {
-              //调用筛选函数
               this.timeSelect();
           }
       },
       bidEndDate(curVal,oldVal){
           if(curVal !== oldVal) {
-              console.log('时间筛选2');
+              this.timeSelect();
           }
       }
   },
