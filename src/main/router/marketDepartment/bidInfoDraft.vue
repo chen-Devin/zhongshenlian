@@ -18,6 +18,7 @@
 					</tr>
 				</tbody>
 			</table>
+			<my-pagination :iniTotalPage="totalPage" @currentChange="currentChange"></my-pagination>
 		</card>
 	</div>
 </template>
@@ -43,6 +44,7 @@ import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
+import myPagination from '../../component/pagination.vue';
 
 export default {
 	name: 'bidInfoDraft',
@@ -56,17 +58,12 @@ export default {
 	  		isTax: false,
 	  		isCost: false,
 	  		unfinishedList: [],
-	  		office: '会计所'
+	  		office: '会计所',
+	  		pageNum: 1,
 		}
 	},
 	methods: {
-		sel_kjs() {
-			this.isAccounting = true;
-			this.isAssessment= false;
-	  		this.isTax= false;
-	  		this.isCost= false;
-	  		this.unfinishedList = [];
-	  		this.office = '会计所';
+		getList() {
 			axios({
 			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
 			  method: 'get',
@@ -76,9 +73,8 @@ export default {
 			      let obj = {
 			        command: 'getBiddingList',
 			        platform: 'web',
-			        departmentType: 'kjs',
 			        type: 'temp',
-			        updateAt: new Date()
+			        pageNum: this.pageNum
 			      }
 			      return JSON.stringify(obj);
 			    })()
@@ -89,103 +85,21 @@ export default {
 	    		}
 	  		}, (rep) => {});
 		},
-		sel_pgs() {
-			this.isAccounting= false;
-			this.isAssessment= true;
-			this.isTax= false;
-			this.isCost= false;
-			this.unfinishedList = [];
-			this.office = '评估所';
-			axios({
-			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-			  method: 'get',
-			  url: '/service',
-			  params: {
-			    data: (() => {
-			      let obj = {
-			        command: 'getBiddingList',
-			        platform: 'web',
-			        departmentType: 'pgs',
-			        type: 'temp',
-			        updateAt: new Date()
-			      }
-			      return JSON.stringify(obj);
-			    })()
-			  }
-			}).then((rep) => {
-	    		if (rep.data.statusCode === '10001') {
-					this.unfinishedList = rep.data.data.businessArray;
-	    		}
-	  		}, (rep) => {});
-		},
-		sel_sws() {
-			this.isAccounting= false;
-			this.isAssessment= false;
-			this.isTax= true;
-			this.isCost= false;
-			this.unfinishedList = [];
-			this.office = '税务所';
-			axios({
-			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-			  method: 'get',
-			  url: '/service',
-			  params: {
-			    data: (() => {
-			      let obj = {
-			        command: 'getBiddingList',
-			        platform: 'web',
-			        departmentType: 'sws',
-			        type: 'temp',
-			        updateAt: new Date()
-			      }
-			      return JSON.stringify(obj);
-			    })()
-			  }
-			}).then((rep) => {
-	    		if (rep.data.statusCode === '10001') {
-					this.unfinishedList = rep.data.data.businessArray;
-	    		}
-	  		}, (rep) => {});
-		},
-		sel_zjs() {
-			this.isAccounting= false;
-			this.isAssessment= false;
-			this.isTax= false;
-			this.isCost= true;
-			this.unfinishedList = [];
-			this.office = '造价所';
-			axios({
-			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-			  method: 'get',
-			  url: '/service',
-			  params: {
-			    data: (() => {
-			      let obj = {
-			        command: 'getBiddingList',
-			        platform: 'web',
-			        departmentType: 'zjs',
-			        type: 'temp',
-			        updateAt: new Date()
-			      }
-			      return JSON.stringify(obj);
-			    })()
-			  }
-			}).then((rep) => {
-	    		if (rep.data.statusCode === '10001') {
-					this.unfinishedList = rep.data.data.businessArray;
-	    		}
-	  		}, (rep) => {});
+		currentChange(val) {
+			this.pageNum = val;
+			this.getList();
 		},
 		checkMessage(project) {
-			this.$router.push('/bid-info-detail/'+project.id+"&"+this.office);
+			this.$router.push('/bid-info-detail/'+project.id+"&isDraft");
 		}
 	},
 	created() {
-		this.sel_kjs();
+		this.getList();
 	},
 	components: {
 		crumbs,
-		card
+		card,
+		myPagination
 	}
 }
 </script>

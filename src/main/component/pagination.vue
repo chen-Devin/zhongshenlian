@@ -4,7 +4,8 @@
       <el-pagination
         layout="prev, pager, next"
         :page-size="10"
-        :page-count="10" 
+        :page-count="10"
+        @current-change="handleCurrentChange"
         class="myPagination">
       </el-pagination>
     </div>
@@ -49,6 +50,11 @@ export default {
   data() {
       return {
           totalPage: this.iniTotalPage,
+      }
+  },
+  methods: {
+      handleCurrentChange(val) {
+          this.$emit('currentChange',val);
       }
   },
   props: ['iniTotalPage'],

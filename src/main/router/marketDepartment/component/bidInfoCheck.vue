@@ -151,7 +151,7 @@
           </div>
           <hr>
         </div>
-        <div class="form-group" v-if="scaleOther">
+        <div class="form-group">
           <label for="serviceTerm" class="col-sm-2 control-label">审计期限：</label>
           <div class="col-sm-10">
               {{ project.serviceTerm }}
@@ -189,7 +189,6 @@
                   </div>
                 </div>
                 <div class="col-sm-1">
-
                 </div>
               </div>
             </div>
@@ -217,7 +216,6 @@
               </div>
             </div>
           </div>
-
           <div class="form-group">
             <label class="col-sm-2 control-label">效益取费：</label>
             <div class="col-sm-10">
@@ -478,25 +476,26 @@ export default {
 				}
 			},
 			office: '',
-      adviceText: '',
+      		adviceText: '',
 			editBtn: false,
 			brandBtn: false,
 			checkBtn: false,
 			user: {},
 			delipotentShow: true,
 			directorAgreeShow: false,
-      finishBtn: false,
-      noticePanel: false,
-      noticeUpload: false,
-      adviceShow: false,
-      checkAdviceModal: false,
-      checkAdviceShow: false,
+			commonwealthShow: false,
+			finishBtn: false,
+			noticePanel: false,
+			noticeUpload: false,
+			adviceShow: false,
+			checkAdviceModal: false,
+			checkAdviceShow: false,
 			bidNotice: 'bidNotice',
 			shortlistedNotice: 'shortlistedNotice',
 			projectId: this.$route.params.id,
-      ruweiDoc: {},
-      zhongbiaoDoc: {},
-      adviceContent: ''
+			ruweiDoc: {},
+			zhongbiaoDoc: {},
+			adviceContent: ''
     	}
     },
     computed: {
@@ -540,255 +539,258 @@ export default {
       //         this.noticeUpload = true;
       //     }
       // },
-      departmentTypeMap() {
-          let departmentTypeMap = this.project.departmentType.map((item,index,array) => {
-              if (item === 'kjs') {
-                return '会计所';
-              }
-              if (item === 'pgs') {
-                return '评估所';
-              }
-              if (item === 'sws') {
-                return '税务所';
-              }
-              if (item === 'zjs') {
-                return '造价所';
-              }
-          });
-          return departmentTypeMap;
-      },
-      biddingApproverArray() {
-          for (var i = 0; i < this.project.biddingApproverArray.length; i++) {
-            if(this.project.biddingApproverArray[i].approverResult === '不通过') {
-              this.project.biddingApproverArray[i].showTaga = true;
-            }
-            else {
-              this.project.biddingApproverArray[i].showTaga = false;
-            }
-          }
-          return this.project.biddingApproverArray;
-      }
+	      departmentTypeMap() {
+	          let departmentTypeMap = this.project.departmentType.map((item,index,array) => {
+	              if (item === 'kjs') {
+	                return '会计所';
+	              }
+	              if (item === 'pgs') {
+	                return '评估所';
+	              }
+	              if (item === 'sws') {
+	                return '税务所';
+	              }
+	              if (item === 'zjs') {
+	                return '造价所';
+	              }
+	          });
+	          return departmentTypeMap;
+	      },
+	      biddingApproverArray() {
+	          for (var i = 0; i < this.project.biddingApproverArray.length; i++) {
+	            if(this.project.biddingApproverArray[i].approverResult === '不通过') {
+	              this.project.biddingApproverArray[i].showTaga = true;
+	            }
+	            else {
+	              this.project.biddingApproverArray[i].showTaga = false;
+	            }
+	          }
+	          return this.project.biddingApproverArray;
+	      }
     },
     methods: {
-    	isEdit() {
-    		this.$emit('isEdit');
-    	},
-    	getInfo() {
-    		let pro = new Promise((resolve, reject) => {
-    			axios({
+	    	isEdit() {
+	    		this.$emit('isEdit');
+	    	},
+	    	getInfo() {
+	    		let pro = new Promise((resolve, reject) => {
+	    			axios({
+		    		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+		    		  method: 'get',
+		    		  url: '/service',
+		    		  params: {
+		    		    data: (() => {
+		    		      let obj = {
+		    		        command: 'getBiddingInfo',
+		    		        platform: 'web',
+		    		        id: this.$route.params.id,
+		    		        type: this.$route.params.office,
+		    		      }
+		    		      return JSON.stringify(obj);
+		    		    })()
+		    		  }
+		    		}).then((rep) => {
+		        		if (rep.data.statusCode === '10001') {
+							this.project = rep.data.data;
+							resolve('done');
+		        		} else {
+
+		        		}
+		      		}, (rep) => {
+
+		      		});
+		    	});
+		    	return pro;
+	    	},
+	    	showEditBtn() {
+	    		if (this.user.department === "市场部" && this.project.biddingStatus === "0") {
+	    			this.editBtn = true;
+	    		}
+	    	},
+	    	showBrandBtn() {
+	    		if (this.user.department === "业务部" && this.project.biddingStatus === "0") {
+	    			this.brandBtn = true;
+	    		}
+	    	},
+	    	showCheckBtn() {
+	    		if (this.user.department === "所长") {
+	    			this.checkBtn = true;
+	    		}
+	    	},
+	    	showDelipotent() {
+	    		if (this.project.biddingStatus === "0" || this.project.biddingStatus === "5") {
+	    			this.delipotentShow = false;
+	    		}
+	    	},
+	    	showDirectorAgree() {
+	    		if (this.project.biddingStatus === "1" && this.user.department === "所长" && this.project.directorHandleStatus === "3") {
+	    			this.directorAgreeShow = true;
+	    		}
+	    	},
+			showNoticePanel() {
+				if (this.user.department === "业务部" && this.project.directorHandleStatus === "1") {
+				  this.noticePanel = true;
+				}
+				if (this.project.biddingStatus === "3") {
+					  this.noticePanel = true;
+				}
+			},
+			showCheckAdvice() {
+				  if (this.project.directorHandleStatus === "0" || this.project.directorHandleStatus === "1") {
+				  	this.checkAdviceShow = true;
+				  }
+			},
+			showNoticeUpload() {
+				if (this.user.department === "业务部" && this.project.confirmAnnex === "0" && this.project.directorHandleStatus === "1") {
+					this.noticeUpload = true;
+					this.finishBtn = true;
+				}
+			},
+			adviceCancel() {
+				this.adviceShow = false;
+			},
+			adviceUpload() {
+			  axios({
+			      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+			      method: 'get',
+			      url: '/service',
+			      params: {
+			        data: (() => {
+			          let obj = {
+			            command: 'reviewBiddingInfo',
+			            platform: 'web',
+			            id: this.project.id,
+			            result: "不通过",
+			            reason: this.adviceText
+			          }
+			          return JSON.stringify(obj);
+			        })()
+			      }
+			    }).then((rep) => {
+			        if (rep.data.statusCode === '10001') {
+			           console.log('提交成功');
+			           this.adviceShow = false;
+			           this.directorAgreeShow = false;
+			        } else {
+
+			        }
+			      }, (rep) => {
+
+			      });
+			},
+			showAdvice() {
+				this.adviceShow = true;
+			},
+			delisting() {
+				axios({
+				  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+				  method: 'get',
+				  url: '/service',
+				  params: {
+				    data: (() => {
+				      let obj = {
+				        command: 'delisting',
+				        platform: 'web',
+				        biddingId: this.project.id
+				      }
+				      return JSON.stringify(obj);
+				    })()
+				  }
+				}).then((rep) => {
+					if (rep.data.statusCode === '10001') {
+					    this.brandBtn = false;
+					    this.getInfo();
+					    this.delipotentShow = true;
+					} else {
+
+					}
+					}, (rep) => {});
+			},
+	    	approve() {
+				axios({
 	    		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
 	    		  method: 'get',
 	    		  url: '/service',
 	    		  params: {
 	    		    data: (() => {
 	    		      let obj = {
-	    		        command: 'getBiddingInfo',
+	    		        command: 'reviewBiddingInfo',
 	    		        platform: 'web',
-	    		        id: this.$route.params.id,
-	    		        type: this.$route.params.office,
+	    		        id: this.project.id,
+	    		        result: "通过",
+	    		        reason: ""
 	    		      }
 	    		      return JSON.stringify(obj);
 	    		    })()
 	    		  }
 	    		}).then((rep) => {
 	        		if (rep.data.statusCode === '10001') {
-						this.project = rep.data.data;
-						resolve('done');
+						     console.log('审核通过');
+	               this.directorAgreeShow = false;
 	        		} else {
 
 	        		}
 	      		}, (rep) => {
 
 	      		});
-	    	});
-	    	return pro;
-    	},
-    	showEditBtn() {
-    		if (this.user.department === "市场部" && this.project.biddingStatus === "0") {
-    			this.editBtn = true;
-    		}
-    	},
-    	showBrandBtn() {
-    		if (this.user.department === "业务部" && this.project.biddingStatus === "0") {
-    			this.brandBtn = true;
-    		}
-    	},
-    	showCheckBtn() {
-    		if (this.user.department === "所长") {
-    			this.checkBtn = true;
-    		}
-    	},
-    	showDelipotent() {
-    		if (this.project.biddingStatus === "0") {
-    			this.delipotentShow = false;
-    		}
-    	},
-    	showDirectorAgree() {
-    		if (this.project.biddingStatus === "1" && this.user.department === "所长" && this.project.directorHandleStatus === "3") {
-    			this.directorAgreeShow = true;
-    		}
-    	},
-      showNoticePanel() {
-          if (this.user.department === "业务部" && this.project.directorHandleStatus === "1") {
-              this.noticePanel = true;
-          }
-          if (this.project.biddingStatus === "3") {
-          	  this.noticePanel = true;
-          }
-      },
-      showCheckAdvice() {
-      	  if (this.project.directorHandleStatus === "0" || this.project.directorHandleStatus === "1") {
-      	  	this.checkAdviceShow = true;
-      	  }
-      },
-      showNoticeUpload() {
-      		if (this.user.department === "业务部" && this.project.confirmAnnex === "0" && this.project.directorHandleStatus === "1") {
-      			this.noticeUpload = true;
-      			this.finishBtn = true;
-      		}
-      },
-      adviceCancel() {
-          this.adviceShow = false;
-      },
-      adviceUpload() {
-          axios({
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-              method: 'get',
-              url: '/service',
-              params: {
-                data: (() => {
-                  let obj = {
-                    command: 'reviewBiddingInfo',
-                    platform: 'web',
-                    id: this.project.id,
-                    result: "不通过",
-                    reason: this.adviceText
-                  }
-                  return JSON.stringify(obj);
-                })()
-              }
-            }).then((rep) => {
-                if (rep.data.statusCode === '10001') {
-                   console.log('提交成功');
-                   this.adviceShow = false;
-                   this.directorAgreeShow = false;
-                } else {
+	    	},
+			recRuweiDoc(fileList) {
+				this.ruweiDoc = fileList[0];
+			},
+			recZhongbiaoDoc(fileList) {
+				this.zhongbiaoDoc = fileList[0];
+			},
+			distributeDoc() {
+			for (var i = 0; i < this.project.biddingAnnexArray.length; i++) {
+			    if (this.project.biddingAnnexArray[i].annexType === "bidNotice") {
+			        this.zhongbiaoDoc.name = this.project.biddingAnnexArray[i].annexName;
+			        this.zhongbiaoDoc.url = this.project.biddingAnnexArray[i].annexUrl;
+			        this.zhongbiaoDoc.id = this.project.biddingAnnexArray[i].id;
+			    } else if (this.project.biddingAnnexArray[i].annexType === "shortlistedNotice") {
+			        this.ruweiDoc.name = this.project.biddingAnnexArray[i].annexName;
+			        this.ruweiDoc.url = this.project.biddingAnnexArray[i].annexUrl;
+			        this.ruweiDoc.id = this.project.biddingAnnexArray[i].id;
+			    }
+			}
+			},
+			uploadFinish() {
+			  axios({
+			      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+			      method: 'get',
+			      url: '/service',
+			      params: {
+			        data: (() => {
+			          let obj = {
+			            command: 'confirmBiddingAnnex',
+			            platform: 'web',
+			            id: this.project.id
+			          }
+			          return JSON.stringify(obj);
+			        })()
+			      }
+			    }).then((rep) => {
+			        if (rep.data.statusCode === '10001') {
+			            console.log('上传完成');
+			            this.finishBtn = false;
+			        } else {
 
-                }
-              }, (rep) => {
+			        }
+			      }, (rep) => {
 
-              });
-      },
-      showAdvice() {
-          this.adviceShow = true;
-      },
-    	delisting() {
-			axios({
-    		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-    		  method: 'get',
-    		  url: '/service',
-    		  params: {
-    		    data: (() => {
-    		      let obj = {
-    		        command: 'delisting',
-    		        platform: 'web',
-    		        biddingId: this.project.id
-    		      }
-    		      return JSON.stringify(obj);
-    		    })()
-    		  }
-    		}).then((rep) => {
-        		if (rep.data.statusCode === '10001') {
-                this.brandBtn = false;
-                this.getInfo();
-                this.delipotentShow = true;
-        		} else {
-
-        		}
-      		}, (rep) => {
-
-      		});
-    	},
-    	approve() {
-			axios({
-    		  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-    		  method: 'get',
-    		  url: '/service',
-    		  params: {
-    		    data: (() => {
-    		      let obj = {
-    		        command: 'reviewBiddingInfo',
-    		        platform: 'web',
-    		        id: this.project.id,
-    		        result: "通过",
-    		        reason: ""
-    		      }
-    		      return JSON.stringify(obj);
-    		    })()
-    		  }
-    		}).then((rep) => {
-        		if (rep.data.statusCode === '10001') {
-					     console.log('审核通过');
-               this.directorAgreeShow = false;
-        		} else {
-
-        		}
-      		}, (rep) => {
-
-      		});
-    	},
-      recRuweiDoc(fileList) {
-          this.ruweiDoc = fileList[0];
-      },
-      recZhongbiaoDoc(fileList) {
-          this.zhongbiaoDoc = fileList[0];
-      },
-      distributeDoc() {
-        for (var i = 0; i < this.project.biddingAnnexArray.length; i++) {
-            if (this.project.biddingAnnexArray[i].annexType === "bidNotice") {
-                this.zhongbiaoDoc.name = this.project.biddingAnnexArray[i].annexName;
-                this.zhongbiaoDoc.url = this.project.biddingAnnexArray[i].annexUrl;
-                this.zhongbiaoDoc.id = this.project.biddingAnnexArray[i].id;
-            } else if (this.project.biddingAnnexArray[i].annexType === "shortlistedNotice") {
-                this.ruweiDoc.name = this.project.biddingAnnexArray[i].annexName;
-                this.ruweiDoc.url = this.project.biddingAnnexArray[i].annexUrl;
-                this.ruweiDoc.id = this.project.biddingAnnexArray[i].id;
-            }
-        }
-      },
-      uploadFinish() {
-          axios({
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-              method: 'get',
-              url: '/service',
-              params: {
-                data: (() => {
-                  let obj = {
-                    command: 'confirmBiddingAnnex',
-                    platform: 'web',
-                    id: this.project.id
-                  }
-                  return JSON.stringify(obj);
-                })()
-              }
-            }).then((rep) => {
-                if (rep.data.statusCode === '10001') {
-                    console.log('上传完成');
-                    this.finishBtn = false;
-                } else {
-
-                }
-              }, (rep) => {
-
-              });
-      },
-      checkAdvice(content) {
-          this.checkAdviceModal = true;
-          this.adviceContent = content;
-      },
-      closeAdviceContent() {
-          this.checkAdviceModal = false;
-      }
+			      });
+			},
+			checkAdvice(content) {
+				this.checkAdviceModal = true;
+				this.adviceContent = content;
+			},
+			closeAdviceContent() {
+				this.checkAdviceModal = false;
+			},
+			showCommonwealth() {
+				if (this.project.contractType.type === "联合体") {
+					this.commonwealthShow = true;
+				}
+			}
     },
     props: ['biddingState'],
     created() {
@@ -801,6 +803,7 @@ export default {
         	this.showCheckAdvice();
         	this.showNoticePanel();
         	this.showNoticeUpload();
+        	this.showCommonwealth();
     	}, () => { });
     	this.id = this.$route.params.id;
     	this.office = this.$route.params.office;

@@ -62,14 +62,15 @@ export default {
     data() {
     	return {
 			paths: [
-	    		{name: '招投标信息看板', url: '/bid-info-list', present: false},
-	    		{name: '招投标详情', url: '/bid-info-detail', present: true}
+	    		// {name: '招投标信息看板', url: '/bid-info-list', present: false},
+	    		// {name: '招投标详情', url: '/bid-info-detail', present: true}
 	  		],
 	  		project: {},
 	  		iniProject: {},
 	  		editShow: false,
 	  		checkShow: true,
             id: '',
+            isDraft: '',
             draftSussessShow: false,
             inputSussessShow: false,
             deleteSussessShow: false
@@ -195,13 +196,29 @@ export default {
         draftFinish() {
             //close
             this.$router.push('/bid-info-draft');
+        },
+        definePath() {
+            if (this.isDraft === "isDraft") {
+                this.paths = [
+                    {name: '草稿箱', url: '/bid-info-draft', present: false},
+                    {name: '招投标详情', url: '/bid-info-detail', present: true}
+                ]
+            }
+            if (this.isDraft === "notDraft") {
+                this.paths = [
+                    {name: '招投标信息看板', url: '/bid-info-list', present: false},
+                    {name: '招投标详情', url: '/bid-info-detail', present: true}
+                ]
+            }
         }
     },
     created() {
+        this.id = this.$route.params.id;
+        this.isDraft = this.$route.params.isDraft;
     	this.getInfo();
     	this.editShow = false;
     	this.checkShow = true;
-        this.id = this.$route.params.id;
+        this.definePath();
     },
     components: {
     	crumbs,

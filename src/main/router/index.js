@@ -361,7 +361,7 @@ const router = new VueRouter({
             component: bidInfoDraft
         },
         {
-            path: '/bid-info-detail/:id',
+            path: '/bid-info-detail/:id&:isDraft',
             component: bidInfoDetail
         },
         {

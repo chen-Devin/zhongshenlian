@@ -60,7 +60,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<my-pagination :iniTotalPage="totalPage"></my-pagination>
+		<my-pagination :iniTotalPage="totalPage" @currentChange="currentChange"></my-pagination>
 	</div>
 </template>
 
@@ -136,7 +136,8 @@ export default {
       		          label: '造价所'
       		        }],
       		officeList: [],
-      		totalPage: ''
+      		totalPage: '',
+      		pageNum: 1
 		};
 	},
 	computed: {
@@ -145,19 +146,15 @@ export default {
 			for (var i = 0; i < this.bidArrayConnect.length; i++) {
 				if(this.bidArrayConnect[i].biddingState === "0") {
 					this.bidArrayConnect[i].biddingState = '未摘牌';
-					this.weiZhaiPai.push(this.bidArrayConnect[i]);
 				}
 				if(this.bidArrayConnect[i].biddingState === "1") {
 					this.bidArrayConnect[i].biddingState = '已摘牌';
-					this.yiZhaiPai.push(this.bidArrayConnect[i]);
 				}
 				if(this.bidArrayConnect[i].biddingState === "2") {
 					this.bidArrayConnect[i].biddingState = '已入围';
-					this.yiRuWei.push(this.bidArrayConnect[i]);
 				}
 				if(this.bidArrayConnect[i].biddingState === "3") {
 					this.bidArrayConnect[i].biddingState = '已中标';
-					this.yiZhongBiao.push(this.bidArrayConnect[i]);
 				}
 				if(this.bidArrayConnect[i].biddingState === "4") {
 					this.bidArrayConnect[i].biddingState = '已过期';
@@ -170,16 +167,24 @@ export default {
 				}
 			}
 			if (this.filterState === "未摘牌") {
-				this.bidArrayConnect = this.weiZhaiPai;
+				this.bidArrayConnect = this.bidArrayConnect.filter((item,index,array) => {
+					return item.biddingState === "未摘牌";
+				})
 			}
 			if (this.filterState === "已摘牌") {
-				this.bidArrayConnect = this.yiZhaiPai;
+				this.bidArrayConnect = this.bidArrayConnect.filter((item,index,array) => {
+					return item.biddingState === "已摘牌";
+				})
 			}
 			if (this.filterState === "已中标") {
-				this.bidArrayConnect = this.yiZhongBiao;
+				this.bidArrayConnect = this.bidArrayConnect.filter((item,index,array) => {
+					return item.biddingState === "已中标";
+				})
 			}
 			if (this.filterState === "已入围") {
-				this.bidArrayConnect = this.yiRuWei;
+				this.bidArrayConnect = this.bidArrayConnect.filter((item,index,array) => {
+					return item.biddingState === "已入围";
+				})
 			}
       for (var i = 0; i < this.officeList.length; i++) {
           this.bidArrayConnect = this.bidArrayConnect.filter((item,index,array) => {
@@ -200,30 +205,31 @@ export default {
 			this.$router.push('/bid-info-input/');
 		},
 		checkMessage(project) {
-			this.$router.push('/bid-info-detail/'+project.id);
+			this.$router.push('/bid-info-detail/'+project.id+"&notDraft");
 		},
-  	search() {
-  	    axios({
-  	      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-  	      method: 'get',
-  	      url: '/service',
-  	      params: {
-  	        data: (() => {
-  	          let obj = {
-  	            command: 'searchBiddingList',
-  	            platform: 'web',
-  	            searchContent: this.searchContent,
-                pageNum: "1"
-  	          }
-  	          return JSON.stringify(obj);
-  	        })()
-  	      }
-  	    }).then((rep) => {
-  	        if (rep.data.statusCode === '10001') {
-  	          this.bidArray = rep.data.data.businessArray;
-  	        }
-  	      }, (rep) => {});
-  	},
+	  	search() {
+	  	    axios({
+	  	      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+	  	      method: 'get',
+	  	      url: '/service',
+	  	      params: {
+	  	        data: (() => {
+	  	          let obj = {
+	  	            command: 'searchBiddingList',
+	  	            platform: 'web',
+	  	            searchContent: this.searchContent,
+	                pageNum: "1"
+	  	          }
+	  	          return JSON.stringify(obj);
+	  	        })()
+	  	      }
+	  	    }).then((rep) => {
+	  	        if (rep.data.statusCode === '10001') {
+	  	        	this.bidArray = [];
+					this.bidArray = rep.data.data.businessArray;
+	  	        }
+	  	      }, (rep) => {});
+	  	},
 		showInputBtn() {
 			if (this.user.department === "市场部") {
 				this.inputBtn = true;
@@ -241,32 +247,37 @@ export default {
 				        command: 'getBiddingList',
 				        platform: 'web',
 				        type: 'other',
-                		pageNum: "1"
+                		pageNum: this.pageNum
 				      }
 				      return JSON.stringify(obj);
 				    })()
 				  }
 				}).then((rep) => {
 				    if (rep.data.statusCode === '10001') {
-				      this.bidArray = rep.data.data.businessArray;
-					  this.totalPage = 10; //祥哥周一给 
-				      resolve('done');
+				    	this.bidArray = [];
+						this.bidArray = rep.data.data.businessArray;
+						this.totalPage = 10; //祥哥周一给
+						resolve('done');
 				    }
 				  }, (rep) => {});
 			});
 			return pro;
 		},
-    timeSelect() { //祥哥写
-    	this.bidArrayTimeResult = this.bidArray.filter((item,index,array) => {
-    		let openStrArray = item.openBidDate.split("-");
-    		let startStrArray = this.bidStartDate.split("-");
-    		let endStrArray = this.bidEndDate.split("-");
-    		let startDateObj = new Date(startStrArray[0],Number(startStrArray[1])-1,startStrArray[2]);
-    		let endDateObj = new Date(endStrArray[0],Number(endStrArray[1])-1,endStrArray[2]);
-    		let openDateObj = new Date(openStrArray[0],Number(openStrArray[1])-1,openStrArray[2]);
-    		return ( openDateObj <= endDateObj && openDateObj >= startDateObj );
-    	});
-    }
+	    timeSelect() { //祥哥写
+	    	this.bidArrayTimeResult = this.bidArray.filter((item,index,array) => {
+	    		let openStrArray = item.openBidDate.split("-");
+	    		let startStrArray = this.bidStartDate.split("-");
+	    		let endStrArray = this.bidEndDate.split("-");
+	    		let startDateObj = new Date(startStrArray[0],Number(startStrArray[1])-1,startStrArray[2]);
+	    		let endDateObj = new Date(endStrArray[0],Number(endStrArray[1])-1,endStrArray[2]);
+	    		let openDateObj = new Date(openStrArray[0],Number(openStrArray[1])-1,openStrArray[2]);
+	    		return ( openDateObj <= endDateObj && openDateObj >= startDateObj );
+	    	});
+	    },
+	    currentChange(val) {
+	    	this.pageNum = val;
+	    	this.getAllList();
+	    }
 	},
 	components: {
 		axios,
