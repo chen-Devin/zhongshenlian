@@ -3,7 +3,9 @@
     <crumbs :paths="paths"></crumbs>
     <customer-infor :customers="customers"
                     :user="user"
-                    :indClassify="indClassify"></customer-infor>
+                    :indClassify="indClassify"
+                    :page="page"
+                    @pageChan="pageChan"></customer-infor>
   </div>
 </template>
 
@@ -28,18 +30,25 @@ export default {
         '医药卫生',
         '建筑建材',
         '冶金矿产'
-      ]
+      ],
+      page: {
+        total: 0,
+        current: 0
+      }
     };
   },
   props: ['user'],
   created() {
-    this.getInfo();
+    this.getInfo(1);
   },
   watch: {
     $route: 'getInfo'
   },
   methods: {
-    getInfo() {
+    pageChan(newPage) {
+      this.getInfo(newPage);
+    },
+    getInfo(newPage) {
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
         method: 'get',
@@ -49,13 +58,16 @@ export default {
             var obj = {
               command: 'getCustomerList',
               platform: 'web',
-              pageNum: 1
+              pageNum: newPage
             }
             return JSON.stringify(obj);
           })()
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
+          this.page.total = rep.data.data.pageNum;
+          this.page.current = newPage;
+          this.customers.length = 0;
           for (let i = 0; i < rep.data.data.customerArray.length; i++) {
             let obj = {
               id: rep.data.data.customerArray[i].id,

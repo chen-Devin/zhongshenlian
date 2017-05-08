@@ -29,6 +29,9 @@
         </tr>
       </tbody>
     </table>
+    <pager :pageCount="page.total"
+           :currentPage="page.current"
+           @change="pageChan"></pager>
     <customer-mod-modal v-if="showModModal"
                         :initalCustomer="modCustomer"
                         :indClassify="indClassify"
@@ -51,6 +54,7 @@
 import axios from 'axios';
 
 import card from '../../../component/card.vue';
+import pager from '../../../component/pager.vue';
 import customerModModal from './customerModModal.vue';
 import customerDelModal from './customerDelModal.vue';
 import customerAddModal from './customerAddModal.vue';
@@ -68,8 +72,11 @@ export default {
       addCustomer: {}
     };
   },
-  props: ['customers', 'user', 'indClassify'],
+  props: ['customers', 'user', 'indClassify', 'page'],
   methods: {
+    pageChan(newPage) {
+      this.$emit('pageChan', newPage);
+    },
     mod(CUSTOMER) {
       this.modCustomer = CUSTOMER;
       this.showModModal = true;
@@ -157,7 +164,8 @@ export default {
     card,
     customerModModal,
     customerDelModal,
-    customerAddModal
+    customerAddModal,
+    pager
   }
 };
 </script>

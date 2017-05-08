@@ -3,16 +3,27 @@
     <div class="form-group"
          v-if="reportUploadShow">
       <label class="col-sm-2 control-label">业务报告</label>
-      <el-upload class="col-sm-10"
+      <el-upload class="col-sm-9"
                  :multiple="false"
-                 :action="uploadURL"
+                 :action="upload.URL"
+                 :on-progress="uploadProgress"
                  :on-success="uploadSuccess"
                  :show-file-list="false">
         <button class="btn btn-info btn-sm"
-                type="button">点击上传</button>
+                type="button"
+                :disabled="upload.progressShow">点击上传</button>
         <span slot="tip"
               class="text-info">&emsp;文件大小建议不超过3Mb</span>
       </el-upload>
+      <div class="col-sm-offset-2 col-sm-9">
+        <div class="progress-wrap" v-show="upload.progressShow">
+          <div class="progress">
+            <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: upload.percentage}">
+              {{upload.percentage}}
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="col-sm-offset-2 col-sm-9">
         <ul class="attachment-list list-group">
           <li class="list-group-item"
@@ -56,7 +67,11 @@ export default {
     return {
       paths: [],
       business: this.initBusiness,
-      uploadURL: ''
+      upload: {
+        URL: '',
+        progressShow: false,
+        percentage: '0%'
+      }
     };
   },
   computed: {
@@ -75,7 +90,7 @@ export default {
       id: this.business.id,
       type: 'projectReport'
     };
-    this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);
+    this.upload.URL = '/fileUpload?data=' + JSON.stringify(data);
 
     if (this.user.department === '业务部') {
       this.paths.push({ name: '待处理业务', url: '/business-handle-list-sales', present: false });
@@ -105,6 +120,10 @@ export default {
     this.$emit('pathsChan', this.paths);
   },
   methods: {
+    uploadProgress(event, file, fileList) {
+      this.upload.progressShow = true;
+      this.upload.percentage = parseInt(file.percentage)+'%';
+    },
     uploadSuccess(responseData, file, fileList) {
       if (responseData.statusCode === '10001') {
         let obj = {
@@ -114,6 +133,10 @@ export default {
         };
         this.business.reports.push(obj);
         this.$emit('uploaded', this.business);
+        setTimeout(() => {
+          this.upload.percentage = '0%';
+          this.upload.progressShow = false;
+        }, 500);
       }
     },
     delFile(FILE) {
@@ -154,6 +177,11 @@ form.form-horizontal {
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
+  .progress-wrap {
+    .progress {
+      margin: 5px 0;
+    }
+  }
   .attachment-list {
     margin-top: 10px;
     > li.list-group-item {

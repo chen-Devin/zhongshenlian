@@ -1,6 +1,15 @@
 <template>
   <form class="form-horizontal">
     <div class="form-group"
+         v-if="QRCodeShow">
+      <label class="col-sm-2 control-label">二维码</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">
+          <img :src="business.QRCode.url" alt="二维码" class="img-thumbnail QRCode">
+        </p>
+      </div>
+    </div>
+    <div class="form-group"
          v-if="contractNumShow">
       <label class="col-sm-2 control-label">项目编号</label>
       <div class="col-sm-9">
@@ -260,16 +269,27 @@
     <div class="form-group"
          v-if="contractUploadShow">
       <label class="col-sm-2 control-label">正式合同</label>
-      <el-upload class="col-sm-10"
+      <el-upload class="col-sm-9"
                  :multiple="false"
-                 :action="uploadURL"
+                 :action="upload.URL"
+                 :on-progress="uploadProgress"
                  :on-success="uploadSuccess"
                  :show-file-list="false">
         <button class="btn btn-info btn-sm"
-                type="button">点击上传</button>
+                type="button"
+                :disabled="upload.progressShow">点击上传</button>
         <span slot="tip"
               class="text-info">&emsp;文件大小建议不超过3Mb</span>
       </el-upload>
+      <div class="col-sm-offset-2 col-sm-9">
+        <div class="progress-wrap" v-show="upload.progressShow">
+          <div class="progress">
+            <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: upload.percentage}">
+              {{upload.percentage}}
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="col-sm-offset-2 col-sm-9">
         <ul class="attachment-list list-group">
           <li class="list-group-item"
@@ -297,15 +317,6 @@
         </li>
       </ul>
     </div>
-    <div class="form-group"
-         v-if="QRCodeShow">
-      <label class="col-sm-2 control-label">二维码</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">
-          <img :src="business.QRCode.url" alt="二维码" class="img-thumbnail QRCode">
-        </p>
-      </div>
-    </div>
   </form>
 </template>
 
@@ -325,7 +336,11 @@ export default {
     return {
       paths: [],
       business: this.initBusiness,
-      uploadURL: ''
+      upload: {
+        URL: '',
+        progressShow: false,
+        percentage: '0%'
+      }
     };
   },
   computed: {
@@ -398,7 +413,7 @@ export default {
       id: this.business.id,
       type: 'electronicContract'
     };
-    this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);
+    this.upload.URL = '/fileUpload?data=' + JSON.stringify(data);
 
     if (this.user.department === '业务部') {
       this.paths.push({ name: '待处理业务', url: '/business-handle-list-sales', present: false });
@@ -435,6 +450,10 @@ export default {
     // });
   },
   methods: {
+    uploadProgress(event, file, fileList) {
+      this.upload.progressShow = true;
+      this.upload.percentage = parseInt(file.percentage)+'%';
+    },
     uploadSuccess(responseData, file, fileList) {
       if (responseData.statusCode === '10001') {
         let obj = {
@@ -444,6 +463,10 @@ export default {
         };
         this.business.contracts.push(obj);
         this.$emit('uploaded', this.business);
+        setTimeout(() => {
+          this.upload.percentage = '0%';
+          this.upload.progressShow = false;
+        }, 500);
       }
     },
     delFile(FILE) {
@@ -484,6 +507,11 @@ form.form-horizontal {
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
+  .progress-wrap {
+    .progress {
+      margin: 5px 0;
+    }
+  }
   .attachment-list {
     margin-top: 10px;
     > li.list-group-item {

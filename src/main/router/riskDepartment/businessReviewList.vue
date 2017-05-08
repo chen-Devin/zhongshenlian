@@ -7,7 +7,7 @@
         </h3>
       <div class="business-list-review list-group">
         <router-link class="list-group-item"
-                     :to="'/business-review-detail-risk-'+BUSINESS.id"
+                     :to="businessRoute(BUSINESS)"
                      v-for="(BUSINESS, index) in businesses"
                      :key="index">
           <span class="label label-warning"
@@ -23,6 +23,9 @@
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime}}</span>
         </router-link>
+        <pager :pageCount="page.total"
+               :currentPage="page.current"
+               @change="pageChan"></pager>
       </div>
     </card>
   </div>
@@ -33,6 +36,7 @@ import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
+import pager from '../../component/pager.vue';
 
 export default {
   name: 'businessReviewListRisk',
@@ -41,17 +45,24 @@ export default {
       paths: [
         { name: '待审核业务', url: '/business-review-list-risk', present: true }
       ],
-      businesses: []
+      businesses: [],
+      page: {
+        total: 0,
+        current: 0
+      }
     };
   },
   created() {
-    this.getInfo();
+    this.getInfo(1);
   },
   watch: {
     $route: 'getInfo'
   },
   methods: {
-    getInfo() {
+    pageChan(newPage) {
+      this.getInfo(newPage);
+    },
+    getInfo(newPage) {
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
         method: 'get',
@@ -61,13 +72,16 @@ export default {
             var obj = {
               command: 'getBusinessChecking',
               platform: 'web',
-              pageNum: 1
+              pageNum: newPage
             }
             return JSON.stringify(obj);
           })()
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
+          this.page.total = rep.data.data.pageNum;
+          this.page.current = newPage;
+          this.businesses.length = 0;
           for (let i = 0; i < rep.data.data.businessArray.length; i++) {
             let obj = {
               id: rep.data.data.businessArray[i].id,
@@ -79,11 +93,15 @@ export default {
           }
         }
       }, (rep) => { });
+    },
+    businessRoute(BUSINESS) {
+      return '/business-review-detail-risk-'+BUSINESS.id;
     }
   },
   components: {
     crumbs,
-    card
+    card,
+    pager
   }
 }
 </script>

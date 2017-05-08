@@ -7,9 +7,14 @@
           <div class="form-group">
             <div class="col-sm-12">
               <div class="input-group">
-                <input type="text" class="text-center form-control" placeholder="请输入关键词、制度编号" v-model.trim="searchKeyRule">
+                <input type="text"
+                       class="text-center form-control"
+                       placeholder="请输入关键词、制度编号"
+                       v-model.trim="searchKeyRule">
                 <span class="input-group-btn">
-                  <button class="btn btn-primary" type="button" @click="searchRuleBtn">搜索</button>
+                  <button class="btn btn-primary"
+                          type="button"
+                          @click="tog">搜索</button>
                 </span>
               </div>
             </div>
@@ -24,21 +29,28 @@
         </router-link>
       </h3>
       <div class="rule-list list-group">
-        <router-link class="list-group-item" :to="'/rule-regulation-detail-'+RULE.id" v-for="(RULE,index) in rules" :key="index">
+        <router-link class="list-group-item"
+                     :to="'/rule-regulation-detail-'+RULE.id"
+                     v-for="(RULE,index) in rules"
+                     :key="index">
           <span class="title">{{RULE.title}}</span>
           <span class="date pull-right">{{RULE.releaseTime}}</span>
         </router-link>
       </div>
+      <pager :pageCount="page.total"
+             :currentPage="page.current"
+             @change="pageChan"></pager>
     </card>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import qs from 'qs';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
+import pager from '../../component/pager.vue';
+
 export default {
   name: 'ruleRegulation',
   data() {
@@ -47,15 +59,29 @@ export default {
         { name: '规章制度', url: '/rule-regulation', present: true }
       ],
       rules: [],
-      searchKeyRule: ''
+      searchKeyRule: '',
+      page: {
+        total: 0,
+        current: 0
+      }
     };
   },
   created() {
-    this.getRuleLists();
+    this.getRuleLists(1);
   },
   props: ['user'],
   methods: {
-    getRuleLists() {
+    tog() {
+      this.searchRuleLists(1);
+    },
+    pageChan(newPage) {
+      if (this.searchKeyRule === '') {
+        this.getRuleLists(newPage);
+      } else {
+        this.searchRuleLists(newPage);
+      }
+    },
+    getRuleLists(newPage) {
       axios({
         method: 'get',
         url: '/service',
@@ -64,12 +90,16 @@ export default {
             var obj = {
               command: 'getRegulationsList',
               platform: 'web',
+              pageNum: newPage
             }
             return JSON.stringify(obj);
           })()
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
+          this.page.total = rep.data.data.pageNum;
+          this.page.current = newPage;
+          this.rules.length = 0;
           for (let i = 0; i < rep.data.data.regulationsArray.length; i++) {
             let obj = {
               id: rep.data.data.regulationsArray[i].id,
@@ -79,9 +109,9 @@ export default {
             this.rules.push(obj);
           }
         }
-      }, (rep) => { })
+      }, (rep) => { });
     },
-    searchRuleBtn() {
+    searchRuleLists(newPage) {
       axios({
         method: 'get',
         url: '/service',
@@ -90,13 +120,16 @@ export default {
             var obj = {
               command: 'searchRegulationsList',
               platform: 'web',
-              searchContent: this.searchKeyRule
+              searchContent: this.searchKeyRule,
+              pageNum: newPage
             }
             return JSON.stringify(obj);
           })()
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
+          this.page.total = rep.data.data.pageNum;
+          this.page.current = newPage;
           this.rules.length = 0;
           for (let i = 0; i < rep.data.data.regulationsArray.length; i++) {
             let obj = {
@@ -112,7 +145,8 @@ export default {
   },
   components: {
     crumbs,
-    card
+    card,
+    pager
   }
 }
 </script>

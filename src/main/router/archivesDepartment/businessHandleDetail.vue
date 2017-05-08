@@ -4,12 +4,13 @@
     <card>
       <h3>
         {{business.name}}
-        <el-upload :multiple="false"
+        <el-upload class="pull-right"
+                   :multiple="false"
                    :action="uploadURL"
                    :on-success="uploadSuccess"
                    :show-file-list="false"
                    v-if="!submited">
-          <button class="btn btn-primary pull-right"
+          <button class="btn btn-primary"
                   type="button">上传二维码</button>
         </el-upload>
         <small class="label label-success pull-right"

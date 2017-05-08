@@ -4,15 +4,27 @@
       <label class="col-sm-2 control-label">
         发票图片
       </label>
-      <el-upload class="col-sm-10"
+      <el-upload class="col-sm-9"
                  :multiple="false"
-                 :action="uploadBillURL"
+                 :action="uploadBill.URL"
+                 :on-progress="uploadBillProgress"
                  :on-success="uploadBillSuccess"
                  :show-file-list="false">
-        <button class="btn btn-info btn-sm" type="button">上传发票图片</button>
+        <button class="btn btn-info btn-sm"
+                type="button"
+                :disabled="uploadBill.progressShow">上传发票图片</button>
         <span slot="tip"
               class="text-info">&emsp;文件大小建议不超过3Mb</span>
       </el-upload>
+      <div class="col-sm-offset-2 col-sm-9">
+        <div class="progress-wrap" v-show="uploadBill.progressShow">
+          <div class="progress">
+            <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: uploadBill.percentage}">
+              {{uploadBill.percentage}}
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="col-sm-offset-2 col-sm-9">
         <ul class="attachment-list list-group">
           <li class="list-group-item" v-for="FILE in bill.billFiles">
@@ -27,15 +39,27 @@
       <label class="col-sm-2 control-label">
         收款图片
       </label>
-      <el-upload class="col-sm-10"
+      <el-upload class="col-sm-9"
                  :multiple="false"
-                 :action="uploadReceiptURL"
+                 :action="uploadReceipt.URL"
+                 :on-progress="uploadReceiptProgress"
                  :on-success="uploadReceiptSuccess"
                  :show-file-list="false">
-        <button class="btn btn-info btn-sm" type="button">上传收款图片</button>
+        <button class="btn btn-info btn-sm"
+                type="button"
+                :disabled="uploadReceipt.progressShow">上传收款图片</button>
         <span slot="tip"
               class="text-info">&emsp;文件大小建议不超过3Mb</span>
       </el-upload>
+      <div class="col-sm-offset-2 col-sm-9">
+        <div class="progress-wrap" v-show="uploadReceipt.progressShow">
+          <div class="progress">
+            <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: uploadReceipt.percentage}">
+              {{uploadReceipt.percentage}}
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="col-sm-offset-2 col-sm-9">
         <ul class="attachment-list list-group">
           <li class="list-group-item" v-for="FILE in bill.receiptFiles">
@@ -307,8 +331,16 @@ export default {
       paths: [],
       business: this.initBusiness,
       bill: {},
-      uploadBillURL: '',
-      uploadReceiptURL: ''
+      uploadBill: {
+        URL: '',
+        progressShow: false,
+        percentage: '0%'
+      },
+      uploadReceipt: {
+        URL: '',
+        progressShow: false,
+        percentage: '0%'
+      }
     };
   },
   computed: {
@@ -338,7 +370,7 @@ export default {
       id: this.bill.id,
       type: 'billingOthers'
     };
-    this.uploadBillURL = '/fileUpload?data=' + JSON.stringify(data);
+    this.uploadBill.URL = '/fileUpload?data=' + JSON.stringify(data);
 
     data = {
       command: 'handlerBusiness',
@@ -346,7 +378,7 @@ export default {
       id: this.bill.id,
       type: 'receivables'
     };
-    this.uploadReceiptURL = '/fileUpload?data=' + JSON.stringify(data);
+    this.uploadReceipt.URL = '/fileUpload?data=' + JSON.stringify(data);
 
     if (this.user.department === '业务部') {
       this.paths.push({ name: '待处理业务', url: '/business-handle-list-sales', present: false });
@@ -382,6 +414,10 @@ export default {
     this.$emit('pathsChan', this.paths);
   },
   methods: {
+    uploadBillProgress(event, file, fileList) {
+      this.uploadBill.progressShow = true;
+      this.uploadBill.percentage = parseInt(file.percentage)+'%';
+    },
     uploadBillSuccess(responseData, file, fileList) {
       if (responseData.statusCode === '10001') {
         let obj = {
@@ -391,6 +427,10 @@ export default {
         };
         this.bill.billFiles.push(obj);
         this.$emit('uploaded', this.bill);
+        setTimeout(() => {
+          this.uploadBill.percentage = '0%';
+          this.uploadBill.progressShow = false;
+        }, 500);
       }
     },
     delBillFile(FILE) {
@@ -421,6 +461,10 @@ export default {
         }
       }, (rep) => { });
     },
+    uploadReceiptProgress(event, file, fileList) {
+      this.uploadReceipt.progressShow = true;
+      this.uploadReceipt.percentage = parseInt(file.percentage)+'%';
+    },
     uploadReceiptSuccess(responseData, file, fileList) {
       if (responseData.statusCode === '10001') {
         let obj = {
@@ -430,6 +474,10 @@ export default {
         };
         this.bill.receiptFiles.push(obj);
         this.$emit('uploaded', this.bill);
+        setTimeout(() => {
+          this.uploadReceipt.percentage = '0%';
+          this.uploadReceipt.progressShow = false;
+        }, 500);
       }
     },
     delReceiptFile(FILE) {
@@ -470,6 +518,11 @@ form.form-horizontal {
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
+  .progress-wrap {
+    .progress {
+      margin: 5px 0;
+    }
+  }
   .attachment-list {
     margin-top: 10px;
     > li.list-group-item {

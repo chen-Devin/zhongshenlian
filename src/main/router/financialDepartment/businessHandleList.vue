@@ -25,6 +25,9 @@
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime}}</span>
         </router-link>
+        <pager :pageCount="page.total"
+               :currentPage="page.current"
+               @change="pageChan"></pager>
       </div>
     </card>
   </div>
@@ -35,6 +38,7 @@ import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
+import pager from '../../component/pager.vue';
 
 export default {
   name: 'businessHandleListFinancial',
@@ -43,17 +47,24 @@ export default {
       paths: [
         { name: '代开发票', url: '/business-handle-list-financial', present: true }
       ],
-      businesses: []
+      businesses: [],
+      page: {
+        total: 0,
+        current: 0
+      }
     };
   },
   created() {
-    this.getInfo();
+    this.getInfo(1);
   },
   watch: {
     $route: 'getInfo'
   },
   methods: {
-    getInfo() {
+    pageChan(newPage) {
+      this.getInfo(newPage);
+    },
+    getInfo(newPage) {
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
         method: 'get',
@@ -63,13 +74,16 @@ export default {
             var obj = {
               command: 'getBusinessReviewing',
               platform: 'web',
-              pageNum: 1
+              pageNum: newPage
             }
             return JSON.stringify(obj);
           })()
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
+          this.page.total = rep.data.data.pageNum;
+          this.page.current = newPage;
+          this.businesses.length = 0;
           for (let i = 0; i < rep.data.data.businessArray.length; i++) {
             let obj = {
               id: rep.data.data.businessArray[i].id,
@@ -88,7 +102,8 @@ export default {
   },
   components: {
     crumbs,
-    card
+    card,
+    pager
   }
 }
 </script>

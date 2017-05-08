@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <business-complete-search-bar @search="search"></business-complete-search-bar>
+      <business-complete-search-bar @tog="search"></business-complete-search-bar>
       <h3>
         业务列表
       </h3>
@@ -26,6 +26,9 @@
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime}}</span>
         </router-link>
+        <pager :pageCount="page.total"
+               :currentPage="page.current"
+               @change="pageChan"></pager>
       </div>
     </card>
   </div>
@@ -37,6 +40,7 @@ import axios from 'axios';
 import businessCompleteSearchBar from './component/businessCompleteSearchBar.vue';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
+import pager from '../../component/pager.vue';
 
 export default {
   name: 'businessCompleteList',
@@ -45,11 +49,33 @@ export default {
       paths: [
         { name: '已完成业务', url: '/business-complete-list', present: true }
       ],
-      businesses: []
+      businesses: [],
+      searchTog: false,
+      page: {
+        total: 0,
+        current: 0
+      }
     };
   },
+  created() {
+    this.get(1);
+  },
+  watch: {
+    $route: 'getInfo'
+  },
   methods: {
-    get() {
+    tog(sea) {
+      this.searchTog = true;
+      this.search(sea, 1);
+    },
+    pageChan(newPage) {
+      if (this.searchTog) {
+        this.search(newPage);
+      } else {
+        this.get(newPage);
+      }
+    },
+    get(newPage) {
       let promise = new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -60,13 +86,16 @@ export default {
               var obj = {
                 command: 'getBusinessFinished',
                 platform: 'web',
-                pageNum: 1
+                pageNum: newPage
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            this.page.total = rep.data.data.pageNum;
+            this.page.current = newPage;
+            this.businesses.length = 0;
             for (let i = 0; i < rep.data.data.businessArray.length; i++) {
               let obj = {
                 id: rep.data.data.businessArray[i].id,
@@ -81,7 +110,7 @@ export default {
       });
       return promise;
     },
-    search(sea) {
+    search(sea, newPage) {
       let promise = new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -97,13 +126,16 @@ export default {
                 endTime: sea.time.end === '' ? null : sea.time.end,
                 businessAmount: sea.amount === '所有' ? null : sea.amount,
                 businessType: sea.type === '所有' ? null : sea.type,
-                pageNum: 1
+                pageNum: newPage
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            this.page.total = rep.data.data.pageNum;
+            this.page.current = newPage;
+            this.businesses.length = 0;
             for (let i = 0; i < rep.data.data.businessArray.length; i++) {
               let obj = {
                 id: rep.data.data.businessArray[i].id,
@@ -125,7 +157,8 @@ export default {
   components: {
     crumbs,
     card,
-    businessCompleteSearchBar
+    businessCompleteSearchBar,
+    pager
   }
 }
 </script>

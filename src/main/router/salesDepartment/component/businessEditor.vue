@@ -343,13 +343,31 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">
-        相关附件
-      </label>
-      <el-upload class="col-sm-10" :multiple="false" :action="uploadURL" :before-upload="reSave" :on-success="uploadSuccess" :show-file-list="false">
-        <button class="btn btn-info btn-sm" type="button" v-if="editable">点击上传</button>
-        <span slot="tip" class="text-info" v-if="editable">&emsp;文件大小建议不超过3Mb</span>
+      <label class="col-sm-2 control-label">相关附件</label>
+      <el-upload class="col-sm-9"
+                 :multiple="false"
+                 :action="upload.URL"
+                 :before-upload="reSave"
+                 :on-progress="uploadProgress"
+                 :on-success="uploadSuccess"
+                 :show-file-list="false">
+        <button class="btn btn-info btn-sm"
+                type="button"
+                v-if="editable"
+                :disabled="upload.progressShow">点击上传</button>
+        <span slot="tip"
+              class="text-info"
+              v-if="editable">&emsp;文件大小建议不超过3Mb</span>
       </el-upload>
+      <div class="col-sm-offset-2 col-sm-9">
+        <div class="progress-wrap" v-show="upload.progressShow">
+          <div class="progress">
+            <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: upload.percentage}">
+              {{upload.percentage}}
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="col-sm-offset-2 col-sm-9">
         <ul class="attachment-list list-group">
           <li class="list-group-item" v-for="FILE in business.files">
@@ -380,7 +398,11 @@ export default {
   data() {
     return {
       business: this.initBusiness,
-      uploadURL: '',
+      upload: {
+        URL: '',
+        progressShow: false,
+        percentage: '0%'
+      },
       staffs: [],
       customers: [],
       businessType: [
@@ -429,7 +451,7 @@ export default {
       id: this.business.id,
       type: 'projectAnnex'
     };
-    this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);
+    this.upload.URL = '/fileUpload?data=' + JSON.stringify(data);
 
     /*
     暂时停用下拉菜单
@@ -893,11 +915,15 @@ export default {
             id: this.business.id,
             type: 'projectAnnex'
           };
-          this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);
+          this.upload.URL = '/fileUpload?data=' + JSON.stringify(data);
         }, (rep) => { });
       } else {
         return true;
       }
+    },
+    uploadProgress(event, file, fileList) {
+      this.upload.progressShow = true;
+      this.upload.percentage = parseInt(file.percentage)+'%';
     },
     uploadSuccess(responseData, file, fileList) {
       if (responseData.statusCode === '10001') {
@@ -908,6 +934,10 @@ export default {
         };
         this.business.files.push(obj);
         this.$emit('uploaded', this.business);
+        setTimeout(() => {
+          this.upload.percentage = '0%';
+          this.upload.progressShow = false;
+        }, 500);
       }
     },
     delFile(FILE) {
@@ -1022,6 +1052,11 @@ form.form-horizontal {
   }
   textarea {
     resize: vertical;
+  }
+  .progress-wrap {
+    .progress {
+      margin: 5px 0;
+    }
   }
   .attachment-list {
     margin-top: 10px;
