@@ -4,7 +4,7 @@
       <el-pagination
         layout="prev, pager, next"
         :page-size="10"
-        :page-count="10"
+        :page-count="iniTotalPage"
         @current-change="handleCurrentChange"
         class="myPagination">
       </el-pagination>
@@ -48,9 +48,7 @@ Vue.use(Pagination);
 export default {
   name: 'myPagination',
   data() {
-      return {
-          totalPage: this.iniTotalPage,
-      }
+      return {};
   },
   methods: {
       handleCurrentChange(val) {
