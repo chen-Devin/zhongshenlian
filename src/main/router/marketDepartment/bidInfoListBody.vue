@@ -4,7 +4,7 @@
   			<div class="row">
     				<div class="form-group col-xs-12">
     	    			<input type="text" class="form-control name-input" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" v-model.trim="searchContent">
-                		<button type="submit" class="btn btn-primary f-r" @click="search()">搜索</button>
+                <button type="submit" class="btn btn-primary f-r" @click="search()">搜索</button>
     	  		</div>
   			</div>
   			<div class="row">
@@ -137,7 +137,8 @@ export default {
       		        }],
       		officeList: [],
       		totalPage: '',
-      		pageNum: 1
+      		pageNum: 1,
+          listType: 'get'
 		};
 	},
 	computed: {
@@ -195,9 +196,6 @@ export default {
           });
       }
 			return this.bidArrayConnect;
-		},
-		departmentType() {
-
 		}
 	},
 	methods: {
@@ -208,6 +206,7 @@ export default {
 			this.$router.push('/bid-info-detail/'+project.id+"&notDraft");
 		},
 	  	search() {
+          this.listType = 'search';
 	  	    axios({
 	  	      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
 	  	      method: 'get',
@@ -218,7 +217,9 @@ export default {
 	  	            command: 'searchBiddingList',
 	  	            platform: 'web',
 	  	            searchContent: this.searchContent,
-	                pageNum: "1"
+                  bidStartDate: '',
+                  bidEndDate: '',
+	                pageNum: this.pageNum
 	  	          }
 	  	          return JSON.stringify(obj);
 	  	        })()
@@ -226,16 +227,45 @@ export default {
 	  	    }).then((rep) => {
 	  	        if (rep.data.statusCode === '10001') {
 	  	        	this.bidArray = [];
-					this.bidArray = rep.data.data.businessArray;
+          this.bidArray = rep.data.data.businessArray;
+					this.totalPage = rep.data.data.pageNum;
 	  	        }
 	  	      }, (rep) => {});
 	  	},
+      searchTime() {
+          this.listType = 'search';
+          axios({
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+            method: 'get',
+            url: '/service',
+            params: {
+              data: (() => {
+                let obj = {
+                  command: 'searchBiddingList',
+                  platform: 'web',
+                  searchContent: this.searchContent,
+                  bidStartDate: this.bidStartDate,
+                  bidEndDate: this.bidEndDate,
+                  pageNum: this.pageNum
+                }
+                return JSON.stringify(obj);
+              })()
+            }
+          }).then((rep) => {
+              if (rep.data.statusCode === '10001') {
+                this.bidArray = [];
+          this.bidArray = rep.data.data.businessArray;
+          this.totalPage = rep.data.data.pageNum;
+              }
+            }, (rep) => {});
+      },
 		showInputBtn() {
 			if (this.user.department === "市场部") {
 				this.inputBtn = true;
 			}
 		},
 		getAllList() {
+      this.listType = 'get';
 			let pro = new Promise((resolve, reject) => {
 				axios({
 				  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -247,7 +277,7 @@ export default {
 				        command: 'getBiddingList',
 				        platform: 'web',
 				        type: 'other',
-                		pageNum: this.pageNum
+                pageNum: this.pageNum
 				      }
 				      return JSON.stringify(obj);
 				    })()
@@ -256,27 +286,21 @@ export default {
 				    if (rep.data.statusCode === '10001') {
 				    	this.bidArray = [];
 						this.bidArray = rep.data.data.businessArray;
-						this.totalPage = 10; //祥哥周一给
+						this.totalPage = rep.data.data.pageNum;
 						resolve('done');
 				    }
 				  }, (rep) => {});
 			});
 			return pro;
 		},
-	    timeSelect() { //祥哥写
-	    	this.bidArrayTimeResult = this.bidArray.filter((item,index,array) => {
-	    		let openStrArray = item.openBidDate.split("-");
-	    		let startStrArray = this.bidStartDate.split("-");
-	    		let endStrArray = this.bidEndDate.split("-");
-	    		let startDateObj = new Date(startStrArray[0],Number(startStrArray[1])-1,startStrArray[2]);
-	    		let endDateObj = new Date(endStrArray[0],Number(endStrArray[1])-1,endStrArray[2]);
-	    		let openDateObj = new Date(openStrArray[0],Number(openStrArray[1])-1,openStrArray[2]);
-	    		return ( openDateObj <= endDateObj && openDateObj >= startDateObj );
-	    	});
-	    },
 	    currentChange(val) {
 	    	this.pageNum = val;
-	    	this.getAllList();
+        if (this.listType === 'get') {
+            this.getAllList();
+        } else if (this.listType === 'search') {
+            this.search();
+        }
+
 	    }
 	},
 	components: {
@@ -287,12 +311,12 @@ export default {
   watch: {
       bidStartDate(curVal,oldVal){
           if(curVal !== oldVal) {
-              this.timeSelect();
+              this.searchTime();
           }
       },
       bidEndDate(curVal,oldVal){
           if(curVal !== oldVal) {
-              this.timeSelect();
+              this.searchTime();
           }
       }
   },

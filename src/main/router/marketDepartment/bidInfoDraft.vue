@@ -60,6 +60,7 @@ export default {
 	  		unfinishedList: [],
 	  		office: '会计所',
 	  		pageNum: 1,
+        totalPage: ''
 		}
 	},
 	methods: {
@@ -82,6 +83,7 @@ export default {
 			}).then((rep) => {
 	    		if (rep.data.statusCode === '10001') {
 					this.unfinishedList = rep.data.data.businessArray;
+          this.totalPage = rep.data.data.pageNum;
 	    		}
 	  		}, (rep) => {});
 		},
