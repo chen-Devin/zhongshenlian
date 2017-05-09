@@ -577,6 +577,8 @@ export default {
               }
             }
             resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       });
@@ -623,6 +625,8 @@ export default {
               this.customers.push(obj);
             }
             resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       });
@@ -758,6 +762,8 @@ export default {
             this.business.id = rep.data.data.id;
             this.$emit('saved', this.business);
             resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       });
@@ -900,6 +906,8 @@ export default {
               this.business.id = rep.data.data.id;
               this.$emit('submited', this.business);
               resolve(rep);
+            } else if (rep.data.statusCode === '10012') {
+              window.location.href = 'signIn.html';
             }
           }, (rep) => { });
         });
@@ -965,6 +973,8 @@ export default {
             }
           }
           this.$emit('deletedFile', this.business);
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => { });
     },

@@ -593,6 +593,8 @@ export default {
             this.adviceClassify();
 
             resolve(this.business);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       });
@@ -633,6 +635,8 @@ export default {
         if (rep.data.statusCode === '10001') {
           this.business.projectStatus = 130;
           this.subBtn.cont = '已提交';
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => { });
     },

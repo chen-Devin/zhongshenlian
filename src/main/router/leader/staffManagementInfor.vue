@@ -47,6 +47,8 @@ export default {
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
           this.departments = rep.data.data.departmentArray;
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => {});
     }

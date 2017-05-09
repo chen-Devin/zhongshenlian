@@ -65,6 +65,8 @@ export default {
               this.departments[i].staffArray[j].authority = arr;
             }
           }
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       },(rep)=>{});
     }

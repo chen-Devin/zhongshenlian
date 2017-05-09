@@ -18,9 +18,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-import qs from 'qs';
-
 import modal from '../../../component/modal.vue';
 
 export default {

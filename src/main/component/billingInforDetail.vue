@@ -458,6 +458,8 @@ export default {
             }
           }
           this.$emit('deletedFile', this.bill);
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => { });
     },
@@ -505,6 +507,8 @@ export default {
             }
           }
           this.$emit('deletedFile', this.business);
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => { });
     }

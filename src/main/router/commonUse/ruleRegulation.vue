@@ -106,6 +106,8 @@ export default {
             };
             this.rules.push(obj);
           }
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => { });
     },
@@ -137,6 +139,8 @@ export default {
             };
             this.rules.push(obj);
           }
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => { });
     }

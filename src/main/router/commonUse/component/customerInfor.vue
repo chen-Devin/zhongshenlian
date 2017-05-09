@@ -51,8 +51,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 import card from '../../../component/card.vue';
 import pager from '../../../component/pager.vue';
 import customerModModal from './customerModModal.vue';

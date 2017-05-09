@@ -86,6 +86,8 @@ export default {
           this.editRule.content = rep.data.data.content;
           this.editRule.releaseDepartment = rep.data.data.releaseDepartment;
           this.editRule.releaseTime = rep.data.data.releaseTime;
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => { });
     },
@@ -110,6 +112,8 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.$router.push('/rule-regulation-detail-' + this.editRule.id)
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       } else {

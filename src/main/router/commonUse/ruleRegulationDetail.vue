@@ -66,6 +66,8 @@ export default {
           this.detail.content = rep.data.data.content;
           this.detail.releaseDepartment = rep.data.data.releaseDepartment;
           this.detail.releaseTime = rep.data.data.releaseTime;
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => { });
     },
