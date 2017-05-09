@@ -2,25 +2,23 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <div class="search-wrap">
-        <form class="form-horizontal">
-          <div class="form-group">
-            <div class="col-sm-12">
-              <div class="input-group">
-                <input type="text"
-                       class="text-center form-control"
-                       placeholder="请输入关键词、制度编号"
-                       v-model.trim="searchKeyRule">
-                <span class="input-group-btn">
-                  <button class="btn btn-primary"
-                          type="button"
-                          @click="tog">搜索</button>
-                </span>
-              </div>
+      <form class="form-horizontal normal-wrap">
+        <div class="form-group">
+          <div class="col-sm-12">
+            <div class="input-group">
+              <input type="text"
+                      class="text-center form-control"
+                      placeholder="请输入关键词、制度编号"
+                      v-model.trim="searchKeyRule">
+              <span class="input-group-btn">
+                <button class="btn btn-primary"
+                        type="button"
+                        @click="tog">搜索</button>
+              </span>
             </div>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
       <h3>
         制度列表
         <router-link class="btn btn-primary pull-right"
@@ -28,7 +26,7 @@
           新建制度
         </router-link>
       </h3>
-      <div class="rule-list list-group">
+      <div class="com-list list-group">
         <router-link class="list-group-item"
                      :to="'/rule-regulation-detail-'+RULE.id"
                      v-for="(RULE,index) in rules"
@@ -152,31 +150,4 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.search-wrap {
-  margin-top: 30px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.rule-list {
-  margin-top: 30px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  > a.list-group-item {
-    border-right: 0;
-    border-left: 0;
-    > span.title {
-      margin-left: 7px;
-    }
-  }
-  > a.list-group-item:first-child {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-  }
-  > a.list-group-item:last-child {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-}
 </style>

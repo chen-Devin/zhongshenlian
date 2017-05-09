@@ -1,5 +1,5 @@
 <template>
-  <form class="form-horizontal">
+  <form class="form-horizontal normal-wrap">
     <div class="form-group" v-for="(SCHDULE, index) in business.schdules" :key="index">
       <div class="checkbox col-sm-offset-2 col-sm-10">
         <label>
@@ -196,10 +196,4 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-form.form-horizontal {
-  margin-top: 40px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-}
 </style>

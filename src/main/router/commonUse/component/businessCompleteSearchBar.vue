@@ -1,63 +1,61 @@
 <template>
-  <div class="search-wrap">
-    <form class="form-horizontal">
-      <div class="form-group">
-        <div class="col-sm-12">
-          <div class="input-group">
-            <input type="text"
-                   class="text-center form-control"
-                   placeholder="请输入委托单位、委托单位联系人或提交申请人进行搜索"
-                   v-model="sea.cont">
-            <span class="input-group-btn">
-              <button class="btn btn-primary" type="button" @click="search()">搜索</button>
-            </span>
-          </div>
+  <form class="form-horizontal normal-wrap">
+    <div class="form-group">
+      <div class="col-sm-12">
+        <div class="input-group">
+          <input type="text"
+                  class="text-center form-control"
+                  placeholder="请输入委托单位、委托单位联系人或提交申请人进行搜索"
+                  v-model="sea.cont">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="button" @click="search()">搜索</button>
+          </span>
         </div>
       </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">业务完成时间</label>
-        <div class="col-sm-5">
-          <div class="input-group">
-            <div class="input-group-addon">开始时间</div>
-            <input type="date"
-                   class="form-control"
-                   placeholder="请输入开始时间"
-                   v-model="sea.time.start"
-                   @change="search()">
-          </div>
-        </div>
-        <div class="col-sm-5">
-          <div class="input-group">
-            <div class="input-group-addon">结束时间</div>
-            <input type="date"
-                   class="form-control"
-                   placeholder="请输入结束时间"
-                   v-model="sea.time.end"
-                   @change="search()">
-          </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">业务完成时间</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <div class="input-group-addon">开始时间</div>
+          <input type="date"
+                  class="form-control"
+                  placeholder="请输入开始时间"
+                  v-model="sea.time.start"
+                  @change="search()">
         </div>
       </div>
-      <div class="form-group">
-        <div class="col-sm-6">
-          <div class="input-group">
-            <div class="input-group-addon">项目金额</div>
-            <select class="form-control" v-model="sea.amount" @change="search()">
-              <option :value="AMO" v-for="(AMO, index) in amounts" :key="index">{{AMO}}</option>
-            </select>
-            <div class="input-group-addon">元</div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="input-group">
-            <div class="input-group-addon">业务类型</div>
-            <select class="form-control" v-model="sea.type" @change="search()">
-              <option :value="TYPE" v-for="(TYPE, index) in types" :key="index">{{TYPE}}</option>
-            </select>
-          </div>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <div class="input-group-addon">结束时间</div>
+          <input type="date"
+                  class="form-control"
+                  placeholder="请输入结束时间"
+                  v-model="sea.time.end"
+                  @change="search()">
         </div>
       </div>
-    </form>
-  </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-6">
+        <div class="input-group">
+          <div class="input-group-addon">项目金额</div>
+          <select class="form-control" v-model="sea.amount" @change="search()">
+            <option :value="AMO" v-for="(AMO, index) in amounts" :key="index">{{AMO}}</option>
+          </select>
+          <div class="input-group-addon">元</div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="input-group">
+          <div class="input-group-addon">业务类型</div>
+          <select class="form-control" v-model="sea.type" @change="search()">
+            <option :value="TYPE" v-for="(TYPE, index) in types" :key="index">{{TYPE}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -118,10 +116,4 @@ export default {
 </script>
 
 <style style="sass" scoped>
-.search-wrap {
-  margin-top: 30px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-}
 </style>

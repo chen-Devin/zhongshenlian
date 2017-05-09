@@ -1,5 +1,5 @@
 <template>
-  <div class="billing">
+  <div class="normal-wrap">
     <h3>
       开票列表
       <router-link class="btn btn-primary pull-right"
@@ -73,10 +73,4 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-div.billing {
-  margin-top: 40px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-}
 </style>
