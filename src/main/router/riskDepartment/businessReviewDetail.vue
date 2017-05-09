@@ -13,6 +13,7 @@
           <small class="label label-danger" v-else-if="decide==='refuse'">已选择未通过</small>
         </div>
       </h3>
+      <progress-bar :progress="progress"></progress-bar>
       <business-profile :initBusiness="business" :user="user"></business-profile>
       <hr>
       <div class="row">
@@ -42,6 +43,7 @@ import businessProfile from '../../component/businessProfile.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
 import businessApproveModal from '../../component/businessApproveModal.vue';
 import businessRefuseModal from '../../component/businessRefuseModal.vue';
+import progressBar from '../../component/progressBar.vue';
 
 export default {
   name: 'businessReviewDetailRisk',
@@ -273,6 +275,108 @@ export default {
         } else if (this.business.projectStatus === 60) {
           return 'approve';
         }
+      }
+    },
+    progress() {
+      if (this.business.projectStatus < 20) {
+          return [
+              { name: '立项申请', passed: false, active: false },
+              { name: '风控初审', passed: false, active: false },
+              { name: '所长终审', passed: false, active: false },
+              { name: '发放编号', passed: false, active: false },
+              { name: '处理业务', passed: false, active: false },
+              { name: '风控复审', passed: false, active: false },
+              { name: '上传注协', passed: false, active: false },
+              { name: '业务完结', passed: false, active: false }
+          ];
+      } else if (this.business.projectStatus < 40) {
+          return [
+              { name: '立项申请', passed: false, active: true },
+              { name: '风控初审', passed: false, active: false },
+              { name: '所长终审', passed: false, active: false },
+              { name: '发放编号', passed: false, active: false },
+              { name: '处理业务', passed: false, active: false },
+              { name: '风控复审', passed: false, active: false },
+              { name: '上传注协', passed: false, active: false },
+              { name: '业务完结', passed: false, active: false }
+          ];
+      } else if (this.business.projectStatus < 60) {
+          return [
+              { name: '立项申请', passed: true, active: false },
+              { name: '风控初审', passed: false, active: true },
+              { name: '所长终审', passed: false, active: false },
+              { name: '发放编号', passed: false, active: false },
+              { name: '处理业务', passed: false, active: false },
+              { name: '风控复审', passed: false, active: false },
+              { name: '上传注协', passed: false, active: false },
+              { name: '业务完结', passed: false, active: false }
+          ];
+      } else if (this.business.projectStatus < 80) {
+          return [
+              { name: '立项申请', passed: true, active: false },
+              { name: '风控初审', passed: true, active: false },
+              { name: '所长终审', passed: false, active: true },
+              { name: '发放编号', passed: false, active: false },
+              { name: '处理业务', passed: false, active: false },
+              { name: '风控复审', passed: false, active: false },
+              { name: '上传注协', passed: false, active: false },
+              { name: '业务完结', passed: false, active: false }
+          ];
+      } else if (this.business.projectStatus < 130) {
+          return [
+              { name: '立项申请', passed: true, active: false },
+              { name: '风控初审', passed: true, active: false },
+              { name: '所长终审', passed: true, active: false },
+              { name: '发放编号', passed: false, active: true },
+              { name: '处理业务', passed: false, active: false },
+              { name: '风控复审', passed: false, active: false },
+              { name: '上传注协', passed: false, active: false },
+              { name: '业务完结', passed: false, active: false }
+          ];
+      } else if (this.business.projectStatus < 140) {
+          return [
+              { name: '立项申请', passed: true, active: false },
+              { name: '风控初审', passed: true, active: false },
+              { name: '所长终审', passed: true, active: false },
+              { name: '发放编号', passed: true, active: false },
+              { name: '处理业务', passed: false, active: true },
+              { name: '风控复审', passed: false, active: false },
+              { name: '上传注协', passed: false, active: false },
+              { name: '业务完结', passed: false, active: false }
+          ];
+      } else if (this.business.projectStatus < 150) {
+          return [
+              { name: '立项申请', passed: true, active: false },
+              { name: '风控初审', passed: true, active: false },
+              { name: '所长终审', passed: true, active: false },
+              { name: '发放编号', passed: true, active: false },
+              { name: '处理业务', passed: true, active: false },
+              { name: '风控复审', passed: false, active: true },
+              { name: '上传注协', passed: false, active: false },
+              { name: '业务完结', passed: false, active: false }
+          ];
+      } else if (this.business.projectStatus < 160) {
+          return [
+              { name: '立项申请', passed: true, active: false },
+              { name: '风控初审', passed: true, active: false },
+              { name: '所长终审', passed: true, active: false },
+              { name: '发放编号', passed: true, active: false },
+              { name: '处理业务', passed: true, active: false },
+              { name: '风控复审', passed: true, active: false },
+              { name: '上传注协', passed: false, active: true },
+              { name: '业务完结', passed: false, active: false }
+          ];
+      } else {
+          return [
+              { name: '立项申请', passed: true, active: false },
+              { name: '风控初审', passed: true, active: false },
+              { name: '所长终审', passed: true, active: false },
+              { name: '发放编号', passed: true, active: false },
+              { name: '处理业务', passed: true, active: false },
+              { name: '风控复审', passed: true, active: false },
+              { name: '上传注协', passed: true, active: false },
+              { name: '业务完结', passed: false, active: true }
+          ];
       }
     }
   },
@@ -593,7 +697,8 @@ export default {
     businessProfile,
     approverAdvice,
     businessApproveModal,
-    businessRefuseModal
+    businessRefuseModal,
+    progressBar
   }
 }
 </script>

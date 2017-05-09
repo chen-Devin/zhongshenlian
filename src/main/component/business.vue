@@ -1,6 +1,6 @@
 <template>
   <div>
-    <progress-bar></progress-bar>
+    <progress-bar :progress="progress"></progress-bar>
     <tab-control :initParts="parts"
                  :initBusiness="business"
                  :user="user"
@@ -26,7 +26,7 @@ export default {
       business: this.initBusiness
     };
   },
-  props: ['initBusiness', 'user'],
+  props: ['initBusiness', 'user', 'progress'],
   methods: {
     pathsChan(paths) {
       this.$emit('pathsChan', paths);

@@ -1,5 +1,5 @@
 <template>
-  <nav class="clearfix">
+  <nav class="clearfix" v-if="pageCount !== 0">
     <ul class="pagination pull-right" @click="onPagerClick">
       <li v-if="currentPage !== 1">
         <a class="more laquo">&laquo;</a>
@@ -46,6 +46,7 @@ export default {
       showNextMore: false
     };
   },
+  props: ['currentPage', 'pageCount'],
   computed: {
     pagers() {
       const pagerCount = 7;
@@ -86,7 +87,6 @@ export default {
       return array;
     }
   },
-  props: ['currentPage', 'pageCount'],
   methods: {
     onPagerClick(event) {
       const target = event.target;

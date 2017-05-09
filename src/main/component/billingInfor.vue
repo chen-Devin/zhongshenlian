@@ -8,7 +8,7 @@
         新增开票申请
       </router-link>
     </h3>
-    <div class="billing-list list-group">
+    <div class="com-list list-group">
       <router-link class="list-group-item"
                    :to="billRoute(BILL)"
                    v-for="(BILL, index) in business.bills"
@@ -78,23 +78,5 @@ div.billing {
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
-  div.billing-list {
-    margin-top: 40px;
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
-     > a.list-group-item {
-      border-right: 0;
-      border-left: 0;
-    }
-     > a.list-group-item:first-child {
-      border-top-right-radius: 0;
-      border-top-left-radius: 0;
-    }
-     > a.list-group-item:last-child {
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  }
 }
 </style>

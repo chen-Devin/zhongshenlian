@@ -8,7 +8,7 @@
           新建业务
         </router-link>
       </h3>
-      <div class="business-list-review list-group">
+      <div class="com-list list-group">
         <router-link class="list-group-item" :to="businessRoute(BUSINESS)" v-for="(BUSINESS, index) in businesses" :key="index">
           <span class="label label-warning"
                 v-if="BUSINESS.projectStatus===10">尚未完成</span>
@@ -111,25 +111,4 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.business-list-review {
-  margin-top: 30px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  > a.list-group-item {
-    border-right: 0;
-    border-left: 0;
-    > span.title {
-      margin-left: 7px;
-    }
-  }
-  > a.list-group-item:first-child {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-  }
-  > a.list-group-item:last-child {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-}
 </style>

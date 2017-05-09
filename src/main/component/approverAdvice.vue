@@ -3,7 +3,7 @@
     <h4>
       <slot>error</slot>
     </h4>
-    <ul class="list-group approver-list">
+    <ul class="list-group com-list approver-list">
       <li class="list-group-item" v-for="(ADVICE, index) in advices" :key="index">
         <span>{{index+1+'.'}}</span>
         <span class="people">{{ADVICE.approverName}}</span>
@@ -62,26 +62,12 @@ export default {
 .approver-advice {
   padding: 0 50px;
   .approver-list {
-    margin-top: 30px;
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
     > li.list-group-item {
-      border-right: 0;
-      border-left: 0;
       .people,
       .label,
       .time {
         margin-left: 5px;
       }
-    }
-    > li.list-group-item:first-child {
-      border-top-right-radius: 0;
-      border-top-left-radius: 0;
-    }
-    > li.list-group-item:last-child {
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
     }
   }
 }

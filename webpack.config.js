@@ -161,7 +161,8 @@ const config = {
     plugins: [
         extractCss,
         new HtmlWebpackPlugin({
-            title: '主界面',
+            title: '天津中审联-主界面',
+            favicon: 'src/img/favicon.svg',
             template: path.resolve(srcPath, 'main/index.html'),
             filename: 'index.html',
             //chunks这个参数告诉插件要引用entry里面的哪几个入口
@@ -170,14 +171,16 @@ const config = {
             inject: 'body'
         }),
         new HtmlWebpackPlugin({
-            title: '登录界面',
+            title: '天津中审联-登录',
+            favicon: 'src/img/favicon.svg',
             template: path.resolve(srcPath, 'signIn/index.html'),
             filename: 'signIn.html',
             chunks: ['signIn', 'vendors'],
             inject: 'body'
         }),
         new HtmlWebpackPlugin({
-            title: '注册界面',
+            title: '天津中审联-注册',
+            favicon: 'src/img/favicon.svg',
             template: path.resolve(srcPath, 'signUp/index.html'),
             filename: 'signUp.html',
             chunks: ['signUp', 'vendors'],

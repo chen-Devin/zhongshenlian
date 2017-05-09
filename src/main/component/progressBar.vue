@@ -23,19 +23,7 @@
 <script>
 export default {
   name: 'progressBar',
-  data() {
-    return {
-      progress: [
-        { name: 'aaa', passed: true, active: false },
-        { name: 'bbb', passed: true, active: false },
-        { name: 'ccc', passed: true, active: false },
-        { name: 'ccc', passed: true, active: false },
-        { name: 'ddd', passed: false, active: true },
-        { name: 'eee', passed: false, active: false },
-        { name: 'fff', passed: false, active: false }
-      ]
-    };
-  }
+  props: ['progress']
 };
 </script>
 
@@ -49,6 +37,7 @@ export default {
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
+  margin-top: 30px;
   div {
     margin: 0 5px;
     &.circle {
