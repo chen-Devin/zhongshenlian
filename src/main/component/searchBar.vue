@@ -1,0 +1,39 @@
+<template>
+  <form class="form-horizontal normal-wrap">
+    <div class="form-group">
+      <div class="col-sm-12">
+        <div class="input-group">
+          <input type="text"
+                 class="text-center form-control"
+                 :placeholder="placeholder"
+                 v-model.trim="searchCont">
+          <span class="input-group-btn">
+            <button class="btn btn-primary"
+                    type="button"
+                    @click="tog">搜索</button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </form>
+</template>
+
+<script>
+export default {
+  name: 'searchBar',
+  data() {
+    return {
+      searchCont: ''
+    }
+  },
+  props: ['placeholder'],
+  methods: {
+    tog() {
+      this.$emit('search', this.searchCont);
+    }
+  }
+}
+</script>
+
+<style lang="sass" scoped>
+</style>

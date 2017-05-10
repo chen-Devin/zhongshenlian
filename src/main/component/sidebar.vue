@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">
+  <div class="side-bar">
     <ul class="nav nav-pills nav-stacked">
       <router-link :to="ROU.link"
                    v-for="(ROU, index) in routes"
@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'sidebar',
+  name: 'sideBar',
   data() {
     return {};
   },
@@ -78,7 +78,7 @@ export default {
 <style lang="sass" scoped>
 @import '../../scss/_variables.scss';
 
-.sidebar {
+.side-bar {
   margin-top: 20px;
   .nav-pills {
     > li {

@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h3>
+      <h3 class="main-title">
         新建业务
         <div class="pull-right">
           <button class="btn btn-success" @click="sub()">提交</button>

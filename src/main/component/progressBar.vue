@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="progressBar">
+    <div class="progress-bar">
       <template v-for="(PRO, index) in progress">
         <div class="circle"
              :class="{passed: PRO.passed, active: PRO.active}"
@@ -11,7 +11,7 @@
              :style="{order: index}"></div>
       </template>
     </div>
-    <div class="progressContent">
+    <div class="progress-content">
       <div class="content"
            :class="{active: PRO.active}"
            v-for="(PRO, index) in progress"
@@ -30,7 +30,7 @@ export default {
 <style lang="sass" scoped>
 @import '../../scss/_variables.scss';
 
-.progressBar {
+.progress-bar {
   display: flex;
   height: 28px;
   flex-direction: row;
@@ -59,18 +59,16 @@ export default {
       }
     }
     &.line {
-      width: 79px;
+      width: 90px;
       height: 0;
       border-top: 1px solid $gray-light;
-      // border-bottom: 1px solid $gray-light;
       &.passed {
         border-top: 1px solid rgba($brand-primary, 0.6);
-        // border-bottom: 1px solid rgba($brand-primary, 0.6);
       }
     }
   }
 }
-.progressContent {
+.progress-content {
   display: flex;
   height: 60px;
   flex-direction: row;

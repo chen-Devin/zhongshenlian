@@ -1,21 +1,22 @@
 <template>
   <card>
-    <h3 class="main-title">
-      {{thisDepart.department}}
+    <search-bar placeholder="输入关键字搜索员工" @search="tog"></search-bar>
+    <h3 v-if="staffsShow">
+      员工列表
       <button type="button"
               class="btn btn-default pull-right"
               @click="ediBtnTog()"
               :disabled="ediBtn.dis">{{ediBtn.cont}}</button>
     </h3>
-    <table class="table table-striped table-hover com-list">
+    <table class="table table-striped table-hover com-list" v-if="staffsShow">
       <tbody>
         <tr>
           <th class="text-center">职员</th>
           <th class="text-center"
-              v-for="(AUTH, index) in thisDepart.authorityArray"
+              v-for="(AUTH, index) in staffs.authorityArray"
               :key="index">{{AUTH.name}}</th>
         </tr>
-        <tr v-for="STAFF in thisDepart.staffArray"
+        <tr v-for="STAFF in staffs.staffArray"
             :key="STAFF.id">
           <td class="text-center">{{STAFF.name}}</td>
           <td class="text-center"
@@ -36,32 +37,40 @@ import axios from 'axios';
 import qs from 'qs';
 
 import card from '../../../component/card.vue';
+import searchBar from '../../../component/searchBar.vue';
 
 export default {
-  name: 'departmentAuthor',
+  name: 'staffAuthorList',
   data() {
     return {
-      thisDepart: this.department,
+      staffs: [],
       ediBtn: {
         dis: false,
         cont: '编辑',
         ediStat: false,
       }
-    };
+    }
   },
-  props: ['department'],
+  computed: {
+    staffsShow() {
+      return this.staffs.length!==0;
+    }
+  },
   methods: {
+    tog(searchCont) {
+
+    },
     ediBtnTog() {
       if (this.ediBtn.ediStat) {
         this.ediBtn.dis = true;
         this.ediBtn.cont = '提交...';
         let promiseArr = [];
-        for (let i = 0; i < this.thisDepart.staffArray.length; i++) {
+        for (let i = 0; i < this.staffs.staffArray.length; i++) {
           let arr = [];
-          for (let j = 0; j < this.thisDepart.staffArray[i].authority.length; j++) {
+          for (let j = 0; j < this.staffs.staffArray[i].authority.length; j++) {
             let obj = {
-              name: this.thisDepart.staffArray[i].authority[j].authName,
-              authority: this.thisDepart.staffArray[i].authority[j].stat ? '1' : '0'
+              name: this.staffs.staffArray[i].authority[j].authName,
+              authority: this.staffs.staffArray[i].authority[j].stat ? '1' : '0'
             };
             arr.push(obj);
           }
@@ -75,8 +84,8 @@ export default {
                   var obj = {
                     command: 'staffAuthorityEdit',
                     platform: 'web',
-                    staffUserId: this.thisDepart.staffArray[i].id,
-                    department: this.thisDepart.staffArray[i].department,
+                    staffUserId: this.staffs.staffArray[i].id,
+                    department: this.staffs.staffArray[i].department,
                     authorityArray: arr
                   };
                   return JSON.stringify(obj);
@@ -107,7 +116,8 @@ export default {
     }
   },
   components: {
-    card
+    card,
+    searchBar
   }
 };
 </script>

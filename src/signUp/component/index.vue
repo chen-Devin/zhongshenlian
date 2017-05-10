@@ -21,8 +21,11 @@
                    @input="judgeTel()"
                    v-model="tel.val">
             <span class="input-group-btn">
-                <button class="btn text-primary" type="button" :disabled="getBtn.dis" @click="getBtnTog()">{{getBtn.cont}}</button>
-              </span>
+              <button class="btn text-primary"
+                      type="button"
+                      :disabled="getBtn.dis"
+                      @click="getBtnTog()">{{getBtn.cont}}</button>
+            </span>
           </div>
         </div>
         <div class="form-group"
@@ -134,9 +137,10 @@ export default {
           this.user.gender = rep.data.data.gender;
           this.user.wechatName = rep.data.data.wechatName;
           this.user.wechatHeadImg = rep.data.data.wechatHeadImg;
-        } else if (rep.data.statusCode === '10012') {
-          window.location.href = 'signIn.html';
         }
+        // else if (rep.data.statusCode === '10012') {
+        //   window.location.href = 'signIn.html';
+        // }
       }, (rep) => {
 
       });

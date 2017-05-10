@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h3>
+      <h3 class="main-title">
         编辑制度
         <div class="pull-right">
           <button type="button" class="btn btn-primary" @click="saveEdit()">保存</button>

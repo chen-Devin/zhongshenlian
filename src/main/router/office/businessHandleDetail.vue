@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h3>
+      <h3 class="main-title">
         {{business.name}}
         <button class="btn btn-primary pull-right" @click="sub()" v-if="!sended">完结业务</button>
         <small class="label label-success pull-right" v-if="sended">业务已完结</small>

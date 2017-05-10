@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <span>&copy;2016</span>
+    <span>&copy;2016-2017</span>
     <span>天津中审联有限责任会计师事务所版权所有</span>
     <span>津ICP备12000891号-1</span>
   </footer>

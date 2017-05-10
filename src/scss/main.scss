@@ -5,6 +5,12 @@ body {
   overflow-y: scroll;
 }
 
+//标题
+.main-title {
+  padding-left: 15px;
+  border-left: 3px solid $brand-primary;
+}
+
 //业务列表
 .com-list {
   margin: 30px auto 20px auto;

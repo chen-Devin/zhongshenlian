@@ -1,6 +1,6 @@
 <template>
   <div class="normal-wrap">
-    <h3>
+    <h3 class="main-title">
       开票列表
       <router-link class="btn btn-primary pull-right"
                    to="billing-infor-editor"

@@ -2,24 +2,8 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <form class="form-horizontal normal-wrap">
-        <div class="form-group">
-          <div class="col-sm-12">
-            <div class="input-group">
-              <input type="text"
-                      class="text-center form-control"
-                      placeholder="请输入关键词、制度编号"
-                      v-model.trim="searchKeyRule">
-              <span class="input-group-btn">
-                <button class="btn btn-primary"
-                        type="button"
-                        @click="tog">搜索</button>
-              </span>
-            </div>
-          </div>
-        </div>
-      </form>
-      <h3>
+      <search-bar placeholder="输入关键字搜索规章制度" @search="tog"></search-bar>
+      <h3 class="main-title">
         制度列表
         <router-link class="btn btn-primary pull-right"
                      to="/rule-regulation-add">
@@ -48,6 +32,7 @@ import axios from 'axios';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import pager from '../../component/pager.vue';
+import searchBar from '../../component/searchBar.vue';
 
 export default {
   name: 'ruleRegulation',
@@ -64,13 +49,18 @@ export default {
       }
     };
   },
+  props: ['user'],
   created() {
     this.getRuleLists(1);
   },
-  props: ['user'],
   methods: {
-    tog() {
-      this.searchRuleLists(1);
+    tog(searchCont) {
+      this.searchKeyRule = searchCont;
+      if (this.searchKeyRule === '') {
+        this.getRuleLists(1);
+      } else {
+        this.searchRuleLists(1);
+      }
     },
     pageChan(newPage) {
       if (this.searchKeyRule === '') {
@@ -148,7 +138,8 @@ export default {
   components: {
     crumbs,
     card,
-    pager
+    pager,
+    searchBar
   }
 }
 </script>

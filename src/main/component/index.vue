@@ -1,26 +1,26 @@
 <template>
-  <main class="container">
+  <main class="container-fluid">
     <div class="row">
-      <sidebar class="col-md-2" :user="user"></sidebar>
+      <side-bar class="col-md-2" :user="user"></side-bar>
       <router-view class="col-md-10" :user="user"></router-view>
     </div>
   </main>
 </template>
 
 <script>
-import sidebar from './sidebar.vue';
+import sideBar from './sideBar.vue';
 
 export default {
   name: 'index',
   props: ['user'],
   components: {
-    sidebar
+    sideBar
   }
 }
 </script>
 
 <style lang="sass" scoped>
-main.container {
+main.container-fluid {
   margin-top: 51px;
 }
 </style>

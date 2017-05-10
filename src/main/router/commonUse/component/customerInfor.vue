@@ -1,13 +1,13 @@
 <template>
   <card>
-    <h3>
+    <h3 class="main-title">
       客户列表
       <button class="btn btn-primary pull-right"
               @click="add()">
         添加客户
       </button>
     </h3>
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover com-list">
       <tbody>
         <tr>
           <th class="text-center">客户名称</th>
@@ -169,8 +169,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-table {
-  margin: 20px auto;
+.com-list {
   .link-wrap {
     width: 45px;
     a:hover {
