@@ -26,16 +26,33 @@
     <div class="row">
       <p class="col-xs-12 check-wrap">
         <label class="radio-inline">
-          <input type="radio" name="filterState" id="inlineradio1" value="已中标" v-model="filterState"> 已中标
+          <input type="radio" name="filterState" value="已中标" v-model="filterState"> 已中标
         </label>
         <label class="radio-inline">
-          <input type="radio" name="filterState" id="inlineradio2" value="已入围" v-model="filterState"> 已入围
+          <input type="radio" name="filterState" value="已入围" v-model="filterState"> 已入围
         </label>
         <label class="radio-inline">
-          <input type="radio" name="filterState" id="inlineradio3" value="已摘牌" v-model="filterState"> 已摘牌
+          <input type="radio" name="filterState" value="已摘牌" v-model="filterState"> 已摘牌
         </label>
         <label class="radio-inline">
-          <input type="radio" name="filterState" id="inlineradio3" value="未摘牌" v-model="filterState"> 未摘牌
+          <input type="radio" name="filterState" value="未摘牌" v-model="filterState"> 未摘牌
+        </label>
+        <!-- <button class="btn btn-primary type-btn f-r" @click="input()" v-if="inputBtn">录入</button> -->
+      </p>
+    </div>
+    <div class="row">
+      <p class="col-xs-12 check-wrap">
+        <label class="radio-inline">
+          <input type="radio" name="officeList" value="kjs" v-model="officeList"> 会计所
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="officeList" value="pgs" v-model="officeList"> 评估所
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="officeList" value="sws" v-model="officeList"> 税务所
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="officeList" value="zjs" v-model="officeList"> 造价所
         </label>
         <button class="btn btn-primary type-btn f-r" @click="input()" v-if="inputBtn">录入</button>
       </p>
@@ -116,7 +133,7 @@ export default {
       bidStartTime: '',
       bidEndTime: '',
       inputBtn: false,
-      bidArray: {},
+      bidArray: [], //是数组不是对象
       user: {},
       searchContent: '',
       options: [{
@@ -192,6 +209,11 @@ export default {
           return isContain;
         });
       }
+      this.bidArrayConnect = this.bidArrayConnect.map((item, index, array) => {
+        let openBidDateStr = item.openBidDate.replace("T"," ");
+        item.openBidDate = openBidDateStr;
+        return item;
+      });
       return this.bidArrayConnect;
     }
   },
@@ -336,7 +358,7 @@ export default {
 	text-align: right;
 }
 .dateMr {
-	padding-right: 18px;
+	padding-right: 35px;
 }
 .form-inline {
 	.form-group {

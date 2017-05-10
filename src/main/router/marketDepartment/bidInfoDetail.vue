@@ -74,9 +74,6 @@ export default {
       deleteSussessShow: false
     }
   },
-  // computed() {
-
-    // },
     methods: {
     	getInfo() {
     		axios({
@@ -104,96 +101,96 @@ export default {
     		this.editShow = true;
     		this.checkShow = false;
     	},
-        submit(project) {
-            project.departmentType = this.departmentType;
-            axios({
-                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-                method: 'post',
-                url: '/service',
-                data: qs.stringify({
-                  data: (() => {
-                    var obj = {
-                      command: 'addOrEditBiddingInfo',
-                      platform: 'web',
-                      type: 'edit',
-                      data: project
-                    };
-                    return JSON.stringify(obj);
-                  })()
-                })
-            }).then((rep)=>{
-              if (rep.data.statusCode === '10001') {
-                this.inputSussessShow = true;
-                //加一个弹出框，然后加一个跳转
-              }
-            }, (rep)=>{});
-        },
-        saveDraft(project) {
-            project.departmentType = this.departmentType;
-            axios({
-                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-                method: 'post',
-                url: '/service',
-                data: qs.stringify({
-                  data: (() => {
-                    var obj = {
-                      command: 'addOrEditBiddingInfo',
-                      platform: 'web',
-                      type: 'temp',
-                      data: project
-                    };
-                    return JSON.stringify(obj);
-                  })()
-                })
-            }).then((rep)=>{
-              if (rep.data.statusCode === '10001') {
-                this.draftSussessShow = true;
-              }
-            }, (rep)=>{});
-        },
-        delBasicFee(index) {
-            this.project.contractType.subBasicArray.splice(index,1);
-        },
-        addBasicFee() {
-            this.project.contractType.subBasicArray.push({"name":'',"rate": 0});
-        },
-        delEfficiencyFee(index) {
-            this.project.contractType.subEfficiencyArray.splice(index,1);
-        },
-        addEfficiencyFee() {
-            this.project.contractType.subEfficiencyArray.push({"name":'',"rate": 0});
-        },
-        quedingDelete(id) {
-            axios({
-                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-                method: 'post',
-                url: '/service',
-                data: qs.stringify({
-                  data: (() => {
-                    var obj = {
-                      command: 'delBiddingInfo',
-                      platform: 'web',
-                      id: this.id
-                    };
-                    return JSON.stringify(obj);
-                  })()
-                })
-            }).then((rep)=>{
-              if (rep.data.statusCode === '10001') {
-                this.deleteSussessShow = true;
-              }
-            }, (rep)=>{});
-        },
-        deleteFinish() {
-            this.$router.push('/bid-info-list');
-        },
-        inputFinish() {
-            this.$router.push('/bid-info-list');
-        },
-        draftFinish() {
-            //close
-            this.$router.push('/bid-info-draft');
-        },
+      submit(project) {
+          project.departmentType = this.departmentType;
+          axios({
+              headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+              method: 'post',
+              url: '/service',
+              data: qs.stringify({
+                data: (() => {
+                  var obj = {
+                    command: 'addOrEditBiddingInfo',
+                    platform: 'web',
+                    type: 'edit',
+                    data: project
+                  };
+                  return JSON.stringify(obj);
+                })()
+              })
+          }).then((rep)=>{
+            if (rep.data.statusCode === '10001') {
+              this.inputSussessShow = true;
+              //加一个弹出框，然后加一个跳转
+            }
+          }, (rep)=>{});
+      },
+      saveDraft(project) {
+          project.departmentType = this.departmentType;
+          axios({
+              headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+              method: 'post',
+              url: '/service',
+              data: qs.stringify({
+                data: (() => {
+                  var obj = {
+                    command: 'addOrEditBiddingInfo',
+                    platform: 'web',
+                    type: 'temp',
+                    data: project
+                  };
+                  return JSON.stringify(obj);
+                })()
+              })
+          }).then((rep)=>{
+            if (rep.data.statusCode === '10001') {
+              this.draftSussessShow = true;
+            }
+          }, (rep)=>{});
+      },
+      delBasicFee(index) {
+          this.project.contractType.subBasicArray.splice(index,1);
+      },
+      addBasicFee() {
+          this.project.contractType.subBasicArray.push({"name":'',"rate": 0});
+      },
+      delEfficiencyFee(index) {
+          this.project.contractType.subEfficiencyArray.splice(index,1);
+      },
+      addEfficiencyFee() {
+          this.project.contractType.subEfficiencyArray.push({"name":'',"rate": 0});
+      },
+      quedingDelete(id) {
+          axios({
+              headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+              method: 'post',
+              url: '/service',
+              data: qs.stringify({
+                data: (() => {
+                  var obj = {
+                    command: 'delBiddingInfo',
+                    platform: 'web',
+                    id: this.id
+                  };
+                  return JSON.stringify(obj);
+                })()
+              })
+          }).then((rep)=>{
+            if (rep.data.statusCode === '10001') {
+              this.deleteSussessShow = true;
+            }
+          }, (rep)=>{});
+      },
+      deleteFinish() {
+          this.$router.push('/bid-info-list');
+      },
+      inputFinish() {
+          this.$router.push('/bid-info-list');
+      },
+      draftFinish() {
+          //close
+          this.$router.push('/bid-info-draft');
+      },
         definePath() {
             if (this.isDraft === "isDraft") {
                 this.paths = [
@@ -206,140 +203,9 @@ export default {
                     {name: '招投标信息看板', url: '/bid-info-list', present: false},
                     {name: '招投标详情', url: '/bid-info-detail', present: true}
                 ]
-  // },
-  methods: {
-    getInfo() {
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-        method: 'get',
-        url: '/service',
-        params: {
-          data: (() => {
-            let obj = {
-              command: 'getBiddingInfo',
-              platform: 'web',
-              id: this.$route.params.id
             }
-            return JSON.stringify(obj);
-          })()
-        }
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          this.project = rep.data.data;
-          this.iniProject = this.project;
-        }
-      }, (rep) => { });
-    },
-    isEdit() {
-      this.editShow = true;
-      this.checkShow = false;
-    },
-    submit(project) {
-      project.departmentType = this.departmentType;
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-        method: 'post',
-        url: '/service',
-        data: qs.stringify({
-          data: (() => {
-            var obj = {
-              command: 'addOrEditBiddingInfo',
-              platform: 'web',
-              type: 'edit',
-              data: project
-            };
-            return JSON.stringify(obj);
-          })()
-        })
-      }).then((rep) => {
-        console.log(rep.data);
-        if (rep.data.statusCode === '10001') {
-          this.inputSussessShow = true;
-          //加一个弹出框，然后加一个跳转
-        }
-      }, (rep) => { });
-    },
-    saveDraft(project) {
-      project.departmentType = this.departmentType;
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-        method: 'post',
-        url: '/service',
-        data: qs.stringify({
-          data: (() => {
-            var obj = {
-              command: 'addOrEditBiddingInfo',
-              platform: 'web',
-              type: 'temp',
-              data: project
-            };
-            return JSON.stringify(obj);
-          })()
-        })
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          this.draftSussessShow = true;
-        }
-      }, (rep) => { });
-    },
-    delBasicFee(index) {
-      this.project.contractType.subBasicArray.splice(index, 1);
-    },
-    addBasicFee() {
-      this.project.contractType.subBasicArray.push({ "name": '', "rate": 0 });
-    },
-    delEfficiencyFee(index) {
-      this.project.contractType.subEfficiencyArray.splice(index, 1);
-    },
-    addEfficiencyFee() {
-      this.project.contractType.subEfficiencyArray.push({ "name": '', "rate": 0 });
-    },
-    quedingDelete(id) {
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-        method: 'post',
-        url: '/service',
-        data: qs.stringify({
-          data: (() => {
-            var obj = {
-              command: 'delBiddingInfo',
-              platform: 'web',
-              id: this.id
-            };
-            return JSON.stringify(obj);
-          })()
-        })
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          this.deleteSussessShow = true;
-        }
-      }, (rep) => { });
-    },
-    deleteFinish() {
-      this.$router.push('/bid-info-list');
-    },
-    inputFinish() {
-      this.$router.push('/bid-info-list');
-    },
-    draftFinish() {
-      //close
-      this.$router.push('/bid-info-draft');
-    },
-    definePath() {
-      if (this.isDraft === "isDraft") {
-        this.paths = [
-          { name: '草稿箱', url: '/bid-info-draft', present: false },
-          { name: '招投标详情', url: '/bid-info-detail', present: true }
-        ]
       }
-      if (this.isDraft === "notDraft") {
-        this.paths = [
-          { name: '招投标信息看板', url: '/bid-info-list', present: false },
-          { name: '招投标详情', url: '/bid-info-detail', present: true }
-        ]
-      }
-    }
-  },
+    },
   created() {
     this.id = this.$route.params.id;
     this.isDraft = this.$route.params.isDraft;
