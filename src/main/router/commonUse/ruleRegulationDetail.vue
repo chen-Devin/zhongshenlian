@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h3>
+      <h3 class="main-title">
         {{detail.title}}
         <button class="btn btn-primary pull-right" type="button" :user="user" v-if="btnShow" @click="editRule()">编辑</button>
       </h3>

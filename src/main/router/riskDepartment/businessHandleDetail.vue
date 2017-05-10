@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h3>
+      <h3 class="main-title">
         {{business.name}}
         <div class="pull-right">
           <template v-if="decide==='undecide'">

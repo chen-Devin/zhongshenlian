@@ -3,7 +3,7 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <business-complete-search-bar @tog="search"></business-complete-search-bar>
-      <h3>
+      <h3 class="main-title">
         业务列表
       </h3>
       <div class="com-list list-group">

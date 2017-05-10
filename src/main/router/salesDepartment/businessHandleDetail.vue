@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h3>
+      <h3 class="main-title">
         {{business.name}}
         <button class="btn btn-primary pull-right"
                 @click="sub()"

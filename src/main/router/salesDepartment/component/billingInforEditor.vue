@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>
+    <h3 class="main-title">
       新增开票申请
       <div class="pull-right">
         <button class="btn btn-success" @click="sub()">提交</button>

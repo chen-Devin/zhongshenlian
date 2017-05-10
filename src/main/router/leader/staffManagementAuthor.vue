@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <crumbs :paths="paths"></crumbs>
+    <staff-author-list></staff-author-list>
     <department-author v-for="(DEP, index) in departments"
                        :department="DEP"
                        :key="index"></department-author>
@@ -12,13 +13,14 @@ import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
 import departmentAuthor from './component/departmentAuthor.vue';
+import staffAuthorList from './component/staffAuthorList.vue';
 
 export default {
   name: 'staffManagementAuthor',
   data() {
     return {
       paths: [
-        {name: '职员权限管理', url: '/author-management-author', present: true}
+        { name: '职员权限管理', url: '/author-management-author', present: true }
       ],
       departments: []
     };
@@ -73,7 +75,8 @@ export default {
   },
   components: {
     crumbs,
-    departmentAuthor
+    departmentAuthor,
+    staffAuthorList
   }
 }
 </script>

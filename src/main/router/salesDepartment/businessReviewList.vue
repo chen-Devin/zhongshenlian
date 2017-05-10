@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h3>
+      <h3 class="main-title">
         业务列表
         <router-link class="btn btn-primary pull-right" to="/business-review-add">
           新建业务

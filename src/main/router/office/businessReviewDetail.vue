@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h3>
+      <h3 class="main-title">
         业务详情
         <button class="btn btn-primary pull-right" @click="sel()" v-if="!sended">发放合同编号</button>
         <small class="label label-success pull-right" v-if="sended">合同编号已经发放</small>

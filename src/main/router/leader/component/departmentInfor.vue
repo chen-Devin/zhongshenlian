@@ -1,12 +1,12 @@
 <template>
   <card>
-    <h3>{{thisDepart.department}}</h3>
-    <form class="form-inline clearfix">
+    <h3 class="main-title">
+      {{thisDepart.department}}
       <button type="button"
-              class="btn btn-default btn-sm pull-right"
-              @click="add()">&nbsp;录入&nbsp;</button>
-    </form>
-    <table class="table table-striped table-hover">
+              class="btn btn-default pull-right"
+              @click="add()">录入</button>
+    </h3>
+    <table class="table table-striped table-hover com-list">
       <tbody>
         <tr>
           <th class="text-center">职员</th>
@@ -50,7 +50,6 @@
 
 <script>
 import card from '../../../component/card.vue';
-import staffSearchBar from './staffSearchBar.vue';
 import staffModModal from './staffModModal.vue';
 import staffDelModal from './staffDelModal.vue';
 import staffAddModal from './staffAddModal.vue';
@@ -143,18 +142,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '../../../../scss/variables.scss';
-
-h3 {
-  padding-left: 15px;
-  border-left: 3px solid $brand-primary;
-  margin-bottom: 20px;
-}
-form.form-inline {
-  margin: 20px auto;
-}
-table {
-  margin: 20px auto;
+.com-list {
   .link-wrap {
     width: 45px;
     a:hover {
