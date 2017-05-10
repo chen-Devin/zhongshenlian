@@ -124,7 +124,6 @@ export default {
                   })()
                 })
             }).then((rep)=>{
-                console.log(rep.data);
               if (rep.data.statusCode === '10001') {
                 this.inputSussessShow = true;
                 //加一个弹出框，然后加一个跳转
