@@ -79,7 +79,8 @@ export default {
 @import '../../scss/_variables.scss';
 
 .side-bar {
-  margin-top: 20px;
+  position: fixed;
+  padding-top: 20px;
   .nav-pills {
     > li {
       > a {

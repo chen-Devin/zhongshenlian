@@ -2,7 +2,7 @@
   <main class="container-fluid">
     <div class="row">
       <side-bar class="col-md-2" :user="user"></side-bar>
-      <router-view class="col-md-10" :user="user"></router-view>
+      <router-view class="col-md-10 col-md-offset-2" :user="user"></router-view>
     </div>
   </main>
 </template>
