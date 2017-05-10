@@ -493,7 +493,7 @@
 			<div class="form-group">
 				<label for="openBidDate" class="col-sm-2 control-label">开标时间：</label>
 				<div class="col-sm-10">
-				  <input type="date" class="form-control" id="openBidDate" v-model="project.openBidDate" name="openBidDate" placeholder="请输入开标时间">
+				  <input type="datetime-local" class="form-control" id="openBidDate" v-model="project.openBidDate"  name="openBidDate" placeholder="请输入开标时间">
 				</div>
 			</div>
 			<div class="form-group">
@@ -560,8 +560,7 @@ export default {
 		return {
 			project: this.iniProject,
 			cancelModal: false,
-			commonwealthShow: false,
-      inputType: '录入'
+			commonwealthShow: false
 		}
 	},
 	computed: {
