@@ -76,7 +76,6 @@ export default {
   },
   // computed() {
 
-<<<<<<< HEAD
     // },
     methods: {
     	getInfo() {
@@ -207,7 +206,6 @@ export default {
                     {name: '招投标信息看板', url: '/bid-info-list', present: false},
                     {name: '招投标详情', url: '/bid-info-detail', present: true}
                 ]
-=======
   // },
   methods: {
     getInfo() {
@@ -221,7 +219,6 @@ export default {
               command: 'getBiddingInfo',
               platform: 'web',
               id: this.$route.params.id
->>>>>>> a522781e749a69a7efb1e97968a7c2265bb3a0cd
             }
             return JSON.stringify(obj);
           })()
