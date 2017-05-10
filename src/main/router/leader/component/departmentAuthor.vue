@@ -85,6 +85,8 @@ export default {
             }).then((rep)=>{
               if(rep.data.statusCode === '10001') {
                 resolve();
+              } else if (rep.data.statusCode === '10012') {
+                window.location.href = 'signIn.html';
               } else {
                 reject();
               }

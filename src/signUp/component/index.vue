@@ -134,6 +134,8 @@ export default {
           this.user.gender = rep.data.data.gender;
           this.user.wechatName = rep.data.data.wechatName;
           this.user.wechatHeadImg = rep.data.data.wechatHeadImg;
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => {
 
@@ -215,6 +217,8 @@ export default {
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
           this.getBtnInter();
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => {});
     },

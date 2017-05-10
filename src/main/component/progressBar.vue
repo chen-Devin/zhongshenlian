@@ -59,7 +59,7 @@ export default {
       }
     }
     &.line {
-      width: 90px;
+      width: 79px;
       height: 0;
       border-top: 1px solid $gray-light;
       // border-bottom: 1px solid $gray-light;

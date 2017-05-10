@@ -56,6 +56,8 @@ export default {
         if (rep.data.statusCode === '10001') {
           this.subBtn.cont = '已删除';
           this.$emit('deleted', this.initalCustomer);
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep)=>{});
     },

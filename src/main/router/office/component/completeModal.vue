@@ -59,6 +59,8 @@ export default {
         if (rep.data.statusCode === '10001') {
           this.subBtn.cont = '已提交';
           this.$emit('submited');
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => { });
     },

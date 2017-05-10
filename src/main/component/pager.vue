@@ -119,7 +119,6 @@ export default {
         return;
       }
       if (newPage !== currentPage) {
-        console.log(newPage);
         this.$emit('change', newPage);
       }
     }

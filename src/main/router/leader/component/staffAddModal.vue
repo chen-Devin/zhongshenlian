@@ -215,6 +215,8 @@ export default {
             this.subBtn.cont = '已保存';
             this.staff.id.val = rep.data.data.id;
             this.$emit('added', this.staff);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       }

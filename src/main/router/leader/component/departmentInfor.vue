@@ -49,8 +49,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 import card from '../../../component/card.vue';
 import staffSearchBar from './staffSearchBar.vue';
 import staffModModal from './staffModModal.vue';

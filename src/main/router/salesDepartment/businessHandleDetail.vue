@@ -11,7 +11,7 @@
         <small class="label label-primary pull-right"
                v-if="submited">已提交风评复审</small>
       </h3>
-      <div class="business-wrap">
+      <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
         <hr>
         <div class="row">
@@ -593,6 +593,8 @@ export default {
             this.adviceClassify();
 
             resolve(this.business);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       });
@@ -633,6 +635,8 @@ export default {
         if (rep.data.statusCode === '10001') {
           this.business.projectStatus = 130;
           this.subBtn.cont = '已提交';
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => { });
     },
@@ -647,10 +651,4 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.business-wrap {
-  margin-top: 40px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-}
 </style>

@@ -132,6 +132,8 @@ export default {
           let contNum = rep.data.data.contactNo;
           this.subBtn.cont = '已提交';
           this.$emit('submited', contNum);
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => { });
     },

@@ -59,5 +59,7 @@ axios({
             app.user.gender = rep.data.data.gender;
             app.user.wechatName = rep.data.data.wechatName;
             app.user.wechatHeadImg = rep.data.data.wechatHeadImg;
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
     },(rep)=>{});

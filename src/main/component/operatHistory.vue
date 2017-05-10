@@ -1,5 +1,5 @@
 <template>
-  <div class="row timeline">
+  <div class="row normal-wrap">
     <div class="col-sm-offset-2 col-sm-10">
       <ul class="list-group">
         <li class="list-group-item"
@@ -58,11 +58,7 @@ export default {
 <style lang="sass" scoped>
 @import '../../scss/variables.scss';
 
-.timeline {
-  margin-top: 40px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
+.normal-wrap {
   li.list-group-item {
     border-right: 0;
     border-top: 0;

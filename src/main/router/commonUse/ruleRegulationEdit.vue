@@ -9,7 +9,7 @@
           <button type="button" class="btn btn-default" @click="canceled()">取消</button>
         </div>
       </h3>
-      <form class="form-horizontal">
+      <form class="form-horizontal normal-wrap">
         <div class="form-group">
           <label class="col-sm-2 control-label">标题</label>
           <div class="col-sm-9">
@@ -86,6 +86,8 @@ export default {
           this.editRule.content = rep.data.data.content;
           this.editRule.releaseDepartment = rep.data.data.releaseDepartment;
           this.editRule.releaseTime = rep.data.data.releaseTime;
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => { });
     },
@@ -110,6 +112,8 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.$router.push('/rule-regulation-detail-' + this.editRule.id)
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       } else {
@@ -131,11 +135,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-form.form-horizontal {
-  margin-top: 40px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
+.normal-wrap {
   textarea {
     resize: vertical;
   }

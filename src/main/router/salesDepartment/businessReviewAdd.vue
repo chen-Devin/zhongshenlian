@@ -28,7 +28,6 @@
 
 <script>
 import Vue from 'vue';
-import axios from 'axios';
 import { Message } from 'element-ui';
 
 import bus from '../../bus.js';

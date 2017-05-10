@@ -1,10 +1,10 @@
 <template>
-	<div class="main">
-		<crumbs :paths="paths"></crumbs>
-		<card>
-        <bid-info-list-body></bid-info-list-body>
-		</card>
-	</div>
+  <div class="main">
+    <crumbs :paths="paths"></crumbs>
+    <card>
+      <bid-info-list-body></bid-info-list-body>
+    </card>
+  </div>
 </template>
 
 <script>
@@ -18,142 +18,142 @@ import bidInfoListBody from './bidInfoListBody.vue';
 
 
 export default {
-    name: 'bidInfoList',
-    data() {
-    	return {
-    		paths: [
-        		{name: '招投标信息看板', url: '/bid-info-list', present: true}
-      		],
-      		checked: '',
-      		searchContent: '',
-      		bidStartDate1: '',
-      		bidEndDate1: '',
-      		bidArray: [],
-            office: '',
-            biddingArray: []
-    	};
+  name: 'bidInfoList',
+  data() {
+    return {
+      paths: [
+        { name: '招投标信息看板', url: '/bid-info-list', present: true }
+      ],
+      checked: '',
+      searchContent: '',
+      bidStartDate1: '',
+      bidEndDate1: '',
+      bidArray: [],
+      office: '',
+      biddingArray: []
+    };
+  },
+  computed: {
+    bidStartDate() {
+      let str = this.bidStartDate1 + " 00:00:00";
+      return str;
     },
-    computed: {
-    	bidStartDate() {
-    		let str = this.bidStartDate1 + " 00:00:00";
-    		return str;
-    	},
-    	bidEndDate() {
-    		let str = this.bidEndDate1 + " 00:00:00";
-    		return str;
-    	}
-    },
-    created() {
-      this.$watch('checkedAttr', function(newVal,oldVal){
-      	if (newVal !== oldVal) {
-      		this.filterList(newVal);
-      	};
-      });
-    },
-    methods: {
-    	checkMessage(project,office) {
-    		this.$router.push('/bid-info-detail/'+project.id+"&"+office);
-    	},
-        queryList(office) {
-            if(office === "会计所") {
-                this.biddingArray = [];
-                axios({
-                  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-                  method: 'get',
-                  url: '/service',
-                  params: {
-                    data: (() => {
-                      let obj = {
-                        command: 'getBiddingList',
-                        platform: 'web',
-                        departmentType: 'kjs',
-                        type: 'other'
-                      }
-                      return JSON.stringify(obj);
-                    })()
-                  }
-                }).then((rep) => {
-                    if (rep.data.statusCode === '10001') {
-                        this.biddingArray = rep.data.data.businessArray;
-                    }
-                    }, (rep) => {});
-            }
-            if(office === "评估所") {
-                this.biddingArray = [];
-                axios({
-                  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-                  method: 'get',
-                  url: '/service',
-                  params: {
-                    data: (() => {
-                      let obj = {
-                        command: 'getBiddingList',
-                        platform: 'web',
-                        departmentType: 'pgs',
-                        type: 'other'
-                      }
-                      return JSON.stringify(obj);
-                    })()
-                  }
-                }).then((rep) => {
-                    if (rep.data.statusCode === '10001') {
-                        this.biddingArray = rep.data.data.businessArray;
-                    }
-                    }, (rep) => {});
-            }
-            if(office === "税务所") {
-                this.biddingArray = [];
-                axios({
-                  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-                  method: 'get',
-                  url: '/service',
-                  params: {
-                    data: (() => {
-                      let obj = {
-                        command: 'getBiddingList',
-                        platform: 'web',
-                        departmentType: 'sws',
-                        type: 'other'
-                      }
-                      return JSON.stringify(obj);
-                    })()
-                  }
-                }).then((rep) => {
-                    if (rep.data.statusCode === '10001') {
-                        this.biddingArray = rep.data.data.businessArray;
-                    }
-                    }, (rep) => {});
-            }
-            if(office === "造价所") {
-                this.biddingArray = [];
-                axios({
-                  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-                  method: 'get',
-                  url: '/service',
-                  params: {
-                    data: (() => {
-                      let obj = {
-                        command: 'getBiddingList',
-                        platform: 'web',
-                        departmentType: 'zjs',
-                        type: 'other'
-                      }
-                      return JSON.stringify(obj);
-                    })()
-                  }
-                }).then((rep) => {
-                    if (rep.data.statusCode === '10001') {
-                        this.biddingArray = rep.data.data.businessArray;
-                    }
-                    }, (rep) => {});
-            }
-        }
-    },
-    components: {
-    	crumbs,
-    	card,
-      bidInfoListBody
+    bidEndDate() {
+      let str = this.bidEndDate1 + " 00:00:00";
+      return str;
     }
+  },
+  created() {
+    this.$watch('checkedAttr', function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.filterList(newVal);
+      };
+    });
+  },
+  methods: {
+    checkMessage(project, office) {
+      this.$router.push('/bid-info-detail/' + project.id + "&" + office);
+    },
+    queryList(office) {
+      if (office === "会计所") {
+        this.biddingArray = [];
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getBiddingList',
+                platform: 'web',
+                departmentType: 'kjs',
+                type: 'other'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.biddingArray = rep.data.data.businessArray;
+          }
+        }, (rep) => { });
+      }
+      if (office === "评估所") {
+        this.biddingArray = [];
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getBiddingList',
+                platform: 'web',
+                departmentType: 'pgs',
+                type: 'other'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.biddingArray = rep.data.data.businessArray;
+          }
+        }, (rep) => { });
+      }
+      if (office === "税务所") {
+        this.biddingArray = [];
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getBiddingList',
+                platform: 'web',
+                departmentType: 'sws',
+                type: 'other'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.biddingArray = rep.data.data.businessArray;
+          }
+        }, (rep) => { });
+      }
+      if (office === "造价所") {
+        this.biddingArray = [];
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getBiddingList',
+                platform: 'web',
+                departmentType: 'zjs',
+                type: 'other'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.biddingArray = rep.data.data.businessArray;
+          }
+        }, (rep) => { });
+      }
+    }
+  },
+  components: {
+    crumbs,
+    card,
+    bidInfoListBody
+  }
 }
 </script>
 

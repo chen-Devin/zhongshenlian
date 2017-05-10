@@ -39,6 +39,8 @@ const actions = {
                 if(rep.data.statusCode === '10001') {
                     commit('updateUserInfo',rep.data.data);
                     resolve('done');
+                } else if (rep.data.statusCode === '10012') {
+                    window.location.href = 'signIn.html';
                 }
             },(rep)=>{});
         });

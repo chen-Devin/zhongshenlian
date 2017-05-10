@@ -40,7 +40,6 @@
 
 <script>
 import Vue from 'vue';
-// import axios from 'axios';
 import { Pagination } from 'element-ui';
 
 Vue.use(Pagination);

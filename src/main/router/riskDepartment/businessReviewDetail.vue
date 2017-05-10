@@ -618,6 +618,8 @@ export default {
             this.adviceClassify();
 
             resolve(this.business);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => {});
       });

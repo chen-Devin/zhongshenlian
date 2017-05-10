@@ -228,6 +228,8 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.subBtn.cont = '已保存';
             this.$emit('saved', this.staff);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       }

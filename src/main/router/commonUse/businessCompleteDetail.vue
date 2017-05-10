@@ -5,7 +5,7 @@
       <h3>
         {{business.name}}
       </h3>
-      <div class="business-wrap">
+      <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
         <hr>
         <div class="row">
@@ -577,6 +577,8 @@ export default {
             this.adviceClassify();
 
             resolve(this.business);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       });
@@ -607,10 +609,4 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.business-wrap {
-  margin-top: 40px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-}
 </style>

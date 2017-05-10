@@ -384,6 +384,8 @@ export default {
             this.customer.id.val = rep.data.data.id;
             this.subBtn.cont = '已保存';
             this.$emit('added', this.customer);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       }

@@ -1,5 +1,5 @@
 <template>
-  <form class="form-horizontal">
+  <form class="form-horizontal normal-wrap">
     <div class="form-group">
       <label class="col-sm-2 control-label">项目名称</label>
       <div class="col-sm-9">
@@ -577,6 +577,8 @@ export default {
               }
             }
             resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       });
@@ -623,6 +625,8 @@ export default {
               this.customers.push(obj);
             }
             resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       });
@@ -758,6 +762,8 @@ export default {
             this.business.id = rep.data.data.id;
             this.$emit('saved', this.business);
             resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
           }
         }, (rep) => { });
       });
@@ -900,6 +906,8 @@ export default {
               this.business.id = rep.data.data.id;
               this.$emit('submited', this.business);
               resolve(rep);
+            } else if (rep.data.statusCode === '10012') {
+              window.location.href = 'signIn.html';
             }
           }, (rep) => { });
         });
@@ -965,6 +973,8 @@ export default {
             }
           }
           this.$emit('deletedFile', this.business);
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
         }
       }, (rep) => { });
     },
@@ -1039,44 +1049,11 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-form.form-horizontal {
-  margin-top: 40px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
+.normal-wrap {
   a.fa {
     text-decoration: none;
     &:hover {
       cursor: pointer;
-    }
-  }
-  textarea {
-    resize: vertical;
-  }
-  .progress-wrap {
-    .progress {
-      margin: 5px 0;
-    }
-  }
-  .attachment-list {
-    margin-top: 10px;
-    > li.list-group-item {
-      border-right: 0;
-      border-left: 0;
-      > a.title {
-        margin-left: 7px;
-      }
-      > a.text-danger {
-        cursor: pointer;
-      }
-    }
-    > li.list-group-item:first-child {
-      border-top-right-radius: 0;
-      border-top-left-radius: 0;
-    }
-    > li.list-group-item:last-child {
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
     }
   }
 }
