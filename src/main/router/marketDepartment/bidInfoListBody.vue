@@ -14,13 +14,6 @@
           <span>-</span>
           <input type="date" class="form-control" v-model="bidEndDate">
         </div>
-        <div class="form-group typeWidth">
-          <label>所属类型</label>
-          <el-select v-model="officeList" multiple placeholder="所有" class="selectBox">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-          </el-select>
-        </div>
       </div>
     </form>
     <div class="row">
@@ -42,17 +35,17 @@
     </div>
     <div class="row">
       <p class="col-xs-12 check-wrap">
-        <label class="radio-inline">
-          <input type="radio" name="officeList" value="kjs" v-model="officeList"> 会计所
+        <label class="checkbox-inline">
+          <input type="checkbox" name="officeList" value="kjs" v-model="officeList"> 会计所
         </label>
-        <label class="radio-inline">
-          <input type="radio" name="officeList" value="pgs" v-model="officeList"> 评估所
+        <label class="checkbox-inline">
+          <input type="checkbox" name="officeList" value="pgs" v-model="officeList"> 评估所
         </label>
-        <label class="radio-inline">
-          <input type="radio" name="officeList" value="sws" v-model="officeList"> 税务所
+        <label class="checkbox-inline">
+          <input type="checkbox" name="officeList" value="sws" v-model="officeList"> 税务所
         </label>
-        <label class="radio-inline">
-          <input type="radio" name="officeList" value="zjs" v-model="officeList"> 造价所
+        <label class="checkbox-inline">
+          <input type="checkbox" name="officeList" value="zjs" v-model="officeList"> 造价所
         </label>
         <button class="btn btn-primary type-btn f-r" @click="input()" v-if="inputBtn">录入</button>
       </p>
@@ -121,34 +114,11 @@ export default {
         let dateStr = year + "-" + month + "-" + date;
         return dateStr;
       })(),
-      weiZhaiPai: [],
-      yiZhaiPai: [],
-      yiZhongBiao: [],
-      yiRuWei: [],
       filterState: '',
-      departmentType: '',
-      tenderPerson: '',
-      agency: '',
-      projectName: '',
-      bidStartTime: '',
-      bidEndTime: '',
       inputBtn: false,
       bidArray: [], //是数组不是对象
       user: {},
       searchContent: '',
-      options: [{
-        value: 'kjs',
-        label: '会计所'
-      }, {
-        value: 'pgs',
-        label: '评估所'
-      }, {
-        value: 'sws',
-        label: '税务所'
-      }, {
-        value: 'zjs',
-        label: '造价所'
-      }],
       officeList: [],
       totalPage: '',
       pageNum: 1,

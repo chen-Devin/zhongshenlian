@@ -23,7 +23,6 @@ export default {
       let routes = [
         {name: '已完成业务', link: '/business-complete-list'},
         {name: '招投标信息看板', link: '/bid-info-list'},
-        {name: '招投标信息草稿箱', link: '/bid-info-draft'},
         {name: '规章制度', link: '/rule-regulation'}
       ];
       this.$router.push(routes[0].link);
@@ -63,7 +62,7 @@ export default {
       } else if (this.user.department === '市场部') {
         return routes.concat([
           // {name: '招投标信息', link: '/bid-info-list'},
-          // {name: '招投标信息草稿箱', link: '/bid-info-draft'}
+          {name: '草稿箱', link: '/bid-info-draft'}
         ]);
       } else {
         return routes;
