@@ -474,7 +474,6 @@ export default {
           subEfficiencyArray: [{ "name": '', "rate": 0 }]
         }
       },
-      office: '',
       adviceText: '',
       editBtn: false,
       brandBtn: false,
@@ -533,11 +532,6 @@ export default {
     biddingStatus() {
       return this.project.biddingStatus;
     },
-    // noticeUpload() {
-    //     if (this.project.confirmAnnex === "0") {
-    //         this.noticeUpload = true;
-    //     }
-    // },
     departmentTypeMap() {
       let departmentTypeMap = this.project.departmentType.map((item, index, array) => {
         if (item === 'kjs') {
