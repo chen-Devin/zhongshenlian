@@ -2,9 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <staff-infor-list></staff-infor-list>
-    <department-infor v-for="(DEP, index) in departments"
-                      :department="DEP"
-                      :key="index"></department-infor>
+    <department-infor v-for="(DEP, index) in departments" :department="DEP" :key="index"></department-infor>
   </div>
 </template>
 
@@ -26,33 +24,73 @@ export default {
     };
   },
   created() {
-    this.getInfo();
+    this.getDepartmentInfo().then((rep) => {
+      for (let i = 0; i < rep.data.data.departmentArray.length; i++) {
+        this.getStaffInfo(rep.data.data.departmentArray[i].departmentName).then((rep) => {
+          this.departments.push(rep.data.data);
+        }, (rep) => {});
+      }
+    }, (rep) => { });
   },
   watch: {
-    $route: 'getInfo'
+    $route: 'getDepartmentInfo'
   },
   methods: {
-    getInfo() {
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        method: 'get',
-        url: '/service',
-        params: {
-          data: (() => {
-            var obj = {
-              command: 'staffManagement',
-              platform: 'web'
-            }
-            return JSON.stringify(obj);
-          })()
-        }
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          this.departments = rep.data.data.departmentArray;
-        } else if (rep.data.statusCode === '10012') {
-          window.location.href = 'signIn.html';
-        }
-      }, (rep) => {});
+    getDepartmentInfo() {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'getDepartmentList',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
+          } else {
+            reject(rep);
+          }
+        }, (rep) => { });
+      });
+      return promise;
+    },
+    getStaffInfo(department) {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'getStaffArrayByDepartment',
+                platform: 'web',
+                department: department,
+                pageNum: 1
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
+          } else {
+            reject(rep);
+          }
+        }, (rep) => { });
+      });
+      return promise;
     }
   },
   components: {

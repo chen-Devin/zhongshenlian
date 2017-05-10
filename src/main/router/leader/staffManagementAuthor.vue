@@ -26,51 +26,89 @@ export default {
     };
   },
   created() {
-    this.getInfo();
-  },
-  watch: {
-    $route: 'getInfo'
-  },
-  methods: {
-    getInfo() {
-      axios({
-        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'},
-        method: 'get',
-        url: '/service',
-        params: {
-            data: (()=>{
-            var obj = {
-                command: 'staffManagement',
-                platform: 'web'
-            }
-            return JSON.stringify(obj);
-            })()
-        }
-      }).then((rep)=>{
-        if(rep.data.statusCode === '10001') {
-          this.departments = rep.data.data.departmentArray;
-          for(let i=0; i < this.departments.length; i++) {
-            for(let j=0; j < this.departments[i].staffArray.length; j++) {
-              let arr = [];
-              for(let k=0; k < this.departments[i].authorityArray.length; k++) {
-                for(let m=0; m < this.departments[i].staffArray[j].authority.length; m++) {
-                  if (this.departments[i].authorityArray[k].name === this.departments[i].staffArray[j].authority[m].name) {
-                    let obj = {
-                      authName: this.departments[i].staffArray[j].authority[m].name,
-                      stat: this.departments[i].staffArray[j].authority[m].authority === '0' ? false : true,
-                    };
-                    arr.push(obj);
-                    break;
-                  }
+    this.getDepartmentInfo().then((rep) => {
+      for (let i = 0; i < rep.data.data.departmentArray.length; i++) {
+        this.getStaffInfo(rep.data.data.departmentArray[i].departmentName).then((rep) => {
+          for(let j=0; j < rep.data.data.staffArray.length; j++) {
+            let arr = [];
+            for(let k=0; k < rep.data.data.authorityArray.length; k++) {
+              for(let m=0; m < rep.data.data.staffArray[j].authority.length; m++) {
+                if (rep.data.data.authorityArray[k].name === rep.data.data.staffArray[j].authority[m].name) {
+                  let obj = {
+                    authName: rep.data.data.staffArray[j].authority[m].name,
+                    stat: rep.data.data.staffArray[j].authority[m].authority === '0' ? false : true,
+                  };
+                  arr.push(obj);
+                  break;
                 }
               }
-              this.departments[i].staffArray[j].authority = arr;
             }
+            rep.data.data.staffArray[j].authority = arr;
           }
-        } else if (rep.data.statusCode === '10012') {
-          window.location.href = 'signIn.html';
-        }
-      },(rep)=>{});
+          this.departments.push(rep.data.data);
+        }, (rep) => {});
+      }
+    }, (rep) => { });
+  },
+  watch: {
+    $route: 'getDepartmentInfo'
+  },
+  methods: {
+    getDepartmentInfo() {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'getDepartmentList',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
+          } else {
+            reject(rep);
+          }
+        }, (rep) => { });
+      });
+      return promise;
+    },
+    getStaffInfo(department) {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'getStaffArrayByDepartment',
+                platform: 'web',
+                department: department,
+                pageNum: 1
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
+          } else {
+            reject(rep);
+          }
+        }, (rep) => { });
+      });
+      return promise;
     }
   },
   components: {

@@ -369,7 +369,7 @@
         </div>
       </div>
       <div class="col-sm-offset-2 col-sm-9">
-        <ul class="attachment-list list-group">
+        <ul class="com-list attachment-list list-group">
           <li class="list-group-item" v-for="FILE in business.files">
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>

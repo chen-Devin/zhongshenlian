@@ -52,13 +52,63 @@ export default {
         ediStat: false,
       },
       page: {
-        total: 0,
-        current: 0
+        total: this.department.pageNum,
+        current: (this.department.pageNum === 0) ? 0 : 1
       }
     };
   },
   props: ['department'],
   methods: {
+    pageChan(newPage) {
+      this.getStaffInfo(newPage);
+    },
+    getStaffInfo(newPage) {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'getStaffArrayByDepartment',
+                platform: 'web',
+                department: this.thisDepart.department,
+                pageNum: newPage
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.page.total = rep.data.data.pageNum;
+            this.page.current = newPage;
+            for(let j=0; j < rep.data.data.staffArray.length; j++) {
+              let arr = [];
+              for(let k=0; k < rep.data.data.authorityArray.length; k++) {
+                for(let m=0; m < rep.data.data.staffArray[j].authority.length; m++) {
+                  if (rep.data.data.authorityArray[k].name === rep.data.data.staffArray[j].authority[m].name) {
+                    let obj = {
+                      authName: rep.data.data.staffArray[j].authority[m].name,
+                      stat: rep.data.data.staffArray[j].authority[m].authority === '0' ? false : true,
+                    };
+                    arr.push(obj);
+                    break;
+                  }
+                }
+              }
+              rep.data.data.staffArray[j].authority = arr;
+            }
+            this.thisDepart.staffArray = rep.data.data.staffArray;
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
+          } else {
+            reject(rep);
+          }
+        }, (rep) => { });
+      });
+      return promise;
+    },
     ediBtnTog() {
       if (this.ediBtn.ediStat) {
         this.ediBtn.dis = true;
@@ -115,7 +165,8 @@ export default {
     }
   },
   components: {
-    card
+    card,
+    pager
   }
 };
 </script>

@@ -256,7 +256,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">相关附件</label>
-      <ul class="col-sm-9 attachment-list list-group">
+      <ul class="col-sm-9 com-list attachment-list list-group">
         <li class="list-group-item"
             v-for="FILE in business.files">
           <span class="fa fa-file-text-o"></span>
@@ -291,7 +291,7 @@
         </div>
       </div>
       <div class="col-sm-offset-2 col-sm-9">
-        <ul class="attachment-list list-group">
+        <ul class="com-list attachment-list list-group">
           <li class="list-group-item"
               v-for="FILE in business.contracts">
             <span class="fa fa-file-text-o"></span>
@@ -307,7 +307,7 @@
     <div class="form-group"
          v-if="contractFileShow">
       <label class="col-sm-2 control-label">正式合同</label>
-      <ul class="col-sm-9 attachment-list list-group">
+      <ul class="col-sm-9 com-list attachment-list list-group">
         <li class="list-group-item"
             v-for="FILE in business.contracts">
           <span class="fa fa-file-text-o"></span>

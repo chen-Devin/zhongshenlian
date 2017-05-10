@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="col-sm-offset-2 col-sm-9">
-        <ul class="attachment-list list-group">
+        <ul class="com-list attachment-list list-group">
           <li class="list-group-item"
               v-for="FILE in business.reports">
             <span class="fa fa-file-text-o"></span>
@@ -41,7 +41,7 @@
     <div class="form-group"
          v-if="reportFileShow">
       <label class="col-sm-2 control-label">业务报告</label>
-      <ul class="col-sm-9 attachment-list list-group">
+      <ul class="col-sm-9 com-list attachment-list list-group">
         <li class="list-group-item"
             v-for="FILE in business.reports">
           <span class="fa fa-file-text-o"></span>

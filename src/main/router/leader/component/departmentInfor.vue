@@ -52,7 +52,10 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import card from '../../../component/card.vue';
+import pager from '../../../component/pager.vue';
 import staffModModal from './staffModModal.vue';
 import staffDelModal from './staffDelModal.vue';
 import staffAddModal from './staffAddModal.vue';
@@ -68,13 +71,47 @@ export default {
       delStaff: {},
       showAddModal: false,
       page: {
-        total: 0,
-        current: 0
+        total: this.department.pageNum,
+        current: (this.department.pageNum === 0) ? 0 : 1
       }
     };
   },
   props: ['department'],
   methods: {
+    pageChan(newPage) {
+      this.getStaffInfo(newPage);
+    },
+    getStaffInfo(newPage) {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'getStaffArrayByDepartment',
+                platform: 'web',
+                department: this.thisDepart.department,
+                pageNum: newPage
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.page.total = rep.data.data.pageNum;
+            this.page.current = newPage;
+            this.thisDepart.staffArray = rep.data.data.staffArray;
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
+          } else {
+            reject(rep);
+          }
+        }, (rep) => { });
+      });
+      return promise;
+    },
     mod(STAFF) {
       this.modStaff = STAFF;
       this.showModModal = true;
@@ -137,10 +174,11 @@ export default {
     },
     addCanceled() {
       this.showAddModal = false;
-    },
+    }
   },
   components: {
     card,
+    pager,
     staffModModal,
     staffDelModal,
     staffAddModal
