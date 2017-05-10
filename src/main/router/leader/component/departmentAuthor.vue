@@ -28,6 +28,9 @@
         </tr>
       </tbody>
     </table>
+    <pager :pageCount="page.total"
+           :currentPage="page.current"
+           @change="pageChan"></pager>
   </card>
 </template>
 
@@ -36,6 +39,7 @@ import axios from 'axios';
 import qs from 'qs';
 
 import card from '../../../component/card.vue';
+import pager from '../../../component/pager.vue';
 
 export default {
   name: 'departmentAuthor',
@@ -46,6 +50,10 @@ export default {
         dis: false,
         cont: '编辑',
         ediStat: false,
+      },
+      page: {
+        total: 0,
+        current: 0
       }
     };
   },

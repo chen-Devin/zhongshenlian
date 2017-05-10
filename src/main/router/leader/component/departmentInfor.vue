@@ -32,6 +32,9 @@
         </tr>
       </tbody>
     </table>
+    <pager :pageCount="page.total"
+           :currentPage="page.current"
+           @change="pageChan"></pager>
     <staff-mod-modal v-if="showModModal"
                      :initalStaff="modStaff"
                      @saved="saved"
@@ -63,7 +66,11 @@ export default {
       modStaff: {},
       showDelModal: false,
       delStaff: {},
-      showAddModal: false
+      showAddModal: false,
+      page: {
+        total: 0,
+        current: 0
+      }
     };
   },
   props: ['department'],

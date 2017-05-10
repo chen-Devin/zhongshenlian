@@ -1,58 +1,70 @@
 <template>
   <form class="form-horizontal normal-wrap">
     <div class="form-group">
-      <div class="col-sm-12">
-        <div class="input-group">
-          <input type="text"
-                  class="text-center form-control"
-                  placeholder="请输入委托单位、委托单位联系人或提交申请人进行搜索"
-                  v-model="sea.cont">
-          <span class="input-group-btn">
-            <button class="btn btn-primary" type="button" @click="search()">搜索</button>
-          </span>
+      <div class="col-sm-4 row">
+        <label class="col-xs-3 control-label">委托单位</label>
+        <div class="col-xs-9">
+          <input type="text" class="form-control" placeholder="请输入委托单位" v-model.trim="sea.requester">
+        </div>
+      </div>
+      <div class="col-sm-4 row">
+        <label class="col-xs-3 control-label">联系人</label>
+        <div class="col-xs-9">
+          <input type="text" class="form-control" placeholder="请输入联系人" v-model.trim="sea.requesterName">
+        </div>
+      </div>
+      <div class="col-sm-4 row">
+        <label class="col-xs-3 control-label">申请人</label>
+        <div class="col-xs-9">
+          <input type="text" class="form-control" placeholder="请输入申请人" v-model.trim="sea.applicantName">
         </div>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">业务完成时间</label>
-      <div class="col-sm-5">
-        <div class="input-group">
-          <div class="input-group-addon">开始时间</div>
-          <input type="date"
-                  class="form-control"
-                  placeholder="请输入开始时间"
-                  v-model="sea.time.start"
-                  @change="search()">
+      <div class="col-sm-6 row">
+        <label class="col-xs-2 control-label">项目金额</label>
+        <div class="col-xs-10">
+          <div class="input-group">
+            <select class="form-control" v-model="sea.amount" @change="search()">
+              <option :value="AMO" v-for="(AMO, index) in amounts" :key="index">{{AMO}}</option>
+            </select>
+            <div class="input-group-addon">元</div>
+          </div>
         </div>
       </div>
-      <div class="col-sm-5">
-        <div class="input-group">
-          <div class="input-group-addon">结束时间</div>
-          <input type="date"
-                  class="form-control"
-                  placeholder="请输入结束时间"
-                  v-model="sea.time.end"
-                  @change="search()">
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-6">
-        <div class="input-group">
-          <div class="input-group-addon">项目金额</div>
-          <select class="form-control" v-model="sea.amount" @change="search()">
-            <option :value="AMO" v-for="(AMO, index) in amounts" :key="index">{{AMO}}</option>
-          </select>
-          <div class="input-group-addon">元</div>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="input-group">
-          <div class="input-group-addon">业务类型</div>
+      <div class="col-sm-6 row">
+        <label class="col-xs-2 control-label">业务类型</label>
+        <div class="col-xs-10">
           <select class="form-control" v-model="sea.type" @change="search()">
             <option :value="TYPE" v-for="(TYPE, index) in types" :key="index">{{TYPE}}</option>
           </select>
         </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-12 row">
+        <label class="col-xs-1 control-label">项目完成时间</label>
+        <div class="col-xs-5">
+          <input type="date"
+                 class="form-control"
+                 placeholder="请输入时间区间起点"
+                 v-model.trim="sea.time.start"
+                 @change="search()">
+        </div>
+        <div class="col-xs-5">
+          <input type="date"
+                 class="form-control"
+                 placeholder="请输入时间区间终点"
+                 v-model.trim="sea.time.end"
+                 @change="search()">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-12">
+        <button class="btn btn-primary" type="button" @click="search">
+          查询
+        </button>
       </div>
     </div>
   </form>
@@ -64,7 +76,9 @@ export default {
   data() {
     return {
       sea: {
-        cont: '',
+        requester: '',
+        requesterName: '',
+        applicantName: '',
         time: {
           start: '',
           end: ''

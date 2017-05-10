@@ -2,7 +2,16 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <business-complete-search-bar @tog="search"></business-complete-search-bar>
+      <form class="form-horizontal normal-wrap">
+        <label class="radio-inline">
+          <input type="radio" name="seaType" value="关键字搜索" v-model="seaType" @change="seaTypeChan"> 关键字搜索
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="seaType" value="条件查询" v-model="seaType" @change="seaTypeChan"> 条件查询
+        </label>
+      </form>
+      <business-complete-search-bar @search="tog" v-show="seaType==='条件查询'"></business-complete-search-bar>
+      <search-bar placeholder="输入关键字搜索已完成业务" @search="tog" v-show="seaType==='关键字搜索'"></search-bar>
       <h3 class="main-title">
         业务列表
       </h3>
@@ -38,6 +47,7 @@
 import axios from 'axios';
 
 import businessCompleteSearchBar from './component/businessCompleteSearchBar.vue';
+import searchBar from '../../component/searchBar.vue';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import pager from '../../component/pager.vue';
@@ -50,7 +60,20 @@ export default {
         { name: '已完成业务', url: '/business-complete-list', present: true }
       ],
       businesses: [],
+      seaType: '关键字搜索',
       searchTog: false,
+      sea: {
+        searchContent: '',
+        requester: '',
+        requesterName: '',
+        applicantName: '',
+        time: {
+          start: '',
+          end: ''
+        },
+        amount: '所有',
+        type: '所有',
+      },
       page: {
         total: 0,
         current: 0
@@ -64,9 +87,38 @@ export default {
     $route: 'getInfo'
   },
   methods: {
-    tog(sea) {
+    seaTypeChan() {
+      this.get(1);
+      this.seaInit();
+    },
+    seaInit() {
+      this.sea = {
+        searchContent: '',
+        requester: '',
+        requesterName: '',
+        applicantName: '',
+        time: {
+          start: '',
+          end: ''
+        },
+        amount: '所有',
+        type: '所有',
+      };
+    },
+    tog(seaCont) {
       this.searchTog = true;
-      this.search(sea, 1);
+      if (this.seaType === '关键字搜索') {
+        this.sea.searchContent = seaCont;
+      } else if (this.seaType === '条件查询') {
+        this.sea.requester = seaCont.requester;
+        this.sea.requesterName = seaCont.requesterName;
+        this.sea.applicantName = seaCont.applicantName;
+        this.sea.time.start = seaCont.time.start;
+        this.sea.time.end = seaCont.time.end;
+        this.sea.amount = seaCont.amount;
+        this.sea.type = seaCont.type;
+      }
+      this.search(1);
     },
     pageChan(newPage) {
       if (this.searchTog) {
@@ -112,7 +164,7 @@ export default {
       });
       return promise;
     },
-    search(sea, newPage) {
+    search(newPage) {
       let promise = new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -123,11 +175,14 @@ export default {
               var obj = {
                 command: 'searchBusinessFinished',
                 platform: 'web',
-                searchContent: sea.cont === '' ? null : sea.cont,
-                beginTime: sea.time.start === '' ? null : sea.time.start,
-                endTime: sea.time.end === '' ? null : sea.time.end,
-                businessAmount: sea.amount === '所有' ? null : sea.amount,
-                businessType: sea.type === '所有' ? null : sea.type,
+                searchContent: this.sea.searchContent === '' ? null : this.sea.searchContent,
+                requester: this.sea.requester === '' ? null : this.sea.requester,
+                requesterName: this.sea.requesterName === '' ? null : this.sea.requesterName,
+                applicantName: this.sea.applicantName === '' ? null : this.sea.applicantName,
+                beginTime: this.sea.time.start === '' ? null : this.sea.time.start,
+                endTime: this.sea.time.end === '' ? null : this.sea.time.end,
+                businessAmount: this.sea.amount === '所有' ? null : this.sea.amount,
+                businessType: this.sea.type === '所有' ? null : this.sea.type,
                 pageNum: newPage
               }
               return JSON.stringify(obj);
@@ -162,6 +217,7 @@ export default {
     crumbs,
     card,
     businessCompleteSearchBar,
+    searchBar,
     pager
   }
 }
