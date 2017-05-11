@@ -5,15 +5,9 @@
         招投标信息详情
       </h4>
     </div>
-<<<<<<< HEAD
-    <form class="form-horizontal">
+    <form class="form-horizontal" @submit.prevent @keyup.enter.prevent>
       <button type="button" class="btn btn-primary f-r" @click="isEdit" v-if="editBtn">编辑</button>
       <button type="button" class="btn btn-primary f-r" @click="delisting" v-if="brandBtn">摘牌</button>
-=======
-    <form class="form-horizontal" @submit.prevent @keyup.enter.prevent>
-      <button class="btn btn-primary f-r" @click="isEdit" v-if="editBtn">编辑</button>
-      <button class="btn btn-primary f-r" @click="delisting" v-if="brandBtn">摘牌</button>
->>>>>>> 92db9d2c374aa7e9815173fafd4e522daf1663a2
       <div class="form-group">
         <label for="projectName" class="col-sm-2 control-label">项目名称：</label>
         <div class="col-sm-6">

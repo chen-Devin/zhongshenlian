@@ -218,12 +218,8 @@ export default {
         if (rep.data.statusCode === '10001') {
           this.bidArray = [];
           this.bidArray = rep.data.data.businessArray;
-<<<<<<< HEAD
           this.totalPage = rep.data.data.pageNum;
           this.totalNum = rep.data.data.totalNum;
-=======
-          this.totalPage = parseInt(rep.data.data.pageNum);
->>>>>>> 92db9d2c374aa7e9815173fafd4e522daf1663a2
         }
       }, (rep) => { });
     },
@@ -250,12 +246,8 @@ export default {
         if (rep.data.statusCode === '10001') {
           this.bidArray = [];
           this.bidArray = rep.data.data.businessArray;
-<<<<<<< HEAD
           this.totalPage = rep.data.data.pageNum;
           this.totalNum = rep.data.data.totalNum;
-=======
-          this.totalPage = parseInt(rep.data.data.pageNum);
->>>>>>> 92db9d2c374aa7e9815173fafd4e522daf1663a2
         }
       }, (rep) => { });
     },
@@ -286,12 +278,8 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.bidArray = [];
             this.bidArray = rep.data.data.businessArray;
-<<<<<<< HEAD
             this.totalPage = rep.data.data.pageNum;
             this.totalNum = rep.data.data.totalNum;
-=======
-            this.totalPage = parseInt(rep.data.data.pageNum);
->>>>>>> 92db9d2c374aa7e9815173fafd4e522daf1663a2
             resolve('done');
           }
         }, (rep) => { });
