@@ -217,7 +217,7 @@ export default {
         if (rep.data.statusCode === '10001') {
           this.bidArray = [];
           this.bidArray = rep.data.data.businessArray;
-          this.totalPage = rep.data.data.pageNum;
+          this.totalPage = parseInt(rep.data.data.pageNum);
         }
       }, (rep) => { });
     },
@@ -244,7 +244,7 @@ export default {
         if (rep.data.statusCode === '10001') {
           this.bidArray = [];
           this.bidArray = rep.data.data.businessArray;
-          this.totalPage = rep.data.data.pageNum;
+          this.totalPage = parseInt(rep.data.data.pageNum);
         }
       }, (rep) => { });
     },
@@ -275,7 +275,7 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.bidArray = [];
             this.bidArray = rep.data.data.businessArray;
-            this.totalPage = rep.data.data.pageNum;
+            this.totalPage = parseInt(rep.data.data.pageNum);
             resolve('done');
           }
         }, (rep) => { });

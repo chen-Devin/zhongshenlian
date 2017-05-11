@@ -83,7 +83,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.page.total = rep.data.data.pageNum;
+            this.page.total = parseInt(rep.data.data.pageNum);
             this.page.current = newPage;
             for(let j=0; j < rep.data.data.staffArray.length; j++) {
               let arr = [];

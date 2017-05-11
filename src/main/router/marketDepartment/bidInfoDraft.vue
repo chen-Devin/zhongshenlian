@@ -83,7 +83,7 @@ export default {
 			}).then((rep) => {
 	    		if (rep.data.statusCode === '10001') {
 					this.unfinishedList = rep.data.data.businessArray;
-          this.totalPage = rep.data.data.pageNum;
+          this.totalPage = parseInt(rep.data.data.pageNum);
 	    		}
 	  		}, (rep) => {});
 		},

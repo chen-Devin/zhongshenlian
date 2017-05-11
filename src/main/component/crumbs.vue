@@ -17,7 +17,7 @@ export default {
   props: ['paths'],
   methods: {
     backUp() {
-      this.$router.push(this.paths[paths.length-2].url);
+      this.$router.push(this.paths[this.paths.length-2].url);
     }
   }
 }
