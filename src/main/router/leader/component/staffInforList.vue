@@ -5,7 +5,7 @@
       员工列表
     </h3>
     <table class="table table-striped table-hover com-list" v-if="staffsShow">
-      <tbody>
+      <thead>
         <tr>
           <th class="text-center">职员</th>
           <th class="text-center">性别</th>
@@ -15,6 +15,8 @@
           <th class="text-center">所属部门</th>
           <th class="text-center">&nbsp;</th>
         </tr>
+      </thead>
+      <tbody>
         <tr v-for="STAFF in staffs"
             :key="STAFF.id">
           <td class="text-center">{{STAFF.name}}</td>
@@ -43,6 +45,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import card from '../../../component/card.vue';
 import searchBar from '../../../component/searchBar.vue';
 import staffModModal from './staffModModal.vue';
@@ -52,7 +56,11 @@ export default {
   name: 'staffInforList',
   data() {
     return {
-      staffs: []
+      staffs: [],
+      showModModal: false,
+      modStaff: {},
+      showDelModal: false,
+      delStaff: {},
     }
   },
   computed: {
@@ -60,9 +68,82 @@ export default {
       return this.staffs.length!==0;
     }
   },
-  mothods: {
+  methods: {
     tog(searchCont) {
-
+      this.searchStaffs(searchCont).then((rep) => {
+        this.staffs = rep.data.data.userArray;
+      }, (rep) => {});
+    },
+    searchStaffs(searchCont) {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'staffSearch',
+                platform: 'web',
+                searchContent: searchCont
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
+          } else {
+            reject(rep);
+          }
+        }, (rep) => { });
+      });
+      return promise;
+    },
+    mod(STAFF) {
+      this.modStaff = STAFF;
+      this.showModModal = true;
+    },
+    del(STAFF) {
+      this.delStaff = STAFF;
+      this.showModModal = false;
+      this.showDelModal = true;
+    },
+    saved(modedStaff) {
+      for (let i = 0; i < this.staffs.length; i++) {
+        if (this.staffs[i].id === modedStaff.id.val) {
+          this.staffs[i].telephone = modedStaff.telephone.val;
+          this.staffs[i].name = modedStaff.name.val;
+          this.staffs[i].jobNumber = modedStaff.jobNumber.val;
+          this.staffs[i].duties = modedStaff.duties.val;
+          this.staffs[i].gender = modedStaff.gender.val;
+          this.staffs[i].remark = modedStaff.remark.val;
+          break;
+        }
+      }
+      this.modStaff = {};
+      this.showModModal = false;
+    },
+    modCanceled() {
+      this.modStaff = {};
+      this.showModModal = false;
+    },
+    deleted(deletedStaff) {
+      for (let i = 0; i < this.staffs.length; i++) {
+        if (this.staffs[i].id === deletedStaff.id) {
+          this.staffs.splice(i, 1);
+          break;
+        }
+      }
+      this.delStaff = {};
+      this.showDelModal = false;
+    },
+    delCanceled() {
+      this.delStaff = {};
+      this.showDelModal = false;
+      this.showModModal = true;
     }
   },
   components: {

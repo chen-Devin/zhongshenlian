@@ -1,7 +1,9 @@
 <template>
   <modal alignSelf="flex-start">
     <form class="form-horizontal clearfix"
-          slot="body">
+          slot="body"
+          @submit.prevent
+          @keyup.enter.prevent>
       <div class="form-group"
            :class="{'has-error': !customer.customerName.ver}">
         <label class="col-sm-3 control-label">客户名称</label>

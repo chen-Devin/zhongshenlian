@@ -8,13 +8,15 @@
               :disabled="ediBtn.dis">{{ediBtn.cont}}</button>
     </h3>
     <table class="table table-striped table-hover com-list">
-      <tbody>
+      <thead>
         <tr>
           <th class="text-center">职员</th>
           <th class="text-center"
               v-for="(AUTH, index) in thisDepart.authorityArray"
               :key="index">{{AUTH.name}}</th>
         </tr>
+      </thead>
+      <tbody>
         <tr v-for="STAFF in thisDepart.staffArray"
             :key="STAFF.id">
           <td class="text-center">{{STAFF.name}}</td>

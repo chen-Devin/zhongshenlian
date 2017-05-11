@@ -5,7 +5,7 @@
         招投标信息详情
       </h4>
     </div>
-    <form class="form-horizontal">
+    <form class="form-horizontal" @submit.prevent @keyup.enter.prevent>
       <button class="btn btn-primary f-r" @click="isEdit" v-if="editBtn">编辑</button>
       <button class="btn btn-primary f-r" @click="delisting" v-if="brandBtn">摘牌</button>
       <div class="form-group">

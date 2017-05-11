@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <form class="form-horizontal normal-wrap">
+      <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
         <label class="radio-inline">
           <input type="radio" name="seaType" value="关键字搜索" v-model="seaType" @change="seaTypeChan"> 关键字搜索
         </label>

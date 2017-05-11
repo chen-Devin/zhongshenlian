@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="form-inline">
+    <form class="form-inline" @submit.prevent @keyup.enter.prevent>
       <div class="row">
         <div class="form-group col-xs-12">
           <input type="text" class="form-control name-input" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" v-model.trim="searchContent">

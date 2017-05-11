@@ -1,7 +1,9 @@
 <template>
   <modal>
     <form class="form-horizontal clearfix"
-          slot="body">
+          slot="body"
+          @submit.prevent
+          @keyup.enter.prevent>
       <div class="form-group"
            :class="{'has-error': !staff.name.ver}">
         <label class="col-sm-3 control-label">姓名</label>

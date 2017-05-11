@@ -8,7 +8,7 @@
       </button>
     </h3>
     <table class="table table-striped table-hover com-list">
-      <tbody>
+      <thead>
         <tr>
           <th class="text-center">客户名称</th>
           <th class="text-center">客户联系人</th>
@@ -16,6 +16,8 @@
           <th class="text-center">联系人电话</th>
           <th class="text-center">&nbsp;</th>
         </tr>
+      </thead>
+      <tbody>
         <tr v-for="(CUSTOMER, index) in thisCustomers"
             :key="index">
           <td class="text-center">{{CUSTOMER.customerName}}</td>

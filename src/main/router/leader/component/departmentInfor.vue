@@ -7,7 +7,7 @@
               @click="add()">录入</button>
     </h3>
     <table class="table table-striped table-hover com-list">
-      <tbody>
+      <thead>
         <tr>
           <th class="text-center">职员</th>
           <th class="text-center">性别</th>
@@ -17,6 +17,8 @@
           <th class="text-center">所属部门</th>
           <th class="text-center">&nbsp;</th>
         </tr>
+      </thead>
+      <tbody>
         <tr v-for="STAFF in thisDepart.staffArray"
             :key="STAFF.id">
           <td class="text-center">{{STAFF.name}}</td>

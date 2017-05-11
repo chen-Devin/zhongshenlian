@@ -7,7 +7,7 @@
         <button class="btn btn-danger" @click="del()">撤销</button>
       </div>
     </h3>
-    <form class="form-horizontal normal-wrap">
+    <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
       <div class="form-group">
         <label class="col-sm-2 control-label">签订合同编号</label>
         <div class="col-sm-9">

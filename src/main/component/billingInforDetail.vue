@@ -1,5 +1,5 @@
 <template>
-  <form class="form-horizontal normal-wrap">
+  <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
     <div class="form-group" v-if="uploadEnabled">
       <label class="col-sm-2 control-label">
         发票图片

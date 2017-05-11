@@ -1,7 +1,9 @@
 <template>
   <modal>
     <form class="form-horizontal clearfix"
-          slot="body">
+          slot="body"
+          @submit.prevent
+          @keyup.enter.prevent>
       <div class="form-group">
         <label class="col-sm-3 control-label">报告类型</label>
         <div class="col-sm-9">
