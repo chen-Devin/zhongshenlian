@@ -18,7 +18,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<my-pagination :iniTotalPage="totalPage" @currentChange="currentChange"></my-pagination>
+			<my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
 		</card>
 	</div>
 </template>
@@ -60,6 +60,7 @@ export default {
 	  		unfinishedList: [],
 	  		office: '会计所',
 	  		pageNum: 1,
+        totalNum: 1,
         totalPage: ''
 		}
 	},
@@ -84,6 +85,7 @@ export default {
 	    		if (rep.data.statusCode === '10001') {
 					this.unfinishedList = rep.data.data.businessArray;
           this.totalPage = rep.data.data.pageNum;
+          this.totalNum = rep.data.data.totalNum;
 	    		}
 	  		}, (rep) => {});
 		},

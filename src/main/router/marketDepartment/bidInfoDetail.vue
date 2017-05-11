@@ -4,7 +4,6 @@
     <card>
       <bid-info-check @isEdit="isEdit" v-if="checkShow"></bid-info-check>
       <bid-info-edit :iniProject="project"
-                     :isTempDetail="isTempDetail"
                      inputType="编辑"
                      @submit="submit"
                      @saveDraft="saveDraft"
@@ -112,7 +111,7 @@ export default {
                   var obj = {
                     command: 'addOrEditBiddingInfo',
                     platform: 'web',
-                    type: 'edit',
+                    type: 'add',
                     data: project
                   };
                   return JSON.stringify(obj);

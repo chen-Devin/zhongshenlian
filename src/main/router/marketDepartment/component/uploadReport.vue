@@ -1,25 +1,35 @@
 <template>
-    <el-upload
-      class="upload-demo ta-c"
-      :action="uploadURL"
-      :on-preview="handlePreview"
-      :on-remove="handleRemove"
-      :file-list="fileList"
-      :show-file-list="false"
-      :on-success="uploadSuccess"
-      :type="type"
-      >
-      <slot>
-          <a>上传</a>
-            <!-- <el-button size="small" type="primary">上传</el-button> -->
-      </slot>
-      <span></span>
-    </el-upload>
+  <div class="row">
+    <div class="col-sm-8">
+      <el-upload
+        class="upload-demo ta-r"
+        :action="uploadURL"
+        :on-preview="handlePreview"
+        :on-remove="handleRemove"
+        :file-list="fileList"
+        :show-file-list="false"
+        :on-success="uploadSuccess"
+        :type="type">
+        <slot>
+            <a>上传</a>
+        </slot>
+        <span></span>
+      </el-upload>
+    </div>
+    <div class="col-sm-4">
+      <a class="delete" @click="deleteDoc">删除</a>
+    </div>
+  </div>
 </template>
 
 <style lang="sass" scoped>
-    .ta-c {
-      text-align: center;
+    .ta-r {
+      text-align: right;
+    }
+    .delete {
+      &:hover {
+        cursor: pointer;
+      }
     }
 </style>
 
@@ -56,9 +66,11 @@ export default {
         this.fileList.push(obj);
         this.$emit('uploadList',this.fileList);
       }
-      console.log(responseData);
-      console.log(file);
-      console.log(fileList);
+    },
+    deleteDoc() {
+      console.log('点击删除');
+      console.log(this.fileList);
+      this.$emit('deleteDoc');
     }
   },
   mounted() {

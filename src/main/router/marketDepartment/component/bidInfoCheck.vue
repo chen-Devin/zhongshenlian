@@ -6,8 +6,8 @@
       </h4>
     </div>
     <form class="form-horizontal">
-      <button class="btn btn-primary f-r" @click="isEdit" v-if="editBtn">编辑</button>
-      <button class="btn btn-primary f-r" @click="delisting" v-if="brandBtn">摘牌</button>
+      <button type="button" class="btn btn-primary f-r" @click="isEdit" v-if="editBtn">编辑</button>
+      <button type="button" class="btn btn-primary f-r" @click="delisting" v-if="brandBtn">摘牌</button>
       <div class="form-group">
         <label for="projectName" class="col-sm-2 control-label">项目名称：</label>
         <div class="col-sm-6">
@@ -363,8 +363,8 @@
         <div class="form-group">
           <label for="remark" class="col-sm-2 control-label"></label>
           <div class="col-sm-10">
-            <button class="btn btn-success" @click="approve()">通过</button>
-            <button class="btn btn-danger" @click="showAdvice()">不通过</button>
+            <button type="button" class="btn btn-success" @click="approve()">通过</button>
+            <button type="button" class="btn btn-danger" @click="showAdvice()">不通过</button>
           </div>
         </div>
       </div>
@@ -376,8 +376,8 @@
           <textarea class="form-control" rows="8" placeholder="请填写修改意见，不超过500个字" v-model="adviceText"></textarea>
         </div>
         <div slot="footer">
-          <button class="btn btn-default" @click="adviceUpload">提交</button>
-          <button class="btn btn-default" @click="adviceCancel">取消</button>
+          <button type="button" class="btn btn-default" @click="adviceUpload">提交</button>
+          <button type="button" class="btn btn-default" @click="adviceCancel">取消</button>
         </div>
       </modal>
       <!-- 审核意见 -->
@@ -387,20 +387,20 @@
         <div class="row">
           <div class="col-sm-5">审核人</div>
           <div class="col-sm-5">是否通过</div>
-          <div class="col-sm-2"></div>
+          <div class="col-sm-2">修改意见</div>
         </div>
         <div class="row" v-for="item in this.biddingApproverArray">
           <div class="col-sm-5">{{ item.approverName }}</div>
           <div class="col-sm-5">{{ item.approverResult }}</div>
           <div class="col-sm-2">
-            <a v-if="item.showTaga" href="javascript:void(0);" @click="checkAdvice(item.approverOpinion)">修改意见</a>
+            <a v-if="item.showTaga" href="javascript:void(0);" @click="checkAdvice(item.approverOpinion)">查看</a>
           </div>
         </div>
       </div>
 
       <modal v-if="checkAdviceModal">
-        <textarea slot="body" class="form-control" rows="8" placeholder="请填写修改意见，不超过500个字" v-model="adviceContent"></textarea>
-        <button class="btn btn-default" slot="footer" @click="closeAdviceContent()">完成</button>
+        <textarea slot="body" class="form-control" rows="8" placeholder="请填写修改意见，不超过500个字" v-model="adviceContent" readonly></textarea>
+        <button type="button" class="btn btn-default" slot="footer" @click="closeAdviceContent()">完成</button>
       </modal>
       <!-- 入围或中标通知书-->
       <div v-if="noticePanel">
@@ -412,7 +412,7 @@
               <a :href="ruweiDoc.url" target="_blank">{{ ruweiDoc.name }}</a>
             </div>
             <div class="col-sm-2">
-              <upload-report :type="shortlistedNotice" :id="projectId" @uploadList="recRuweiDoc" v-if="noticeUpload"></upload-report>
+              <upload-report :type="shortlistedNotice" :id="projectId" @uploadList="recRuweiDoc" @deleteDoc="deleteRuweiDoc" v-if="noticeUpload"></upload-report>
             </div>
           </div>
         </div>
@@ -423,7 +423,7 @@
               <a :href="zhongbiaoDoc.url" target="_blank">{{ zhongbiaoDoc.name }}</a>
             </div>
             <div class="col-sm-2">
-              <upload-report :type="bidNotice" :id="projectId" @uploadList="recZhongbiaoDoc" v-if="noticeUpload"></upload-report>
+              <upload-report :type="bidNotice" :id="projectId" @uploadList="recZhongbiaoDoc" @deleteDoc="deleteZhongbiaoDoc" v-if="noticeUpload"></upload-report>
             </div>
           </div>
         </div>
@@ -432,7 +432,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label"></label>
           <div class="col-sm-10">
-            <button class="btn btn-default" @click="uploadFinish()">上传完成</button>
+            <button type="button" class="btn btn-default" @click="uploadFinish()">上传完成</button>
           </div>
         </div>
       </div>
@@ -472,7 +472,8 @@ export default {
           mainEfficiencyRate: 0,
           subBasicArray: [{ "name": '', "rate": 0 }],
           subEfficiencyArray: [{ "name": '', "rate": 0 }]
-        }
+        },
+        departmentType: []
       },
       adviceText: '',
       editBtn: false,
@@ -585,6 +586,7 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.project = rep.data.data;
+            this.project.openBidDate = this.project.openBidDate.replace("T"," ");
             resolve('done');
           } else {
 
@@ -596,7 +598,7 @@ export default {
       return pro;
     },
     showEditBtn() {
-      if (this.user.department === "市场部" && this.project.biddingStatus === "0") {
+      if (this.user.department === "市场部" && (this.project.biddingStatus === "0" || this.project.biddingStatus === "5" || this.project.directorHandleStatus === "0")) {
         this.editBtn = true;
       }
     },
@@ -621,7 +623,7 @@ export default {
       }
     },
     showNoticePanel() {
-      if (this.user.department === "业务部" && this.project.directorHandleStatus === "1") {
+      if (this.user.department === "市场部" && this.project.directorHandleStatus === "1") {
         this.noticePanel = true;
       }
       if (this.project.biddingStatus === "3") {
@@ -634,7 +636,7 @@ export default {
       }
     },
     showNoticeUpload() {
-      if (this.user.department === "业务部" && this.project.confirmAnnex === "0" && this.project.directorHandleStatus === "1") {
+      if (this.user.department === "市场部" && this.project.confirmAnnex === "0" && this.project.directorHandleStatus === "1") {
         this.noticeUpload = true;
         this.finishBtn = true;
       }
@@ -662,6 +664,8 @@ export default {
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
           console.log('提交成功');
+          this.getInfo();
+          this.checkAdviceShow = true;
           this.adviceShow = false;
           this.directorAgreeShow = false;
         } else {
@@ -692,7 +696,7 @@ export default {
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
           this.brandBtn = false;
-          this.getInfo();
+          // this.getInfo();
           this.delipotentShow = true;
         } else {
 
@@ -719,6 +723,8 @@ export default {
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
           console.log('审核通过');
+          this.getInfo();
+          this.checkAdviceShow = true;
           this.directorAgreeShow = false;
         } else {
 
@@ -730,8 +736,60 @@ export default {
     recRuweiDoc(fileList) {
       this.ruweiDoc = fileList[0];
     },
+    deleteRuweiDoc() {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            let obj = {
+              command: 'delFile',
+              platform: 'web',
+              delFileId: this.ruweiDoc.id,
+              type: 'shortlistedNotice'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.ruweiDoc = {};
+        } else {
+
+        }
+      }, (rep) => {
+
+      });
+    },
     recZhongbiaoDoc(fileList) {
       this.zhongbiaoDoc = fileList[0];
+    },
+    deleteZhongbiaoDoc(fileList) {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            let obj = {
+              command: 'delFile',
+              platform: 'web',
+              delFileId: this.zhongbiaoDoc.id,
+              type: 'bidNotice'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.zhongbiaoDoc = {};
+        } else {
+
+        }
+      }, (rep) => {
+
+      });
     },
     distributeDoc() {
       for (var i = 0; i < this.project.biddingAnnexArray.length; i++) {
@@ -804,6 +862,7 @@ export default {
     this.user = this.$store.getters.getUser;
   },
   components: {
+    axios,
     uploadReport,
     modal
   }

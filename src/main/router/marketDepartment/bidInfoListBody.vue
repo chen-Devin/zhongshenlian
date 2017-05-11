@@ -67,7 +67,7 @@
         </tr>
       </tbody>
     </table>
-    <my-pagination :iniTotalPage="totalPage" @currentChange="currentChange"></my-pagination>
+    <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
   </div>
 </template>
 
@@ -122,6 +122,7 @@ export default {
       officeList: [],
       totalPage: '',
       pageNum: 1,
+      totalNum: 1,
       listType: 'get'
     };
   },
@@ -218,6 +219,7 @@ export default {
           this.bidArray = [];
           this.bidArray = rep.data.data.businessArray;
           this.totalPage = rep.data.data.pageNum;
+          this.totalNum = rep.data.data.totalNum;
         }
       }, (rep) => { });
     },
@@ -245,6 +247,7 @@ export default {
           this.bidArray = [];
           this.bidArray = rep.data.data.businessArray;
           this.totalPage = rep.data.data.pageNum;
+          this.totalNum = rep.data.data.totalNum;
         }
       }, (rep) => { });
     },
@@ -276,6 +279,7 @@ export default {
             this.bidArray = [];
             this.bidArray = rep.data.data.businessArray;
             this.totalPage = rep.data.data.pageNum;
+            this.totalNum = rep.data.data.totalNum;
             resolve('done');
           }
         }, (rep) => { });
@@ -371,7 +375,7 @@ table {
 	width: 330px;
 }
 .name-input {
-	width: 815px;
+	width: 95%;
   text-align: center;
 }
 .left-move {
