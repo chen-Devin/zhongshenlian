@@ -1,5 +1,5 @@
 <template>
-  <form class="form-horizontal normal-wrap">
+  <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
     <div class="form-group"
          v-if="reportUploadShow">
       <label class="col-sm-2 control-label">业务报告</label>

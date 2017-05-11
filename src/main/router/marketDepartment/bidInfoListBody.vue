@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="form-inline">
+    <form class="form-inline" @submit.prevent @keyup.enter.prevent>
       <div class="row">
         <div class="form-group col-xs-12">
           <input type="text" class="form-control name-input" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" v-model.trim="searchContent">
@@ -218,8 +218,12 @@ export default {
         if (rep.data.statusCode === '10001') {
           this.bidArray = [];
           this.bidArray = rep.data.data.businessArray;
+<<<<<<< HEAD
           this.totalPage = rep.data.data.pageNum;
           this.totalNum = rep.data.data.totalNum;
+=======
+          this.totalPage = parseInt(rep.data.data.pageNum);
+>>>>>>> 92db9d2c374aa7e9815173fafd4e522daf1663a2
         }
       }, (rep) => { });
     },
@@ -246,8 +250,12 @@ export default {
         if (rep.data.statusCode === '10001') {
           this.bidArray = [];
           this.bidArray = rep.data.data.businessArray;
+<<<<<<< HEAD
           this.totalPage = rep.data.data.pageNum;
           this.totalNum = rep.data.data.totalNum;
+=======
+          this.totalPage = parseInt(rep.data.data.pageNum);
+>>>>>>> 92db9d2c374aa7e9815173fafd4e522daf1663a2
         }
       }, (rep) => { });
     },
@@ -278,8 +286,12 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.bidArray = [];
             this.bidArray = rep.data.data.businessArray;
+<<<<<<< HEAD
             this.totalPage = rep.data.data.pageNum;
             this.totalNum = rep.data.data.totalNum;
+=======
+            this.totalPage = parseInt(rep.data.data.pageNum);
+>>>>>>> 92db9d2c374aa7e9815173fafd4e522daf1663a2
             resolve('done');
           }
         }, (rep) => { });

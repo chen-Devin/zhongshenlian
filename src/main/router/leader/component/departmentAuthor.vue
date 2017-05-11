@@ -8,13 +8,15 @@
               :disabled="ediBtn.dis">{{ediBtn.cont}}</button>
     </h3>
     <table class="table table-striped table-hover com-list">
-      <tbody>
+      <thead>
         <tr>
           <th class="text-center">职员</th>
           <th class="text-center"
               v-for="(AUTH, index) in thisDepart.authorityArray"
               :key="index">{{AUTH.name}}</th>
         </tr>
+      </thead>
+      <tbody>
         <tr v-for="STAFF in thisDepart.staffArray"
             :key="STAFF.id">
           <td class="text-center">{{STAFF.name}}</td>
@@ -81,7 +83,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.page.total = rep.data.data.pageNum;
+            this.page.total = parseInt(rep.data.data.pageNum);
             this.page.current = newPage;
             for(let j=0; j < rep.data.data.staffArray.length; j++) {
               let arr = [];

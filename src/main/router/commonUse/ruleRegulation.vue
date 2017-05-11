@@ -85,7 +85,7 @@ export default {
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          this.page.total = rep.data.data.pageNum;
+          this.page.total = parseInt(rep.data.data.pageNum);
           this.page.current = newPage;
           this.rules.length = 0;
           for (let i = 0; i < rep.data.data.regulationsArray.length; i++) {
@@ -118,7 +118,7 @@ export default {
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          this.page.total = rep.data.data.pageNum;
+          this.page.total = parseInt(rep.data.data.pageNum);
           this.page.current = newPage;
           this.rules.length = 0;
           for (let i = 0; i < rep.data.data.regulationsArray.length; i++) {

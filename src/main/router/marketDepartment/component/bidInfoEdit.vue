@@ -5,7 +5,7 @@
 				招投标信息{{ inputType }}
 			</h4>
 		</div>
-		<form class="form-horizontal">
+		<form class="form-horizontal" @submit.prevent @keyup.enter.prevent>
 			<div class="form-group">
 			  <label for="projectName" class="col-sm-2 control-label">项目名称：</label>
 			  <div class="col-sm-10">

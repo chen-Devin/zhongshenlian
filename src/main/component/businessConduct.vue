@@ -1,5 +1,5 @@
 <template>
-  <form class="form-horizontal normal-wrap">
+  <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
     <div class="form-group" v-for="(SCHDULE, index) in business.schdules" :key="index">
       <div class="checkbox col-sm-offset-2 col-sm-10">
         <label>

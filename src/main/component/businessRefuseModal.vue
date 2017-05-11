@@ -1,6 +1,6 @@
 <template>
   <modal>
-    <form class="clearfix" slot="body">
+    <form class="clearfix" slot="body" @submit.prevent @keyup.enter.prevent>
       <div class="form-group">
         <textarea cols="30"
                   rows="10"

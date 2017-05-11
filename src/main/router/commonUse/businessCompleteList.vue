@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <form class="form-horizontal normal-wrap">
+      <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
         <label class="radio-inline">
           <input type="radio" name="seaType" value="关键字搜索" v-model="seaType" @change="seaTypeChan"> 关键字搜索
         </label>
@@ -145,7 +145,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.page.total = rep.data.data.pageNum;
+            this.page.total = parseInt(rep.data.data.pageNum);
             this.page.current = newPage;
             this.businesses.length = 0;
             for (let i = 0; i < rep.data.data.businessArray.length; i++) {
@@ -190,7 +190,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.page.total = rep.data.data.pageNum;
+            this.page.total = parseInt(rep.data.data.pageNum);
             this.page.current = newPage;
             this.businesses.length = 0;
             for (let i = 0; i < rep.data.data.businessArray.length; i++) {

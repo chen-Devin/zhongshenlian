@@ -9,22 +9,24 @@
               :disabled="ediBtn.dis">{{ediBtn.cont}}</button>
     </h3>
     <table class="table table-striped table-hover com-list" v-if="staffsShow">
-      <tbody>
+      <thead>
         <tr>
           <th class="text-center">职员</th>
-          <th class="text-center"
-              v-for="(AUTH, index) in staffs.authorityArray"
-              :key="index">{{AUTH.name}}</th>
+          <th class="text-center">权限</th>
         </tr>
-        <tr v-for="STAFF in staffs.staffArray"
+      </thead>
+      <tbody>
+        <tr v-for="STAFF in staffs"
             :key="STAFF.id">
           <td class="text-center">{{STAFF.name}}</td>
-          <td class="text-center"
-              v-for="STAFF_AUTH in STAFF.authority"
-              :key="STAFF.authName">
-            <input type="checkbox"
-                   v-model="STAFF_AUTH.stat"
-                   :disabled="!ediBtn.ediStat">
+          <td class="text-center">
+            <label class="checkbox-inline"
+                   v-for="(STAFF_AUTH, index) in STAFF.authority"
+                   :key="index">
+              <input type="checkbox"
+                     v-model="STAFF_AUTH.stat"
+                     :disabled="!ediBtn.ediStat"> {{STAFF_AUTH.authName}}
+            </label>
           </td>
         </tr>
       </tbody>
@@ -58,19 +60,57 @@ export default {
   },
   methods: {
     tog(searchCont) {
-
+      this.searchStaffs(searchCont).then((rep) => {
+        for(let m=0; m < rep.data.data.userArray.length; m++) {
+          for(let n=0; n < rep.data.data.userArray[m].authority.length; n++) {
+            let obj = {};
+            obj.authName = rep.data.data.userArray[m].authority[n].name;
+            obj.stat = rep.data.data.userArray[m].authority[n].authority === '0' ? false : true;
+            rep.data.data.userArray[m].authority[n] = obj;
+          }
+        }
+        this.staffs = rep.data.data.userArray;
+      }, (rep) => {});
+    },
+    searchStaffs(searchCont) {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'staffSearch',
+                platform: 'web',
+                searchContent: searchCont
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
+          } else {
+            reject(rep);
+          }
+        }, (rep) => { });
+      });
+      return promise;
     },
     ediBtnTog() {
       if (this.ediBtn.ediStat) {
         this.ediBtn.dis = true;
         this.ediBtn.cont = '提交...';
         let promiseArr = [];
-        for (let i = 0; i < this.staffs.staffArray.length; i++) {
+        for (let i = 0; i < this.staffs.length; i++) {
           let arr = [];
-          for (let j = 0; j < this.staffs.staffArray[i].authority.length; j++) {
+          for (let j = 0; j < this.staffs[i].authority.length; j++) {
             let obj = {
-              name: this.staffs.staffArray[i].authority[j].authName,
-              authority: this.staffs.staffArray[i].authority[j].stat ? '1' : '0'
+              name: this.staffs[i].authority[j].authName,
+              authority: this.staffs[i].authority[j].stat ? '1' : '0'
             };
             arr.push(obj);
           }
@@ -84,8 +124,8 @@ export default {
                   var obj = {
                     command: 'staffAuthorityEdit',
                     platform: 'web',
-                    staffUserId: this.staffs.staffArray[i].id,
-                    department: this.staffs.staffArray[i].department,
+                    staffUserId: this.staffs[i].id,
+                    department: this.staffs[i].department,
                     authorityArray: arr
                   };
                   return JSON.stringify(obj);
@@ -123,4 +163,10 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.com-list {
+  .checkbox-inline {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <form class="form-horizontal normal-wrap">
+  <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent="tog">
     <div class="form-group">
       <div class="col-sm-12">
         <div class="input-group">

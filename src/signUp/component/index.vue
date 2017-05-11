@@ -1,7 +1,7 @@
 <template>
   <main>
     <section class="section">
-      <form>
+      <form @submit.prevent @keyup.enter.prevent>
         <div class="form-group">
           <img :src="userHead"
                alt="头像"

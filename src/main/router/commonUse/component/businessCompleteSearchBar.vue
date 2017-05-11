@@ -1,5 +1,5 @@
 <template>
-  <form class="form-horizontal normal-wrap">
+  <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent="search">
     <div class="form-group">
       <div class="col-sm-4 row">
         <label class="col-xs-3 control-label">委托单位</label>
