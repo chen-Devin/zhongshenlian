@@ -445,13 +445,7 @@ export default {
     bus.$on('subBusiness', () => { this.sub() });
     bus.$on('savBusiness', () => { this.save() });
 
-    let data = {
-      command: 'handlerBusiness',
-      platform: 'web',
-      id: this.business.id,
-      type: 'projectAnnex'
-    };
-    this.upload.URL = '/fileUpload?data=' + JSON.stringify(data);
+    this.uploadURLGen();
 
     /*
     暂时停用下拉菜单
@@ -760,6 +754,7 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.business.id = rep.data.data.id;
+            this.uploadURLGen();
             this.$emit('saved', this.business);
             resolve(rep);
           } else if (rep.data.statusCode === '10012') {
@@ -914,17 +909,18 @@ export default {
         return promise;
       }
     },
+    uploadURLGen() {
+      let data = {
+        command: 'handlerBusiness',
+        platform: 'web',
+        id: this.business.id,
+        type: 'projectAnnex'
+      };
+      this.upload.URL = '/fileUpload?data=' + JSON.stringify(data);
+    },
     reSave(file) {
       if (this.business.id === '') {
-        return this.save().then((rep) => {
-          let data = {
-            command: 'handlerBusiness',
-            platform: 'web',
-            id: this.business.id,
-            type: 'projectAnnex'
-          };
-          this.upload.URL = '/fileUpload?data=' + JSON.stringify(data);
-        }, (rep) => { });
+        return this.save();
       } else {
         return true;
       }

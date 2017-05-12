@@ -4,7 +4,7 @@
     <card>
       <h3 class="main-title">
         业务列表
-        <router-link class="btn btn-primary pull-right" to="/business-review-add">
+        <router-link class="btn btn-primary pull-right" to="/business-review-add" v-if="user.authority['业务立项']">
           新建业务
         </router-link>
       </h3>
@@ -52,6 +52,7 @@ export default {
       }
     };
   },
+  props: ['user'],
   created() {
     this.getInfo(1);
   },
