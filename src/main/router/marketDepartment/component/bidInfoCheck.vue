@@ -696,7 +696,7 @@ export default {
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
           this.brandBtn = false;
-          // this.getInfo();
+          this.getInfo();
           this.delipotentShow = true;
         } else {
 
