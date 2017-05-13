@@ -2,18 +2,15 @@
   <modal>
     <div slot="body">
       <p>
-        <span class="fa fa-exclamation-circle fa-5x text-success"></span>
-        <span class="text-cont">装订后该业务完结！确定装订该业务吗？</span>
+        <span class="fa fa-exclamation-circle fa-5x text-danger"></span>
+        <span class="text-cont">确定删除该规章制度吗？</span>
       </p>
     </div>
     <div slot="footer">
-      <button class="btn btn-success modal-default-button"
-              @click="sub()"
-              :disabled="subBtn.dis">
+      <button class="btn btn-danger modal-default-button" @click="del()" :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
-      <button class="btn btn-default modal-default-button"
-              @click="cancel()">
+      <button class="btn btn-default modal-default-button" @click="cancel()">
         取消
       </button>
     </div>
@@ -27,42 +24,42 @@ import qs from 'qs';
 import modal from '../../../component/modal.vue';
 
 export default {
-  name: 'completeModal',
+  name: 'ruleDelModal',
   data() {
     return {
       subBtn: {
         dis: false,
-        cont: '确定'
+        cont: '删除'
       }
     };
   },
-  props: ['initBusiness'],
+  props: ['initalRule'],
   methods: {
-    sub() {
+    del() {
       this.subBtn.dis = true;
-      this.subBtn.cont = '提交中...';
+      this.subBtn.cont = '删除中...';
       axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
         method: 'post',
         url: '/service',
         data: qs.stringify({
           data: (() => {
             var obj = {
-              command: 'finishedBusiness',
+              command: 'delRegulations',
               platform: 'web',
-              id: this.initBusiness.id
+              regulationsId: this.initalRule.id
             };
             return JSON.stringify(obj);
           })()
         })
-      }).then((rep) => {
+      }).then((rep)=>{
         if (rep.data.statusCode === '10001') {
-          this.subBtn.cont = '已提交';
-          this.$emit('submited');
+          this.subBtn.cont = '已删除';
+          this.$emit('deleted', this.initalRule);
         } else if (rep.data.statusCode === '10012') {
           window.location.href = 'signIn.html';
         }
-      }, (rep) => { });
+      }, (rep)=>{});
     },
     cancel() {
       this.$emit('canceled');
@@ -71,9 +68,16 @@ export default {
   components: {
     modal
   }
-};
+}
 </script>
 
 <style lang="sass" scoped>
-
+p {
+  span {
+    display: inline-block;
+    &.fa {
+      margin: 0 20px 0 40px;
+    }
+  }
+}
 </style>

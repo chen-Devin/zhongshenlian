@@ -15,11 +15,13 @@
       </h3>
       <progress-bar :progress="progress"></progress-bar>
       <business-profile :initBusiness="business" :user="user"></business-profile>
-      <hr>
-      <div class="row">
-        <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
-        <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
-      </div>
+      <template v-if="business.projectStatus>=30">
+        <hr>
+        <div class="row">
+          <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
+          <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
+        </div>
+      </template>
     </card>
     <business-approve-modal v-if="showApproveModal"
                             :initalBusiness="business"
@@ -34,8 +36,6 @@
 
 <script>
 import axios from 'axios';
-
-import router from '../index.js';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
@@ -214,7 +214,7 @@ export default {
         departmentCoop: {
           name: '无部门合作',
           departments: {
-            main: { name: '主要部门', percentage: 0 },
+            main: { name: '', percentage: 0 },
             coop: [{ name: '', percentage: 0 }]
           },
         },
@@ -480,6 +480,7 @@ export default {
 
             if (rep.data.data.cooperationDepartment.hasOwnProperty('mainRate')) {
               this.business.departmentCoop.name = '有部门合作';
+              this.business.departmentCoop.departments.main.name = rep.data.data.cooperationDepartment.mainDepartment;
               this.business.departmentCoop.departments.main.percentage = rep.data.data.cooperationDepartment.mainRate;
               this.business.departmentCoop.departments.coop = [];
               for (let i=0; i<rep.data.data.cooperationDepartment.otherArray.length; i++) {
@@ -529,6 +530,7 @@ export default {
 
             this.business.projectApproverArray = rep.data.data.projectApproverArray;
 
+            this.business.schdules = [];
             for (let i = 0; i < rep.data.data.projectSchduleArray.length; i++) {
               let obj = {
                 name: rep.data.data.projectSchduleArray[i].name,
@@ -646,7 +648,7 @@ export default {
         approverName: this.user.name,
         department: this.user.department,
         approveResult: '通过',
-        approverOpinion: '',
+        approveOpinion: '',
         updateAt: (()=>{
           let t = new Date();
           let Y = t.getFullYear();
@@ -681,7 +683,7 @@ export default {
         approverName: this.user.name,
         department: this.user.department,
         approveResult: '不通过',
-        approverOpinion: reason,
+        approveOpinion: reason,
         updateAt: (()=>{
           let t = new Date();
           let Y = t.getFullYear();

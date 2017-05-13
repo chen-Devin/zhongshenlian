@@ -23,7 +23,7 @@
           <span class="label label-default"
                 v-else-if="BUSINESS.projectStatus===180">已完成</span>
           <span class="title">{{BUSINESS.businessName}}</span>
-          <span class="date pull-right">{{BUSINESS.finishTime}}</span>
+          <span class="date pull-right">{{BUSINESS.finishTime.substring(0,10)}}</span>
         </router-link>
         <pager :pageCount="page.total"
                :currentPage="page.current"

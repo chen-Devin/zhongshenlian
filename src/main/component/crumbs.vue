@@ -1,7 +1,7 @@
 <template>
 <div class="navigation">
   <a class="fa fa-angle-double-left back-up" @click="backUp" v-if="paths.length!==1"></a>
-  <span class="fa fa-angle-double-left back-up" v-if="paths.length===1"></span>
+  <span class="back-up" v-if="paths.length===1">&nbsp;</span>
   <ol class="breadcrumb">
     <li :class="{active: PATH.present}" v-for="PATH in paths">
       <router-link :to="PATH.url" v-if="!PATH.present">{{PATH.name}}</router-link>
@@ -31,6 +31,7 @@ export default {
   }
   a.back-up {
     text-decoration: none;
+    width: 8px;
     &:hover {
       cursor: pointer;
     }

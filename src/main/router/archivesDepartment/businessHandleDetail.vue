@@ -18,11 +18,13 @@
       </h3>
       <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
-        <hr>
-        <div class="row">
-          <approver-advice :advices="riskAdvices" @pathsChan="pathsChan">风险评估部意见</approver-advice>
-          <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
-        </div>
+        <template v-if="approverAdviceShow">
+          <hr>
+          <div class="row">
+            <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
+            <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
+          </div>
+        </template>
       </div>
     </card>
   </div>
@@ -209,7 +211,7 @@ export default {
         departmentCoop: {
           name: '无部门合作',
           departments: {
-            main: { name: '主要部门', percentage: 0 },
+            main: { name: '', percentage: 0 },
             coop: [{ name: '', percentage: 0 }]
           },
         },
@@ -356,6 +358,9 @@ export default {
               { name: '业务完结', passed: false, active: true }
           ];
       }
+    },
+    approverAdviceShow() {
+      return this.$route.path.indexOf('/business-profile') === -1 ? false : true;
     }
   },
   created() {
@@ -466,6 +471,7 @@ export default {
 
             if (rep.data.data.cooperationDepartment.hasOwnProperty('mainRate')) {
               this.business.departmentCoop.name = '有部门合作';
+              this.business.departmentCoop.departments.main.name = rep.data.data.cooperationDepartment.mainDepartment;
               this.business.departmentCoop.departments.main.percentage = rep.data.data.cooperationDepartment.mainRate;
               this.business.departmentCoop.departments.coop = [];
               for (let i=0; i<rep.data.data.cooperationDepartment.otherArray.length; i++) {
@@ -515,6 +521,7 @@ export default {
 
             this.business.projectApproverArray = rep.data.data.projectApproverArray;
 
+            this.business.schdules = [];
             for (let i = 0; i < rep.data.data.projectSchduleArray.length; i++) {
               let obj = {
                 name: rep.data.data.projectSchduleArray[i].name,

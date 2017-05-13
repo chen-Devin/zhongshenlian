@@ -63,8 +63,35 @@ const router = new VueRouter({
             component: businessCompleteList
         },
         {
-            path: '/business-complete-detail',
-            component: businessCompleteDetail
+            path: '/business-complete-detail-:id',
+            component: businessCompleteDetail,
+            redirect: '/business-complete-detail-:id/business-profile',
+            children: [
+                {
+                    path: 'business-profile',
+                    component: businessProfile
+                },
+                {
+                    path: 'business-conduct',
+                    component: businessConduct
+                },
+                {
+                    path: 'billing-infor',
+                    component: billingInfor
+                },
+                {
+                    path: 'billing-infor-detail-:billId',
+                    component: billingInforDetail
+                },
+                {
+                    path: 'business-report',
+                    component: businessReport
+                },
+                {
+                    path: 'operat-history',
+                    component: operatHistory
+                }
+            ]
         },
         {
             path: '/rule-regulation',

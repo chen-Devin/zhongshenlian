@@ -193,7 +193,7 @@
         <div class="row form-group">
           <div class="col-sm-6">
             <p class="form-control-static">
-              主要部门
+              主要部门：{{business.departmentCoop.departments.main.name}}
             </p>
           </div>
           <div class="col-sm-5">
@@ -432,7 +432,7 @@ export default {
       this.paths.push({ name: '业务详情', url: `/business-handle-detail-office-${this.$route.params.id}/business-profile`, present: false });
       this.paths.push({ name: '业务概况', url: `/business-handle-detail-office-${this.$route.params.id}/business-profile`, present: true });
     } else if (this.user.department === '财务部') {
-      this.paths.push({ name: '代开发票', url: '/business-handle-list-financial', present: false });
+      this.paths.push({ name: '待开发票', url: '/business-handle-list-financial', present: false });
       this.paths.push({ name: '业务详情', url: `/business-handle-detail-financial-${this.$route.params.id}/business-profile`, present: false });
       this.paths.push({ name: '业务概况', url: `/business-handle-detail-financial-${this.$route.params.id}/business-profile`, present: true });
     } else if (this.user.department === '档案部') {
@@ -504,9 +504,12 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import '../../scss/variables.scss';
+
 .normal-wrap {
   img.QRCode {
     width: 150px;
+    background-color: $origin-color;
   }
 }
 </style>

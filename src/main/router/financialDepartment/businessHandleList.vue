@@ -10,20 +10,8 @@
                      :to="businessRoute(BUSINESS)"
                      v-for="(BUSINESS, index) in businesses"
                      :key="index">
-          <span class="label label-warning"
-                v-if="BUSINESS.projectStatus<130">未复审</span>
-          <span class="label label-info"
-                v-else-if="BUSINESS.projectStatus===130">待复审</span>
-          <span class="label label-danger"
-                v-else-if="BUSINESS.projectStatus===131">未通过</span>
-          <span class="label label-success"
-                v-else-if="BUSINESS.projectStatus===140">已通过</span>
-          <span class="label label-primary"
-                v-else-if="BUSINESS.projectStatus===150">已上传二维码</span>
-          <span class="label label-default"
-                v-else-if="BUSINESS.projectStatus===180">已完成</span>
           <span class="title">{{BUSINESS.businessName}}</span>
-          <span class="date pull-right">{{BUSINESS.finishTime}}</span>
+          <span class="date pull-right">{{BUSINESS.finishTime.substring(0,10)}}</span>
         </router-link>
         <pager :pageCount="page.total"
                :currentPage="page.current"
@@ -45,7 +33,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '代开发票', url: '/business-handle-list-financial', present: true }
+        { name: '待开发票', url: '/business-handle-list-financial', present: true }
       ],
       businesses: [],
       page: {

@@ -6,7 +6,8 @@
         编辑制度
         <div class="pull-right">
           <button type="button" class="btn btn-primary" @click="saveEdit()">保存</button>
-          <button type="button" class="btn btn-default" @click="canceled()">取消</button>
+          <button type="button" class="btn btn-default" @click="cancel()">取消</button>
+          <button type="button" class="btn btn-danger" @click="del()">删除</button>
         </div>
       </h3>
       <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
@@ -31,6 +32,10 @@
           </div>
         </div>
       </form>
+      <rule-del-modal v-if="showDelModal"
+                      :initalRule="editRule"
+                      @deleted="deleted"
+                      @canceled="delCanceled"></rule-del-modal>
     </card>
   </div>
 </template>
@@ -43,6 +48,7 @@ import { Message } from 'element-ui';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
+import ruleDelModal from './component/ruleDelModal.vue';
 
 Vue.prototype.$message = Message;
 
@@ -59,7 +65,8 @@ export default {
         id: this.$route.params.id,
         title: '',
         content: ''
-      }
+      },
+      showDelModal: false
     };
   },
   created() {
@@ -123,13 +130,24 @@ export default {
         });
       }
     },
-    canceled() {
+    cancel() {
       this.$router.push('/rule-regulation-detail-' + this.editRule.id);
+    },
+    del() {
+      this.showDelModal = true;
+    },
+    deleted() {
+      this.showDelModal = false;
+      this.$router.push({ path: '/rule-regulation' });
+    },
+    delCanceled() {
+      this.showDelModal = false;
     }
   },
   components: {
     crumbs,
-    card
+    card,
+    ruleDelModal
   }
 }
 </script>

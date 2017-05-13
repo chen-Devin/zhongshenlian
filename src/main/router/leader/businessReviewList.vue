@@ -21,7 +21,7 @@
           <span class="label label-primary"
                 v-else-if="BUSINESS.projectStatus===70">待发合同编号</span>
           <span class="title">{{BUSINESS.businessName}}</span>
-          <span class="date pull-right">{{BUSINESS.finishTime}}</span>
+          <span class="date pull-right">{{BUSINESS.finishTime.substring(0,10)}}</span>
         </router-link>
         <pager :pageCount="page.total"
                :currentPage="page.current"

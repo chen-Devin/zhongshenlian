@@ -252,7 +252,7 @@
       <div class="col-sm-9">
         <div class="row form-group">
           <div class="col-sm-6">
-            <p class="form-control-static">主要部门</p>
+            <p class="form-control-static">主要部门：{{business.departmentCoop.departments.main.name}}</p>
           </div>
           <div class="col-sm-5">
             <div class="input-group">
@@ -508,6 +508,9 @@ export default {
         for (let i = 0; i < TYPE.words.length; i++) {
           TYPE.words[i].state = false;
         }
+        if (TYPE.name === '会计所') {
+          this.business.auditTime.exist = false;
+        }
       }
     },
     reportTypeChan(TYPE, WORD) {
@@ -685,6 +688,7 @@ export default {
                   cooperationDepartment: (() => {
                     let out = {};
                     if (this.business.departmentCoop.name === '有部门合作') {
+                      out.mainDepartment = this.business.departmentCoop.departments.main.name;
                       out.mainRate = this.business.departmentCoop.departments.main.percentage;
                       out.otherArray = [];
                       for (let i = 0; i < this.business.departmentCoop.departments.coop.length; i++) {
@@ -830,6 +834,7 @@ export default {
                     cooperationDepartment: (() => {
                       let out = {};
                       if (this.business.departmentCoop.name === '有部门合作') {
+                        out.mainDepartment = this.business.departmentCoop.departments.main.name;
                         out.mainRate = this.business.departmentCoop.departments.main.percentage;
                         out.otherArray = [];
                         for (let i = 0; i < this.business.departmentCoop.departments.coop.length; i++) {

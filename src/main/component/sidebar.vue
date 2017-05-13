@@ -57,7 +57,7 @@ export default {
           ];
         } else if (this.user.department === '财务部') {
           routes = [
-            {name: '代开发票', link: '/business-handle-list-financial'}
+            {name: '待开发票', link: '/business-handle-list-financial'}
           ];
         } else if (this.user.department === '市场部') {
           routes = [

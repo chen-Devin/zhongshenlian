@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 176:
+/***/ 177:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10,15 +10,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _comHeader = __webpack_require__(37);
+var _comHeader = __webpack_require__(36);
 
 var _comHeader2 = _interopRequireDefault(_comHeader);
 
-var _comFooter = __webpack_require__(36);
+var _comFooter = __webpack_require__(35);
 
 var _comFooter2 = _interopRequireDefault(_comFooter);
 
-var _index = __webpack_require__(355);
+var _index = __webpack_require__(358);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -66,7 +66,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 177:
+/***/ 178:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -129,7 +129,7 @@ exports.default = {
 
   computed: {
     userHead: function userHead() {
-      return this.user.wechatHeadImg || __webpack_require__(34);
+      return this.user.wechatHeadImg || __webpack_require__(33);
     }
   },
   methods: {
@@ -365,7 +365,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 181:
+/***/ 182:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -379,9 +379,9 @@ var _App = __webpack_require__(72);
 
 var _App2 = _interopRequireDefault(_App);
 
-__webpack_require__(20);
+__webpack_require__(19);
 
-__webpack_require__(24);
+__webpack_require__(23);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -395,7 +395,7 @@ var app = new _vue2.default({
 
 /***/ }),
 
-/***/ 218:
+/***/ 219:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(true);
@@ -410,7 +410,7 @@ exports.push([module.i, "\n@charset \"UTF-8\";\n/*\r\n主色调\r\n@property 自
 
 /***/ }),
 
-/***/ 226:
+/***/ 227:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(true);
@@ -425,14 +425,14 @@ exports.push([module.i, "", "", {"version":3,"sources":[],"names":[],"mappings":
 
 /***/ }),
 
-/***/ 24:
+/***/ 23:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 28:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -456,7 +456,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 29:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -489,7 +489,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 30:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(true);
@@ -504,7 +504,7 @@ exports.push([module.i, "\nfooter[data-v-032a2e43] {\n  display: flex;\n  flex-d
 
 /***/ }),
 
-/***/ 31:
+/***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(true);
@@ -519,25 +519,64 @@ exports.push([module.i, "\n.navbar[data-v-245c9235] {\n  background-color: rgba(
 
 /***/ }),
 
-/***/ 34:
+/***/ 33:
 /***/ (function(module, exports) {
 
 module.exports = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAD9APkDASIAAhEBAxEB/8QAHAABAAIDAQEBAAAAAAAAAAAAAAEGAgMHBAUI/8QAQRAAAgEDAQQFCAgEBgMBAAAAAAECAwQRBQYSITEHQVFhcRMUIoGRobHBJDI0QlJyc9EIFSNiJTNDouHwgpKywv/EABoBAQADAQEBAAAAAAAAAAAAAAADBAUBAgb/xAAuEQEAAQMDAwMCBQUBAAAAAAAAAQIDEQQhQRITMTI08DNhFFFSYrEFFSIjQnH/2gAMAwEAAhEDEQA/AOkZGSAbzHTkZIAE5GSABORkgATkZIAE5GSABORkgATkvJRS9FbUcJ7HIACqsAAAAAAAAAAAAAAAABaCrloIrvCS3y46CAbLLSCABIIAEggASCABIIAEggASXrJRC9FXU8J7HKcjJAKqwnIyQAJyMkACcjJAAnIyQAJyMkACcjJAAnJaCrFpIrvCW1y41kZIBsstORkgATkZIAE5GSABORkgATk3WltXu6ypW1OVSo+qKPpbP6DX1WflJN0rVPjPHGXci9N6bs/p0pzlStbaP1pyfGT+LZWu6iKJ6ad5T27E1x1TtCuadsbOSUtQuNxfgpcX7Xw+J9612d0u3xi2VSXbUbl7uRRte6S5ylKloluox5eXrrLfhHq9fsKVqGuanqUm72+r1U/uueI/+q4HmnT6i7vXOHqb1m3tTGXdpT0q1e5J2VFr7rcImynd6fXajTuLWo31RnFn53RJ6/t37nPxv7X6JqWVvPnTUX/bwPHX0trjRnnul+5xLT9Y1HTmnZXteil92M3u+zkXPQ+ketTlGnrNBVYcvLUViS8Y8n6sENeiu0b0zlJTqbdW1UYWqrSnSlu1IuL7zA+1ZXllrFkq1rVp16Mutc0+/rTPBe2crd70cyp9vZ4kEV74naU00bZjw8gAPTxgAAMAABgAAMAABgLSVYtJFd4S2+XGQRkZNplJBGRkCQRkZAkEZGQJPr7N6RLVbzE01bU+NSS6+5d7PlUacq1aFKmsznJRiu1s6bZ0rbQtGflZqFKjB1KtR9bxlsram9NunFPmVixbiucz4hq1/WbHZnSVWrJKMVuUaMODm+xfNnENodfvtevXXvanop/06UfqU12JfMx2r1+ttDq9S6q5jRXo0aefqQ/d82fITLGl0kWo6qvVKLUaibk4jw3pmaZoUjNSLas3pmSZoUjNSOYdbcjJrTJyB9PRNZvNFvFcWNVxf3oPjGa7GjtGzWvWu0On+WopRqR9GrRk8uD+afUzgmT6Oz2s19E1SleW7ylwqQzwnHrRU1Wli9GY9SxYvzbnE+HZ7+2dvUzH/Lly7u48mT7NtXt9V02nXoS3qFeClGXZ/wAo+PUg4TlGXNPDMqic7T5aFcY3hGRkA9vBkZAAZGQAGRkABktRVS1EN7hLa5cXBANvDKSCAMCQQBgSCAMCybD2iranO4ksxoRyvzPgvdk8vTJrTt9PttKoyxK5flKuPwJ8F63/APJY9h6Pk9IlVfOrUb9S4fuch6Sr53u2WoPOYUZKhFdm6sP35Klmnu6qZnxSs3J7enxHKvKRmpHnUjJSNjDOehSM1I8ykZqRzDuXoUjJSPOpGSkcw69CkZbx51IyUjmBu3hk1bw3jmB1Hoj1dyhdaVVlnc/rUs9mcSXtw/Wy56rTxVjUX3lh+JxbYm+djtVp1VPEZVVSl4S9H5ncdSjvWzf4WmY2so7d7MctPTVddrE8PkgAjewAAAAAAAAtRVS1EF7hLa5cWBANtlJBAAkEACQQAOlbMpQ0K0S/C37W2fnjXqrq65qNSTy53NST9cmfoPZap5TQrXHUnF+ps/Pm01J220eqUZc4XNRereeCtoNrtz5ysar6dDwqRkpGnJKkauVBuUjJSNCkSpHcj0KZkpnnUjJSA9CmZKZ5lIlSGHHp3yd486kSpHMO5e2zqund0Jx5xqRkvUz9HXXG3qflPzfpdN3Gp2lGPF1K0IJeMkj9HXUsW9TwwZP9T9VHz8mhofTU+SACplOAAZAADIAAZAtRVS1EN3hLa5cVBGRk22SkEZGQJBGRkCQRkZAuuw9xvWNeg3xpz3l4Nf8ADOWdLWnuy2uq1lHFO7hGtHszjdfvWfWXXZe9VpqsFN4p1V5OXdnk/aezpU0N6ts87ihByurJupFLnKH3l7k/UUqauzqcz4q+fyt47tjHMOF5CZANdQZpkpmKJR1xmjJMwRkjrjLJOTElHROScmJKAtfRrYO/2ttHjNO3zXn3bvL/AHNHbb+eKKj2sp3RTor0/RZX1eGLi8xKOeapr6vt4v2FovKm/VwuUeBg6u53b+3iGrp6O3a38y0ZGSARvScjJAAnIyQAJyMkACclrKmWwhvcJbXLiYANtkgAAAAAAABf9ndTWoWSjUlm4prdmn195QD06feVbG6hXov0o811SXYyDUWe7TjlLZu9urPCt9JGyctEv5XtlTf8tryysf6Un93w7PYUrB+lKNaz1zTpwnCFWjUju1aU+OO5/ucl2z2CutJnO60uM7mwzlxSzOku9da7/ad0urz/AK7u0w939P8A92/CjIyRGDJI0VIRkiEZI64IklIlI6IwWzYHZeeu36rXEWtOoSzUk/8AUf4F8+427IbEXesThcXqnbWHPLWJ1F/auzv+J2C1t7bTbKnb2tKNKhTWIwiZ2s1kUR27fn+FzT6aav8AOvw3VZxo0koJLhiKXJHgMqs3Ull+wwMyinphdqq6pAAe3kAAAAAAAALYVMthBe4S2uXEgAbbJAAAAAAAAAAB6LK7rWVdVbebjJc+xrsZctJ1+3vVGFZqjX/DJ8H4P5FZ0/Q7y9SkoeSpP79ThnwRYbPZqzopOu515d7wvYijqarM+qd/st6eLsePH3eXX9iNI1iUqrpO1uXxdWhhZfeuT+PeUfUejPVKDbsbi3uodSb8nJ+p8PedQvNR07SKEVeXdtaU4r0VVqKPsyaKm0GnxScazqZ/DBkNnUainajeE12zZq9W0uOVdjNoKLalplV4/BKMvgyaOxuv1WlHTKyz+Jxj8WdfjtHYy5+Vj4wJltFYrk6svCJa/Gaj9H8oPw9n9TnOndG2q12neVre1h18d+XsXD3l20HYfSdKlGrOm7u4XHfr4aT7o8vifUpa7YVOdVwfZKLN9hqlhqUG7G8t7ldfkqik14pcire1OoqjFW0J7VmzT6d5empWjDguL7EeSc5TeZM9MqEXyyjRUpTh1ZXaiG3NMeElfU1gZGSZGAZGQAGRkABkZAAZGQBbCp5LYQXuEtrlxEEZGTbZKQRkZAkEZGQJBGT26Vp9XUbjydLhBcZzfKKOVVRTGZdiJqnENNna1rysqVvBzm/Yu9lx0nQKFmozuEq1fta9GPgvmelKw0HTKlWrUhQt6S3qlWb5977X3ew49tx0jXWrOdno0qlpYcpVE8VKq/8Ayu7n29hS6ruqnpt7U/mt9NvTx1V7y6HtV0gaRoDnRU3e3seHkaLWIv8AulyXvfcco2g6Rtf1ZyhRuPMLd8oW3oyx3z5+zBUMEYL1nRWrXGZ+6nd1dy5ziGNWU6tSU6s5TnJ5cpPLfrOyaTcRvNMta8Gmp00/B44r2nHMFl2R2i/lUnbXeXaTeU1xdN9vgWLlOY2Q0VYnd0oI129elc0IVqE41KU1mMo8mTWrU6FGVWtONOnBZlKTwkVVgu68LS0rXFRpQpwcn6jjtOc4VFUhKUZp5UovDTLJtZtJHUV5pZNq1TzKb4eUfV6isxLFunEbq9yrM7LjoPSBruluMalx57QX+nc+k/VLn8TqOzG3ula44UZzdneS4eSrPhJ/2y5P3PuOAxM0QXtHbu8YlNa1dy3zmH6jqUYy4rgzyyi4vEkcj2L6QLrSXC11VzurHkpN5qUl3PrXc/V2HYbO6tdTs6dxaVYVqFRZjOL/AO8e4yrluvTzirw0bdyi/GafLSDOpBwlh8upmB2JzvBMYAAdAAAAAALaVItpBe4S2uXDwQDbZKQQAJBAA9NhaVL26hQpfWk+L6ku0vP0LQNJqVa1SNG2ox36lSXX3+Pd6jTs5pqsLPfqL6RVWZ5+6uw450p7X/zzUXYWNT/DbaWMp8Ks1wcvBcl7esozE6u50U+mFyMaa311eZfO252vutp75pOVLT6T/o0M/wC6Xa/h8auYpk5Neiim3T00+GXXXNc9VXlJDGRk9PKGIQlUqRhBZlJ4S7WQ2fZ2PtPPNoLZNZhSflZf+PL34EziMuxGZw6dp9tGzsaFvHlSgoeOFzJv7eN3ZV7eXKrBw8MrmbwU/utY4cVlGVOcoTWJReGuxmUWfV2vtfNNfuUliFV+Vj6+fvyfIiy3E5jKrMYnDfFmaNMWbIsONiLJsZtTc7OXyacqtjUf9ajnn/dHsfxKymZZPFdFNdPTV4eqK5onqp8v03ZXdtqdjSubSoqtCrHejJf95mucXCTTON9G21T0TUPM7yf+HXMsNt8KU+qXh1P29R22tBThlc1yMO7anT19M+JbNu5F+jqjy8mRkA6GRkABkZAAZLcVEtxBe4S2uXDcjIBtskyMgAMn2tlrJXeoeUms0qPpPPW+pf8Aew+KXzZm1820qm2sTq/1H6+XuwVtVc6Le3mU+no66/8AxW+lvaR6LoHmltPdvb7ME0+MKf3pe/C8X2HAkyw9IeuPXdq7y4jLet6UvIUezcjwyvF5frK3kt6Ox2rcRzPlW1N3u3JniGzJO8a8jJaV2zeI3jDJDYGeS99G1rild3klxk1Si/Di/ivYUDJ1zZe08y0G0ptYm4eUl4y4/PBHdnEYSW43fYyN4wyMlfCfKndJFrmlaXkV9VulJ+PFfB+0oykdV2otfPdBu6SWZqG/Hxjx+WDkqZYtbxhBcjfL0xkbIyPLGRsjI9o3pUjJM0RkZqRwbcnbuiraB6rorsriebuySjlvjKn91+rl7O04dk+9sPrL0TaW0uZSxQlLyVbs3JcH7OD9RW1dnu25jmPCxprvauRPD9A3EN2eVyZqPXXW9TfdxPHkxrc5hq1xiUgjIye3lIIyMgSW8p+S4EN7hLa5cLAyMm2ygDIyBttqTr3FKkuc5KPtZcNttR/kuyGpXVJ7k6dFwptdUpejH3tFf2Yp+V1qhnlDMvYv3wePp1u3R2XtbaLw69ys98Yxb+LiUr0dy/RbWrU9FqqtwzIyY5JybTKZZJyYZJAyyMmIyB7dGtPPtVtbbGVUqJS/LzfuydlXBYRzro5tPK6pWupL0aFPC/NL/hM6KV7s74TW42yAAiSHNYfFHG9YtXY6rdW2MKnUaj+Xmvdg7Ic66RrTyWqUblL0a9PD/NH/AIaJbU74R3I2yqyZnFmpMzTJ0LdGRmmaEzYmcG5MnJqTMsgfpHYfUf5rspp1zOW9UdLyc32yj6Lfrxn1nukt2TXYykdCV26uz95bN5dG43l3KUV80y83CxVfefPV09F6qluU1ddqmpgCAdeUggASXEppciG9wmtcuFAjIybbKSCMjIFg2MjnU6r7KT+KKl/EBVf+B0k+H9aT/wBmPmW7Yt/T6/6XzRSv4gH9L0X8lX4xKdHvI+cLNXtp+cuT5JyYZGTXyzGeScmvJOTuTDPJOTXknIyYdR2CtfNtBjUksTuJup6uS+GfWWPKK5sdqtK/0mnSilCtbxVOUF2JYTXife3irV5nKxTGzblDKNW8N48u4bcorm3tr5zoMqsVmdvNVPVyfxz6j728fB2x1WlYaTVoySnWuIunGD7GsNvwPVPmMOVRs5jkyUjVknJaVsN6kZKR50zJSA9CkZKR51IzUgOt9BNV+W1mn1ONKXs3/wBzqN19deByfoI43mrvsp0175HV7t+mvAwdV7mfnDY0/wBCPnLUDHIyeHtkDHIyBkXMpWS6kN3hLa5cJABtMoAAFh2L+31/0vmikfxA/bNF/Tq/GJdtjPt9f9L5opH8QP2zRf06vxiVKPdx84WavbT85cmyRkgZNZmpyTkwyMjIzyTkwyMjI+ho+pVdLv6dzRbe7wlHqlHrR1mxvKV7aU7i3lvU6iyv2OLZLJsbrf8AL7rza4li1rPm/uS7fDtI7lOYzCSirGzpm8N407w3iumRfXlKytKlxcS3adNZf7HJtY1Krql/Uuaz+twjHqjHqR9TbLW/5hdebW8s2tF819+Xb4dhW8li3TiMyhrqzszyEzDJOSTKNsTJTNWTJM7kbEzJM1pkpncuYdc6BHm71n8lL4yOrXb9NeByboDf0rWfyUvjI6xefXXgYWr9zPzhr6b6EfOWrIyY5GSN7ZZGTHIyBlkuxR8l4IbvCW1y4QCAbTKSCABYdjPt9f8AS+aKR/EC/pmi/p1fjEu+xn2+v+l80Uf+IH7Xov6dX4xKlHu4+cLNXtp+cuSZABqM4AAdAAAAAHQNi9a87t1ZXMvpFJeg39+P7obaa15pbuytpfSKq9Nr7kf3ZQ7WvUtbinXoScakHvRaF1XqXVxUr15OVSb3pNnjo3y99e2GsAHt4BkACUyUzEHcuNiZkma0ZI64650BP6VrP5KXxkdYvH/Uj4HJegH7XrX5KXxkdZvf8yPgYeq9zPzhr6f6EfOWjIyRkZPD0nIyRkZAnJeiiZL2Q3eEtrl//9k="
 
 /***/ }),
 
-/***/ 355:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(476)
+__webpack_require__(41)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(177),
+  __webpack_require__(27),
   /* template */
-  __webpack_require__(389),
+  __webpack_require__(39),
+  /* scopeId */
+  "data-v-032a2e43",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\Users\\xiaoj\\Documents\\tzucpa\\src\\component\\comFooter.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] comFooter.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-032a2e43", Component.options)
+  } else {
+    hotAPI.reload("data-v-032a2e43", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 358:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(480)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(178),
+  /* template */
+  __webpack_require__(392),
   /* scopeId */
   "data-v-3f62ac20",
   /* cssModules */
@@ -578,45 +617,6 @@ var Component = __webpack_require__(1)(
   /* template */
   __webpack_require__(40),
   /* scopeId */
-  "data-v-032a2e43",
-  /* cssModules */
-  null
-)
-Component.options.__file = "C:\\Users\\xiaoj\\Documents\\tzucpa\\src\\component\\comFooter.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] comFooter.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-032a2e43", Component.options)
-  } else {
-    hotAPI.reload("data-v-032a2e43", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 37:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(43)
-
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(29),
-  /* template */
-  __webpack_require__(41),
-  /* scopeId */
   "data-v-245c9235",
   /* cssModules */
   null
@@ -643,7 +643,25 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 389:
+/***/ 39:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('footer', [_c('span', [_vm._v("©2016-2017")]), _vm._v(" "), _c('span', [_vm._v("天津中审联有限责任会计师事务所版权所有")]), _vm._v(" "), _c('span', [_vm._v("津ICP备12000891号-1")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-032a2e43", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 392:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -801,7 +819,43 @@ if (false) {
 
 /***/ }),
 
-/***/ 397:
+/***/ 40:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('header', [_c('nav', {
+    staticClass: "navbar navbar-default navbar-fixed-top"
+  }, [_c('div', {
+    staticClass: "container-fluid"
+  }, [_c('div', {
+    staticClass: "navbar-header"
+  }, [_c('a', {
+    staticClass: "navbar-brand",
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('img', {
+    attrs: {
+      "alt": "Brand",
+      "src": __webpack_require__(34)
+    }
+  })])]), _vm._v(" "), _c('h4', {
+    staticClass: "navbar-text brand-name"
+  }, [_vm._v("\n        天津中审联会计师管理系统\n      ")])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-245c9235", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 400:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -822,67 +876,13 @@ if (false) {
 
 /***/ }),
 
-/***/ 40:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('footer', [_c('span', [_vm._v("©2016-2017")]), _vm._v(" "), _c('span', [_vm._v("天津中审联有限责任会计师事务所版权所有")]), _vm._v(" "), _c('span', [_vm._v("津ICP备12000891号-1")])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-032a2e43", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ 41:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('header', [_c('nav', {
-    staticClass: "navbar navbar-default navbar-fixed-top"
-  }, [_c('div', {
-    staticClass: "container-fluid"
-  }, [_c('div', {
-    staticClass: "navbar-header"
-  }, [_c('a', {
-    staticClass: "navbar-brand",
-    attrs: {
-      "href": "#"
-    }
-  }, [_c('img', {
-    attrs: {
-      "alt": "Brand",
-      "src": __webpack_require__(35)
-    }
-  })])]), _vm._v(" "), _c('h4', {
-    staticClass: "navbar-text brand-name"
-  }, [_vm._v("\n        天津中审联会计师管理系统\n      ")])])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-245c9235", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(30);
+var content = __webpack_require__(29);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -903,13 +903,13 @@ if(false) {
 
 /***/ }),
 
-/***/ 43:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(31);
+var content = __webpack_require__(30);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -930,13 +930,13 @@ if(false) {
 
 /***/ }),
 
-/***/ 476:
+/***/ 480:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(218);
+var content = __webpack_require__(219);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -957,13 +957,13 @@ if(false) {
 
 /***/ }),
 
-/***/ 484:
+/***/ 488:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(226);
+var content = __webpack_require__(227);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -989,13 +989,13 @@ if(false) {
 
 
 /* styles */
-__webpack_require__(484)
+__webpack_require__(488)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(176),
+  __webpack_require__(177),
   /* template */
-  __webpack_require__(397),
+  __webpack_require__(400),
   /* scopeId */
   "data-v-4bd40f3e",
   /* cssModules */
@@ -1023,5 +1023,5 @@ module.exports = Component.exports
 
 /***/ })
 
-},[181]);
-//# sourceMappingURL=signUp.168c6ad1c65f53e540c2.js.map
+},[182]);
+//# sourceMappingURL=signUp.2db71a0e939ddcb42d84.js.map

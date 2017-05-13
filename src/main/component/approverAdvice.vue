@@ -58,7 +58,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '../../scss/_variables.scss';
 .approver-advice {
   padding: 0 50px;
   .approver-list {
@@ -67,6 +66,11 @@ export default {
       .label,
       .time {
         margin-left: 5px;
+      }
+      a {
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
   }

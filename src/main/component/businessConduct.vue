@@ -15,6 +15,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+import qs from 'qs';
+
 export default {
   name: 'businessConduct',
   data() {
@@ -47,7 +50,7 @@ export default {
       this.paths.push({ name: '业务详情', url: `/business-handle-detail-office-${this.$route.params.id}/business-conduct`, present: false });
       this.paths.push({ name: '业务开展', url: `/business-handle-detail-office-${this.$route.params.id}/business-conduct`, present: true });
     } else if (this.user.department === '财务部') {
-      this.paths.push({ name: '代开发票', url: '/business-handle-list-financial', present: false });
+      this.paths.push({ name: '待开发票', url: '/business-handle-list-financial', present: false });
       this.paths.push({ name: '业务详情', url: `/business-handle-detail-financial-${this.$route.params.id}/business-conduct`, present: false });
       this.paths.push({ name: '业务开展', url: `/business-handle-detail-financial-${this.$route.params.id}/business-conduct`, present: true });
     } else if (this.user.department === '档案部') {
@@ -117,6 +120,7 @@ export default {
                   cooperationDepartment: (() => {
                     let out = {};
                     if (this.business.departmentCoop.name === '有部门合作') {
+                      out.mainDepartment = this.business.departmentCoop.departments.main.name;
                       out.mainRate = this.business.departmentCoop.departments.main.percentage;
                       out.otherArray = [];
                       for (let i = 0; i < this.business.departmentCoop.departments.coop.length; i++) {

@@ -209,7 +209,7 @@ export default {
         departmentCoop: {
           name: '无部门合作',
           departments: {
-            main: { name: '主要部门', percentage: 0 },
+            main: { name: this.user.subDepartment, percentage: 0 },
             coop: [{ name: '', percentage: 0 }]
           },
         },

@@ -53,6 +53,6 @@ ul.nav {
   }
 }
 div.tab-content {
-  min-height: 400px;
+  min-height: 500px;
 }
 </style>

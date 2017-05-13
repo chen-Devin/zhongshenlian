@@ -19,6 +19,7 @@ var app = new Vue({
             name: '',
             jobNumber: '',
             department: '',
+            subDepartment: '',
             duties: '',
             authority: {},
             gender: '',
@@ -54,6 +55,7 @@ axios({
             app.user.name = rep.data.data.name;
             app.user.jobNumber = rep.data.data.jobNumber;
             app.user.department = rep.data.data.department;
+            app.user.subDepartment = rep.data.data.subDepartment;
             app.user.duties = rep.data.data.duties;
             for (let i = 0; i < rep.data.data.authority.length; i++) {
                 app.user.authority[rep.data.data.authority[i].name] = (rep.data.data.authority[i].authority === '0') ? false : true;

@@ -109,7 +109,7 @@ export default {
       this.paths.push({ name: '业务详情', url: `/business-handle-detail-office-${this.$route.params.id}/business-report`, present: false });
       this.paths.push({ name: '业务报告', url: `/business-handle-detail-office-${this.$route.params.id}/business-report`, present: true });
     } else if (this.user.department === '财务部') {
-      this.paths.push({ name: '代开发票', url: '/business-handle-list-financial', present: false });
+      this.paths.push({ name: '待开发票', url: '/business-handle-list-financial', present: false });
       this.paths.push({ name: '业务详情', url: `/business-handle-detail-financial-${this.$route.params.id}/business-report`, present: false });
       this.paths.push({ name: '业务报告', url: `/business-handle-detail-financial-${this.$route.params.id}/business-report`, present: true });
     } else if (this.user.department === '档案部') {
