@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <h3 class="main-title">
+  <div class="normal-wrap">
+    <h4 class="main-title">
       新增开票申请
       <div class="pull-right">
         <button class="btn btn-success" @click="sub()">提交</button>
         <button class="btn btn-danger" @click="del()">撤销</button>
       </div>
-    </h3>
+    </h4>
     <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
       <div class="form-group">
         <label class="col-sm-2 control-label">签订合同编号</label>

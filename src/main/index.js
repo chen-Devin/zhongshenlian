@@ -20,7 +20,7 @@ var app = new Vue({
             jobNumber: '',
             department: '',
             duties: '',
-            authority: [],
+            authority: {},
             gender: '',
             wechatName: '',
             wechatHeadImg: ''
@@ -55,7 +55,9 @@ axios({
             app.user.jobNumber = rep.data.data.jobNumber;
             app.user.department = rep.data.data.department;
             app.user.duties = rep.data.data.duties;
-            app.user.authority = rep.data.data.authority;
+            for (let i = 0; i < rep.data.data.authority.length; i++) {
+                app.user.authority[rep.data.data.authority[i].name] = (rep.data.data.authority[i].authority === '0') ? false : true;
+            }
             app.user.gender = rep.data.data.gender;
             app.user.wechatName = rep.data.data.wechatName;
             app.user.wechatHeadImg = rep.data.data.wechatHeadImg;

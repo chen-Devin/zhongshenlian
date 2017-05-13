@@ -1,13 +1,13 @@
 <template>
   <div class="normal-wrap">
-    <h3 class="main-title">
+    <h4 class="main-title">
       开票列表
       <router-link class="btn btn-primary pull-right"
                    to="billing-infor-editor"
                    v-if="addBillShow">
         新增开票申请
       </router-link>
-    </h3>
+    </h4>
     <div class="com-list list-group">
       <router-link class="list-group-item"
                    :to="billRoute(BILL)"
