@@ -36,7 +36,6 @@
            @change="pageChan"></pager>
     <customer-mod-modal v-if="showModModal"
                         :initalCustomer="modCustomer"
-                        :indClassify="indClassify"
                         @del="del"
                         @saved="saved"
                         @canceled="modCanceled"></customer-mod-modal>
@@ -46,7 +45,6 @@
                         @canceled="delCanceled"></customer-del-modal>
     <customer-add-modal v-if="showAddModal"
                         :user="user"
-                        :indClassify="indClassify"
                         @added="added"
                         @canceled="addCanceled"></customer-add-modal>
   </card>
@@ -72,7 +70,7 @@ export default {
       addCustomer: {}
     };
   },
-  props: ['customers', 'user', 'indClassify', 'page'],
+  props: ['customers', 'user', 'page'],
   methods: {
     pageChan(newPage) {
       this.$emit('pageChan', newPage);

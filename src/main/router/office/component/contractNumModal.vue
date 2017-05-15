@@ -14,7 +14,8 @@
                    :key="index">
               <input type="checkbox"
                      v-model="WORD.state"
-                     @change="reportTypeChan(TYPE, WORD)"> {{WORD.name}}
+                     @change="reportTypeChan(TYPE, WORD)"
+                     :disabled="!WORD.state"> {{WORD.name}}
             </label>
             <hr>
           </template>

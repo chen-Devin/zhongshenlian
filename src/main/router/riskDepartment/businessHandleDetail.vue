@@ -227,15 +227,7 @@ export default {
           name: ''
         },
         lastOffice: '',
-        getWay: [
-          {
-            name: '直接委托',
-            state: false
-          }, {
-            name: '中标委托',
-            state: false
-          },
-        ],
+        getWay: '直接委托',
         files: [],
         projectStatus: 0,
         contracts: [],

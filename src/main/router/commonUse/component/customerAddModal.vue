@@ -85,15 +85,15 @@
         </div>
       </div>
       <div class="form-group"
-           :class="{'has-error': !customer.registeredCapital.ver}">
-        <label class="col-sm-3 control-label">注册资本</label>
+           :class="{'has-error': !customer.assetSize.ver}">
+        <label class="col-sm-3 control-label">资产规模</label>
         <div class="col-sm-9">
           <div class="input-group">
             <input type="number"
                    class="form-control"
-                   placeholder="请输入注册资本"
-                   v-model.number="customer.registeredCapital.val">
-            <div class="input-group-addon">元</div>
+                   placeholder="请输入资产规模"
+                   v-model.number="customer.assetSize.val">
+            <div class="input-group-addon">万元</div>
           </div>
         </div>
       </div>
@@ -109,15 +109,15 @@
         </div>
       </div>
       <div class="form-group"
-           :class="{'has-error': !customer.assetSize.ver}">
-        <label class="col-sm-3 control-label">资产规模</label>
+           :class="{'has-error': !customer.registeredCapital.ver}">
+        <label class="col-sm-3 control-label">注册资本</label>
         <div class="col-sm-9">
           <div class="input-group">
             <input type="number"
                    class="form-control"
-                   placeholder="请输入资产规模"
-                   v-model.number="customer.assetSize.val">
-            <div class="input-group-addon">元</div>
+                   placeholder="请输入注册资本"
+                   v-model.number="customer.registeredCapital.val">
+            <div class="input-group-addon">万元</div>
           </div>
         </div>
       </div>
@@ -276,7 +276,7 @@ export default {
       }
     };
   },
-  props: ['user', 'indClassify'],
+  props: ['user'],
   methods: {
     save() {
       let reg = /^(1+\d{10})$/;

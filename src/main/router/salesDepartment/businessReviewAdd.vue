@@ -222,15 +222,7 @@ export default {
           name: ''
         },
         lastOffice: '',
-        getWay: [
-          {
-            name: '直接委托',
-            state: false
-          },{
-            name: '中标委托',
-            state: false
-          },
-        ],
+        getWay: '直接委托',
         files: [],
         projectStatus: 0,
         contracts: [],
@@ -390,7 +382,10 @@ export default {
     },
     saved(savedBusiness) {
       this.business = savedBusiness;
-      this.$message('暂存成功');
+      this.$message('暂存成功，将返回待审核业务列表');
+      setTimeout(() => {
+        this.$router.push({ path: '/business-review-list-sales' });
+      }, 1000);
     },
     del() {
       this.showDelModal = true;

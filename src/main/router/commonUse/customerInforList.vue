@@ -3,7 +3,6 @@
     <crumbs :paths="paths"></crumbs>
     <customer-infor :customers="customers"
                     :user="user"
-                    :indClassify="indClassify"
                     :page="page"
                     @pageChan="pageChan"></customer-infor>
   </div>
@@ -23,14 +22,6 @@ export default {
         { name: '客户信息', url: '/customer-infor-list', present: true }
       ],
       customers: [],
-      indClassify: [
-        '机构组织',
-        '农林牧渔',
-        '医疗卫生',
-        '医药卫生',
-        '建筑建材',
-        '冶金矿产'
-      ],
       page: {
         total: 0,
         current: 0

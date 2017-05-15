@@ -72,6 +72,12 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-2 control-label">项目取得方式</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.getWay}}</p>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-2 control-label">资产总额</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.institution.assetSize===''?'':`${business.institution.assetSize}元`}}</p>
@@ -242,19 +248,14 @@
         <p class="form-control-static">{{business.report.usage}}</p>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group"
+         v-if="business.auditTime.exist">
       <label class="col-sm-2 control-label">上次报告事务所</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.lastOffice}}</p>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">项目取得方式</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{getWayFormat}}</p>
-      </div>
-    </div>
-    <div class="form-group">
+    <div class="form-group" v-if="false">
       <label class="col-sm-2 control-label">相关附件</label>
       <ul class="col-sm-9 com-list attachment-list list-group">
         <li class="list-group-item"
@@ -271,21 +272,21 @@
       <label class="col-sm-2 control-label">正式合同</label>
       <el-upload class="col-sm-9"
                  :multiple="false"
-                 :action="upload.URL"
-                 :on-progress="uploadProgress"
-                 :on-success="uploadSuccess"
+                 :action="contractUpload.URL"
+                 :on-progress="contractUploadProgress"
+                 :on-success="contractUploadSuccess"
                  :show-file-list="false">
         <button class="btn btn-info btn-sm"
                 type="button"
-                :disabled="upload.progressShow">点击上传</button>
+                :disabled="contractUpload.progressShow">点击上传</button>
         <span slot="tip"
               class="text-info">&emsp;文件大小建议不超过3Mb</span>
       </el-upload>
       <div class="col-sm-offset-2 col-sm-9">
-        <div class="progress-wrap" v-show="upload.progressShow">
+        <div class="progress-wrap" v-show="contractUpload.progressShow">
           <div class="progress">
-            <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: upload.percentage}">
-              {{upload.percentage}}
+            <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: contractUpload.percentage}">
+              {{contractUpload.percentage}}
             </div>
           </div>
         </div>
@@ -299,7 +300,7 @@
                :href="FILE.url"
                target="_blank">{{FILE.name}}</a>
             <a class="text-danger pull-right"
-               @click="delFile(FILE)"><i class="fa fa-times"></i></a>
+               @click="contractDelFile(FILE)"><i class="fa fa-times"></i></a>
           </li>
         </ul>
       </div>
@@ -310,6 +311,57 @@
       <ul class="col-sm-9 com-list attachment-list list-group">
         <li class="list-group-item"
             v-for="FILE in business.contracts">
+          <span class="fa fa-file-text-o"></span>
+          <a class="text-primary title"
+             :href="FILE.url"
+             target="_blank">{{FILE.name}}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="form-group"
+         v-if="reportUploadShow">
+      <label class="col-sm-2 control-label">业务报告</label>
+      <el-upload class="col-sm-9"
+                 :multiple="false"
+                 :action="reportUpload.URL"
+                 :on-progress="reportUploadProgress"
+                 :on-success="reportUploadSuccess"
+                 :show-file-list="false">
+        <button class="btn btn-info btn-sm"
+                type="button"
+                :disabled="reportUpload.progressShow">点击上传</button>
+        <span slot="tip"
+              class="text-info">&emsp;文件大小建议不超过3Mb</span>
+      </el-upload>
+      <div class="col-sm-offset-2 col-sm-9">
+        <div class="progress-wrap" v-show="reportUpload.progressShow">
+          <div class="progress">
+            <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: reportUpload.percentage}">
+              {{reportUpload.percentage}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-offset-2 col-sm-9">
+        <ul class="com-list attachment-list list-group">
+          <li class="list-group-item"
+              v-for="FILE in business.reports">
+            <span class="fa fa-file-text-o"></span>
+            <a class="text-primary title"
+               :href="FILE.url"
+               target="_blank">{{FILE.name}}</a>
+            <a class="text-danger pull-right"
+               @click="reportDelFile(FILE)"><i class="fa fa-times"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="form-group"
+         v-if="reportFileShow">
+      <label class="col-sm-2 control-label">业务报告</label>
+      <ul class="col-sm-9 com-list attachment-list list-group">
+        <li class="list-group-item"
+            v-for="FILE in business.reports">
           <span class="fa fa-file-text-o"></span>
           <a class="text-primary title"
              :href="FILE.url"
@@ -336,11 +388,16 @@ export default {
     return {
       paths: [],
       business: this.initBusiness,
-      upload: {
+      contractUpload: {
         URL: '',
         progressShow: false,
         percentage: '0%'
-      }
+      },
+      reportUpload: {
+        URL: '',
+        progressShow: false,
+        percentage: '0%'
+      },
     };
   },
   computed: {
@@ -349,15 +406,6 @@ export default {
     },
     departmentCoopChan() {
       return (this.business.departmentCoop.name === '有部门合作') ? true : false;
-    },
-    getWayFormat() {
-      let out = '';
-      for (let i = 0; i < this.business.getWay.length; i++) {
-        if (this.business.getWay[i].state) {
-          out += this.business.getWay[i].name + ' ';
-        }
-      }
-      return out;
     },
     reportFormat() {
       let out = '';
@@ -398,6 +446,12 @@ export default {
         }
       }
     },
+    reportUploadShow() {
+      return (this.user.department === '业务部' && this.business.projectStatus >= 80) ? true : false;
+    },
+    reportFileShow() {
+      return (this.user.department !== '业务部' && this.business.projectStatus >= 80) ? true : false;
+    },
     contractNumShow() {
       return (this.business.projectStatus >= 80) ? true : false;
     },
@@ -413,7 +467,15 @@ export default {
       id: this.business.id,
       type: 'electronicContract'
     };
-    this.upload.URL = '/fileUpload?data=' + JSON.stringify(data);
+    this.contractUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
+
+    data = {
+      command: 'handlerBusiness',
+      platform: 'web',
+      id: this.business.id,
+      type: 'projectReport'
+    };
+    this.reportUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
 
     if (this.user.department === '业务部') {
       this.paths.push({ name: '待处理业务', url: '/business-handle-list-sales', present: false });
@@ -442,19 +504,13 @@ export default {
     }
     this.$emit('pathsChan', this.paths);
 
-    /*
-    TODO
-    */
-    // bus.$on('projectStatusUpdate', (projectStatus) => {
-    //   this.business.projectStatus = projectStatus;
-    // });
   },
   methods: {
-    uploadProgress(event, file, fileList) {
-      this.upload.progressShow = true;
-      this.upload.percentage = parseInt(file.percentage)+'%';
+    contractUploadProgress(event, file, fileList) {
+      this.contractUpload.progressShow = true;
+      this.contractUpload.percentage = parseInt(file.percentage)+'%';
     },
-    uploadSuccess(responseData, file, fileList) {
+    contractUploadSuccess(responseData, file, fileList) {
       if (responseData.statusCode === '10001') {
         let obj = {
           id: responseData.data.id,
@@ -464,12 +520,12 @@ export default {
         this.business.contracts.push(obj);
         this.$emit('uploaded', this.business);
         setTimeout(() => {
-          this.upload.percentage = '0%';
-          this.upload.progressShow = false;
+          this.contractUpload.percentage = '0%';
+          this.contractUpload.progressShow = false;
         }, 500);
       }
     },
-    delFile(FILE) {
+    contractDelFile(FILE) {
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
         method: 'post',
@@ -490,6 +546,55 @@ export default {
           for (let i = 0; i < this.business.contracts.length; i++) {
             if (this.business.contracts[i].id === FILE.id) {
               this.business.contracts.splice(i, 1);
+              break;
+            }
+          }
+          this.$emit('deletedFile', this.business);
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
+    },
+    reportUploadProgress(event, file, fileList) {
+      this.reportUpload.progressShow = true;
+      this.reportUpload.percentage = parseInt(file.percentage)+'%';
+    },
+    reportUploadSuccess(responseData, file, fileList) {
+      if (responseData.statusCode === '10001') {
+        let obj = {
+          id: responseData.data.id,
+          name: file.name,
+          url: responseData.data.path
+        };
+        this.business.reports.push(obj);
+        this.$emit('uploaded', this.business);
+        setTimeout(() => {
+          this.reportUpload.percentage = '0%';
+          this.reportUpload.progressShow = false;
+        }, 500);
+      }
+    },
+    reportDelFile(FILE) {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'post',
+        url: '/service',
+        params: {
+          data: (() => {
+            let obj = {
+              command: 'delFile',
+              platform: 'web',
+              delFileId: FILE.id,
+              type: 'projectReport'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          for (let i = 0; i < this.business.reports.length; i++) {
+            if (this.business.reports[i].id === FILE.id) {
+              this.business.reports.splice(i, 1);
               break;
             }
           }

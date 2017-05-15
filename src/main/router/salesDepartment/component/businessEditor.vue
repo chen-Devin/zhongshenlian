@@ -73,6 +73,14 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-2 control-label">项目取得方式</label>
+      <div class="col-sm-9">
+        <label class="radio-inline" v-for="(WAY, index) in getWay" :key="index">
+          <input type="radio" name="gainingMethod" v-model="business.getWay" :value="WAY" :disabled="!editable"> {{WAY}}
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-2 control-label">资产总额</label>
       <div class="col-sm-9">
         <div class="input-group">
@@ -328,21 +336,13 @@
         <input type="text" class="form-control" placeholder="请输入报告用途" v-model="business.report.usage" :disabled="!editable">
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" v-if="business.auditTime.exist">
       <label class="col-sm-2 control-label">上次报告事务所</label>
       <div class="col-sm-9">
         <input type="text" class="form-control" placeholder="请输入上次报告事务所" v-model="business.lastOffice" :disabled="!editable">
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">项目取得方式</label>
-      <div class="col-sm-9">
-        <label class="checkbox-inline" v-for="(WAY, index) in business.getWay" :key="index">
-          <input type="checkbox" name="gainingMethod" v-model="WAY.state" :disabled="!editable"> {{WAY.name}}
-        </label>
-      </div>
-    </div>
-    <div class="form-group">
+    <div class="form-group" v-if="false">
       <label class="col-sm-2 control-label">相关附件</label>
       <el-upload class="col-sm-9"
                  :multiple="false"
@@ -387,6 +387,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
+import moment from 'moment';
 import { Upload } from 'element-ui';
 
 import bus from '../../../bus.js';
@@ -429,6 +430,10 @@ export default {
         '税审',
         '工程结算',
         '其他'
+      ],
+      getWay: [
+        '直接委托',
+        '中标委托'
       ]
     };
   },
@@ -758,7 +763,8 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.business.id = rep.data.data.id;
-            this.uploadURLGen();
+            /*暂时废止上传附件*/
+            // this.uploadURLGen();
             this.$emit('saved', this.business);
             resolve(rep);
           } else if (rep.data.statusCode === '10012') {
@@ -1045,6 +1051,39 @@ export default {
         return true;
       }
     },
+    departmentsNameCheck() {
+      if (this.business.departmentCoop.name === '有部门合作') {
+        let flag = true;
+        for (let i = 0; i < this.business.departmentCoop.departments.coop.length; i++) {
+          if(this.business.departmentCoop.departments.main.name === this.business.departmentCoop.departments.coop[i].name) {
+            flag = false;
+            break;
+          }
+        }
+        if (flag) {
+          return true;
+        } else {
+          this.$emit('refuseSub', '合作部门与主要部门不能是同一个，请检查');
+          return false;
+        }
+      } else {
+        return true;
+      }
+    },
+    auditTimeCheck() {
+      if (business.auditTime.exist) {
+        sta = mement(business.auditTime.start, 'YYYY-MM-DD');
+        end = mement(business.auditTime.end, 'YYYY-MM-DD');
+        if (sta.isAfter(new Date(), 'day') || end.isAfter(new Date(), 'day')) {
+          this.$emit('refuseSub', '审计时间不能超过今天，请检查');
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    }
   }
 };
 </script>

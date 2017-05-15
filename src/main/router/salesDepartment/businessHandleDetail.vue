@@ -216,15 +216,7 @@ export default {
           name: ''
         },
         lastOffice: '',
-        getWay: [
-          {
-            name: '直接委托',
-            state: false
-          }, {
-            name: '中标委托',
-            state: false
-          },
-        ],
+        getWay: '直接委托',
         files: [],
         projectStatus: 0,
         contracts: [],
@@ -250,7 +242,7 @@ export default {
   props: ['user'],
   computed: {
     submited() {
-      return (this.business.projectStatus < 130) ? false : true;
+      return (this.business.projectStatus < 130 || this.business.projectStatus === 131) ? false : true;
     },
     progress() {
       if (this.business.projectStatus < 20) {
