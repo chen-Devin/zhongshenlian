@@ -58,8 +58,8 @@ export default {
 
 <style lang="sass" scoped>
 .navbar {
-  background-color: rgba(255,255,255,0);
-  background: linear-gradient(165deg, rgba(31,107,169,1), rgba(84,173,217,1));
+  background-color: #1F6BA9;
+  // background: linear-gradient(165deg, rgba(31,107,169,1), rgba(84,173,217,1));
   border-color: rgba(255,255,255,0);
   box-shadow: 0 2px 4px -1px rgba(84,173,217,1);
   .navbar-brand {
