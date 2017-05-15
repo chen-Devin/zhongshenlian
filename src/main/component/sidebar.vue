@@ -26,8 +26,8 @@ export default {
           routes = [
             {name: '待审核业务', link: '/business-review-list-leader', icon: 'bid-info'},
             // {name: '待处理业务', link: '/business-handle-list-leader'},
-            {name: '客户信息', link: '/customer-infor-list', icon: 'bid-info'},
-            {name: '职员权限管理', link: '/staff-management-author', icon: 'bid-info'},
+            {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list'},
+            {name: '职员权限管理', link: '/staff-management-author', icon: 'staff-management-author'},
             {name: '职员资料管理', link: '/staff-management-infor', icon: 'bid-info'},
             {name: '业务分析', link: '/business-analysis', icon: 'bid-info'},
             {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
@@ -45,7 +45,7 @@ export default {
           routes = [
             {name: '待审核业务', link: '/business-review-list-sales', icon: 'bid-info'},
             {name: '待处理业务', link: '/business-handle-list-sales', icon: 'bid-info'},
-            {name: '客户信息', link: '/customer-infor-list', icon: 'bid-info'},
+            {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list'},
             {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
           ];
         } else if (this.user.department === '风险评估部') {
@@ -103,15 +103,23 @@ export default {
         border-radius: 0;
         padding: 15px 15px;
         padding-left: 100px;
-        &.bid-info:before {
+        &:before {
           content: '';
-          background: url('../../img/sidebar/bidInfo.png');
           position: relative;
           top: 17px;
           left: -30px;
           display: block;
           height: 14px;
           width: 14px;
+        }
+        &.bid-info:before {
+          background: url('../../img/sidebar/bidInfo.svg');
+        }
+        &.customer-infor-list:before {
+          background: url('../../img/sidebar/customer-infor-list.svg');
+        }
+        &.staff-management-author:before {
+          background: url('../../img/sidebar/staff-management-author.svg');
         }
       }
       &.active {
