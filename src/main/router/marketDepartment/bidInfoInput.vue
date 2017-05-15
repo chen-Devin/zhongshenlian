@@ -99,6 +99,28 @@ export default {
   },
   methods: {
     saveDraft(project) {
+      var departmentSort = [];
+      for (var i = 0; i < project.departmentType.length; i++) {
+        if(project.departmentType[i] === 'kjs') {
+            departmentSort.push('kjs');
+        }
+      }
+      for (var i = 0; i < project.departmentType.length; i++) {
+        if(project.departmentType[i] === 'pgs') {
+            departmentSort.push('pgs');
+        }
+      }
+      for (var i = 0; i < project.departmentType.length; i++) {
+        if(project.departmentType[i] === 'sws') {
+            departmentSort.push('sws');
+        }
+      }
+      for (var i = 0; i < project.departmentType.length; i++) {
+        if(project.departmentType[i] === 'zjs') {
+            departmentSort.push('zjs');
+        }
+      }
+      project.departmentType = departmentSort;
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
         method: 'post',
@@ -143,6 +165,28 @@ export default {
       this.$router.push('/bid-info-list');
     },
     submit(project) {
+      var departmentSort = [];
+      for (var i = 0; i < project.departmentType.length; i++) {
+        if(project.departmentType[i] === 'kjs') {
+            departmentSort.push('kjs');
+        }
+      }
+      for (var i = 0; i < project.departmentType.length; i++) {
+        if(project.departmentType[i] === 'pgs') {
+            departmentSort.push('pgs');
+        }
+      }
+      for (var i = 0; i < project.departmentType.length; i++) {
+        if(project.departmentType[i] === 'sws') {
+            departmentSort.push('sws');
+        }
+      }
+      for (var i = 0; i < project.departmentType.length; i++) {
+        if(project.departmentType[i] === 'zjs') {
+            departmentSort.push('zjs');
+        }
+      }
+      project.departmentType = departmentSort;
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
         method: 'post',

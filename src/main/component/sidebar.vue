@@ -6,7 +6,7 @@
                    :key="index"
                    tag="li"
                    active-class="active">
-        <a>{{ROU.name}}</a>
+        <a :class="ROU.icon">{{ROU.name}}</a>
       </router-link>
     </ul>
   </div>
@@ -24,60 +24,60 @@ export default {
       if (this.user.department) {
         if (this.user.department === '所长') {
           routes = [
-            {name: '待审核业务', link: '/business-review-list-leader'},
+            {name: '待审核业务', link: '/business-review-list-leader', icon: 'bid-info'},
             // {name: '待处理业务', link: '/business-handle-list-leader'},
-            {name: '客户信息', link: '/customer-infor-list'},
-            {name: '职员权限管理', link: '/staff-management-author'},
-            {name: '职员资料管理', link: '/staff-management-infor'},
-            {name: '业务分析', link: '/business-analysis'},
-            {name: '招投标信息看板', link: '/bid-info-list'}
+            {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list'},
+            {name: '职员权限管理', link: '/staff-management-author', icon: 'staff-management-author'},
+            {name: '职员资料管理', link: '/staff-management-infor', icon: 'bid-info'},
+            {name: '业务分析', link: '/business-analysis', icon: 'bid-info'},
+            {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
           ];
         } else if (this.user.department === '办公室') {
           if (this.user.authority['发合同编号']) {
-            routes.push({name: '待发合同编号', link: '/business-review-list-office'});
-            routes.push({name: '招投标信息看板', link: '/bid-info-list'});
+            routes.push({name: '待发合同编号', link: '/business-review-list-office', icon: 'bid-info'});
+            routes.push({name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'});
           }
           if (this.user.authority['装订业务报告']) {
-            routes.push({name: '待装订业务', link: '/business-handle-list-office'});
-            routes.push({name: '招投标信息看板', link: '/bid-info-list'});
+            routes.push({name: '待装订业务', link: '/business-handle-list-office', icon: 'bid-info'});
+            routes.push({name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'});
           }
         } else if (this.user.department === '业务部') {
           routes = [
-            {name: '待审核业务', link: '/business-review-list-sales'},
-            {name: '待处理业务', link: '/business-handle-list-sales'},
-            {name: '客户信息', link: '/customer-infor-list'},
-            {name: '招投标信息看板', link: '/bid-info-list'}
+            {name: '待审核业务', link: '/business-review-list-sales', icon: 'bid-info'},
+            {name: '待处理业务', link: '/business-handle-list-sales', icon: 'bid-info'},
+            {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list'},
+            {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
           ];
         } else if (this.user.department === '风险评估部') {
           if (this.user.authority['业务初审']) {
-            routes.push({name: '待审核业务', link: '/business-review-list-risk'});
-            routes.push({name: '招投标信息看板', link: '/bid-info-list'});
+            routes.push({name: '待审核业务', link: '/business-review-list-risk', icon: 'bid-info'});
+            routes.push({name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'});
           }
           if (this.user.authority['业务复审']) {
-            routes.push({name: '待复审业务', link: '/business-handle-list-risk'});
-            routes.push({name: '招投标信息看板', link: '/bid-info-list'});
+            routes.push({name: '待复审业务', link: '/business-handle-list-risk', icon: 'bid-info'});
+            routes.push({name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'});
           }
         } else if (this.user.department === '档案部') {
           routes = [
-            {name: '待处理业务', link: '/business-handle-list-archives'},
-            {name: '招投标信息看板', link: '/bid-info-list'}
+            {name: '待处理业务', link: '/business-handle-list-archives', icon: 'bid-info'},
+            {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
           ];
         } else if (this.user.department === '财务部') {
           routes = [
-            {name: '待开发票', link: '/business-handle-list-financial'},
-            {name: '招投标信息看板', link: '/bid-info-list'}
+            {name: '待开发票', link: '/business-handle-list-financial', icon: 'bid-info'},
+            {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
           ];
         } else if (this.user.department === '市场部') {
           routes = [
-            {name: '招投标信息', link: '/bid-info-list'},
-            {name: '草稿箱', link: '/bid-info-draft'}
+            {name: '招投标信息', link: '/bid-info-list', icon: 'bid-info'},
+            {name: '草稿箱', link: '/bid-info-draft', icon: 'bid-info'}
           ];
         }
         this.$router.push(routes[0].link);
         return routes.concat([
-          {name: '已完成业务', link: '/business-complete-list'},
+          {name: '已完成业务', link: '/business-complete-list', icon: 'bid-info'},
           // {name: '招投标信息看板', link: '/bid-info-list'},
-          {name: '规章制度', link: '/rule-regulation'}
+          {name: '规章制度', link: '/rule-regulation', icon: 'bid-info'}
         ]);
       } else {
         return routes;
@@ -94,15 +94,38 @@ export default {
 
 .side-bar {
   position: fixed;
-  padding-top: 20px;
+  background-color: #000;
+  height: 100%;
   .nav-pills {
     > li {
+      // height: 50px;
       > a {
         border-radius: 0;
+        padding: 15px 15px;
+        padding-left: 100px;
+        &:before {
+          content: '';
+          position: relative;
+          top: 17px;
+          left: -30px;
+          display: block;
+          height: 14px;
+          width: 14px;
+        }
+        &.bid-info:before {
+          background: url('../../img/sidebar/bidInfo.svg');
+        }
+        &.customer-infor-list:before {
+          background: url('../../img/sidebar/customer-infor-list.svg');
+        }
+        &.staff-management-author:before {
+          background: url('../../img/sidebar/staff-management-author.svg');
+        }
       }
       &.active {
         > a {
-          box-shadow: 1px 2px 4px rgba(84,173,217,1);
+          // box-shadow: 1px 2px 4px rgba(84,173,217,1);
+          background-color: #288ADA;
         }
       }
     }
