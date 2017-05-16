@@ -138,7 +138,14 @@
         <label class="col-sm-2 control-label">本次开票金额</label>
         <div class="col-sm-9">
           <div class="input-group">
-            <input type="number" class="form-control" placeholder="请输入本次开票金额" v-model.number="bill.amount">
+            <masked-input type="text"
+                          class="form-control"
+                          placeholder="请输入本次开票金额"
+                          v-model="bill.amount"
+                          :mask="currencyMask"
+                          :guide="false"
+                          placeholderChar="#">
+            </masked-input>
             <div class="input-group-addon">元</div>
           </div>
         </div>
@@ -246,9 +253,11 @@
 <script>
 import Vue from 'vue';
 import { Message } from 'element-ui';
+import maskedInput from 'vue-text-mask';
 
 import billSubModal from './billSubModal.vue';
 import billDelModal from './billDelModal.vue';
+import currencyMask from '../../../currencyMask.js';
 
 Vue.prototype.$message = Message;
 
@@ -270,8 +279,8 @@ export default {
           name: this.user.name,
           tele: this.user.telephone
         },
-        addUpAmount: 0,
-        amount: 0,
+        addUpAmount: '',
+        amount: '',
         billingUnit: '',
         type: '增值税普通发票',
         unit: {
@@ -326,6 +335,7 @@ export default {
     })();
   },
   methods: {
+    currencyMask,
     amountCheck() {
       if (this.bill.addUpAmount + this.bill.amount > parseInt(this.business.contractAmount)) {
         this.$message({
@@ -384,7 +394,8 @@ export default {
   },
   components: {
     billSubModal,
-    billDelModal
+    billDelModal,
+    maskedInput
   }
 };
 </script>
