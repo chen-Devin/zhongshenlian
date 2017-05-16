@@ -24,12 +24,12 @@ export default {
       if (this.user.department) {
         if (this.user.department === '所长') {
           routes = [
-            {name: '待审核业务', link: '/business-review-list-leader', icon: 'bid-info'},
+            {name: '待审核业务', link: '/business-review-list-leader', icon: 'business-review-list-leader'},
             // {name: '待处理业务', link: '/business-handle-list-leader'},
             {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list'},
             {name: '职员权限管理', link: '/staff-management-author', icon: 'staff-management-author'},
-            {name: '职员资料管理', link: '/staff-management-infor', icon: 'bid-info'},
-            {name: '业务分析', link: '/business-analysis', icon: 'bid-info'},
+            {name: '职员资料管理', link: '/staff-management-infor', icon: ''},
+            {name: '业务分析', link: '/business-analysis', icon: ''},
             {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
           ];
         } else if (this.user.department === '办公室') {
@@ -43,14 +43,14 @@ export default {
           }
         } else if (this.user.department === '业务部') {
           routes = [
-            {name: '待审核业务', link: '/business-review-list-sales', icon: 'bid-info'},
-            {name: '待处理业务', link: '/business-handle-list-sales', icon: 'bid-info'},
+            {name: '待审核业务', link: '/business-review-list-sales', icon: 'business-review-list-leader'},
+            {name: '待处理业务', link: '/business-handle-list-sales', icon: 'business-handle-list-sales'},
             {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list'},
             {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
           ];
         } else if (this.user.department === '风险评估部') {
           if (this.user.authority['业务初审']) {
-            routes.push({name: '待审核业务', link: '/business-review-list-risk', icon: 'bid-info'});
+            routes.push({name: '待审核业务', link: '/business-review-list-risk', icon: 'business-review-list-leader'});
             routes.push({name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'});
           }
           if (this.user.authority['业务复审']) {
@@ -59,7 +59,7 @@ export default {
           }
         } else if (this.user.department === '档案部') {
           routes = [
-            {name: '待处理业务', link: '/business-handle-list-archives', icon: 'bid-info'},
+            {name: '待处理业务', link: '/business-handle-list-archives', icon: 'business-handle-list-sales'},
             {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
           ];
         } else if (this.user.department === '财务部') {
@@ -70,14 +70,13 @@ export default {
         } else if (this.user.department === '市场部') {
           routes = [
             {name: '招投标信息', link: '/bid-info-list', icon: 'bid-info'},
-            {name: '草稿箱', link: '/bid-info-draft', icon: 'bid-info'}
+            {name: '草稿箱', link: '/bid-info-draft', icon: 'bid-info-draft'}
           ];
         }
         this.$router.push(routes[0].link);
         return routes.concat([
-          {name: '已完成业务', link: '/business-complete-list', icon: 'bid-info'},
-          // {name: '招投标信息看板', link: '/bid-info-list'},
-          {name: '规章制度', link: '/rule-regulation', icon: 'bid-info'}
+          {name: '已完成业务', link: '/business-complete-list', icon: 'business-complete-list'},
+          {name: '规章制度', link: '/rule-regulation', icon: 'rule-regulation'}
         ]);
       } else {
         return routes;
@@ -98,11 +97,48 @@ export default {
   height: 100%;
   .nav-pills {
     > li {
-      // height: 50px;
+      &.active {
+        > a {
+          background-color: #288ADA;
+          &.bid-info:before {
+            background: url('../../img/sidebar/bidInfoSelected.svg');
+            background-repeat: no-repeat;
+          }
+          &.customer-infor-list:before {
+            background: url('../../img/sidebar/customer-infor-listSelected.svg');
+            background-repeat: no-repeat;
+          }
+          &.staff-management-author:before {
+            background: url('../../img/sidebar/staff-management-authorSelected.svg');
+            background-repeat: no-repeat;
+          }
+          &.business-review-list-leader:before {
+            background: url('../../img/sidebar/business-review-list-leaderSelected.svg');
+            background-repeat: no-repeat;
+          }
+          &.business-complete-list:before {
+            background: url('../../img/sidebar/business-complete-listSelected.svg');
+            background-repeat: no-repeat;
+          }
+          &.rule-regulation:before {
+            background: url('../../img/sidebar/rule-regulationSelected.svg');
+            background-repeat: no-repeat;
+          }
+          &.bid-info-draft:before {
+            background: url('../../img/sidebar/bid-info-draftSelected.svg');
+            background-repeat: no-repeat;
+          }
+          &.business-handle-list-sales:before {
+            background: url('../../img/sidebar/business-handle-list-salesSelected.svg');
+            background-repeat: no-repeat;
+          }
+        }
+      }
       > a {
         border-radius: 0;
-        padding: 15px 15px;
+        padding: 1px 15px;
         padding-left: 100px;
+        padding-bottom: 15px;
         &:before {
           content: '';
           position: relative;
@@ -114,18 +150,35 @@ export default {
         }
         &.bid-info:before {
           background: url('../../img/sidebar/bidInfo.svg');
+          background-repeat: no-repeat;
         }
         &.customer-infor-list:before {
           background: url('../../img/sidebar/customer-infor-list.svg');
+          background-repeat: no-repeat;
         }
         &.staff-management-author:before {
           background: url('../../img/sidebar/staff-management-author.svg');
+          background-repeat: no-repeat;
         }
-      }
-      &.active {
-        > a {
-          // box-shadow: 1px 2px 4px rgba(84,173,217,1);
-          background-color: #288ADA;
+        &.business-review-list-leader:before {
+          background: url('../../img/sidebar/business-review-list-leader.svg');
+          background-repeat: no-repeat;
+        }
+        &.business-complete-list:before {
+          background: url('../../img/sidebar/business-complete-list.svg');
+          background-repeat: no-repeat;
+        }
+        &.rule-regulation:before {
+          background: url('../../img/sidebar/rule-regulation.svg');
+          background-repeat: no-repeat;
+        }
+        &.bid-info-draft:before {
+          background: url('../../img/sidebar/bid-info-draft.svg');
+          background-repeat: no-repeat;
+        }
+        &.business-handle-list-sales:before {
+          background: url('../../img/sidebar/business-handle-list-sales.svg');
+          background-repeat: no-repeat;
         }
       }
     }

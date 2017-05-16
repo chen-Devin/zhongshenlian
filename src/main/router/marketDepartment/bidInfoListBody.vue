@@ -86,11 +86,13 @@
         <button type="button" class="btn btn-primary" @click="reset()">重置</button>
       </div>
     </form>
-    <div class="row">
-      <p class="col-xs-12 check-wrap">
-        <button class="btn btn-primary type-btn f-r" @click="input()" v-if="inputBtn">录入</button>
-      </p>
-    </div>
+    <h3 class="main-title">
+      信息列表
+      <button class="btn btn-primary type-btn f-r" @click="input()" v-if="inputBtn">
+        <img class="input-icon" src="../../../img/market/input.svg">&nbsp
+        录入
+      </button>
+    </h3>
     <table class="table table-hover projectList">
       <thead>
         <tr>
@@ -476,5 +478,8 @@ input::-webkit-input-placeholder{text-align: center;}
 .typeWidth {
 	width: 48%;
 	padding-left: 25px;
+}
+.input-icon {
+  margin-top: -2px;
 }
 </style>
