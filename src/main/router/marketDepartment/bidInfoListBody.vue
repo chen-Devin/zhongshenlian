@@ -51,9 +51,9 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-6 row">
-          <label class="col-md-2 ta-l">项目状态</label>
-          <div class="check-box col-md-10">
+        <div class="col-md-4 ta-c">
+          <label class="ta-l">项目状态</label>
+          <div class="check-box search-checkbox">
             <label class="checkbox-inline">
               <input type="checkbox" name="filterState" value="3" v-model="filterState"> 已中标
             </label>
@@ -68,9 +68,9 @@
             </label>
           </div>
         </div>
-        <div class="col-md-6 row">
-          <label class="col-md-2 ta-l">所属类型</label>
-          <div class="check-box col-md-10">
+        <div class="col-md-4 ta-c">
+          <label class="ta-l">所属类型</label>
+          <div class="check-box search-checkbox">
             <label class="checkbox-inline">
               <input type="checkbox" name="officeList" value="kjs" v-model="officeList"> 会计所
             </label>
@@ -508,5 +508,10 @@ input::-webkit-input-placeholder{text-align: center;}
       margin-right: 30px;
     }
   }
+}
+.search-checkbox {
+  display: inline-block;
+  margin-left: 45px;
+  margin-top: 10px;
 }
 </style>
