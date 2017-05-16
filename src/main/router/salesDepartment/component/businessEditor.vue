@@ -794,7 +794,13 @@ export default {
       return promise;
     },
     sub() {
-      if (!this.basicFeeCheck()) {
+      if (!this.contractAmountCheck()) {
+        return false;
+      } else if (!this.auditTimeCheck()) {
+        return false;
+      } else if (!this.departmentsNameCheck()) {
+        return false;
+      } else if (!this.basicFeeCheck()) {
         return false;
       } else if (!this.benefitFeeCheck()) {
         return false;
@@ -1082,17 +1088,35 @@ export default {
         if (flag) {
           return true;
         } else {
-          this.$emit('refuseSub', '合作部门与主要部门不能是同一个，请检查');
+          this.$emit('refuseSub', '合作部门与主要部门不能是同一部门，请检查');
           return false;
         }
       } else {
         return true;
       }
     },
+    contractAmountCheck() {
+      if (this.business.contractAmount === '') {
+        this.$emit('refuseSub', '请填写合同金额');
+        return false;
+      } else {
+        let amoArr = this.business.contractAmount.split(',').reverse();
+        let amoNum = 0;
+        for (let i = 0; i < amoArr.length; i++) {
+          amoNum += parseFloat(amoArr[i])*Math.pow(1000, i);
+        }
+        if (amoNum <= 0) {
+          this.$emit('refuseSub', '合同金额必须大于零，请检查');
+          return false;
+        } else {
+          return true;
+        }
+      }
+    },
     auditTimeCheck() {
-      if (business.auditTime.exist) {
-        sta = mement(business.auditTime.start, 'YYYY-MM-DD');
-        end = mement(business.auditTime.end, 'YYYY-MM-DD');
+      if (this.business.auditTime.exist) {
+        let sta = moment(this.business.auditTime.start, 'YYYY-MM-DD');
+        let end = moment(this.business.auditTime.end, 'YYYY-MM-DD');
         if (sta.isAfter(new Date(), 'day') || end.isAfter(new Date(), 'day')) {
           this.$emit('refuseSub', '审计时间不能超过今天，请检查');
           return false;
