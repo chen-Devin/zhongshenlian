@@ -15,7 +15,7 @@
               <input type="checkbox"
                      v-model="WORD.state"
                      @change="reportTypeChan(TYPE, WORD)"
-                     :disabled="!WORD.state"> {{WORD.name}}
+                     :disabled="WORD.dis"> {{WORD.name}}
             </label>
             <hr>
           </template>
@@ -63,8 +63,14 @@ export default {
     };
   },
   props: ['initBusiness'],
-  created() {
+  mounted() {
     this.reportTypeChan();
+
+    for (let i = 0; i < this.type.length; i++) {
+      for (let j = 0; j < this.type[i].words.length; j++) {
+        this.type[i].words[j].dis = !this.type[i].words[j].state;
+      }
+    }
   },
   methods: {
     reportTypeChan(TYPE, WORD) {
@@ -85,11 +91,7 @@ export default {
         }
       }
 
-      if (flag) {
-        this.number = `${type}-${word}-${year}-XXXX`;
-      } else {
-        this.number = '';
-      }
+      this.number = flag ? `${type}-${word}-${year}-XXXX` : '';
     },
     sub() {
       this.subBtn.dis = true;
