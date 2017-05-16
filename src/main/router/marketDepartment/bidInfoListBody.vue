@@ -3,11 +3,16 @@
     <form class="row" @submit.prevent @keyup.enter.prevent>
       <search-bar class="col-md-11" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" @search="search"></search-bar>
       <div class="col-md-1 higher-search">
-        <button type="button" class="btn btn-primary" @click="showHigherSearch()">高级搜索</button>
+        <button type="button" class="btn btn-primary" @click="showHigherSearch()">
+          高级搜索
+          &nbsp
+          <img v-if="searchDown" class="search-icon" src="../../../img/market/search_down.svg">
+          <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg">
+        </button>
       </div>
     </form>
     <!--高级搜索-->
-    <form class="form-inline" v-if="higherSearch">
+    <form class="form-inline higherForm" v-if="higherSearch">
       <div class="row">
         <div class="col-md-4 ta-c">
           <div class="form-group">
@@ -81,7 +86,7 @@
           </div>
         </div>
       </div>
-      <div class="ta-c">
+      <div class="search-btns ta-c">
         <button type="button" class="btn btn-primary" @click="higherSearchEvent()">查找</button>
         <button type="button" class="btn btn-primary" @click="reset()">重置</button>
       </div>
@@ -96,15 +101,14 @@
     <table class="table table-hover projectList">
       <thead>
         <tr>
-          <td>项目名称</td>
-          <td class="ta-r dateMr">开标时间</td>
+          <td class="h-left">信息详情</td>
+          <td class="h-right">开标时间</td>
         </tr>
       </thead>
       <tbody>
         <tr v-for="project in biddingArray" @click="checkMessage(project)">
-          <td>
-            <span class="state-wrap">{{project.biddingState}}</span>{{project.biddingName}}</td>
-          <td class="ta-r">
+          <td><span class="state-wrap">{{project.biddingState}}</span>{{project.biddingName}}</td>
+          <td class="time-wrap">
             {{project.openBidDate}}
           </td>
         </tr>
@@ -161,6 +165,8 @@ export default {
       filterState: [],
       inputBtn: false,
       higherSearch: false,
+      searchDown: true,
+      searchUp: false,
       bidArray: [], //是数组不是对象
       user: {},
       searchContent: '',
@@ -171,7 +177,7 @@ export default {
       listType: 'get',
       projectName: '',
       tenderPerson: '',
-      agency: ''
+      agency: '',
     };
   },
   computed: {
@@ -381,8 +387,12 @@ export default {
     showHigherSearch() {
       if (this.higherSearch === false) {
         this.higherSearch = true;
+        this.searchUp = true;
+        this.searchDown = false;
       } else {
         this.higherSearch = false;
+        this.searchUp = false;
+        this.searchDown = true;
       }
     }
   },
@@ -413,11 +423,14 @@ export default {
 .ta-c {
   text-align: center;
 }
+.va-c {
+  vertical-align: middle;
+}
 .higher-search {
   margin-top: 30px;
 }
 .dateMr {
-	padding-right: 35px;
+	padding-right: 110px;
 }
 .form-inline {
 	.form-group {
@@ -437,14 +450,6 @@ export default {
 	label {
 		margin-top: 7px;
 	}
-}
-.state-wrap {
-	display: inline-block;
-	background-color: #fff;
-	border: 1px solid #000;
-	margin-right: 5px;
-	padding: 1px 3px;
-	font-size: 11px;
 }
 table {
 	tbody {
@@ -481,5 +486,27 @@ input::-webkit-input-placeholder{text-align: center;}
 }
 .input-icon {
   margin-top: -2px;
+}
+.search-icon {
+  margin-top: -2px;
+}
+.higherForm {
+  .form-group {
+    width: 100%;
+    label {
+      width: 25%;
+    }
+    input {
+      width: 70%;
+    }
+  }
+}
+.search-btns {
+  margin-top: 20px;
+  button {
+    &:first-child {
+      margin-right: 30px;
+    }
+  }
 }
 </style>
