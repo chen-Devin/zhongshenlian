@@ -80,7 +80,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">资产总额</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.institution.assetSize===''?'':`${business.institution.assetSize}元`}}</p>
+        <p class="form-control-static">{{business.institution.assetSize===''?'':`${business.institution.assetSize}万元`}}</p>
       </div>
     </div>
     <div class="form-group">

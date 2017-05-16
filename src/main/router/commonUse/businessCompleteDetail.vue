@@ -48,7 +48,7 @@ export default {
           customerName: '',
           name: '',
           telephone: '',
-          assetSize: 0
+          assetSize: ''
         },
         type: '',
         manager: {
@@ -71,8 +71,8 @@ export default {
             return `${Y}-${M}-${D}`;
           })(),
         },
-        contractAmount: 0,
-        contractPrice: 0,
+        contractAmount: '',
+        contractPrice: '',
         report: {
           type: [
             {

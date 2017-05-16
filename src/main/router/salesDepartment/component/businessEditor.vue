@@ -84,7 +84,7 @@
       <label class="col-sm-2 control-label">资产总额</label>
       <div class="col-sm-9">
         <div class="input-group">
-          <p class="form-control-static">{{business.institution.assetSize+'元'}}</p>
+          <p class="form-control-static">{{business.institution.assetSize+'万元'}}</p>
         </div>
       </div>
     </div>
@@ -92,7 +92,15 @@
       <label class="col-sm-2 control-label">合同金额</label>
       <div class="col-sm-9">
         <div class="input-group">
-          <input type="number" class="form-control" placeholder="请输入合同金额" v-model.number="business.contractAmount" :disabled="!editable">
+          <masked-input type="text"
+                        class="form-control"
+                        placeholder="请输入合同金额"
+                        v-model="business.contractAmount"
+                        :disabled="!editable"
+                        :mask="currencyMask"
+                        :guide="false"
+                        placeholderChar="#">
+          </masked-input>
           <div class="input-group-addon">元</div>
         </div>
       </div>
@@ -101,7 +109,15 @@
       <label class="col-sm-2 control-label">合同单价</label>
       <div class="col-sm-9">
         <div class="input-group">
-          <input type="number" class="form-control" placeholder="请输入合同单价" v-model.number="business.contractPrice" :disabled="!editable">
+          <masked-input type="text"
+                        class="form-control"
+                        placeholder="请输入合同单价"
+                        v-model="business.contractPrice"
+                        :disabled="!editable"
+                        :mask="currencyMask"
+                        :guide="false"
+                        placeholderChar="#">
+          </masked-input>
           <div class="input-group-addon">元</div>
         </div>
       </div>
@@ -389,8 +405,10 @@ import axios from 'axios';
 import qs from 'qs';
 import moment from 'moment';
 import { Upload } from 'element-ui';
+import maskedInput from 'vue-text-mask';
 
 import bus from '../../../bus.js';
+import currencyMask from '../../../currencyMask.js';
 
 Vue.use(Upload);
 
@@ -508,6 +526,7 @@ export default {
     this.reportTypeChan();
   },
   methods: {
+    currencyMask,
     typeChan(TYPE) {
       if (!TYPE.state) {
         for (let i = 0; i < TYPE.words.length; i++) {
@@ -1084,6 +1103,9 @@ export default {
         return true;
       }
     }
+  },
+  components: {
+    maskedInput
   }
 };
 </script>

@@ -89,10 +89,14 @@
         <label class="col-sm-3 control-label">资产规模</label>
         <div class="col-sm-9">
           <div class="input-group">
-            <input type="number"
-                   class="form-control"
-                   placeholder="请输入资产规模"
-                   v-model.number="customer.assetSize.val">
+            <masked-input type="text"
+                          class="form-control"
+                          placeholder="请输入资产规模"
+                          v-model="customer.assetSize.val"
+                          :mask="currencyMask"
+                          :guide="false"
+                          placeholderChar="#">
+            </masked-input>
             <div class="input-group-addon">万元</div>
           </div>
         </div>
@@ -113,10 +117,14 @@
         <label class="col-sm-3 control-label">注册资本</label>
         <div class="col-sm-9">
           <div class="input-group">
-            <input type="number"
-                   class="form-control"
-                   placeholder="请输入注册资本"
-                   v-model.number="customer.registeredCapital.val">
+            <masked-input type="text"
+                          class="form-control"
+                          placeholder="请输入注册资本"
+                          v-model="customer.registeredCapital.val"
+                          :mask="currencyMask"
+                          :guide="false"
+                          placeholderChar="#">
+            </masked-input>
             <div class="input-group-addon">万元</div>
           </div>
         </div>
@@ -183,8 +191,10 @@
 <script>
 import axios from 'axios';
 import qs from 'qs';
+import maskedInput from 'vue-text-mask';
 
 import modal from '../../../component/modal.vue';
+import currencyMask from '../../../currencyMask.js';
 
 export default {
   name: 'customerModModal',
@@ -276,6 +286,7 @@ export default {
   },
   props: ['initalCustomer'],
   methods: {
+    currencyMask,
     save() {
       let reg = /^(1+\d{10})$/;
       this.alert.show = false;
@@ -398,7 +409,8 @@ export default {
     }
   },
   components: {
-    modal
+    modal,
+    maskedInput
   }
 };
 </script>
