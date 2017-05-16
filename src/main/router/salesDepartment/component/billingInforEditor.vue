@@ -279,8 +279,8 @@ export default {
           name: this.user.name,
           tele: this.user.telephone
         },
-        addUpAmount: 0,
-        amount: 0,
+        addUpAmount: '',
+        amount: '',
         billingUnit: '',
         type: '增值税普通发票',
         unit: {
