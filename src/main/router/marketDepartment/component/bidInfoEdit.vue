@@ -91,10 +91,11 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="totalAssets" class="col-sm-2 control-label">资产总额：</label>
+					<label class="col-sm-2 control-label">资产总额：</label>
 					<div class="col-sm-10">
 						<div class="input-group">
-							<input type="text" class="form-control" id="totalAssets" v-model="project.totalAssets" name="totalAssets" placeholder="请输入资产总额">
+              <masked-input type="text" class="form-control" placeholder="请输入资产总额" v-model="project.totalAssets" :mask="currencyMask" :guide="false" placeholderChar="#">
+              </masked-input>
 							<div class="input-group-addon">元</div>
 						</div>
 					</div>
@@ -420,13 +421,13 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="controlPrice" class="col-sm-2 control-label">招标控制价：</label>
+				<label class="col-sm-2 control-label">招标控制价：</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<input type="text" class="form-control" id="controlPrice" v-model="project.controlPrice" name="controlPrice" placeholder="请输入招标控制价">
+            <masked-input type="text" class="form-control" placeholder="请输入招标控制价" v-model="project.controlPrice" :mask="currencyMask" :guide="false" placeholderChar="#">
+            </masked-input>
 						<div class="input-group-addon">元</div>
 					</div>
-
 				</div>
 			</div>
 			<div class="form-group">
@@ -436,13 +437,13 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="bidDocumentPrice" class="col-sm-2 control-label">招标文件价格：</label>
+				<label class="col-sm-2 control-label">招标文件价格：</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<input type="text" class="form-control" id="bidDocumentPrice" v-model="project.bidDocumentPrice" name="bidDocumentPrice" placeholder="请输入招标文件价格">
+            <masked-input type="text" class="form-control" placeholder="请输入招标文件价格" v-model="project.bidDocumentPrice" :mask="currencyMask" :guide="false" placeholderChar="#">
+            </masked-input>
 						<div class="input-group-addon">元</div>
 					</div>
-
 				</div>
 			</div>
 			<div class="form-group">
@@ -462,10 +463,11 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="bidBond" class="col-sm-2 control-label">投标保证金：</label>
+				<label class="col-sm-2 control-label">投标保证金：</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<input type="text" class="form-control" id="bidBond" v-model="project.bidBond" name="bidBond" placeholder="请输入投标保证金">
+            <masked-input type="text" class="form-control" placeholder="请输入投标保证金" v-model="project.bidBond" :mask="currencyMask" :guide="false" placeholderChar="#">
+            </masked-input>
 						<div class="input-group-addon">元</div>
 					</div>
 				</div>
@@ -475,7 +477,8 @@
 				<label for="tenderFee" class="col-sm-2 control-label">标书费：</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<input type="text" class="form-control" id="tenderFee" v-model="project.tenderFee" name="tenderFee" placeholder="请输入标书费">
+            <masked-input type="text" class="form-control" placeholder="请输入标书费" v-model="project.tenderFee" :mask="currencyMask" :guide="false" placeholderChar="#">
+            </masked-input>
 						<div class="input-group-addon">元</div>
 					</div>
 				</div>
@@ -485,7 +488,8 @@
 				<label for="winningServiceFee" class="col-sm-2 control-label">中标服务费：</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<input type="text" class="form-control" id="winningServiceFee" v-model="project.winningServiceFee" name="winningServiceFee" placeholder="请输入中标服务费">
+            <masked-input type="text" class="form-control" placeholder="请输入中标服务费" v-model="project.winningServiceFee" :mask="currencyMask" :guide="false" placeholderChar="#">
+            </masked-input>
 						<div class="input-group-addon">元</div>
 					</div>
 				</div>
@@ -552,7 +556,10 @@
 <script>
 import axios from 'axios';
 import qs from 'qs';
-import modal from '../../../component/modal.vue'
+import maskedInput from 'vue-text-mask';
+
+import modal from '../../../component/modal.vue';
+import currencyMask from '../../../currencyMask.js';
 
 export default {
 	name: 'bidInfoEdit',
@@ -599,6 +606,7 @@ export default {
 	},
 	props: ['iniProject','inputType'],
 	methods: {
+    currencyMask,
 		submit(project) {
 			this.$emit('submit',project);
 		},
@@ -638,7 +646,8 @@ export default {
 
 	},
 	components: {
-		modal
+		modal,
+    maskedInput
 	}
 };
 </script>
