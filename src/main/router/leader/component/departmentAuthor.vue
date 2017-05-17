@@ -33,6 +33,7 @@
     <pager :pageCount="page.total"
            :currentPage="page.current"
            @change="pageChan"></pager>
+    <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
   </card>
 </template>
 
@@ -41,7 +42,7 @@ import axios from 'axios';
 import qs from 'qs';
 
 import card from '../../../component/card.vue';
-import pager from '../../../component/pager.vue';
+import myPagination from '../../../component/pagination.vue';
 
 export default {
   name: 'departmentAuthor',
@@ -56,12 +57,13 @@ export default {
       page: {
         total: this.department.pageNum,
         current: (this.department.pageNum === 0) ? 0 : 1
-      }
+      },
+      totalPage: 1
     };
   },
   props: ['department'],
   methods: {
-    pageChan(newPage) {
+    currentChange(newPage) {
       this.getStaffInfo(newPage);
     },
     getStaffInfo(newPage) {
@@ -83,7 +85,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.page.total = parseInt(rep.data.data.pageNum);
+            this.page.total = parseInt(rep.data.data.totalNum);
             this.page.current = newPage;
             for(let j=0; j < rep.data.data.staffArray.length; j++) {
               let arr = [];
@@ -168,7 +170,7 @@ export default {
   },
   components: {
     card,
-    pager
+    myPagination
   }
 };
 </script>

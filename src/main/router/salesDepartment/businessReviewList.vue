@@ -4,11 +4,15 @@
     <card>
       <h3 class="main-title">
         业务列表
-        <router-link class="btn btn-primary pull-right" to="/business-review-add" v-if="user.authority['业务立项']">
+        <router-link class="btn my-btn submit-btn pull-right" to="/business-review-add" tag="button" v-if="user.authority['业务立项']">
           新建业务
         </router-link>
       </h3>
       <div class="com-list list-group">
+        <li class="list-group-item list-head">
+          <span class="title">业务列表</span>
+          <span class="date pull-right">创建时间</span>
+        </li>
         <router-link class="list-group-item" :to="businessRoute(BUSINESS)" v-for="(BUSINESS, index) in businesses" :key="index">
           <span class="label label-warning"
                 v-if="BUSINESS.projectStatus===10">尚未完成</span>
@@ -23,9 +27,7 @@
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime.substring(0,10)}}</span>
         </router-link>
-        <pager :pageCount="page.total"
-               :currentPage="page.current"
-               @change="pageChan"></pager>
+        <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
       </div>
     </card>
   </div>
@@ -36,7 +38,7 @@ import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
-import pager from '../../component/pager.vue';
+import myPagination from '../../component/pagination.vue';
 
 export default {
   name: 'businessReviewListSales',
@@ -46,6 +48,7 @@ export default {
         { name: '待审核业务', url: '/business-review-list-sales', present: true }
       ],
       businesses: [],
+      totalPage: 1,
       page: {
         total: 0,
         current: 0
@@ -60,7 +63,7 @@ export default {
     $route: 'getInfo'
   },
   methods: {
-    pageChan(newPage) {
+    currentChange(newPage) {
       this.getInfo(newPage);
     },
     getInfo(newPage) {
@@ -80,7 +83,7 @@ export default {
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          this.page.total = parseInt(rep.data.data.pageNum);
+          this.page.total = parseInt(rep.data.data.totalNum);
           this.page.current = newPage;
           this.businesses.length = 0;
           for (let i = 0; i < rep.data.data.businessArray.length; i++) {
@@ -108,7 +111,7 @@ export default {
   components: {
     crumbs,
     card,
-    pager
+    myPagination
   }
 };
 </script>

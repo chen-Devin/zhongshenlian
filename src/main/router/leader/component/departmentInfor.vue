@@ -3,8 +3,11 @@
     <h3 class="main-title">
       {{thisDepart.department}}
       <button type="button"
-              class="btn btn-default pull-right"
-              @click="add()">录入</button>
+              class="btn my-btn submit-btn  pull-right"
+              @click="add()">
+              <img class="input-icon" src="../../../../img/market/input.svg">&nbsp
+              录入
+      </button>
     </h3>
     <table class="table table-striped table-hover com-list">
       <thead>
@@ -34,9 +37,7 @@
         </tr>
       </tbody>
     </table>
-    <pager :pageCount="page.total"
-           :currentPage="page.current"
-           @change="pageChan"></pager>
+    <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="pageChan"></my-pagination>
     <staff-mod-modal v-if="showModModal"
                      :initalStaff="modStaff"
                      @saved="saved"
@@ -57,7 +58,7 @@
 import axios from 'axios';
 
 import card from '../../../component/card.vue';
-import pager from '../../../component/pager.vue';
+import myPagination from '../../../component/pagination.vue';
 import staffModModal from './staffModModal.vue';
 import staffDelModal from './staffDelModal.vue';
 import staffAddModal from './staffAddModal.vue';
@@ -75,7 +76,8 @@ export default {
       page: {
         total: this.department.pageNum,
         current: (this.department.pageNum === 0) ? 0 : 1
-      }
+      },
+      totalPage: 1
     };
   },
   props: ['department'],
@@ -102,7 +104,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.page.total = parseInt(rep.data.data.pageNum);
+            this.page.total = parseInt(rep.data.data.totalNum);
             this.page.current = newPage;
             this.thisDepart.staffArray = rep.data.data.staffArray;
           } else if (rep.data.statusCode === '10012') {
@@ -180,7 +182,7 @@ export default {
   },
   components: {
     card,
-    pager,
+    myPagination,
     staffModModal,
     staffDelModal,
     staffAddModal
@@ -196,5 +198,8 @@ export default {
       cursor: pointer;
     }
   }
+}
+.input-icon {
+  margin-top: -2px;
 }
 </style>

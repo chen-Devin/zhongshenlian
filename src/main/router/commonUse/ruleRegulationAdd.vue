@@ -5,8 +5,8 @@
       <h3 class="main-title">
         新建制度
         <div class="pull-right">
-          <button type="button" class="btn btn-primary" @click="saveEdit()">保存</button>
-          <button type="button" class="btn btn-default" @click="canceled()">取消</button>
+          <button type="button" class="btn my-btn submit-btn" @click="saveEdit()">保存</button>
+          <button type="button" class="btn my-btn cancel-btn" @click="canceled()">取消</button>
         </div>
       </h3>
       <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>

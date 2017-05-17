@@ -4,7 +4,7 @@
     <card>
       <h3 class="main-title">
         {{business.name}}
-        <button class="btn btn-primary pull-right" @click="sub()" v-if="!sended">装订业务</button>
+        <button class="btn my-btn submit-btn pull-right" @click="sub()" v-if="!sended">装订业务</button>
         <small class="label label-success pull-right" v-if="sended">业务已装订</small>
       </h3>
       <div class="normal-wrap">

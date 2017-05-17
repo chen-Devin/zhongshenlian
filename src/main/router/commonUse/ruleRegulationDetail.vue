@@ -4,7 +4,7 @@
     <card>
       <h3 class="main-title">
         {{detail.title}}
-        <button class="btn btn-primary pull-right" type="button" :user="user" v-if="btnShow" @click="editRule()">编辑</button>
+        <button class="btn my-btn submit-btn pull-right" type="button" :user="user" v-if="btnShow" @click="editRule()">编辑</button>
       </h3>
       <p class="content-area">{{detail.content}}</p>
       <p class="text-right">{{detail.releaseDepartment}}</p>

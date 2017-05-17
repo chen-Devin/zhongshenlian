@@ -1,9 +1,9 @@
 <template>
   <div>
-    <form class="row" @submit.prevent @keyup.enter.prevent>
-      <search-bar class="col-md-11" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" @search="search"></search-bar>
-      <div class="col-md-1 higher-search">
-        <button type="button" class="btn btn-primary" @click="showHigherSearch()">
+    <form class="row search-form" @submit.prevent @keyup.enter.prevent>
+      <search-bar class="col-md-10" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" @search="search"></search-bar>
+      <div class="col-md-2 higher-search">
+        <button type="button" class="btn draft-btn my-btn" @click="showHigherSearch()">
           高级搜索
           &nbsp
           <img v-if="searchDown" class="search-icon" src="../../../img/market/search_down.svg">
@@ -87,13 +87,13 @@
         </div>
       </div>
       <div class="search-btns ta-c">
-        <button type="button" class="btn btn-primary" @click="higherSearchEvent()">查找</button>
-        <button type="button" class="btn btn-primary" @click="reset()">重置</button>
+        <button type="button" class="btn my-btn submit-btn" @click="higherSearchEvent()">查找</button>
+        <button type="button" class="btn my-btn draft-btn" @click="reset()">重置</button>
       </div>
     </form>
     <h3 class="main-title">
       信息列表
-      <button class="btn btn-primary type-btn f-r" @click="input()" v-if="inputBtn">
+      <button class="btn my-btn btn-primary type-btn f-r" @click="input()" v-if="inputBtn">
         <img class="input-icon" src="../../../img/market/input.svg">&nbsp
         录入
       </button>
@@ -513,5 +513,13 @@ input::-webkit-input-placeholder{text-align: center;}
   display: inline-block;
   margin-left: 45px;
   margin-top: 10px;
+}
+.search-form {
+  .col-md-10 {
+    width: 90%;
+  }
+  .col-md-2 {
+    width: 10%;
+  }
 }
 </style>

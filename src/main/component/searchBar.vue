@@ -8,7 +8,7 @@
                  :placeholder="placeholder"
                  v-model.trim="searchCont">
           <span class="input-group-btn">
-            <button class="btn btn-primary"
+            <button class="btn submit-btn my-btn"
                     type="button"
                     @click="tog">搜索</button>
           </span>
@@ -36,4 +36,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+input {
+  height: 40px;
+}
 </style>

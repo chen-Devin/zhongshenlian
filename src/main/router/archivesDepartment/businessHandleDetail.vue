@@ -10,7 +10,7 @@
                    :on-success="uploadSuccess"
                    :show-file-list="false"
                    v-if="!submited">
-          <button class="btn btn-primary"
+          <button class="btn my-btn submit-btn"
                   type="button">上传二维码</button>
         </el-upload>
         <small class="label label-success pull-right"

@@ -2,12 +2,13 @@
   <card>
     <h3 class="main-title">
       客户列表
-      <button class="btn btn-primary pull-right"
+      <button class="btn my-btn submit-btn pull-right"
               @click="add()">
-        添加客户
+        <img class="input-icon" src="../../../../img/market/input.svg">&nbsp
+        录入
       </button>
     </h3>
-    <table class="table table-striped table-hover com-list">
+    <table class="table table-hover com-list">
       <thead>
         <tr>
           <th class="text-center">客户名称</th>
@@ -31,9 +32,10 @@
         </tr>
       </tbody>
     </table>
-    <pager :pageCount="page.total"
+    <!-- <pager :pageCount="page.total"
            :currentPage="page.current"
-           @change="pageChan"></pager>
+           @change="pageChan"></pager> -->
+    <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
     <customer-mod-modal v-if="showModModal"
                         :initalCustomer="modCustomer"
                         @del="del"
@@ -56,6 +58,7 @@ import pager from '../../../component/pager.vue';
 import customerModModal from './customerModModal.vue';
 import customerDelModal from './customerDelModal.vue';
 import customerAddModal from './customerAddModal.vue';
+import myPagination from '../../../component/pagination.vue';
 
 export default {
   name: 'customerInfor',
@@ -67,12 +70,13 @@ export default {
       showDelModal: false,
       delCustomer: {},
       showAddModal: false,
-      addCustomer: {}
+      addCustomer: {},
+      totalPage: 1
     };
   },
   props: ['customers', 'user', 'page'],
   methods: {
-    pageChan(newPage) {
+    totalPage(newPage) {
       this.$emit('pageChan', newPage);
     },
     mod(CUSTOMER) {
@@ -163,18 +167,25 @@ export default {
     customerModModal,
     customerDelModal,
     customerAddModal,
-    pager
+    myPagination
   }
 };
 </script>
 
 <style lang="sass" scoped>
 .com-list {
+    border: 1px solid #E6E6E6;
+    thead {
+      background-color: #E6E6E6;
+    }
   .link-wrap {
     width: 45px;
     a:hover {
       cursor: pointer;
     }
   }
+}
+.input-icon {
+  margin-top: -2px;
 }
 </style>

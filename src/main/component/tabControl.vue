@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs nav-justified">
       <li :class="{active: PART.state}"
           @click="sel(index)"
           v-for="(PART, index) in parts"
@@ -54,5 +54,6 @@ ul.nav {
 }
 div.tab-content {
   min-height: 500px;
+  border: 1px solid #E8E8E8;
 }
 </style>

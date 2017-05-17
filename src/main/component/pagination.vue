@@ -15,6 +15,7 @@
         padding: 2px 5px;
         color: #48576a;
         text-align: right;
+        margin-top: 10px;
     }
 </style>
 

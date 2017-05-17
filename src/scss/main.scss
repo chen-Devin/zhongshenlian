@@ -3,6 +3,7 @@
 body {
   background-color: $body-bg;
   overflow-y: scroll;
+  color: #666666;
 }
 
 //标题
@@ -95,5 +96,134 @@ body {
     }
   }
 }
+
+//录入表单
+.form-horizontal .control-label {
+  text-align: right;
+  margin-bottom: 0;
+  padding-top: 7px;
+  // color: #666666;
+  font-weight: normal;
+  text-align: left;
+  width: 13%;
+}
+.form-horizontal {
+  .half-width {
+    width: 50%;
+  }
+}
+.form-group {
+    margin-bottom: 30px;
+}
+.form-control {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+//属性
+.f-l {
+  float: left;
+}
+
+.f-r {
+  float: right;
+}
+
+.ta-c {
+  text-align: center;
+}
+
+//按钮
+.btn-primary {
+  background-color: #0074D3;
+  border: none;
+  &:hover {
+    background-color: #1276D0;
+    color: #ffffff;
+  }
+  &:active {
+    background-color: #1276D0;
+    color: #ffffff;
+  }
+}
+
+.btn-primary:active:focus {
+  color: #fff;
+  background-color: #1276D0;
+  border-color: none;
+}
+
+.my-btn {
+  width: 120px;
+  height: 40px;
+  font-family: MicrosoftYaHei;
+  font-size: 14px;
+  color: #FFFFFF;
+  border: none;
+}
+
+.btn-mb {
+  margin-top: -5px;
+}
+
+.submit-btn {
+  background-color: #288ada;
+  border: none;
+  &:hover {
+    background-color: #1276D0;
+    color: #ffffff;
+  }
+  &:active {
+    background-color: #1276D0;
+    color: #ffffff;
+  }
+  &:focus {
+    background-color: #1276D0;
+    color: #ffffff;
+  }
+}
+
+.draft-btn {
+  background-color: #EB4848;
+  border: none;
+  &:hover {
+    background-color: #D52a2e;
+    color: #ffffff;
+  }
+  &:active {
+    background-color: #D52a2e;
+    color: #ffffff;
+    border: none;
+  }
+  &:focus {
+    background-color: #D52a2e;
+    color: #ffffff;
+    border: none;
+  }
+}
+
+.cancel-btn {
+  background-color: #C4C4C4;
+  border: none;
+  &:hover {
+    background-color: #999999;
+    color: #ffffff;
+  }
+  &:active {
+    background-color: #999999;
+    color: #ffffff;
+  }
+  &:focus {
+    background-color: #999999;
+    color: #ffffff;
+  }
+}
+
+.btn-mr {
+  margin-right: 20px;
+  border: none;
+}
+
+
 
 

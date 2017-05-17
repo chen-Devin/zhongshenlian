@@ -1,27 +1,30 @@
 <template>
 	<div>
 		<div class="page-header">
-			<h4>
+			<h4 class="main-title">
 				招投标信息{{ inputType }}
+        <button type="button" class="btn f-r my-btn cancel-btn btn-mb" @click="cancel()">撤销</button>
+        <button type="button" class="btn f-r my-btn draft-btn btn-mr btn-mb" @click="saveDraft(project)">存为草稿</button>
+        <button type="button" class="btn f-r my-btn submit-btn btn-mr btn-mb" @click="submit(project)">提交</button>
 			</h4>
 		</div>
 		<form class="form-horizontal" @submit.prevent @keyup.enter.prevent>
 			<div class="form-group">
 			  <label for="projectName" class="col-sm-2 control-label">项目名称：</label>
 			  <div class="col-sm-10">
-			    <input type="text" class="form-control" id="projectName" v-model="project.projectName" name="projectName" placeholder="请输入项目名称">
+			    <input type="text" class="form-control half-width" id="projectName" v-model="project.projectName" name="projectName" placeholder="请输入项目名称">
 			  </div>
 			</div>
 			<div class="form-group">
 				<label for="tenderPerson" class="col-sm-2 control-label">招标人：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="tenderPerson" v-model="project.tenderPerson" name="tenderPerson" placeholder="请输入招标人">
+				  <input type="text" class="form-control half-width" id="tenderPerson" v-model="project.tenderPerson" name="tenderPerson" placeholder="请输入招标人">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="agency" class="col-sm-2 control-label">招标代理机构：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="agency" v-model="project.agency" name="agency" placeholder="请输入招标代理机构">
+				  <input type="text" class="form-control half-width" id="agency" v-model="project.agency" name="agency" placeholder="请输入招标代理机构">
 				</div>
 			</div>
 			<div class="form-group">
@@ -93,7 +96,7 @@
 				<div class="form-group">
 					<label for="totalAssets" class="col-sm-2 control-label">资产总额：</label>
 					<div class="col-sm-10">
-						<div class="input-group">
+						<div class="input-group half-width">
 							<input type="text" class="form-control" id="totalAssets" v-model="project.totalAssets" name="totalAssets" placeholder="请输入资产总额">
 							<div class="input-group-addon">元</div>
 						</div>
@@ -102,7 +105,7 @@
 				<div class="form-group">
 					<label for="location" class="col-sm-2 control-label">坐落地点：</label>
 					<div class="col-sm-10">
-					  <input type="text" class="form-control" id="location" v-model="project.location" name="location" placeholder="请输入坐落地点">
+					  <input type="text" class="form-control half-width" id="location" v-model="project.location" name="location" placeholder="请输入坐落地点">
 					</div>
 				</div>
 				<hr>
@@ -239,7 +242,7 @@
 				<div class="form-group">
 					<label for="scale" class="col-sm-2 control-label">建设规模：</label>
 					<div class="col-sm-10">
-						<div class="row">
+						<div class="row adjust-half-width">
 							<div class="col-sm-4">
 								<input type="text" class="form-control" id="scale" v-model="project.zjsArea" name="zjsArea" placeholder="请输入建设面积">
 							</div>
@@ -255,13 +258,13 @@
 				<div class="form-group">
 					<label for="zjsLocation" class="col-sm-2 control-label">建设地点：</label>
 					<div class="col-sm-10">
-					  <input type="text" class="form-control" id="zjsLocation" v-model="project.zjsLocation" name="zjsLocation" placeholder="请输入建设地点">
+					  <input type="text" class="form-control half-width" id="zjsLocation" v-model="project.zjsLocation" name="zjsLocation" placeholder="请输入建设地点">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="serviceTerm" class="col-sm-2 control-label">服务期限：</label>
 					<div class="col-sm-10">
-					  <input type="text" class="form-control" id="serviceTerm" v-model="project.serviceTerm" name="serviceTerm" placeholder="请输入服务期限">
+					  <input type="text" class="form-control half-width" id="serviceTerm" v-model="project.serviceTerm" name="serviceTerm" placeholder="请输入服务期限">
 					</div>
 				</div>
 				<hr>
@@ -270,13 +273,13 @@
 			<div class="form-group">
 				<label for="serviceTerm" class="col-sm-2 control-label">审计期限：</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="serviceTerm" v-model="project.serviceTerm" name="serviceTerm" placeholder="请输入审计期限">
+					<input type="text" class="form-control half-width" id="serviceTerm" v-model="project.serviceTerm" name="serviceTerm" placeholder="请输入审计期限">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="investmentConditions" class="col-sm-2 control-label">投资人资质条件、能力：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="investmentConditions" v-model="project.investmentConditions" name="investmentConditions" placeholder="请输入投资人资质条件及能力">
+				  <input type="text" class="form-control half-width" id="investmentConditions" v-model="project.investmentConditions" name="investmentConditions" placeholder="请输入投资人资质条件及能力">
 				</div>
 			</div>
 			<div class="form-group">
@@ -294,7 +297,7 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">基本取费：</label>
 					<div class="col-sm-10">
-						<div class="row">
+						<div class="row half-width">
 							<div class="col-sm-5">
 								<div class="input-group">
 									<div class="input-group-addon">主办方</div>
@@ -318,7 +321,7 @@
 				<div class="form-group" v-for="(item, index) in project.contractType.subBasicArray">
 					<label class="col-sm-2 control-label"></label>
 					<div class="col-sm-10">
-						<div class="row">
+						<div class="row half-width">
 							<div class="col-sm-5">
 								<div class="input-group">
 									<div class="input-group-addon">协办方</div>
@@ -344,7 +347,7 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label"></label>
 					<div class="col-sm-10">
-						<div class="row">
+						<div class="row half-width">
 							<h4 class="col-sm-1 col-sm-offset-11">
 								<a class="fa fa-plus-circle text-danger" @click="addBasicFee()"></a>
 							</h4>
@@ -355,7 +358,7 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">效益取费：</label>
 					<div class="col-sm-10">
-						<div class="row">
+						<div class="row half-width">
 							<div class="col-sm-5">
 								<div class="input-group">
 									<div class="input-group-addon">主办方</div>
@@ -379,7 +382,7 @@
 				<div class="form-group" v-for="(item, index) in project.contractType.subEfficiencyArray">
 					<label class="col-sm-2 control-label"></label>
 					<div class="col-sm-10">
-						<div class="row">
+						<div class="row half-width">
 							<div class="col-sm-5">
 								<div class="input-group">
 									<div class="input-group-addon">协办方</div>
@@ -405,7 +408,7 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label"></label>
 					<div class="col-sm-10">
-						<div class="row">
+						<div class="row half-width">
 							<h4 class="col-sm-1 col-sm-offset-11">
 								<a class="fa fa-plus-circle text-danger" @click="addEfficiencyFee()"></a>
 							</h4>
@@ -416,13 +419,13 @@
 			<div class="form-group">
 				<label for="biddingNumber" class="col-sm-2 control-label">中标单位数量：</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="biddingNumber" v-model="project.biddingNumber" name="biddingNumber" placeholder="请输入中标单位数量">
+					<input type="text" class="form-control half-width" id="biddingNumber" v-model="project.biddingNumber" name="biddingNumber" placeholder="请输入中标单位数量">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="controlPrice" class="col-sm-2 control-label">招标控制价：</label>
 				<div class="col-sm-10">
-					<div class="input-group">
+					<div class="input-group half-width">
 						<input type="text" class="form-control" id="controlPrice" v-model="project.controlPrice" name="controlPrice" placeholder="请输入招标控制价">
 						<div class="input-group-addon">元</div>
 					</div>
@@ -432,13 +435,13 @@
 			<div class="form-group">
 				<label for="bidStartTime" class="col-sm-2 control-label">招标报名时间：</label>
 				<div class="col-sm-10">
-				  <input type="date" class="form-control" id="bidStartTime" v-model="project.bidStartTime" name="bidStartTime">
+				  <input type="date" class="form-control half-width" id="bidStartTime" v-model="project.bidStartTime" name="bidStartTime">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="bidDocumentPrice" class="col-sm-2 control-label">招标文件价格：</label>
 				<div class="col-sm-10">
-					<div class="input-group">
+					<div class="input-group half-width">
 						<input type="text" class="form-control" id="bidDocumentPrice" v-model="project.bidDocumentPrice" name="bidDocumentPrice" placeholder="请输入招标文件价格">
 						<div class="input-group-addon">元</div>
 					</div>
@@ -448,13 +451,13 @@
 			<div class="form-group">
 				<label for="quotations" class="col-sm-2 control-label">报价方式：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="quotations" v-model="project.quotations" name="quotations" placeholder="请输入报价方式">
+				  <input type="text" class="form-control half-width" id="quotations" v-model="project.quotations" name="quotations" placeholder="请输入报价方式">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="tenderValidityPeriod" class="col-sm-2 control-label">投标有效期：</label>
 				<div class="col-sm-10">
-					<div class="input-group">
+					<div class="input-group half-width">
 						<input type="text" class="form-control" id="tenderValidityPeriod" v-model="project.tenderValidityPeriod" name="tenderValidityPeriod" placeholder="请输入投标有限期">
 						<div class="input-group-addon">天</div>
 					</div>
@@ -464,7 +467,7 @@
 			<div class="form-group">
 				<label for="bidBond" class="col-sm-2 control-label">投标保证金：</label>
 				<div class="col-sm-10">
-					<div class="input-group">
+					<div class="input-group half-width">
 						<input type="text" class="form-control" id="bidBond" v-model="project.bidBond" name="bidBond" placeholder="请输入投标保证金">
 						<div class="input-group-addon">元</div>
 					</div>
@@ -474,7 +477,7 @@
 			<div class="form-group">
 				<label for="tenderFee" class="col-sm-2 control-label">标书费：</label>
 				<div class="col-sm-10">
-					<div class="input-group">
+					<div class="input-group half-width">
 						<input type="text" class="form-control" id="tenderFee" v-model="project.tenderFee" name="tenderFee" placeholder="请输入标书费">
 						<div class="input-group-addon">元</div>
 					</div>
@@ -484,7 +487,7 @@
 			<div class="form-group">
 				<label for="winningServiceFee" class="col-sm-2 control-label">中标服务费：</label>
 				<div class="col-sm-10">
-					<div class="input-group">
+					<div class="input-group half-width">
 						<input type="text" class="form-control" id="winningServiceFee" v-model="project.winningServiceFee" name="winningServiceFee" placeholder="请输入中标服务费">
 						<div class="input-group-addon">元</div>
 					</div>
@@ -493,13 +496,13 @@
 			<div class="form-group">
 				<label for="openBidDate" class="col-sm-2 control-label">开标时间：</label>
 				<div class="col-sm-10">
-				  <input type="datetime-local" class="form-control" id="openBidDate" v-model="project.openBidDate"  name="openBidDate" placeholder="请输入开标时间">
+				  <input type="datetime-local" class="form-control half-width" id="openBidDate" v-model="project.openBidDate"  name="openBidDate" placeholder="请输入开标时间">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="openBidPlace" class="col-sm-2 control-label">开标地点：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="openBidPlace" v-model="project.openBidPlace" name="openBidPlace" placeholder="请输入开标地点">
+				  <input type="text" class="form-control half-width" id="openBidPlace" v-model="project.openBidPlace" name="openBidPlace" placeholder="请输入开标地点">
 				</div>
 			</div>
 			<hr>
@@ -507,16 +510,9 @@
 			<div class="form-group">
 				<label for="remark" class="col-sm-2 control-label">备注：</label>
 				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="remark" v-model="project.remark" name="remark" placeholder="请输入备注">
+				  <input type="text" class="form-control half-width" id="remark" v-model="project.remark" name="remark" placeholder="请输入备注">
 				</div>
 			</div>
-		  <div class="form-group">
-		    <div class="col-sm-offset-2 col-sm-10">
-		      <button type="button" class="btn btn-primary" @click="submit(project)">提交</button>
-		      <button type="button" class="btn btn-default" @click="saveDraft(project)">存为草稿</button>
-		      <button type="button" class="btn btn-danger" @click="cancel()">撤销</button>
-		    </div>
-		  </div>
 		</form>
 		<modal v-show="cancelModal">
 			<p slot="body" class="ta-c cancel-word">
@@ -547,6 +543,9 @@
 		text-decoration: none;
 		cursor: pointer;
 	}
+  .adjust-half-width {
+    width: 52.4%;
+  }
 </style>
 
 <script>

@@ -29,9 +29,7 @@
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime.substring(0,10)}}</span>
         </router-link>
-        <pager :pageCount="page.total"
-               :currentPage="page.current"
-               @change="pageChan"></pager>
+        <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
       </div>
     </card>
   </div>
@@ -42,7 +40,7 @@ import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
-import pager from '../../component/pager.vue';
+import myPagination from '../../component/pagination.vue';
 
 export default {
   name: 'businessHandleListSales',
@@ -52,10 +50,8 @@ export default {
         { name: '待处理业务', url: '/business-handle-list-sales', present: true }
       ],
       businesses: [],
-      page: {
-        total: 0,
-        current: 0
-      }
+      totalPage: 1,
+      totalNum: 1
     };
   },
   created() {
@@ -65,9 +61,6 @@ export default {
     $route: 'getInfo'
   },
   methods: {
-    pageChan(newPage) {
-      this.getInfo(newPage);
-    },
     getInfo(newPage) {
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -85,8 +78,8 @@ export default {
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          this.page.total = parseInt(rep.data.data.pageNum);
-          this.page.current = newPage;
+          this.totalPage = parseInt(rep.data.data.pageNum);
+          this.totalNum = parseInt(rep.data.data.totalNum);
           this.businesses.length = 0;
           for (let i = 0; i < rep.data.data.businessArray.length; i++) {
             let obj = {
@@ -104,12 +97,16 @@ export default {
     },
     businessRoute(BUSINESS) {
       return '/business-handle-detail-sales-'+BUSINESS.id;
+    },
+    currentChange(val) {
+      this.pageNum = val;
+      this.getInfo();
     }
   },
   components: {
     crumbs,
     card,
-    pager
+    myPagination
   }
 };
 </script>

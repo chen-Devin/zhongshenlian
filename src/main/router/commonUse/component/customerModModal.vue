@@ -6,8 +6,8 @@
           @keyup.enter.prevent>
       <div class="form-group"
            :class="{'has-error': !customer.customerName.ver}">
-        <label class="col-sm-3 control-label">客户名称</label>
-        <div class="col-sm-9">
+        <label class="control-label">客户名称</label>
+        <div>
           <input type="text"
                  class="form-control"
                  placeholder="请输入客户名称"
@@ -16,8 +16,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !customer.name.ver}">
-        <label class="col-sm-3 control-label">客户联系人</label>
-        <div class="col-sm-9">
+        <label class="control-label">客户联系人</label>
+        <div>
           <input type="text"
                  class="form-control"
                  placeholder="请输入客户联系人"
@@ -26,8 +26,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !customer.duty.ver}">
-        <label class="col-sm-3 control-label">联系人职位</label>
-        <div class="col-sm-9">
+        <label class="control-label">联系人职位</label>
+        <div>
           <input type="text"
                  class="form-control"
                  placeholder="请输入联系人职位"
@@ -36,8 +36,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !customer.telephone.ver}">
-        <label class="col-sm-3 control-label">联系人电话</label>
-        <div class="col-sm-9">
+        <label class="control-label">联系人电话</label>
+        <div>
           <input type="tel"
                  class="form-control"
                  placeholder="请输入联系人电话"
@@ -46,8 +46,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !customer.department.ver}">
-        <label class="col-sm-3 control-label">联系人部门</label>
-        <div class="col-sm-9">
+        <label class="control-label">联系人部门</label>
+        <div>
           <input type="text"
                  class="form-control"
                  placeholder="请输入联系人部门"
@@ -56,8 +56,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !customer.registeredAddress.ver}">
-        <label class="col-sm-3 control-label">注册地址</label>
-        <div class="col-sm-9">
+        <label class="control-label">注册地址</label>
+        <div>
           <input type="text"
                  class="form-control"
                  placeholder="请输入注册地址"
@@ -66,8 +66,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !customer.mailingAddress.ver}">
-        <label class="col-sm-3 control-label">邮寄地址</label>
-        <div class="col-sm-9">
+        <label class="control-label">邮寄地址</label>
+        <div>
           <input type="text"
                  class="form-control"
                  placeholder="请输入邮寄地址"
@@ -76,8 +76,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !customer.businessLicenseNumber.ver}">
-        <label class="col-sm-3 control-label">营业执照号码</label>
-        <div class="col-sm-9">
+        <label class="control-label">营业执照号码</label>
+        <div>
           <input type="text"
                  class="form-control"
                  placeholder="请输入营业执照号码"
@@ -86,8 +86,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !customer.assetSize.ver}">
-        <label class="col-sm-3 control-label">资产规模</label>
-        <div class="col-sm-9">
+        <label class="control-label">资产规模</label>
+        <div>
           <div class="input-group">
             <masked-input type="text"
                           class="form-control"
@@ -102,8 +102,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label">客户性质</label>
-        <div class="col-sm-9">
+        <label class="control-label">客户性质</label>
+        <div>
           <label class="checkbox-inline"
                  v-for="(NAT, index) in customer.customerNature"
                  :key="index">
@@ -114,8 +114,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !customer.registeredCapital.ver}">
-        <label class="col-sm-3 control-label">注册资本</label>
-        <div class="col-sm-9">
+        <label class="control-label">注册资本</label>
+        <div>
           <div class="input-group">
             <masked-input type="text"
                           class="form-control"
@@ -131,8 +131,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !customer.setUpTime.ver}">
-        <label class="col-sm-3 control-label">成立日期</label>
-        <div class="col-sm-9">
+        <label class="control-label">成立日期</label>
+        <div>
           <input type="date"
                  class="form-control"
                  placeholder="请输入成立日期"
@@ -141,8 +141,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !customer.industry.ver}">
-        <label class="col-sm-3 control-label">所属行业</label>
-        <div class="col-sm-9">
+        <label class="control-label">所属行业</label>
+        <div>
           <input type="text"
                  class="form-control"
                  placeholder="请输入所属行业"
@@ -150,16 +150,16 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label">创建部门</label>
-        <div class="col-sm-9">
+        <label class="control-label">创建部门</label>
+        <div>
           <p class="form-control-static">
             {{customer.founderDepartment.val}}
           </p>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label">创建人</label>
-        <div class="col-sm-9">
+        <label class="control-label">创建人</label>
+        <div>
           <p class="form-control-static">
             {{customer.founderName.val}}
           </p>
@@ -170,17 +170,17 @@
         {{alert.cont}}
       </div>
     </form>
-    <div slot="footer">
-      <button class="btn btn-primary modal-default-button"
+    <div slot="footer" class="ta-c">
+      <button class="btn my-btn submit-btn modal-default-button"
               @click="save()"
               :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
-      <button class="btn btn-default modal-default-button"
+      <button class="btn my-btn cancel-btn modal-default-button"
               @click="cancel()">
         取消
       </button>
-      <button class="btn btn-danger modal-default-button"
+      <button class="btn my-btn draft-btn modal-default-button"
               @click="del()">
         删除
       </button>
@@ -416,5 +416,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-
+  .control-label {
+    width: 100%;
+  }
 </style>
