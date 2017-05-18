@@ -57,13 +57,13 @@
       <label class="col-sm-2 control-label">项目计划时间</label>
       <div class="col-sm-5">
         <div class="row">
-          <div class="col-sm-5">
+          <div class="col-sm-6">
             <div class="input-group">
               <div class="input-group-addon">开始时间</div>
               <input type="date" class="form-control" placeholder="请输入项目开始时间" v-model="business.time.start" :disabled="!editable">
             </div>
           </div>
-          <div class="col-sm-5">
+          <div class="col-sm-6">
             <div class="input-group">
               <div class="input-group-addon">结束时间</div>
               <input type="date" class="form-control" placeholder="请输入项目结束时间" v-model="business.time.end" :disabled="!editable">
@@ -148,13 +148,13 @@
       <label class="col-sm-2 control-label">审计时间</label>
       <div class="col-sm-5">
         <div class="row">
-          <div class="col-sm-5">
+          <div class="col-sm-6">
             <div class="input-group">
               <div class="input-group-addon">开始时间</div>
               <input type="date" class="form-control" placeholder="请输入项目开始时间" v-model="business.auditTime.start" :disabled="!editable">
             </div>
           </div>
-          <div class="col-sm-5">
+          <div class="col-sm-6">
             <div class="input-group">
               <div class="input-group-addon">结束时间</div>
               <input type="date" class="form-control" placeholder="请输入项目结束时间" v-model="business.auditTime.end" :disabled="!editable">

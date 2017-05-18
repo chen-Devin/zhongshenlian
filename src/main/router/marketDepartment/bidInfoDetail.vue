@@ -13,46 +13,23 @@
                      @addEfficiencyFee="addEfficiencyFee"
                      @quedingDelete="quedingDelete"
                      v-if="editShow"></bid-info-edit>
-      <modal v-show="inputSussessShow">
-        <p slot="body" class="ta-c cancel-word">
-          <i class="fa fa-check-circle fa-3x icon" aria-hidden="true"></i>
-          保存信息成功
-        </p>
-        <p slot="footer">
-          <button class="btn btn-primary" @click="inputFinish()">完成</button>
-        </p>
-      </modal>
-      <modal v-show="draftSussessShow">
-        <p slot="body" class="ta-c cancel-word">
-          <i class="fa fa-check-circle fa-3x icon" aria-hidden="true"></i>
-          保存草稿成功
-        </p>
-        <p slot="footer">
-          <button class="btn btn-primary" @click="draftFinish()">完成</button>
-        </p>
-      </modal>
-      <modal v-show="deleteSussessShow">
-        <p slot="body" class="ta-c cancel-word">
-          <i class="fa fa-check-circle fa-3x icon" aria-hidden="true"></i>
-          撤销成功，已删除项目
-        </p>
-        <p slot="footer">
-          <button class="btn btn-primary" @click="deleteFinish()">完成</button>
-        </p>
-      </modal>
     </card>
   </div>
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
+import { Message } from 'element-ui';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import bidInfoCheck from './component/bidInfoCheck.vue';
 import bidInfoEdit from './component/bidInfoEdit.vue';
-import modal from '../../component/modal.vue'
+import modal from '../../component/modal.vue';
+
+Vue.prototype.$message = Message;
 
 export default {
   name: 'bidInfoDetail',
@@ -67,10 +44,7 @@ export default {
       editShow: false,
       checkShow: true,
       id: '',
-      isDraft: '',
-      draftSussessShow: false,
-      inputSussessShow: false,
-      deleteSussessShow: false
+      isDraft: ''
     }
   },
     methods: {
@@ -119,8 +93,8 @@ export default {
               })
           }).then((rep)=>{
             if (rep.data.statusCode === '10001') {
-              this.inputSussessShow = true;
-              //加一个弹出框，然后加一个跳转
+              this.$message.success('保存信息成功');
+              this.$router.push('/bid-info-list');
             }
           }, (rep)=>{});
       },
@@ -143,7 +117,8 @@ export default {
               })
           }).then((rep)=>{
             if (rep.data.statusCode === '10001') {
-              this.draftSussessShow = true;
+              this.$message.success('保存草稿成功');
+              this.$router.push('/bid-info-draft');
             }
           }, (rep)=>{});
       },
@@ -176,19 +151,10 @@ export default {
               })
           }).then((rep)=>{
             if (rep.data.statusCode === '10001') {
-              this.deleteSussessShow = true;
+              this.$message.success('撤销成功，已删除项目');
+              this.$router.push('/bid-info-list');
             }
           }, (rep)=>{});
-      },
-      deleteFinish() {
-          this.$router.push('/bid-info-list');
-      },
-      inputFinish() {
-          this.$router.push('/bid-info-list');
-      },
-      draftFinish() {
-          //close
-          this.$router.push('/bid-info-draft');
       },
         definePath() {
             if (this.isDraft === "isDraft") {

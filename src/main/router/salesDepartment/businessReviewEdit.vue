@@ -7,12 +7,12 @@
         <div class="pull-right">
           <template v-if="editStat">
             <template v-if="!editable">
-              <button class="btn btn-primary" @click="edi()">编辑</button>
+              <button class="btn my-btn submit-btn" @click="edi()">编辑</button>
             </template>
             <template v-if="editable">
-              <button class="btn btn-success" @click="sub()">提交</button>
-              <button class="btn btn-warning" @click="sav()">暂存</button>
-              <button class="btn btn-danger" @click="del()">撤销</button>
+              <button class="btn my-btn submit-btn" @click="sub()">提交</button>
+              <button class="btn my-btn draft-btn" @click="sav()">暂存</button>
+              <button class="btn my-btn cancel-btn" @click="del()">撤销</button>
             </template>
           </template>
         </div>

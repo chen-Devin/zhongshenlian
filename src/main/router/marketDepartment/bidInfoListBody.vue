@@ -1,8 +1,8 @@
 <template>
   <div>
-    <form class="row search-form" @submit.prevent @keyup.enter.prevent>
-      <search-bar class="col-md-10" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" @search="search"></search-bar>
-      <div class="col-md-2 higher-search">
+    <form class="row search-form p-r" @submit.prevent @keyup.enter.prevent>
+      <search-bar class="col-md-10" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" @search="search" v-if="simpleSearch"></search-bar>
+      <div class="col-md-2 higher-search p-a">
         <button type="button" class="btn draft-btn my-btn" @click="showHigherSearch()">
           高级搜索
           &nbsp
@@ -17,19 +17,19 @@
         <div class="col-md-4 ta-c">
           <div class="form-group">
             <label for="projectName">项目名称</label>
-            <input type="text" class="form-control" id="projectName" placeholder="请填写项目名称" v-model="projectName">
+            <input type="text" class="form-control ta-c" id="projectName" placeholder="请填写项目名称" v-model="projectName">
           </div>
         </div>
         <div class="col-md-4 ta-c">
           <div class="form-group">
             <label for="agency">代理机构</label>
-            <input type="text" class="form-control" id="agency" placeholder="请填写代理机构" v-model="agency">
+            <input type="text" class="form-control ta-c" id="agency" placeholder="请填写代理机构" v-model="agency">
           </div>
         </div>
         <div class="col-md-4 ta-c">
           <div class="form-group">
             <label for="tenderPerson">招标人</label>
-            <input type="text" class="form-control" id="tenderPerson" placeholder="请填写招标人" v-model="tenderPerson">
+            <input type="text" class="form-control ta-c" id="tenderPerson" placeholder="请填写招标人" v-model="tenderPerson">
           </div>
         </div>
       </div>
@@ -167,6 +167,7 @@ export default {
       higherSearch: false,
       searchDown: true,
       searchUp: false,
+      simpleSearch: true,
       bidArray: [], //是数组不是对象
       user: {},
       searchContent: '',
@@ -387,10 +388,12 @@ export default {
     showHigherSearch() {
       if (this.higherSearch === false) {
         this.higherSearch = true;
+        this.simpleSearch = false;
         this.searchUp = true;
         this.searchDown = false;
       } else {
         this.higherSearch = false;
+        this.simpleSearch = true;
         this.searchUp = false;
         this.searchDown = true;
       }
@@ -428,6 +431,7 @@ export default {
 }
 .higher-search {
   margin-top: 30px;
+  right: 10px;
 }
 .dateMr {
 	padding-right: 110px;
@@ -491,6 +495,7 @@ input::-webkit-input-placeholder{text-align: center;}
   margin-top: -2px;
 }
 .higherForm {
+  margin-top: 90px;
   .form-group {
     width: 100%;
     label {
@@ -515,11 +520,16 @@ input::-webkit-input-placeholder{text-align: center;}
   margin-top: 10px;
 }
 .search-form {
+  padding-left: 0;
+  padding-right: 0;
   .col-md-10 {
-    width: 90%;
+    width: 87%;
   }
   .col-md-2 {
     width: 10%;
   }
+}
+.search-btn {
+  right: 0;
 }
 </style>

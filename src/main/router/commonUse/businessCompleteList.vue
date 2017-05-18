@@ -2,16 +2,18 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
-        <label class="radio-inline">
-          <input type="radio" name="seaType" value="关键字搜索" v-model="seaType" @change="seaTypeChan"> 关键字搜索
-        </label>
-        <label class="radio-inline">
-          <input type="radio" name="seaType" value="条件查询" v-model="seaType" @change="seaTypeChan"> 条件查询
-        </label>
+      <form class="row search-form p-r" @submit.prevent @keyup.enter.prevent>
+        <search-bar class="col-md-10" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" @search="tog" v-if="simpleSearch"></search-bar>
+        <div class="col-md-2 higher-search p-a">
+          <button type="button" class="btn draft-btn my-btn" @click="showHigherSearch()">
+            高级搜索
+            &nbsp
+            <img v-if="searchDown" class="search-icon" src="../../../img/market/search_down.svg">
+            <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg">
+          </button>
+        </div>
       </form>
-      <business-complete-search-bar @search="tog" v-show="seaType==='条件查询'"></business-complete-search-bar>
-      <search-bar placeholder="输入关键字搜索已完成业务" @search="tog" v-show="seaType==='关键字搜索'"></search-bar>
+      <business-complete-search-bar @search="tog" v-if="higherSearch"></business-complete-search-bar>
       <h3 class="main-title">
         业务列表
       </h3>
@@ -52,6 +54,10 @@ export default {
       businesses: [],
       seaType: '关键字搜索',
       searchTog: false,
+      simpleSearch: true,
+      searchDown: true,
+      searchUp: false,
+      higherSearch: false,
       sea: {
         searchContent: '',
         requester: '',
@@ -81,6 +87,19 @@ export default {
     seaTypeChan() {
       this.get(1);
       this.seaInit();
+    },
+    showHigherSearch() {
+      if (this.higherSearch === false) {
+        this.higherSearch = true;
+        this.simpleSearch = false;
+        this.searchUp = true;
+        this.searchDown = false;
+      } else {
+        this.higherSearch = false;
+        this.simpleSearch = true;
+        this.searchUp = false;
+        this.searchDown = true;
+      }
     },
     seaInit() {
       this.sea = {
@@ -215,4 +234,21 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+  .search-form {
+    padding-left: 0;
+    padding-right: 0;
+    .col-md-10 {
+      width: 87%;
+    }
+    .col-md-2 {
+      width: 10%;
+    }
+  }
+  .search-btn {
+    right: 0;
+  }
+  .higher-search {
+  margin-top: 30px;
+  right: 10px;
+}
 </style>
