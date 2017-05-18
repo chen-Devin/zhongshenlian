@@ -98,6 +98,7 @@ export default {
       &.active {
         > a {
           background-color: #288ADA;
+          color: #ffffff;
           &.bid-info:before {
             background: url('../../img/sidebar/bidInfoSelected.svg');
             background-repeat: no-repeat;
@@ -137,6 +138,7 @@ export default {
         padding: 1px 15px;
         padding-left: 100px;
         padding-bottom: 15px;
+        color: #999999;
         &:before {
           content: '';
           position: relative;

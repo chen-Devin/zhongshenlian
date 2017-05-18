@@ -6,8 +6,8 @@
       </h4>
     </div>
     <form class="form-horizontal" @submit.prevent @keyup.enter.prevent>
-      <button type="button" class="btn btn-primary f-r" @click="isEdit" v-if="editBtn">编辑</button>
-      <button type="button" class="btn btn-primary f-r" @click="delisting" v-if="brandBtn">摘牌</button>
+      <button type="button" class="btn my-btn submit-btn f-r" @click="isEdit" v-if="editBtn">编辑</button>
+      <button type="button" class="btn my-btn submit-btn f-r" @click="delisting" v-if="brandBtn">摘牌</button>
       <div class="form-group">
         <label for="projectName" class="col-sm-2 control-label">项目名称：</label>
         <div class="col-sm-6">
@@ -341,30 +341,44 @@
       <hr>
       <!-- 摘牌信息 一会加上-->
       <div v-if="delipotentShow">
-        <div class="form-group">
-          <label class="col-sm-2 control-label">摘牌部门：</label>
-          <div class="col-sm-10">
-            {{ project.delipotentDepartment }}
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="remark" class="col-sm-2 control-label">摘牌人员：</label>
-          <div class="col-sm-10">
-            {{ project.delipotentName }}
-          </div>
-        </div>
+        <table class="table table-bordered table-handle">
+          <thead>
+            <tr>
+              <td>
+                摘牌情况
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">摘牌部门：</label>
+                  <div class="col-sm-10">
+                    {{ project.delipotentDepartment }}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="remark" class="col-sm-2 control-label">摘牌人员：</label>
+                  <div class="col-sm-10">
+                    {{ project.delipotentName }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <div class="form-group">
           <label for="remark" class="col-sm-3 control-label">{{ project.delipotentTime }}</label>
         </div>
       </div>
       <!-- 所长通过不通过-->
       <div v-if="directorAgreeShow">
-        <hr>
         <div class="form-group">
-          <label for="remark" class="col-sm-2 control-label"></label>
-          <div class="col-sm-10">
-            <button type="button" class="btn btn-success" @click="approve()">通过</button>
-            <button type="button" class="btn btn-danger" @click="showAdvice()">不通过</button>
+          <label for="remark" class="col-sm-1 control-label"></label>
+          <div class="col-sm-11">
+            <button type="button" class="btn my-btn submit-btn" @click="approve()">通过</button>
+            <button type="button" class="btn my-btn draft-btn" @click="showAdvice()">不通过</button>
           </div>
         </div>
       </div>
@@ -376,65 +390,89 @@
           <textarea class="form-control" rows="8" placeholder="请填写修改意见，不超过500个字" v-model="adviceText"></textarea>
         </div>
         <div slot="footer">
-          <button type="button" class="btn btn-default" @click="adviceUpload">提交</button>
-          <button type="button" class="btn btn-default" @click="adviceCancel">取消</button>
+          <button type="button" class="btn my-btn submit-btn" @click="adviceUpload">提交</button>
+          <button type="button" class="btn my-btn draft-btn" @click="adviceCancel">取消</button>
         </div>
       </modal>
       <!-- 审核意见 -->
       <div v-if="checkAdviceShow">
-        <h5>审核意见</h5>
-        <hr>
-        <div class="row">
-          <div class="col-sm-5">审核人</div>
-          <div class="col-sm-5">是否通过</div>
-          <div class="col-sm-2">修改意见</div>
-        </div>
-        <div class="row" v-for="item in this.biddingApproverArray">
-          <div class="col-sm-5">{{ item.approverName }}</div>
-          <div class="col-sm-5">{{ item.approverResult }}</div>
-          <div class="col-sm-2">
-            <a v-if="item.showTaga" href="javascript:void(0);" @click="checkAdvice(item.approverOpinion)">查看</a>
-          </div>
-        </div>
+        <table class="table table-bordered table-handle">
+          <thead>
+            <tr>
+              <td>
+                审核意见
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="row">
+                  <div class="col-sm-5">审核人</div>
+                  <div class="col-sm-5">是否通过</div>
+                  <div class="col-sm-2 ta-c">修改意见</div>
+                </div>
+                <div class="row" v-for="item in this.biddingApproverArray">
+                  <div class="col-sm-5">{{ item.approverName }}</div>
+                  <div class="col-sm-5">{{ item.approverResult }}</div>
+                  <div class="col-sm-2 ta-c">
+                    <a v-if="item.showTaga" href="javascript:void(0);" @click="checkAdvice(item.approverOpinion)">查看</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
       <modal v-if="checkAdviceModal">
         <textarea slot="body" class="form-control" rows="8" placeholder="请填写修改意见，不超过500个字" v-model="adviceContent" readonly></textarea>
-        <button type="button" class="btn btn-default" slot="footer" @click="closeAdviceContent()">完成</button>
+        <button type="button" class="btn my-btn submit-btn" slot="footer" @click="closeAdviceContent()">完成</button>
       </modal>
       <!-- 入围或中标通知书-->
       <div v-if="noticePanel">
-        <hr>
-        <div class="row">
-          <div class="form-group">
-            <label class="col-sm-2 control-label">入围通知书：</label>
-            <div class="col-sm-8">
-              <a :href="ruweiDoc.url" target="_blank">{{ ruweiDoc.name }}</a>
-            </div>
-            <div class="col-sm-2">
-              <upload-report :type="shortlistedNotice" :id="projectId" @uploadList="recRuweiDoc" @deleteDoc="deleteRuweiDoc" v-if="noticeUpload"></upload-report>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group">
-            <label class="col-sm-2 control-label">中标通知书：</label>
-            <div class="col-sm-8">
-              <a :href="zhongbiaoDoc.url" target="_blank">{{ zhongbiaoDoc.name }}</a>
-            </div>
-            <div class="col-sm-2">
-              <upload-report :type="bidNotice" :id="projectId" @uploadList="recZhongbiaoDoc" @deleteDoc="deleteZhongbiaoDoc" v-if="noticeUpload"></upload-report>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row" v-if="finishBtn">
-        <div class="form-group">
-          <label class="col-sm-2 control-label"></label>
-          <div class="col-sm-10">
-            <button type="button" class="btn btn-default" @click="uploadFinish()">上传完成</button>
-          </div>
-        </div>
+        <table class="table table-bordered table-handle table-contract">
+          <thead>
+            <tr>
+              <td>电子合同附件</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="row">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">入围通知书：</label>
+                    <div class="col-sm-8">
+                      <a :href="ruweiDoc.url" target="_blank">{{ ruweiDoc.name }}</a>
+                    </div>
+                    <div class="col-sm-2">
+                      <upload-report :type="shortlistedNotice" :id="projectId" @uploadList="recRuweiDoc" @deleteDoc="deleteRuweiDoc" v-if="noticeUpload"></upload-report>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">中标通知书：</label>
+                    <div class="col-sm-8">
+                      <a :href="zhongbiaoDoc.url" target="_blank">{{ zhongbiaoDoc.name }}</a>
+                    </div>
+                    <div class="col-sm-2">
+                      <upload-report :type="bidNotice" :id="projectId" @uploadList="recZhongbiaoDoc" @deleteDoc="deleteZhongbiaoDoc" v-if="noticeUpload"></upload-report>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" v-if="finishBtn">
+                  <div class="form-group">
+                    <label class="col-sm-1 control-label"></label>
+                    <div class="col-sm-11">
+                      <button type="button" class="btn my-btn submit-btn" @click="uploadFinish()">上传完成</button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </form>
   </div>
@@ -453,6 +491,15 @@
   .adviceTitle {
       margin-top: 0;
       margin-bottom: 20px;
+  }
+  .table-contract {
+    tbody {
+      tr {
+        td {
+          padding-left: 30px;
+        }
+      }
+    }
   }
 </style>
 

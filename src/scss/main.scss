@@ -54,8 +54,8 @@ body {
 .normal-wrap {
   margin-top: 30px;
   margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 //列表
@@ -69,7 +69,7 @@ body {
     }
     .h-right {
       float: right;
-      padding-right: 110px;
+      padding-right: 40px;
     }
   }
   tbody {
@@ -78,19 +78,18 @@ body {
         .state-wrap {
           display: inline-block;
           background-color: #fff;
-          border: 1px solid #288ada;
-          border-radius: 5px;
-          margin-top: 16px;
-          margin-bottom: 16px;
-          margin-left: 30px;
-          margin-right: 30px;
-          padding: 7px 38px;
+          border: 1px solid #000;
+          border-radius: 2px;
+          margin-right: 10px;
           font-size: 14px;
+          padding-left: 5px;
+          padding-right: 5px;
+          padding-top: 1px;
+          padding-bottom: 1px;
         }
         &.time-wrap {
           text-align: right;
           vertical-align: middle;
-          padding-right: 70px;
         }
       }
     }
@@ -102,7 +101,6 @@ body {
   text-align: right;
   margin-bottom: 0;
   padding-top: 7px;
-  // color: #666666;
   font-weight: normal;
   text-align: left;
   width: 13%;
@@ -119,6 +117,10 @@ body {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+form {
+  padding-left: 50px;
+  padding-right: 50px;
+}
 
 //属性
 .f-l {
@@ -131,6 +133,14 @@ body {
 
 .ta-c {
   text-align: center;
+}
+
+.p-a {
+  position: absolute;
+}
+
+.p-r {
+  position: relative;
 }
 
 //按钮
@@ -224,6 +234,23 @@ body {
   border: none;
 }
 
+//摘牌及审核情况
+
+.table-handle {
+  thead {
+    background-color: #E6E6E6;
+  }
+  tbody {
+    tr {
+      td {
+        padding: 15px;
+      }
+    }
+  }
+  .form-group {
+    margin-bottom: 0;
+  }
+}
 
 
 

@@ -96,7 +96,7 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">资产总额：</label>
 					<div class="col-sm-10">
-						<div class="input-group">
+						<div class="input-group half-width">
               <masked-input type="text" class="form-control" placeholder="请输入资产总额" v-model="project.totalAssets" :mask="currencyMask" :guide="false" placeholderChar="#">
               </masked-input>
 							<div class="input-group-addon">元</div>
@@ -426,7 +426,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">招标控制价：</label>
 				<div class="col-sm-10">
-					<div class="input-group">
+					<div class="input-group half-width">
             <masked-input type="text" class="form-control" placeholder="请输入招标控制价" v-model="project.controlPrice" :mask="currencyMask" :guide="false" placeholderChar="#">
             </masked-input>
 						<div class="input-group-addon">元</div>
@@ -442,7 +442,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">招标文件价格：</label>
 				<div class="col-sm-10">
-					<div class="input-group">
+					<div class="input-group half-width">
             <masked-input type="text" class="form-control" placeholder="请输入招标文件价格" v-model="project.bidDocumentPrice" :mask="currencyMask" :guide="false" placeholderChar="#">
             </masked-input>
 						<div class="input-group-addon">元</div>
@@ -468,7 +468,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">投标保证金：</label>
 				<div class="col-sm-10">
-					<div class="input-group">
+					<div class="input-group half-width">
             <masked-input type="text" class="form-control" placeholder="请输入投标保证金" v-model="project.bidBond" :mask="currencyMask" :guide="false" placeholderChar="#">
             </masked-input>
 						<div class="input-group-addon">元</div>
@@ -479,7 +479,7 @@
 			<div class="form-group">
 				<label for="tenderFee" class="col-sm-2 control-label">标书费：</label>
 				<div class="col-sm-10">
-					<div class="input-group">
+					<div class="input-group half-width">
             <masked-input type="text" class="form-control" placeholder="请输入标书费" v-model="project.tenderFee" :mask="currencyMask" :guide="false" placeholderChar="#">
             </masked-input>
 						<div class="input-group-addon">元</div>
@@ -490,7 +490,7 @@
 			<div class="form-group">
 				<label for="winningServiceFee" class="col-sm-2 control-label">中标服务费：</label>
 				<div class="col-sm-10">
-					<div class="input-group">
+					<div class="input-group half-width">
             <masked-input type="text" class="form-control" placeholder="请输入中标服务费" v-model="project.winningServiceFee" :mask="currencyMask" :guide="false" placeholderChar="#">
             </masked-input>
 						<div class="input-group-addon">元</div>
@@ -524,8 +524,8 @@
 				撤销后项目将不存在，是否确定撤销？
 			</p>
 			<p slot="footer">
-				<button class="btn btn-primary" @click="queding()">确定</button>
-				<button class="btn btn-default" @click="quxiao()">取消</button>
+				<button class="btn my-btn submit-btn" @click="queding()">确定</button>
+				<button class="btn my-btn cancel-btn" @click="quxiao()">取消</button>
 			</p>
 		</modal>
 	</div>
@@ -619,7 +619,6 @@ export default {
 			this.cancelModal = false;
 		},
 		queding() {
-			//祥哥给
 			this.$emit('quedingDelete',this.project.id);
 		},
 		delBasicFee(index) {

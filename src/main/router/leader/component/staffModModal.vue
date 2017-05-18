@@ -6,8 +6,8 @@
           @keyup.enter.prevent>
       <div class="form-group"
            :class="{'has-error': !staff.name.ver}">
-        <label class="col-sm-3 control-label">姓名</label>
-        <div class="col-sm-9">
+        <label class="control-label">姓名</label>
+        <div>
           <input type="text"
                  class="form-control"
                  placeholder="请输入职员姓名"
@@ -15,8 +15,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label">性别</label>
-        <div class="col-sm-9">
+        <label class="control-label">性别</label>
+        <div>
           <label class="radio-inline">
             <input type="radio"
                    name="staff-sex"
@@ -33,8 +33,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !staff.telephone.ver}">
-        <label class="col-sm-3 control-label">手机号</label>
-        <div class="col-sm-9">
+        <label class="control-label">手机号</label>
+        <div>
           <input type="tel"
                  class="form-control"
                  placeholder="请输入职员手机号码"
@@ -43,8 +43,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !staff.jobNumber.ver}">
-        <label class="col-sm-3 control-label">工号</label>
-        <div class="col-sm-9">
+        <label class="control-label">工号</label>
+        <div>
           <input type="text"
                  class="form-control"
                  placeholder="请输入工号"
@@ -53,8 +53,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !staff.duties.ver}">
-        <label class="col-sm-3 control-label">职务</label>
-        <div class="col-sm-9">
+        <label class="control-label">职务</label>
+        <div>
           <input type="text"
                  class="form-control"
                  placeholder="请输入职务"
@@ -63,8 +63,8 @@
       </div>
       <div class="form-group"
            :class="{'has-error': !staff.department.ver}">
-        <label class="col-sm-3 control-label">所属部门</label>
-        <div class="col-sm-9">
+        <label class="control-label">所属部门</label>
+        <div>
           <input type="text"
                  class="form-control"
                  placeholder="请输入所属部门"
@@ -73,8 +73,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label">备注</label>
-        <div class="col-sm-9">
+        <label class="control-label">备注</label>
+        <div>
           <input type="text"
                  class="form-control"
                  placeholder="请输入备注"
@@ -86,17 +86,17 @@
         {{alert.cont}}
       </div>
     </form>
-    <div slot="footer">
-      <button class="btn btn-primary modal-default-button"
+    <div slot="footer" class="ta-c">
+      <button class="btn my-btn submit-btn modal-default-button"
               @click="save()"
               :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
-      <button class="btn btn-default modal-default-button"
+      <button class="btn my-btn cancel-btn modal-default-button"
               @click="cancel()">
         取消
       </button>
-      <button class="btn btn-danger modal-default-button"
+      <button class="btn my-btn draft-btn modal-default-button"
               @click="del()">
         删除
       </button>
@@ -249,6 +249,8 @@ export default {
 };
 </script>
 
-<style>
-
+<style lang="sass" scoped>
+  .control-label {
+    width: 100%;
+  }
 </style>

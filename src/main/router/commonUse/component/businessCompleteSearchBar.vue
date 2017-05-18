@@ -1,29 +1,29 @@
 <template>
-  <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent="search">
-    <div class="form-group">
-      <div class="col-sm-4 row">
-        <label class="col-xs-3 control-label">委托单位</label>
-        <div class="col-xs-9">
-          <input type="text" class="form-control" placeholder="请输入委托单位" v-model.trim="sea.requester">
+  <form class="form-inline higherForm">
+    <div class="row">
+      <div class="col-md-4 ta-c">
+        <div class="form-group">
+          <label for="projectName">委托单位</label>
+          <input type="text" class="form-control" id="projectName" placeholder="请输入委托单位" v-model="sea.requester">
         </div>
       </div>
-      <div class="col-sm-4 row">
-        <label class="col-xs-3 control-label">联系人</label>
-        <div class="col-xs-9">
-          <input type="text" class="form-control" placeholder="请输入联系人" v-model.trim="sea.requesterName">
+      <div class="col-md-4 ta-c">
+        <div class="form-group">
+          <label for="agency">联系人</label>
+          <input type="text" class="form-control" id="agency" placeholder="请输入联系人" v-model="sea.requesterName">
         </div>
       </div>
-      <div class="col-sm-4 row">
-        <label class="col-xs-3 control-label">申请人</label>
-        <div class="col-xs-9">
-          <input type="text" class="form-control" placeholder="请输入申请人" v-model.trim="sea.applicantName">
+      <div class="col-md-4 ta-c">
+        <div class="form-group">
+          <label for="tenderPerson">申请人</label>
+          <input type="text" class="form-control" id="tenderPerson" placeholder="请输入申请人" v-model="sea.applicantName">
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <div class="col-sm-6 row">
-        <label class="col-xs-2 control-label">项目金额</label>
-        <div class="col-xs-10">
+    <div class="row">
+      <div class="col-md-4 ta-c">
+        <div class="form-group">
+          <label for="projectName">项目金额</label>
           <div class="input-group">
             <select class="form-control" v-model="sea.amount" @change="search()">
               <option :value="AMO" v-for="(AMO, index) in amounts" :key="index">{{AMO}}</option>
@@ -32,40 +32,44 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-6 row">
-        <label class="col-xs-2 control-label">业务类型</label>
-        <div class="col-xs-10">
-          <select class="form-control" v-model="sea.type" @change="search()">
+      <div class="col-md-4 ta-c">
+        <div class="form-group">
+          <label for="agency">业务类型</label>
+          <select class="form-control type" v-model="sea.type" @change="search()">
             <option :value="TYPE" v-for="(TYPE, index) in types" :key="index">{{TYPE}}</option>
           </select>
         </div>
       </div>
+      <div class="col-md-4 ta-c"></div>
     </div>
-    <div class="form-group">
-      <div class="col-sm-12 row">
-        <label class="col-xs-1 control-label">项目完成时间</label>
-        <div class="col-xs-5">
+    <div class="row">
+      <div class="col-md-4 ta-c">
+        <div class="form-group">
+          <label for="tenderPerson">项目完成时间起</label>
           <input type="date"
                  class="form-control"
-                 placeholder="请输入时间区间起点"
+                 placeholder="请输入时间区间起"
                  v-model.trim="sea.time.start"
                  @change="search()">
         </div>
-        <div class="col-xs-5">
+      </div>
+      <div class="col-md-4 ta-c">
+        <div class="form-group">
+          <label for="tenderPerson">项目完成时间止</label>
           <input type="date"
                  class="form-control"
-                 placeholder="请输入时间区间终点"
+                 placeholder="请输入时间区间止"
                  v-model.trim="sea.time.end"
                  @change="search()">
         </div>
       </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-12">
-        <button class="btn btn-primary" type="button" @click="search">
-          查询
-        </button>
+      <div class="col-md-4">
+
       </div>
+    </div>
+    <div class="search-btns ta-c">
+      <button type="button" class="btn my-btn submit-btn" @click="higherSearchEvent()">查找</button>
+      <button type="button" class="btn my-btn draft-btn" @click="reset()">重置</button>
     </div>
   </form>
 </template>
@@ -129,5 +133,32 @@ export default {
 };
 </script>
 
-<style style="sass" scoped>
+<style lang="sass" scoped>
+.normal-wrap {
+  margin-top: 100px;
+}
+.higherForm {
+  margin-top: 90px;
+  .form-group {
+    width: 100%;
+    label {
+      width: 25%;
+    }
+    input {
+      width: 70%;
+    }
+    .input-group {
+      width: 70%;
+    }
+  }
+}
+.form-inline .type {
+    width: 70%;
+}
+.row {
+    margin-bottom: 20px;
+}
+.submit-btn {
+  margin-right: 30px;
+}
 </style>

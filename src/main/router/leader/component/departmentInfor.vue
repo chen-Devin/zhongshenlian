@@ -9,7 +9,7 @@
               录入
       </button>
     </h3>
-    <table class="table table-striped table-hover com-list">
+    <table class="table table-bordered table-hover com-list">
       <thead>
         <tr>
           <th class="text-center">职员</th>
@@ -18,7 +18,7 @@
           <th class="text-center">工号</th>
           <th class="text-center">职务</th>
           <th class="text-center">所属部门</th>
-          <th class="text-center">&nbsp;</th>
+          <th class="text-center">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -74,7 +74,7 @@ export default {
       delStaff: {},
       showAddModal: false,
       page: {
-        total: this.department.pageNum,
+        total: this.department.totalNum,
         current: (this.department.pageNum === 0) ? 0 : 1
       },
       totalPage: 1
@@ -192,6 +192,9 @@ export default {
 
 <style lang="sass" scoped>
 .com-list {
+  thead {
+    background-color: #E6E6E6;
+  }
   .link-wrap {
     width: 45px;
     a:hover {
