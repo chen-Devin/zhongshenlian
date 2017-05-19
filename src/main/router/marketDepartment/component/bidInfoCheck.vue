@@ -443,7 +443,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label">入围通知书：</label>
                     <div class="col-sm-8">
-                      <a :href="ruweiDoc.url" target="_blank">{{ ruweiDoc.name }}</a>
+                      <a :href="ruweiDoc.url" download>{{ ruweiDoc.name }}</a>
                     </div>
                     <div class="col-sm-2">
                       <upload-report :type="shortlistedNotice" :id="projectId" @uploadList="recRuweiDoc" @deleteDoc="deleteRuweiDoc" v-if="noticeUpload"></upload-report>
@@ -454,7 +454,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label">中标通知书：</label>
                     <div class="col-sm-8">
-                      <a :href="zhongbiaoDoc.url" target="_blank">{{ zhongbiaoDoc.name }}</a>
+                      <a :href="zhongbiaoDoc.url" download>{{ zhongbiaoDoc.name }}</a>
                     </div>
                     <div class="col-sm-2">
                       <upload-report :type="bidNotice" :id="projectId" @uploadList="recZhongbiaoDoc" @deleteDoc="deleteZhongbiaoDoc" v-if="noticeUpload"></upload-report>

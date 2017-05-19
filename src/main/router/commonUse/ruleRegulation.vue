@@ -7,7 +7,8 @@
         制度列表
         <router-link class="btn my-btn submit-btn pull-right"
                      to="/rule-regulation-add"
-                     tag="button">
+                     tag="button"
+                     v-if="btnShow">
           新建制度
         </router-link>
       </h3>
@@ -50,6 +51,11 @@ export default {
       totalPage: 1,
       totalNum: 1
     };
+  },
+  computed: {
+    btnShow() {
+      return this.user.department === '所长';
+    }
   },
   props: ['user'],
   created() {
