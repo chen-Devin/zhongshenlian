@@ -9,7 +9,7 @@ __webpack_require__(624)
 
 var Component = __webpack_require__(2)(
   /* script */
-  __webpack_require__(296),
+  __webpack_require__(298),
   /* template */
   __webpack_require__(537),
   /* scopeId */
@@ -17,13 +17,13 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\Administrator\\Documents\\Liulu-dev\\tzucpa\\src\\signUp\\App.vue"
+Component.options.__file = "C:\\Users\\xiaoj\\Documents\\tzucpa\\src\\signUp\\App.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] App.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
@@ -46,7 +46,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 296:
+/***/ 298:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -112,7 +112,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 297:
+/***/ 299:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -435,13 +435,13 @@ exports.default = {
 
 /***/ }),
 
-/***/ 301:
+/***/ 303:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _vue = __webpack_require__(8);
+var _vue = __webpack_require__(7);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -506,7 +506,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\nfooter[data-v-032a2e43] {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  width: 100%;\n  padding-top: 20px;\n}\nspan[data-v-032a2e43] {\n  display: inline-block;\n  padding: 0 15px;\n  color: #f0f0f0;\n  line-height: 0.8em;\n}\nfooter span[data-v-032a2e43]:first-child {\n  border-right: 1px solid #f0f0f0;\n}\nfooter span[data-v-032a2e43]:last-child {\n  border-left: 1px solid #f0f0f0;\n}\n", "", {"version":3,"sources":["C:/Users/Administrator/Documents/Liulu-dev/tzucpa/src/component/comFooter.vue"],"names":[],"mappings":";AAAA;EACE,cAAc;EACd,oBAAoB;EACpB,kBAAkB;EAClB,wBAAwB;EACxB,oBAAoB;EACpB,YAAY;EACZ,kBAAkB;CAAE;AAEtB;EACE,sBAAsB;EACtB,gBAAgB;EAChB,eAAe;EACf,mBAAmB;CAAE;AAEvB;EACE,gCAAgC;CAAE;AAEpC;EACE,+BAA+B;CAAE","file":"comFooter.vue","sourcesContent":["footer {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  width: 100%;\n  padding-top: 20px; }\n\nspan {\n  display: inline-block;\n  padding: 0 15px;\n  color: #f0f0f0;\n  line-height: 0.8em; }\n\nfooter span:first-child {\n  border-right: 1px solid #f0f0f0; }\n\nfooter span:last-child {\n  border-left: 1px solid #f0f0f0; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\nfooter[data-v-032a2e43] {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  width: 100%;\n  padding-top: 20px;\n}\nspan[data-v-032a2e43] {\n  display: inline-block;\n  padding: 0 15px;\n  color: #f0f0f0;\n  line-height: 0.8em;\n}\nfooter span[data-v-032a2e43]:first-child {\n  border-right: 1px solid #f0f0f0;\n}\nfooter span[data-v-032a2e43]:last-child {\n  border-left: 1px solid #f0f0f0;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/component/comFooter.vue"],"names":[],"mappings":";AAAA;EACE,cAAc;EACd,oBAAoB;EACpB,kBAAkB;EAClB,wBAAwB;EACxB,oBAAoB;EACpB,YAAY;EACZ,kBAAkB;CAAE;AAEtB;EACE,sBAAsB;EACtB,gBAAgB;EAChB,eAAe;EACf,mBAAmB;CAAE;AAEvB;EACE,gCAAgC;CAAE;AAEpC;EACE,+BAA+B;CAAE","file":"comFooter.vue","sourcesContent":["footer {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  width: 100%;\n  padding-top: 20px; }\n\nspan {\n  display: inline-block;\n  padding: 0 15px;\n  color: #f0f0f0;\n  line-height: 0.8em; }\n\nfooter span:first-child {\n  border-right: 1px solid #f0f0f0; }\n\nfooter span:last-child {\n  border-left: 1px solid #f0f0f0; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -521,14 +521,14 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n.navbar[data-v-245c9235] {\n  background-color: rgba(255, 255, 255, 0);\n  border-color: rgba(255, 255, 255, 0);\n}\n.navbar .navbar-brand[data-v-245c9235] {\n    padding: 8px 15px;\n}\n.navbar .navbar-brand img[data-v-245c9235] {\n      height: 100%;\n}\n.navbar h4.brand-name[data-v-245c9235] {\n    margin-left: 0;\n    color: rgba(240, 240, 240, 0.9);\n}\n", "", {"version":3,"sources":["C:/Users/Administrator/Documents/Liulu-dev/tzucpa/src/component/comHeader.vue"],"names":[],"mappings":";AAAA;EACE,yCAAyC;EACzC,qCAAqC;CAAE;AACvC;IACE,kBAAkB;CAAE;AACpB;MACE,aAAa;CAAE;AACnB;IACE,eAAe;IACf,gCAAgC;CAAE","file":"comHeader.vue","sourcesContent":[".navbar {\n  background-color: rgba(255, 255, 255, 0);\n  border-color: rgba(255, 255, 255, 0); }\n  .navbar .navbar-brand {\n    padding: 8px 15px; }\n    .navbar .navbar-brand img {\n      height: 100%; }\n  .navbar h4.brand-name {\n    margin-left: 0;\n    color: rgba(240, 240, 240, 0.9); }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.navbar[data-v-245c9235] {\n  background-color: rgba(255, 255, 255, 0);\n  border-color: rgba(255, 255, 255, 0);\n}\n.navbar .navbar-brand[data-v-245c9235] {\n    padding: 8px 15px;\n}\n.navbar .navbar-brand img[data-v-245c9235] {\n      height: 100%;\n}\n.navbar h4.brand-name[data-v-245c9235] {\n    margin-left: 0;\n    color: rgba(240, 240, 240, 0.9);\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/component/comHeader.vue"],"names":[],"mappings":";AAAA;EACE,yCAAyC;EACzC,qCAAqC;CAAE;AACvC;IACE,kBAAkB;CAAE;AACpB;MACE,aAAa;CAAE;AACnB;IACE,eAAe;IACf,gCAAgC;CAAE","file":"comHeader.vue","sourcesContent":[".navbar {\n  background-color: rgba(255, 255, 255, 0);\n  border-color: rgba(255, 255, 255, 0); }\n  .navbar .navbar-brand {\n    padding: 8px 15px; }\n    .navbar .navbar-brand img {\n      height: 100%; }\n  .navbar h4.brand-name {\n    margin-left: 0;\n    color: rgba(240, 240, 240, 0.9); }\n"],"sourceRoot":""}]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 337:
+/***/ 340:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(true);
@@ -536,14 +536,14 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n@charset \"UTF-8\";\n/*\n主色调\n@property 自定义变量\n@author xiaodabao\n@date 2017-03-31\n*/\n/*\n主体section边框色\n@property 自定义变量\n@author xiaodabao\n@date 2017-04-01\n*/\n/*\n主体section边框阴影色\n@property 自定义变量\n@author xiaodabao\n@date 2017-04-01\n*/\n/*\n主背景色\n@property 覆盖默认变量\n@author xiaodabao\n@date 2017-03-31\n*/\n/*\n修改大尺寸input的圆角\n@property 覆盖默认变量\n@author xiaodabao\n@date 2017-03-31\n*/\n/*\n修改默认非衬线字体\n@property 覆盖默认变量\n@author xiaodabao\n@date 2017-03-31\n*/\n/*\n修改type=\"file\"的<input>为不显示\n@property 强制覆盖bootstrap设置\n@author xiaodabao\n@date 2017-04-6\n*/\ninput[type=\"file\"][data-v-3f62ac20] {\n  display: none !important;\n}\n.section[data-v-3f62ac20] {\n  order: 1;\n  display: flex;\n  flex-direction: column;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  background: rgba(255, 255, 255, 0.9);\n}\n.section form[data-v-3f62ac20] {\n    margin: 0 70px;\n}\n.section form .form-group[data-v-3f62ac20] {\n      border: 1px solid transparent;\n      border-radius: 3px;\n}\n.section form .form-group.focus[data-v-3f62ac20] {\n        border: 1px solid #337ab7;\n}\n.section form .form-group.error[data-v-3f62ac20] {\n        border: 1px solid #d9534f;\n}\n.section form img[data-v-3f62ac20] {\n      width: 150px;\n      height: 150px;\n      margin-bottom: 50px;\n}\n.section form input.form-control[data-v-3f62ac20] {\n      border: none;\n      box-shadow: none;\n}\n.section form input.form-control[data-v-3f62ac20]:focus {\n        border: none;\n        box-shadow: none;\n}\n.section form .input-group-addon[data-v-3f62ac20],\n    .section form .input-group-btn > button[data-v-3f62ac20] {\n      border: none;\n      box-shadow: none;\n      background-color: white;\n}\n.section form .input-group-addon[data-v-3f62ac20]:hover, .section form .input-group-addon[data-v-3f62ac20]:focus,\n      .section form .input-group-btn > button[data-v-3f62ac20]:hover,\n      .section form .input-group-btn > button[data-v-3f62ac20]:focus {\n        border: none;\n        box-shadow: none;\n        outline: none;\n}\n.section form .input-group-btn > button[data-v-3f62ac20]:hover, .section form .input-group-btn > button[data-v-3f62ac20]:focus {\n      color: #23527c;\n}\n.section form .input-group-btn > button[data-v-3f62ac20]:disabled {\n      color: #777;\n}\n", "", {"version":3,"sources":["C:/Users/Administrator/Documents/Liulu-dev/tzucpa/src/signUp/component/index.vue"],"names":[],"mappings":";AAAA,iBAAiB;AACjB;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;EACE,yBAAyB;CAAE;AAE7B;EACE,SAAS;EACT,cAAc;EACd,uBAAuB;EACvB,kBAAkB;EAClB,wBAAwB;EACxB,oBAAoB;EACpB,qCAAqC;CAAE;AACvC;IACE,eAAe;CAAE;AACjB;MACE,8BAA8B;MAC9B,mBAAmB;CAAE;AACrB;QACE,0BAA0B;CAAE;AAC9B;QACE,0BAA0B;CAAE;AAChC;MACE,aAAa;MACb,cAAc;MACd,oBAAoB;CAAE;AACxB;MACE,aAAa;MACb,iBAAiB;CAAE;AACnB;QACE,aAAa;QACb,iBAAiB;CAAE;AACvB;;MAEE,aAAa;MACb,iBAAiB;MACjB,wBAAwB;CAAE;AAC1B;;;QAGE,aAAa;QACb,iBAAiB;QACjB,cAAc;CAAE;AACpB;MACE,eAAe;CAAE;AACnB;MACE,YAAY;CAAE","file":"index.vue","sourcesContent":["@charset \"UTF-8\";\n/*\n主色调\n@property 自定义变量\n@author xiaodabao\n@date 2017-03-31\n*/\n/*\n主体section边框色\n@property 自定义变量\n@author xiaodabao\n@date 2017-04-01\n*/\n/*\n主体section边框阴影色\n@property 自定义变量\n@author xiaodabao\n@date 2017-04-01\n*/\n/*\n主背景色\n@property 覆盖默认变量\n@author xiaodabao\n@date 2017-03-31\n*/\n/*\n修改大尺寸input的圆角\n@property 覆盖默认变量\n@author xiaodabao\n@date 2017-03-31\n*/\n/*\n修改默认非衬线字体\n@property 覆盖默认变量\n@author xiaodabao\n@date 2017-03-31\n*/\n/*\n修改type=\"file\"的<input>为不显示\n@property 强制覆盖bootstrap设置\n@author xiaodabao\n@date 2017-04-6\n*/\ninput[type=\"file\"] {\n  display: none !important; }\n\n.section {\n  order: 1;\n  display: flex;\n  flex-direction: column;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  background: rgba(255, 255, 255, 0.9); }\n  .section form {\n    margin: 0 70px; }\n    .section form .form-group {\n      border: 1px solid transparent;\n      border-radius: 3px; }\n      .section form .form-group.focus {\n        border: 1px solid #337ab7; }\n      .section form .form-group.error {\n        border: 1px solid #d9534f; }\n    .section form img {\n      width: 150px;\n      height: 150px;\n      margin-bottom: 50px; }\n    .section form input.form-control {\n      border: none;\n      box-shadow: none; }\n      .section form input.form-control:focus {\n        border: none;\n        box-shadow: none; }\n    .section form .input-group-addon,\n    .section form .input-group-btn > button {\n      border: none;\n      box-shadow: none;\n      background-color: white; }\n      .section form .input-group-addon:hover, .section form .input-group-addon:focus,\n      .section form .input-group-btn > button:hover,\n      .section form .input-group-btn > button:focus {\n        border: none;\n        box-shadow: none;\n        outline: none; }\n    .section form .input-group-btn > button:hover, .section form .input-group-btn > button:focus {\n      color: #23527c; }\n    .section form .input-group-btn > button:disabled {\n      color: #777; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n@charset \"UTF-8\";\n/*\r\n主色调\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n主体section边框色\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-04-01\r\n*/\n/*\r\n主体section边框阴影色\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-04-01\r\n*/\n/*\r\n主背景色\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改大尺寸input的圆角\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改默认非衬线字体\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改type=\"file\"的<input>为不显示\r\n@property 强制覆盖bootstrap设置\r\n@author xiaodabao\r\n@date 2017-04-6\r\n*/\ninput[type=\"file\"][data-v-3f62ac20] {\n  display: none !important;\n}\n.section[data-v-3f62ac20] {\n  order: 1;\n  display: flex;\n  flex-direction: column;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  background: rgba(255, 255, 255, 0.9);\n}\n.section form[data-v-3f62ac20] {\n    margin: 0 70px;\n}\n.section form .form-group[data-v-3f62ac20] {\n      border: 1px solid transparent;\n      border-radius: 3px;\n}\n.section form .form-group.focus[data-v-3f62ac20] {\n        border: 1px solid #337ab7;\n}\n.section form .form-group.error[data-v-3f62ac20] {\n        border: 1px solid #d9534f;\n}\n.section form img[data-v-3f62ac20] {\n      width: 150px;\n      height: 150px;\n      margin-bottom: 50px;\n}\n.section form input.form-control[data-v-3f62ac20] {\n      border: none;\n      box-shadow: none;\n}\n.section form input.form-control[data-v-3f62ac20]:focus {\n        border: none;\n        box-shadow: none;\n}\n.section form .input-group-addon[data-v-3f62ac20],\n    .section form .input-group-btn > button[data-v-3f62ac20] {\n      border: none;\n      box-shadow: none;\n      background-color: white;\n}\n.section form .input-group-addon[data-v-3f62ac20]:hover, .section form .input-group-addon[data-v-3f62ac20]:focus,\n      .section form .input-group-btn > button[data-v-3f62ac20]:hover,\n      .section form .input-group-btn > button[data-v-3f62ac20]:focus {\n        border: none;\n        box-shadow: none;\n        outline: none;\n}\n.section form .input-group-btn > button[data-v-3f62ac20]:hover, .section form .input-group-btn > button[data-v-3f62ac20]:focus {\n      color: #23527c;\n}\n.section form .input-group-btn > button[data-v-3f62ac20]:disabled {\n      color: #777;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/signUp/component/index.vue"],"names":[],"mappings":";AAAA,iBAAiB;AACjB;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;EACE,yBAAyB;CAAE;AAE7B;EACE,SAAS;EACT,cAAc;EACd,uBAAuB;EACvB,kBAAkB;EAClB,wBAAwB;EACxB,oBAAoB;EACpB,qCAAqC;CAAE;AACvC;IACE,eAAe;CAAE;AACjB;MACE,8BAA8B;MAC9B,mBAAmB;CAAE;AACrB;QACE,0BAA0B;CAAE;AAC9B;QACE,0BAA0B;CAAE;AAChC;MACE,aAAa;MACb,cAAc;MACd,oBAAoB;CAAE;AACxB;MACE,aAAa;MACb,iBAAiB;CAAE;AACnB;QACE,aAAa;QACb,iBAAiB;CAAE;AACvB;;MAEE,aAAa;MACb,iBAAiB;MACjB,wBAAwB;CAAE;AAC1B;;;QAGE,aAAa;QACb,iBAAiB;QACjB,cAAc;CAAE;AACpB;MACE,eAAe;CAAE;AACnB;MACE,YAAY;CAAE","file":"index.vue","sourcesContent":["@charset \"UTF-8\";\n/*\r\n主色调\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n主体section边框色\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-04-01\r\n*/\n/*\r\n主体section边框阴影色\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-04-01\r\n*/\n/*\r\n主背景色\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改大尺寸input的圆角\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改默认非衬线字体\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改type=\"file\"的<input>为不显示\r\n@property 强制覆盖bootstrap设置\r\n@author xiaodabao\r\n@date 2017-04-6\r\n*/\ninput[type=\"file\"] {\n  display: none !important; }\n\n.section {\n  order: 1;\n  display: flex;\n  flex-direction: column;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  background: rgba(255, 255, 255, 0.9); }\n  .section form {\n    margin: 0 70px; }\n    .section form .form-group {\n      border: 1px solid transparent;\n      border-radius: 3px; }\n      .section form .form-group.focus {\n        border: 1px solid #337ab7; }\n      .section form .form-group.error {\n        border: 1px solid #d9534f; }\n    .section form img {\n      width: 150px;\n      height: 150px;\n      margin-bottom: 50px; }\n    .section form input.form-control {\n      border: none;\n      box-shadow: none; }\n      .section form input.form-control:focus {\n        border: none;\n        box-shadow: none; }\n    .section form .input-group-addon,\n    .section form .input-group-btn > button {\n      border: none;\n      box-shadow: none;\n      background-color: white; }\n      .section form .input-group-addon:hover, .section form .input-group-addon:focus,\n      .section form .input-group-btn > button:hover,\n      .section form .input-group-btn > button:focus {\n        border: none;\n        box-shadow: none;\n        outline: none; }\n    .section form .input-group-btn > button:hover, .section form .input-group-btn > button:focus {\n      color: #23527c; }\n    .section form .input-group-btn > button:disabled {\n      color: #777; }\n"],"sourceRoot":""}]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 345:
+/***/ 348:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(true);
@@ -582,13 +582,13 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\Administrator\\Documents\\Liulu-dev\\tzucpa\\src\\component\\comFooter.vue"
+Component.options.__file = "C:\\Users\\xiaoj\\Documents\\tzucpa\\src\\component\\comFooter.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] comFooter.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
@@ -621,13 +621,13 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\Administrator\\Documents\\Liulu-dev\\tzucpa\\src\\component\\comHeader.vue"
+Component.options.__file = "C:\\Users\\xiaoj\\Documents\\tzucpa\\src\\component\\comHeader.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] comHeader.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
@@ -655,7 +655,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-032a2e43", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-032a2e43", module.exports)
   }
 }
 
@@ -691,7 +691,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-245c9235", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-245c9235", module.exports)
   }
 }
 
@@ -707,13 +707,13 @@ var content = __webpack_require__(32);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("a95cac7a", content, false);
+var update = __webpack_require__(3)("5640783b", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../node_modules/._css-loader@0.27.3@css-loader/index.js?sourceMap!../../node_modules/._vue-loader@11.3.4@vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-032a2e43\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/._sass-loader@6.0.3@sass-loader/lib/loader.js!../../node_modules/._vue-loader@11.3.4@vue-loader/lib/selector.js?type=styles&index=0!./comFooter.vue", function() {
-     var newContent = require("!!../../node_modules/._css-loader@0.27.3@css-loader/index.js?sourceMap!../../node_modules/._vue-loader@11.3.4@vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-032a2e43\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/._sass-loader@6.0.3@sass-loader/lib/loader.js!../../node_modules/._vue-loader@11.3.4@vue-loader/lib/selector.js?type=styles&index=0!./comFooter.vue");
+   module.hot.accept("!!../../node_modules/css-loader/index.js?sourceMap!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-032a2e43\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/sass-loader/lib/loader.js!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./comFooter.vue", function() {
+     var newContent = require("!!../../node_modules/css-loader/index.js?sourceMap!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-032a2e43\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/sass-loader/lib/loader.js!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./comFooter.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -734,13 +734,13 @@ var content = __webpack_require__(33);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("1173d4ec", content, false);
+var update = __webpack_require__(3)("d252ddfc", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../node_modules/._css-loader@0.27.3@css-loader/index.js?sourceMap!../../node_modules/._vue-loader@11.3.4@vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-245c9235\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/._sass-loader@6.0.3@sass-loader/lib/loader.js!../../node_modules/._vue-loader@11.3.4@vue-loader/lib/selector.js?type=styles&index=0!./comHeader.vue", function() {
-     var newContent = require("!!../../node_modules/._css-loader@0.27.3@css-loader/index.js?sourceMap!../../node_modules/._vue-loader@11.3.4@vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-245c9235\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/._sass-loader@6.0.3@sass-loader/lib/loader.js!../../node_modules/._vue-loader@11.3.4@vue-loader/lib/selector.js?type=styles&index=0!./comHeader.vue");
+   module.hot.accept("!!../../node_modules/css-loader/index.js?sourceMap!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-245c9235\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/sass-loader/lib/loader.js!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./comHeader.vue", function() {
+     var newContent = require("!!../../node_modules/css-loader/index.js?sourceMap!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-245c9235\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/sass-loader/lib/loader.js!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./comHeader.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -760,7 +760,7 @@ __webpack_require__(616)
 
 var Component = __webpack_require__(2)(
   /* script */
-  __webpack_require__(297),
+  __webpack_require__(299),
   /* template */
   __webpack_require__(529),
   /* scopeId */
@@ -768,13 +768,13 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\Administrator\\Documents\\Liulu-dev\\tzucpa\\src\\signUp\\component\\index.vue"
+Component.options.__file = "C:\\Users\\xiaoj\\Documents\\tzucpa\\src\\signUp\\component\\index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] index.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
@@ -942,7 +942,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-3f62ac20", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-3f62ac20", module.exports)
   }
 }
 
@@ -963,7 +963,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-loader/node_modules/vue-hot-reload-api").rerender("data-v-4bd40f3e", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-4bd40f3e", module.exports)
   }
 }
 
@@ -975,17 +975,17 @@ if (false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(337);
+var content = __webpack_require__(340);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("615896c2", content, false);
+var update = __webpack_require__(3)("4343864a", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/._css-loader@0.27.3@css-loader/index.js?sourceMap!../../../node_modules/._vue-loader@11.3.4@vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3f62ac20\",\"scoped\":true,\"hasInlineConfig\":false}!../../../node_modules/._sass-loader@6.0.3@sass-loader/lib/loader.js!../../../node_modules/._vue-loader@11.3.4@vue-loader/lib/selector.js?type=styles&index=0!./index.vue", function() {
-     var newContent = require("!!../../../node_modules/._css-loader@0.27.3@css-loader/index.js?sourceMap!../../../node_modules/._vue-loader@11.3.4@vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3f62ac20\",\"scoped\":true,\"hasInlineConfig\":false}!../../../node_modules/._sass-loader@6.0.3@sass-loader/lib/loader.js!../../../node_modules/._vue-loader@11.3.4@vue-loader/lib/selector.js?type=styles&index=0!./index.vue");
+   module.hot.accept("!!../../../node_modules/css-loader/index.js?sourceMap!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3f62ac20\",\"scoped\":true,\"hasInlineConfig\":false}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js?sourceMap!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3f62ac20\",\"scoped\":true,\"hasInlineConfig\":false}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -1002,17 +1002,17 @@ if(false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(345);
+var content = __webpack_require__(348);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("08a40ffc", content, false);
+var update = __webpack_require__(3)("0e2fce74", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../node_modules/._css-loader@0.27.3@css-loader/index.js?sourceMap!../../node_modules/._vue-loader@11.3.4@vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4bd40f3e\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/._sass-loader@6.0.3@sass-loader/lib/loader.js!../../node_modules/._vue-loader@11.3.4@vue-loader/lib/selector.js?type=styles&index=0!./App.vue", function() {
-     var newContent = require("!!../../node_modules/._css-loader@0.27.3@css-loader/index.js?sourceMap!../../node_modules/._vue-loader@11.3.4@vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4bd40f3e\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/._sass-loader@6.0.3@sass-loader/lib/loader.js!../../node_modules/._vue-loader@11.3.4@vue-loader/lib/selector.js?type=styles&index=0!./App.vue");
+   module.hot.accept("!!../../node_modules/css-loader/index.js?sourceMap!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4bd40f3e\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/sass-loader/lib/loader.js!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./App.vue", function() {
+     var newContent = require("!!../../node_modules/css-loader/index.js?sourceMap!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4bd40f3e\",\"scoped\":true,\"hasInlineConfig\":false}!../../node_modules/sass-loader/lib/loader.js!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./App.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -1023,5 +1023,5 @@ if(false) {
 
 /***/ })
 
-},[301]);
-//# sourceMappingURL=signUp.796d1d45ebc2d24d2b5d.js.map
+},[303]);
+//# sourceMappingURL=signUp.24bc2e11b3fe119ad2a6.js.map
