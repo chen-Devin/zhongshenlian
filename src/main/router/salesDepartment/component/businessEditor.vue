@@ -207,12 +207,18 @@
             </div>
           </div>
           <h4 class="col-sm-1" v-if="editable">
-            <a class="fa fa-times-circle text-danger" @click="delBasicFee(index)"></a>
+            <a class="text-danger" @click="delBasicFee(index)">
+              <img src="../../../../img/delete_icon.svg">
+            </a>
           </h4>
         </div>
         <div class="row form-group">
-          <h4 class="col-sm-1 col-sm-offset-11" v-if="editable">
-            <a class="fa fa-plus-circle text-success" @click="addBasicFee()"></a>
+          <div class="col-sm-5"></div>
+          <div class="col-sm-5"></div>
+          <h4 class="col-sm-1" v-if="editable">
+            <a class="text-danger" @click="addBasicFee()">
+              <img src="../../../../img/add_icon.svg">
+            </a>
           </h4>
         </div>
       </div>
@@ -250,13 +256,20 @@
             </div>
           </div>
           <h4 class="col-sm-1" v-if="editable">
-            <a class="fa fa-times-circle text-danger" @click="delBenefitFee(index)"></a>
+            <a class="text-danger" @click="delBenefitFee(index)">
+              <img src="../../../../img/delete_icon.svg">
+            </a>
           </h4>
         </div>
-        <div class="row form-group">
-          <h4 class="col-sm-1 col-sm-offset-11" v-if="editable">
-            <a class="fa fa-plus-circle text-success" @click="addBenefitFee()"></a>
-          </h4>
+          <div class="row form-group">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-5"></div>
+            <h4 class="col-sm-1" v-if="editable">
+              <a class="text-danger" @click="addBenefitFee()">
+                <img src="../../../../img/add_icon.svg">
+              </a>
+            </h4>
+          </div>
         </div>
       </div>
     </div>
@@ -306,7 +319,7 @@
         </div>
         <div class="row form-group">
           <h4 class="col-sm-1 col-sm-offset-11" v-if="editable">
-            <a class="fa fa-plus-circle text-success" @click="addDepartments()"></a>
+            <a class="fa fa-plus-circle text-danger" @click="addDepartments()"></a>
           </h4>
         </div>
       </div>
@@ -1141,6 +1154,13 @@ export default {
     &:hover {
       cursor: pointer;
     }
+  }
+}
+.text-danger {
+  text-decoration: none;
+  cursor: pointer;
+  img {
+    width: 42px;
   }
 }
 </style>

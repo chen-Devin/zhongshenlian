@@ -1,14 +1,19 @@
 <template>
   <div>
-    <form class="row search-form p-r" @submit.prevent @keyup.enter.prevent>
-      <search-bar class="col-md-10" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" @search="search" v-if="simpleSearch"></search-bar>
-      <div class="col-md-2 higher-search p-a">
-        <button type="button" class="btn draft-btn my-btn" @click="showHigherSearch()">
-          高级搜索
-          &nbsp
-          <img v-if="searchDown" class="search-icon" src="../../../img/market/search_down.svg">
-          <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg">
-        </button>
+    <form class="search-form" @submit.prevent @keyup.enter.prevent>
+      <div class="row">
+        <div class="col-md-11">
+          <search-bar placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" @search="search" v-show="simpleSearch"></search-bar>
+        </div>
+        <div class="col-md-10 replace" v-show="!simpleSearch"></div>
+        <div class="col-md-1 higher-search f-r">
+          <button type="button" class="btn draft-btn my-btn" @click="showHigherSearch()">
+            高级搜索
+            &nbsp
+            <img v-if="searchDown" class="search-icon" src="../../../img/market/search_down.svg">
+            <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg">
+          </button>
+        </div>
       </div>
     </form>
     <!--高级搜索-->
@@ -134,34 +139,8 @@ export default {
   name: 'bidInfoListBody',
   data() {
     return {
-      bidStartDate: (() => {
-        let dt = new Date();
-        let year = dt.getFullYear();
-        let month = dt.getMonth() + 1;
-        if (month < 10) {
-          month = "0" + month;
-        }
-        let date = dt.getDate();
-        if (date < 10) {
-          date = "0" + date;
-        }
-        let dateStr = year + "-" + month + "-" + date;
-        return dateStr;
-      })(),
-      bidEndDate: (() => {
-        let dt = new Date();
-        let year = dt.getFullYear();
-        let month = dt.getMonth() + 1;
-        if (month < 10) {
-          month = "0" + month;
-        }
-        let date = dt.getDate();
-        if (date < 10) {
-          date = "0" + date;
-        }
-        let dateStr = year + "-" + month + "-" + date;
-        return dateStr;
-      })(),
+      bidStartDate: '',
+      bidEndDate: '',
       filterState: [],
       inputBtn: false,
       higherSearch: false,
@@ -311,36 +290,11 @@ export default {
         this.projectName = '';
         this.tenderPerson = '';
         this.agency = '';
-        this.bidStartDate = (() => {
-        let dt = new Date();
-        let year = dt.getFullYear();
-        let month = dt.getMonth() + 1;
-        if (month < 10) {
-          month = "0" + month;
-        }
-        let date = dt.getDate();
-        if (date < 10) {
-          date = "0" + date;
-        }
-        let dateStr = year + "-" + month + "-" + date;
-        return dateStr;
-      })();
-      this.bidEndDate = (() => {
-        let dt = new Date();
-        let year = dt.getFullYear();
-        let month = dt.getMonth() + 1;
-        if (month < 10) {
-          month = "0" + month;
-        }
-        let date = dt.getDate();
-        if (date < 10) {
-          date = "0" + date;
-        }
-        let dateStr = year + "-" + month + "-" + date;
-        return dateStr;
-      })();
-      this.filterState = [];
-      this.officeList = [];
+        this.bidStartDate = '';
+        this.bidEndDate = '';
+        this.filterState = [];
+        this.officeList = [];
+        this.getAllList();
     },
     showInputBtn() {
       if (this.user.department === "市场部") {
@@ -431,7 +385,9 @@ export default {
 }
 .higher-search {
   margin-top: 30px;
-  right: 10px;
+  button {
+    float: right;
+  }
 }
 .dateMr {
 	padding-right: 110px;
@@ -518,16 +474,11 @@ input::-webkit-input-placeholder{text-align: center;}
   display: inline-block;
   margin-left: 45px;
   margin-top: 10px;
+  vertical-align: bottom;
 }
 .search-form {
   padding-left: 0;
   padding-right: 0;
-  .col-md-10 {
-    width: 87%;
-  }
-  .col-md-2 {
-    width: 10%;
-  }
 }
 .search-btn {
   right: 0;

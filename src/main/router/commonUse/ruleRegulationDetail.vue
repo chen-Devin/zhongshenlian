@@ -7,8 +7,22 @@
         <button class="btn my-btn submit-btn pull-right" type="button" :user="user" v-if="btnShow" @click="editRule()">编辑</button>
       </h3>
       <p class="content-area">{{detail.content}}</p>
-      <p class="text-right">{{detail.releaseDepartment}}</p>
-      <p class="text-right">{{detail.releaseTime}}</p>
+      <div class="row">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+          <p>
+            {{detail.releaseDepartment}}
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+          <p>
+            {{detail.releaseTime}}
+          </p>
+        </div>
+      </div>
     </card>
   </div>
 </template>

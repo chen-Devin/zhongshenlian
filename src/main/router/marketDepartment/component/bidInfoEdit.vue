@@ -339,7 +339,9 @@
 							</div>
 							<div class="col-sm-1">
 								<h4>
-									<a class="fa fa-times-circle text-danger" @click="delBasicFee(index)"></a>
+									<a class="text-danger" @click="delBasicFee(index)">
+                    <img src="../../../../img/delete_icon.svg">
+                  </a>
 								</h4>
 							</div>
 						</div>
@@ -350,7 +352,9 @@
 					<div class="col-sm-10">
 						<div class="row half-width">
 							<h4 class="col-sm-1 col-sm-offset-11">
-								<a class="fa fa-plus-circle text-danger" @click="addBasicFee()"></a>
+								<a class="text-danger" @click="addBasicFee()">
+                  <img src="../../../../img/add_icon.svg">
+                </a>
 							</h4>
 						</div>
 					</div>
@@ -400,7 +404,9 @@
 							</div>
 							<div class="col-sm-1">
 								<h4>
-									<a class="fa fa-times-circle text-danger" @click="delEfficiencyFee(index)"></a>
+									<a class="text-danger" @click="delEfficiencyFee(index)">
+                    <img src="../../../../img/delete_icon.svg">
+                  </a>
 								</h4>
 							</div>
 						</div>
@@ -411,7 +417,9 @@
 					<div class="col-sm-10">
 						<div class="row half-width">
 							<h4 class="col-sm-1 col-sm-offset-11">
-								<a class="fa fa-plus-circle text-danger" @click="addEfficiencyFee()"></a>
+								<a class="text-danger" @click="addEfficiencyFee()">
+                  <img src="../../../../img/add_icon.svg">
+                </a>
 							</h4>
 						</div>
 					</div>
@@ -546,6 +554,9 @@
 	.text-danger {
 		text-decoration: none;
 		cursor: pointer;
+    img {
+      width: 42px;
+    }
 	}
   .adjust-half-width {
     width: 52.4%;

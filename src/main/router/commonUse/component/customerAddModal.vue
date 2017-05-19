@@ -4,57 +4,76 @@
           slot="body"
           @submit.prevent
           @keyup.enter.prevent>
-      <div class="form-group"
-           :class="{'has-error': !customer.customerName.ver}">
-        <label class="control-label">客户名称</label>
-        <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入客户名称"
-                 v-model="customer.customerName.val">
+      <div class="row">
+        <div class="form-group col-md-6"
+             :class="{'has-error': !customer.customerName.ver}">
+          <label class="control-label">客户名称</label>
+          <div>
+            <input type="text"
+                   class="form-control"
+                   placeholder="请输入客户名称"
+                   v-model="customer.customerName.val">
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-6"
+             :class="{'has-error': !customer.name.ver}">
+          <label class="control-label">客户联系人</label>
+          <div>
+            <input type="text"
+                   class="form-control"
+                   placeholder="请输入客户联系人"
+                   v-model="customer.name.val">
+          </div>
         </div>
       </div>
-      <div class="form-group"
-           :class="{'has-error': !customer.name.ver}">
-        <label class="control-label">客户联系人</label>
-        <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入客户联系人"
-                 v-model="customer.name.val">
+      <div class="row">
+        <div class="form-group col-md-6"
+             :class="{'has-error': !customer.duty.ver}">
+          <label class="control-label">联系人职位</label>
+          <div>
+            <input type="text"
+                   class="form-control"
+                   placeholder="请输入联系人职位"
+                   v-model="customer.duty.val">
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-6"
+             :class="{'has-error': !customer.telephone.ver}">
+          <label class="control-label">联系人电话</label>
+          <div>
+            <input type="tel"
+                   class="form-control"
+                   placeholder="请输入联系人电话"
+                   v-model="customer.telephone.val">
+          </div>
         </div>
       </div>
-      <div class="form-group"
-           :class="{'has-error': !customer.duty.ver}">
-        <label class="control-label">联系人职位</label>
-        <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入联系人职位"
-                 v-model="customer.duty.val">
+      <div class="row">
+        <div class="form-group col-md-6"
+             :class="{'has-error': !customer.department.ver}">
+          <label class="control-label">联系人部门</label>
+          <div>
+            <input type="text"
+                   class="form-control"
+                   placeholder="请输入联系人部门"
+                   v-model="customer.department.val">
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-6"
+             :class="{'has-error': !customer.businessLicenseNumber.ver}">
+          <label class="control-label">营业执照号码</label>
+          <div>
+            <input type="text"
+                   class="form-control"
+                   placeholder="请输入营业执照号码"
+                   v-model="customer.businessLicenseNumber.val">
+          </div>
         </div>
       </div>
-      <div class="form-group"
-           :class="{'has-error': !customer.telephone.ver}">
-        <label class="control-label">联系人电话</label>
-        <div>
-          <input type="tel"
-                 class="form-control"
-                 placeholder="请输入联系人电话"
-                 v-model="customer.telephone.val">
-        </div>
-      </div>
-      <div class="form-group"
-           :class="{'has-error': !customer.department.ver}">
-        <label class="control-label">联系人部门</label>
-        <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入联系人部门"
-                 v-model="customer.department.val">
-        </div>
-      </div>
-      <div class="form-group"
+      <div class="form-group row"
            :class="{'has-error': !customer.registeredAddress.ver}">
         <label class="control-label">注册地址</label>
         <div>
@@ -64,40 +83,40 @@
                  v-model="customer.registeredAddress.val">
         </div>
       </div>
-      <div class="form-group"
-           :class="{'has-error': !customer.mailingAddress.ver}">
-        <label class="control-label">邮寄地址</label>
-        <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入邮寄地址"
-                 v-model="customer.mailingAddress.val">
+      <div class="row">
+        <div class="form-group col-md-6"
+             :class="{'has-error': !customer.assetSize.ver}">
+          <label class="control-label">资产规模</label>
+          <div>
+            <div class="input-group">
+              <masked-input type="text"
+                            class="form-control"
+                            placeholder="请输入资产规模"
+                            v-model="customer.assetSize.val"
+                            :mask="currencyMask"
+                            :guide="false"
+                            placeholderChar="#">
+              </masked-input>
+              <div class="input-group-addon">万元</div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="form-group"
-           :class="{'has-error': !customer.businessLicenseNumber.ver}">
-        <label class="control-label">营业执照号码</label>
-        <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入营业执照号码"
-                 v-model="customer.businessLicenseNumber.val">
-        </div>
-      </div>
-      <div class="form-group"
-           :class="{'has-error': !customer.assetSize.ver}">
-        <label class="control-label">资产规模</label>
-        <div>
-          <div class="input-group">
-            <masked-input type="text"
-                          class="form-control"
-                          placeholder="请输入资产规模"
-                          v-model="customer.assetSize.val"
-                          :mask="currencyMask"
-                          :guide="false"
-                          placeholderChar="#">
-            </masked-input>
-            <div class="input-group-addon">万元</div>
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-6"
+             :class="{'has-error': !customer.registeredCapital.ver}">
+          <label class="control-label">注册资本</label>
+          <div>
+            <div class="input-group">
+              <masked-input type="text"
+                            class="form-control"
+                            placeholder="请输入注册资本"
+                            v-model="customer.registeredCapital.val"
+                            :mask="currencyMask"
+                            :guide="false"
+                            placeholderChar="#">
+              </masked-input>
+              <div class="input-group-addon">万元</div>
+            </div>
           </div>
         </div>
       </div>
@@ -112,59 +131,59 @@
           </label>
         </div>
       </div>
-      <div class="form-group"
-           :class="{'has-error': !customer.registeredCapital.ver}">
-        <label class="control-label">注册资本</label>
-        <div>
-          <div class="input-group">
-            <masked-input type="text"
-                          class="form-control"
-                          placeholder="请输入注册资本"
-                          v-model="customer.registeredCapital.val"
-                          :mask="currencyMask"
-                          :guide="false"
-                          placeholderChar="#">
-            </masked-input>
-            <div class="input-group-addon">万元</div>
+      <div class="row">
+        <div class="form-group col-md-6"
+             :class="{'has-error': !customer.setUpTime.ver}">
+          <label class="control-label">成立日期</label>
+          <div>
+            <input type="date"
+                   class="form-control"
+                   placeholder="请输入成立日期"
+                   v-model="customer.setUpTime.val">
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-6"
+             :class="{'has-error': !customer.industry.ver}">
+          <label class="control-label">所属行业</label>
+          <div>
+            <input type="text"
+                   class="form-control"
+                   placeholder="请输入所属行业"
+                   v-model="customer.industry.val">
           </div>
         </div>
       </div>
-      <div class="form-group"
-           :class="{'has-error': !customer.setUpTime.ver}">
-        <label class="control-label">成立日期</label>
-        <div>
-          <input type="date"
-                 class="form-control"
-                 placeholder="请输入成立日期"
-                 v-model="customer.setUpTime.val">
-        </div>
-      </div>
-      <div class="form-group"
-           :class="{'has-error': !customer.industry.ver}">
-        <label class="control-label">所属行业</label>
+      <div class="form-group row"
+           :class="{'has-error': !customer.mailingAddress.ver}">
+        <label class="control-label">邮寄地址</label>
         <div>
           <input type="text"
                  class="form-control"
-                 placeholder="请输入所属行业"
-                 v-model="customer.industry.val">
+                 placeholder="请输入邮寄地址"
+                 v-model="customer.mailingAddress.val">
         </div>
       </div>
-      <div class="form-group">
-        <label class="control-label">创建部门</label>
-        <div>
-          <p class="form-control-static">
-            {{customer.founderDepartment.val}}
-          </p>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label class="control-label">
+            创建部门&nbsp;
+            <span>
+              {{customer.founderDepartment.val}}
+            </span>
+          </label>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="control-label">
+            创建人&nbsp;
+            <span>
+              {{customer.founderName.val}}
+            </span>
+          </label>
         </div>
       </div>
-      <div class="form-group">
-        <label class="control-label">创建人</label>
-        <div>
-          <p class="form-control-static">
-            {{customer.founderName.val}}
-          </p>
-        </div>
-      </div>
+
+
       <div class="alert alert-danger well-sm"
            v-show="alert.show">
         {{alert.cont}}
