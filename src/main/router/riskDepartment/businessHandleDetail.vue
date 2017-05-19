@@ -6,11 +6,11 @@
         {{business.name}}
         <div class="pull-right">
           <template v-if="decide==='undecide'">
-            <button class="btn btn-success" @click="approve()">通过</button>
-            <button class="btn btn-danger" @click="refuse()">不通过</button>
+            <button class="btn my-btn submit-btn" @click="approve()">通过</button>
+            <button class="btn my-btn draft-btn" @click="refuse()">不通过</button>
           </template>
-          <small class="label label-success" v-else-if="decide==='approve'">已选择通过</small>
-          <small class="label label-danger" v-else-if="decide==='refuse'">已选择未通过</small>
+          <small class="label label-success business-label" v-else-if="decide==='approve'">已选择通过</small>
+          <small class="label label-danger business-label" v-else-if="decide==='refuse'">已选择未通过</small>
         </div>
       </h3>
       <div class="normal-wrap">

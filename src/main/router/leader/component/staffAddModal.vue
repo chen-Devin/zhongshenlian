@@ -92,7 +92,7 @@
               :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
-      <button class="btn my-btn cancel-btn"
+      <button class="btn my-btn draft-btn"
               @click="cancel()">
         取消
       </button>

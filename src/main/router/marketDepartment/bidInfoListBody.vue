@@ -7,11 +7,11 @@
         </div>
         <div class="col-md-10 replace" v-show="!simpleSearch"></div>
         <div class="col-md-1 higher-search f-r">
-          <button type="button" class="btn draft-btn my-btn" @click="showHigherSearch()">
+          <button type="button" class="btn my-btn draft-btn" @click="showHigherSearch()">
             高级搜索
-            &nbsp
+            <!-- &nbsp;
             <img v-if="searchDown" class="search-icon" src="../../../img/market/search_down.svg">
-            <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg">
+            <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg"> -->
           </button>
         </div>
       </div>
@@ -98,8 +98,8 @@
     </form>
     <h3 class="main-title">
       信息列表
-      <button class="btn my-btn btn-primary type-btn f-r" @click="input()" v-if="inputBtn">
-        <img class="input-icon" src="../../../img/market/input.svg">&nbsp
+      <button class="btn my-btn submit-btn type-btn f-r" @click="input()" v-if="inputBtn">
+        <!-- <img class="input-icon" src="../../../img/market/input.svg">&nbsp -->
         录入
       </button>
     </h3>
@@ -112,7 +112,17 @@
       </thead>
       <tbody>
         <tr v-for="project in biddingArray" @click="checkMessage(project)">
-          <td><span class="state-wrap">{{project.biddingState}}</span>{{project.biddingName}}</td>
+          <td>
+            <span class="label label-warning"
+                  v-if="project.biddingState==='未摘牌'">未摘牌</span>
+            <span class="label label-info"
+                  v-else-if="project.biddingState==='已摘牌'">已摘牌</span>
+            <span class="label label-primary"
+                  v-else-if="project.biddingState==='已入围'">已入围</span>
+            <span class="label label-success"
+                  v-else-if="project.biddingState==='已中标'">已中标</span>
+            <span class="project-name">{{project.biddingName}}</span>
+          </td>
           <td class="time-wrap">
             {{project.openBidDate}}
           </td>
@@ -482,5 +492,8 @@ input::-webkit-input-placeholder{text-align: center;}
 }
 .search-btn {
   right: 0;
+}
+.project-name {
+  margin-left: 10px;
 }
 </style>

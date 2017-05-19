@@ -4,7 +4,7 @@
     <card>
       <h3 class="main-title">
         {{business.name}}
-        <button class="btn btn-primary pull-right"
+        <button class="btn my-btn submit-btn pull-right"
                 @click="sub()"
                 :disabled="subBtn.dis"
                 v-if="!submited">{{subBtn.cont}}</button>

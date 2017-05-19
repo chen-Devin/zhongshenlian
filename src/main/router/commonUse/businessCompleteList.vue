@@ -9,11 +9,11 @@
           </div>
           <div class="col-md-10 replace" v-show="!simpleSearch"></div>
           <div class="col-md-1 higher-search f-r">
-            <button type="button" class="btn draft-btn my-btn" @click="showHigherSearch()">
+            <button type="button" class="btn my-btn draft-btn" @click="showHigherSearch()">
               高级搜索
-              &nbsp
+              <!-- &nbsp
               <img v-if="searchDown" class="search-icon" src="../../../img/market/search_down.svg">
-              <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg">
+              <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg"> -->
             </button>
           </div>
         </div>

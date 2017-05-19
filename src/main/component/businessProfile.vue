@@ -276,7 +276,7 @@
                  :on-progress="contractUploadProgress"
                  :on-success="contractUploadSuccess"
                  :show-file-list="false">
-        <button class="btn btn-info btn-sm"
+        <button class="btn my-btn submit-btn"
                 type="button"
                 :disabled="contractUpload.progressShow">点击上传</button>
         <span slot="tip"
@@ -327,7 +327,7 @@
                  :on-progress="reportUploadProgress"
                  :on-success="reportUploadSuccess"
                  :show-file-list="false">
-        <button class="btn btn-info btn-sm"
+        <button class="my-btn submit-btn btn-sm"
                 type="button"
                 :disabled="reportUpload.progressShow">点击上传</button>
         <span slot="tip"

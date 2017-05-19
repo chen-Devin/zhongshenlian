@@ -4,7 +4,7 @@
       客户列表
       <button class="btn my-btn submit-btn pull-right"
               @click="add()">
-        <img class="input-icon" src="../../../../img/market/input.svg">&nbsp;
+        <!-- <img class="input-icon" src="../../../../img/market/input.svg">&nbsp; -->
         录入
       </button>
     </h3>

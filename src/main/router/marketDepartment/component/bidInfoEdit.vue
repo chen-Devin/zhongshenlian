@@ -533,7 +533,7 @@
 			</p>
 			<p slot="footer">
 				<button class="btn my-btn submit-btn" @click="queding()">确定</button>
-				<button class="btn my-btn cancel-btn" @click="quxiao()">取消</button>
+				<button class="btn my-btn draft-btn" @click="quxiao()">取消</button>
 			</p>
 		</modal>
 	</div>

@@ -380,7 +380,7 @@
                  :on-progress="uploadProgress"
                  :on-success="uploadSuccess"
                  :show-file-list="false">
-        <button class="btn btn-info btn-sm"
+        <button class="btn my-btn submit-btn btn-sm"
                 type="button"
                 v-if="editable"
                 :disabled="upload.progressShow">点击上传</button>

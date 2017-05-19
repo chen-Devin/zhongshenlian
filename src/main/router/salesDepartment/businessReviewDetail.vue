@@ -5,7 +5,7 @@
       <h3 class="main-title">
         业务详情
         <div class="pull-right">
-          <button class="btn btn-primary"
+          <button class="btn my-btn submit-btn"
                   @click="sub()"
                   :disabled="subBtn.dis"
                   v-if="!submited">{{subBtn.cont}}</button>
