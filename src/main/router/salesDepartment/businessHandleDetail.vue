@@ -21,6 +21,10 @@
           </div>
         </template>
       </div>
+      <business-sub-modal v-if="showSubModal"
+                          :initBusiness="business"
+                          @submited="submited"
+                          @canceled="delCanceled"></business-sub-modal>
     </card>
   </div>
 </template>
@@ -33,6 +37,7 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
+import businessSubModal from './component/businessSubModal.vue';
 
 export default {
   name: 'businessHandleDetailSales',
@@ -236,7 +241,8 @@ export default {
       subBtn: {
         dis: false,
         cont: '提交风评复审'
-      }
+      },
+      showSubModal: false
     };
   },
   props: ['user'],
@@ -612,37 +618,24 @@ export default {
       this.paths = paths;
     },
     sub() {
-      this.subBtn.dis = true;
-      this.subBtn.cont = '提交中...';
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-        method: 'post',
-        url: '/service',
-        data: qs.stringify({
-          data: (() => {
-            var obj = {
-              command: 'submitReview',
-              platform: 'web',
-              id: this.business.id
-            };
-            return JSON.stringify(obj);
-          })()
-        })
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          this.business.projectStatus = 130;
-          this.subBtn.cont = '已提交';
-        } else if (rep.data.statusCode === '10012') {
-          window.location.href = 'signIn.html';
-        }
-      }, (rep) => { });
+      this.showSubModal = true;
     },
+    submited() {
+      this.showSubModal = false;
+      this.business.projectStatus = 130;
+      this.subBtn.dis = true;
+      this.subBtn.cont = '已提交';
+    },
+    delCanceled() {
+      this.showSubModal = false;
+    }
   },
   components: {
     crumbs,
     card,
     business,
-    approverAdvice
+    approverAdvice,
+    businessSubModal
   }
 }
 </script>

@@ -9,7 +9,7 @@
         </div>
         <div class="form-group"
              :class="{focus: tel.foc, error: tel.err}">
-          <div class="input-group input-group-lg">
+          <div class="input-group">
             <div class="input-group-addon"><span class="fa fa-phone"></span></div>
             <input type="tel"
                    class="form-control"
@@ -30,7 +30,7 @@
         </div>
         <div class="form-group"
              :class="{focus: ver.foc, error: ver.err}">
-          <div class="input-group input-group-lg">
+          <div class="input-group">
             <div class="input-group-addon"><span class="fa fa-shield"></span></div>
             <input type="text"
                    class="form-control"
@@ -48,7 +48,7 @@
           {{alert.cont}}
         </div>
         <div class="form-group">
-          <button class="btn btn-primary btn-block btn-lg"
+          <button class="btn btn-primary btn-block"
                   type="button"
                   :disabled="subBtn.dis"
                   @click="subBtnTog()">{{subBtn.cont}}</button>
@@ -301,9 +301,9 @@ export default {
       }
     }
     img {
-      width: 150px;
-      height: 150px;
-      margin-bottom: 50px;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 25px;
     }
     input.form-control {
       border: none;

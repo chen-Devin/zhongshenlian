@@ -36,6 +36,9 @@
                       :initalRule="editRule"
                       @deleted="deleted"
                       @canceled="delCanceled"></rule-del-modal>
+      <rule-can-modal v-if="showCanModal"
+                      @deleted="canDeleted"
+                      @canceled="canCanceled"></rule-can-modal>
     </card>
   </div>
 </template>
@@ -49,6 +52,7 @@ import { Message } from 'element-ui';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import ruleDelModal from './component/ruleDelModal.vue';
+import ruleCanModal from './component/ruleCanModal.vue';
 
 Vue.prototype.$message = Message;
 
@@ -66,7 +70,8 @@ export default {
         title: '',
         content: ''
       },
-      showDelModal: false
+      showDelModal: false,
+      showCanModal: false
     };
   },
   created() {
@@ -131,7 +136,14 @@ export default {
       }
     },
     cancel() {
+      this.showCanModal = true;
+    },
+    canDeleted() {
+      this.showCanModal = false;
       this.$router.push('/rule-regulation-detail-' + this.editRule.id);
+    },
+    canCanceled() {
+      this.showCanModal = false;
     },
     del() {
       this.showDelModal = true;
@@ -147,7 +159,8 @@ export default {
   components: {
     crumbs,
     card,
-    ruleDelModal
+    ruleDelModal,
+    ruleCanModal
   }
 }
 </script>

@@ -401,7 +401,7 @@
         <ul class="com-list attachment-list list-group">
           <li class="list-group-item" v-for="FILE in business.files">
             <span class="fa fa-file-text-o"></span>
-            <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
+            <a class="text-primary title" :href="FILE.url" download>{{FILE.name}}</a>
             <a class="text-danger pull-right" @click="delFile(FILE)" v-if="editable">
               <i class="fa fa-times"></i>
             </a>

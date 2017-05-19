@@ -263,7 +263,7 @@
           <span class="fa fa-file-text-o"></span>
           <a class="text-primary title"
              :href="FILE.url"
-             target="_blank">{{FILE.name}}</a>
+             download>{{FILE.name}}</a>
         </li>
       </ul>
     </div>
@@ -298,7 +298,7 @@
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title"
                :href="FILE.url"
-               target="_blank">{{FILE.name}}</a>
+               download>{{FILE.name}}</a>
             <a class="text-danger pull-right"
                @click="contractDelFile(FILE)"><i class="fa fa-times"></i></a>
           </li>
@@ -314,7 +314,7 @@
           <span class="fa fa-file-text-o"></span>
           <a class="text-primary title"
              :href="FILE.url"
-             target="_blank">{{FILE.name}}</a>
+             download>{{FILE.name}}</a>
         </li>
       </ul>
     </div>
@@ -349,7 +349,7 @@
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title"
                :href="FILE.url"
-               target="_blank">{{FILE.name}}</a>
+               download>{{FILE.name}}</a>
             <a class="text-danger pull-right"
                @click="reportDelFile(FILE)"><i class="fa fa-times"></i></a>
           </li>
@@ -365,7 +365,7 @@
           <span class="fa fa-file-text-o"></span>
           <a class="text-primary title"
              :href="FILE.url"
-             target="_blank">{{FILE.name}}</a>
+             download>{{FILE.name}}</a>
         </li>
       </ul>
     </div>

@@ -6,7 +6,7 @@
         新建制度
         <div class="pull-right">
           <button type="button" class="btn my-btn submit-btn" @click="saveEdit()">保存</button>
-          <button type="button" class="btn my-btn cancel-btn" @click="canceled()">取消</button>
+          <button type="button" class="btn my-btn cancel-btn" @click="cancel()">取消</button>
         </div>
       </h3>
       <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
@@ -30,6 +30,9 @@
             </textarea>
           </div>
         </div>
+        <rule-can-modal v-if="showCanModal"
+                        @deleted="canDeleted"
+                        @canceled="canCanceled"></rule-can-modal>
       </form>
     </card>
   </div>
@@ -43,6 +46,7 @@ import { Message } from 'element-ui';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
+import ruleCanModal from './component/ruleCanModal.vue';
 
 Vue.prototype.$message = Message;
 
@@ -58,7 +62,8 @@ export default {
         id: '',
         title: '',
         content: ''
-      }
+      },
+      showCanModal: false
     }
   },
   methods: {
@@ -94,8 +99,15 @@ export default {
         });
       }
     },
-    canceled() {
+    cancel() {
+      this.showCanModal = true;
+    },
+    canDeleted() {
+      this.showCanModal = false;
       this.$router.push('/rule-regulation');
+    },
+    canCanceled() {
+      this.showCanModal = false;
     }
   },
   components: {
