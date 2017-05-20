@@ -4,7 +4,7 @@
     <h3 v-if="staffsShow">
       员工列表
       <button type="button"
-              class="btn btn-default pull-right"
+              class="btn my-btn submit-btn pull-right"
               @click="ediBtnTog()"
               :disabled="ediBtn.dis">{{ediBtn.cont}}</button>
     </h3>

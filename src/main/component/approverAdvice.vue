@@ -1,9 +1,12 @@
 <template>
   <div class="col-sm-12 approver-advice">
-    <h4>
-      <slot>error</slot>
-    </h4>
     <ul class="list-group com-list approver-list">
+      <li class="list-group-item list-head">
+        <span class="title">
+          <slot></slot>
+        </span>
+        <span class="date pull-right">创建时间</span>
+      </li>
       <li class="list-group-item" v-for="(ADVICE, index) in advices" :key="index">
         <span>{{index+1+'.'}}</span>
         <span class="people">{{ADVICE.approverName}}</span>
@@ -21,7 +24,7 @@
         <p>{{reason}}</p>
       </div>
       <div slot="footer">
-        <button class="btn btn-primary modal-default-button"
+        <button class="btn my-btn submit-btn modal-default-button"
                 @click="close()">
           确定
         </button>
@@ -53,6 +56,9 @@ export default {
   },
   components: {
     modal
+  },
+  created() {
+    console.log(this.advices);
   }
 };
 </script>

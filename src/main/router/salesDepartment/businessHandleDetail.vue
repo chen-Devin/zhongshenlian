@@ -4,11 +4,11 @@
     <card>
       <h3 class="main-title">
         {{business.name}}
-        <button class="btn btn-primary pull-right"
+        <button class="btn my-btn submit-btn pull-right"
                 @click="sub()"
                 :disabled="subBtn.dis"
                 v-if="!submited">{{subBtn.cont}}</button>
-        <small class="label label-primary pull-right"
+        <small class="label label-primary business-label pull-right"
                v-if="submited">已提交风评复审</small>
       </h3>
       <div class="normal-wrap">

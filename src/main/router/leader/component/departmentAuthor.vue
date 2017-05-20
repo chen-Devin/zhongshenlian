@@ -3,7 +3,7 @@
     <h3 class="main-title">
       {{thisDepart.department}}
       <button type="button"
-              class="btn btn-default pull-right"
+              class="btn my-btn submit-btn pull-right"
               @click="ediBtnTog()"
               :disabled="ediBtn.dis">{{ediBtn.cont}}</button>
     </h3>

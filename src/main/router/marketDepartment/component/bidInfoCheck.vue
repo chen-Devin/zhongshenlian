@@ -6,8 +6,8 @@
       </h4>
     </div>
     <form class="form-horizontal" @submit.prevent @keyup.enter.prevent>
-      <button type="button" class="btn my-btn submit-btn f-r" @click="isEdit" v-if="editBtn">编辑</button>
-      <button type="button" class="btn my-btn submit-btn f-r" @click="delisting" v-if="brandBtn">摘牌</button>
+      <button type="button" class="btn my-btn submit-btn f-r mt" @click="isEdit" v-if="editBtn">编辑</button>
+      <button type="button" class="btn my-btn submit-btn f-r mt" @click="delisting" v-if="brandBtn">摘牌</button>
       <div class="form-group">
         <label for="projectName" class="col-sm-2 control-label">项目名称：</label>
         <div class="col-sm-6">
@@ -378,7 +378,7 @@
           <label for="remark" class="col-sm-1 control-label"></label>
           <div class="col-sm-11">
             <button type="button" class="btn my-btn submit-btn" @click="approve()">通过</button>
-            <button type="button" class="btn my-btn draft-btn" @click="showAdvice()">不通过</button>
+            <button type="button" class="btn my-btn cancel-btn" @click="showAdvice()">不通过</button>
           </div>
         </div>
       </div>
@@ -394,36 +394,8 @@
           <button type="button" class="btn my-btn draft-btn" @click="adviceCancel">取消</button>
         </div>
       </modal>
-      <!-- 审核意见 -->
-      <div v-if="checkAdviceShow">
-        <table class="table table-bordered table-handle">
-          <thead>
-            <tr>
-              <td>
-                审核意见
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="row">
-                  <div class="col-sm-5">审核人</div>
-                  <div class="col-sm-5">是否通过</div>
-                  <div class="col-sm-2 ta-c">修改意见</div>
-                </div>
-                <div class="row" v-for="item in this.biddingApproverArray">
-                  <div class="col-sm-5">{{ item.approverName }}</div>
-                  <div class="col-sm-5">{{ item.approverResult }}</div>
-                  <div class="col-sm-2 ta-c">
-                    <a v-if="item.showTaga" href="javascript:void(0);" @click="checkAdvice(item.approverOpinion)">查看</a>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <!--调用组件的审核意见-->
+      <approver-advice class="advice"  v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
       <modal v-if="checkAdviceModal">
         <textarea slot="body" class="form-control" rows="8" placeholder="请填写修改意见，不超过500个字" v-model="adviceContent" readonly></textarea>
         <button type="button" class="btn my-btn submit-btn" slot="footer" @click="closeAdviceContent()">完成</button>
@@ -501,12 +473,20 @@
       }
     }
   }
+  .advice {
+    margin-top: -60px;
+    padding: 0;
+  }
+  .mt {
+    margin-top: -10px;
+  }
 </style>
 
 <script>
 import axios from 'axios';
 import uploadReport from './uploadReport.vue';
-import modal from '../../../component/modal.vue'
+import modal from '../../../component/modal.vue';
+import approverAdvice from '../../../component/approverAdvice.vue';
 
 export default {
   name: 'bidInfoCheck',
@@ -877,10 +857,6 @@ export default {
 
       });
     },
-    checkAdvice(content) {
-      this.checkAdviceModal = true;
-      this.adviceContent = content;
-    },
     closeAdviceContent() {
       this.checkAdviceModal = false;
     },
@@ -911,7 +887,8 @@ export default {
   components: {
     axios,
     uploadReport,
-    modal
+    modal,
+    approverAdvice
   }
 }
 </script>

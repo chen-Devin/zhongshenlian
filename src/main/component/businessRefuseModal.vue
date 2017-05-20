@@ -15,7 +15,7 @@
               :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
-      <button class="btn my-btn cancel-btn modal-default-button"
+      <button class="btn my-btn draft-btn modal-default-button"
               @click="cancel()">
         取消
       </button>

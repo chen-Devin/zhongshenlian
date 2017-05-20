@@ -31,12 +31,12 @@
       </div>
     </form>
     <div slot="footer">
-      <button class="btn btn-primary modal-default-button"
+      <button class="btn my-btn submit-btn modal-default-button"
               @click="sub()"
               :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
-      <button class="btn btn-default modal-default-button"
+      <button class="btn my-btn draft-btn modal-default-button"
               @click="cancel()">
         取消
       </button>

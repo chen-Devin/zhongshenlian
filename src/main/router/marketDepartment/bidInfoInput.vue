@@ -11,36 +11,21 @@
                      @delEfficiencyFee="delEfficiencyFee"
                      @addEfficiencyFee="addEfficiencyFee"
                      @quedingDelete="quedingDelete"></bid-info-edit>
-      <modal v-show="inputSussessShow">
-        <p slot="body" class="ta-c cancel-word">
-          <i class="fa fa-check-circle fa-3x icon" aria-hidden="true"></i>
-          保存信息成功
-        </p>
-        <p slot="footer">
-          <button class="btn btn-primary" @click="inputFinish()">完成</button>
-        </p>
-      </modal>
-      <modal v-show="draftSussessShow">
-        <p slot="body" class="ta-c cancel-word">
-          <i class="fa fa-check-circle fa-3x icon" aria-hidden="true"></i>
-          保存草稿成功
-        </p>
-        <p slot="footer">
-          <button class="btn btn-primary" @click="draftFinish()">完成</button>
-        </p>
-      </modal>
     </card>
   </div>
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
+import { Message } from 'element-ui';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import bidInfoEdit from './component/bidInfoEdit.vue';
-import modal from '../../component/modal.vue'
+
+Vue.prototype.$message = Message;
 
 export default {
   name: 'bidInfoInput',
@@ -138,7 +123,8 @@ export default {
         })
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          this.draftSussessShow = true;
+          this.$message.success('保存草稿成功');
+          this.$router.push('/bid-info-draft');
         }
       }, (rep) => { });
     },
@@ -154,12 +140,6 @@ export default {
     },
     addEfficiencyFee() {
       this.project.contractType.subEfficiencyArray.push({ "name": '', "rate": 0 });
-    },
-    inputFinish() {
-      this.$router.push('/bid-info-list');
-    },
-    draftFinish() {
-      this.$router.push('/bid-info-draft');
     },
     quedingDelete(id) {
       this.$router.push('/bid-info-list');
@@ -203,9 +183,9 @@ export default {
           })()
         })
       }).then((rep) => {
-        console.log(rep.data);
         if (rep.data.statusCode === '10001') {
-          this.inputSussessShow = true;
+          this.$message.success('保存信息成功');
+          this.$router.push('/bid-info-list');
         }
       }, (rep) => { });
     }
@@ -213,8 +193,7 @@ export default {
   components: {
     crumbs,
     card,
-    bidInfoEdit,
-    modal
+    bidInfoEdit
   }
 }
 </script>

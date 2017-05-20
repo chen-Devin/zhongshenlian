@@ -95,7 +95,11 @@ export default {
   height: 100%;
   .nav-pills {
     > li {
+      &:hover {
+        background-color: #EEEEEE;
+      }
       &.active {
+        background-color: #288ADA;
         > a {
           background-color: #288ADA;
           color: #ffffff;
@@ -134,10 +138,12 @@ export default {
         }
       }
       > a {
+        display: block;
+        width: 130px;
         border-radius: 0;
         padding: 1px 15px;
-        padding-left: 100px;
         padding-bottom: 15px;
+        margin: 0 auto;
         color: #999999;
         &:before {
           content: '';

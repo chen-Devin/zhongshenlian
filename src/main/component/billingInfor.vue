@@ -9,6 +9,9 @@
       </router-link>
     </h4>
     <div class="com-list list-group">
+      <li class="list-group-item list-head">
+        <span class="title">开票列表</span>
+      </li>
       <router-link class="list-group-item"
                    :to="billRoute(BILL)"
                    v-for="(BILL, index) in business.bills"

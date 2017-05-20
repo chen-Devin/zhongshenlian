@@ -14,7 +14,7 @@
                   :on-progress="uploadBillProgress"
                   :on-success="uploadBillSuccess"
                   :show-file-list="false">
-          <button class="btn btn-info btn-sm"
+          <button class="btn my-btn submit-btn"
                   type="button"
                   :disabled="uploadBill.progressShow">上传发票图片</button>
           <span slot="tip"
@@ -49,7 +49,7 @@
                   :on-progress="uploadReceiptProgress"
                   :on-success="uploadReceiptSuccess"
                   :show-file-list="false">
-          <button class="btn btn-info btn-sm"
+          <button class="btn my-btn submit-btn"
                   type="button"
                   :disabled="uploadReceipt.progressShow">上传收款图片</button>
           <span slot="tip"

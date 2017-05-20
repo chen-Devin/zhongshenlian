@@ -3,9 +3,9 @@
     <h3 class="main-title">
       {{thisDepart.department}}
       <button type="button"
-              class="btn my-btn submit-btn  pull-right"
+              class="btn my-btn submit-btn pull-right"
               @click="add()">
-              <img class="input-icon" src="../../../../img/market/input.svg">&nbsp
+              <!-- <img class="input-icon" src="../../../../img/market/input.svg">&nbsp -->
               录入
       </button>
     </h3>

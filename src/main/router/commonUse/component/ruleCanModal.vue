@@ -7,10 +7,10 @@
       </p>
     </div>
     <div slot="footer">
-      <button class="btn btn-danger modal-default-button" @click="del()">
+      <button class="btn my-btn submit-btn modal-default-button" @click="del()">
         确定
       </button>
-      <button class="btn btn-default modal-default-button" @click="cancel()">
+      <button class="btn my-btn draft-btn modal-default-button" @click="cancel()">
         取消
       </button>
     </div>

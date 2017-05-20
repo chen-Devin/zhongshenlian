@@ -164,67 +164,76 @@ form {
 }
 
 .my-btn {
-  width: 120px;
+  width: 100px;
   height: 40px;
   font-family: MicrosoftYaHei;
   font-size: 14px;
   color: #FFFFFF;
   border: none;
+  &:focus {
+      outline: none;
+      color: #ffffff;
+  }
 }
 
 .btn-mb {
   margin-top: -5px;
 }
 
+//提交、保存、录入、搜索、编辑按钮
 .submit-btn {
-  background-color: #288ada;
+  background-color: #288BDB;
   border: none;
   &:hover {
-    background-color: #1276D0;
+    background-color: #2171B2;
     color: #ffffff;
   }
   &:active {
-    background-color: #1276D0;
+    background-color: #2171B2;
     color: #ffffff;
   }
   &:focus {
-    background-color: #1276D0;
+    background-color: #2171B2;
     color: #ffffff;
   }
 }
 
+//暂存、取消、高级搜索、重置按钮
 .draft-btn {
-  background-color: #EB4848;
+  color: #ffffff;
+  background-color: #FDAD03;
   border: none;
   &:hover {
-    background-color: #D52a2e;
+    background-color: #D59203;
     color: #ffffff;
   }
   &:active {
-    background-color: #D52a2e;
+    background-color: #D59203;
     color: #ffffff;
     border: none;
   }
-  &:focus {
-    background-color: #D52a2e;
-    color: #ffffff;
-    border: none;
-  }
+  // &:focus {
+  //   background-color: #D59203;
+  //   color: #ffffff;
+  //   border: none;
+  // }
 }
 
+//撤销、删除按钮
 .cancel-btn {
-  background-color: #C4C4C4;
+  background-color: #F86A50;
   border: none;
+  width: 60px;
   &:hover {
-    background-color: #999999;
+    background-color: #C8503A;
     color: #ffffff;
   }
   &:active {
-    background-color: #999999;
+    background-color: #C8503A;
     color: #ffffff;
   }
   &:focus {
-    background-color: #999999;
+    background-color: #C8503A;
     color: #ffffff;
   }
 }
@@ -251,6 +260,20 @@ form {
     margin-bottom: 0;
   }
 }
+
+//业务部状态label
+
+.business-label {
+  background-color: #969696;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-weight: normal;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 15px;
+}
+
+
 
 
 

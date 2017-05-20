@@ -2,15 +2,20 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <form class="row search-form p-r" @submit.prevent @keyup.enter.prevent>
-        <search-bar class="col-md-10" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" @search="tog" v-if="simpleSearch"></search-bar>
-        <div class="col-md-2 higher-search p-a">
-          <button type="button" class="btn draft-btn my-btn" @click="showHigherSearch()">
-            高级搜索
-            &nbsp
-            <img v-if="searchDown" class="search-icon" src="../../../img/market/search_down.svg">
-            <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg">
-          </button>
+      <form @submit.prevent @keyup.enter.prevent>
+        <div class="row">
+          <div class="col-md-11">
+            <search-bar class="col-md-11" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" @search="tog" v-if="simpleSearch"></search-bar>
+          </div>
+          <div class="col-md-10 replace" v-show="!simpleSearch"></div>
+          <div class="col-md-1 higher-search f-r">
+            <button type="button" class="btn my-btn draft-btn" @click="showHigherSearch()">
+              高级搜索
+              <!-- &nbsp
+              <img v-if="searchDown" class="search-icon" src="../../../img/market/search_down.svg">
+              <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg"> -->
+            </button>
+          </div>
         </div>
       </form>
       <business-complete-search-bar @search="tog" v-if="higherSearch"></business-complete-search-bar>
@@ -234,21 +239,10 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  .search-form {
-    padding-left: 0;
-    padding-right: 0;
-    .col-md-10 {
-      width: 87%;
-    }
-    .col-md-2 {
-      width: 10%;
-    }
-  }
-  .search-btn {
-    right: 0;
-  }
-  .higher-search {
+.higher-search {
   margin-top: 30px;
-  right: 10px;
+  button {
+    margin-left: -15px;
+  }
 }
 </style>
