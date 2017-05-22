@@ -2,7 +2,7 @@
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper" :style="{alignSelf: alignSelf}">
-        <div class="modal-container">
+        <div class="modal-container" :style="{width: modalWidth}">
           <div class="modal-body">
             <slot name="body">
               default body
@@ -22,7 +22,7 @@
 <script>
 export default {
   name: 'modal',
-  props: ['alignSelf']
+  props: ['alignSelf','modalWidth']
 }
 </script>
 
@@ -43,7 +43,7 @@ export default {
 }
 
 .modal-container {
-  width: 800px;
+  width: 500px;
   margin: 0px auto;
   padding: 10px 20px;
   background-color: #fff;

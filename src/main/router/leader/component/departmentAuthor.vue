@@ -10,16 +10,16 @@
     <table class="table table-striped table-hover com-list">
       <thead>
         <tr>
-          <th class="text-center">职员</th>
-          <th class="text-center"
+          <td class="text-center staff-max">职员</td>
+          <td class="text-center"
               v-for="(AUTH, index) in thisDepart.authorityArray"
-              :key="index">{{AUTH.name}}</th>
+              :key="index">{{AUTH.name}}</td>
         </tr>
       </thead>
       <tbody>
         <tr v-for="STAFF in thisDepart.staffArray"
             :key="STAFF.id">
-          <td class="text-center">{{STAFF.name}}</td>
+          <td class="text-center staff-max">{{STAFF.name}}</td>
           <td class="text-center"
               v-for="STAFF_AUTH in STAFF.authority"
               :key="STAFF.authName">
@@ -30,9 +30,6 @@
         </tr>
       </tbody>
     </table>
-    <pager :pageCount="page.total"
-           :currentPage="page.current"
-           @change="pageChan"></pager>
     <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
   </card>
 </template>
@@ -55,7 +52,7 @@ export default {
         ediStat: false,
       },
       page: {
-        total: this.department.pageNum,
+        total: this.department.totalNum,
         current: (this.department.pageNum === 0) ? 0 : 1
       },
       totalPage: 1
