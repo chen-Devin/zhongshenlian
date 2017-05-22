@@ -265,6 +265,9 @@ export default {
           }
         }
         this.officeList = departmentSort;
+        if (this.officeList.length === 0) {
+          this.officeList = '';
+        }
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
           method: 'get',
