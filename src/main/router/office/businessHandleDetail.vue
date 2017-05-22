@@ -561,7 +561,7 @@ export default {
                   }
                   return arr;
                 })(),
-                state: parseInt(rep.data.data.projectBillingArray[i].financeHandleStatus)
+                state: parseInt(rep.data.data.projectBillingArray[i].state)
               };
               this.business.bills.push(obj);
             }

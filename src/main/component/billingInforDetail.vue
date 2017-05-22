@@ -2,6 +2,15 @@
   <div class="normal-wrap">
     <h4 class="main-title">
       开票信息
+      <div class="pull-right" v-if="uploadEnabled">
+        <button class="btn btn-info" v-if="billNotUpload" @click="confirm" :disabled="disConfirm">已开票</button>
+        <button class="btn btn-primary" v-else-if="receiptNotUpload" @click="finish" :disabled="disFinish">已收款</button>
+      </div>
+      <div class="pull-right" v-if="stateShow">
+        <small class="label label-info" v-if="billNotUpload">尚未开票</small>
+        <small class="label label-info" v-else-if="receiptNotUpload">尚未收款</small>
+      </div>
+      <small class="label label-success pull-right" v-if="finished">已完成该申请</small>
     </h4>
     <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
       <div class="form-group" v-if="uploadEnabled">
@@ -287,7 +296,7 @@
           <p class="form-control-static">{{bill.filingDate}}</p>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" v-if="receiptNotUpload">
         <label class="col-sm-2 control-label">开票日期</label>
         <div class="col-sm-9">
           <p class="form-control-static">{{bill.billingDate}}</p>
@@ -325,9 +334,10 @@
 import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
-import { Upload } from 'element-ui';
+import { Upload,Message } from 'element-ui';
 
 Vue.use(Upload);
+Vue.prototype.$message = Message;
 
 export default {
   name: 'billingInforDetail',
@@ -385,7 +395,9 @@ export default {
         URL: '',
         progressShow: false,
         percentage: '0%'
-      }
+      },
+      disConfirm: false,
+      disFinish: false,
     };
   },
   computed: {
@@ -396,7 +408,19 @@ export default {
       return (this.user.department === '财务部' && this.business.projectStatus >= 80) ? true : false;
     },
     uploadDisabled() {
+      return (this.user.department !== '财务部' && this.user.department !== '业务部' && this.business.projectStatus >= 80) ? true : false;
+    },
+    stateShow() {
       return (this.user.department !== '财务部' && this.business.projectStatus >= 80) ? true : false;
+    },
+    billNotUpload() {
+      return (this.bill.state < 1) ? true : false;
+    },
+    receiptNotUpload() {
+      return (this.bill.state < 2) ? true : false;
+    },
+    finished() {
+      return (this.bill.state === 2) ? true : false;
     }
   },
   props: ['initBusiness', 'user'],
@@ -555,6 +579,69 @@ export default {
           window.location.href = 'signIn.html';
         }
       }, (rep) => { });
+    },
+    confirm() {
+      if (this.bill.billFiles.length === 0) {
+        this.$message({
+          message: '请先上传发票图片',
+          type: 'warning'
+        });
+        return false;
+      } else {
+        this.disConfirm = true;
+        this.billStateChan().then(() => {
+          this.bill.billingDate = (() => {
+            let t = new Date();
+            let Y = t.getFullYear();
+            let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+            let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
+            return `${Y}-${M}-${D}`;
+          })();
+          this.disConfirm = false;
+        }, () => {});
+      }
+    },
+    finish() {
+      if (this.bill.receiptFiles.length === 0) {
+        this.$message({
+          message: '请先上传收款图片',
+          type: 'warning'
+        });
+        return false;
+      } else {
+        this.disFinish = true;
+        this.billStateChan().then(() => {
+          this.disFinish = false;
+        }, () => {});
+      }
+    },
+    billStateChan() {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+          method: 'post',
+          url: '/service',
+          data: qs.stringify({
+            data: (() => {
+              let obj = {
+                command: 'makeBilling',
+                platform: 'web',
+                id: this.bill.id,
+                type: this.bill.state + 1
+              };
+              return JSON.stringify(obj);
+            })()
+          })
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.bill.state += 1;
+            resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
+          }
+        }, (rep) => { });
+      });
+      return promise;
     }
   }
 };

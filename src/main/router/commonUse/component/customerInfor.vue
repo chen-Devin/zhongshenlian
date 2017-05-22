@@ -8,6 +8,7 @@
         录入
       </button>
     </h3>
+    <search-bar placeholder="请输入客户关键字进行搜索" @search="search"></search-bar>
     <table class="table table-hover com-list">
       <thead>
         <tr>
@@ -54,6 +55,7 @@
 
 <script>
 import card from '../../../component/card.vue';
+import searchBar from '../../../component/searchBar.vue';
 import pager from '../../../component/pager.vue';
 import customerModModal from './customerModModal.vue';
 import customerDelModal from './customerDelModal.vue';
@@ -76,6 +78,9 @@ export default {
   },
   props: ['customers', 'user', 'page'],
   methods: {
+    search(searchCont) {
+      this.$emit('search', searchCont);
+    },
     currentChange(newPage) {
       this.$emit('pageChan', newPage);
     },
@@ -164,6 +169,7 @@ export default {
   },
   components: {
     card,
+    searchBar,
     customerModModal,
     customerDelModal,
     customerAddModal,

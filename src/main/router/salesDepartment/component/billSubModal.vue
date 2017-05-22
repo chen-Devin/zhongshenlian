@@ -70,7 +70,6 @@ export default {
                   openBankNumber: this.bill.unit.account,
                   applicationDate: this.bill.filingDate,
                   totalBillingAmount: this.bill.addUpAmount,
-                  billingDate: this.bill.billingDate,
                   deliveryMethod: this.bill.way,
                   recipientName: this.bill.receiver,
                   deliverAddress: this.bill.receiveAdd,
@@ -80,7 +79,8 @@ export default {
                   signContractAmount: this.business.contractAmount,
                   startServiceTime: this.business.time.start,
                   endServiceTime: this.business.time.end,
-                  annexArray: []
+                  annexArray: [],
+                  state: this.bill.state
                 }
               };
               return JSON.stringify(obj);

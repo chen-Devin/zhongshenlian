@@ -212,13 +212,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">申请日期</label>
         <div class="col-sm-9">
-          <input type="date" class="form-control" placeholder="请输入申请日期" v-model="bill.filingDate">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">开票日期</label>
-        <div class="col-sm-9">
-          <input type="date" class="form-control" placeholder="请输入开票日期" v-model="bill.billingDate">
+          <p class="form-control-static">{{bill.filingDate}}</p>
         </div>
       </div>
       <div class="form-group">
@@ -342,17 +336,12 @@ export default {
       for (let i = 0; i < amoArr.length; i++) {
         amoNum += parseFloat(amoArr[i])*Math.pow(1000, i);
       }
-      return amo;
+      return amoNum;
     },
     addUpAmountInit() {
       let sum = 0;
       for (let i = 0; i < this.business.bills.length; i++) {
-        let amoArr = this.business.bills[i].amount.split(',').reverse();
-        let amoNum = 0;
-        for (let i = 0; i < amoArr.length; i++) {
-          amoNum += parseFloat(amoArr[i]) * Math.pow(1000, i);
-        }
-        sum += amoNum;
+        sum += this.currencyToNum(this.business.bills[i].amount);
       }
       let sumStr = sum.toString().split('.');
       let sumInt = sumStr[0];
@@ -374,9 +363,21 @@ export default {
       }
     },
     amountCheck() {
-      if (this.currencyToNum(this.bill.addUpAmount) + this.currencyToNum(this.bill.amount) > this.currencyToNum(this.business.contractAmount)) {
+      if (this.bill.amount === '') {
         this.$message({
-          message: '开票总和不能大于合同金额',
+          message: '请填写开票金额',
+          type: 'warning'
+        });
+        return false;
+      } else if (this.currencyToNum(this.bill.amount) <= 0) {
+        this.$message({
+          message: '开票金额必须大于零，请检查',
+          type: 'warning'
+        });
+        return false;
+      } else if (this.currencyToNum(this.bill.addUpAmount) + this.currencyToNum(this.bill.amount) > this.currencyToNum(this.business.contractAmount)) {
+        this.$message({
+          message: '开票金额总和不能大于合同金额',
           type: 'warning'
         });
         return false;
