@@ -196,7 +196,7 @@ export default {
     background-color: #E6E6E6;
   }
   .link-wrap {
-    width: 45px;
+    // width: 45px;
     a:hover {
       cursor: pointer;
     }
