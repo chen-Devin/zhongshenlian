@@ -192,29 +192,27 @@
             </div>
           </div>
         </div>
-        <div class="row form-group" v-for="(DEPEND, index) in business.contractType.basicFee.depend" :key="index">
-          <div class="col-sm-5">
-            <div class="input-group">
-              <div class="input-group-addon">协办方</div>
-              <input type="text" class="form-control" placeholder="请输入协办方" v-model="DEPEND.name" :disabled="!editable">
-            </div>
-          </div>
-          <div class="col-sm-5">
-            <div class="input-group">
-              <div class="input-group-addon">比例</div>
-              <input type="number" class="form-control" placeholder="请输入比例" v-model.number="DEPEND.percentage" :disabled="!editable">
-              <div class="input-group-addon">%</div>
-            </div>
-          </div>
-          <h4 class="col-sm-1" v-if="editable">
-            <a class="text-danger" @click="delBasicFee(index)">
-              <img src="../../../../img/delete_icon.svg">
-            </a>
-          </h4>
-        </div>
         <div class="row form-group">
-          <div class="col-sm-5"></div>
-          <div class="col-sm-5"></div>
+          <template v-for="(DEPEND, index) in business.contractType.basicFee.depend">
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">协办方</div>
+                <input type="text" class="form-control" placeholder="请输入协办方" v-model="DEPEND.name" :disabled="!editable">
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">比例</div>
+                <input type="number" class="form-control" placeholder="请输入比例" v-model.number="DEPEND.percentage" :disabled="!editable">
+                <div class="input-group-addon">%</div>
+              </div>
+            </div>
+            <h4 class="col-sm-1" v-if="editable">
+              <a class="text-danger" @click="delBasicFee(index)">
+                <img src="../../../../img/delete_icon.svg">
+              </a>
+            </h4>
+          </template>
           <h4 class="col-sm-1" v-if="editable">
             <a class="text-danger" @click="addBasicFee()">
               <img src="../../../../img/add_icon.svg">
@@ -241,35 +239,32 @@
             </div>
           </div>
         </div>
-        <div class="row form-group" v-for="(DEPEND, index) in business.contractType.benefitFee.depend" :key="index">
-          <div class="col-sm-5">
-            <div class="input-group">
-              <div class="input-group-addon">协办方</div>
-              <input type="text" class="form-control" placeholder="请输入协办方" v-model="DEPEND.name" :disabled="!editable">
+        <div class="row form-group" >
+          <template v-for="(DEPEND, index) in business.contractType.benefitFee.depend">
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">协办方</div>
+                <input type="text" class="form-control" placeholder="请输入协办方" v-model="DEPEND.name" :disabled="!editable">
+              </div>
             </div>
-          </div>
-          <div class="col-sm-5">
-            <div class="input-group">
-              <div class="input-group-addon">比例</div>
-              <input type="number" class="form-control" placeholder="请输入比例" v-model.number="DEPEND.percentage" :disabled="!editable">
-              <div class="input-group-addon">%</div>
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">比例</div>
+                <input type="number" class="form-control" placeholder="请输入比例" v-model.number="DEPEND.percentage" :disabled="!editable">
+                <div class="input-group-addon">%</div>
+              </div>
             </div>
-          </div>
-          <h4 class="col-sm-1" v-if="editable">
-            <a class="text-danger" @click="delBenefitFee(index)">
-              <img src="../../../../img/delete_icon.svg">
-            </a>
-          </h4>
-        </div>
-          <div class="row form-group">
-            <div class="col-sm-5"></div>
-            <div class="col-sm-5"></div>
             <h4 class="col-sm-1" v-if="editable">
-              <a class="text-danger" @click="addBenefitFee()">
-                <img src="../../../../img/add_icon.svg">
+              <a class="text-danger" @click="delBenefitFee(index)">
+                <img src="../../../../img/delete_icon.svg">
               </a>
             </h4>
-          </div>
+          </template>
+          <h4 class="col-sm-1" v-if="editable">
+            <a class="text-danger" @click="addBenefitFee()">
+              <img src="../../../../img/add_icon.svg">
+            </a>
+          </h4>
         </div>
       </div>
     </div>
@@ -299,27 +294,31 @@
             </div>
           </div>
         </div>
-        <div class="row form-group" v-for="(COOP, index) in business.departmentCoop.departments.coop">
-          <div class="col-sm-5">
-            <div class="input-group">
-              <div class="input-group-addon">合作部门</div>
-              <input type="text" class="form-control" placeholder="请输入合作部门" v-model="COOP.name" :disabled="!editable">
-            </div>
-          </div>
-          <div class="col-sm-5">
-            <div class="input-group">
-              <div class="input-group-addon">比例</div>
-              <input type="number" class="form-control" placeholder="请输入比例" v-model.number="COOP.percentage" :disabled="!editable">
-              <div class="input-group-addon">%</div>
-            </div>
-          </div>
-          <h4 class="col-sm-1" v-if="editable">
-            <a class="fa fa-times-circle text-danger" @click="delDepartments(index)"></a>
-          </h4>
-        </div>
         <div class="row form-group">
-          <h4 class="col-sm-1 col-sm-offset-11" v-if="editable">
-            <a class="fa fa-plus-circle text-danger" @click="addDepartments()"></a>
+          <template v-for="(COOP, index) in business.departmentCoop.departments.coop">
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">合作部门</div>
+                <input type="text" class="form-control" placeholder="请输入合作部门" v-model="COOP.name" :disabled="!editable">
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">比例</div>
+                <input type="number" class="form-control" placeholder="请输入比例" v-model.number="COOP.percentage" :disabled="!editable">
+                <div class="input-group-addon">%</div>
+              </div>
+            </div>
+            <h4 class="col-sm-1" v-if="editable">
+              <a class="text-danger" @click="delDepartments(index)">
+                <img src="../../../../img/delete_icon.svg">
+              </a>
+            </h4>
+          </template>
+          <h4 class="col-sm-1" v-if="editable">
+            <a class="text-danger" @click="addDepartments()">
+              <img src="../../../../img/add_icon.svg">
+            </a>
           </h4>
         </div>
       </div>
