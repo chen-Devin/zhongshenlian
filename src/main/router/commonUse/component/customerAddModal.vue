@@ -1,5 +1,5 @@
 <template>
-  <modal alignSelf="flex-start">
+  <modal class="add-width" alignSelf="flex-start" modalWidth="800px">
     <form class="form-horizontal clearfix"
           slot="body"
           @submit.prevent
@@ -182,8 +182,6 @@
           </label>
         </div>
       </div>
-
-
       <div class="alert alert-danger well-sm"
            v-show="alert.show">
         {{alert.cont}}
@@ -442,4 +440,5 @@ export default {
       text-align: left;
       width: 100%;
   }
+
 </style>

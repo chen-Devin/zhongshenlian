@@ -355,7 +355,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">摘牌部门：</label>
                   <div class="col-sm-10">
-                    {{ project.delipotentDepartment }}
+                    {{ project.subDepartment }}
                   </div>
                 </div>
                 <div class="form-group">
@@ -378,7 +378,7 @@
           <label for="remark" class="col-sm-1 control-label"></label>
           <div class="col-sm-11">
             <button type="button" class="btn my-btn submit-btn" @click="approve()">通过</button>
-            <button type="button" class="btn my-btn cancel-btn" @click="showAdvice()">不通过</button>
+            <button type="button" class="btn my-btn draft-btn" @click="showAdvice()">不通过</button>
           </div>
         </div>
       </div>
