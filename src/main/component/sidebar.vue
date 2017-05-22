@@ -99,9 +99,9 @@ export default {
         background-color: #EEEEEE;
       }
       &.active {
-        background-color: #288ADA;
+        background-color: #1F6BA9;
         > a {
-          background-color: #288ADA;
+          background-color: #1F6BA9;
           color: #ffffff;
           &.bid-info:before {
             background: url('../../img/sidebar/bidInfoSelected.svg');
