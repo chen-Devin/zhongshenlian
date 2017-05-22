@@ -418,6 +418,7 @@ import qs from 'qs';
 import moment from 'moment';
 import { Upload } from 'element-ui';
 import maskedInput from 'vue-text-mask';
+import vSelect from 'vue-select';
 
 import bus from '../../../bus.js';
 import currencyMask from '../../../currencyMask.js';
@@ -1141,7 +1142,8 @@ export default {
     }
   },
   components: {
-    maskedInput
+    maskedInput,
+    vSelect
   }
 };
 </script>
