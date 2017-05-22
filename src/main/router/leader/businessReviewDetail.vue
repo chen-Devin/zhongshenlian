@@ -7,7 +7,7 @@
         <div class="pull-right">
           <template v-if="decide==='undecide'">
             <button class="btn my-btn submit-btn" @click="approve()">通过</button>
-            <button class="btn my-btn cancel-btn" @click="refuse()">不通过</button>
+            <button class="btn my-btn draft-btn" @click="refuse()">不通过</button>
           </template>
           <small class="label label-success" v-else-if="decide==='approve'">已选择通过</small>
           <small class="label label-danger" v-else-if="decide==='refuse'">已选择未通过</small>
@@ -586,7 +586,7 @@ export default {
                   }
                   return arr;
                 })(),
-                state: parseInt(rep.data.data.projectBillingArray[i].financeHandleStatus)
+                state: parseInt(rep.data.data.projectBillingArray[i].state)
               };
               this.business.bills.push(obj);
             }

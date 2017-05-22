@@ -9,9 +9,9 @@
         <div class="col-md-1 higher-search f-r">
           <button type="button" class="btn my-btn draft-btn" @click="showHigherSearch()">
             高级搜索
-            <!-- &nbsp;
+            &nbsp;
             <img v-if="searchDown" class="search-icon" src="../../../img/market/search_down.svg">
-            <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg"> -->
+            <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg">
           </button>
         </div>
       </div>
@@ -265,6 +265,9 @@ export default {
           }
         }
         this.officeList = departmentSort;
+        if (this.officeList.length === 0) {
+          this.officeList = '';
+        }
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
           method: 'get',

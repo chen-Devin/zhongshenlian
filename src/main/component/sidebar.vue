@@ -25,11 +25,10 @@ export default {
         if (this.user.department === '所长') {
           routes = [
             {name: '待审核业务', link: '/business-review-list-leader', icon: 'business-review-list-leader'},
-            // {name: '待处理业务', link: '/business-handle-list-leader'},
+            {name: '待处理业务', link: '/business-handle-list-leader', icon: 'business-handle-list-sales'},
             {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list'},
             {name: '职员权限管理', link: '/staff-management-author', icon: 'staff-management-author'},
-            {name: '职员资料管理', link: '/staff-management-infor', icon: ''},
-            {name: '业务分析', link: '/business-analysis', icon: ''},
+            {name: '职员资料管理', link: '/staff-management-infor', icon: 'staff-management-author'},
             {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
           ];
         } else if (this.user.department === '办公室') {
@@ -99,9 +98,9 @@ export default {
         background-color: #EEEEEE;
       }
       &.active {
-        background-color: #288ADA;
+        background-color: #1F6BA9;
         > a {
-          background-color: #288ADA;
+          background-color: #1F6BA9;
           color: #ffffff;
           &.bid-info:before {
             background: url('../../img/sidebar/bidInfoSelected.svg');

@@ -162,41 +162,49 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">单位名称</label>
+        <label class="col-sm-2 control-label">
+          单位名称<span class="text-danger">*</span>
+        </label>
         <div class="col-sm-9">
           <input type="text" class="form-control" placeholder="请输入单位名称" v-model="bill.unit.name">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">纳税人识别号</label>
+        <label class="col-sm-2 control-label">
+          纳税人识别号<span class="text-danger">*</span>
+        </label>
         <div class="col-sm-9">
           <input type="text" class="form-control" placeholder="请输入纳税人识别号" v-model="bill.taxpayerID">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">
-          <span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>单位地址</label>
+          单位地址<span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>
+        </label>
         <div class="col-sm-9">
           <input type="text" class="form-control" placeholder="请输入单位地址" v-model="bill.unit.address">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">
-          <span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>单位电话</label>
+          单位电话<span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>
+        </label>
         <div class="col-sm-9">
           <input type="tel" class="form-control" placeholder="请输入单位电话" v-model="bill.unit.tele">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">
-          <span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>开户银行</label>
+          开户银行<span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>
+        </label>
         <div class="col-sm-9">
           <input type="text" class="form-control" placeholder="请输入开户银行" v-model="bill.unit.depositBank">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">
-          <span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>开户账号</label>
+          开户账号<span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>
+        </label>
         <div class="col-sm-9">
           <input type="text" class="form-control" placeholder="请输入开户账号" v-model="bill.unit.account">
         </div>
@@ -204,13 +212,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">申请日期</label>
         <div class="col-sm-9">
-          <input type="date" class="form-control" placeholder="请输入申请日期" v-model="bill.filingDate">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">开票日期</label>
-        <div class="col-sm-9">
-          <input type="date" class="form-control" placeholder="请输入开票日期" v-model="bill.billingDate">
+          <p class="form-control-static">{{bill.filingDate}}</p>
         </div>
       </div>
       <div class="form-group">
@@ -334,17 +336,12 @@ export default {
       for (let i = 0; i < amoArr.length; i++) {
         amoNum += parseFloat(amoArr[i])*Math.pow(1000, i);
       }
-      return amo;
+      return amoNum;
     },
     addUpAmountInit() {
       let sum = 0;
       for (let i = 0; i < this.business.bills.length; i++) {
-        let amoArr = this.business.bills[i].amount.split(',').reverse();
-        let amoNum = 0;
-        for (let i = 0; i < amoArr.length; i++) {
-          amoNum += parseFloat(amoArr[i]) * Math.pow(1000, i);
-        }
-        sum += amoNum;
+        sum += this.currencyToNum(this.business.bills[i].amount);
       }
       let sumStr = sum.toString().split('.');
       let sumInt = sumStr[0];
@@ -355,10 +352,32 @@ export default {
       }
       return sumArr.join(',') + ((sumStr.length > 1) ? ('.'+sumStr[1]) : '');
     },
-    amountCheck() {
-      if (this.currencyToNum(this.bill.addUpAmount) + this.currencyToNum(this.bill.amount) > this.currencyToNum(this.business.contractAmount)) {
+    commonCheck() {
+      if (this.bill.billingUnit === '' || this.bill.taxpayerID === '') {
         this.$message({
-          message: '开票总和不能大于合同金额',
+          message: '必须填写单位单位名称、纳税人识别号',
+          type: 'warning'
+        });
+      } else {
+        return true;
+      }
+    },
+    amountCheck() {
+      if (this.bill.amount === '') {
+        this.$message({
+          message: '请填写开票金额',
+          type: 'warning'
+        });
+        return false;
+      } else if (this.currencyToNum(this.bill.amount) <= 0) {
+        this.$message({
+          message: '开票金额必须大于零，请检查',
+          type: 'warning'
+        });
+        return false;
+      } else if (this.currencyToNum(this.bill.addUpAmount) + this.currencyToNum(this.bill.amount) > this.currencyToNum(this.business.contractAmount)) {
+        this.$message({
+          message: '开票金额总和不能大于合同金额',
           type: 'warning'
         });
         return false;
@@ -382,7 +401,9 @@ export default {
       }
     },
     sub() {
-      if (!this.amountCheck()) {
+      if (!this.commonCheck()) {
+        return false;
+      } if (!this.amountCheck()) {
         return false;
       } else if (!this.typeCheck()) {
         return false;

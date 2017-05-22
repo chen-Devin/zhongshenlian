@@ -7,7 +7,7 @@
               @click="ediBtnTog()"
               :disabled="ediBtn.dis">{{ediBtn.cont}}</button>
     </h3>
-    <table class="table table-striped table-hover com-list">
+    <table class="table table-bordered table-hover com-list">
       <thead>
         <tr>
           <td class="text-center staff-max">职员</td>
@@ -173,4 +173,15 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.com-list {
+  thead {
+    background-color: #E6E6E6;
+  }
+  .link-wrap {
+    // width: 45px;
+    a:hover {
+      cursor: pointer;
+    }
+  }
+}
 </style>

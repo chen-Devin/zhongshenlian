@@ -15,7 +15,15 @@
       <router-link class="list-group-item"
                    :to="billRoute(BILL)"
                    v-for="(BILL, index) in business.bills"
-                   :key="index">{{BILL.amount+'元'}}</router-link>
+                   :key="index">
+        <span class="label label-warning"
+              v-if="BILL.state<1">未开票</span>
+        <span class="label label-info"
+              v-else-if="BILL.state<2">未付款</span>
+        <span class="label label-success"
+              v-else-if="BILL.state<3">已完成</span>
+        {{BILL.amount+'元'}}
+      </router-link>
     </div>
   </div>
 </template>

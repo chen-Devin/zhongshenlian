@@ -8,14 +8,15 @@
         录入
       </button>
     </h3>
-    <table class="table table-hover com-list">
+    <search-bar placeholder="请输入客户关键字进行搜索" @search="search"></search-bar>
+    <table class="table table-bordered table-hover com-list">
       <thead>
         <tr>
           <th class="text-center">客户名称</th>
           <th class="text-center">客户联系人</th>
           <th class="text-center">联系人职位</th>
           <th class="text-center">联系人电话</th>
-          <th class="text-center">&nbsp;</th>
+          <th class="text-center">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -54,6 +55,7 @@
 
 <script>
 import card from '../../../component/card.vue';
+import searchBar from '../../../component/searchBar.vue';
 import pager from '../../../component/pager.vue';
 import customerModModal from './customerModModal.vue';
 import customerDelModal from './customerDelModal.vue';
@@ -76,6 +78,9 @@ export default {
   },
   props: ['customers', 'user', 'page'],
   methods: {
+    search(searchCont) {
+      this.$emit('search', searchCont);
+    },
     currentChange(newPage) {
       this.$emit('pageChan', newPage);
     },
@@ -164,6 +169,7 @@ export default {
   },
   components: {
     card,
+    searchBar,
     customerModModal,
     customerDelModal,
     customerAddModal,
@@ -174,12 +180,12 @@ export default {
 
 <style lang="sass" scoped>
 .com-list {
-    border: 1px solid #E6E6E6;
-    thead {
-      background-color: #E6E6E6;
-    }
+  border: 1px solid #E6E6E6;
+  thead {
+    background-color: #E6E6E6;
+  }
   .link-wrap {
-    width: 45px;
+    // width: 45px;
     a:hover {
       cursor: pointer;
     }
