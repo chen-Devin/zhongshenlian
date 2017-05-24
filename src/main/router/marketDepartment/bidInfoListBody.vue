@@ -103,32 +103,24 @@
         录入
       </button>
     </h3>
-    <table class="table table-hover projectList">
-      <thead>
-        <tr>
-          <td class="h-left">信息详情</td>
-          <td class="h-right">开标时间</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="project in biddingArray" @click="checkMessage(project)">
-          <td>
-            <span class="label label-warning"
-                  v-if="project.biddingState==='未摘牌'">未摘牌</span>
-            <span class="label label-info"
-                  v-else-if="project.biddingState==='已摘牌'">已摘牌</span>
-            <span class="label label-primary"
-                  v-else-if="project.biddingState==='已入围'">已入围</span>
-            <span class="label label-success"
-                  v-else-if="project.biddingState==='已中标'">已中标</span>
-            <span class="project-name">{{project.biddingName}}</span>
-          </td>
-          <td class="time-wrap">
-            {{project.openBidDate}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="com-list list-group">
+      <li class="list-group-item list-head">
+        <span class="title">信息详情</span>
+        <span class="date pull-right">创建时间</span>
+      </li>
+      <a class="list-group-item" @click="checkMessage(project)" v-for="project in biddingArray">
+        <span class="label label-warning"
+              v-if="project.biddingState==='未摘牌'">未摘牌</span>
+        <span class="label label-info"
+              v-else-if="project.biddingState==='已摘牌'">已摘牌</span>
+        <span class="label label-primary"
+              v-else-if="project.biddingState==='已入围'">已入围</span>
+        <span class="label label-success"
+              v-else-if="project.biddingState==='已中标'">已中标</span>
+        <span class="project-name">{{project.biddingName}}</span>
+        <span class="date pull-right">{{project.openBidDate}}</span>
+      </a>
+    </div>
     <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
   </div>
 </template>
@@ -498,5 +490,10 @@ input::-webkit-input-placeholder{text-align: center;}
 }
 .project-name {
   margin-left: 10px;
+}
+.com-list {
+  a {
+    cursor: pointer;
+  }
 }
 </style>

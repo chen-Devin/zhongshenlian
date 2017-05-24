@@ -17,8 +17,19 @@ body {
   margin: 30px auto 20px auto;
   .list-head {
     background-color: #E6E6E6;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 27px;
+    padding-right: 35px;
   }
   > .list-group-item {
+    .date {
+      color: #969696;
+    }
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-left: 0;
+    border-right: 0;
     > span.title {
       margin-left: 7px;
     }
@@ -182,7 +193,7 @@ form {
 
 //提交、保存、录入、搜索、编辑按钮
 .submit-btn {
-  background-color: #288BDB;
+  background-color: #1F6BA9;
   border: none;
   &:hover {
     background-color: #2171B2;
@@ -281,6 +292,17 @@ form {
 
 .label {
   font-weight:normal;
+  background-color: #fff;
+  color: #51AAD6;
+  letter-spacing: -0.32px;
+  border: 1px solid #51AAD6;
+  border-radius: 2px;
+  padding: .1em .5em .1em;
+}
+
+.label-danger {
+  border: 1px solid #E84C4C;
+  color: #E84C4C;
 }
 
 

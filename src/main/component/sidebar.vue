@@ -6,7 +6,7 @@
                    :key="index"
                    tag="li"
                    active-class="active">
-        <a :class="ROU.icon">{{ROU.name}}</a>
+        <span :class="ROU.icon">{{ROU.name}}</span>
       </router-link>
     </ul>
   </div>
@@ -90,60 +90,17 @@ export default {
 
 .side-bar {
   position: fixed;
-  background-color: #000;
+  background-color: #283037;
   height: 100%;
   .nav-pills {
     > li {
       &:hover {
-        background-color: #EEEEEE;
+        background-color: #51616F;
       }
-      &.active {
-        background-color: #1F6BA9;
-        > a {
-          background-color: #1F6BA9;
-          color: #ffffff;
-          &.bid-info:before {
-            background: url('../../img/sidebar/bidInfoSelected.svg');
-            background-repeat: no-repeat;
-          }
-          &.customer-infor-list:before {
-            background: url('../../img/sidebar/customer-infor-listSelected.svg');
-            background-repeat: no-repeat;
-          }
-          &.staff-management-author:before {
-            background: url('../../img/sidebar/staff-management-authorSelected.svg');
-            background-repeat: no-repeat;
-          }
-          &.business-review-list-leader:before {
-            background: url('../../img/sidebar/business-review-list-leaderSelected.svg');
-            background-repeat: no-repeat;
-          }
-          &.business-complete-list:before {
-            background: url('../../img/sidebar/business-complete-listSelected.svg');
-            background-repeat: no-repeat;
-          }
-          &.rule-regulation:before {
-            background: url('../../img/sidebar/rule-regulationSelected.svg');
-            background-repeat: no-repeat;
-          }
-          &.bid-info-draft:before {
-            background: url('../../img/sidebar/bid-info-draftSelected.svg');
-            background-repeat: no-repeat;
-          }
-          &.business-handle-list-sales:before {
-            background: url('../../img/sidebar/business-handle-list-salesSelected.svg');
-            background-repeat: no-repeat;
-          }
-        }
-      }
-      > a {
+      > span {
         display: block;
         width: 130px;
-        border-radius: 0;
-        padding: 1px 15px;
-        padding-bottom: 15px;
         margin: 0 auto;
-        color: #999999;
         &:before {
           content: '';
           position: relative;
@@ -154,38 +111,80 @@ export default {
           width: 14px;
         }
         &.bid-info:before {
-          background: url('../../img/sidebar/bidInfo.svg');
+          background: url('../../img/sidebar/bidInfo.png');
           background-repeat: no-repeat;
         }
         &.customer-infor-list:before {
-          background: url('../../img/sidebar/customer-infor-list.svg');
+          background: url('../../img/sidebar/customer-infor-list.png');
           background-repeat: no-repeat;
         }
         &.staff-management-author:before {
-          background: url('../../img/sidebar/staff-management-author.svg');
+          background: url('../../img/sidebar/staff-management-author.png');
           background-repeat: no-repeat;
         }
         &.business-review-list-leader:before {
-          background: url('../../img/sidebar/business-review-list-leader.svg');
+          background: url('../../img/sidebar/business-review-list-leader.png');
           background-repeat: no-repeat;
         }
         &.business-complete-list:before {
-          background: url('../../img/sidebar/business-complete-list.svg');
+          background: url('../../img/sidebar/business-complete-list.png');
           background-repeat: no-repeat;
         }
         &.rule-regulation:before {
-          background: url('../../img/sidebar/rule-regulation.svg');
+          background: url('../../img/sidebar/rule-regulation.png');
           background-repeat: no-repeat;
         }
         &.bid-info-draft:before {
-          background: url('../../img/sidebar/bid-info-draft.svg');
+          background: url('../../img/sidebar/bid-info-draft.png');
           background-repeat: no-repeat;
         }
         &.business-handle-list-sales:before {
-          background: url('../../img/sidebar/business-handle-list-sales.svg');
+          background: url('../../img/sidebar/business-handle-list-sales.png');
           background-repeat: no-repeat;
         }
       }
+      &.active {
+          > span {
+            &.bid-info:before {
+              background: url('../../img/sidebar/bidInfoSelected.svg');
+              background-repeat: no-repeat;
+            }
+            &.customer-infor-list:before {
+              background: url('../../img/sidebar/customer-infor-listSelected.svg');
+              background-repeat: no-repeat;
+            }
+            &.staff-management-author:before {
+              background: url('../../img/sidebar/staff-management-authorSelected.svg');
+              background-repeat: no-repeat;
+            }
+            &.business-review-list-leader:before {
+              background: url('../../img/sidebar/business-review-list-leaderSelected.svg');
+              background-repeat: no-repeat;
+            }
+            &.business-complete-list:before {
+              background: url('../../img/sidebar/business-complete-listSelected.svg');
+              background-repeat: no-repeat;
+            }
+            &.rule-regulation:before {
+              background: url('../../img/sidebar/rule-regulationSelected.svg');
+              background-repeat: no-repeat;
+            }
+            &.bid-info-draft:before {
+              background: url('../../img/sidebar/bid-info-draftSelected.svg');
+              background-repeat: no-repeat;
+            }
+            &.business-handle-list-sales:before {
+              background: url('../../img/sidebar/business-handle-list-salesSelected.svg');
+              background-repeat: no-repeat;
+            }
+          }
+          background-color: #1F6BA9;
+          color: #ffffff;
+      }
+        padding: 1px 15px;
+        padding-bottom: 15px;
+        color: #999999;
+        cursor: pointer;
     }
   }
 }

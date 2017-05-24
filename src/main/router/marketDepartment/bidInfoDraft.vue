@@ -2,22 +2,16 @@
 	<div class="main">
 		<crumbs :paths="paths"></crumbs>
 		<card>
-			<table class="table table-hover projectList">
-				<thead>
-					<tr>
-						<td>业务</td>
-						<td class="ta-r dateMr">最后保存时间</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="project in unfinishedList" @click="checkMessage(project)">
-						<td>{{ project.biddingName }}</td>
-						<td class="ta-r">
-							{{ project.updateAt }}
-						</td>
-					</tr>
-				</tbody>
-			</table>
+      <div class="com-list list-group">
+        <li class="list-group-item list-head">
+          <span class="title">信息详情</span>
+          <span class="date pull-right">最后保存时间</span>
+        </li>
+        <a class="list-group-item" @click="checkMessage(project)" v-for="project in unfinishedList">
+          <span class="project-name">{{project.biddingName}}</span>
+          <span class="date pull-right">{{ project.updateAt }}</span>
+        </a>
+      </div>
 			<my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
 		</card>
 	</div>
@@ -36,6 +30,11 @@ table {
 			cursor: pointer;
 		}
 	}
+}
+.com-list {
+  a {
+    cursor: pointer;
+  }
 }
 </style>
 

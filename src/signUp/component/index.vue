@@ -10,7 +10,7 @@
         <div class="form-group"
              :class="{focus: tel.foc, error: tel.err}">
           <div class="input-group">
-            <div class="input-group-addon"><span class="fa fa-phone"></span></div>
+            <div class="input-group-addon"><span class="phone-icon"></span></div>
             <input type="tel"
                    class="form-control"
                    id="telephone"
@@ -21,7 +21,7 @@
                    @input="judgeTel()"
                    v-model="tel.val">
             <span class="input-group-btn">
-              <button class="btn text-primary"
+              <button class="btn text-primary verification"
                       type="button"
                       :disabled="getBtn.dis"
                       @click="getBtnTog()">{{getBtn.cont}}</button>
@@ -31,7 +31,7 @@
         <div class="form-group"
              :class="{focus: ver.foc, error: ver.err}">
           <div class="input-group">
-            <div class="input-group-addon"><span class="fa fa-shield"></span></div>
+            <div class="input-group-addon"><span class="verification-icon"></span></div>
             <input type="text"
                    class="form-control"
                    id="verCode"
@@ -48,7 +48,7 @@
           {{alert.cont}}
         </div>
         <div class="form-group">
-          <button class="btn btn-primary btn-block"
+          <button class="btn btn-primary btn-block letterSpacing"
                   type="button"
                   :disabled="subBtn.dis"
                   @click="subBtnTog()">{{subBtn.cont}}</button>
@@ -82,7 +82,7 @@ export default {
       },
       subBtn: {
         dis: true,
-        cont: '确定'
+        cont: '登录'
       },
       alert: {
         show: false,
@@ -107,7 +107,7 @@ export default {
   },
   computed: {
     userHead() {
-      return this.user.wechatHeadImg || require('../../img/head.jpg');
+      return this.user.wechatHeadImg || require('../../img/head.svg');
     }
   },
   methods: {
@@ -190,7 +190,7 @@ export default {
 
         if (!(this.ver.err || this.tel.err)) {
           this.subBtn.dis = false;
-          this.subBtn.cont = '确定';
+          this.subBtn.cont = '登录';
         }
       } else {
         this.ver.err = true;
@@ -198,7 +198,7 @@ export default {
         this.alert.show = true;
 
         this.subBtn.dis = true;
-        this.subBtn.cont = '确定';
+        this.subBtn.cont = '登录';
       }
     },
     getBtnTog() {
@@ -269,7 +269,7 @@ export default {
           this.alert.show = true;
           this.alert.cont = rep.data.msg;
           this.subBtn.dis = false;
-          this.subBtn.cont = '确定';
+          this.subBtn.cont = '登录';
         }
       }, (rep) => {});
     }
@@ -279,6 +279,37 @@ export default {
 
 <style lang="sass" scoped>
 @import '../../scss/_variables.scss';
+
+.verification {
+  height: 35px;
+  color: #1F6BA9;
+}
+
+.letterSpacing {
+  letter-spacing: 10px;
+}
+
+.phone-icon {
+  &:before {
+    content: '';
+    background: url('../../img/signup/phone.svg');
+    background-repeat: no-repeat;
+    display: block;
+    width: 15px;
+    height: 23px;
+  }
+}
+
+.verification-icon {
+  &:before {
+    content: '';
+    background: url('../../img/signup/verification.svg');
+    background-repeat: no-repeat;
+    display: block;
+    width: 15px;
+    height: 23px;
+  }
+}
 
 .section {
   order: 1;

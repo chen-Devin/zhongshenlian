@@ -9,16 +9,16 @@
         </router-link>
       </h3>
       <div class="com-list list-group">
-        <li class="list-group-item list-head">
+        <!-- <li class="list-group-item list-head">
           <span class="title">业务列表</span>
           <span class="date pull-right">创建时间</span>
-        </li>
+        </li> -->
         <router-link class="list-group-item" :to="businessRoute(BUSINESS)" v-for="(BUSINESS, index) in businesses" :key="index">
-          <span class="label label-warning"
+          <span class="label label-danger"
                 v-if="BUSINESS.projectStatus===10">尚未完成</span>
           <span class="label label-info"
                 v-else-if="BUSINESS.projectStatus===20||BUSINESS.projectStatus===40">已提交待审核</span>
-          <span class="label label-danger"
+          <span class="label label-warning"
                 v-else-if="BUSINESS.projectStatus===30||BUSINESS.projectStatus===50">已审核未通过</span>
           <span class="label label-success"
                 v-else-if="BUSINESS.projectStatus===60">待上传合同</span>

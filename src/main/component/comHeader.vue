@@ -69,6 +69,7 @@ export default {
   h4.brand-name {
     margin-left: 0;
     color: rgba(240,240,240,0.9);
+    font-weight: normal;
   }
   .img-head {
     width: 36px;
