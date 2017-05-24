@@ -395,11 +395,13 @@
         </div>
       </modal>
       <!--调用组件的审核意见-->
-      <approver-advice class="advice"  v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
-      <modal v-if="checkAdviceModal">
-        <textarea slot="body" class="form-control" rows="8" placeholder="请填写修改意见，不超过500个字" v-model="adviceContent" readonly></textarea>
-        <button type="button" class="btn my-btn submit-btn" slot="footer" @click="closeAdviceContent()">完成</button>
-      </modal>
+      <div class="form-group">
+        <approver-advice class="advice"  v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
+        <!-- <modal v-if="checkAdviceModal">
+          <textarea slot="body" class="form-control" rows="8" placeholder="请填写修改意见，不超过500个字" v-model="adviceContent" readonly></textarea>
+          <button type="button" class="btn my-btn submit-btn" slot="footer" @click="closeAdviceContent()">完成</button>
+        </modal> -->
+      </div>
       <!-- 入围或中标通知书-->
       <div v-if="noticePanel">
         <table class="table table-bordered table-handle table-contract">

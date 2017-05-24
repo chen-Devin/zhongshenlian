@@ -67,7 +67,15 @@ export default {
 .approver-advice {
   padding: 0 50px;
   .approver-list {
+    .list-head {
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
     > li.list-group-item {
+      border-left: 1px solid #DDDDDD;
+      border-right: 1px solid #DDDDDD;
       .people,
       .label,
       .time {

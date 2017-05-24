@@ -16,7 +16,6 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import bidInfoListBody from './bidInfoListBody.vue';
 
-
 export default {
   name: 'bidInfoList',
   data() {

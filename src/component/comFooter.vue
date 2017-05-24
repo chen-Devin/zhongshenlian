@@ -21,6 +21,7 @@ footer {
   align-items: center;
   width: 100%;
   padding-top: 20px;
+  font-size: 12px;
 }
 span {
   display: inline-block;

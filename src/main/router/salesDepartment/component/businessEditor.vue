@@ -3,7 +3,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">项目名称</label>
       <div class="col-sm-5">
-        <input type="text" class="form-control half-width" placeholder="请输入项目名称" v-model="business.name" :disabled="!editable">
+        <input type="text" class="form-control" placeholder="请输入项目名称" v-model="business.name" :disabled="!editable">
       </div>
     </div>
     <div class="form-group">

@@ -270,7 +270,7 @@
     <div class="form-group"
          v-if="contractUploadShow">
       <label class="col-sm-2 control-label">正式合同</label>
-      <el-upload class="col-sm-9"
+      <el-upload class="col-sm-10"
                  :multiple="false"
                  :action="contractUpload.URL"
                  :on-progress="contractUploadProgress"
@@ -282,7 +282,8 @@
         <span slot="tip"
               class="text-info">&emsp;文件大小建议不超过3Mb</span>
       </el-upload>
-      <div class="col-sm-offset-2 col-sm-9">
+      <label class="col-sm-2 control-label"></label>
+      <div class="col-sm-10">
         <div class="progress-wrap" v-show="contractUpload.progressShow">
           <div class="progress">
             <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: contractUpload.percentage}">
@@ -291,7 +292,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-offset-2 col-sm-9">
+      <div class="col-sm-offset-2 col-sm-10">
         <ul class="com-list attachment-list list-group">
           <li class="list-group-item"
               v-for="FILE in business.contracts">
@@ -321,7 +322,7 @@
     <div class="form-group"
          v-if="reportUploadShow">
       <label class="col-sm-2 control-label">业务报告</label>
-      <el-upload class="col-sm-9"
+      <el-upload class="col-sm-10"
                  :multiple="false"
                  :action="reportUpload.URL"
                  :on-progress="reportUploadProgress"
@@ -333,7 +334,11 @@
         <span slot="tip"
               class="text-info">&emsp;文件大小建议不超过3Mb</span>
       </el-upload>
-      <div class="col-sm-offset-2 col-sm-9">
+    </div>
+    <div class="form-group"
+         v-if="reportUploadShow">
+      <label class="col-sm-2 control-label"></label>
+      <div class="col-sm-2">
         <div class="progress-wrap" v-show="reportUpload.progressShow">
           <div class="progress">
             <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: reportUpload.percentage}">
@@ -342,7 +347,8 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-offset-2 col-sm-9">
+      <label class="col-sm-2"></label>
+      <div class="col-sm-9">
         <ul class="com-list attachment-list list-group">
           <li class="list-group-item"
               v-for="FILE in business.reports">
@@ -359,7 +365,7 @@
     <div class="form-group"
          v-if="reportFileShow">
       <label class="col-sm-2 control-label">业务报告</label>
-      <ul class="col-sm-9 com-list attachment-list list-group">
+      <ul class="col-sm-10 com-list attachment-list list-group">
         <li class="list-group-item"
             v-for="FILE in business.reports">
           <span class="fa fa-file-text-o"></span>

@@ -15,35 +15,39 @@ html, body {
   transition-delay: 2s;
 }
 
+.form-control {
+  height: 35px;
+}
+
 .bgImg-1 {
-  background-image: url('../img/bg1.jpg');
+  background-image: url('../img/bg1.png');
 }
 .bgImg-2 {
-  background-image: url('../img/bg2.jpg');
+  background-image: url('../img/bg1.png');
 }
 .bgImg-3 {
-  background-image: url('../img/bg3.jpg');
+  background-image: url('../img/bg1.png');
 }
 .bgImg-4 {
-  background-image: url('../img/bg4.jpg');
+  background-image: url('../img/bg1.png');
 }
 .bgImg-5 {
-  background-image: url('../img/bg5.jpg');
+  background-image: url('../img/bg1.png');
 }
 .bgImg-6 {
-  background-image: url('../img/bg6.jpg');
+  background-image: url('../img/bg1.png');
 }
 .bgImg-7 {
-  background-image: url('../img/bg7.jpg');
+  background-image: url('../img/bg1.png');
 }
 .bgImg-8 {
-  background-image: url('../img/bg8.jpg');
+  background-image: url('../img/bg1.png');
 }
 .bgImg-9 {
-  background-image: url('../img/bg9.jpg');
+  background-image: url('../img/bg1.png');
 }
 .bgImg-10 {
-  background-image: url('../img/bg10.jpg');
+  background-image: url('../img/bg1.png');
 }
 
 main {
@@ -53,7 +57,7 @@ main {
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding-top: 120px;
+  padding-top: 11%;
 }
 
 section {
