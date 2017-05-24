@@ -21,9 +21,10 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">委托单位（客户）</label>
       <div class="col-sm-5">
-        <select class="form-control" v-model="business.institution" :disabled="!editable">
+        <v-select class="form-control" :options="institutioned" v-model="business.institution" :disabled="!editable"></v-select>
+        <!--<select class="form-control" v-model="business.institution" :disabled="!editable">
           <option v-for="(CUS, index) in customers" :value="CUS" :key="index">{{CUS.customerName}}</option>
-        </select>
+        </select>-->
       </div>
     </div>
     <div class="form-group">
@@ -478,6 +479,12 @@ export default {
     },
     departmentCoopChan() {
       return (this.business.departmentCoop.name === '有部门合作') ? true : false;
+    },
+    institutioned() {
+      let institutioned = [];
+      this.customers.forEach(function(element) {
+        institutioned.push({label: element.customerName, value: element})
+      }, this);;
     }
   },
   props: ['initBusiness', 'editable'],
@@ -524,16 +531,16 @@ export default {
     // }, () => { });
 
     this.getCustomers().then(() => {
-      if (this.business.institution.id === '') {
-        this.business.institution = this.customers[0];
-      } else {
-        for (let i = 0; i < this.customers.length; i++) {
-          if (this.business.institution.id === this.customers[i].id) {
-            this.business.institution = this.customers[i];
-            break;
-          }
-        }
-      }
+      // if (this.business.institution.id === '') {
+      //   this.business.institution = this.customers[0];
+      // } else {
+      //   for (let i = 0; i < this.customers.length; i++) {
+      //     if (this.business.institution.id === this.customers[i].id) {
+      //       this.business.institution = this.customers[i];
+      //       break;
+      //     }
+      //   }
+      // }
     }, () => { });
 
     if (this.business.type === '') {
