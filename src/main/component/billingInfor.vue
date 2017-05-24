@@ -8,6 +8,7 @@
         新增开票申请
       </router-link>
     </h4>
+    <h4 class="total-amount"><small>当前申请发票总计：</small><strong>{{total}}</strong>元</h4>
     <div class="com-list list-group">
       <li class="list-group-item list-head">
         <span class="title">开票列表</span>
@@ -38,6 +39,20 @@ export default {
     };
   },
   computed: {
+    total() {
+      let sum = 0;
+      for (let i = 0; i < this.business.bills.length; i++) {
+        sum += this.currencyToNum(this.business.bills[i].amount);
+      }
+      let sumStr = sum.toString().split('.');
+      let sumInt = sumStr[0];
+      let sumArr = [];
+      for (let i = sumInt.length; i > 0; i -= 3) {
+        let part = sumInt.substring(i-3, i);
+        sumArr.unshift(part);
+      }
+      return sumArr.join(',') + ((sumStr.length > 1) ? ('.'+sumStr[1]) : '');
+    },
     addBillShow() {
       return this.user.department === '业务部' ? true : false;
     }
@@ -72,6 +87,14 @@ export default {
     this.$emit('pathsChan', this.paths);
   },
   methods: {
+    currencyToNum(amo) {
+      let amoArr = amo.split(',').reverse();
+      let amoNum = 0;
+      for (let i = 0; i < amoArr.length; i++) {
+        amoNum += parseFloat(amoArr[i])*Math.pow(1000, i);
+      }
+      return amoNum;
+    },
     billRoute(BILL) {
       return 'billing-infor-detail-'+BILL.id;
     }
@@ -80,4 +103,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.total-amount {
+  margin-top: 30px;
+}
 </style>

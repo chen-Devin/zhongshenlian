@@ -81,14 +81,6 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">资产总额</label>
-      <div class="col-sm-5">
-        <div class="input-group">
-          <p class="form-control-static">{{business.institution.assetSize+'万元'}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
       <label class="col-sm-2 control-label">合同金额</label>
       <div class="col-sm-5">
         <div class="input-group">
@@ -120,6 +112,18 @@
           </masked-input>
           <div class="input-group-addon">元</div>
         </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">报价依据</label>
+      <div class="col-sm-5">
+        <textarea cols="10"
+                  rows="3"
+                  maxlength="100"
+                  class="form-control"
+                  placeholder="请输入报价依据"
+                  v-model="business.basisQuote">
+        </textarea>
       </div>
     </div>
     <div class="form-group">
@@ -688,7 +692,7 @@ export default {
                   reportPurpose: this.business.report.usage,
                   startTime: this.business.time.start,
                   endTime: this.business.time.end,
-                  totalAssets: this.business.institution.assetSize,
+                  totalAssets: this.business.basisQuote,
                   contractAmount: this.business.contractAmount,
                   contractPrice: this.business.contractPrice,
                   reportCopies: this.business.report.amount,
@@ -841,7 +845,7 @@ export default {
                     reportPurpose: this.business.report.usage,
                     startTime: this.business.time.start,
                     endTime: this.business.time.end,
-                    totalAssets: this.business.institution.assetSize,
+                    totalAssets: this.business.basisQuote,
                     contractAmount: this.business.contractAmount,
                     contractPrice: this.business.contractPrice,
                     reportCopies: this.business.report.amount,
@@ -1163,5 +1167,8 @@ export default {
   img {
     width: 42px;
   }
+}
+textarea {
+  resize: none;
 }
 </style>

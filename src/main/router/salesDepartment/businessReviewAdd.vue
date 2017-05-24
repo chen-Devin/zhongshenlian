@@ -60,9 +60,9 @@ export default {
           id: '',
           customerName: '',
           name: '',
-          telephone: '',
-          assetSize: ''
+          telephone: ''
         },
+        basisQuote: '',
         type: '',
         manager: {
           id: '',

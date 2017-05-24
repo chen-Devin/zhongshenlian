@@ -65,9 +65,9 @@ export default {
           id: '',
           customerName: '',
           name: '',
-          telephone: '',
-          assetSize: ''
+          telephone: ''
         },
+        basisQuote: '',
         type: '',
         manager: {
           id: '',
@@ -401,7 +401,8 @@ export default {
             this.business.institution.customerName = rep.data.data.requester;
             this.business.institution.name = rep.data.data.requesterName;
             this.business.institution.telephone = rep.data.data.requesterPhone;
-            this.business.institution.assetSize = rep.data.data.totalAssets;
+
+            this.business.basisQuote = rep.data.data.totalAssets;
 
             this.business.type = rep.data.data.businessType;
 
