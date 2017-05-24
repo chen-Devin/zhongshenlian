@@ -71,10 +71,16 @@ export default {
           ];
         }
         this.$router.push(routes[0].link);
-        return routes.concat([
-          {name: '已完成业务', link: '/business-complete-list', icon: 'business-complete-list'},
-          {name: '规章制度', link: '/rule-regulation', icon: 'rule-regulation'}
-        ]);
+        if(this.user.department === '市场部') {
+          return routes.concat([
+            {name: '规章制度', link: '/rule-regulation', icon: 'rule-regulation'}
+          ]);
+        } else {
+          return routes.concat([
+            {name: '已完成业务', link: '/business-complete-list', icon: 'business-complete-list'},
+            {name: '规章制度', link: '/rule-regulation', icon: 'rule-regulation'}
+          ]);
+        }
       } else {
         return routes;
       }
@@ -82,7 +88,7 @@ export default {
   },
   props: ['user'],
   methods: {}
-}
+};
 </script>
 
 <style lang="sass" scoped>

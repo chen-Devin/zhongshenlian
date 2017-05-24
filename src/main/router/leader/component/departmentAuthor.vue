@@ -176,9 +176,11 @@ export default {
 .com-list {
   thead {
     background-color: #E6E6E6;
+    th {
+      width: 33.3%;
+    }
   }
   .link-wrap {
-    // width: 45px;
     a:hover {
       cursor: pointer;
     }

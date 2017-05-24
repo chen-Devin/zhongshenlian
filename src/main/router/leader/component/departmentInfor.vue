@@ -195,8 +195,10 @@ export default {
   thead {
     background-color: #E6E6E6;
   }
-  .link-wrap {
-    // width: 45px;
+  th {
+    width: 14.28%;
+  }
+  .link-wrap {d
     a:hover {
       cursor: pointer;
     }
