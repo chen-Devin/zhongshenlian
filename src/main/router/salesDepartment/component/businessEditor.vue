@@ -21,9 +21,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">委托单位（客户）</label>
       <div class="my-col-sm-5">
-        <select class="form-control" v-model="business.institution" :disabled="!editable">
-          <option v-for="(CUS, index) in customers" :value="CUS" :key="index">{{CUS.customerName}}</option>
-        </select>
+        <v-select class="form-control" :options="institutioned" v-model="business.institution" :disabled="!editable"></v-select>
       </div>
     </div>
     <div class="form-group">
@@ -44,13 +42,6 @@
       <label class="col-sm-2 control-label">项目经理</label>
       <div class="my-col-sm-5">
         <input type="text" class="form-control" placeholder="请输入项目经理" v-model="business.manager.name" :disabled="!editable">
-        <!--<select class="form-control"
-                  v-model="business.manager"
-                  :disabled="!editable">
-            <option v-for="(STA, index) in staffs"
-                    :value="STA"
-                    :key="index">{{STA.name}}</option>
-          </select>-->
       </div>
     </div>
     <div class="form-group">
@@ -81,6 +72,7 @@
       </div>
     </div>
     <div class="form-group">
+<<<<<<< HEAD
       <label class="col-sm-2 control-label">资产总额</label>
       <div class="my-col-sm-5">
         <div class="input-group">
@@ -89,6 +81,8 @@
       </div>
     </div>
     <div class="form-group">
+=======
+>>>>>>> 2b45eff7e7c07d95d3fbfc5d6baecd79c6865ed8
       <label class="col-sm-2 control-label">合同金额</label>
       <div class="my-col-sm-5">
         <div class="input-group">
@@ -120,6 +114,18 @@
           </masked-input>
           <div class="input-group-addon">元</div>
         </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">报价依据</label>
+      <div class="col-sm-5">
+        <textarea cols="10"
+                  rows="3"
+                  maxlength="100"
+                  class="form-control"
+                  placeholder="请输入报价依据"
+                  v-model="business.basisQuote">
+        </textarea>
       </div>
     </div>
     <div class="form-group">
@@ -474,6 +480,12 @@ export default {
     },
     departmentCoopChan() {
       return (this.business.departmentCoop.name === '有部门合作') ? true : false;
+    },
+    institutioned() {
+      let institutioned = [];
+      this.customers.forEach(function(element) {
+        institutioned.push({label: element.customerName, value: element})
+      }, this);;
     }
   },
   props: ['initBusiness', 'editable'],
@@ -520,16 +532,16 @@ export default {
     // }, () => { });
 
     this.getCustomers().then(() => {
-      if (this.business.institution.id === '') {
-        this.business.institution = this.customers[0];
-      } else {
-        for (let i = 0; i < this.customers.length; i++) {
-          if (this.business.institution.id === this.customers[i].id) {
-            this.business.institution = this.customers[i];
-            break;
-          }
-        }
-      }
+      // if (this.business.institution.id === '') {
+      //   this.business.institution = this.customers[0];
+      // } else {
+      //   for (let i = 0; i < this.customers.length; i++) {
+      //     if (this.business.institution.id === this.customers[i].id) {
+      //       this.business.institution = this.customers[i];
+      //       break;
+      //     }
+      //   }
+      // }
     }, () => { });
 
     if (this.business.type === '') {
@@ -688,7 +700,7 @@ export default {
                   reportPurpose: this.business.report.usage,
                   startTime: this.business.time.start,
                   endTime: this.business.time.end,
-                  totalAssets: this.business.institution.assetSize,
+                  totalAssets: this.business.basisQuote,
                   contractAmount: this.business.contractAmount,
                   contractPrice: this.business.contractPrice,
                   reportCopies: this.business.report.amount,
@@ -841,7 +853,7 @@ export default {
                     reportPurpose: this.business.report.usage,
                     startTime: this.business.time.start,
                     endTime: this.business.time.end,
-                    totalAssets: this.business.institution.assetSize,
+                    totalAssets: this.business.basisQuote,
                     contractAmount: this.business.contractAmount,
                     contractPrice: this.business.contractPrice,
                     reportCopies: this.business.report.amount,
@@ -1164,11 +1176,16 @@ export default {
     width: 42px;
   }
 }
+<<<<<<< HEAD
 .my-col-sm-5 {
   width: 600px;
   float: left;
 }
 label.col-sm-2.control-label {
     width: 145px;
+=======
+textarea {
+  resize: none;
+>>>>>>> 2b45eff7e7c07d95d3fbfc5d6baecd79c6865ed8
 }
 </style>

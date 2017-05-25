@@ -78,12 +78,6 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">资产总额</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.institution.assetSize===''?'':`${business.institution.assetSize}万元`}}</p>
-      </div>
-    </div>
-    <div class="form-group">
       <label class="col-sm-2 control-label">合同金额</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</p>
@@ -93,6 +87,12 @@
       <label class="col-sm-2 control-label">合同单价</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.contractPrice===''?'':`${business.contractPrice}元`}}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">报价依据</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.basisQuote}}</p>
       </div>
     </div>
     <div class="form-group">
