@@ -72,17 +72,6 @@
       </div>
     </div>
     <div class="form-group">
-<<<<<<< HEAD
-      <label class="col-sm-2 control-label">资产总额</label>
-      <div class="my-col-sm-5">
-        <div class="input-group">
-          <p class="form-control-static">{{business.institution.assetSize+'万元'}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-=======
->>>>>>> 2b45eff7e7c07d95d3fbfc5d6baecd79c6865ed8
       <label class="col-sm-2 control-label">合同金额</label>
       <div class="my-col-sm-5">
         <div class="input-group">
@@ -118,7 +107,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">报价依据</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <textarea cols="10"
                   rows="3"
                   maxlength="100"
