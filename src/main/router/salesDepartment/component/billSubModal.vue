@@ -38,7 +38,7 @@ export default {
   props: ['initBill', 'initBusiness'],
   methods: {
     sub() {
-      this.subBtn.cont = '提交中...';
+      this.subBtn.cont = '提交...';
       this.subBtn.dis = true;
       let promise = new Promise((resolve, reject) => {
         axios({
@@ -79,7 +79,6 @@ export default {
                   signContractAmount: this.business.contractAmount,
                   startServiceTime: this.business.time.start,
                   endServiceTime: this.business.time.end,
-                  annexArray: [],
                   state: this.bill.state
                 }
               };

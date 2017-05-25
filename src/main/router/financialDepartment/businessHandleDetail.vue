@@ -4,6 +4,8 @@
     <card>
       <h3 class="main-title">
         {{business.name}}
+        <button class="btn my-btn submit-btn pull-right" @click="sub()" v-if="!sended">完成开票</button>
+        <small class="label label-success business-label pull-right" v-if="sended">开票已完成</small>
       </h3>
       <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
@@ -16,6 +18,10 @@
         </template>
       </div>
     </card>
+    <complete-bill-modal v-if="showModal"
+                         :initBusiness="business"
+                         @submited="submited"
+                         @canceled="canceled"></complete-bill-modal>
   </div>
 </template>
 
@@ -26,6 +32,7 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
+import completeBillModal from './component/completeBillModal.vue';
 
 export default {
   name: 'businessHandleDetailFinancial',
@@ -210,26 +217,31 @@ export default {
         },
         lastOffice: '',
         getWay: '直接委托',
-        files: [],
         projectStatus: 0,
         contracts: [],
         projectApproverArray: [],
         schdules: [],
         bills: [],
         reports: [],
-        projectOperatingArray: [],
-        QRCode: {
-          id: '',
-          name: '',
-          url: ''
-        }
+        projectOperatingArray: []
       },
       riskAdvices: [],
-      leaderAdivces: []
+      leaderAdivces: [],
+      showModal: false
     };
   },
   props: ['user'],
   computed: {
+    sended() {
+      let flag = true;
+      for (let i = 0; i < this.business.bills.length; i++) {
+        if (this.business.bills[i].state < 3) {
+          flag = false;
+          break;
+        }
+      }
+      return flag;
+    },
     progress() {
       if (this.business.projectStatus < 20) {
           return [
@@ -465,16 +477,6 @@ export default {
 
             this.business.projectStatus = parseInt(rep.data.data.projectStatus);
 
-            this.business.files = [];
-            for (let i = 0; i < rep.data.data.annexArray.length; i++) {
-              let obj = {
-                id: rep.data.data.annexArray[i].id,
-                name: rep.data.data.annexArray[i].annexName,
-                url: rep.data.data.annexArray[i].annexUrl
-              }
-              this.business.files.push(obj);
-            }
-
             this.business.contracts = [];
             for (let i = 0; i < rep.data.data.contractAnnexArray.length; i++) {
               let obj = {
@@ -561,18 +563,13 @@ export default {
               let obj = {
                 id: rep.data.data.reportAnnexArray[i].id,
                 name: rep.data.data.reportAnnexArray[i].annexName,
-                url: rep.data.data.reportAnnexArray[i].annexUrl
+                url: rep.data.data.reportAnnexArray[i].annexUrl,
+                state: true
               }
               this.business.reports.push(obj);
             }
 
             this.business.projectOperatingArray = rep.data.data.projectOperatingArray;
-
-            if (rep.data.data.qrcodeAnnexArray.length) {
-              this.business.QRCode.id = rep.data.data.qrcodeAnnexArray[0].id;
-              this.business.QRCode.name = rep.data.data.qrcodeAnnexArray[0].annexName;
-              this.business.QRCode.url = rep.data.data.qrcodeAnnexArray[0].annexUrl;
-            }
 
             this.adviceClassify();
 
@@ -597,13 +594,26 @@ export default {
     },
     pathsChan(paths) {
       this.paths = paths;
+    },
+    sub() {
+      this.showModal = true;
+    },
+    submited() {
+      for (let i = 0; i < this.business.bills.length; i++) {
+        this.business.bills[i].state += 1;
+      }
+      this.showModal = false;
+    },
+    canceled() {
+      this.showModal = false;
     }
   },
   components: {
     crumbs,
     card,
     business,
-    approverAdvice
+    approverAdvice,
+    completeBillModal
   }
 }
 </script>

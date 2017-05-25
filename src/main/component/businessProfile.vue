@@ -1,15 +1,6 @@
 <template>
   <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
     <div class="form-group"
-         v-if="QRCodeShow">
-      <label class="col-sm-2 control-label">二维码</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">
-          <img :src="business.QRCode.url" alt="二维码" class="img-thumbnail QRCode">
-        </p>
-      </div>
-    </div>
-    <div class="form-group"
          v-if="contractNumShow">
       <label class="col-sm-2 control-label">项目编号</label>
       <div class="col-sm-9">
@@ -255,18 +246,6 @@
         <p class="form-control-static">{{business.lastOffice}}</p>
       </div>
     </div>
-    <div class="form-group" v-if="false">
-      <label class="col-sm-2 control-label">相关附件</label>
-      <ul class="col-sm-9 com-list attachment-list list-group">
-        <li class="list-group-item"
-            v-for="FILE in business.files">
-          <span class="fa fa-file-text-o"></span>
-          <a class="text-primary title"
-             :href="FILE.url"
-             download>{{FILE.name}}</a>
-        </li>
-      </ul>
-    </div>
     <div class="form-group"
          v-if="contractUploadShow">
       <label class="col-sm-2 control-label">正式合同</label>
@@ -460,9 +439,6 @@ export default {
     },
     contractNumShow() {
       return (this.business.projectStatus >= 80) ? true : false;
-    },
-    QRCodeShow() {
-      return (this.business.projectStatus >= 150) ? true : false;
     }
   },
   props: ['initBusiness', 'user'],
@@ -570,7 +546,8 @@ export default {
         let obj = {
           id: responseData.data.id,
           name: file.name,
-          url: responseData.data.path
+          url: responseData.data.path,
+          state: false
         };
         this.business.reports.push(obj);
         this.$emit('uploaded', this.business);
@@ -615,12 +592,4 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '../../scss/variables.scss';
-
-.normal-wrap {
-  img.QRCode {
-    width: 150px;
-    background-color: $origin-color;
-  }
-}
 </style>

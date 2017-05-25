@@ -4,17 +4,8 @@
     <card>
       <h3 class="main-title">
         {{business.name}}
-        <el-upload class="pull-right"
-                   :multiple="false"
-                   :action="uploadURL"
-                   :on-success="uploadSuccess"
-                   :show-file-list="false"
-                   v-if="!submited">
-          <button class="btn my-btn submit-btn"
-                  type="button">上传二维码</button>
-        </el-upload>
-        <small class="label label-success pull-right"
-               v-if="submited">已上传二维码</small>
+        <button class="btn my-btn submit-btn pull-right" @click="sub()" v-if="!sended">完结业务</button>
+        <small class="label label-success business-label pull-right" v-if="sended">业务已完结</small>
       </h3>
       <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
@@ -27,20 +18,21 @@
         </template>
       </div>
     </card>
+    <complete-modal v-if="showModal"
+                    :initBusiness="business"
+                    @submited="submited"
+                    @canceled="canceled"></complete-modal>
   </div>
 </template>
 
 <script>
-import Vue from 'vue';
 import axios from 'axios';
-import { Upload } from 'element-ui';
-
-Vue.use(Upload);
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
+import completeModal from './component/completeModal.vue';
 
 export default {
   name: 'businessHandleDetailArchives',
@@ -225,29 +217,23 @@ export default {
         },
         lastOffice: '',
         getWay: '直接委托',
-        files: [],
         projectStatus: 0,
         contracts: [],
         projectApproverArray: [],
         schdules: [],
         bills: [],
         reports: [],
-        projectOperatingArray: [],
-        QRCode: {
-          id: '',
-          name: '',
-          url: ''
-        }
+        projectOperatingArray: []
       },
       riskAdvices: [],
       leaderAdivces: [],
-      uploadURL: ''
+      showModal: false
     };
   },
   props: ['user'],
   computed: {
-    submited() {
-      return (this.business.projectStatus < 150) ? false : true;
+    sended() {
+      return (this.business.projectStatus < 180) ? false : true;
     },
     progress() {
       if (this.business.projectStatus < 20) {
@@ -356,15 +342,7 @@ export default {
     }
   },
   created() {
-    this.getInfo().then(() => {
-      let data = {
-        command: 'handlerBusiness',
-        platform: 'web',
-        id: this.business.id,
-        type: 'projectQRcode'
-      };
-      this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);
-    }, () => {});
+    this.getInfo();
   },
   watch: {
     $route: 'getInfo'
@@ -492,16 +470,6 @@ export default {
 
             this.business.projectStatus = parseInt(rep.data.data.projectStatus);
 
-            this.business.files = [];
-            for (let i = 0; i < rep.data.data.annexArray.length; i++) {
-              let obj = {
-                id: rep.data.data.annexArray[i].id,
-                name: rep.data.data.annexArray[i].annexName,
-                url: rep.data.data.annexArray[i].annexUrl
-              }
-              this.business.files.push(obj);
-            }
-
             this.business.contracts = [];
             for (let i = 0; i < rep.data.data.contractAnnexArray.length; i++) {
               let obj = {
@@ -588,18 +556,13 @@ export default {
               let obj = {
                 id: rep.data.data.reportAnnexArray[i].id,
                 name: rep.data.data.reportAnnexArray[i].annexName,
-                url: rep.data.data.reportAnnexArray[i].annexUrl
+                url: rep.data.data.reportAnnexArray[i].annexUrl,
+                state: true
               }
               this.business.reports.push(obj);
             }
 
             this.business.projectOperatingArray = rep.data.data.projectOperatingArray;
-
-            if (rep.data.data.qrcodeAnnexArray.length) {
-              this.business.QRCode.id = rep.data.data.qrcodeAnnexArray[0].id;
-              this.business.QRCode.name = rep.data.data.qrcodeAnnexArray[0].annexName;
-              this.business.QRCode.url = rep.data.data.qrcodeAnnexArray[0].annexUrl;
-            }
 
             this.adviceClassify();
 
@@ -625,20 +588,23 @@ export default {
     pathsChan(paths) {
       this.paths = paths;
     },
-    uploadSuccess(responseData, file, fileList) {
-      if (responseData.statusCode === '10001') {
-        this.business.QRCode.id = responseData.data.id;
-        this.business.QRCode.name = file.name;
-        this.business.QRCode.url = responseData.data.path;
-        this.business.projectStatus = 150;
-      }
+    sub() {
+      this.showModal = true;
+    },
+    submited() {
+      this.business.projectStatus = 180;
+      this.showModal = false;
+    },
+    canceled() {
+      this.showModal = false;
     }
   },
   components: {
     crumbs,
     card,
     business,
-    approverAdvice
+    approverAdvice,
+    completeModal
   }
 }
 </script>

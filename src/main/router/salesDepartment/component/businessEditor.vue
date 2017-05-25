@@ -45,13 +45,6 @@
       <label class="col-sm-2 control-label">项目经理</label>
       <div class="col-sm-5">
         <input type="text" class="form-control" placeholder="请输入项目经理" v-model="business.manager.name" :disabled="!editable">
-        <!--<select class="form-control"
-                  v-model="business.manager"
-                  :disabled="!editable">
-            <option v-for="(STA, index) in staffs"
-                    :value="STA"
-                    :key="index">{{STA.name}}</option>
-          </select>-->
       </div>
     </div>
     <div class="form-group">
@@ -332,26 +325,12 @@
       <label class="col-sm-2 control-label">参审注师</label>
       <div class="col-sm-5">
         <input type="text" class="form-control" placeholder="请输入参审注师" v-model="business.reviewCPA.name" :disabled="!editable">
-        <!--<select class="form-control"
-                  v-model="business.reviewCPA"
-                  :disabled="!editable">
-            <option v-for="(STA, index) in staffs"
-                    :value="STA"
-                    :key="index">{{STA.name}}</option>
-          </select>-->
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">参审助理</label>
       <div class="col-sm-5">
         <input type="text" class="form-control" placeholder="请输入参审助理" v-model="business.reviewAssistant.name" :disabled="!editable">
-        <!--<select class="form-control"
-                  v-model="business.reviewAssistant"
-                  :disabled="!editable">
-            <option v-for="(STA, index) in staffs"
-                    :value="STA"
-                    :key="index">{{STA.name}}</option>
-          </select>-->
       </div>
     </div>
     <div class="form-group">
@@ -373,44 +352,6 @@
       <label class="col-sm-2 control-label">上次报告事务所</label>
       <div class="col-sm-5">
         <input type="text" class="form-control" placeholder="请输入上次报告事务所" v-model="business.lastOffice" :disabled="!editable">
-      </div>
-    </div>
-    <div class="form-group" v-if="false">
-      <label class="col-sm-2 control-label">相关附件</label>
-      <el-upload class="col-sm-5"
-                 :multiple="false"
-                 :action="upload.URL"
-                 :before-upload="reSave"
-                 :on-progress="uploadProgress"
-                 :on-success="uploadSuccess"
-                 :show-file-list="false">
-        <button class="btn my-btn submit-btn btn-sm"
-                type="button"
-                v-if="editable"
-                :disabled="upload.progressShow">点击上传</button>
-        <span slot="tip"
-              class="text-info"
-              v-if="editable">&emsp;文件大小建议不超过3Mb</span>
-      </el-upload>
-      <div class="col-sm-offset-2 col-sm-5">
-        <div class="progress-wrap" v-show="upload.progressShow">
-          <div class="progress">
-            <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: upload.percentage}">
-              {{upload.percentage}}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-offset-2 col-sm-5">
-        <ul class="com-list attachment-list list-group">
-          <li class="list-group-item" v-for="FILE in business.files">
-            <span class="fa fa-file-text-o"></span>
-            <a class="text-primary title" :href="FILE.url" download>{{FILE.name}}</a>
-            <a class="text-danger pull-right" @click="delFile(FILE)" v-if="editable">
-              <i class="fa fa-times"></i>
-            </a>
-          </li>
-        </ul>
       </div>
     </div>
   </form>
@@ -491,44 +432,6 @@ export default {
   created() {
     bus.$on('subBusiness', () => { this.sub() });
     bus.$on('savBusiness', () => { this.save() });
-
-    this.uploadURLGen();
-
-    /*
-    暂时停用下拉菜单
-    */
-    // this.getStaffs().then(() => {
-    //   if (this.business.manager.id === '') {
-    //     this.business.manager = this.staffs[0];
-    //   } else {
-    //     for (let i = 0; i < this.staffs.length; i++) {
-    //       if (this.business.manager.id === this.staffs[i].id) {
-    //         this.business.manager = this.staffs[i];
-    //         break;
-    //       }
-    //     }
-    //   }
-    //   if (this.business.reviewCPA.id === '') {
-    //     this.business.reviewCPA = this.staffs[0];
-    //   } else {
-    //     for (let i = 0; i < this.staffs.length; i++) {
-    //       if (this.business.reviewCPA.id === this.staffs[i].id) {
-    //         this.business.reviewCPA = this.staffs[i];
-    //         break;
-    //       }
-    //     }
-    //   }
-    //   if (this.business.reviewAssistant.id === '') {
-    //     this.business.reviewAssistant = this.staffs[0];
-    //   } else {
-    //     for (let i = 0; i < this.staffs.length; i++) {
-    //       if (this.business.reviewAssistant.id === this.staffs[i].id) {
-    //         this.business.reviewAssistant = this.staffs[i];
-    //         break;
-    //       }
-    //     }
-    //   }
-    // }, () => { });
 
     this.getCustomers().then(() => {
       // if (this.business.institution.id === '') {
@@ -782,7 +685,6 @@ export default {
                     }
                     return out;
                   })(),
-                  annexArray: this.business.files,
                   contractAnnexArray: this.business.contracts,
                   projectApproverArray: this.business.projectApproverArray,
                   projectSchduleArray: (() => {
@@ -806,8 +708,6 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.business.id = rep.data.data.id;
-            /*暂时废止上传附件*/
-            // this.uploadURLGen();
             this.$emit('saved', this.business);
             resolve(rep);
           } else if (rep.data.statusCode === '10012') {
@@ -935,7 +835,6 @@ export default {
                       }
                       return out;
                     })(),
-                    annexArray: this.business.files,
                     contractAnnexArray: this.business.contracts,
                     projectApproverArray: this.business.projectApproverArray,
                     projectSchduleArray: (() => {
@@ -968,71 +867,6 @@ export default {
         });
         return promise;
       }
-    },
-    uploadURLGen() {
-      let data = {
-        command: 'handlerBusiness',
-        platform: 'web',
-        id: this.business.id,
-        type: 'projectAnnex'
-      };
-      this.upload.URL = '/fileUpload?data=' + JSON.stringify(data);
-    },
-    reSave(file) {
-      if (this.business.id === '') {
-        return this.save();
-      } else {
-        return true;
-      }
-    },
-    uploadProgress(event, file, fileList) {
-      this.upload.progressShow = true;
-      this.upload.percentage = parseInt(file.percentage)+'%';
-    },
-    uploadSuccess(responseData, file, fileList) {
-      if (responseData.statusCode === '10001') {
-        let obj = {
-          id: responseData.data.id,
-          name: file.name,
-          url: responseData.data.path
-        };
-        this.business.files.push(obj);
-        this.$emit('uploaded', this.business);
-        setTimeout(() => {
-          this.upload.percentage = '0%';
-          this.upload.progressShow = false;
-        }, 500);
-      }
-    },
-    delFile(FILE) {
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-        method: 'post',
-        url: '/service',
-        data: qs.stringify({
-          data: (() => {
-            let obj = {
-              command: 'delFile',
-              platform: 'web',
-              delFileId: FILE.id,
-              type: 'projectAnnex'
-            }
-            return JSON.stringify(obj);
-          })()
-        })
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          for (let i = 0; i < this.business.files.length; i++) {
-            if (this.business.files[i].id === FILE.id) {
-              this.business.files.splice(i, 1);
-              break;
-            }
-          }
-          this.$emit('deletedFile', this.business);
-        } else if (rep.data.statusCode === '10012') {
-          window.location.href = 'signIn.html';
-        }
-      }, (rep) => { });
     },
     delBasicFee(index) {
       this.business.contractType.basicFee.depend.splice(index, 1);

@@ -420,7 +420,7 @@ export default {
       return (this.bill.state < 2) ? true : false;
     },
     finished() {
-      return (this.bill.state === 2) ? true : false;
+      return (this.bill.state >= 2) ? true : false;
     }
   },
   props: ['initBusiness', 'user'],

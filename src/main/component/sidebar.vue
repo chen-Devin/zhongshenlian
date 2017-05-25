@@ -35,9 +35,9 @@ export default {
           if (this.user.authority['发合同编号']) {
             routes.push({name: '待发合同编号', link: '/business-review-list-office', icon: 'bid-info'});
           }
-          if (this.user.authority['装订业务报告']) {
-            routes.push({name: '待装订业务', link: '/business-handle-list-office', icon: 'bid-info'});
-          }
+          // if (this.user.authority['装订业务报告']) {
+          //   routes.push({name: '待装订业务', link: '/business-handle-list-office', icon: 'bid-info'});
+          // }
           routes.push({name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'});
         } else if (this.user.department === '业务部') {
           routes = [

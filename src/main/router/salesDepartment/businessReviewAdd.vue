@@ -223,7 +223,6 @@ export default {
         },
         lastOffice: '',
         getWay: '直接委托',
-        files: [],
         projectStatus: 0,
         contracts: [],
         projectApproverArray: [],
@@ -247,12 +246,7 @@ export default {
         ],
         bills: [],
         reports: [],
-        projectOperatingArray: [],
-        QRCode: {
-          id: '',
-          name: '',
-          url: ''
-        }
+        projectOperatingArray: []
       },
       editable: true,
       showDelModal: false,

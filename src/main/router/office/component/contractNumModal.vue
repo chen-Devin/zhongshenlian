@@ -95,7 +95,7 @@ export default {
     },
     sub() {
       this.subBtn.dis = true;
-      this.subBtn.cont = '提交中...';
+      this.subBtn.cont = '提交...';
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
         method: 'post',

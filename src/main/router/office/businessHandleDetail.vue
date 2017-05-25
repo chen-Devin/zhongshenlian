@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待完结业务', url: '/business-handle-list-office', present: false },
+        { name: '待装订业务', url: '/business-handle-list-office', present: false },
         { name: '业务详情', url: `/business-handle-detail-office-${this.$route.params.id}`, present: true }
       ],
       business: {
@@ -217,19 +217,13 @@ export default {
         },
         lastOffice: '',
         getWay: '直接委托',
-        files: [],
         projectStatus: 0,
         contracts: [],
         projectApproverArray: [],
         schdules: [],
         bills: [],
         reports: [],
-        projectOperatingArray: [],
-        QRCode: {
-          id: '',
-          name: '',
-          url: ''
-        }
+        projectOperatingArray: []
       },
       riskAdvices: [],
       leaderAdivces: [],
@@ -476,16 +470,6 @@ export default {
 
             this.business.projectStatus = parseInt(rep.data.data.projectStatus);
 
-            this.business.files = [];
-            for (let i = 0; i < rep.data.data.annexArray.length; i++) {
-              let obj = {
-                id: rep.data.data.annexArray[i].id,
-                name: rep.data.data.annexArray[i].annexName,
-                url: rep.data.data.annexArray[i].annexUrl
-              }
-              this.business.files.push(obj);
-            }
-
             this.business.contracts = [];
             for (let i = 0; i < rep.data.data.contractAnnexArray.length; i++) {
               let obj = {
@@ -572,18 +556,13 @@ export default {
               let obj = {
                 id: rep.data.data.reportAnnexArray[i].id,
                 name: rep.data.data.reportAnnexArray[i].annexName,
-                url: rep.data.data.reportAnnexArray[i].annexUrl
+                url: rep.data.data.reportAnnexArray[i].annexUrl,
+                state: true
               }
               this.business.reports.push(obj);
             }
 
             this.business.projectOperatingArray = rep.data.data.projectOperatingArray;
-
-            if (rep.data.data.qrcodeAnnexArray.length) {
-              this.business.QRCode.id = rep.data.data.qrcodeAnnexArray[0].id;
-              this.business.QRCode.name = rep.data.data.qrcodeAnnexArray[0].annexName;
-              this.business.QRCode.url = rep.data.data.qrcodeAnnexArray[0].annexUrl;
-            }
 
             this.adviceClassify();
 
