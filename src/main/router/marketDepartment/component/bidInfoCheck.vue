@@ -397,10 +397,6 @@
       <!--调用组件的审核意见-->
       <div class="form-group">
         <approver-advice class="advice"  v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
-        <!-- <modal v-if="checkAdviceModal">
-          <textarea slot="body" class="form-control" rows="8" placeholder="请填写修改意见，不超过500个字" v-model="adviceContent" readonly></textarea>
-          <button type="button" class="btn my-btn submit-btn" slot="footer" @click="closeAdviceContent()">完成</button>
-        </modal> -->
       </div>
       <!-- 入围或中标通知书-->
       <div v-if="noticePanel">
@@ -477,7 +473,6 @@
   }
   .advice {
     margin-top: -60px;
-    padding: 0;
   }
   .mt {
     margin-top: -10px;
@@ -660,7 +655,7 @@ export default {
       }
     },
     showCheckAdvice() {
-      if (this.project.directorHandleStatus === "0" || this.project.directorHandleStatus === "1") {
+      if (this.project.biddingApproverArray[0].approveResult === "通过" || this.project.biddingApproverArray[0].approveResult === "不通过") {
         this.checkAdviceShow = true;
       }
     },

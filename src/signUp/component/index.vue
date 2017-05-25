@@ -295,7 +295,7 @@ export default {
     background: url('../../img/signup/phone.svg');
     background-repeat: no-repeat;
     display: block;
-    width: 15px;
+    width: 18px;
     height: 23px;
   }
 }
@@ -306,7 +306,7 @@ export default {
     background: url('../../img/signup/verification.svg');
     background-repeat: no-repeat;
     display: block;
-    width: 15px;
+    width: 18px;
     height: 23px;
   }
 }

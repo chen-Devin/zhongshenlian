@@ -592,4 +592,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+label.col-sm-2.control-label {
+  width: 143px;
+}
 </style>

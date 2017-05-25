@@ -299,116 +299,96 @@
 					<label class="col-sm-2 control-label">基本取费：</label>
 					<div class="col-sm-10">
 						<div class="row half-width">
-							<div class="col-sm-5">
-								<div class="input-group">
-									<div class="input-group-addon">主办方</div>
-									<input type="text" class="form-control" v-model="project.contractType.mainBasicName" placeholder="请输入主办方">
-								</div>
-							</div>
-							<div class="col-sm-1"></div>
-							<div class="col-sm-5">
-								<div class="input-group">
-									<div class="input-group-addon">比例</div>
-									<input type="text" class="form-control" v-model="project.contractType.mainBasicRate">
-									<div class="input-group-addon">%</div>
-								</div>
-							</div>
-							<div class="col-sm-1">
+              <div class="col-sm-11">
+                <div class="row">
+                  <div class="col-sm-5">
+                    <div class="input-group">
+                      <div class="input-group-addon">主办方</div>
+                      <input type="text" class="form-control" v-model="project.contractType.mainBasicName" placeholder="请输入主办方">
+                    </div>
+                  </div>
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-5">
+                    <div class="input-group">
+                      <div class="input-group-addon">比例</div>
+                      <input type="text" class="form-control" v-model="project.contractType.mainBasicRate">
+                      <div class="input-group-addon">%</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
 
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="form-group" v-for="(item, index) in project.contractType.subBasicArray">
-					<label class="col-sm-2 control-label"></label>
-					<div class="col-sm-10">
-						<div class="row half-width">
-							<div class="col-sm-5">
-								<div class="input-group">
-									<div class="input-group-addon">协办方</div>
-									<input type="text" class="form-control" v-model="item.name" placeholder="请输入协办方">
-								</div>
-							</div>
+                  </div>
+                </div>
+              </div>
 							<div class="col-sm-1"></div>
-							<div class="col-sm-5">
-								<div class="input-group">
-									<div class="input-group-addon">比例</div>
-									<input type="text" class="form-control" v-model="item.rate">
-									<div class="input-group-addon">%</div>
-								</div>
-							</div>
-							<div class="col-sm-1">
-								<h4>
-									<a class="text-danger" @click="delBasicFee(index)">
-                    <img src="../../../../img/delete_icon.svg">
-                  </a>
-								</h4>
-							</div>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label"></label>
-					<div class="col-sm-10">
-						<div class="row half-width">
-							<h4 class="col-sm-1 col-sm-offset-11">
-								<a class="text-danger" @click="addBasicFee()">
-                  <img src="../../../../img/add_icon.svg">
-                </a>
-							</h4>
-						</div>
-					</div>
+          <label class="col-sm-2 control-label"></label>
+          <div class="col-sm-10">
+            <div class="row half-width">
+            <template v-for="(item, index) in project.contractType.subBasicArray">
+              <div class="col-sm-11">
+                <div class="row">
+                  <div class="col-sm-5">
+                    <div class="input-group">
+                      <div class="input-group-addon">协办方</div>
+                      <input type="text" class="form-control" v-model="item.name" placeholder="请输入协办方">
+                    </div>
+                  </div>
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-5">
+                    <div class="input-group">
+                      <div class="input-group-addon">比例</div>
+                      <input type="text" class="form-control" v-model="item.rate">
+                      <div class="input-group-addon">%</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
+                    <h4>
+                      <a class="text-danger" @click="delBasicFee(index)">
+                        <img src="../../../../img/delete_icon.svg">
+                      </a>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </template>
+            <h4 class="col-sm-1">
+              <a class="text-danger" @click="addBasicFee()">
+                <img src="../../../../img/add_icon.svg">
+              </a>
+            </h4>
+            </div>
+          </div>
 				</div>
-
 				<div class="form-group">
 					<label class="col-sm-2 control-label">效益取费：</label>
 					<div class="col-sm-10">
 						<div class="row half-width">
-							<div class="col-sm-5">
-								<div class="input-group">
-									<div class="input-group-addon">主办方</div>
-									<input type="text" class="form-control" v-model="project.contractType.mainEfficiencyName" placeholder="请输入主办方">
-								</div>
-							</div>
-							<div class="col-sm-1"></div>
-							<div class="col-sm-5">
-								<div class="input-group">
-									<div class="input-group-addon">比例</div>
-									<input type="text" class="form-control" v-model="project.contractType.mainEfficiencyRate">
-									<div class="input-group-addon">%</div>
-								</div>
-							</div>
-							<div class="col-sm-1">
+              <div class="col-sm-11">
+                <div class="row">
+                  <div class="col-sm-5">
+                    <div class="input-group">
+                      <div class="input-group-addon">主办方</div>
+                      <input type="text" class="form-control" v-model="project.contractType.mainEfficiencyName" placeholder="请输入主办方">
+                    </div>
+                  </div>
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-5">
+                    <div class="input-group">
+                      <div class="input-group-addon">比例</div>
+                      <input type="text" class="form-control" v-model="project.contractType.mainEfficiencyRate">
+                      <div class="input-group-addon">%</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-1">
 
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="form-group" v-for="(item, index) in project.contractType.subEfficiencyArray">
-					<label class="col-sm-2 control-label"></label>
-					<div class="col-sm-10">
-						<div class="row half-width">
-							<div class="col-sm-5">
-								<div class="input-group">
-									<div class="input-group-addon">协办方</div>
-									<input type="text" class="form-control" v-model="item.name" placeholder="请输入协办方">
-								</div>
-							</div>
-							<div class="col-sm-1"></div>
-							<div class="col-sm-5">
-								<div class="input-group">
-									<div class="input-group-addon">比例</div>
-									<input type="text" class="form-control" v-model="item.rate">
-									<div class="input-group-addon">%</div>
-								</div>
-							</div>
-							<div class="col-sm-1">
-								<h4>
-									<a class="text-danger" @click="delEfficiencyFee(index)">
-                    <img src="../../../../img/delete_icon.svg">
-                  </a>
-								</h4>
-							</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-1"></div>
 						</div>
 					</div>
 				</div>
@@ -416,11 +396,38 @@
 					<label class="col-sm-2 control-label"></label>
 					<div class="col-sm-10">
 						<div class="row half-width">
-							<h4 class="col-sm-1 col-sm-offset-11">
-								<a class="text-danger" @click="addEfficiencyFee()">
+              <template v-for="(item, index) in project.contractType.subEfficiencyArray">
+                <div class="col-sm-11">
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <div class="input-group">
+                        <div class="input-group-addon">协办方</div>
+                        <input type="text" class="form-control" v-model="item.name" placeholder="请输入协办方">
+                      </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5">
+                      <div class="input-group">
+                        <div class="input-group-addon">比例</div>
+                        <input type="text" class="form-control" v-model="item.rate">
+                        <div class="input-group-addon">%</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-1">
+                      <h4>
+                        <a class="text-danger" @click="delEfficiencyFee(index)">
+                          <img src="../../../../img/delete_icon.svg">
+                        </a>
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              </template>
+              <h4 class="col-sm-1">
+                <a class="text-danger" @click="addEfficiencyFee()">
                   <img src="../../../../img/add_icon.svg">
                 </a>
-							</h4>
+              </h4>
 						</div>
 					</div>
 				</div>
@@ -559,7 +566,11 @@
     }
 	}
   .adjust-half-width {
-    width: 52.4%;
+    width: 630px;
+  }
+  .row.width-adjust {
+      width: 800px;
+      // margin-left: 80px;
   }
 </style>
 

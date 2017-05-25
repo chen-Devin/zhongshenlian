@@ -118,7 +118,7 @@ body {
 }
 .form-horizontal {
   .half-width {
-    width: 50%;
+    width: 600px;
   }
 }
 .form-group {
@@ -303,6 +303,11 @@ form {
 .label-danger {
   border: 1px solid #E84C4C;
   color: #E84C4C;
+}
+
+//列表项宽度
+label.col-sm-2.control-label {
+    width: 145px;
 }
 
 
