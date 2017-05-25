@@ -623,4 +623,7 @@ export default {
     background-color: $origin-color;
   }
 }
+label.col-sm-2.control-label {
+    width: 143px;
+}
 </style>

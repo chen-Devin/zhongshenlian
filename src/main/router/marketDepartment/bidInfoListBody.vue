@@ -55,40 +55,38 @@
 
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-4 ta-c">
-          <label class="ta-l">项目状态</label>
-          <div class="check-box search-checkbox">
-            <label class="checkbox-inline">
-              <input type="checkbox" name="filterState" value="3" v-model="filterState"> 已中标
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" name="filterState" value="2" v-model="filterState"> 已入围
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" name="filterState" value="1" v-model="filterState"> 已摘牌
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" name="filterState" value="0" v-model="filterState"> 未摘牌
-            </label>
-          </div>
+      <div class="row check-pl">
+        <label class="ta-l">项目状态</label>
+        <div class="check-box search-checkbox">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="filterState" value="3" v-model="filterState"> 已中标
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" name="filterState" value="2" v-model="filterState"> 已入围
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" name="filterState" value="1" v-model="filterState"> 已摘牌
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" name="filterState" value="0" v-model="filterState"> 未摘牌
+          </label>
         </div>
-        <div class="col-md-4 ta-c">
-          <label class="ta-l">所属类型</label>
-          <div class="check-box search-checkbox">
-            <label class="checkbox-inline">
-              <input type="checkbox" name="officeList" value="kjs" v-model="officeList"> 会计所
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" name="officeList" value="pgs" v-model="officeList"> 评估所
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" name="officeList" value="sws" v-model="officeList"> 税务所
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" name="officeList" value="zjs" v-model="officeList"> 造价所
-            </label>
-          </div>
+      </div>
+      <div class="row check-pl">
+        <label class="ta-l">所属类型</label>
+        <div class="check-box search-checkbox">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="officeList" value="kjs" v-model="officeList"> 会计所
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" name="officeList" value="pgs" v-model="officeList"> 评估所
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" name="officeList" value="sws" v-model="officeList"> 税务所
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" name="officeList" value="zjs" v-model="officeList"> 造价所
+          </label>
         </div>
       </div>
       <div class="search-btns ta-c">
@@ -495,5 +493,8 @@ input::-webkit-input-placeholder{text-align: center;}
   a {
     cursor: pointer;
   }
+}
+.check-pl {
+  padding-left: 3%;
 }
 </style>

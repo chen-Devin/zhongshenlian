@@ -29,7 +29,7 @@ export default {
             {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list'},
             {name: '职员权限管理', link: '/staff-management-author', icon: 'staff-management-author'},
             {name: '职员资料管理', link: '/staff-management-infor', icon: 'staff-management-author'},
-            {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
+            {name: '招投标信息', link: '/bid-info-list', icon: 'bid-info'}
           ];
         } else if (this.user.department === '办公室') {
           if (this.user.authority['发合同编号']) {
@@ -38,13 +38,13 @@ export default {
           if (this.user.authority['装订业务报告']) {
             routes.push({name: '待装订业务', link: '/business-handle-list-office', icon: 'bid-info'});
           }
-          routes.push({name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'});
+          routes.push({name: '招投标信息', link: '/bid-info-list', icon: 'bid-info'});
         } else if (this.user.department === '业务部') {
           routes = [
             {name: '待审核业务', link: '/business-review-list-sales', icon: 'business-review-list-leader'},
             {name: '待处理业务', link: '/business-handle-list-sales', icon: 'business-handle-list-sales'},
             {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list'},
-            {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
+            {name: '招投标信息', link: '/bid-info-list', icon: 'bid-info'}
           ];
         } else if (this.user.department === '风险评估部') {
           if (this.user.authority['业务初审']) {
@@ -53,16 +53,16 @@ export default {
           if (this.user.authority['业务复审']) {
             routes.push({name: '待复审业务', link: '/business-handle-list-risk', icon: 'bid-info'});
           }
-          routes.push({name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'});
+          routes.push({name: '招投标信息', link: '/bid-info-list', icon: 'bid-info'});
         } else if (this.user.department === '档案部') {
           routes = [
             {name: '待处理业务', link: '/business-handle-list-archives', icon: 'business-handle-list-sales'},
-            {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
+            {name: '招投标信息', link: '/bid-info-list', icon: 'bid-info'}
           ];
         } else if (this.user.department === '财务部') {
           routes = [
             {name: '待开发票', link: '/business-handle-list-financial', icon: 'bid-info'},
-            {name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info'}
+            {name: '招投标信息', link: '/bid-info-list', icon: 'bid-info'}
           ];
         } else if (this.user.department === '市场部') {
           routes = [
@@ -105,7 +105,7 @@ export default {
       }
       > span {
         display: block;
-        width: 130px;
+        width: 100px;
         margin: 0 auto;
         &:before {
           content: '';

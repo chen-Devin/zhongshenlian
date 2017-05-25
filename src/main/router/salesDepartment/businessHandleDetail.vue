@@ -3,8 +3,8 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3 class="main-title">
-        {{business.name}}
-        <button class="btn my-btn submit-btn pull-right"
+        {{business.name===''?'项目名称':business.name}}
+        <button class="btn my-btn submit-btn pull-right btn-adjust"
                 @click="sub()"
                 :disabled="subBtn.dis"
                 v-if="!submited">{{subBtn.cont}}</button>
@@ -641,4 +641,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+  .btn-adjust {
+    width: 106px;
+  }
 </style>

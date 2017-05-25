@@ -2,25 +2,25 @@
   <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
     <div class="form-group">
       <label class="col-sm-2 control-label">项目名称</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <input type="text" class="form-control" placeholder="请输入项目名称" v-model="business.name" :disabled="!editable">
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">提交申请人</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <p class="form-control-static">{{business.proposer.name}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">项目申请人电话</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <p class="form-control-static">{{business.proposer.tele}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">委托单位（客户）</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <select class="form-control" v-model="business.institution" :disabled="!editable">
           <option v-for="(CUS, index) in customers" :value="CUS" :key="index">{{CUS.customerName}}</option>
         </select>
@@ -28,13 +28,13 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">客户联系人</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <p class="form-control-static">{{business.institution.name}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">业务类型</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <select class="form-control" v-model="business.type" :disabled="!editable">
           <option v-for="(TYPE, index) in businessType" :value="TYPE" :key="index">{{TYPE}}</option>
         </select>
@@ -42,7 +42,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">项目经理</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <input type="text" class="form-control" placeholder="请输入项目经理" v-model="business.manager.name" :disabled="!editable">
         <!--<select class="form-control"
                   v-model="business.manager"
@@ -55,7 +55,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">项目计划时间</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <div class="row">
           <div class="col-sm-6">
             <div class="input-group">
@@ -74,7 +74,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">项目取得方式</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <label class="radio-inline" v-for="(WAY, index) in getWay" :key="index">
           <input type="radio" name="gainingMethod" v-model="business.getWay" :value="WAY" :disabled="!editable"> {{WAY}}
         </label>
@@ -82,7 +82,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">资产总额</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <div class="input-group">
           <p class="form-control-static">{{business.institution.assetSize+'万元'}}</p>
         </div>
@@ -90,7 +90,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">合同金额</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <div class="input-group">
           <masked-input type="text"
                         class="form-control"
@@ -107,7 +107,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">合同单价</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <div class="input-group">
           <masked-input type="text"
                         class="form-control"
@@ -124,7 +124,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">出据报告类型</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <label class="checkbox-inline" v-for="(TYPE, index) in business.report.type" :key="index">
           <input type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable"> {{TYPE.name}}
         </label>
@@ -140,13 +140,13 @@
     </div>
     <div class="form-group" v-show="false">
       <label class="col-sm-2 control-label">项目编号</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <p class="form-control-static">{{business.number}}</p>
       </div>
     </div>
     <div class="form-group" v-if="business.auditTime.exist">
       <label class="col-sm-2 control-label">审计时间</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <div class="row">
           <div class="col-sm-6">
             <div class="input-group">
@@ -165,7 +165,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">合同体制</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <label class="radio-inline">
           <input type="radio" name="contractSystem" value="联合体" v-model="business.contractType.name" :disabled="!editable"> 联合体
         </label>
@@ -176,7 +176,7 @@
     </div>
     <div class="form-group" v-if="contractTypeChan">
       <label class="col-sm-2 control-label">基本取费</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <div class="row form-group">
           <div class="col-sm-5">
             <div class="input-group">
@@ -223,7 +223,7 @@
     </div>
     <div class="form-group" v-if="contractTypeChan">
       <label class="col-sm-2 control-label">效益取费</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <div class="row form-group">
           <div class="col-sm-5">
             <div class="input-group">
@@ -270,7 +270,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">部门合作</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <label class="radio-inline">
           <input type="radio" name="departmentCooperation" value="有部门合作" v-model="business.departmentCoop.name" :disabled="!editable"> 有部门合作
         </label>
@@ -281,7 +281,7 @@
     </div>
     <div class="form-group" v-if="departmentCoopChan">
       <label class="col-sm-2 control-label">合作部门</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <div class="row form-group">
           <div class="col-sm-5">
             <p class="form-control-static">主要部门：{{business.departmentCoop.departments.main.name}}</p>
@@ -325,7 +325,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">参审注师</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <input type="text" class="form-control" placeholder="请输入参审注师" v-model="business.reviewCPA.name" :disabled="!editable">
         <!--<select class="form-control"
                   v-model="business.reviewCPA"
@@ -338,7 +338,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">参审助理</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <input type="text" class="form-control" placeholder="请输入参审助理" v-model="business.reviewAssistant.name" :disabled="!editable">
         <!--<select class="form-control"
                   v-model="business.reviewAssistant"
@@ -351,7 +351,7 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">报告数量</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <div class="input-group">
           <input type="number" class="form-control" placeholder="请输入比例" v-model.number="business.report.amount" :disabled="!editable">
           <div class="input-group-addon">份（类）</div>
@@ -360,19 +360,19 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">报告用途</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <input type="text" class="form-control" placeholder="请输入报告用途" v-model="business.report.usage" :disabled="!editable">
       </div>
     </div>
     <div class="form-group" v-if="business.auditTime.exist">
       <label class="col-sm-2 control-label">上次报告事务所</label>
-      <div class="col-sm-5">
+      <div class="my-col-sm-5">
         <input type="text" class="form-control" placeholder="请输入上次报告事务所" v-model="business.lastOffice" :disabled="!editable">
       </div>
     </div>
     <div class="form-group" v-if="false">
       <label class="col-sm-2 control-label">相关附件</label>
-      <el-upload class="col-sm-5"
+      <el-upload class="my-col-sm-5"
                  :multiple="false"
                  :action="upload.URL"
                  :before-upload="reSave"
@@ -387,7 +387,7 @@
               class="text-info"
               v-if="editable">&emsp;文件大小建议不超过3Mb</span>
       </el-upload>
-      <div class="col-sm-offset-2 col-sm-5">
+      <div class="col-sm-offset-2 my-col-sm-5">
         <div class="progress-wrap" v-show="upload.progressShow">
           <div class="progress">
             <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: upload.percentage}">
@@ -396,7 +396,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-offset-2 col-sm-5">
+      <div class="col-sm-offset-2 my-col-sm-5">
         <ul class="com-list attachment-list list-group">
           <li class="list-group-item" v-for="FILE in business.files">
             <span class="fa fa-file-text-o"></span>
@@ -1163,5 +1163,12 @@ export default {
   img {
     width: 42px;
   }
+}
+.my-col-sm-5 {
+  width: 600px;
+  float: left;
+}
+label.col-sm-2.control-label {
+    width: 145px;
 }
 </style>
