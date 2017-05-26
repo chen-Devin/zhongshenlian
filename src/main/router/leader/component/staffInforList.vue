@@ -1,8 +1,9 @@
 <template>
   <card>
     <search-bar placeholder="输入关键字搜索员工" @search="tog"></search-bar>
-    <h3 v-if="staffsShow">
+    <h3 class="main-title" v-if="staffsShow">
       员工列表
+      <button type="button" class="btn my-btn submit-btn f-r" @click.prevent="add()">录入</button>
     </h3>
     <table class="table table-bordered table-hover com-list" v-if="staffsShow">
       <thead>
@@ -32,6 +33,9 @@
         </tr>
       </tbody>
     </table>
+    <staff-add-modal v-if="showAddModal"
+                     @added="added"
+                     @canceled="addCanceled"></staff-add-modal>
     <staff-mod-modal v-if="showModModal"
                      :initalStaff="modStaff"
                      @saved="saved"
@@ -41,6 +45,7 @@
                      :initalStaff="delStaff"
                      @deleted="deleted"
                      @canceled="delCanceled"></staff-del-modal>
+    <my-pagination   :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
   </card>
 </template>
 
@@ -51,6 +56,8 @@ import card from '../../../component/card.vue';
 import searchBar from '../../../component/searchBar.vue';
 import staffModModal from './staffModModal.vue';
 import staffDelModal from './staffDelModal.vue';
+import staffAddModal from './staffAddModal.vue';
+import myPagination from '../../../component/pagination.vue';
 
 export default {
   name: 'staffInforList',
@@ -58,9 +65,13 @@ export default {
     return {
       staffs: [],
       showModModal: false,
+      showAddModal: false,
       modStaff: {},
       showDelModal: false,
       delStaff: {},
+      totalNum: 1,
+      pageNum: 1,
+      searchContent: ''
     }
   },
   computed: {
@@ -70,8 +81,10 @@ export default {
   },
   methods: {
     tog(searchCont) {
+      this.searchContent = searchCont;
       this.searchStaffs(searchCont).then((rep) => {
         this.staffs = rep.data.data.userArray;
+        this.totalNum = rep.data.data.totalNum;
       }, (rep) => {});
     },
     searchStaffs(searchCont) {
@@ -85,7 +98,8 @@ export default {
               var obj = {
                 command: 'staffSearch',
                 platform: 'web',
-                searchContent: searchCont
+                searchContent: searchCont,
+                pageNum: this.pageNum
               }
               return JSON.stringify(obj);
             })()
@@ -101,6 +115,23 @@ export default {
         }, (rep) => { });
       });
       return promise;
+    },
+    add() {
+      this.showAddModal = true;
+    },
+    added(addStaff) {
+      let newStaff = {
+        id: addStaff.id.val,
+        telephone: addStaff.telephone.val,
+        name: addStaff.name.val,
+        jobNumber: addStaff.jobNumber.val,
+        duties: addStaff.duties.val,
+        gender: addStaff.gender.val,
+        remark: addStaff.remark.val,
+        department: addStaff.department.val,
+      };
+      this.staffs.push(newStaff);
+      this.showAddModal = false;
     },
     mod(STAFF) {
       this.modStaff = STAFF;
@@ -130,6 +161,9 @@ export default {
       this.modStaff = {};
       this.showModModal = false;
     },
+    addCanceled() {
+      this.showAddModal = false;
+    },
     deleted(deletedStaff) {
       for (let i = 0; i < this.staffs.length; i++) {
         if (this.staffs[i].id === deletedStaff.id) {
@@ -144,13 +178,25 @@ export default {
       this.delStaff = {};
       this.showDelModal = false;
       this.showModModal = true;
+    },
+    currentChange(val) {
+      this.pageNum = val;
+      this.tog(this.searchContent);
     }
+  },
+  created() {
+    this.searchStaffs('').then((rep) => {
+      this.staffs = rep.data.data.userArray;
+      this.totalNum = rep.data.data.totalNum;
+    }, (rep) => {});
   },
   components: {
     card,
     staffModModal,
     staffDelModal,
-    searchBar
+    staffAddModal,
+    searchBar,
+    myPagination
   }
 };
 </script>

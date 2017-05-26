@@ -22,7 +22,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="STAFF in thisDepart.staffArray"
+        <tr v-for="STAFF in staffArray"
             :key="STAFF.id">
           <td class="text-center">{{STAFF.name}}</td>
           <td class="text-center">{{STAFF.gender}}</td>
@@ -67,52 +67,59 @@ export default {
   name: 'departmentInfor',
   data() {
     return {
-      thisDepart: this.department,
+      thisDeparts: this.departments,
+      thisDepart: {},
       showModModal: false,
       modStaff: {},
       showDelModal: false,
       delStaff: {},
+      staffArray: [],
       showAddModal: false,
       page: {
-        total: this.department.totalNum,
-        current: (this.department.pageNum === 0) ? 0 : 1
+        // total: this.department.totalNum,
+        totalNum: 1,
+        // current: (this.department.pageNum === 0) ? 0 : 1
+        current: 0
       },
       totalPage: 1
     };
   },
-  props: ['department'],
+  props: ['departments'],
   methods: {
     pageChan(newPage) {
       this.getStaffInfo(newPage);
     },
     getStaffInfo(newPage) {
       let promise = new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              var obj = {
-                command: 'getStaffArrayByDepartment',
-                platform: 'web',
-                department: this.thisDepart.department,
-                pageNum: newPage
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.page.total = parseInt(rep.data.data.totalNum);
-            this.page.current = newPage;
-            this.thisDepart.staffArray = rep.data.data.staffArray;
-          } else if (rep.data.statusCode === '10012') {
-            window.location.href = 'signIn.html';
-          } else {
-            reject(rep);
-          }
-        }, (rep) => { });
+        for (var i = 0; i < this.thisDeparts.length; i++) {
+          this.thisDepart = this.thisDeparts[i];
+          axios({
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            method: 'get',
+            url: '/service',
+            params: {
+              data: (() => {
+                var obj = {
+                  command: 'getStaffArrayByDepartment',
+                  platform: 'web',
+                  department: this.thisDepart.department,
+                  pageNum: newPage
+                }
+                return JSON.stringify(obj);
+              })()
+            }
+          }).then((rep) => {
+            if (rep.data.statusCode === '10001') {
+              this.page.total = parseInt(rep.data.data.totalNum);
+              this.page.current = newPage;
+              this.staffArray.push(rep.data.data.staffArray);
+            } else if (rep.data.statusCode === '10012') {
+              window.location.href = 'signIn.html';
+            } else {
+              reject(rep);
+            }
+          }, (rep) => { });
+        }
       });
       return promise;
     },
@@ -198,7 +205,7 @@ export default {
   th {
     width: 14.28%;
   }
-  .link-wrap {d
+  .link-wrap {
     a:hover {
       cursor: pointer;
     }

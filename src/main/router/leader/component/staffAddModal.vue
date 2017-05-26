@@ -65,11 +65,11 @@
            :class="{'has-error': !staff.department.ver}">
         <label class="control-label">所属部门</label>
         <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入所属部门"
-                 readonly
-                 v-model="staff.department.val">
+          <select v-model="staff.department.val" class="form-control">
+              <option v-for="option in departmentArray" :value="option">
+                {{ option }}
+              </option>
+          </select>
         </div>
       </div>
       <div class="form-group">
@@ -135,7 +135,7 @@ export default {
             ver: true
           },
           department: {
-            val: this.thisDepart.department,
+            val: '',
             ver: true
           },
           remark: {
@@ -150,10 +150,10 @@ export default {
       subBtn: {
         dis: false,
         cont: '保存'
-      }
+      },
+      departmentArray: []
     };
   },
-  props: ['thisDepart'],
   methods: {
     save() {
       let reg = /^(1+\d{10})$/;
@@ -199,7 +199,7 @@ export default {
           data: qs.stringify({
             data: (() => {
               var obj = {
-                command: 'editBiddingInfo',
+                command: 'addUser',
                 platform: 'web',
                 phone: this.staff.telephone.val,
                 jobNumber: this.staff.jobNumber.val,
@@ -225,7 +225,43 @@ export default {
     },
     cancel() {
       this.$emit('canceled');
+    },
+    getDepartmentList() {
+      let promise = new Promise((resolve,reject)=>{
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'getDepartmentList',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
+          } else {
+            reject(rep);
+          }
+        }, (rep) => { });
+      });
+      return promise;
     }
+  },
+  created() {
+    this.getDepartmentList().then((rep) => {
+      this.departmentArray1 = rep.data.data.departmentArray;
+      for (var i = 0; i < this.departmentArray1.length; i++) {
+        this.departmentArray.push(this.departmentArray1[i].departmentName);
+        console.log(this.departmentArray);
+      }
+    }, (rep) => {});
   },
   components: {
     modal
@@ -239,5 +275,8 @@ export default {
 }
 label {
   margin-bottom: 15px !important;
+}
+.control-label {
+    width: 20% !important;
 }
 </style>
