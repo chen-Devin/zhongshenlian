@@ -2,7 +2,6 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <staff-infor-list></staff-infor-list>
-    <department-infor v-for="(DEP, index) in departments" :department="DEP" :key="index"></department-infor>
   </div>
 </template>
 
@@ -10,7 +9,6 @@
 import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
-import departmentInfor from './component/departmentInfor.vue';
 import staffInforList from './component/staffInforList.vue';
 
 export default {
@@ -95,7 +93,6 @@ export default {
   },
   components: {
     crumbs,
-    departmentInfor,
     staffInforList
   }
 }
