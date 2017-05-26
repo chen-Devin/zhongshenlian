@@ -335,8 +335,13 @@
             <a class="text-primary title"
                :href="FILE.url"
                download>{{FILE.name}}</a>
-            <a class="text-danger pull-right"
-               @click="reportDelFile(FILE)"><i class="fa fa-times"></i></a>
+            <span class="pull-right">
+              <a class="text-danger"
+                 @click="reportDelFile(FILE)"
+                 v-if="!FILE.state"><i class="fa fa-times"></i></a>
+              <span class="label label-info" v-if="!FILE.state">尚未打印二维码</span>
+              <span class="label label-success" v-if="FILE.state">已打印二维码</span>
+            </span>
           </li>
         </ul>
       </div>
@@ -351,6 +356,15 @@
           <a class="text-primary title"
              :href="FILE.url"
              download>{{FILE.name}}</a>
+          <span class="pull-right" v-if="chanStatShow">
+            <label class="checkbox-inline">
+              <input type="checkbox" v-model="FILE.state" @change="reportStatChan(FILE)"> 打印二维码
+            </label>
+          </span>
+          <span class="pull-right" v-if="chanStatShow">
+            <span class="label label-info" v-if="!FILE.state">尚未打印二维码</span>
+            <span class="label label-success" v-if="FILE.state">已打印二维码</span>
+          </span>
         </li>
       </ul>
     </div>
@@ -439,6 +453,9 @@ export default {
     },
     contractNumShow() {
       return (this.business.projectStatus >= 80) ? true : false;
+    },
+    chanStatShow() {
+      return (this.user.department === '档案部' && this.business.projectStatus >= 80) ? true : false;
     }
   },
   props: ['initBusiness', 'user'],
@@ -582,6 +599,30 @@ export default {
             }
           }
           this.$emit('deletedFile', this.business);
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
+    },
+    reportStatChan(FILE) {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'post',
+        url: '/service',
+        params: {
+          data: (() => {
+            let obj = {
+              command: 'confirmQRcode',
+              platform: 'web',
+              projectAnnexId: FILE.id,
+              result: FILE.state ? '1' : '0'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+
         } else if (rep.data.statusCode === '10012') {
           window.location.href = 'signIn.html';
         }
