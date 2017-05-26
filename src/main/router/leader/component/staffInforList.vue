@@ -70,7 +70,8 @@ export default {
       showDelModal: false,
       delStaff: {},
       totalNum: 1,
-      pageNum: 1
+      pageNum: 1,
+      searchContent: ''
     }
   },
   computed: {
@@ -80,6 +81,7 @@ export default {
   },
   methods: {
     tog(searchCont) {
+      this.searchContent = searchCont;
       this.searchStaffs(searchCont).then((rep) => {
         this.staffs = rep.data.data.userArray;
         this.totalNum = rep.data.data.totalNum;
@@ -179,7 +181,7 @@ export default {
     },
     currentChange(val) {
       this.pageNum = val;
-      this.tog(searchCont);
+      this.tog(this.searchContent);
     }
   },
   created() {
