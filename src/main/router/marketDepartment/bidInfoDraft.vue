@@ -2,6 +2,7 @@
 	<div class="main">
 		<crumbs :paths="paths"></crumbs>
 		<card>
+      <h3 class="main-title">草稿箱</h3>
       <div class="com-list list-group">
         <li class="list-group-item list-head">
           <span class="title">信息详情</span>

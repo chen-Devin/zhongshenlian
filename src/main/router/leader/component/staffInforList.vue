@@ -6,7 +6,7 @@
           <!-- <search-bar placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" @search="search" v-show="simpleSearch"></search-bar> -->
           <search-bar placeholder="输入关键字搜索员工" @search="tog" v-show="simpleSearch"></search-bar>
         </div>
-        <div class="col-md-10 replace" v-show="!simpleSearch"></div>
+        <div class="col-md-11 replace" v-show="!simpleSearch"></div>
         <div class="col-md-1 higher-search f-r">
           <button type="button" class="btn my-btn draft-btn f-r" @click="showHigherSearch()">
             高级搜索
@@ -19,22 +19,24 @@
     </form>
     <form class="form-inline higherForm" v-if="higherSearch">
       <div class="row">
-        <div class="col-md-4 ta-c">
-          <div class="form-group">
-            <label for="projectName">员工姓名</label>
-            <input type="text" class="form-control ta-c" id="projectName" placeholder="请填写员工姓名" v-model="staffName">
+        <div class="col-md-10">
+          <div class="col-md-4 ta-c">
+            <div class="form-group">
+              <label for="projectName">员工姓名</label>
+              <input type="text" class="form-control ta-c" id="projectName" placeholder="请填写员工姓名" v-model="staffName">
+            </div>
           </div>
-        </div>
-        <div class="col-md-4 ta-c">
-          <div class="form-group">
-            <label for="agency">员工工号</label>
-            <input type="text" class="form-control ta-c" id="agency" placeholder="请填写员工工号" v-model="staffNumber">
+          <div class="col-md-4 ta-c">
+            <div class="form-group">
+              <label for="agency">员工工号</label>
+              <input type="text" class="form-control ta-c" id="agency" placeholder="请填写员工工号" v-model="staffNumber">
+            </div>
           </div>
-        </div>
-        <div class="col-md-4 ta-c">
-          <div class="form-group">
-            <label for="tenderPerson">手机号</label>
-            <input type="text" class="form-control ta-c" id="tenderPerson" placeholder="请填写手机号" v-model="staffPhone">
+          <div class="col-md-4 ta-c">
+            <div class="form-group">
+              <label for="tenderPerson">手机号</label>
+              <input type="text" class="form-control ta-c" id="tenderPerson" placeholder="请填写手机号" v-model="staffPhone">
+            </div>
           </div>
         </div>
       </div>
@@ -330,7 +332,7 @@ export default {
   }
 }
 .higherForm {
-  margin-top: 20px;
+  margin-top: -39px;
   .form-group {
     width: 100%;
     label {

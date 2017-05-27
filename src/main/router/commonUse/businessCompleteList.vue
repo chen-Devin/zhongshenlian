@@ -245,4 +245,10 @@ export default {
     margin-left: -15px;
   }
 }
+.com-list > .list-group-item {
+    padding-left: 13px;
+}
+.com-list > .list-head {
+    padding-left: 32px;
+}
 </style>

@@ -29,9 +29,7 @@
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime.substring(0,10)}}</span>
         </router-link>
-        <pager :pageCount="page.total"
-               :currentPage="page.current"
-               @change="pageChan"></pager>
+        <my-pagination :totalNum="page.total" @currentChange="currentChange"></my-pagination>
       </div>
     </card>
   </div>
@@ -42,7 +40,7 @@ import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
-import pager from '../../component/pager.vue';
+import myPagination from '../../component/pagination.vue';
 
 export default {
   name: 'businessHandleListLeader',
@@ -65,7 +63,7 @@ export default {
     $route: 'getInfo'
   },
   methods: {
-    pageChan(newPage) {
+    currentChange(newPage) {
       this.getInfo(newPage);
     },
     getInfo(newPage) {
@@ -85,7 +83,7 @@ export default {
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          this.page.total = parseInt(rep.data.data.pageNum);
+          this.page.total = parseInt(rep.data.data.totalNum);
           this.page.current = newPage;
           this.businesses.length = 0;
           for (let i = 0; i < rep.data.data.businessArray.length; i++) {
@@ -109,7 +107,7 @@ export default {
   components: {
     crumbs,
     card,
-    pager
+    myPagination
   }
 };
 </script>

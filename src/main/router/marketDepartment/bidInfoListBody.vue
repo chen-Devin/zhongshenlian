@@ -19,40 +19,44 @@
     <!--高级搜索-->
     <form class="form-inline higherForm" v-if="higherSearch">
       <div class="row">
-        <div class="col-md-4 ta-c">
-          <div class="form-group">
-            <label for="projectName">项目名称</label>
-            <input type="text" class="form-control ta-c" id="projectName" placeholder="请填写项目名称" v-model="projectName">
+        <div class="col-md-11">
+          <div class="col-md-4 ta-c">
+            <div class="form-group">
+              <label for="projectName">项目名称</label>
+              <input type="text" class="form-control ta-c" id="projectName" placeholder="请填写项目名称" v-model="projectName">
+            </div>
           </div>
-        </div>
-        <div class="col-md-4 ta-c">
-          <div class="form-group">
-            <label for="agency">代理机构</label>
-            <input type="text" class="form-control ta-c" id="agency" placeholder="请填写代理机构" v-model="agency">
+          <div class="col-md-4 ta-c">
+            <div class="form-group">
+              <label for="agency">代理机构</label>
+              <input type="text" class="form-control ta-c" id="agency" placeholder="请填写代理机构" v-model="agency">
+            </div>
           </div>
-        </div>
-        <div class="col-md-4 ta-c">
-          <div class="form-group">
-            <label for="tenderPerson">招标人</label>
-            <input type="text" class="form-control ta-c" id="tenderPerson" placeholder="请填写招标人" v-model="tenderPerson">
+          <div class="col-md-4 ta-c">
+            <div class="form-group">
+              <label for="tenderPerson">招标人</label>
+              <input type="text" class="form-control ta-c" id="tenderPerson" placeholder="请填写招标人" v-model="tenderPerson">
+            </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 ta-c">
-          <div class="form-group">
-            <label for="tenderPerson">招标起始</label>
-            <input type="date" class="form-control" v-model="bidStartDate">
+        <div class="col-md-11">
+          <div class="col-md-4 ta-c">
+            <div class="form-group">
+              <label for="tenderPerson">招标起始</label>
+              <input type="date" class="form-control" v-model="bidStartDate">
+            </div>
           </div>
-        </div>
-        <div class="col-md-4 ta-c">
-          <div class="form-group">
-            <label for="tenderPerson">招标结束</label>
-            <input type="date" class="form-control" v-model="bidEndDate">
+          <div class="col-md-4 ta-c">
+            <div class="form-group">
+              <label for="tenderPerson">招标结束</label>
+              <input type="date" class="form-control" v-model="bidEndDate">
+            </div>
           </div>
-        </div>
-        <div class="col-md-4">
+          <div class="col-md-4">
 
+          </div>
         </div>
       </div>
       <div class="row check-pl">
@@ -89,7 +93,7 @@
           </label>
         </div>
       </div>
-      <div class="search-btns ta-c">
+      <div class="search-btns ta-c f-r">
         <button type="button" class="btn my-btn submit-btn" @click="higherSearchEvent()">查找</button>
         <button type="button" class="btn my-btn draft-btn" @click="reset()">重置</button>
       </div>
@@ -457,7 +461,7 @@ input::-webkit-input-placeholder{text-align: center;}
   margin-top: -2px;
 }
 .higherForm {
-  margin-top: 90px;
+  margin-top: -50px;
   .form-group {
     width: 100%;
     label {
@@ -469,7 +473,8 @@ input::-webkit-input-placeholder{text-align: center;}
   }
 }
 .search-btns {
-  margin-top: 20px;
+  margin-top: -62px;
+  margin-right: -52px;
   button {
     &:first-child {
       margin-right: 30px;

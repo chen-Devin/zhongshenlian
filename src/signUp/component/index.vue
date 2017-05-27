@@ -48,7 +48,7 @@
           {{alert.cont}}
         </div>
         <div class="form-group">
-          <button class="btn btn-primary btn-block letterSpacing"
+          <button class="btn btn-primary btn-block letterSpacing login-btn"
                   type="button"
                   :disabled="subBtn.dis"
                   @click="subBtnTog()">{{subBtn.cont}}</button>
@@ -281,7 +281,7 @@ export default {
 @import '../../scss/_variables.scss';
 
 .verification {
-  height: 35px;
+  height: 53px;
   color: #1F6BA9;
 }
 
@@ -332,8 +332,8 @@ export default {
       }
     }
     img {
-      width: 120px;
-      height: 120px;
+      width: 160px;
+      height: 160px;
       margin-bottom: 25px;
     }
     input.form-control {
@@ -366,5 +366,22 @@ export default {
       }
     }
   }
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.login-btn {
+  width: 400px;
+  height: 53px;
+}
+
+.input-group-addon {
+  height: 53px;
+}
+
+input.form-control {
+  height: 53px;
 }
 </style>
