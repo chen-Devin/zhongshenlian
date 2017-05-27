@@ -244,6 +244,7 @@ export default {
             state: false
           }
         ],
+        billState: 0,
         bills: [],
         reports: [],
         projectOperatingArray: []

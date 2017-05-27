@@ -63,7 +63,7 @@ export default {
         params: {
           data: (() => {
             var obj = {
-              command: 'getBusinessReviewingAgain',
+              command: 'getBusinessReviewing',
               platform: 'web',
               pageNum: newPage
             }

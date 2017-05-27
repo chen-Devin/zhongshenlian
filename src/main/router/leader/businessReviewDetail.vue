@@ -232,6 +232,7 @@ export default {
         contracts: [],
         projectApproverArray: [],
         schdules: [],
+        billState: 0,
         bills: [],
         reports: [],
         projectOperatingArray: []
@@ -516,6 +517,7 @@ export default {
               this.business.schdules.push(obj);
             }
 
+            this.business.billState = parseInt(rep.data.data.financeCreateBillingState);
             this.business.bills = [];
             for (let i = 0; i < rep.data.data.projectBillingArray.length; i++) {
               let obj = {
@@ -582,7 +584,7 @@ export default {
                 id: rep.data.data.reportAnnexArray[i].id,
                 name: rep.data.data.reportAnnexArray[i].annexName,
                 url: rep.data.data.reportAnnexArray[i].annexUrl,
-                state: true
+                state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true
               }
               this.business.reports.push(obj);
             }

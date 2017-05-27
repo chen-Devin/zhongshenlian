@@ -42,38 +42,34 @@ export default {
     sub() {
       this.subBtn.dis = true;
       this.subBtn.cont = '提交...';
-      let promiseArr = [];
-      for (let i = 0; i < this.business.bills.length; i++) {
-        promiseArr.push(new Promise((resolve, reject) => {
-          axios({
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-            method: 'post',
-            url: '/service',
-            data: qs.stringify({
-              data: (() => {
-                let obj = {
-                  command: 'makeBilling',
-                  platform: 'web',
-                  id: this.business.bills[i].id,
-                  type: this.business.bills[i].state + 1
-                };
-                return JSON.stringify(obj);
-              })()
-            })
-          }).then((rep) => {
-            if (rep.data.statusCode === '10001') {
-              this.business.bills[i].state += 1;
-              resolve(rep);
-            } else if (rep.data.statusCode === '10012') {
-              window.location.href = 'signIn.html';
-            }
-          }, (rep) => { });
-        }));
-      }
-      Promise.all(promiseArr).then(values => {
-        this.subBtn.cont = '已提交';
-        this.$emit('submited');
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+          method: 'post',
+          url: '/service',
+          data: qs.stringify({
+            data: (() => {
+              let obj = {
+                command: 'makeBilling',
+                platform: 'web',
+                id: this.business.bills[1].id,
+                type: 3
+              };
+              return JSON.stringify(obj);
+            })()
+          })
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.business.billState = 1;
+            this.subBtn.cont = '已提交';
+            this.$emit('submited');
+            resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
+          }
+        }, (rep) => { });
       });
+      return promise;
     },
     cancel() {
       this.$emit('canceled');
