@@ -9,10 +9,10 @@
         </router-link>
       </h3>
       <div class="com-list list-group">
-        <!-- <li class="list-group-item list-head">
+        <li class="list-group-item list-head">
           <span class="title">业务列表</span>
           <span class="date pull-right">创建时间</span>
-        </li> -->
+        </li>
         <router-link class="list-group-item" :to="businessRoute(BUSINESS)" v-for="(BUSINESS, index) in businesses" :key="index">
           <span class="label label-danger"
                 v-if="BUSINESS.projectStatus===10">尚未完成</span>

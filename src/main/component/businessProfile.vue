@@ -326,24 +326,26 @@
           </div>
         </div>
       </div>
-      <label class="col-sm-2"></label>
-      <div class="col-sm-9">
-        <ul class="com-list attachment-list list-group">
-          <li class="list-group-item"
-              v-for="FILE in business.reports">
-            <span class="fa fa-file-text-o"></span>
-            <a class="text-primary title"
-               :href="FILE.url"
-               download>{{FILE.name}}</a>
-            <span class="pull-right">
-              <a class="text-danger"
-                 @click="reportDelFile(FILE)"
-                 v-if="!FILE.state"><i class="fa fa-times"></i></a>
-              <span class="label label-info" v-if="!FILE.state">尚未打印二维码</span>
-              <span class="label label-success" v-if="FILE.state">已打印二维码</span>
-            </span>
-          </li>
-        </ul>
+      <div class="row">
+        <label class="col-sm-2"></label>
+        <div class="col-sm-9">
+          <ul class="com-list attachment-list list-group">
+            <li class="list-group-item"
+                v-for="FILE in business.reports">
+              <span class="fa fa-file-text-o"></span>
+              <a class="text-primary title"
+                 :href="FILE.url"
+                 download>{{FILE.name}}</a>
+              <span class="pull-right">
+                <a class="text-danger"
+                   @click="reportDelFile(FILE)"
+                   v-if="!FILE.state"><i class="fa fa-times"></i></a>
+                <span class="label label-info" v-if="!FILE.state">尚未打印二维码</span>
+                <span class="label label-success" v-if="FILE.state">已打印二维码</span>
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="form-group"
