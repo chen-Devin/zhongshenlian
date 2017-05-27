@@ -1,9 +1,38 @@
 <template>
   <div class="side-bar">
-    <ul class="nav nav-pills nav-stacked">
+    <ul class="nav nav-pills nav-stacked" v-if="user.department !== '所长'">
       <router-link :to="ROU.link"
                    v-for="(ROU, index) in routes"
-                   v-if="ROU.open"
+                   :key="index"
+                   tag="li"
+                   active-class="active">
+        <span :class="ROU.icon">{{ROU.name}}</span>
+      </router-link>
+    </ul>
+    <ul class="nav nav-pills nav-stacked" v-if="user.department === '所长'">
+      <router-link :to="ROU.link"
+                   v-for="(ROU, index) in routesLeader1"
+                   :key="index"
+                   tag="li"
+                   active-class="active">
+        <span :class="ROU.icon">{{ROU.name}}</span>
+      </router-link>
+      <!--职员管理-->
+      <li @click="openItem()">
+        <span :class="staffManagement.icon">{{staffManagement.name}}</span>
+      </li>
+      <!--展开项-->
+      <router-link :to="ROU.link"
+                   v-for="(ROU, index) in staffManagementOpen"
+                   v-if="isOpen"
+                   :key="index"
+                   tag="li"
+                   class="open-item"
+                   active-class="active">
+        <span :class="ROU.icon">{{ROU.name}}</span>
+      </router-link>
+      <router-link :to="ROU.link"
+                   v-for="(ROU, index) in routes"
                    :key="index"
                    tag="li"
                    active-class="active">
@@ -17,7 +46,19 @@
 export default {
   name: 'sideBar',
   data() {
-    return {};
+    return {
+      routesLeader1: [
+        {name: '待审核业务', link: '/business-review-list-leader', icon: 'business-review-list-leader',openClass: 1, open:true},
+        {name: '待处理业务', link: '/business-handle-list-leader', icon: 'business-handle-list-sales',openClass: 1, open:true},
+        {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list',openClass: 1, open:true}
+      ],
+      staffManagement: {name: '职员管理', icon: 'staff-management-author',openClass: 2, open:true},
+      staffManagementOpen: [
+        {name: '职员权限管理', link: '/staff-management-author', icon: 'staff-management-author',openClass: 2, open:false},
+        {name: '职员资料管理', link: '/staff-management-infor', icon: 'staff-management-author',openClass: 2, open:false},
+      ],
+      isOpen: false
+    };
   },
   computed: {
     routes() {
@@ -25,12 +66,8 @@ export default {
       if (this.user.department) {
         if (this.user.department === '所长') {
           routes = [
-            {name: '待审核业务', link: '/business-review-list-leader', icon: 'business-review-list-leader',openClass: 1, open:true},
-            {name: '待处理业务', link: '/business-handle-list-leader', icon: 'business-handle-list-sales',openClass: 1, open:true},
-            {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list',openClass: 1, open:true},
-            {name: '职员管理', link: '/staff-management-author', icon: 'staff-management-author',openClass: 2, open:true},
-            {name: '职员权限管理', link: '/staff-management-author', icon: 'staff-management-author',openClass: 2, open:false},
-            {name: '职员资料管理', link: '/staff-management-infor', icon: 'staff-management-author',openClass: 2, open:false},
+            // {name: '职员权限管理', link: '/staff-management-author', icon: 'staff-management-author',openClass: 2, open:false},
+            // {name: '职员资料管理', link: '/staff-management-infor', icon: 'staff-management-author',openClass: 2, open:false},
             {name: '招投标信息', link: '/bid-info-list', icon: 'bid-info',openClass: 1, open:true}
           ];
         } else if (this.user.department === '办公室') {
@@ -90,12 +127,12 @@ export default {
   },
   props: ['user'],
   methods: {
-    a() {
-      console.log(1);
+    openItem() {
+      this.isOpen = !this.isOpen;
     }
   },
   created() {
-    console.log('test');
+
   }
 };
 </script>
@@ -111,6 +148,9 @@ export default {
     > li {
       &:hover {
         background-color: #51616F;
+      }
+      &.open-item {
+        padding-left: 20%;
       }
       > span {
         display: block;

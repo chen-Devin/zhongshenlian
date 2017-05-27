@@ -233,6 +233,7 @@ export default {
       }, (rep) => { });
     },
     higherSearchEvent() {
+        this.listType = 'higherSearch';
         var departmentSort = [];
         for (var i = 0; i < this.officeList.length; i++) {
           if(this.officeList[i] === 'kjs') {
@@ -340,6 +341,8 @@ export default {
         this.getAllList();
       } else if (this.listType === 'search') {
         this.search();
+      } else if (this.listType = 'higherSearch') {
+        this.higherSearchEvent();
       }
     },
     showHigherSearch() {
