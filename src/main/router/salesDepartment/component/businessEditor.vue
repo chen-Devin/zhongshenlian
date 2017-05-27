@@ -115,7 +115,8 @@
                   maxlength="100"
                   class="form-control"
                   placeholder="请输入报价依据"
-                  v-model="business.basisQuote">
+                  v-model="business.basisQuote"
+                  :disabled="!editable">
         </textarea>
       </div>
     </div>
