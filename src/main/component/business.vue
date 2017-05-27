@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import progressBar from './progressBar.vue';
+import progressBar from './progressBarSVG.vue';
 import tabControl from './tabControl.vue';
 
 export default {

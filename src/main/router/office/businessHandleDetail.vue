@@ -239,103 +239,123 @@ export default {
     progress() {
       if (this.business.projectStatus < 20) {
           return [
-              { name: '立项申请', passed: false, active: false },
-              { name: '风控初审', passed: false, active: false },
-              { name: '所长终审', passed: false, active: false },
-              { name: '发放编号', passed: false, active: false },
-              { name: '处理业务', passed: false, active: false },
-              { name: '风控复审', passed: false, active: false },
-              { name: '上传注协', passed: false, active: false },
-              { name: '业务完结', passed: false, active: false }
+            { name: '立项申请', passed: false, active: false },
+            { name: '风控初审', passed: false, active: false },
+            { name: '所长终审', passed: false, active: false },
+            { name: '发放编号', passed: false, active: false },
+            { name: '风控复审', passed: false, active: false },
+            {
+              qrCode: {name: '二维码完成', passed: false, active: false},
+              bill: {name: '开票完成', passed: false, active: false}
+            },
+            { name: '业务完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus < 40) {
           return [
-              { name: '立项申请', passed: false, active: true },
-              { name: '风控初审', passed: false, active: false },
-              { name: '所长终审', passed: false, active: false },
-              { name: '发放编号', passed: false, active: false },
-              { name: '处理业务', passed: false, active: false },
-              { name: '风控复审', passed: false, active: false },
-              { name: '上传注协', passed: false, active: false },
-              { name: '业务完结', passed: false, active: false }
+            { name: '立项申请', passed: false, active: true },
+            { name: '风控初审', passed: false, active: false },
+            { name: '所长终审', passed: false, active: false },
+            { name: '发放编号', passed: false, active: false },
+            { name: '风控复审', passed: false, active: false },
+            {
+              qrCode: {name: '二维码完成', passed: false, active: false},
+              bill: {name: '开票完成', passed: false, active: false}
+            },
+            { name: '业务完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus < 60) {
           return [
-              { name: '立项申请', passed: true, active: false },
-              { name: '风控初审', passed: false, active: true },
-              { name: '所长终审', passed: false, active: false },
-              { name: '发放编号', passed: false, active: false },
-              { name: '处理业务', passed: false, active: false },
-              { name: '风控复审', passed: false, active: false },
-              { name: '上传注协', passed: false, active: false },
-              { name: '业务完结', passed: false, active: false }
+            { name: '立项申请', passed: true, active: false },
+            { name: '风控初审', passed: false, active: true },
+            { name: '所长终审', passed: false, active: false },
+            { name: '发放编号', passed: false, active: false },
+            { name: '风控复审', passed: false, active: false },
+            {
+              qrCode: {name: '二维码完成', passed: false, active: false},
+              bill: {name: '开票完成', passed: false, active: false}
+            },
+            { name: '业务完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus < 80) {
           return [
-              { name: '立项申请', passed: true, active: false },
-              { name: '风控初审', passed: true, active: false },
-              { name: '所长终审', passed: false, active: true },
-              { name: '发放编号', passed: false, active: false },
-              { name: '处理业务', passed: false, active: false },
-              { name: '风控复审', passed: false, active: false },
-              { name: '上传注协', passed: false, active: false },
-              { name: '业务完结', passed: false, active: false }
+            { name: '立项申请', passed: true, active: false },
+            { name: '风控初审', passed: true, active: false },
+            { name: '所长终审', passed: false, active: true },
+            { name: '发放编号', passed: false, active: false },
+            { name: '风控复审', passed: false, active: false },
+            {
+              qrCode: {name: '二维码完成', passed: false, active: false},
+              bill: {name: '开票完成', passed: false, active: false}
+            },
+            { name: '业务完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus < 130) {
           return [
-              { name: '立项申请', passed: true, active: false },
-              { name: '风控初审', passed: true, active: false },
-              { name: '所长终审', passed: true, active: false },
-              { name: '发放编号', passed: false, active: true },
-              { name: '处理业务', passed: false, active: false },
-              { name: '风控复审', passed: false, active: false },
-              { name: '上传注协', passed: false, active: false },
-              { name: '业务完结', passed: false, active: false }
-          ];
-      } else if (this.business.projectStatus < 140) {
-          return [
-              { name: '立项申请', passed: true, active: false },
-              { name: '风控初审', passed: true, active: false },
-              { name: '所长终审', passed: true, active: false },
-              { name: '发放编号', passed: true, active: false },
-              { name: '处理业务', passed: false, active: true },
-              { name: '风控复审', passed: false, active: false },
-              { name: '上传注协', passed: false, active: false },
-              { name: '业务完结', passed: false, active: false }
+            { name: '立项申请', passed: true, active: false },
+            { name: '风控初审', passed: true, active: false },
+            { name: '所长终审', passed: true, active: false },
+            { name: '发放编号', passed: false, active: true },
+            { name: '风控复审', passed: false, active: false },
+            {
+              qrCode: {name: '二维码完成', passed: false, active: false},
+              bill: {name: '开票完成', passed: false, active: false}
+            },
+            { name: '业务完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus < 150) {
           return [
-              { name: '立项申请', passed: true, active: false },
-              { name: '风控初审', passed: true, active: false },
-              { name: '所长终审', passed: true, active: false },
-              { name: '发放编号', passed: true, active: false },
-              { name: '处理业务', passed: true, active: false },
-              { name: '风控复审', passed: false, active: true },
-              { name: '上传注协', passed: false, active: false },
-              { name: '业务完结', passed: false, active: false }
+            { name: '立项申请', passed: true, active: false },
+            { name: '风控初审', passed: true, active: false },
+            { name: '所长终审', passed: true, active: false },
+            { name: '发放编号', passed: true, active: false },
+            { name: '风控复审', passed: false, active: true },
+            {
+              qrCode: {name: '二维码完成', passed: false, active: false},
+              bill: {name: '开票完成', passed: false, active: false}
+            },
+            { name: '业务完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus < 160) {
+        if (this.business.billState) {
           return [
-              { name: '立项申请', passed: true, active: false },
-              { name: '风控初审', passed: true, active: false },
-              { name: '所长终审', passed: true, active: false },
-              { name: '发放编号', passed: true, active: false },
-              { name: '处理业务', passed: true, active: false },
-              { name: '风控复审', passed: true, active: false },
-              { name: '上传注协', passed: false, active: true },
-              { name: '业务完结', passed: false, active: false }
+            { name: '立项申请', passed: true, active: false },
+            { name: '风控初审', passed: true, active: false },
+            { name: '所长终审', passed: true, active: false },
+            { name: '发放编号', passed: true, active: false },
+            { name: '风控复审', passed: true, active: false },
+            {
+              qrCode: {name: '二维码完成', passed: false, active: true},
+              bill: {name: '开票完成', passed: false, active: true}
+            },
+            { name: '业务完结', passed: false, active: false }
           ];
+        } else {
+          return [
+            { name: '立项申请', passed: true, active: false },
+            { name: '风控初审', passed: true, active: false },
+            { name: '所长终审', passed: true, active: false },
+            { name: '发放编号', passed: true, active: false },
+            { name: '风控复审', passed: true, active: false },
+            {
+              qrCode: {name: '二维码完成', passed: false, active: true},
+              bill: {name: '开票完成', passed: false, active: false}
+            },
+            { name: '业务完结', passed: false, active: false }
+          ];
+        }
       } else {
-          return [
-              { name: '立项申请', passed: true, active: false },
-              { name: '风控初审', passed: true, active: false },
-              { name: '所长终审', passed: true, active: false },
-              { name: '发放编号', passed: true, active: false },
-              { name: '处理业务', passed: true, active: false },
-              { name: '风控复审', passed: true, active: false },
-              { name: '上传注协', passed: true, active: false },
-              { name: '业务完结', passed: false, active: true }
-          ];
+        return [
+          { name: '立项申请', passed: true, active: false },
+          { name: '风控初审', passed: true, active: false },
+          { name: '所长终审', passed: true, active: false },
+          { name: '发放编号', passed: true, active: false },
+          { name: '风控复审', passed: true, active: false },
+          {
+            qrCode: {name: '二维码完成', passed: true, active: false},
+            bill: {name: '开票完成', passed: true, active: false}
+          },
+          { name: '业务完结', passed: false, active: true }
+        ];
       }
     },
     approverAdviceShow() {
