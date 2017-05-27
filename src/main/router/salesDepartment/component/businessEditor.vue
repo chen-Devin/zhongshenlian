@@ -21,7 +21,9 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">委托单位（客户）</label>
       <div class="my-col-sm-5">
-        <v-select class="form-control" :options="institutioned" v-model="business.institution" :disabled="!editable"></v-select>
+        <select class="form-control" :v-model="business.institution" :disabled="!editable">
+          <option v-for="(CUS, index) in customers" :value="CUS" :key="index">{{CUS.customerName}}</option>
+        </select>
       </div>
     </div>
     <div class="form-group">
@@ -361,7 +363,6 @@ import qs from 'qs';
 import moment from 'moment';
 import { Upload } from 'element-ui';
 import maskedInput from 'vue-text-mask';
-import vSelect from 'vue-select';
 
 import bus from '../../../bus.js';
 import currencyMask from '../../../currencyMask.js';
@@ -417,12 +418,6 @@ export default {
     },
     departmentCoopChan() {
       return (this.business.departmentCoop.name === '有部门合作') ? true : false;
-    },
-    institutioned() {
-      let institutioned = [];
-      this.customers.forEach(function(element) {
-        institutioned.push({label: element.customerName, value: element})
-      }, this);;
     }
   },
   props: ['initBusiness', 'editable'],
@@ -431,16 +426,16 @@ export default {
     bus.$on('savBusiness', () => { this.save() });
 
     this.getCustomers().then(() => {
-      // if (this.business.institution.id === '') {
-      //   this.business.institution = this.customers[0];
-      // } else {
-      //   for (let i = 0; i < this.customers.length; i++) {
-      //     if (this.business.institution.id === this.customers[i].id) {
-      //       this.business.institution = this.customers[i];
-      //       break;
-      //     }
-      //   }
-      // }
+      if (this.business.institution.id === '') {
+        this.business.institution = this.customers[0];
+      } else {
+        for (let i = 0; i < this.customers.length; i++) {
+          if (this.business.institution.id === this.customers[i].id) {
+            this.business.institution = this.customers[i];
+            break;
+          }
+        }
+      }
     }, () => { });
 
     if (this.business.type === '') {
@@ -984,8 +979,7 @@ export default {
     }
   },
   components: {
-    maskedInput,
-    vSelect
+    maskedInput
   }
 };
 </script>
