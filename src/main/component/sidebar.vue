@@ -52,10 +52,10 @@ export default {
         {name: '待处理业务', link: '/business-handle-list-leader', icon: 'business-handle-list-sales',openClass: 1, open:true},
         {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list',openClass: 1, open:true}
       ],
-      staffManagement: {name: '职员管理', icon: 'staff-management-author',openClass: 2, open:true},
+      staffManagement: {name: '职员管理', link: '/staff-management-author', icon: 'staff-management-author',openClass: 2, open:true},
       staffManagementOpen: [
-        {name: '职员权限管理', link: '/staff-management-author', icon: 'staff-management-author',openClass: 2, open:false},
-        {name: '职员资料管理', link: '/staff-management-infor', icon: 'staff-management-author',openClass: 2, open:false},
+        {name: '职员权限管理', link: '/staff-management-author', icon: 'no-pic',openClass: 2, open:false},
+        {name: '职员资料管理', link: '/staff-management-infor', icon: 'no-pic',openClass: 2, open:false},
       ],
       isOpen: false
     };
@@ -129,6 +129,9 @@ export default {
   methods: {
     openItem() {
       this.isOpen = !this.isOpen;
+      if (this.isOpen) {
+        this.$router.push('/staff-management-author');
+      }
     }
   },
   created() {

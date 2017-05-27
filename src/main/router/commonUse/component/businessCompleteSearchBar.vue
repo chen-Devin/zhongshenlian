@@ -1,73 +1,79 @@
 <template>
   <form class="form-inline higherForm">
     <div class="row">
-      <div class="col-md-4 ta-c">
-        <div class="form-group">
-          <label for="projectName">委托单位</label>
-          <input type="text" class="form-control" id="projectName" placeholder="请输入委托单位" v-model="sea.requester">
+      <div class="col-md-11">
+        <div class="col-md-4 ta-c">
+          <div class="form-group">
+            <label for="projectName">委托单位</label>
+            <input type="text" class="form-control" id="projectName" placeholder="请输入委托单位" v-model="sea.requester">
+          </div>
         </div>
-      </div>
-      <div class="col-md-4 ta-c">
-        <div class="form-group">
-          <label for="agency">联系人</label>
-          <input type="text" class="form-control" id="agency" placeholder="请输入联系人" v-model="sea.requesterName">
+        <div class="col-md-4 ta-c">
+          <div class="form-group">
+            <label for="agency">联系人</label>
+            <input type="text" class="form-control" id="agency" placeholder="请输入联系人" v-model="sea.requesterName">
+          </div>
         </div>
-      </div>
-      <div class="col-md-4 ta-c">
-        <div class="form-group">
-          <label for="tenderPerson">申请人</label>
-          <input type="text" class="form-control" id="tenderPerson" placeholder="请输入申请人" v-model="sea.applicantName">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 ta-c">
-        <div class="form-group">
-          <label for="projectName">项目金额</label>
-          <div class="input-group">
-            <select class="form-control" v-model="sea.amount" @change="search()">
-              <option :value="AMO" v-for="(AMO, index) in amounts" :key="index">{{AMO}}</option>
-            </select>
-            <div class="input-group-addon">元</div>
+        <div class="col-md-4 ta-c">
+          <div class="form-group">
+            <label for="tenderPerson">申请人</label>
+            <input type="text" class="form-control" id="tenderPerson" placeholder="请输入申请人" v-model="sea.applicantName">
           </div>
         </div>
       </div>
-      <div class="col-md-4 ta-c">
-        <div class="form-group">
-          <label for="agency">业务类型</label>
-          <select class="form-control type" v-model="sea.type" @change="search()">
-            <option :value="TYPE" v-for="(TYPE, index) in types" :key="index">{{TYPE}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-md-4 ta-c"></div>
     </div>
     <div class="row">
-      <div class="col-md-4 ta-c">
-        <div class="form-group">
-          <label for="tenderPerson">项目完成时间起</label>
-          <input type="date"
-                 class="form-control"
-                 placeholder="请输入时间区间起"
-                 v-model.trim="sea.time.start"
-                 @change="search()">
+      <div class="col-md-11">
+        <div class="col-md-4 ta-c">
+          <div class="form-group">
+            <label for="projectName">项目金额</label>
+            <div class="input-group">
+              <select class="form-control" v-model="sea.amount" @change="search()">
+                <option :value="AMO" v-for="(AMO, index) in amounts" :key="index">{{AMO}}</option>
+              </select>
+              <div class="input-group-addon">元</div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="col-md-4 ta-c">
-        <div class="form-group">
-          <label for="tenderPerson">项目完成时间止</label>
-          <input type="date"
-                 class="form-control"
-                 placeholder="请输入时间区间止"
-                 v-model.trim="sea.time.end"
-                 @change="search()">
+        <div class="col-md-4 ta-c">
+          <div class="form-group">
+            <label for="agency">业务类型</label>
+            <select class="form-control type" v-model="sea.type" @change="search()">
+              <option :value="TYPE" v-for="(TYPE, index) in types" :key="index">{{TYPE}}</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="col-md-4">
-
+        <div class="col-md-4 ta-c"></div>
       </div>
     </div>
-    <div class="search-btns ta-c">
+    <div class="row">
+      <div class="col-md-11">
+        <div class="col-md-4 ta-c">
+          <div class="form-group">
+            <label for="tenderPerson">项目完成时间起</label>
+            <input type="date"
+                   class="form-control"
+                   placeholder="请输入时间区间起"
+                   v-model.trim="sea.time.start"
+                   @change="search()">
+          </div>
+        </div>
+        <div class="col-md-4 ta-c">
+          <div class="form-group">
+            <label for="tenderPerson">项目完成时间止</label>
+            <input type="date"
+                   class="form-control"
+                   placeholder="请输入时间区间止"
+                   v-model.trim="sea.time.end"
+                   @change="search()">
+          </div>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+      </div>
+    </div>
+    <div class="search-btns ta-c f-r">
       <button type="button" class="btn my-btn submit-btn" @click="higherSearchEvent()">查找</button>
       <button type="button" class="btn my-btn draft-btn" @click="reset()">重置</button>
     </div>
@@ -138,7 +144,7 @@ export default {
   margin-top: 100px;
 }
 .higherForm {
-  margin-top: 90px;
+  margin-top: -40px;
   .form-group {
     width: 100%;
     label {
@@ -160,5 +166,8 @@ export default {
 }
 .submit-btn {
   margin-right: 30px;
+}
+.search-btns {
+  margin-top: -65px;
 }
 </style>

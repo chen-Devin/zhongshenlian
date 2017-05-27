@@ -276,7 +276,7 @@ export default {
 label {
   margin-bottom: 15px !important;
 }
-.control-label {
+/*.control-label {
     width: 20% !important;
-}
+}*/
 </style>
