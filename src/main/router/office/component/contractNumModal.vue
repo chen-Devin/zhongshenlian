@@ -1,12 +1,12 @@
 <template>
-  <modal>
+  <modal modalWidth="800px">
     <form class="form-horizontal clearfix"
           slot="body"
           @submit.prevent
           @keyup.enter.prevent>
       <div class="form-group">
-        <label class="col-sm-3 control-label">报告类型</label>
-        <div class="col-sm-9">
+        <label class="col-sm-2">报告类型</label>
+        <div class="col-sm-10">
           <template v-for="(TYPE, index) in type">
             <h5>{{TYPE.name}}</h5>
             <label class="checkbox-inline"
@@ -22,8 +22,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label">编号样式</label>
-        <div class="col-sm-9">
+        <label class="col-sm-2">编号样式</label>
+        <div class="col-sm-10">
           <p class="form-control-static">
             {{number}}
           </p>

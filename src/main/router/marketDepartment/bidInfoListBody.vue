@@ -155,6 +155,7 @@ export default {
       user: {},
       searchContent: '',
       officeList: [],
+      officeListTrans: '',
       totalPage: '',
       pageNum: 1,
       totalNum: 1,
@@ -261,7 +262,9 @@ export default {
         }
         this.officeList = departmentSort;
         if (this.officeList.length === 0) {
-          this.officeList = '';
+          this.officeListTrans = '';
+        } else {
+          this.officeListTrans = this.officeList;
         }
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -279,7 +282,7 @@ export default {
                 agency: this.agency,
                 projectName: this.projectName,
                 pageNum: this.pageNum,
-                projectType: this.officeList,
+                projectType: this.officeListTrans,
                 projectStatus: this.filterState.toString()
               }
               return JSON.stringify(obj);

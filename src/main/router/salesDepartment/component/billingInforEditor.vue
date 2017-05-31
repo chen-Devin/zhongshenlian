@@ -281,7 +281,6 @@ export default {
         },
         addUpAmount: '',
         amount: '',
-        billingUnit: '',
         type: '增值税普通发票',
         unit: {
           name: '',
@@ -290,6 +289,7 @@ export default {
           depositBank: '',
           account: ''
         },
+        billingUnit: '',
         taxpayerID: '',
         filingDate: (() => {
           let t = new Date();
@@ -353,7 +353,8 @@ export default {
       return sumArr.join(',') + ((sumStr.length > 1) ? ('.'+sumStr[1]) : '');
     },
     commonCheck() {
-      if (this.bill.billingUnit === '' || this.bill.taxpayerID === '') {
+      console.log('test');
+      if (this.bill.billingUnit !== '' || this.bill.taxpayerID === '') {
         this.$message({
           message: '必须填写单位单位名称、纳税人识别号',
           type: 'warning'

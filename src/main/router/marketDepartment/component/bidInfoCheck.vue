@@ -471,9 +471,6 @@
       }
     }
   }
-  .advice {
-    margin-top: -60px;
-  }
   .mt {
     margin-top: -10px;
   }

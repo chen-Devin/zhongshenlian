@@ -175,7 +175,7 @@ form {
 }
 
 .my-btn {
-  width: 110px;
+  min-width: 100px;
   height: 40px;
   font-family: MicrosoftYaHei;
   font-size: 14px;
@@ -297,7 +297,7 @@ form {
   letter-spacing: -0.32px;
   border: 1px solid #51AAD6;
   border-radius: 2px;
-  padding: .1em .5em .1em;
+  // padding: .1em .5em .1em;
 }
 
 .label-danger {

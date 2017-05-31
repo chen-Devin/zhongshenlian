@@ -271,7 +271,8 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-offset-2 col-sm-10">
+      <label class="col-sm-2 control-label"></label>
+      <div class="col-sm-10">
         <ul class="com-list attachment-list list-group">
           <li class="list-group-item"
               v-for="FILE in business.contracts">
@@ -358,7 +359,7 @@
           <a class="text-primary title"
              :href="FILE.url"
              download>{{FILE.name}}</a>
-          <span class="pull-right" v-if="chanStatShow">
+          <span class="pull-right check-code" v-if="chanStatShow">
             <label class="checkbox-inline">
               <input type="checkbox" v-model="FILE.state" @change="reportStatChan(FILE)"> 打印二维码
             </label>
@@ -637,5 +638,10 @@ export default {
 <style lang="sass" scoped>
 label.col-sm-2.control-label {
   width: 143px;
+}
+
+.check-code {
+  margin-top: -6px;
+  margin-left: 10px;
 }
 </style>
