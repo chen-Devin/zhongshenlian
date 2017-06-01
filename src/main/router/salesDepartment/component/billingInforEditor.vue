@@ -354,7 +354,7 @@ export default {
     },
     commonCheck() {
       console.log('test');
-      if (this.bill.billingUnit !== '' || this.bill.taxpayerID === '') {
+      if (this.bill.unit.name === '' || this.bill.taxpayerID === '') {
         this.$message({
           message: '必须填写单位单位名称、纳税人识别号',
           type: 'warning'
