@@ -40,10 +40,6 @@
 export default {
   name: 'progressBar',
   props: ['progress'],
-  created() {
-    console.log(this.progress[5].qrCode.active);
-    console.log(this.progress[5].qrCode.passed);
-  },
   methods: {
     active(ACT) {
       if (ACT) {

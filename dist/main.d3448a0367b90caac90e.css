@@ -55,12 +55,6 @@ body {
 
 .com-list {
   margin: 30px auto 20px auto; }
-  .com-list .list-head {
-    background-color: #E6E6E6;
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 27px;
-    padding-right: 35px; }
   .com-list > .list-group-item {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -76,6 +70,12 @@ body {
     .com-list > .list-group-item:last-child {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0; }
+  .com-list .list-head {
+    background-color: #E6E6E6;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 30px;
+    padding-right: 35px; }
 
 .attachment-list {
   margin-top: 10px; }
@@ -245,7 +245,7 @@ form {
 
 .staff-max {
   text-align: left;
-  padding-left: 50px !important; }
+  padding-left: 18px !important; }
 
 .label {
   font-weight: normal;
@@ -263,4 +263,4 @@ form {
 label.col-sm-2.control-label {
   width: 145px; }
 
-/*# sourceMappingURL=main.1c26889ccd8b35d76088.css.map*/
+/*# sourceMappingURL=main.d3448a0367b90caac90e.css.map*/

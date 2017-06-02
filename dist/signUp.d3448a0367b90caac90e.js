@@ -521,7 +521,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n@charset \"UTF-8\";\n/*\r\n主色调\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n主体section边框色\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-04-01\r\n*/\n/*\r\n主体section边框阴影色\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-04-01\r\n*/\n/*\r\n主背景色\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改大尺寸input的圆角\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改默认非衬线字体\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改type=\"file\"的<input>为不显示\r\n@property 强制覆盖bootstrap设置\r\n@author xiaodabao\r\n@date 2017-04-6\r\n*/\ninput[type=\"file\"][data-v-3f62ac20] {\n  display: none !important;\n}\n.verification[data-v-3f62ac20] {\n  height: 35px;\n  color: #1F6BA9;\n}\n.letterSpacing[data-v-3f62ac20] {\n  letter-spacing: 10px;\n}\n.phone-icon[data-v-3f62ac20]:before {\n  content: '';\n  background: url(" + __webpack_require__(437) + ");\n  background-repeat: no-repeat;\n  display: block;\n  width: 18px;\n  height: 23px;\n}\n.verification-icon[data-v-3f62ac20]:before {\n  content: '';\n  background: url(" + __webpack_require__(438) + ");\n  background-repeat: no-repeat;\n  display: block;\n  width: 18px;\n  height: 23px;\n}\n.section[data-v-3f62ac20] {\n  order: 1;\n  display: flex;\n  flex-direction: column;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  background: rgba(255, 255, 255, 0.9);\n}\n.section form[data-v-3f62ac20] {\n    margin: 0 70px;\n}\n.section form .form-group[data-v-3f62ac20] {\n      border: 1px solid transparent;\n      border-radius: 3px;\n}\n.section form .form-group.focus[data-v-3f62ac20] {\n        border: 1px solid #337ab7;\n}\n.section form .form-group.error[data-v-3f62ac20] {\n        border: 1px solid #d9534f;\n}\n.section form img[data-v-3f62ac20] {\n      width: 120px;\n      height: 120px;\n      margin-bottom: 25px;\n}\n.section form input.form-control[data-v-3f62ac20] {\n      border: none;\n      box-shadow: none;\n}\n.section form input.form-control[data-v-3f62ac20]:focus {\n        border: none;\n        box-shadow: none;\n}\n.section form .input-group-addon[data-v-3f62ac20],\n    .section form .input-group-btn > button[data-v-3f62ac20] {\n      border: none;\n      box-shadow: none;\n      background-color: white;\n}\n.section form .input-group-addon[data-v-3f62ac20]:hover, .section form .input-group-addon[data-v-3f62ac20]:focus,\n      .section form .input-group-btn > button[data-v-3f62ac20]:hover,\n      .section form .input-group-btn > button[data-v-3f62ac20]:focus {\n        border: none;\n        box-shadow: none;\n        outline: none;\n}\n.section form .input-group-btn > button[data-v-3f62ac20]:hover, .section form .input-group-btn > button[data-v-3f62ac20]:focus {\n      color: #23527c;\n}\n.section form .input-group-btn > button[data-v-3f62ac20]:disabled {\n      color: #777;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/signUp/component/index.vue"],"names":[],"mappings":";AAAA,iBAAiB;AACjB;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;EACE,yBAAyB;CAAE;AAE7B;EACE,aAAa;EACb,eAAe;CAAE;AAEnB;EACE,qBAAqB;CAAE;AAEzB;EACE,YAAY;EACZ,0CAA8C;EAC9C,6BAA6B;EAC7B,eAAe;EACf,YAAY;EACZ,aAAa;CAAE;AAEjB;EACE,YAAY;EACZ,0CAAqD;EACrD,6BAA6B;EAC7B,eAAe;EACf,YAAY;EACZ,aAAa;CAAE;AAEjB;EACE,SAAS;EACT,cAAc;EACd,uBAAuB;EACvB,kBAAkB;EAClB,wBAAwB;EACxB,oBAAoB;EACpB,qCAAqC;CAAE;AACvC;IACE,eAAe;CAAE;AACjB;MACE,8BAA8B;MAC9B,mBAAmB;CAAE;AACrB;QACE,0BAA0B;CAAE;AAC9B;QACE,0BAA0B;CAAE;AAChC;MACE,aAAa;MACb,cAAc;MACd,oBAAoB;CAAE;AACxB;MACE,aAAa;MACb,iBAAiB;CAAE;AACnB;QACE,aAAa;QACb,iBAAiB;CAAE;AACvB;;MAEE,aAAa;MACb,iBAAiB;MACjB,wBAAwB;CAAE;AAC1B;;;QAGE,aAAa;QACb,iBAAiB;QACjB,cAAc;CAAE;AACpB;MACE,eAAe;CAAE;AACnB;MACE,YAAY;CAAE","file":"index.vue","sourcesContent":["@charset \"UTF-8\";\n/*\r\n主色调\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n主体section边框色\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-04-01\r\n*/\n/*\r\n主体section边框阴影色\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-04-01\r\n*/\n/*\r\n主背景色\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改大尺寸input的圆角\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改默认非衬线字体\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改type=\"file\"的<input>为不显示\r\n@property 强制覆盖bootstrap设置\r\n@author xiaodabao\r\n@date 2017-04-6\r\n*/\ninput[type=\"file\"] {\n  display: none !important; }\n\n.verification {\n  height: 35px;\n  color: #1F6BA9; }\n\n.letterSpacing {\n  letter-spacing: 10px; }\n\n.phone-icon:before {\n  content: '';\n  background: url(\"../../img/signup/phone.svg\");\n  background-repeat: no-repeat;\n  display: block;\n  width: 18px;\n  height: 23px; }\n\n.verification-icon:before {\n  content: '';\n  background: url(\"../../img/signup/verification.svg\");\n  background-repeat: no-repeat;\n  display: block;\n  width: 18px;\n  height: 23px; }\n\n.section {\n  order: 1;\n  display: flex;\n  flex-direction: column;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  background: rgba(255, 255, 255, 0.9); }\n  .section form {\n    margin: 0 70px; }\n    .section form .form-group {\n      border: 1px solid transparent;\n      border-radius: 3px; }\n      .section form .form-group.focus {\n        border: 1px solid #337ab7; }\n      .section form .form-group.error {\n        border: 1px solid #d9534f; }\n    .section form img {\n      width: 120px;\n      height: 120px;\n      margin-bottom: 25px; }\n    .section form input.form-control {\n      border: none;\n      box-shadow: none; }\n      .section form input.form-control:focus {\n        border: none;\n        box-shadow: none; }\n    .section form .input-group-addon,\n    .section form .input-group-btn > button {\n      border: none;\n      box-shadow: none;\n      background-color: white; }\n      .section form .input-group-addon:hover, .section form .input-group-addon:focus,\n      .section form .input-group-btn > button:hover,\n      .section form .input-group-btn > button:focus {\n        border: none;\n        box-shadow: none;\n        outline: none; }\n    .section form .input-group-btn > button:hover, .section form .input-group-btn > button:focus {\n      color: #23527c; }\n    .section form .input-group-btn > button:disabled {\n      color: #777; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n@charset \"UTF-8\";\n/*\r\n主色调\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n主体section边框色\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-04-01\r\n*/\n/*\r\n主体section边框阴影色\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-04-01\r\n*/\n/*\r\n主背景色\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改大尺寸input的圆角\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改默认非衬线字体\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改type=\"file\"的<input>为不显示\r\n@property 强制覆盖bootstrap设置\r\n@author xiaodabao\r\n@date 2017-04-6\r\n*/\ninput[type=\"file\"][data-v-3f62ac20] {\n  display: none !important;\n}\n.verification[data-v-3f62ac20] {\n  height: 53px;\n  color: #1F6BA9;\n}\n.letterSpacing[data-v-3f62ac20] {\n  letter-spacing: 10px;\n}\n.phone-icon[data-v-3f62ac20]:before {\n  content: '';\n  background: url(" + __webpack_require__(437) + ");\n  background-repeat: no-repeat;\n  display: block;\n  width: 18px;\n  height: 23px;\n}\n.verification-icon[data-v-3f62ac20]:before {\n  content: '';\n  background: url(" + __webpack_require__(438) + ");\n  background-repeat: no-repeat;\n  display: block;\n  width: 18px;\n  height: 23px;\n}\n.section[data-v-3f62ac20] {\n  order: 1;\n  display: flex;\n  flex-direction: column;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  background: rgba(255, 255, 255, 0.9);\n}\n.section form[data-v-3f62ac20] {\n    margin: 0 70px;\n}\n.section form .form-group[data-v-3f62ac20] {\n      border: 1px solid transparent;\n      border-radius: 3px;\n}\n.section form .form-group.focus[data-v-3f62ac20] {\n        border: 1px solid #337ab7;\n}\n.section form .form-group.error[data-v-3f62ac20] {\n        border: 1px solid #d9534f;\n}\n.section form img[data-v-3f62ac20] {\n      width: 160px;\n      height: 160px;\n      margin-bottom: 25px;\n}\n.section form input.form-control[data-v-3f62ac20] {\n      border: none;\n      box-shadow: none;\n}\n.section form input.form-control[data-v-3f62ac20]:focus {\n        border: none;\n        box-shadow: none;\n}\n.section form .input-group-addon[data-v-3f62ac20],\n    .section form .input-group-btn > button[data-v-3f62ac20] {\n      border: none;\n      box-shadow: none;\n      background-color: white;\n}\n.section form .input-group-addon[data-v-3f62ac20]:hover, .section form .input-group-addon[data-v-3f62ac20]:focus,\n      .section form .input-group-btn > button[data-v-3f62ac20]:hover,\n      .section form .input-group-btn > button[data-v-3f62ac20]:focus {\n        border: none;\n        box-shadow: none;\n        outline: none;\n}\n.section form .input-group-btn > button[data-v-3f62ac20]:hover, .section form .input-group-btn > button[data-v-3f62ac20]:focus {\n      color: #23527c;\n}\n.section form .input-group-btn > button[data-v-3f62ac20]:disabled {\n      color: #777;\n}\n.btn[data-v-3f62ac20] {\n  border-radius: 0;\n}\n.login-btn[data-v-3f62ac20] {\n  width: 400px;\n  height: 53px;\n}\n.input-group-addon[data-v-3f62ac20] {\n  height: 53px;\n}\ninput.form-control[data-v-3f62ac20] {\n  height: 53px;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/signUp/component/index.vue"],"names":[],"mappings":";AAAA,iBAAiB;AACjB;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;;;;;EAKE;AACF;EACE,yBAAyB;CAAE;AAE7B;EACE,aAAa;EACb,eAAe;CAAE;AAEnB;EACE,qBAAqB;CAAE;AAEzB;EACE,YAAY;EACZ,0CAA8C;EAC9C,6BAA6B;EAC7B,eAAe;EACf,YAAY;EACZ,aAAa;CAAE;AAEjB;EACE,YAAY;EACZ,0CAAqD;EACrD,6BAA6B;EAC7B,eAAe;EACf,YAAY;EACZ,aAAa;CAAE;AAEjB;EACE,SAAS;EACT,cAAc;EACd,uBAAuB;EACvB,kBAAkB;EAClB,wBAAwB;EACxB,oBAAoB;EACpB,qCAAqC;CAAE;AACvC;IACE,eAAe;CAAE;AACjB;MACE,8BAA8B;MAC9B,mBAAmB;CAAE;AACrB;QACE,0BAA0B;CAAE;AAC9B;QACE,0BAA0B;CAAE;AAChC;MACE,aAAa;MACb,cAAc;MACd,oBAAoB;CAAE;AACxB;MACE,aAAa;MACb,iBAAiB;CAAE;AACnB;QACE,aAAa;QACb,iBAAiB;CAAE;AACvB;;MAEE,aAAa;MACb,iBAAiB;MACjB,wBAAwB;CAAE;AAC1B;;;QAGE,aAAa;QACb,iBAAiB;QACjB,cAAc;CAAE;AACpB;MACE,eAAe;CAAE;AACnB;MACE,YAAY;CAAE;AAEpB;EACE,iBAAiB;CAAE;AAErB;EACE,aAAa;EACb,aAAa;CAAE;AAEjB;EACE,aAAa;CAAE;AAEjB;EACE,aAAa;CAAE","file":"index.vue","sourcesContent":["@charset \"UTF-8\";\n/*\r\n主色调\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n主体section边框色\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-04-01\r\n*/\n/*\r\n主体section边框阴影色\r\n@property 自定义变量\r\n@author xiaodabao\r\n@date 2017-04-01\r\n*/\n/*\r\n主背景色\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改大尺寸input的圆角\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改默认非衬线字体\r\n@property 覆盖默认变量\r\n@author xiaodabao\r\n@date 2017-03-31\r\n*/\n/*\r\n修改type=\"file\"的<input>为不显示\r\n@property 强制覆盖bootstrap设置\r\n@author xiaodabao\r\n@date 2017-04-6\r\n*/\ninput[type=\"file\"] {\n  display: none !important; }\n\n.verification {\n  height: 53px;\n  color: #1F6BA9; }\n\n.letterSpacing {\n  letter-spacing: 10px; }\n\n.phone-icon:before {\n  content: '';\n  background: url(\"../../img/signup/phone.svg\");\n  background-repeat: no-repeat;\n  display: block;\n  width: 18px;\n  height: 23px; }\n\n.verification-icon:before {\n  content: '';\n  background: url(\"../../img/signup/verification.svg\");\n  background-repeat: no-repeat;\n  display: block;\n  width: 18px;\n  height: 23px; }\n\n.section {\n  order: 1;\n  display: flex;\n  flex-direction: column;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n  background: rgba(255, 255, 255, 0.9); }\n  .section form {\n    margin: 0 70px; }\n    .section form .form-group {\n      border: 1px solid transparent;\n      border-radius: 3px; }\n      .section form .form-group.focus {\n        border: 1px solid #337ab7; }\n      .section form .form-group.error {\n        border: 1px solid #d9534f; }\n    .section form img {\n      width: 160px;\n      height: 160px;\n      margin-bottom: 25px; }\n    .section form input.form-control {\n      border: none;\n      box-shadow: none; }\n      .section form input.form-control:focus {\n        border: none;\n        box-shadow: none; }\n    .section form .input-group-addon,\n    .section form .input-group-btn > button {\n      border: none;\n      box-shadow: none;\n      background-color: white; }\n      .section form .input-group-addon:hover, .section form .input-group-addon:focus,\n      .section form .input-group-btn > button:hover,\n      .section form .input-group-btn > button:focus {\n        border: none;\n        box-shadow: none;\n        outline: none; }\n    .section form .input-group-btn > button:hover, .section form .input-group-btn > button:focus {\n      color: #23527c; }\n    .section form .input-group-btn > button:disabled {\n      color: #777; }\n\n.btn {\n  border-radius: 0; }\n\n.login-btn {\n  width: 400px;\n  height: 53px; }\n\n.input-group-addon {\n  height: 53px; }\n\ninput.form-control {\n  height: 53px; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -563,13 +563,13 @@ exports.push([module.i, "", "", {"version":3,"sources":[],"names":[],"mappings":
 
 
 /* styles */
-__webpack_require__(48)
+__webpack_require__(47)
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(32),
   /* template */
-  __webpack_require__(46),
+  __webpack_require__(45),
   /* scopeId */
   "data-v-032a2e43",
   /* cssModules */
@@ -602,13 +602,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(49)
+__webpack_require__(48)
 
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(33),
   /* template */
-  __webpack_require__(47),
+  __webpack_require__(46),
   /* scopeId */
   "data-v-245c9235",
   /* cssModules */
@@ -657,7 +657,7 @@ module.exports = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGlu
 
 /***/ }),
 
-/***/ 46:
+/***/ 45:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -675,7 +675,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 47:
+/***/ 46:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -711,7 +711,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 48:
+/***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -738,7 +738,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 49:
+/***/ 48:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -928,7 +928,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("\n        " + _vm._s(_vm.alert.cont) + "\n      ")]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
-    staticClass: "btn btn-primary btn-block letterSpacing",
+    staticClass: "btn btn-primary btn-block letterSpacing login-btn",
     attrs: {
       "type": "button",
       "disabled": _vm.subBtn.dis
@@ -1038,4 +1038,4 @@ if(false) {
 /***/ })
 
 },[305]);
-//# sourceMappingURL=signUp.1c26889ccd8b35d76088.js.map
+//# sourceMappingURL=signUp.d3448a0367b90caac90e.js.map

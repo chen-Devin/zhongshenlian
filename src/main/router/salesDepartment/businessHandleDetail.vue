@@ -7,9 +7,9 @@
         <button class="btn my-btn submit-btn pull-right btn-adjust"
                 @click="sub()"
                 :disabled="subBtn.dis"
-                v-if="!submited">{{subBtn.cont}}</button>
+                v-if="!subed">{{subBtn.cont}}</button>
         <small class="label label-primary business-label pull-right"
-               v-if="submited">已提交风评复审</small>
+               v-if="subed">已提交风评复审</small>
       </h3>
       <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
@@ -242,7 +242,7 @@ export default {
   },
   props: ['user'],
   computed: {
-    submited() {
+    subed() {
       return (this.business.projectStatus < 130 || this.business.projectStatus === 131) ? false : true;
     },
     progress() {

@@ -4792,7 +4792,7 @@ module.exports =
 /***/ 132:
 /***/ function(module, exports) {
 
-	module.exports = __webpack_require__(62);
+	module.exports = __webpack_require__(61);
 
 /***/ },
 
@@ -6873,7 +6873,7 @@ exports.default = {
 
 exports.__esModule = true;
 
-var _locale = __webpack_require__(58);
+var _locale = __webpack_require__(57);
 
 exports.default = {
   methods: {
@@ -6979,44 +6979,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(646)
-
-var Component = __webpack_require__(2)(
-  /* script */
-  __webpack_require__(229),
-  /* template */
-  __webpack_require__(556),
-  /* scopeId */
-  "data-v-52bf875c",
-  /* cssModules */
-  null
-)
-Component.options.__file = "C:\\Users\\xiaoj\\Documents\\tzucpa\\src\\main\\component\\pager.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] pager.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-52bf875c", Component.options)
-  } else {
-    hotAPI.reload("data-v-52bf875c", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
+/* 45 */,
 /* 46 */,
 /* 47 */,
 /* 48 */,
@@ -7028,8 +6991,7 @@ module.exports = Component.exports
 /* 54 */,
 /* 55 */,
 /* 56 */,
-/* 57 */,
-/* 58 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7098,7 +7060,7 @@ var i18n = exports.i18n = function i18n(fn) {
 exports.default = { use: use, t: t, i18n: i18n };
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports =
@@ -7434,7 +7396,7 @@ module.exports =
 /******/ });
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports =
@@ -7589,7 +7551,7 @@ module.exports =
 /***/ 47:
 /***/ function(module, exports) {
 
-	module.exports = __webpack_require__(63);
+	module.exports = __webpack_require__(62);
 
 /***/ },
 
@@ -7603,7 +7565,7 @@ module.exports =
 /***/ 61:
 /***/ function(module, exports) {
 
-	module.exports = __webpack_require__(58);
+	module.exports = __webpack_require__(57);
 
 /***/ },
 
@@ -8865,7 +8827,7 @@ module.exports =
 /******/ });
 
 /***/ }),
-/* 61 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8892,7 +8854,7 @@ exports.default = function (target) {
 ;
 
 /***/ }),
-/* 62 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8905,7 +8867,7 @@ var _vue = __webpack_require__(8);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _merge = __webpack_require__(61);
+var _merge = __webpack_require__(60);
 
 var _merge2 = _interopRequireDefault(_merge);
 
@@ -8913,7 +8875,7 @@ var _popupManager = __webpack_require__(409);
 
 var _popupManager2 = _interopRequireDefault(_popupManager);
 
-var _scrollbarWidth = __webpack_require__(64);
+var _scrollbarWidth = __webpack_require__(63);
 
 var _scrollbarWidth2 = _interopRequireDefault(_scrollbarWidth);
 
@@ -9194,7 +9156,7 @@ exports.default = {
 exports.PopupManager = _popupManager2.default;
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9389,7 +9351,7 @@ var removeResizeListener = exports.removeResizeListener = function removeResizeL
 };
 
 /***/ }),
-/* 64 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9433,7 +9395,7 @@ var scrollBarWidth = void 0;
 ;
 
 /***/ }),
-/* 65 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9465,7 +9427,7 @@ function toObject(arr) {
 };
 
 /***/ }),
-/* 66 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9543,7 +9505,7 @@ return af;
 
 
 /***/ }),
-/* 67 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9607,7 +9569,7 @@ return arDz;
 
 
 /***/ }),
-/* 68 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9671,7 +9633,7 @@ return arKw;
 
 
 /***/ }),
-/* 69 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9802,7 +9764,7 @@ return arLy;
 
 
 /***/ }),
-/* 70 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9867,7 +9829,7 @@ return arMa;
 
 
 /***/ }),
-/* 71 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9977,7 +9939,7 @@ return arSa;
 
 
 /***/ }),
-/* 72 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10041,7 +10003,7 @@ return arTn;
 
 
 /***/ }),
-/* 73 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10188,7 +10150,7 @@ return ar;
 
 
 /***/ }),
-/* 74 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10298,7 +10260,7 @@ return az;
 
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10437,7 +10399,7 @@ return be;
 
 
 /***/ }),
-/* 76 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10532,7 +10494,7 @@ return bg;
 
 
 /***/ }),
-/* 77 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10656,7 +10618,7 @@ return bn;
 
 
 /***/ }),
-/* 78 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10780,7 +10742,7 @@ return bo;
 
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10893,7 +10855,7 @@ return br;
 
 
 /***/ }),
-/* 80 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11041,7 +11003,7 @@ return bs;
 
 
 /***/ }),
-/* 81 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11134,7 +11096,7 @@ return ca;
 
 
 /***/ }),
-/* 82 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11311,7 +11273,7 @@ return cs;
 
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11379,7 +11341,7 @@ return cv;
 
 
 /***/ }),
-/* 84 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11465,7 +11427,7 @@ return cy;
 
 
 /***/ }),
-/* 85 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11530,7 +11492,7 @@ return da;
 
 
 /***/ }),
-/* 86 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11614,7 +11576,7 @@ return deAt;
 
 
 /***/ }),
-/* 87 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11697,7 +11659,7 @@ return deCh;
 
 
 /***/ }),
-/* 88 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11780,7 +11742,7 @@ return de;
 
 
 /***/ }),
-/* 89 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11885,7 +11847,7 @@ return dv;
 
 
 /***/ }),
-/* 90 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11990,7 +11952,7 @@ return el;
 
 
 /***/ }),
-/* 91 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12062,7 +12024,7 @@ return enAu;
 
 
 /***/ }),
-/* 92 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12130,7 +12092,7 @@ return enCa;
 
 
 /***/ }),
-/* 93 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12202,7 +12164,7 @@ return enGb;
 
 
 /***/ }),
-/* 94 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12274,7 +12236,7 @@ return enIe;
 
 
 /***/ }),
-/* 95 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12346,7 +12308,7 @@ return enNz;
 
 
 /***/ }),
-/* 96 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12424,7 +12386,7 @@ return eo;
 
 
 /***/ }),
-/* 97 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12511,7 +12473,7 @@ return esDo;
 
 
 /***/ }),
-/* 98 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12599,7 +12561,7 @@ return es;
 
 
 /***/ }),
-/* 99 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12684,7 +12646,7 @@ return et;
 
 
 /***/ }),
-/* 100 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12755,7 +12717,7 @@ return eu;
 
 
 /***/ }),
-/* 101 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12867,7 +12829,7 @@ return fa;
 
 
 /***/ }),
-/* 102 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12979,7 +12941,7 @@ return fi;
 
 
 /***/ }),
-/* 103 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13044,7 +13006,7 @@ return fo;
 
 
 /***/ }),
-/* 104 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13123,7 +13085,7 @@ return frCa;
 
 
 /***/ }),
-/* 105 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13206,7 +13168,7 @@ return frCh;
 
 
 /***/ }),
-/* 106 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13294,7 +13256,7 @@ return fr;
 
 
 /***/ }),
-/* 107 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13374,7 +13336,7 @@ return fy;
 
 
 /***/ }),
-/* 108 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13455,7 +13417,7 @@ return gd;
 
 
 /***/ }),
-/* 109 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13537,7 +13499,7 @@ return gl;
 
 
 /***/ }),
-/* 110 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13664,7 +13626,7 @@ return gomLatn;
 
 
 /***/ }),
-/* 111 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13768,7 +13730,7 @@ return he;
 
 
 /***/ }),
-/* 112 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13897,7 +13859,7 @@ return hi;
 
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14047,7 +14009,7 @@ return hr;
 
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14161,7 +14123,7 @@ return hu;
 
 
 /***/ }),
-/* 115 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14261,7 +14223,7 @@ return hyAm;
 
 
 /***/ }),
-/* 116 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14349,7 +14311,7 @@ return id;
 
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14481,7 +14443,7 @@ return is;
 
 
 /***/ }),
-/* 118 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14556,7 +14518,7 @@ return it;
 
 
 /***/ }),
-/* 119 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14641,7 +14603,7 @@ return ja;
 
 
 /***/ }),
-/* 120 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14729,7 +14691,7 @@ return jv;
 
 
 /***/ }),
-/* 121 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14823,7 +14785,7 @@ return ka;
 
 
 /***/ }),
-/* 122 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14915,7 +14877,7 @@ return kk;
 
 
 /***/ }),
-/* 123 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14978,7 +14940,7 @@ return km;
 
 
 /***/ }),
-/* 124 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15109,7 +15071,7 @@ return kn;
 
 
 /***/ }),
-/* 125 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15183,7 +15145,7 @@ return ko;
 
 
 /***/ }),
-/* 126 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15276,7 +15238,7 @@ return ky;
 
 
 /***/ }),
-/* 127 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15418,7 +15380,7 @@ return lb;
 
 
 /***/ }),
-/* 128 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15493,7 +15455,7 @@ return lo;
 
 
 /***/ }),
-/* 129 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15615,7 +15577,7 @@ return lt;
 
 
 /***/ }),
-/* 130 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15717,7 +15679,7 @@ return lv;
 
 
 /***/ }),
-/* 131 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15833,7 +15795,7 @@ return me;
 
 
 /***/ }),
-/* 132 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15902,7 +15864,7 @@ return mi;
 
 
 /***/ }),
-/* 133 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15997,7 +15959,7 @@ return mk;
 
 
 /***/ }),
-/* 134 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16083,7 +16045,7 @@ return ml;
 
 
 /***/ }),
-/* 135 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16247,7 +16209,7 @@ return mr;
 
 
 /***/ }),
-/* 136 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16335,7 +16297,7 @@ return msMy;
 
 
 /***/ }),
-/* 137 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16422,7 +16384,7 @@ return ms;
 
 
 /***/ }),
-/* 138 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16523,7 +16485,7 @@ return my;
 
 
 /***/ }),
-/* 139 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16591,7 +16553,7 @@ return nb;
 
 
 /***/ }),
-/* 140 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16719,7 +16681,7 @@ return ne;
 
 
 /***/ }),
-/* 141 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16812,7 +16774,7 @@ return nlBe;
 
 
 /***/ }),
-/* 142 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16905,7 +16867,7 @@ return nl;
 
 
 /***/ }),
-/* 143 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16970,7 +16932,7 @@ return nn;
 
 
 /***/ }),
-/* 144 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17099,7 +17061,7 @@ return paIn;
 
 
 /***/ }),
-/* 145 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17211,7 +17173,7 @@ return pl;
 
 
 /***/ }),
-/* 146 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17277,7 +17239,7 @@ return ptBr;
 
 
 /***/ }),
-/* 147 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17347,7 +17309,7 @@ return pt;
 
 
 /***/ }),
-/* 148 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17427,7 +17389,7 @@ return ro;
 
 
 /***/ }),
-/* 149 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17615,7 +17577,7 @@ return ru;
 
 
 /***/ }),
-/* 150 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17718,7 +17680,7 @@ return sd;
 
 
 /***/ }),
-/* 151 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17784,7 +17746,7 @@ return se;
 
 
 /***/ }),
-/* 152 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17860,7 +17822,7 @@ return si;
 
 
 /***/ }),
-/* 153 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18015,7 +17977,7 @@ return sk;
 
 
 /***/ }),
-/* 154 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18182,7 +18144,7 @@ return sl;
 
 
 /***/ }),
-/* 155 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18257,7 +18219,7 @@ return sq;
 
 
 /***/ }),
-/* 156 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18372,7 +18334,7 @@ return srCyrl;
 
 
 /***/ }),
-/* 157 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18487,7 +18449,7 @@ return sr;
 
 
 /***/ }),
-/* 158 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18581,7 +18543,7 @@ return ss;
 
 
 /***/ }),
-/* 159 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18655,7 +18617,7 @@ return sv;
 
 
 /***/ }),
-/* 160 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18719,7 +18681,7 @@ return sw;
 
 
 /***/ }),
-/* 161 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18854,7 +18816,7 @@ return ta;
 
 
 /***/ }),
-/* 162 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18948,7 +18910,7 @@ return te;
 
 
 /***/ }),
-/* 163 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19021,7 +18983,7 @@ return tet;
 
 
 /***/ }),
-/* 164 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19093,7 +19055,7 @@ return th;
 
 
 /***/ }),
-/* 165 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19160,7 +19122,7 @@ return tlPh;
 
 
 /***/ }),
-/* 166 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19285,7 +19247,7 @@ return tlh;
 
 
 /***/ }),
-/* 167 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19380,7 +19342,7 @@ return tr;
 
 
 /***/ }),
-/* 168 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19476,7 +19438,7 @@ return tzl;
 
 
 /***/ }),
-/* 169 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19539,7 +19501,7 @@ return tzmLatn;
 
 
 /***/ }),
-/* 170 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19602,7 +19564,7 @@ return tzm;
 
 
 /***/ }),
-/* 171 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19758,7 +19720,7 @@ return uk;
 
 
 /***/ }),
-/* 172 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19862,7 +19824,7 @@ return ur;
 
 
 /***/ }),
-/* 173 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19925,7 +19887,7 @@ return uzLatn;
 
 
 /***/ }),
-/* 174 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19988,7 +19950,7 @@ return uz;
 
 
 /***/ }),
-/* 175 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20072,7 +20034,7 @@ return vi;
 
 
 /***/ }),
-/* 176 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20145,7 +20107,7 @@ return xPseudo;
 
 
 /***/ }),
-/* 177 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20210,7 +20172,7 @@ return yo;
 
 
 /***/ }),
-/* 178 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20326,7 +20288,7 @@ return zhCn;
 
 
 /***/ }),
-/* 179 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20436,7 +20398,7 @@ return zhHk;
 
 
 /***/ }),
-/* 180 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20542,6 +20504,44 @@ var zhTw = moment.defineLocale('zh-tw', {
 return zhTw;
 
 })));
+
+
+/***/ }),
+/* 180 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(646)
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(229),
+  /* template */
+  __webpack_require__(556),
+  /* scopeId */
+  "data-v-52bf875c",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\Users\\xiaoj\\Documents\\tzucpa\\src\\main\\component\\pager.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] pager.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-52bf875c", Component.options)
+  } else {
+    hotAPI.reload("data-v-52bf875c", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
 
 
 /***/ }),
@@ -23800,11 +23800,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
   name: 'progressBar',
   props: ['progress'],
-  created: function created() {
-    console.log(this.progress[5].qrCode.active);
-    console.log(this.progress[5].qrCode.passed);
-  },
-
   methods: {
     active: function active(ACT) {
       if (ACT) {
@@ -23932,8 +23927,8 @@ exports.default = {
   data: function data() {
     return {
       routesLeader1: [{ name: '待审核业务', link: '/business-review-list-leader', icon: 'business-review-list-leader', openClass: 1, open: true }, { name: '待处理业务', link: '/business-handle-list-leader', icon: 'business-handle-list-sales', openClass: 1, open: true }, { name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list', openClass: 1, open: true }],
-      staffManagement: { name: '职员管理', icon: 'staff-management-author', openClass: 2, open: true },
-      staffManagementOpen: [{ name: '职员权限管理', link: '/staff-management-author', icon: 'staff-management-author', openClass: 2, open: false }, { name: '职员资料管理', link: '/staff-management-infor', icon: 'staff-management-author', openClass: 2, open: false }],
+      staffManagement: { name: '职员管理', link: '/staff-management-author', icon: 'staff-management-author', openClass: 2, open: true },
+      staffManagementOpen: [{ name: '职员权限管理', link: '/staff-management-author', icon: 'no-pic', openClass: 2, open: false }, { name: '职员资料管理', link: '/staff-management-infor', icon: 'no-pic', openClass: 2, open: false }],
       isOpen: false
     };
   },
@@ -23987,6 +23982,9 @@ exports.default = {
   methods: {
     openItem: function openItem() {
       this.isOpen = !this.isOpen;
+      if (this.isOpen) {
+        this.$router.push('/staff-management-author');
+      }
     }
   },
   created: function created() {}
@@ -25768,6 +25766,12 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 exports.default = {
   name: 'businessCompleteSearchBar',
@@ -26360,7 +26364,7 @@ var _searchBar = __webpack_require__(18);
 
 var _searchBar2 = _interopRequireDefault(_searchBar);
 
-var _pager = __webpack_require__(45);
+var _pager = __webpack_require__(180);
 
 var _pager2 = _interopRequireDefault(_pager);
 
@@ -29424,14 +29428,12 @@ var _card = __webpack_require__(5);
 
 var _card2 = _interopRequireDefault(_card);
 
-var _pager = __webpack_require__(45);
+var _pagination = __webpack_require__(10);
 
-var _pager2 = _interopRequireDefault(_pager);
+var _pagination2 = _interopRequireDefault(_pagination);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
-//
 //
 //
 //
@@ -29490,7 +29492,7 @@ exports.default = {
     $route: 'getInfo'
   },
   methods: {
-    pageChan: function pageChan(newPage) {
+    currentChange: function currentChange(newPage) {
       this.getInfo(newPage);
     },
     getInfo: function getInfo(newPage) {
@@ -29512,7 +29514,7 @@ exports.default = {
         }
       }).then(function (rep) {
         if (rep.data.statusCode === '10001') {
-          _this.page.total = parseInt(rep.data.data.pageNum);
+          _this.page.total = parseInt(rep.data.data.totalNum);
           _this.page.current = newPage;
           _this.businesses.length = 0;
           for (var i = 0; i < rep.data.data.businessArray.length; i++) {
@@ -29536,7 +29538,7 @@ exports.default = {
   components: {
     crumbs: _crumbs2.default,
     card: _card2.default,
-    pager: _pager2.default
+    myPagination: _pagination2.default
   }
 };
 
@@ -31490,6 +31492,8 @@ exports.default = {
 //
 //
 //
+//
+//
 
 /***/ }),
 /* 265 */
@@ -32335,6 +32339,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
 	name: 'bidInfoDraft',
@@ -32710,7 +32715,7 @@ var _option = __webpack_require__(411);
 
 var _option2 = _interopRequireDefault(_option);
 
-var _option3 = __webpack_require__(59);
+var _option3 = __webpack_require__(58);
 
 var _option4 = _interopRequireDefault(_option3);
 
@@ -32722,7 +32727,7 @@ var _base = __webpack_require__(11);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _select3 = __webpack_require__(60);
+var _select3 = __webpack_require__(59);
 
 var _select4 = _interopRequireDefault(_select3);
 
@@ -32749,6 +32754,10 @@ var _searchBar2 = _interopRequireDefault(_searchBar);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_select4.default); //
+//
+//
+//
+//
 //
 //
 //
@@ -37226,7 +37235,7 @@ var _card = __webpack_require__(5);
 
 var _card2 = _interopRequireDefault(_card);
 
-var _pager = __webpack_require__(45);
+var _pager = __webpack_require__(180);
 
 var _pager2 = _interopRequireDefault(_pager);
 
@@ -38388,7 +38397,7 @@ exports.default = {
 
   props: ['user'],
   computed: {
-    submited: function submited() {
+    subed: function subed() {
       return this.business.projectStatus < 130 || this.business.projectStatus === 131 ? false : true;
     },
     progress: function progress() {
@@ -39166,9 +39175,7 @@ exports.default = {
         projectOperatingArray: []
       },
       editable: true,
-      showDelModal: false,
-      subDis: false,
-      savDis: false
+      showDelModal: false
     };
   },
 
@@ -39227,7 +39234,6 @@ exports.default = {
   },
   methods: {
     sub: function sub() {
-      this.subDis = true;
       _bus2.default.$emit('subBusiness');
     },
     submited: function submited(submitedBusiness) {
@@ -39243,7 +39249,6 @@ exports.default = {
       }, 1000);
     },
     sav: function sav() {
-      this.savDis = true;
       _bus2.default.$emit('savBusiness');
     },
     saved: function saved(savedBusiness) {
@@ -42551,7 +42556,7 @@ exports.default = {
 
   props: ['initBusiness'],
   methods: {
-    del: function del() {
+    sub: function sub() {
       var _this = this;
 
       this.subBtn.dis = true;
@@ -43262,7 +43267,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n.normal-wrap[data-v-3ee0d9d4] {\n  margin-top: 100px;\n}\n.higherForm[data-v-3ee0d9d4] {\n  margin-top: 90px;\n}\n.higherForm .form-group[data-v-3ee0d9d4] {\n    width: 100%;\n}\n.higherForm .form-group label[data-v-3ee0d9d4] {\n      width: 25%;\n}\n.higherForm .form-group input[data-v-3ee0d9d4] {\n      width: 70%;\n}\n.higherForm .form-group .input-group[data-v-3ee0d9d4] {\n      width: 70%;\n}\n.form-inline .type[data-v-3ee0d9d4] {\n  width: 70%;\n}\n.row[data-v-3ee0d9d4] {\n  margin-bottom: 20px;\n}\n.submit-btn[data-v-3ee0d9d4] {\n  margin-right: 30px;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/router/commonUse/component/businessCompleteSearchBar.vue"],"names":[],"mappings":";AAAA;EACE,kBAAkB;CAAE;AAEtB;EACE,iBAAiB;CAAE;AACnB;IACE,YAAY;CAAE;AACd;MACE,WAAW;CAAE;AACf;MACE,WAAW;CAAE;AACf;MACE,WAAW;CAAE;AAEnB;EACE,WAAW;CAAE;AAEf;EACE,oBAAoB;CAAE;AAExB;EACE,mBAAmB;CAAE","file":"businessCompleteSearchBar.vue","sourcesContent":[".normal-wrap {\n  margin-top: 100px; }\n\n.higherForm {\n  margin-top: 90px; }\n  .higherForm .form-group {\n    width: 100%; }\n    .higherForm .form-group label {\n      width: 25%; }\n    .higherForm .form-group input {\n      width: 70%; }\n    .higherForm .form-group .input-group {\n      width: 70%; }\n\n.form-inline .type {\n  width: 70%; }\n\n.row {\n  margin-bottom: 20px; }\n\n.submit-btn {\n  margin-right: 30px; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.normal-wrap[data-v-3ee0d9d4] {\n  margin-top: 100px;\n}\n.higherForm[data-v-3ee0d9d4] {\n  margin-top: -40px;\n}\n.higherForm .form-group[data-v-3ee0d9d4] {\n    width: 100%;\n}\n.higherForm .form-group label[data-v-3ee0d9d4] {\n      width: 25%;\n}\n.higherForm .form-group input[data-v-3ee0d9d4] {\n      width: 70%;\n}\n.higherForm .form-group .input-group[data-v-3ee0d9d4] {\n      width: 70%;\n}\n.form-inline .type[data-v-3ee0d9d4] {\n  width: 70%;\n}\n.row[data-v-3ee0d9d4] {\n  margin-bottom: 20px;\n}\n.submit-btn[data-v-3ee0d9d4] {\n  margin-right: 30px;\n}\n.search-btns[data-v-3ee0d9d4] {\n  margin-top: -65px;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/router/commonUse/component/businessCompleteSearchBar.vue"],"names":[],"mappings":";AAAA;EACE,kBAAkB;CAAE;AAEtB;EACE,kBAAkB;CAAE;AACpB;IACE,YAAY;CAAE;AACd;MACE,WAAW;CAAE;AACf;MACE,WAAW;CAAE;AACf;MACE,WAAW;CAAE;AAEnB;EACE,WAAW;CAAE;AAEf;EACE,oBAAoB;CAAE;AAExB;EACE,mBAAmB;CAAE;AAEvB;EACE,kBAAkB;CAAE","file":"businessCompleteSearchBar.vue","sourcesContent":[".normal-wrap {\n  margin-top: 100px; }\n\n.higherForm {\n  margin-top: -40px; }\n  .higherForm .form-group {\n    width: 100%; }\n    .higherForm .form-group label {\n      width: 25%; }\n    .higherForm .form-group input {\n      width: 70%; }\n    .higherForm .form-group .input-group {\n      width: 70%; }\n\n.form-inline .type {\n  width: 70%; }\n\n.row {\n  margin-bottom: 20px; }\n\n.submit-btn {\n  margin-right: 30px; }\n\n.search-btns {\n  margin-top: -65px; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -43375,7 +43380,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n.com-list thead[data-v-49bdb483] {\n  background-color: #E6E6E6;\n}\n.com-list .link-wrap[data-v-49bdb483] {\n  width: 45px;\n}\n.com-list .link-wrap a[data-v-49bdb483]:hover {\n    cursor: pointer;\n}\n.higher-search[data-v-49bdb483] {\n  margin-top: 30px;\n}\n.higher-search button[data-v-49bdb483] {\n    float: right;\n}\n.higherForm[data-v-49bdb483] {\n  margin-top: 20px;\n}\n.higherForm .form-group[data-v-49bdb483] {\n    width: 100%;\n}\n.higherForm .form-group label[data-v-49bdb483] {\n      width: 25%;\n}\n.higherForm .form-group input[data-v-49bdb483] {\n      width: 70%;\n}\n.search-btns[data-v-49bdb483] {\n  margin-top: 20px;\n}\n.search-btns button[data-v-49bdb483]:first-child {\n    margin-right: 30px;\n}\nform[data-v-49bdb483] {\n  margin-left: 0;\n  margin-right: 0;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/router/leader/component/staffInforList.vue"],"names":[],"mappings":";AAAA;EACE,0BAA0B;CAAE;AAE9B;EACE,YAAY;CAAE;AACd;IACE,gBAAgB;CAAE;AAEtB;EACE,iBAAiB;CAAE;AACnB;IACE,aAAa;CAAE;AAEnB;EACE,iBAAiB;CAAE;AACnB;IACE,YAAY;CAAE;AACd;MACE,WAAW;CAAE;AACf;MACE,WAAW;CAAE;AAEnB;EACE,iBAAiB;CAAE;AACnB;IACE,mBAAmB;CAAE;AAEzB;EACE,eAAe;EACf,gBAAgB;CAAE","file":"staffInforList.vue","sourcesContent":[".com-list thead {\n  background-color: #E6E6E6; }\n\n.com-list .link-wrap {\n  width: 45px; }\n  .com-list .link-wrap a:hover {\n    cursor: pointer; }\n\n.higher-search {\n  margin-top: 30px; }\n  .higher-search button {\n    float: right; }\n\n.higherForm {\n  margin-top: 20px; }\n  .higherForm .form-group {\n    width: 100%; }\n    .higherForm .form-group label {\n      width: 25%; }\n    .higherForm .form-group input {\n      width: 70%; }\n\n.search-btns {\n  margin-top: 20px; }\n  .search-btns button:first-child {\n    margin-right: 30px; }\n\nform {\n  margin-left: 0;\n  margin-right: 0; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.com-list thead[data-v-49bdb483] {\n  background-color: #E6E6E6;\n}\n.com-list .link-wrap[data-v-49bdb483] {\n  width: 45px;\n}\n.com-list .link-wrap a[data-v-49bdb483]:hover {\n    cursor: pointer;\n}\n.higher-search[data-v-49bdb483] {\n  margin-top: 30px;\n}\n.higher-search button[data-v-49bdb483] {\n    float: right;\n}\n.higherForm[data-v-49bdb483] {\n  margin-top: -39px;\n}\n.higherForm .form-group[data-v-49bdb483] {\n    width: 100%;\n}\n.higherForm .form-group label[data-v-49bdb483] {\n      width: 25%;\n}\n.higherForm .form-group input[data-v-49bdb483] {\n      width: 70%;\n}\n.search-btns[data-v-49bdb483] {\n  margin-top: 20px;\n}\n.search-btns button[data-v-49bdb483]:first-child {\n    margin-right: 30px;\n}\nform[data-v-49bdb483] {\n  margin-left: 0;\n  margin-right: 0;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/router/leader/component/staffInforList.vue"],"names":[],"mappings":";AAAA;EACE,0BAA0B;CAAE;AAE9B;EACE,YAAY;CAAE;AACd;IACE,gBAAgB;CAAE;AAEtB;EACE,iBAAiB;CAAE;AACnB;IACE,aAAa;CAAE;AAEnB;EACE,kBAAkB;CAAE;AACpB;IACE,YAAY;CAAE;AACd;MACE,WAAW;CAAE;AACf;MACE,WAAW;CAAE;AAEnB;EACE,iBAAiB;CAAE;AACnB;IACE,mBAAmB;CAAE;AAEzB;EACE,eAAe;EACf,gBAAgB;CAAE","file":"staffInforList.vue","sourcesContent":[".com-list thead {\n  background-color: #E6E6E6; }\n\n.com-list .link-wrap {\n  width: 45px; }\n  .com-list .link-wrap a:hover {\n    cursor: pointer; }\n\n.higher-search {\n  margin-top: 30px; }\n  .higher-search button {\n    float: right; }\n\n.higherForm {\n  margin-top: -39px; }\n  .higherForm .form-group {\n    width: 100%; }\n    .higherForm .form-group label {\n      width: 25%; }\n    .higherForm .form-group input {\n      width: 70%; }\n\n.search-btns {\n  margin-top: 20px; }\n  .search-btns button:first-child {\n    margin-right: 30px; }\n\nform {\n  margin-left: 0;\n  margin-right: 0; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -43517,7 +43522,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n.higher-search[data-v-654fe551] {\n  margin-top: 30px;\n}\n.higher-search button[data-v-654fe551] {\n    margin-left: -15px;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/router/commonUse/businessCompleteList.vue"],"names":[],"mappings":";AAAA;EACE,iBAAiB;CAAE;AACnB;IACE,mBAAmB;CAAE","file":"businessCompleteList.vue","sourcesContent":[".higher-search {\n  margin-top: 30px; }\n  .higher-search button {\n    margin-left: -15px; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.higher-search[data-v-654fe551] {\n  margin-top: 30px;\n}\n.higher-search button[data-v-654fe551] {\n    margin-left: -15px;\n}\n.com-list > .list-group-item[data-v-654fe551] {\n  padding-left: 13px;\n}\n.com-list > .list-head[data-v-654fe551] {\n  padding-left: 32px;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/router/commonUse/businessCompleteList.vue"],"names":[],"mappings":";AAAA;EACE,iBAAiB;CAAE;AACnB;IACE,mBAAmB;CAAE;AAEzB;EACE,mBAAmB;CAAE;AAEvB;EACE,mBAAmB;CAAE","file":"businessCompleteList.vue","sourcesContent":[".higher-search {\n  margin-top: 30px; }\n  .higher-search button {\n    margin-left: -15px; }\n\n.com-list > .list-group-item {\n  padding-left: 13px; }\n\n.com-list > .list-head {\n  padding-left: 32px; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -43545,7 +43550,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n.f-r[data-v-67d9a411] {\n  float: right;\n}\n.ta-r[data-v-67d9a411] {\n  text-align: right;\n}\n.ta-c[data-v-67d9a411] {\n  text-align: center;\n}\n.va-c[data-v-67d9a411] {\n  vertical-align: middle;\n}\n.higher-search[data-v-67d9a411] {\n  margin-top: 30px;\n}\n.higher-search button[data-v-67d9a411] {\n    float: right;\n}\n.dateMr[data-v-67d9a411] {\n  padding-right: 110px;\n}\n.form-inline .form-group[data-v-67d9a411] {\n  margin: 10px 0;\n}\n.form-inline .form-group label[data-v-67d9a411] {\n    margin-right: 5px;\n}\n.form-inline .form-group .bidMan[data-v-67d9a411] {\n    margin-right: 18px;\n}\n.check-wrap[data-v-67d9a411] {\n  margin: 0;\n  margin-top: 5px;\n  margin-bottom: 5px;\n}\n.check-wrap label[data-v-67d9a411] {\n    margin-top: 7px;\n}\ntable tbody tr[data-v-67d9a411] {\n  cursor: pointer;\n}\n.bidMan-input[data-v-67d9a411] {\n  width: 330px;\n}\n.angency-input[data-v-67d9a411] {\n  width: 330px;\n}\n.name-input[data-v-67d9a411] {\n  width: 95%;\n  text-align: center;\n}\n.left-move[data-v-67d9a411] {\n  margin-left: 10px;\n}\ninput[data-v-67d9a411]::-ms-input-placeholder {\n  text-align: center;\n}\ninput[data-v-67d9a411]::-webkit-input-placeholder {\n  text-align: center;\n}\n.selectBox[data-v-67d9a411] {\n  width: 330px;\n}\n.timeWidth[data-v-67d9a411] {\n  width: 50%;\n  padding-left: 20px;\n}\n.typeWidth[data-v-67d9a411] {\n  width: 48%;\n  padding-left: 25px;\n}\n.input-icon[data-v-67d9a411] {\n  margin-top: -2px;\n}\n.search-icon[data-v-67d9a411] {\n  margin-top: -2px;\n}\n.higherForm[data-v-67d9a411] {\n  margin-top: 90px;\n}\n.higherForm .form-group[data-v-67d9a411] {\n    width: 100%;\n}\n.higherForm .form-group label[data-v-67d9a411] {\n      width: 25%;\n}\n.higherForm .form-group input[data-v-67d9a411] {\n      width: 70%;\n}\n.search-btns[data-v-67d9a411] {\n  margin-top: 20px;\n}\n.search-btns button[data-v-67d9a411]:first-child {\n    margin-right: 30px;\n}\n.search-checkbox[data-v-67d9a411] {\n  display: inline-block;\n  margin-left: 45px;\n  margin-top: 10px;\n  vertical-align: bottom;\n}\n.search-form[data-v-67d9a411] {\n  padding-left: 0;\n  padding-right: 0;\n}\n.search-btn[data-v-67d9a411] {\n  right: 0;\n}\n.project-name[data-v-67d9a411] {\n  margin-left: 10px;\n}\n.com-list a[data-v-67d9a411] {\n  cursor: pointer;\n}\n.check-pl[data-v-67d9a411] {\n  padding-left: 3%;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/router/marketDepartment/bidInfoListBody.vue"],"names":[],"mappings":";AAAA;EACE,aAAa;CAAE;AAEjB;EACE,kBAAkB;CAAE;AAEtB;EACE,mBAAmB;CAAE;AAEvB;EACE,uBAAuB;CAAE;AAE3B;EACE,iBAAiB;CAAE;AACnB;IACE,aAAa;CAAE;AAEnB;EACE,qBAAqB;CAAE;AAEzB;EACE,eAAe;CAAE;AACjB;IACE,kBAAkB;CAAE;AACtB;IACE,mBAAmB;CAAE;AAEzB;EACE,UAAU;EACV,gBAAgB;EAChB,mBAAmB;CAAE;AACrB;IACE,gBAAgB;CAAE;AAEtB;EACE,gBAAgB;CAAE;AAEpB;EACE,aAAa;CAAE;AAEjB;EACE,aAAa;CAAE;AAEjB;EACE,WAAW;EACX,mBAAmB;CAAE;AAEvB;EACE,kBAAkB;CAAE;AAEtB;EACE,mBAAmB;CAAE;AAEvB;EACE,mBAAmB;CAAE;AAEvB;EACE,aAAa;CAAE;AAEjB;EACE,WAAW;EACX,mBAAmB;CAAE;AAEvB;EACE,WAAW;EACX,mBAAmB;CAAE;AAEvB;EACE,iBAAiB;CAAE;AAErB;EACE,iBAAiB;CAAE;AAErB;EACE,iBAAiB;CAAE;AACnB;IACE,YAAY;CAAE;AACd;MACE,WAAW;CAAE;AACf;MACE,WAAW;CAAE;AAEnB;EACE,iBAAiB;CAAE;AACnB;IACE,mBAAmB;CAAE;AAEzB;EACE,sBAAsB;EACtB,kBAAkB;EAClB,iBAAiB;EACjB,uBAAuB;CAAE;AAE3B;EACE,gBAAgB;EAChB,iBAAiB;CAAE;AAErB;EACE,SAAS;CAAE;AAEb;EACE,kBAAkB;CAAE;AAEtB;EACE,gBAAgB;CAAE;AAEpB;EACE,iBAAiB;CAAE","file":"bidInfoListBody.vue","sourcesContent":[".f-r {\n  float: right; }\n\n.ta-r {\n  text-align: right; }\n\n.ta-c {\n  text-align: center; }\n\n.va-c {\n  vertical-align: middle; }\n\n.higher-search {\n  margin-top: 30px; }\n  .higher-search button {\n    float: right; }\n\n.dateMr {\n  padding-right: 110px; }\n\n.form-inline .form-group {\n  margin: 10px 0; }\n  .form-inline .form-group label {\n    margin-right: 5px; }\n  .form-inline .form-group .bidMan {\n    margin-right: 18px; }\n\n.check-wrap {\n  margin: 0;\n  margin-top: 5px;\n  margin-bottom: 5px; }\n  .check-wrap label {\n    margin-top: 7px; }\n\ntable tbody tr {\n  cursor: pointer; }\n\n.bidMan-input {\n  width: 330px; }\n\n.angency-input {\n  width: 330px; }\n\n.name-input {\n  width: 95%;\n  text-align: center; }\n\n.left-move {\n  margin-left: 10px; }\n\ninput::-ms-input-placeholder {\n  text-align: center; }\n\ninput::-webkit-input-placeholder {\n  text-align: center; }\n\n.selectBox {\n  width: 330px; }\n\n.timeWidth {\n  width: 50%;\n  padding-left: 20px; }\n\n.typeWidth {\n  width: 48%;\n  padding-left: 25px; }\n\n.input-icon {\n  margin-top: -2px; }\n\n.search-icon {\n  margin-top: -2px; }\n\n.higherForm {\n  margin-top: 90px; }\n  .higherForm .form-group {\n    width: 100%; }\n    .higherForm .form-group label {\n      width: 25%; }\n    .higherForm .form-group input {\n      width: 70%; }\n\n.search-btns {\n  margin-top: 20px; }\n  .search-btns button:first-child {\n    margin-right: 30px; }\n\n.search-checkbox {\n  display: inline-block;\n  margin-left: 45px;\n  margin-top: 10px;\n  vertical-align: bottom; }\n\n.search-form {\n  padding-left: 0;\n  padding-right: 0; }\n\n.search-btn {\n  right: 0; }\n\n.project-name {\n  margin-left: 10px; }\n\n.com-list a {\n  cursor: pointer; }\n\n.check-pl {\n  padding-left: 3%; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.f-r[data-v-67d9a411] {\n  float: right;\n}\n.ta-r[data-v-67d9a411] {\n  text-align: right;\n}\n.ta-c[data-v-67d9a411] {\n  text-align: center;\n}\n.va-c[data-v-67d9a411] {\n  vertical-align: middle;\n}\n.higher-search[data-v-67d9a411] {\n  margin-top: 30px;\n}\n.higher-search button[data-v-67d9a411] {\n    float: right;\n}\n.dateMr[data-v-67d9a411] {\n  padding-right: 110px;\n}\n.form-inline .form-group[data-v-67d9a411] {\n  margin: 10px 0;\n}\n.form-inline .form-group label[data-v-67d9a411] {\n    margin-right: 5px;\n}\n.form-inline .form-group .bidMan[data-v-67d9a411] {\n    margin-right: 18px;\n}\n.check-wrap[data-v-67d9a411] {\n  margin: 0;\n  margin-top: 5px;\n  margin-bottom: 5px;\n}\n.check-wrap label[data-v-67d9a411] {\n    margin-top: 7px;\n}\ntable tbody tr[data-v-67d9a411] {\n  cursor: pointer;\n}\n.bidMan-input[data-v-67d9a411] {\n  width: 330px;\n}\n.angency-input[data-v-67d9a411] {\n  width: 330px;\n}\n.name-input[data-v-67d9a411] {\n  width: 95%;\n  text-align: center;\n}\n.left-move[data-v-67d9a411] {\n  margin-left: 10px;\n}\ninput[data-v-67d9a411]::-ms-input-placeholder {\n  text-align: center;\n}\ninput[data-v-67d9a411]::-webkit-input-placeholder {\n  text-align: center;\n}\n.selectBox[data-v-67d9a411] {\n  width: 330px;\n}\n.timeWidth[data-v-67d9a411] {\n  width: 50%;\n  padding-left: 20px;\n}\n.typeWidth[data-v-67d9a411] {\n  width: 48%;\n  padding-left: 25px;\n}\n.input-icon[data-v-67d9a411] {\n  margin-top: -2px;\n}\n.search-icon[data-v-67d9a411] {\n  margin-top: -2px;\n}\n.higherForm[data-v-67d9a411] {\n  margin-top: -50px;\n}\n.higherForm .form-group[data-v-67d9a411] {\n    width: 100%;\n}\n.higherForm .form-group label[data-v-67d9a411] {\n      width: 25%;\n}\n.higherForm .form-group input[data-v-67d9a411] {\n      width: 70%;\n}\n.search-btns[data-v-67d9a411] {\n  margin-top: -62px;\n  margin-right: -52px;\n}\n.search-btns button[data-v-67d9a411]:first-child {\n    margin-right: 30px;\n}\n.search-checkbox[data-v-67d9a411] {\n  display: inline-block;\n  margin-left: 45px;\n  margin-top: 10px;\n  vertical-align: bottom;\n}\n.search-form[data-v-67d9a411] {\n  padding-left: 0;\n  padding-right: 0;\n}\n.search-btn[data-v-67d9a411] {\n  right: 0;\n}\n.project-name[data-v-67d9a411] {\n  margin-left: 10px;\n}\n.com-list a[data-v-67d9a411] {\n  cursor: pointer;\n}\n.check-pl[data-v-67d9a411] {\n  padding-left: 3%;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/router/marketDepartment/bidInfoListBody.vue"],"names":[],"mappings":";AAAA;EACE,aAAa;CAAE;AAEjB;EACE,kBAAkB;CAAE;AAEtB;EACE,mBAAmB;CAAE;AAEvB;EACE,uBAAuB;CAAE;AAE3B;EACE,iBAAiB;CAAE;AACnB;IACE,aAAa;CAAE;AAEnB;EACE,qBAAqB;CAAE;AAEzB;EACE,eAAe;CAAE;AACjB;IACE,kBAAkB;CAAE;AACtB;IACE,mBAAmB;CAAE;AAEzB;EACE,UAAU;EACV,gBAAgB;EAChB,mBAAmB;CAAE;AACrB;IACE,gBAAgB;CAAE;AAEtB;EACE,gBAAgB;CAAE;AAEpB;EACE,aAAa;CAAE;AAEjB;EACE,aAAa;CAAE;AAEjB;EACE,WAAW;EACX,mBAAmB;CAAE;AAEvB;EACE,kBAAkB;CAAE;AAEtB;EACE,mBAAmB;CAAE;AAEvB;EACE,mBAAmB;CAAE;AAEvB;EACE,aAAa;CAAE;AAEjB;EACE,WAAW;EACX,mBAAmB;CAAE;AAEvB;EACE,WAAW;EACX,mBAAmB;CAAE;AAEvB;EACE,iBAAiB;CAAE;AAErB;EACE,iBAAiB;CAAE;AAErB;EACE,kBAAkB;CAAE;AACpB;IACE,YAAY;CAAE;AACd;MACE,WAAW;CAAE;AACf;MACE,WAAW;CAAE;AAEnB;EACE,kBAAkB;EAClB,oBAAoB;CAAE;AACtB;IACE,mBAAmB;CAAE;AAEzB;EACE,sBAAsB;EACtB,kBAAkB;EAClB,iBAAiB;EACjB,uBAAuB;CAAE;AAE3B;EACE,gBAAgB;EAChB,iBAAiB;CAAE;AAErB;EACE,SAAS;CAAE;AAEb;EACE,kBAAkB;CAAE;AAEtB;EACE,gBAAgB;CAAE;AAEpB;EACE,iBAAiB;CAAE","file":"bidInfoListBody.vue","sourcesContent":[".f-r {\n  float: right; }\n\n.ta-r {\n  text-align: right; }\n\n.ta-c {\n  text-align: center; }\n\n.va-c {\n  vertical-align: middle; }\n\n.higher-search {\n  margin-top: 30px; }\n  .higher-search button {\n    float: right; }\n\n.dateMr {\n  padding-right: 110px; }\n\n.form-inline .form-group {\n  margin: 10px 0; }\n  .form-inline .form-group label {\n    margin-right: 5px; }\n  .form-inline .form-group .bidMan {\n    margin-right: 18px; }\n\n.check-wrap {\n  margin: 0;\n  margin-top: 5px;\n  margin-bottom: 5px; }\n  .check-wrap label {\n    margin-top: 7px; }\n\ntable tbody tr {\n  cursor: pointer; }\n\n.bidMan-input {\n  width: 330px; }\n\n.angency-input {\n  width: 330px; }\n\n.name-input {\n  width: 95%;\n  text-align: center; }\n\n.left-move {\n  margin-left: 10px; }\n\ninput::-ms-input-placeholder {\n  text-align: center; }\n\ninput::-webkit-input-placeholder {\n  text-align: center; }\n\n.selectBox {\n  width: 330px; }\n\n.timeWidth {\n  width: 50%;\n  padding-left: 20px; }\n\n.typeWidth {\n  width: 48%;\n  padding-left: 25px; }\n\n.input-icon {\n  margin-top: -2px; }\n\n.search-icon {\n  margin-top: -2px; }\n\n.higherForm {\n  margin-top: -50px; }\n  .higherForm .form-group {\n    width: 100%; }\n    .higherForm .form-group label {\n      width: 25%; }\n    .higherForm .form-group input {\n      width: 70%; }\n\n.search-btns {\n  margin-top: -62px;\n  margin-right: -52px; }\n  .search-btns button:first-child {\n    margin-right: 30px; }\n\n.search-checkbox {\n  display: inline-block;\n  margin-left: 45px;\n  margin-top: 10px;\n  vertical-align: bottom; }\n\n.search-form {\n  padding-left: 0;\n  padding-right: 0; }\n\n.search-btn {\n  right: 0; }\n\n.project-name {\n  margin-left: 10px; }\n\n.com-list a {\n  cursor: pointer; }\n\n.check-pl {\n  padding-left: 3%; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -43755,7 +43760,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n.form-group {\r\n  margin-bottom: 20px;\n}\nlabel {\r\n  margin-bottom: 15px !important;\n}\n.control-label {\r\n    width: 20% !important;\n}\r\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/router/leader/component/staffAddModal.vue?bd0f593c"],"names":[],"mappings":";AAgRA;EACA,oBAAA;CACA;AACA;EACA,+BAAA;CACA;AACA;IACA,sBAAA;CACA","file":"staffAddModal.vue","sourcesContent":["<template>\r\n  <modal>\r\n    <form class=\"form-horizontal clearfix\"\r\n          slot=\"body\"\r\n          @submit.prevent\r\n          @keyup.enter.prevent>\r\n      <div class=\"form-group\"\r\n           :class=\"{'has-error': !staff.name.ver}\">\r\n        <label class=\"control-label\">姓名</label>\r\n        <div>\r\n          <input type=\"text\"\r\n                 class=\"form-control\"\r\n                 placeholder=\"请输入职员姓名\"\r\n                 v-model=\"staff.name.val\">\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label class=\"control-label\">性别</label>\r\n        <div>\r\n          <label class=\"radio-inline\">\r\n            <input type=\"radio\"\r\n                   name=\"staff-sex\"\r\n                   value=\"男\"\r\n                   v-model=\"staff.gender.val\"> 男\r\n          </label>\r\n          <label class=\"radio-inline\">\r\n            <input type=\"radio\"\r\n                   name=\"staff-sex\"\r\n                   value=\"女\"\r\n                   v-model=\"staff.gender.val\"> 女\r\n          </label>\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\"\r\n           :class=\"{'has-error': !staff.telephone.ver}\">\r\n        <label class=\"control-label\">手机号</label>\r\n        <div>\r\n          <input type=\"tel\"\r\n                 class=\"form-control\"\r\n                 placeholder=\"请输入职员手机号码\"\r\n                 v-model=\"staff.telephone.val\">\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\"\r\n           :class=\"{'has-error': !staff.jobNumber.ver}\">\r\n        <label class=\"control-label\">工号</label>\r\n        <div>\r\n          <input type=\"text\"\r\n                 class=\"form-control\"\r\n                 placeholder=\"请输入工号\"\r\n                 v-model=\"staff.jobNumber.val\">\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\"\r\n           :class=\"{'has-error': !staff.duties.ver}\">\r\n        <label class=\"control-label\">职务</label>\r\n        <div>\r\n          <input type=\"text\"\r\n                 class=\"form-control\"\r\n                 placeholder=\"请输入职务\"\r\n                 v-model=\"staff.duties.val\">\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\"\r\n           :class=\"{'has-error': !staff.department.ver}\">\r\n        <label class=\"control-label\">所属部门</label>\r\n        <div>\r\n          <select v-model=\"staff.department.val\" class=\"form-control\">\r\n              <option v-for=\"option in departmentArray\" :value=\"option\">\r\n                {{ option }}\r\n              </option>\r\n          </select>\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label class=\"control-label\">备注</label>\r\n        <div>\r\n          <input type=\"text\"\r\n                 class=\"form-control\"\r\n                 placeholder=\"请输入备注\"\r\n                 v-model=\"staff.remark.val\">\r\n        </div>\r\n      </div>\r\n      <div class=\"alert alert-danger well-sm\"\r\n           v-show=\"alert.show\">\r\n        {{alert.cont}}\r\n      </div>\r\n    </form>\r\n    <div slot=\"footer\" class=\"ta-c\">\r\n      <button class=\"btn my-btn submit-btn\"\r\n              @click=\"save()\"\r\n              :disabled=\"subBtn.dis\">\r\n        {{subBtn.cont}}\r\n      </button>\r\n      <button class=\"btn my-btn draft-btn\"\r\n              @click=\"cancel()\">\r\n        取消\r\n      </button>\r\n    </div>\r\n  </modal>\r\n</template>\r\n\r\n<script>\r\nimport axios from 'axios';\r\nimport qs from 'qs';\r\n\r\nimport modal from '../../../component/modal.vue';\r\n\r\nexport default {\r\n  name: 'staffAddModal',\r\n  data() {\r\n    return {\r\n      staff: (() => {\r\n        return {\r\n          id: {\r\n            val: ''\r\n          },\r\n          name: {\r\n            val: '',\r\n            ver: true\r\n          },\r\n          gender: {\r\n            val: '男'\r\n          },\r\n          telephone: {\r\n            val: '',\r\n            ver: true\r\n          },\r\n          jobNumber: {\r\n            val: '',\r\n            ver: true\r\n          },\r\n          duties: {\r\n            val: '',\r\n            ver: true\r\n          },\r\n          department: {\r\n            val: '',\r\n            ver: true\r\n          },\r\n          remark: {\r\n            val: ''\r\n          },\r\n        }\r\n      })(),\r\n      alert: {\r\n        show: false,\r\n        cont: ''\r\n      },\r\n      subBtn: {\r\n        dis: false,\r\n        cont: '保存'\r\n      },\r\n      departmentArray: []\r\n    };\r\n  },\r\n  methods: {\r\n    save() {\r\n      let reg = /^(1+\\d{10})$/;\r\n      this.alert.show = false;\r\n      this.alert.cont = '';\r\n      if (this.staff.name.val === '') {\r\n        this.staff.name.ver = false;\r\n      } else {\r\n        this.staff.name.ver = true;\r\n      }\r\n      if (this.staff.telephone.val === '') {\r\n        this.staff.telephone.ver = false;\r\n      } else if (!reg.test(this.staff.telephone.val)) {\r\n        this.staff.telephone.ver = false;\r\n      } else {\r\n        this.staff.telephone.ver = true;\r\n      }\r\n      if (this.staff.jobNumber.val === '') {\r\n        this.staff.jobNumber.ver = false;\r\n      } else {\r\n        this.staff.jobNumber.ver = true;\r\n      }\r\n      if (this.staff.duties.val === '') {\r\n        this.staff.duties.ver = false;\r\n      } else {\r\n        this.staff.duties.ver = true;\r\n      }\r\n      if (this.staff.department.val === '') {\r\n        this.staff.department.ver = false;\r\n      } else {\r\n        this.staff.department.ver = true;\r\n      }\r\n      if (!(this.staff.name.ver && this.staff.telephone.ver && this.staff.jobNumber.val && this.staff.duties.ver && this.staff.department.ver)) {\r\n        this.alert.show = true;\r\n        this.alert.cont = '您有信息尚未输入或信息格式有误，请检查';\r\n      } else {\r\n        this.subBtn.dis = true;\r\n        this.subBtn.cont = '保存中...';\r\n        axios({\r\n          headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },\r\n          method: 'post',\r\n          url: '/service',\r\n          data: qs.stringify({\r\n            data: (() => {\r\n              var obj = {\r\n                command: 'addUser',\r\n                platform: 'web',\r\n                phone: this.staff.telephone.val,\r\n                jobNumber: this.staff.jobNumber.val,\r\n                userName: this.staff.name.val,\r\n                gender: this.staff.gender.val,\r\n                remark: this.staff.remark.val,\r\n                department: this.staff.department.val,\r\n                duity: this.staff.duties.val,\r\n              };\r\n              return JSON.stringify(obj);\r\n            })()\r\n          })\r\n        }).then((rep) => {\r\n          if (rep.data.statusCode === '10001') {\r\n            this.subBtn.cont = '已保存';\r\n            this.staff.id.val = rep.data.data.id;\r\n            this.$emit('added', this.staff);\r\n          } else if (rep.data.statusCode === '10012') {\r\n            window.location.href = 'signIn.html';\r\n          }\r\n        }, (rep) => { });\r\n      }\r\n    },\r\n    cancel() {\r\n      this.$emit('canceled');\r\n    },\r\n    getDepartmentList() {\r\n      let promise = new Promise((resolve,reject)=>{\r\n        axios({\r\n          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },\r\n          method: 'get',\r\n          url: '/service',\r\n          params: {\r\n            data: (() => {\r\n              var obj = {\r\n                command: 'getDepartmentList',\r\n                platform: 'web'\r\n              }\r\n              return JSON.stringify(obj);\r\n            })()\r\n          }\r\n        }).then((rep) => {\r\n          if (rep.data.statusCode === '10001') {\r\n            resolve(rep);\r\n          } else if (rep.data.statusCode === '10012') {\r\n            window.location.href = 'signIn.html';\r\n          } else {\r\n            reject(rep);\r\n          }\r\n        }, (rep) => { });\r\n      });\r\n      return promise;\r\n    }\r\n  },\r\n  created() {\r\n    this.getDepartmentList().then((rep) => {\r\n      this.departmentArray1 = rep.data.data.departmentArray;\r\n      for (var i = 0; i < this.departmentArray1.length; i++) {\r\n        this.departmentArray.push(this.departmentArray1[i].departmentName);\r\n        console.log(this.departmentArray);\r\n      }\r\n    }, (rep) => {});\r\n  },\r\n  components: {\r\n    modal\r\n  }\r\n}\r\n</script>\r\n\r\n<style>\r\n.form-group {\r\n  margin-bottom: 20px;\r\n}\r\nlabel {\r\n  margin-bottom: 15px !important;\r\n}\r\n.control-label {\r\n    width: 20% !important;\r\n}\r\n</style>\r\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.form-group {\r\n  margin-bottom: 20px;\n}\nlabel {\r\n  margin-bottom: 15px !important;\n}\r\n/*.control-label {\r\n    width: 20% !important;\r\n}*/\r\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/router/leader/component/staffAddModal.vue?7dc5a86c"],"names":[],"mappings":";AAgRA;EACA,oBAAA;CACA;AACA;EACA,+BAAA;CACA;AACA;;GAEA","file":"staffAddModal.vue","sourcesContent":["<template>\r\n  <modal>\r\n    <form class=\"form-horizontal clearfix\"\r\n          slot=\"body\"\r\n          @submit.prevent\r\n          @keyup.enter.prevent>\r\n      <div class=\"form-group\"\r\n           :class=\"{'has-error': !staff.name.ver}\">\r\n        <label class=\"control-label\">姓名</label>\r\n        <div>\r\n          <input type=\"text\"\r\n                 class=\"form-control\"\r\n                 placeholder=\"请输入职员姓名\"\r\n                 v-model=\"staff.name.val\">\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label class=\"control-label\">性别</label>\r\n        <div>\r\n          <label class=\"radio-inline\">\r\n            <input type=\"radio\"\r\n                   name=\"staff-sex\"\r\n                   value=\"男\"\r\n                   v-model=\"staff.gender.val\"> 男\r\n          </label>\r\n          <label class=\"radio-inline\">\r\n            <input type=\"radio\"\r\n                   name=\"staff-sex\"\r\n                   value=\"女\"\r\n                   v-model=\"staff.gender.val\"> 女\r\n          </label>\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\"\r\n           :class=\"{'has-error': !staff.telephone.ver}\">\r\n        <label class=\"control-label\">手机号</label>\r\n        <div>\r\n          <input type=\"tel\"\r\n                 class=\"form-control\"\r\n                 placeholder=\"请输入职员手机号码\"\r\n                 v-model=\"staff.telephone.val\">\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\"\r\n           :class=\"{'has-error': !staff.jobNumber.ver}\">\r\n        <label class=\"control-label\">工号</label>\r\n        <div>\r\n          <input type=\"text\"\r\n                 class=\"form-control\"\r\n                 placeholder=\"请输入工号\"\r\n                 v-model=\"staff.jobNumber.val\">\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\"\r\n           :class=\"{'has-error': !staff.duties.ver}\">\r\n        <label class=\"control-label\">职务</label>\r\n        <div>\r\n          <input type=\"text\"\r\n                 class=\"form-control\"\r\n                 placeholder=\"请输入职务\"\r\n                 v-model=\"staff.duties.val\">\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\"\r\n           :class=\"{'has-error': !staff.department.ver}\">\r\n        <label class=\"control-label\">所属部门</label>\r\n        <div>\r\n          <select v-model=\"staff.department.val\" class=\"form-control\">\r\n              <option v-for=\"option in departmentArray\" :value=\"option\">\r\n                {{ option }}\r\n              </option>\r\n          </select>\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label class=\"control-label\">备注</label>\r\n        <div>\r\n          <input type=\"text\"\r\n                 class=\"form-control\"\r\n                 placeholder=\"请输入备注\"\r\n                 v-model=\"staff.remark.val\">\r\n        </div>\r\n      </div>\r\n      <div class=\"alert alert-danger well-sm\"\r\n           v-show=\"alert.show\">\r\n        {{alert.cont}}\r\n      </div>\r\n    </form>\r\n    <div slot=\"footer\" class=\"ta-c\">\r\n      <button class=\"btn my-btn submit-btn\"\r\n              @click=\"save()\"\r\n              :disabled=\"subBtn.dis\">\r\n        {{subBtn.cont}}\r\n      </button>\r\n      <button class=\"btn my-btn draft-btn\"\r\n              @click=\"cancel()\">\r\n        取消\r\n      </button>\r\n    </div>\r\n  </modal>\r\n</template>\r\n\r\n<script>\r\nimport axios from 'axios';\r\nimport qs from 'qs';\r\n\r\nimport modal from '../../../component/modal.vue';\r\n\r\nexport default {\r\n  name: 'staffAddModal',\r\n  data() {\r\n    return {\r\n      staff: (() => {\r\n        return {\r\n          id: {\r\n            val: ''\r\n          },\r\n          name: {\r\n            val: '',\r\n            ver: true\r\n          },\r\n          gender: {\r\n            val: '男'\r\n          },\r\n          telephone: {\r\n            val: '',\r\n            ver: true\r\n          },\r\n          jobNumber: {\r\n            val: '',\r\n            ver: true\r\n          },\r\n          duties: {\r\n            val: '',\r\n            ver: true\r\n          },\r\n          department: {\r\n            val: '',\r\n            ver: true\r\n          },\r\n          remark: {\r\n            val: ''\r\n          },\r\n        }\r\n      })(),\r\n      alert: {\r\n        show: false,\r\n        cont: ''\r\n      },\r\n      subBtn: {\r\n        dis: false,\r\n        cont: '保存'\r\n      },\r\n      departmentArray: []\r\n    };\r\n  },\r\n  methods: {\r\n    save() {\r\n      let reg = /^(1+\\d{10})$/;\r\n      this.alert.show = false;\r\n      this.alert.cont = '';\r\n      if (this.staff.name.val === '') {\r\n        this.staff.name.ver = false;\r\n      } else {\r\n        this.staff.name.ver = true;\r\n      }\r\n      if (this.staff.telephone.val === '') {\r\n        this.staff.telephone.ver = false;\r\n      } else if (!reg.test(this.staff.telephone.val)) {\r\n        this.staff.telephone.ver = false;\r\n      } else {\r\n        this.staff.telephone.ver = true;\r\n      }\r\n      if (this.staff.jobNumber.val === '') {\r\n        this.staff.jobNumber.ver = false;\r\n      } else {\r\n        this.staff.jobNumber.ver = true;\r\n      }\r\n      if (this.staff.duties.val === '') {\r\n        this.staff.duties.ver = false;\r\n      } else {\r\n        this.staff.duties.ver = true;\r\n      }\r\n      if (this.staff.department.val === '') {\r\n        this.staff.department.ver = false;\r\n      } else {\r\n        this.staff.department.ver = true;\r\n      }\r\n      if (!(this.staff.name.ver && this.staff.telephone.ver && this.staff.jobNumber.val && this.staff.duties.ver && this.staff.department.ver)) {\r\n        this.alert.show = true;\r\n        this.alert.cont = '您有信息尚未输入或信息格式有误，请检查';\r\n      } else {\r\n        this.subBtn.dis = true;\r\n        this.subBtn.cont = '保存中...';\r\n        axios({\r\n          headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },\r\n          method: 'post',\r\n          url: '/service',\r\n          data: qs.stringify({\r\n            data: (() => {\r\n              var obj = {\r\n                command: 'addUser',\r\n                platform: 'web',\r\n                phone: this.staff.telephone.val,\r\n                jobNumber: this.staff.jobNumber.val,\r\n                userName: this.staff.name.val,\r\n                gender: this.staff.gender.val,\r\n                remark: this.staff.remark.val,\r\n                department: this.staff.department.val,\r\n                duity: this.staff.duties.val,\r\n              };\r\n              return JSON.stringify(obj);\r\n            })()\r\n          })\r\n        }).then((rep) => {\r\n          if (rep.data.statusCode === '10001') {\r\n            this.subBtn.cont = '已保存';\r\n            this.staff.id.val = rep.data.data.id;\r\n            this.$emit('added', this.staff);\r\n          } else if (rep.data.statusCode === '10012') {\r\n            window.location.href = 'signIn.html';\r\n          }\r\n        }, (rep) => { });\r\n      }\r\n    },\r\n    cancel() {\r\n      this.$emit('canceled');\r\n    },\r\n    getDepartmentList() {\r\n      let promise = new Promise((resolve,reject)=>{\r\n        axios({\r\n          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },\r\n          method: 'get',\r\n          url: '/service',\r\n          params: {\r\n            data: (() => {\r\n              var obj = {\r\n                command: 'getDepartmentList',\r\n                platform: 'web'\r\n              }\r\n              return JSON.stringify(obj);\r\n            })()\r\n          }\r\n        }).then((rep) => {\r\n          if (rep.data.statusCode === '10001') {\r\n            resolve(rep);\r\n          } else if (rep.data.statusCode === '10012') {\r\n            window.location.href = 'signIn.html';\r\n          } else {\r\n            reject(rep);\r\n          }\r\n        }, (rep) => { });\r\n      });\r\n      return promise;\r\n    }\r\n  },\r\n  created() {\r\n    this.getDepartmentList().then((rep) => {\r\n      this.departmentArray1 = rep.data.data.departmentArray;\r\n      for (var i = 0; i < this.departmentArray1.length; i++) {\r\n        this.departmentArray.push(this.departmentArray1[i].departmentName);\r\n        console.log(this.departmentArray);\r\n      }\r\n    }, (rep) => {});\r\n  },\r\n  components: {\r\n    modal\r\n  }\r\n}\r\n</script>\r\n\r\n<style>\r\n.form-group {\r\n  margin-bottom: 20px;\r\n}\r\nlabel {\r\n  margin-bottom: 15px !important;\r\n}\r\n/*.control-label {\r\n    width: 20% !important;\r\n}*/\r\n</style>\r\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -44557,7 +44562,7 @@ module.exports =
 /***/ 164:
 /***/ function(module, exports) {
 
-	module.exports = __webpack_require__(61);
+	module.exports = __webpack_require__(60);
 
 /***/ },
 
@@ -44699,7 +44704,7 @@ exports.default = function (Vue) {
   return template;
 };
 
-var _util = __webpack_require__(65);
+var _util = __webpack_require__(64);
 
 var RE_NARGS = /(%|)\{([0-9a-zA-Z_]+)\}/g;
 /**
@@ -45680,14 +45685,14 @@ module.exports =
 /***/ 223:
 /***/ function(module, exports) {
 
-	module.exports = __webpack_require__(60);
+	module.exports = __webpack_require__(59);
 
 /***/ },
 
 /***/ 224:
 /***/ function(module, exports) {
 
-	module.exports = __webpack_require__(59);
+	module.exports = __webpack_require__(58);
 
 /***/ }
 
@@ -46107,7 +46112,7 @@ module.exports =
 /***/ 47:
 /***/ function(module, exports) {
 
-	module.exports = __webpack_require__(63);
+	module.exports = __webpack_require__(62);
 
 /***/ },
 
@@ -46304,14 +46309,14 @@ module.exports =
 /***/ 256:
 /***/ function(module, exports) {
 
-	module.exports = __webpack_require__(64);
+	module.exports = __webpack_require__(63);
 
 /***/ },
 
 /***/ 257:
 /***/ function(module, exports) {
 
-	module.exports = __webpack_require__(65);
+	module.exports = __webpack_require__(64);
 
 /***/ },
 
@@ -48235,7 +48240,7 @@ var _vue = __webpack_require__(8);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _popup = __webpack_require__(62);
+var _popup = __webpack_require__(61);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48436,236 +48441,236 @@ exports.default = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 66,
-	"./af.js": 66,
-	"./ar": 73,
-	"./ar-dz": 67,
-	"./ar-dz.js": 67,
-	"./ar-kw": 68,
-	"./ar-kw.js": 68,
-	"./ar-ly": 69,
-	"./ar-ly.js": 69,
-	"./ar-ma": 70,
-	"./ar-ma.js": 70,
-	"./ar-sa": 71,
-	"./ar-sa.js": 71,
-	"./ar-tn": 72,
-	"./ar-tn.js": 72,
-	"./ar.js": 73,
-	"./az": 74,
-	"./az.js": 74,
-	"./be": 75,
-	"./be.js": 75,
-	"./bg": 76,
-	"./bg.js": 76,
-	"./bn": 77,
-	"./bn.js": 77,
-	"./bo": 78,
-	"./bo.js": 78,
-	"./br": 79,
-	"./br.js": 79,
-	"./bs": 80,
-	"./bs.js": 80,
-	"./ca": 81,
-	"./ca.js": 81,
-	"./cs": 82,
-	"./cs.js": 82,
-	"./cv": 83,
-	"./cv.js": 83,
-	"./cy": 84,
-	"./cy.js": 84,
-	"./da": 85,
-	"./da.js": 85,
-	"./de": 88,
-	"./de-at": 86,
-	"./de-at.js": 86,
-	"./de-ch": 87,
-	"./de-ch.js": 87,
-	"./de.js": 88,
-	"./dv": 89,
-	"./dv.js": 89,
-	"./el": 90,
-	"./el.js": 90,
-	"./en-au": 91,
-	"./en-au.js": 91,
-	"./en-ca": 92,
-	"./en-ca.js": 92,
-	"./en-gb": 93,
-	"./en-gb.js": 93,
-	"./en-ie": 94,
-	"./en-ie.js": 94,
-	"./en-nz": 95,
-	"./en-nz.js": 95,
-	"./eo": 96,
-	"./eo.js": 96,
-	"./es": 98,
-	"./es-do": 97,
-	"./es-do.js": 97,
-	"./es.js": 98,
-	"./et": 99,
-	"./et.js": 99,
-	"./eu": 100,
-	"./eu.js": 100,
-	"./fa": 101,
-	"./fa.js": 101,
-	"./fi": 102,
-	"./fi.js": 102,
-	"./fo": 103,
-	"./fo.js": 103,
-	"./fr": 106,
-	"./fr-ca": 104,
-	"./fr-ca.js": 104,
-	"./fr-ch": 105,
-	"./fr-ch.js": 105,
-	"./fr.js": 106,
-	"./fy": 107,
-	"./fy.js": 107,
-	"./gd": 108,
-	"./gd.js": 108,
-	"./gl": 109,
-	"./gl.js": 109,
-	"./gom-latn": 110,
-	"./gom-latn.js": 110,
-	"./he": 111,
-	"./he.js": 111,
-	"./hi": 112,
-	"./hi.js": 112,
-	"./hr": 113,
-	"./hr.js": 113,
-	"./hu": 114,
-	"./hu.js": 114,
-	"./hy-am": 115,
-	"./hy-am.js": 115,
-	"./id": 116,
-	"./id.js": 116,
-	"./is": 117,
-	"./is.js": 117,
-	"./it": 118,
-	"./it.js": 118,
-	"./ja": 119,
-	"./ja.js": 119,
-	"./jv": 120,
-	"./jv.js": 120,
-	"./ka": 121,
-	"./ka.js": 121,
-	"./kk": 122,
-	"./kk.js": 122,
-	"./km": 123,
-	"./km.js": 123,
-	"./kn": 124,
-	"./kn.js": 124,
-	"./ko": 125,
-	"./ko.js": 125,
-	"./ky": 126,
-	"./ky.js": 126,
-	"./lb": 127,
-	"./lb.js": 127,
-	"./lo": 128,
-	"./lo.js": 128,
-	"./lt": 129,
-	"./lt.js": 129,
-	"./lv": 130,
-	"./lv.js": 130,
-	"./me": 131,
-	"./me.js": 131,
-	"./mi": 132,
-	"./mi.js": 132,
-	"./mk": 133,
-	"./mk.js": 133,
-	"./ml": 134,
-	"./ml.js": 134,
-	"./mr": 135,
-	"./mr.js": 135,
-	"./ms": 137,
-	"./ms-my": 136,
-	"./ms-my.js": 136,
-	"./ms.js": 137,
-	"./my": 138,
-	"./my.js": 138,
-	"./nb": 139,
-	"./nb.js": 139,
-	"./ne": 140,
-	"./ne.js": 140,
-	"./nl": 142,
-	"./nl-be": 141,
-	"./nl-be.js": 141,
-	"./nl.js": 142,
-	"./nn": 143,
-	"./nn.js": 143,
-	"./pa-in": 144,
-	"./pa-in.js": 144,
-	"./pl": 145,
-	"./pl.js": 145,
-	"./pt": 147,
-	"./pt-br": 146,
-	"./pt-br.js": 146,
-	"./pt.js": 147,
-	"./ro": 148,
-	"./ro.js": 148,
-	"./ru": 149,
-	"./ru.js": 149,
-	"./sd": 150,
-	"./sd.js": 150,
-	"./se": 151,
-	"./se.js": 151,
-	"./si": 152,
-	"./si.js": 152,
-	"./sk": 153,
-	"./sk.js": 153,
-	"./sl": 154,
-	"./sl.js": 154,
-	"./sq": 155,
-	"./sq.js": 155,
-	"./sr": 157,
-	"./sr-cyrl": 156,
-	"./sr-cyrl.js": 156,
-	"./sr.js": 157,
-	"./ss": 158,
-	"./ss.js": 158,
-	"./sv": 159,
-	"./sv.js": 159,
-	"./sw": 160,
-	"./sw.js": 160,
-	"./ta": 161,
-	"./ta.js": 161,
-	"./te": 162,
-	"./te.js": 162,
-	"./tet": 163,
-	"./tet.js": 163,
-	"./th": 164,
-	"./th.js": 164,
-	"./tl-ph": 165,
-	"./tl-ph.js": 165,
-	"./tlh": 166,
-	"./tlh.js": 166,
-	"./tr": 167,
-	"./tr.js": 167,
-	"./tzl": 168,
-	"./tzl.js": 168,
-	"./tzm": 170,
-	"./tzm-latn": 169,
-	"./tzm-latn.js": 169,
-	"./tzm.js": 170,
-	"./uk": 171,
-	"./uk.js": 171,
-	"./ur": 172,
-	"./ur.js": 172,
-	"./uz": 174,
-	"./uz-latn": 173,
-	"./uz-latn.js": 173,
-	"./uz.js": 174,
-	"./vi": 175,
-	"./vi.js": 175,
-	"./x-pseudo": 176,
-	"./x-pseudo.js": 176,
-	"./yo": 177,
-	"./yo.js": 177,
-	"./zh-cn": 178,
-	"./zh-cn.js": 178,
-	"./zh-hk": 179,
-	"./zh-hk.js": 179,
-	"./zh-tw": 180,
-	"./zh-tw.js": 180
+	"./af": 65,
+	"./af.js": 65,
+	"./ar": 72,
+	"./ar-dz": 66,
+	"./ar-dz.js": 66,
+	"./ar-kw": 67,
+	"./ar-kw.js": 67,
+	"./ar-ly": 68,
+	"./ar-ly.js": 68,
+	"./ar-ma": 69,
+	"./ar-ma.js": 69,
+	"./ar-sa": 70,
+	"./ar-sa.js": 70,
+	"./ar-tn": 71,
+	"./ar-tn.js": 71,
+	"./ar.js": 72,
+	"./az": 73,
+	"./az.js": 73,
+	"./be": 74,
+	"./be.js": 74,
+	"./bg": 75,
+	"./bg.js": 75,
+	"./bn": 76,
+	"./bn.js": 76,
+	"./bo": 77,
+	"./bo.js": 77,
+	"./br": 78,
+	"./br.js": 78,
+	"./bs": 79,
+	"./bs.js": 79,
+	"./ca": 80,
+	"./ca.js": 80,
+	"./cs": 81,
+	"./cs.js": 81,
+	"./cv": 82,
+	"./cv.js": 82,
+	"./cy": 83,
+	"./cy.js": 83,
+	"./da": 84,
+	"./da.js": 84,
+	"./de": 87,
+	"./de-at": 85,
+	"./de-at.js": 85,
+	"./de-ch": 86,
+	"./de-ch.js": 86,
+	"./de.js": 87,
+	"./dv": 88,
+	"./dv.js": 88,
+	"./el": 89,
+	"./el.js": 89,
+	"./en-au": 90,
+	"./en-au.js": 90,
+	"./en-ca": 91,
+	"./en-ca.js": 91,
+	"./en-gb": 92,
+	"./en-gb.js": 92,
+	"./en-ie": 93,
+	"./en-ie.js": 93,
+	"./en-nz": 94,
+	"./en-nz.js": 94,
+	"./eo": 95,
+	"./eo.js": 95,
+	"./es": 97,
+	"./es-do": 96,
+	"./es-do.js": 96,
+	"./es.js": 97,
+	"./et": 98,
+	"./et.js": 98,
+	"./eu": 99,
+	"./eu.js": 99,
+	"./fa": 100,
+	"./fa.js": 100,
+	"./fi": 101,
+	"./fi.js": 101,
+	"./fo": 102,
+	"./fo.js": 102,
+	"./fr": 105,
+	"./fr-ca": 103,
+	"./fr-ca.js": 103,
+	"./fr-ch": 104,
+	"./fr-ch.js": 104,
+	"./fr.js": 105,
+	"./fy": 106,
+	"./fy.js": 106,
+	"./gd": 107,
+	"./gd.js": 107,
+	"./gl": 108,
+	"./gl.js": 108,
+	"./gom-latn": 109,
+	"./gom-latn.js": 109,
+	"./he": 110,
+	"./he.js": 110,
+	"./hi": 111,
+	"./hi.js": 111,
+	"./hr": 112,
+	"./hr.js": 112,
+	"./hu": 113,
+	"./hu.js": 113,
+	"./hy-am": 114,
+	"./hy-am.js": 114,
+	"./id": 115,
+	"./id.js": 115,
+	"./is": 116,
+	"./is.js": 116,
+	"./it": 117,
+	"./it.js": 117,
+	"./ja": 118,
+	"./ja.js": 118,
+	"./jv": 119,
+	"./jv.js": 119,
+	"./ka": 120,
+	"./ka.js": 120,
+	"./kk": 121,
+	"./kk.js": 121,
+	"./km": 122,
+	"./km.js": 122,
+	"./kn": 123,
+	"./kn.js": 123,
+	"./ko": 124,
+	"./ko.js": 124,
+	"./ky": 125,
+	"./ky.js": 125,
+	"./lb": 126,
+	"./lb.js": 126,
+	"./lo": 127,
+	"./lo.js": 127,
+	"./lt": 128,
+	"./lt.js": 128,
+	"./lv": 129,
+	"./lv.js": 129,
+	"./me": 130,
+	"./me.js": 130,
+	"./mi": 131,
+	"./mi.js": 131,
+	"./mk": 132,
+	"./mk.js": 132,
+	"./ml": 133,
+	"./ml.js": 133,
+	"./mr": 134,
+	"./mr.js": 134,
+	"./ms": 136,
+	"./ms-my": 135,
+	"./ms-my.js": 135,
+	"./ms.js": 136,
+	"./my": 137,
+	"./my.js": 137,
+	"./nb": 138,
+	"./nb.js": 138,
+	"./ne": 139,
+	"./ne.js": 139,
+	"./nl": 141,
+	"./nl-be": 140,
+	"./nl-be.js": 140,
+	"./nl.js": 141,
+	"./nn": 142,
+	"./nn.js": 142,
+	"./pa-in": 143,
+	"./pa-in.js": 143,
+	"./pl": 144,
+	"./pl.js": 144,
+	"./pt": 146,
+	"./pt-br": 145,
+	"./pt-br.js": 145,
+	"./pt.js": 146,
+	"./ro": 147,
+	"./ro.js": 147,
+	"./ru": 148,
+	"./ru.js": 148,
+	"./sd": 149,
+	"./sd.js": 149,
+	"./se": 150,
+	"./se.js": 150,
+	"./si": 151,
+	"./si.js": 151,
+	"./sk": 152,
+	"./sk.js": 152,
+	"./sl": 153,
+	"./sl.js": 153,
+	"./sq": 154,
+	"./sq.js": 154,
+	"./sr": 156,
+	"./sr-cyrl": 155,
+	"./sr-cyrl.js": 155,
+	"./sr.js": 156,
+	"./ss": 157,
+	"./ss.js": 157,
+	"./sv": 158,
+	"./sv.js": 158,
+	"./sw": 159,
+	"./sw.js": 159,
+	"./ta": 160,
+	"./ta.js": 160,
+	"./te": 161,
+	"./te.js": 161,
+	"./tet": 162,
+	"./tet.js": 162,
+	"./th": 163,
+	"./th.js": 163,
+	"./tl-ph": 164,
+	"./tl-ph.js": 164,
+	"./tlh": 165,
+	"./tlh.js": 165,
+	"./tr": 166,
+	"./tr.js": 166,
+	"./tzl": 167,
+	"./tzl.js": 167,
+	"./tzm": 169,
+	"./tzm-latn": 168,
+	"./tzm-latn.js": 168,
+	"./tzm.js": 169,
+	"./uk": 170,
+	"./uk.js": 170,
+	"./ur": 171,
+	"./ur.js": 171,
+	"./uz": 173,
+	"./uz-latn": 172,
+	"./uz-latn.js": 172,
+	"./uz.js": 173,
+	"./vi": 174,
+	"./vi.js": 174,
+	"./x-pseudo": 175,
+	"./x-pseudo.js": 175,
+	"./yo": 176,
+	"./yo.js": 176,
+	"./zh-cn": 177,
+	"./zh-cn.js": 177,
+	"./zh-hk": 178,
+	"./zh-hk.js": 178,
+	"./zh-tw": 179,
+	"./zh-tw.js": 179
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -51901,7 +51906,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _c('card', [_c('h3', {
     staticClass: "main-title"
-  }, [_vm._v("\n      " + _vm._s(_vm.business.name === '' ? '项目名称' : _vm.business.name) + "\n      "), (!_vm.submited) ? _c('button', {
+  }, [_vm._v("\n      " + _vm._s(_vm.business.name === '' ? '项目名称' : _vm.business.name) + "\n      "), (!_vm.subed) ? _c('button', {
     staticClass: "btn my-btn submit-btn pull-right btn-adjust",
     attrs: {
       "disabled": _vm.subBtn.dis
@@ -51911,7 +51916,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.sub()
       }
     }
-  }, [_vm._v(_vm._s(_vm.subBtn.cont))]) : _vm._e(), _vm._v(" "), (_vm.submited) ? _c('small', {
+  }, [_vm._v(_vm._s(_vm.subBtn.cont))]) : _vm._e(), _vm._v(" "), (_vm.subed) ? _c('small', {
     staticClass: "label label-primary business-label pull-right"
   }, [_vm._v("已提交风评复审")]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "normal-wrap"
@@ -53926,6 +53931,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
+    staticClass: "col-md-11"
+  }, [_c('div', {
     staticClass: "col-md-4 ta-c"
   }, [_c('div', {
     staticClass: "form-group"
@@ -54015,8 +54022,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.sea.applicantName = $event.target.value
       }
     }
-  })])])]), _vm._v(" "), _c('div', {
+  })])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-11"
   }, [_c('div', {
     staticClass: "col-md-4 ta-c"
   }, [_c('div', {
@@ -54095,8 +54104,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v(_vm._s(TYPE))])
   }))])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-4 ta-c"
-  })]), _vm._v(" "), _c('div', {
+  })])]), _vm._v(" "), _c('div', {
     staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-11"
   }, [_c('div', {
     staticClass: "col-md-4 ta-c"
   }, [_c('div', {
@@ -54175,8 +54186,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-4"
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "search-btns ta-c"
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "search-btns ta-c f-r"
   }, [_c('button', {
     staticClass: "btn my-btn submit-btn",
     attrs: {
@@ -57889,13 +57900,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v(_vm._s(BUSINESS.businessName))]), _vm._v(" "), _c('span', {
       staticClass: "date pull-right"
     }, [_vm._v(_vm._s(BUSINESS.finishTime.substring(0, 10)))])])
-  }), _vm._v(" "), _c('pager', {
+  }), _vm._v(" "), _c('my-pagination', {
     attrs: {
-      "pageCount": _vm.page.total,
-      "currentPage": _vm.page.current
+      "totalNum": _vm.page.total
     },
     on: {
-      "change": _vm.pageChan
+      "currentChange": _vm.currentChange
     }
   })], 2)])], 1)
 },staticRenderFns: []}
@@ -57947,7 +57957,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (!_vm.simpleSearch),
       expression: "!simpleSearch"
     }],
-    staticClass: "col-md-10 replace"
+    staticClass: "col-md-11 replace"
   }), _vm._v(" "), _c('div', {
     staticClass: "col-md-1 higher-search f-r"
   }, [_c('button', {
@@ -57974,6 +57984,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-inline higherForm"
   }, [_c('div', {
     staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-10"
   }, [_c('div', {
     staticClass: "col-md-4 ta-c"
   }, [_c('div', {
@@ -58064,7 +58076,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.staffPhone = $event.target.value
       }
     }
-  })])])]), _vm._v(" "), _c('div', {
+  })])])])]), _vm._v(" "), _c('div', {
     staticClass: "search-btns ta-c"
   }, [_c('button', {
     staticClass: "btn my-btn submit-btn",
@@ -58859,6 +58871,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
+    staticClass: "col-md-11"
+  }, [_c('div', {
     staticClass: "col-md-4 ta-c"
   }, [_c('div', {
     staticClass: "form-group"
@@ -58948,8 +58962,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.tenderPerson = $event.target.value
       }
     }
-  })])])]), _vm._v(" "), _c('div', {
+  })])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-11"
   }, [_c('div', {
     staticClass: "col-md-4 ta-c"
   }, [_c('div', {
@@ -59008,7 +59024,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-4"
-  })]), _vm._v(" "), _c('div', {
+  })])]), _vm._v(" "), _c('div', {
     staticClass: "row check-pl"
   }, [_c('label', {
     staticClass: "ta-l"
@@ -59301,7 +59317,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }), _vm._v(" 造价所\n        ")])])]), _vm._v(" "), _c('div', {
-    staticClass: "search-btns ta-c"
+    staticClass: "search-btns ta-c f-r"
   }, [_c('button', {
     staticClass: "btn my-btn submit-btn",
     attrs: {
@@ -62975,9 +62991,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "pull-right"
   }, [_c('button', {
     staticClass: "btn my-btn submit-btn",
-    attrs: {
-      "disabled": _vm.subDis
-    },
     on: {
       "click": function($event) {
         _vm.sub()
@@ -62985,9 +62998,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("提交")]), _vm._v(" "), _c('button', {
     staticClass: "btn my-btn draft-btn",
-    attrs: {
-      "disabled": _vm.savDis
-    },
     on: {
       "click": function($event) {
         _vm.sav()
@@ -63181,7 +63191,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "paths": _vm.paths
     }
-  }), _vm._v(" "), _c('card', [_c('div', {
+  }), _vm._v(" "), _c('card', [_c('h3', {
+    staticClass: "main-title"
+  }, [_vm._v("草稿箱")]), _vm._v(" "), _c('div', {
     staticClass: "com-list list-group"
   }, [_c('li', {
     staticClass: "list-group-item list-head"
@@ -63473,7 +63485,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('span', {
     staticClass: "input-group-btn"
   }, [_c('button', {
-    staticClass: "btn submit-btn my-btn",
+    staticClass: "btn submit-btn my-btn search-btn",
     attrs: {
       "type": "button"
     },
@@ -69823,4 +69835,4 @@ var index_esm = {
 
 /***/ })
 ],[302]);
-//# sourceMappingURL=main.1c26889ccd8b35d76088.js.map
+//# sourceMappingURL=main.d3448a0367b90caac90e.js.map

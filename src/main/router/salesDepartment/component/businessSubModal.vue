@@ -38,7 +38,7 @@ export default {
   },
   props: ['initBusiness'],
   methods: {
-    del() {
+    sub() {
       this.subBtn.dis = true;
       this.subBtn.cont = '提交...';
       axios({
