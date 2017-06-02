@@ -52,7 +52,7 @@ export default {
               let obj = {
                 command: 'makeBilling',
                 platform: 'web',
-                id: this.business.bills[1].id,
+                id: this.business.bills[0].id,
                 type: 3
               };
               return JSON.stringify(obj);
@@ -77,6 +77,9 @@ export default {
   },
   components: {
     modal
+  },
+  created() {
+    console.log(this.business);
   }
 };
 </script>

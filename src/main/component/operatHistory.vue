@@ -1,15 +1,28 @@
 <template>
   <div class="row normal-wrap">
-    <div class="col-sm-offset-2 col-sm-10">
-      <ul class="list-group">
-        <li class="list-group-item"
-            v-for="(OPER, index) in business.projectOperatingArray"
-            :key="index">
-          <span class="time">{{OPER.updateAt}}</span>
-          <span class="content">{{OPER.content}}</span>
-          <span class="operator">{{OPER.operatorName}}</span>
-        </li>
-      </ul>
+    <div class="col-sm-12">
+      <table class="table table-bordered table-hover com-list">
+        <thead>
+          <tr>
+            <td class="ta-c">操作时间</td>
+            <td class="ta-c">操作内容</td>
+            <td class="ta-c">操作人姓名</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(OPER, index) in business.projectOperatingArray">
+            <td class="ta-c">
+              {{OPER.updateAt}}
+            </td>
+            <td class="ta-c">
+              {{OPER.content}}
+            </td>
+            <td class="ta-c">
+              {{OPER.operatorName}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -57,6 +70,14 @@ export default {
 
 <style lang="sass" scoped>
 @import '../../scss/variables.scss';
+
+.com-list {
+  thead {
+    tr {
+      background-color: #E6E6E6;
+    }
+  }
+}
 
 .normal-wrap {
   // li.list-group-item {

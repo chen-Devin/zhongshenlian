@@ -27,9 +27,6 @@
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime.substring(0,10)}}</span>
         </router-link>
-        <pager :pageCount="page.total"
-               :currentPage="page.current"
-               @change="pageChan"></pager>
         <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="pageChan"></my-pagination>
       </div>
     </card>

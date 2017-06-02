@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-7">
       <el-upload
         class="upload-demo ta-r"
         :action="uploadURL"
@@ -16,7 +16,7 @@
         <span></span>
       </el-upload>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-5">
       <a class="delete" @click="deleteDoc">删除</a>
     </div>
   </div>
