@@ -10,8 +10,8 @@
               <button class="btn my-btn submit-btn" @click="edi()">编辑</button>
             </template>
             <template v-if="editable">
-              <button class="btn my-btn submit-btn" @click="sub()" :disabled="subDis">提交</button>
-              <button class="btn my-btn draft-btn" @click="sav()" :disabled="savDis">暂存</button>
+              <button class="btn my-btn submit-btn" @click="sub()">提交</button>
+              <button class="btn my-btn draft-btn" @click="sav()">暂存</button>
               <button class="btn my-btn cancel-btn" @click="del()">撤销</button>
             </template>
           </template>
@@ -251,9 +251,7 @@ export default {
       riskAdvices: [],
       leaderAdivces: [],
       editable: false,
-      showDelModal: false,
-      subDis: false,
-      savDis: false
+      showDelModal: false
     };
   },
   computed: {
@@ -632,7 +630,6 @@ export default {
       this.editable = true;
     },
     sub() {
-      this.subDis = true;
       bus.$emit('subBusiness');
     },
     submited(submitedBusiness) {
@@ -646,7 +643,6 @@ export default {
       }, 1000);
     },
     sav() {
-      this.savDis = true;
       bus.$emit('savBusiness');
     },
     saved(savedBusiness) {
