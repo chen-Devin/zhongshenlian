@@ -5,7 +5,7 @@
       <button class="btn btn-primary pull-right"
               @click="addReport()"
               v-if="salesShow">
-        新增业务报告
+        添加业务报告
       </button>
     </h4>
     <div class="com-list list-group">
@@ -52,10 +52,40 @@
         </div>
       </li>
     </div>
+    <report-add-modal v-if="showAddModal"
+                      :user="user"
+                      @added="added"
+                      @canceled="addCanceled"></report-add-modal>
+    <report-mod-modal v-if="showModModal"
+                      :initalCustomer="modCustomer"
+                      @del="del"
+                      @saved="saved"
+                      @canceled="modCanceled"></report-mod-modal>
+    <report-del-modal v-if="showDelModal"
+                      :initalCustomer="delCustomer"
+                      @deleted="deleted"
+                      @canceled="delCanceled"></report-del-modal>
+    <report-sub-modal v-if="showSubModal"
+                      :initalCustomer="subCustomer"
+                      @submited="submited"
+                      @canceled="subCanceled"></report-sub-modal>
   </div>
 </template>
 
 <script>
+import Vue from 'vue';
+import axios from 'axios';
+import qs from 'qs';
+import { Upload,Message } from 'element-ui';
+
+import reportAddModal from './reportAddModal.vue';
+import reportModModal from './reportModModal.vue';
+import reportDelModal from './reportDelModal.vue';
+import reportSubModal from './reportSubModal.vue';
+
+Vue.use(Upload);
+Vue.prototype.$message = Message;
+
 export default {
   name: 'businessReports',
   data() {
@@ -105,17 +135,23 @@ export default {
     this.$emit('pathsChan', this.paths);
   },
   methods: {
-    currencyToNum(amo) {
-      let amoArr = amo.split(',').reverse();
-      let amoNum = 0;
-      for (let i = 0; i < amoArr.length; i++) {
-        amoNum += parseFloat(amoArr[i])*Math.pow(1000, i);
+    addReport() {
+      if (this.business.report.amount < this.business.reports.length + 1) {
+        this.$message({
+          message: '报告数量超过要求数量',
+          type: 'warning'
+        });
+        return false;
+      } else {
+
       }
-      return amoNum;
-    },
-    billRoute(BILL) {
-      return 'business-reports-detail-'+BILL.id;
     }
+  },
+  components: {
+    reportAddModal,
+    reportModModal,
+    reportDelModal,
+    reportSubModal
   }
 };
 </script>
