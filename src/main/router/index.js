@@ -11,10 +11,12 @@ import ruleRegulationAdd from './commonUse/ruleRegulationAdd.vue';
 import customerInforList from './commonUse/customerInforList.vue';
 
 import billingInfor from '../component/billingInfor.vue';
+import billingInforDetail from '../component/billingInforDetail.vue';
 import businessConduct from '../component/businessConduct.vue';
 import businessProfile from '../component/businessProfile.vue';
+import businessReports from '../component/businessReports.vue';
 import operatHistory from '../component/operatHistory.vue';
-import billingInforDetail from '../component/billingInforDetail.vue';
+
 //所长
 import businessHandleDetailLeader from './leader/businessHandleDetail.vue';
 import businessHandleListLeader from './leader/businessHandleList.vue';
@@ -83,6 +85,10 @@ const router = new VueRouter({
                     component: billingInforDetail
                 },
                 {
+                    path: 'business-reports',
+                    component: businessReports
+                },
+                {
                     path: 'operat-history',
                     component: operatHistory
                 }
@@ -142,6 +148,10 @@ const router = new VueRouter({
                     component: billingInforDetail
                 },
                 {
+                    path: 'business-reports',
+                    component: businessReports
+                },
+                {
                     path: 'operat-history',
                     component: operatHistory
                 }
@@ -191,6 +201,10 @@ const router = new VueRouter({
                 {
                     path: 'billing-infor-detail-:billId',
                     component: billingInforDetail
+                },
+                {
+                    path: 'business-reports',
+                    component: businessReports
                 },
                 {
                     path: 'operat-history',
@@ -244,6 +258,10 @@ const router = new VueRouter({
                     component: billingInforEditor
                 },
                 {
+                    path: 'business-reports',
+                    component: businessReports
+                },
+                {
                     path: 'operat-history',
                     component: operatHistory
                 }
@@ -283,6 +301,10 @@ const router = new VueRouter({
                     component: billingInforDetail
                 },
                 {
+                    path: 'business-reports',
+                    component: businessReports
+                },
+                {
                     path: 'operat-history',
                     component: operatHistory
                 }
@@ -314,6 +336,10 @@ const router = new VueRouter({
                     component: billingInforDetail
                 },
                 {
+                    path: 'business-reports',
+                    component: businessReports
+                },
+                {
                     path: 'operat-history',
                     component: operatHistory
                 }
@@ -343,6 +369,10 @@ const router = new VueRouter({
                 {
                     path: 'billing-infor-detail-:billId',
                     component: billingInforDetail
+                },
+                {
+                    path: 'business-reports',
+                    component: businessReports
                 },
                 {
                     path: 'operat-history',

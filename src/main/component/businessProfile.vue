@@ -50,7 +50,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">项目计划时间</label>
+      <label class="col-sm-2 control-label">计划工期</label>
       <div class="col-sm-9">
         <div class="row">
           <div class="col-sm-6">
@@ -95,7 +95,7 @@
     </div>
     <div class="form-group"
          v-if="business.auditTime.exist">
-      <label class="col-sm-2 control-label">审计时间</label>
+      <label class="col-sm-2 control-label">审计期间</label>
       <div class="col-sm-9">
         <div class="row">
           <div class="col-sm-6">
