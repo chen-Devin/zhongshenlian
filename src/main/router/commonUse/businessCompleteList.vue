@@ -2,14 +2,14 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <form @submit.prevent @keyup.enter.prevent>
+      <form class="search-form" @submit.prevent @keyup.enter.prevent>
         <div class="row">
           <div class="col-md-11">
-            <search-bar class="col-md-11" placeholder="请输入项目名称、招标代理机构、或招标人进行搜索" @search="tog" v-if="simpleSearch"></search-bar>
+            <search-bar placeholder="请输入关键字进行搜索" @search="tog" v-show="simpleSearch"></search-bar>
           </div>
           <div class="col-md-10 replace" v-show="!simpleSearch"></div>
           <div class="col-md-1 higher-search f-r">
-            <button type="button" class="btn my-btn draft-btn" @click="showHigherSearch()">
+            <button type="button" class="btn my-btn draft-btn f-r" @click="showHigherSearch()">
               高级搜索
               &nbsp;
               <img v-if="searchDown" class="search-icon" src="../../../img/market/search_down.svg">
@@ -241,14 +241,15 @@ export default {
 <style lang="sass" scoped>
 .higher-search {
   margin-top: 30px;
-  button {
-    margin-left: -15px;
-  }
 }
 .com-list > .list-group-item {
     padding-left: 13px;
 }
 .com-list > .list-head {
     padding-left: 32px;
+}
+.search-form {
+  padding-left: 0;
+  padding-right: 0;
 }
 </style>

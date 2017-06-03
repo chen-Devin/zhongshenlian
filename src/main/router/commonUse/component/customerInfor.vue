@@ -33,9 +33,6 @@
         </tr>
       </tbody>
     </table>
-    <!-- <pager :pageCount="page.total"
-           :currentPage="page.current"
-           @change="pageChan"></pager> -->
     <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
     <customer-mod-modal v-if="showModModal"
                         :initalCustomer="modCustomer"
