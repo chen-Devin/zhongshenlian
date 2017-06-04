@@ -3,7 +3,7 @@
     <h4 class="main-title">
       业务报告
       <button class="btn btn-primary pull-right"
-              @click="addReport()"
+              @click="add()"
               v-if="salesShow">
         添加业务报告
       </button>
@@ -16,8 +16,8 @@
         <div class="col-xs-4">报告名称</div>
         <div class="col-xs-1">附件</div>
         <div class="col-xs-1" v-if="salesShow">修改</div>
-        <div class="col-xs-1">复审状态</div>
-        <div class="col-xs-1">下载二维码</div>
+        <div class="col-xs-2">复审状态</div>
+        <div class="col-xs-2">下载二维码</div>
       </li>
       <li class="list-group-item row"
           v-for="(REPORT, index) in business.reports"
@@ -30,43 +30,65 @@
         </div>
         <div class="col-xs-1" v-if="salesShow">
           <a class="text-primary title"
-             @click="REPORT.url">修改</a>
+             v-if="REPORT.adviceState!==2"
+             @click="mod(REPORT)">修改</a>
+          <span class="text-primary title"
+                v-if="REPORT.adviceState===2">不可修改</span>
         </div>
-        <div class="col-xs-1">
-          <template v-if="riskShow">{{}}</template>
-          <template v-if="!riskShow">
+        <div class="col-xs-2">
+          <template v-if="riskShow">
+            <template v-if="REPORT.adviceState===1">
+              <a class="text-success" @click="judgeReport(REPORT, '通过')">通过</a>
+              <a class="text-danger" @click="judgeReport(REPORT, '不通过')">不通过</a>
+            </template>
             <span class="label label-warning"
-                  v-if="BUSINESS.projectStatus<130">未复审</span>
+                  v-if="REPORT.adviceState===0">未通过</span>
+            <span class="label label-success"
+                  v-if="REPORT.adviceState===2">已通过</span>
+          </template>
+          <template v-if="!riskShow">
+            <a class="label label-warning"
+               v-if="REPORT.adviceState===0"
+               @click="sub(REPORT)">提交复审</a>
+            <span class="label label-success"
+                  v-if="REPORT.adviceState===2">已通过复审</span>
             <span class="label label-info"
-                  v-else-if="BUSINESS.projectStatus===130">待复审</span>
+                  v-if="REPORT.adviceState===1">等待复审</span>
           </template>
         </div>
-        <div class="col-xs-1">
-          <template v-if="archivesShow">{{}}</template>
+        <div class="col-xs-2">
+          <template v-if="archivesShow">
+            <label class="checkbox-inline">
+              <input type="checkbox"
+                     v-model="REPORT.state"
+                     @change="reportStatChan(REPORT)"> 下载二维码
+            </label>
+          </template>
           <template v-if="!archivesShow">
-            <span class="label label-warning"
-                  v-if="BUSINESS.projectStatus<130">未复审</span>
-            <span class="label label-info"
-                  v-else-if="BUSINESS.projectStatus===130">待复审</span>
+            <span class="label label-info" v-if="!REPORT.state">未下载</span>
+            <span class="label label-success" v-if="REPORT.state">已下载</span>
           </template>
         </div>
       </li>
     </div>
     <report-add-modal v-if="showAddModal"
-                      :user="user"
+                      :initBusiness="business"
                       @added="added"
                       @canceled="addCanceled"></report-add-modal>
     <report-mod-modal v-if="showModModal"
-                      :initalCustomer="modCustomer"
+                      :initReport="modReport"
+                      :initBusiness="business"
                       @del="del"
                       @saved="saved"
                       @canceled="modCanceled"></report-mod-modal>
     <report-del-modal v-if="showDelModal"
-                      :initalCustomer="delCustomer"
+                      :initReport="delReport"
+                      :initBusiness="business"
                       @deleted="deleted"
                       @canceled="delCanceled"></report-del-modal>
     <report-sub-modal v-if="showSubModal"
-                      :initalCustomer="subCustomer"
+                      :initReport="subReport"
+                      :initBusiness="business"
                       @submited="submited"
                       @canceled="subCanceled"></report-sub-modal>
   </div>
@@ -91,7 +113,15 @@ export default {
   data() {
     return {
       paths: [],
-      business: this.initBusiness
+      business: this.initBusiness,
+      showModModal: false,
+      modReport: {},
+      showDelModal: false,
+      delReport: {},
+      showAddModal: false,
+      addReport: {},
+      showSubModal: false,
+      subReport: {}
     };
   },
   computed: {
@@ -135,7 +165,7 @@ export default {
     this.$emit('pathsChan', this.paths);
   },
   methods: {
-    addReport() {
+    add() {
       if (this.business.report.amount < this.business.reports.length + 1) {
         this.$message({
           message: '报告数量超过要求数量',
@@ -143,8 +173,113 @@ export default {
         });
         return false;
       } else {
-
+        this.addReport = {};
+        this.showAddModal = true;
       }
+    },
+    added(addedReport) {},
+    addCanceled() {
+      this.showAddModal = false;
+    },
+    mod(REPORT) {
+      this.modReport = REPORT;
+      this.showModModal = true;
+    },
+    saved(modedReport) {},
+    modCanceled() {
+      this.modReport = {};
+      this.showModModal = false;
+    },
+    del(REPORT) {
+      this.delReport = REPORT;
+      this.showModModal = false;
+      this.showDelModal = true;
+    },
+    deleted(deletedReport) {
+      for (let i = 0; i > this.business.reports.length; i++) {
+        if (this.business.reports[i].id === deletedReport.id) {
+          this.business.reports.splice(i, 1);
+          break;
+        }
+      }
+      this.delReport = {};
+      this.showDelModal = false;
+    },
+    delCanceled() {
+      this.delReport = {};
+      this.showDelModal = false;
+      this.showModModal = true;
+    },
+    sub(REPORT) {
+      this.subReport = REPORT;
+      this.showSubModal = true;
+    },
+    submited(submitedReport) {
+      for (let i = 0; i > this.business.reports.length; i++) {
+        if (this.business.reports[i].id === submitedReport.id) {
+          this.business.reports[i].adviceState = 1;
+          break;
+        }
+      }
+      this.subReport = {};
+      this.showSubModal = false;
+    },
+    subCanceled() {
+      this.subReport = {};
+      this.showSubModal = false;
+    },
+    judgeReport(REPORT, result) {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'post',
+        url: '/service',
+        data: qs.stringify({
+          data: (() => {
+            let obj = {
+              command: 'handleBusiness',
+              platform: 'web',
+              id: this.business.id,
+              reportId: REPORT.id,
+              result: result
+            }
+            return JSON.stringify(obj);
+          })()
+        })
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          for (let i = 0; i < this.business.reports.length; i++) {
+            if (this.business.reports[i].id === REPORT.id) {
+              this.business.reports[i].adviceState = result === '通过' ? 2 : 0;
+              break;
+            }
+          }
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
+    },
+    reportStatChan(FILE) {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'post',
+        url: '/service',
+        data: qs.stringify({
+          data: (() => {
+            let obj = {
+              command: 'confirmQRcode',
+              platform: 'web',
+              projectAnnexId: FILE.id,
+              result: FILE.state ? '1' : '0'
+            }
+            return JSON.stringify(obj);
+          })()
+        })
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
     }
   },
   components: {

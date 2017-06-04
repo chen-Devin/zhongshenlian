@@ -1,186 +1,27 @@
 <template>
-  <modal alignSelf="flex-start" modalWidth="800px">
-    <form class="form-horizontal clearfix"
+  <modal>
+    <form class="clearfix"
           slot="body"
           @submit.prevent
           @keyup.enter.prevent>
-      <div class="row">
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.customerName.ver}">
-          <label class="control-label">客户名称</label>
-          <div>
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入客户名称"
-                   v-model="customer.customerName.val">
-          </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.name.ver}">
-          <label class="control-label">客户联系人</label>
-          <div>
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入客户联系人"
-                   v-model="customer.name.val">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.duty.ver}">
-          <label class="control-label">联系人职位</label>
-          <div>
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入联系人职位"
-                   v-model="customer.duty.val">
-          </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.telephone.ver}">
-          <label class="control-label">联系人电话</label>
-          <div>
-            <input type="tel"
-                   class="form-control"
-                   placeholder="请输入联系人电话"
-                   v-model="customer.telephone.val">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.department.ver}">
-          <label class="control-label">联系人部门</label>
-          <div>
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入联系人部门"
-                   v-model="customer.department.val">
-          </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.businessLicenseNumber.ver}">
-          <label class="control-label">营业执照号码</label>
-          <div>
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入营业执照号码"
-                   v-model="customer.businessLicenseNumber.val">
-          </div>
-        </div>
-      </div>
-      <div class="form-group row"
-           :class="{'has-error': !customer.registeredAddress.ver}">
-        <label class="control-label">注册地址</label>
-        <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入注册地址"
-                 v-model="customer.registeredAddress.val">
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.assetSize.ver}">
-          <label class="control-label">资产规模</label>
-          <div>
-            <div class="input-group">
-              <masked-input type="text"
-                            class="form-control"
-                            placeholder="请输入资产规模"
-                            v-model="customer.assetSize.val"
-                            :mask="currencyMask"
-                            :guide="false"
-                            placeholderChar="#">
-              </masked-input>
-              <div class="input-group-addon">万元</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.registeredCapital.ver}">
-          <label class="control-label">注册资本</label>
-          <div>
-            <div class="input-group">
-              <masked-input type="text"
-                            class="form-control"
-                            placeholder="请输入注册资本"
-                            v-model="customer.registeredCapital.val"
-                            :mask="currencyMask"
-                            :guide="false"
-                            placeholderChar="#">
-              </masked-input>
-              <div class="input-group-addon">万元</div>
-            </div>
-          </div>
-        </div>
+      <div class="form-group">
+        <label>报告名称</label>
+        <input type="text" class="form-control" placeholder="请输入报告名称" v-model="report.reportName">
       </div>
       <div class="form-group">
-        <label class="control-label">客户性质</label>
-        <div>
-          <label class="checkbox-inline"
-                 v-for="(NAT, index) in customer.customerNature"
-                 :key="index">
-            <input type="checkbox"
-                   v-model="NAT.state"> {{NAT.val}}
-          </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.setUpTime.ver}">
-          <label class="control-label">成立日期</label>
-          <div>
-            <input type="date"
-                   class="form-control"
-                   placeholder="请输入成立日期"
-                   v-model="customer.setUpTime.val">
-          </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.industry.ver}">
-          <label class="control-label">所属行业</label>
-          <div>
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入所属行业"
-                   v-model="customer.industry.val">
-          </div>
-        </div>
-      </div>
-      <div class="form-group row"
-           :class="{'has-error': !customer.mailingAddress.ver}">
-        <label class="control-label">邮寄地址</label>
-        <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入邮寄地址"
-                 v-model="customer.mailingAddress.val">
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label class="control-label">
-            创建部门&nbsp;
-            <span>
-              {{customer.founderDepartment.val}}
-            </span>
-          </label>
-        </div>
-        <div class="form-group col-md-6">
-          <label class="control-label">
-            创建人&nbsp;
-            <span>
-              {{customer.founderName.val}}
-            </span>
-          </label>
-        </div>
+        <label>业务报告</label>
+        <el-upload class="col-sm-10"
+                   :multiple="false"
+                   :action="reportUpload.URL"
+                   :on-progress="reportUploadProgress"
+                   :on-success="reportUploadSuccess"
+                   :show-file-list="false">
+          <button class="my-btn submit-btn btn-sm"
+                  type="button"
+                  :disabled="reportUpload.progressShow">点击上传</button>
+          <span slot="tip"
+                class="text-info">&emsp;文件大小建议不超过3Mb</span>
+        </el-upload>
       </div>
       <div class="alert alert-danger well-sm"
            v-show="alert.show">
@@ -215,7 +56,7 @@ export default {
   name: 'customerModModal',
   data() {
     return {
-      customer: (() => {
+      report: (() => {
         return {
           id: {
             val: this.initalCustomer.id

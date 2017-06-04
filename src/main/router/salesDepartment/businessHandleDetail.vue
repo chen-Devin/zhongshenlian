@@ -654,7 +654,9 @@ export default {
                 id: rep.data.data.reportAnnexArray[i].id,
                 name: rep.data.data.reportAnnexArray[i].annexName,
                 url: rep.data.data.reportAnnexArray[i].annexUrl,
-                state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true
+                state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true,
+                reportName: rep.data.data.reportAnnexArray[i].reportName,
+                adviceState: parseInt(rep.data.data.reportAnnexArray[i].fStatus)
               }
               this.business.reports.push(obj);
             }
