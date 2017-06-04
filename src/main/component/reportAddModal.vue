@@ -5,11 +5,16 @@
           @submit.prevent
           @keyup.enter.prevent>
       <div class="form-group">
-        <label>报告名称</label>
-        <input type="text" class="form-control" placeholder="请输入报告名称" v-model="report.reportName">
+        <label class="col-sm-2 control-label">报告名称</label>
+        <div class="col-sm-10">
+          <input type="text"
+                 class="form-control"
+                 placeholder="请输入报告名称"
+                 v-model="report.reportName">
+        </div>
       </div>
       <div class="form-group">
-        <label>业务报告</label>
+        <label class="col-sm-2 control-label">业务报告</label>
         <el-upload class="col-sm-10"
                    :multiple="false"
                    :action="reportUpload.URL"
@@ -22,6 +27,27 @@
           <span slot="tip"
                 class="text-info">&emsp;文件大小建议不超过3Mb</span>
         </el-upload>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="progress-wrap" v-show="reportUpload.progressShow">
+            <div class="progress">
+              <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: reportUpload.percentage}">
+                {{reportUpload.percentage}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <ul class="com-list attachment-list list-group">
+          <li class="list-group-item">
+            <span class="fa fa-file-text-o"></span>
+            <a class="text-primary title"
+                :href="report.url"
+                download>{{report.name}}</a>
+          </li>
+        </ul>
       </div>
       <div class="alert alert-danger well-sm"
            v-show="alert.show">
@@ -38,10 +64,6 @@
               @click="cancel()">
         取消
       </button>
-      <button class="btn my-btn cancel-btn modal-default-button"
-              @click="del()">
-        删除
-      </button>
     </div>
   </modal>
 </template>
@@ -56,80 +78,14 @@ export default {
   name: 'customerModModal',
   data() {
     return {
-      report: (() => {
-        return {
-          id: {
-            val: this.initalCustomer.id
-          },
-          customerName: {
-            val: this.initalCustomer.customerName,
-            ver: this.initalCustomer.customerName === '' ? false : true
-          },
-          name: {
-            val: this.initalCustomer.name,
-            ver: this.initalCustomer.name === '' ? false : true
-          },
-          telephone: {
-            val: this.initalCustomer.telephone,
-            ver: (() => {
-              let reg = /^(1+\d{10})$/;
-              if (this.initalCustomer.telephone === '') {
-                return false;
-              } else if (!reg.test(this.initalCustomer.telephone)) {
-                return false;
-              } else {
-                return true;
-              }
-            })()
-          },
-          duty: {
-            val: this.initalCustomer.duty,
-            ver: this.initalCustomer.duty === '' ? false : true
-          },
-          department: {
-            val: this.initalCustomer.department,
-            ver: this.initalCustomer.department === '' ? false : true
-          },
-          registeredAddress: {
-            val: this.initalCustomer.registeredAddress,
-            ver: this.initalCustomer.registeredAddress === '' ? false : true
-          },
-          mailingAddress: {
-            val: this.initalCustomer.mailingAddress,
-            ver: this.initalCustomer.mailingAddress === '' ? false : true
-          },
-          businessLicenseNumber: {
-            val: this.initalCustomer.businessLicenseNumber,
-            ver: this.initalCustomer.businessLicenseNumber === '' ? false : true
-          },
-          registeredCapital: {
-            val: this.initalCustomer.registeredCapital,
-            ver: this.initalCustomer.registeredCapital === '' ? false : true
-          },
-          customerNature: this.initalCustomer.customerNature,
-          assetSize: {
-            val: this.initalCustomer.assetSize,
-            ver: this.initalCustomer.assetSize === '' ? false : true
-          },
-          industry: {
-            val: this.initalCustomer.industry,
-            ver: this.initalCustomer.industry === '' ? false : true
-          },
-          setUpTime: {
-            val: this.initalCustomer.setUpTime,
-            ver: this.initalCustomer.setUpTime === '' ? false : true
-          },
-          founderId: {
-            val: this.initalCustomer.founderId
-          },
-          founderName: {
-            val: this.initalCustomer.founderName
-          },
-          founderDepartment: {
-            val: this.initalCustomer.founderDepartment
-          }
-        };
-      })(),
+      report: {
+        id: '',
+        name: '',
+        url: '',
+        state: false,
+        reportName: '',
+        adviceState: 0,
+      },
       alert: {
         show: false,
         cont: ''
@@ -137,12 +93,75 @@ export default {
       subBtn: {
         dis: false,
         cont: '保存'
+      },
+      reportUpload: {
+        URL: '',
+        progressShow: false,
+        percentage: '0%'
       }
     };
   },
-  props: ['initalCustomer'],
+  props: ['initBusiness'],
+  mounted() {
+    let data = {
+      command: 'handlerBusiness',
+      platform: 'web',
+      id: this.business.id,
+      type: 'projectReport'
+    };
+    this.reportUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
+  },
   methods: {
-    currencyMask,
+    reportUploadProgress(event, file, fileList) {
+      this.reportUpload.progressShow = true;
+      this.reportUpload.percentage = parseInt(file.percentage)+'%';
+    },
+    reportUploadSuccess(responseData, file, fileList) {
+      if (responseData.statusCode === '10001') {
+        let obj = {
+          id: responseData.data.id,
+          name: file.name,
+          url: responseData.data.path,
+          state: false
+        };
+        this.business.reports.push(obj);
+        this.$emit('uploaded', this.business);
+        setTimeout(() => {
+          this.reportUpload.percentage = '0%';
+          this.reportUpload.progressShow = false;
+        }, 500);
+      }
+    },
+    reportDelFile(FILE) {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'post',
+        url: '/service',
+        params: {
+          data: (() => {
+            let obj = {
+              command: 'delFile',
+              platform: 'web',
+              delFileId: FILE.id,
+              type: 'projectReport'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          for (let i = 0; i < this.business.reports.length; i++) {
+            if (this.business.reports[i].id === FILE.id) {
+              this.business.reports.splice(i, 1);
+              break;
+            }
+          }
+          this.$emit('deletedFile', this.business);
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
+    },
     save() {
       let reg = /^(1+\d{10})$/;
       this.alert.show = false;
