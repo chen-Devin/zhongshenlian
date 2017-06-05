@@ -58,7 +58,7 @@ export default {
     modal
   },
   created() {
-    console.log(this.advices);
+
   }
 };
 </script>

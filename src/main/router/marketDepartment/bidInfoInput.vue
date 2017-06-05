@@ -1,7 +1,9 @@
 <template>
   <div class="main">
+    <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
     <card>
+      <!--招投标信息编辑子组件-->
       <bid-info-edit :iniProject="project"
                      inputType="录入"
                      @submit="submit"
@@ -35,7 +37,7 @@ export default {
         { name: '招投标信息看板', url: '/bid-info-list', present: false },
         { name: '招投标信息录入', url: '/bid-info-input', present: true }
       ],
-      project: {
+      project: {  //招投标项目详细信息
         bidStartTime: (() => {
           let dt = new Date();
           let year = dt.getFullYear();
@@ -83,6 +85,7 @@ export default {
     }
   },
   methods: {
+    //保存为草稿
     saveDraft(project) {
       var departmentSort = [];
       for (var i = 0; i < project.departmentType.length; i++) {
@@ -128,22 +131,27 @@ export default {
         }
       }, (rep) => { });
     },
-
+    //用splice()方法删除数组中相应的元素
     delBasicFee(index) {
       this.project.contractType.subBasicArray.splice(index, 1);
     },
+    //增加一条基本取费，用push()方法
     addBasicFee() {
       this.project.contractType.subBasicArray.push({ "name": '', "rate": 0 });
     },
+    //删除一条效益取费
     delEfficiencyFee(index) {
       this.project.contractType.subEfficiencyArray.splice(index, 1);
     },
+    //增加一条基本取费
     addEfficiencyFee() {
       this.project.contractType.subEfficiencyArray.push({ "name": '', "rate": 0 });
     },
+    //撤销保存
     quedingDelete(id) {
       this.$router.push('/bid-info-list');
     },
+    //提交
     submit(project) {
       var departmentSort = [];
       for (var i = 0; i < project.departmentType.length; i++) {
@@ -176,7 +184,7 @@ export default {
             var obj = {
               command: 'addOrEditBiddingInfo',
               platform: 'web',
-              type: 'add', //增加或编辑操作
+              type: 'add',
               data: project
             };
             return JSON.stringify(obj);
@@ -201,7 +209,7 @@ export default {
 <style lang="sass" scoped>
 	.icon {
 		vertical-align: middle;
-		color: #EFA844;
+		color: #efa844;
 		margin-right: 10px;
 		margin-bottom: -10px;
 	}

@@ -1,5 +1,6 @@
 <template>
 	<div class="main">
+    <!--面包屑导航-->
 		<crumbs :paths="paths"></crumbs>
 		<card>
       <h3 class="main-title">草稿箱</h3>
@@ -13,30 +14,30 @@
           <span class="date pull-right">{{ project.updateAt }}</span>
         </a>
       </div>
-			<my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
+			<my-pagination :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
 		</card>
 	</div>
 </template>
 
 <style lang="sass" scoped>
-.ta-r {
-	text-align: right;
-}
-.dateMr {
-	padding-right: 32px;
-}
-table {
-	tbody {
-		tr {
-			cursor: pointer;
-		}
-	}
-}
-.com-list {
-  a {
-    cursor: pointer;
+  .ta-r {
+  	text-align: right;
   }
-}
+  .dateMr {
+  	padding-right: 32px;
+  }
+  table {
+  	tbody {
+  		tr {
+  			cursor: pointer;
+  		}
+  	}
+  }
+  .com-list {
+    a {
+      cursor: pointer;
+    }
+  }
 </style>
 
 <script>
@@ -51,20 +52,15 @@ export default {
 	data() {
 		return {
 			paths: [
-	    		{name: '草稿箱', url: '/bid-info-draft', present: true}
+	    		{ name: '草稿箱', url: '/bid-info-draft', present: true }
 	  		],
-	  		isAccounting: true,
-	  		isAssessment: false,
-	  		isTax: false,
-	  		isCost: false,
 	  		unfinishedList: [],
-	  		office: '会计所',
 	  		pageNum: 1,
-        totalNum: 1,
-        totalPage: ''
+        totalNum: 1
 		}
 	},
 	methods: {
+    //获取列表
 		getList() {
 			axios({
 			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -89,10 +85,12 @@ export default {
 	    		}
 	  		}, (rep) => {});
 		},
+    //分页功能
 		currentChange(val) {
 			this.pageNum = val;
 			this.getList();
 		},
+    //获取信息细节
 		checkMessage(project) {
 			this.$router.push('/bid-info-detail/'+project.id+"&isDraft");
 		}

@@ -1,7 +1,9 @@
 <template>
   <div class="main">
+    <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
     <card>
+      <!--招投标列表子组件-->
       <bid-info-list-body></bid-info-list-body>
     </card>
   </div>

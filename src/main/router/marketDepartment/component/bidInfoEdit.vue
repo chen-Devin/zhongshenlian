@@ -544,13 +544,12 @@
 			</p>
 		</modal>
 	</div>
-
 </template>
 
 <style lang="sass" scoped>
 	.icon {
 		vertical-align: middle;
-		color: #EFA844;
+		color: #efa844;
 	}
 	.ta-c {
 		text-align: center;
@@ -570,7 +569,6 @@
   }
   .row.width-adjust {
       width: 800px;
-      // margin-left: 80px;
   }
 </style>
 
@@ -592,6 +590,7 @@ export default {
 		}
 	},
 	computed: {
+    //
 		kjsContentShow() {
 			let kjs = this.project.departmentType.some((item,index,array)=> {
 				return item === 'kjs';
