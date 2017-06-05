@@ -22,7 +22,7 @@
       <li class="list-group-item row"
           v-for="(REPORT, index) in business.reports"
           :key="index">
-        <div class="col-xs-4">{{REPORT.name}}</div>
+        <div class="col-xs-4">{{REPORT.reportName}}</div>
         <div class="col-xs-1">
           <a class="text-primary title"
              :href="REPORT.url"
@@ -95,18 +95,13 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
-import { Upload,Message } from 'element-ui';
 
 import reportAddModal from './reportAddModal.vue';
 import reportModModal from './reportModModal.vue';
 import reportDelModal from './reportDelModal.vue';
 import reportSubModal from './reportSubModal.vue';
-
-Vue.use(Upload);
-Vue.prototype.$message = Message;
 
 export default {
   name: 'businessReports',
@@ -177,7 +172,9 @@ export default {
         this.showAddModal = true;
       }
     },
-    added(addedReport) {},
+    added(addedReport) {
+      this.business.reports.push(addedReport);
+    },
     addCanceled() {
       this.showAddModal = false;
     },

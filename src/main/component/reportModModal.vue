@@ -20,7 +20,7 @@
                    :auto-upload="false"
                    :show-file-list="false"
                    :action="reportUpload.URL"
-                   :on-change="modFile"
+                   :on-change="modReport"
                    :on-progress="reportUploadProgress"
                    :on-success="reportUploadSuccess">
           <button class="my-btn submit-btn btn-sm"
@@ -73,26 +73,20 @@
 import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
-import { Upload } from 'element-ui';
+import { Upload,Message } from 'element-ui';
 
 import modal from './modal.vue';
 
 Vue.use(Upload);
+Vue.prototype.$message = Message;
 
 export default {
   name: 'reportModModal',
   data() {
     return {
-      report: {
-        id: '',
-        name: '',
-        url: '',
-        state: false,
-        reportName: '',
-        adviceState: 0,
-      },
+      report: this.initReport,
       file: {
-        name: ''
+        name: this.initReport.name
       },
       alert: {
         show: false,
@@ -109,19 +103,13 @@ export default {
       }
     };
   },
-  props: ['initBusiness'],
-  mounted() {
-    let data = {
-      command: 'handlerBusiness',
-      platform: 'web',
-      id: this.initBusiness.id,
-      type: 'projectReport'
-    };
-    this.reportUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
-  },
+  props: ['initReport', 'initBusiness'],
   methods: {
-    modFile(file, fileList) {
-      this.file = file;
+    modReport(file, fileList) {
+      if(file.status === 'ready') {
+        this.file = file;
+        fileList.splice(0, fileList.length-2);
+      }
     },
     reportUploadProgress(event, file, fileList) {
       this.reportUpload.progressShow = true;
@@ -129,30 +117,50 @@ export default {
     },
     reportUploadSuccess(responseData, file, fileList) {
       if (responseData.statusCode === '10001') {
-        let obj = {
-          id: responseData.data.id,
-          name: file.name,
-          url: responseData.data.path,
-          state: false,
-          reportName: this.report.reportName,
-          adviceState: 0,
-        };
-        this.business.reports.push(obj);
+        this.report.id = responseData.data.id;
+        this.report.name = file.name;
+        this.report.url = responseData.data.path;
+        this.report.state = this.report.state;
+        this.report.reportName = this.report.reportName;
+        this.report.adviceState = this.report.adviceState;
 
         setTimeout(() => {
           this.reportUpload.percentage = '0%';
           this.reportUpload.progressShow = false;
+          this.$emit('saved', this.report);
         }, 500);
       }
     },
     save() {
-
+      if (this.report.reportName === '') {
+        this.$message({
+          message: '请输入报告名称',
+          type: 'warning'
+        });
+        return false;
+      } else if (this.file.name === '') {
+        this.$message({
+          message: '请先选择文件',
+          type: 'warning'
+        });
+        return false;
+      } else {
+        this.subBtn.cont = '保存...';
+        this.subBtn.dis = true;
+        let data = {
+          command: 'handlerBusiness',
+          platform: 'web',
+          id: this.initBusiness.id,
+          type: 'projectReport',
+          reportName: this.report.reportName,
+          annexId: this.report.id
+        };
+        this.reportUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
+        this.$refs.upload.submit();
+      }
     },
     cancel() {
       this.$emit('canceled');
-    },
-    del() {
-      this.$emit('del', this.initalCustomer);
     }
   },
   components: {
