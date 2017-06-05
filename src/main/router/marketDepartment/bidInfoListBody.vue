@@ -7,11 +7,11 @@
         </div>
         <div class="col-md-10 replace" v-show="!simpleSearch"></div>
         <div class="col-md-1 higher-search f-r">
-          <button type="button" class="btn my-btn draft-btn" @click="showHigherSearch()">
+          <button class="btn my-btn draft-btn" type="button" @click="showHigherSearch()">
             高级搜索
             &nbsp;
-            <img v-if="searchDown" class="search-icon" src="../../../img/market/search_down.svg">
-            <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg">
+            <img class="search-icon" v-if="searchDown" src="../../../img/market/search_down.svg">
+            <img class="search-icon" v-if="searchUp" src="../../../img/market/search_up.svg">
           </button>
         </div>
       </div>
@@ -101,7 +101,6 @@
     <h3 class="main-title">
       信息列表
       <button class="btn my-btn submit-btn type-btn f-r" @click="input()" v-if="inputBtn">
-        <!-- <img class="input-icon" src="../../../img/market/input.svg">&nbsp -->
         录入
       </button>
     </h3>
@@ -238,74 +237,74 @@ export default {
       }, (rep) => { });
     },
     higherSearchEvent() {
-        this.listType = 'higherSearch';
-        var departmentSort = [];
-        for (var i = 0; i < this.officeList.length; i++) {
-          if(this.officeList[i] === 'kjs') {
-              departmentSort.push('kjs');
-          }
+      this.listType = 'higherSearch';
+      var departmentSort = [];
+      for (var i = 0; i < this.officeList.length; i++) {
+        if(this.officeList[i] === 'kjs') {
+            departmentSort.push('kjs');
         }
-        for (var i = 0; i < this.officeList.length; i++) {
-          if(this.officeList[i] === 'pgs') {
-              departmentSort.push('pgs');
-          }
+      }
+      for (var i = 0; i < this.officeList.length; i++) {
+        if(this.officeList[i] === 'pgs') {
+            departmentSort.push('pgs');
         }
-        for (var i = 0; i < this.officeList.length; i++) {
-          if(this.officeList[i] === 'sws') {
-              departmentSort.push('sws');
-          }
+      }
+      for (var i = 0; i < this.officeList.length; i++) {
+        if(this.officeList[i] === 'sws') {
+            departmentSort.push('sws');
         }
-        for (var i = 0; i < this.officeList.length; i++) {
-          if(this.officeList[i] === 'zjs') {
-              departmentSort.push('zjs');
-          }
+      }
+      for (var i = 0; i < this.officeList.length; i++) {
+        if(this.officeList[i] === 'zjs') {
+            departmentSort.push('zjs');
         }
-        this.officeList = departmentSort;
-        if (this.officeList.length === 0) {
-          this.officeListTrans = '';
-        } else {
-          this.officeListTrans = this.officeList;
+      }
+      this.officeList = departmentSort;
+      if (this.officeList.length === 0) {
+        this.officeListTrans = '';
+      } else {
+        this.officeListTrans = this.officeList;
+      }
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            let obj = {
+              command: 'searchBiddingList',
+              platform: 'web',
+              searchContent: '',
+              bidStartDate: this.bidStartDate,
+              bidEndDate: this.bidEndDate,
+              tenderPerson: this.tenderPerson,
+              agency: this.agency,
+              projectName: this.projectName,
+              pageNum: this.pageNum,
+              projectType: this.officeListTrans,
+              projectStatus: this.filterState.toString()
+            }
+            return JSON.stringify(obj);
+          })()
         }
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              let obj = {
-                command: 'searchBiddingList',
-                platform: 'web',
-                searchContent: '',
-                bidStartDate: this.bidStartDate,
-                bidEndDate: this.bidEndDate,
-                tenderPerson: this.tenderPerson,
-                agency: this.agency,
-                projectName: this.projectName,
-                pageNum: this.pageNum,
-                projectType: this.officeListTrans,
-                projectStatus: this.filterState.toString()
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.bidArray = [];
-            this.bidArray = rep.data.data.businessArray;
-            this.totalPage = rep.data.data.pageNum;
-            this.totalNum = rep.data.data.totalNum;
-          }
-        }, (rep) => { });
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.bidArray = [];
+          this.bidArray = rep.data.data.businessArray;
+          this.totalPage = rep.data.data.pageNum;
+          this.totalNum = rep.data.data.totalNum;
+        }
+      }, (rep) => { });
     },
     reset() {
-        this.projectName = '';
-        this.tenderPerson = '';
-        this.agency = '';
-        this.bidStartDate = '';
-        this.bidEndDate = '';
-        this.filterState = [];
-        this.officeList = [];
-        this.getAllList();
+      this.projectName = '';
+      this.tenderPerson = '';
+      this.agency = '';
+      this.bidStartDate = '';
+      this.bidEndDate = '';
+      this.filterState = [];
+      this.officeList = [];
+      this.getAllList();
     },
     showInputBtn() {
       if (this.user.department === "市场部") {
@@ -444,8 +443,12 @@ table {
 .left-move {
 	margin-left: 10px;
 }
-input::-ms-input-placeholder{text-align: center;}
-input::-webkit-input-placeholder{text-align: center;}
+input::-ms-input-placeholder {
+  text-align: center;
+}
+input::-webkit-input-placeholder {
+  text-align: center;
+}
 .selectBox {
 	width: 330px;
 }
