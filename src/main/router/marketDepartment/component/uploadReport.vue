@@ -23,14 +23,14 @@
 </template>
 
 <style lang="sass" scoped>
-    .ta-r {
-      text-align: right;
+  .ta-r {
+    text-align: right;
+  }
+  .delete {
+    &:hover {
+      cursor: pointer;
     }
-    .delete {
-      &:hover {
-        cursor: pointer;
-      }
-    }
+  }
 </style>
 
 <script>
@@ -50,10 +50,10 @@ export default {
   },
   methods: {
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+
     },
     handlePreview(file) {
-      console.log(file);
+
     },
     uploadSuccess(responseData, file, fileList) {
       if (responseData.statusCode === '10001') {
@@ -68,20 +68,17 @@ export default {
       }
     },
     deleteDoc() {
-      console.log('点击删除');
-      console.log(this.fileList);
       this.$emit('deleteDoc');
     }
   },
   mounted() {
-      let data = {
-        command: 'handlerBusiness',
-        platform: 'web',
-        id: this.id,
-        type: this.type
-      };
-      this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);
-      console.log(this.uploadURL);
+    let data = {
+      command: 'handlerBusiness',
+      platform: 'web',
+      id: this.id,
+      type: this.type
+    };
+    this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);
   },
   props: ['type','id']
 }
