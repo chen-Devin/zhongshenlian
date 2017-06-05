@@ -2,15 +2,12 @@
   <modal>
     <div slot="body">
       <p>
-        <span class="fa fa-exclamation-circle fa-5x text-primary"></span>
-        <span class="text-cont">
-          <span v-if="initBusiness.reports.length===0">尚未上传项目报告，</span>
-          确定提交复审吗？
-        </span>
+        <span class="fa fa-exclamation-circle fa-5x text-danger"></span>
+        <span class="text-cont">确定删除该报告吗？</span>
       </p>
     </div>
     <div slot="footer">
-      <button class="btn my-btn submit-btn modal-default-button" @click="sub()" :disabled="subBtn.dis">
+      <button class="btn my-btn submit-btn modal-default-button" @click="del()" :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
       <button class="btn my-btn draft-btn modal-default-button" @click="cancel()">
@@ -24,45 +21,46 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import modal from '../../../component/modal.vue';
+import modal from './modal.vue';
 
 export default {
-  name: 'ruleDelModal',
+  name: 'reportDelModal',
   data() {
     return {
       subBtn: {
         dis: false,
-        cont: '确定'
+        cont: '删除'
       }
     };
   },
-  props: ['initBusiness'],
+  props: ['initReport', 'initBusiness'],
   methods: {
-    sub() {
+    del() {
       this.subBtn.dis = true;
-      this.subBtn.cont = '提交...';
+      this.subBtn.cont = '删除中...';
       axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
         method: 'post',
         url: '/service',
         data: qs.stringify({
           data: (() => {
             var obj = {
-              command: 'submitReview',
+              command: 'delFile',
               platform: 'web',
-              id: this.initBusiness.id
+              delFileId: this.initReport.id,
+              type: 'projectReport'
             };
             return JSON.stringify(obj);
           })()
         })
-      }).then((rep) => {
+      }).then((rep)=>{
         if (rep.data.statusCode === '10001') {
-          this.subBtn.cont = '已提交';
-          this.$emit('submited');
+          this.subBtn.cont = '已删除';
+          this.$emit('deleted', this.initReport);
         } else if (rep.data.statusCode === '10012') {
           window.location.href = 'signIn.html';
         }
-      }, (rep) => { });
+      }, (rep)=>{});
     },
     cancel() {
       this.$emit('canceled');

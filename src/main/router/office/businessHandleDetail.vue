@@ -79,7 +79,8 @@ export default {
           })(),
         },
         contractAmount: '',
-        contractPrice: '',
+        feeBasis: '',
+        feeRate: 0,
         report: {
           type: [
             {
@@ -114,6 +115,10 @@ export default {
                 },{
                   name: '外审字',
                   code: '07',
+                  state: false
+                },{
+                  name: '无报告',
+                  code: '08',
                   state: false
                 }
               ]
@@ -163,6 +168,84 @@ export default {
                 },{
                   name: '咨字',
                   code: '04',
+                  state: false
+                }
+              ]
+            },{
+              name: 'BH',
+              code: 'BH',
+              state: false,
+              words: [
+                {
+                  name: '审字',
+                  code: '01',
+                  state: false
+                },{
+                  name: '专字',
+                  code: '02',
+                  state: false
+                },{
+                  name: '咨字',
+                  code: '03',
+                  state: false
+                },{
+                  name: '基决审字',
+                  code: '04',
+                  state: false
+                },{
+                  name: '外汇检字',
+                  code: '05',
+                  state: false
+                },{
+                  name: '验字',
+                  code: '06',
+                  state: false
+                },{
+                  name: '外审字',
+                  code: '07',
+                  state: false
+                },{
+                  name: '无报告',
+                  code: '08',
+                  state: false
+                }
+              ]
+            },{
+              name: 'QT',
+              code: 'QT',
+              state: false,
+              words: [
+                {
+                  name: '审字',
+                  code: '01',
+                  state: false
+                },{
+                  name: '专字',
+                  code: '02',
+                  state: false
+                },{
+                  name: '咨字',
+                  code: '03',
+                  state: false
+                },{
+                  name: '基决审字',
+                  code: '04',
+                  state: false
+                },{
+                  name: '外汇检字',
+                  code: '05',
+                  state: false
+                },{
+                  name: '验字',
+                  code: '06',
+                  state: false
+                },{
+                  name: '外审字',
+                  code: '07',
+                  state: false
+                },{
+                  name: '无报告',
+                  code: '08',
                   state: false
                 }
               ]
@@ -412,7 +495,9 @@ export default {
             this.business.time.end = rep.data.data.endTime;
 
             this.business.contractAmount = rep.data.data.contractAmount;
-            this.business.contractPrice = rep.data.data.contractPrice;
+
+            this.business.feeBasis = rep.data.data.feeBasis;
+            this.business.feeRate = parseInt(rep.data.data.feeRate);
 
             let flag = false;
             for (let i=0; i<rep.data.data.reportType.length; i++) {
@@ -579,7 +664,9 @@ export default {
                 id: rep.data.data.reportAnnexArray[i].id,
                 name: rep.data.data.reportAnnexArray[i].annexName,
                 url: rep.data.data.reportAnnexArray[i].annexUrl,
-                state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true
+                state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true,
+                reportName: rep.data.data.reportAnnexArray[i].reportName,
+                adviceState: parseInt(rep.data.data.reportAnnexArray[i].fStatus)
               }
               this.business.reports.push(obj);
             }

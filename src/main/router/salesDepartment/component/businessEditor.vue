@@ -21,7 +21,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">委托单位（客户）</label>
       <div class="my-col-sm-5">
-        <select class="form-control" :v-model="business.institution" :disabled="!editable">
+        <select class="form-control" v-model="business.institution" :disabled="!editable">
           <option v-for="(CUS, index) in customers" :value="CUS" :key="index">{{CUS.customerName}}</option>
         </select>
       </div>
@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">项目计划时间</label>
+      <label class="col-sm-2 control-label">计划工期</label>
       <div class="my-col-sm-5">
         <div class="row">
           <div class="col-sm-6">
@@ -91,19 +91,28 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">合同单价</label>
+      <label class="col-sm-2 control-label">取费依据</label>
+      <div class="my-col-sm-5">
+        <textarea cols="10"
+                  rows="3"
+                  maxlength="100"
+                  class="form-control"
+                  placeholder="请输入取费依据"
+                  v-model="business.feeBasis"
+                  :disabled="!editable">
+        </textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">费率</label>
       <div class="my-col-sm-5">
         <div class="input-group">
-          <masked-input type="text"
-                        class="form-control"
-                        placeholder="请输入合同单价"
-                        v-model="business.contractPrice"
-                        :disabled="!editable"
-                        :mask="currencyMask"
-                        :guide="false"
-                        placeholderChar="#">
-          </masked-input>
-          <div class="input-group-addon">元</div>
+          <input type="number"
+                 class="form-control"
+                 placeholder="请输入费率"
+                 v-model="business.feeRate"
+                 :disabled="!editable">
+          <div class="input-group-addon">%</div>
         </div>
       </div>
     </div>
@@ -143,7 +152,7 @@
       </div>
     </div>
     <div class="form-group" v-if="business.auditTime.exist">
-      <label class="col-sm-2 control-label">审计时间</label>
+      <label class="col-sm-2 control-label">审计期间</label>
       <div class="my-col-sm-5">
         <div class="row">
           <div class="col-sm-6">
@@ -405,6 +414,7 @@ export default {
         '评估',
         '税审',
         '工程结算',
+        '财务服务',
         '其他'
       ],
       getWay: [
@@ -426,17 +436,24 @@ export default {
     bus.$on('subBusiness', () => { this.sub() });
     bus.$on('savBusiness', () => { this.save() });
 
-    this.getCustomers().then(() => {
-      if (this.business.institution.id === '') {
-        this.business.institution = this.customers[0];
-      } else {
-        for (let i = 0; i < this.customers.length; i++) {
-          if (this.business.institution.id === this.customers[i].id) {
-            this.business.institution = this.customers[i];
-            break;
+    this.getCustomers(1).then((rep) => {
+      let pageNum = parseInt(rep.data.data.pageNum);
+      let promiseArr = [];
+      for (let i = 2; i <= pageNum; i++) {
+        promiseArr.push(this.getCustomers(i));
+      }
+      Promise.all(promiseArr).then(() => {
+        if (this.business.institution.id === '') {
+          this.business.institution = this.customers[0];
+        } else {
+          for (let i = 0; i < this.customers.length; i++) {
+            if (this.business.institution.id === this.customers[i].id) {
+              this.business.institution = this.customers[i];
+              break;
+            }
           }
         }
-      }
+      });
     }, () => { });
 
     if (this.business.type === '') {
@@ -525,7 +542,7 @@ export default {
       });
       return promise;
     },
-    getCustomers() {
+    getCustomers(pageNum) {
       let promise = new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -536,7 +553,7 @@ export default {
               var obj = {
                 command: 'getCustomerList',
                 platform: 'web',
-              pageNum: 1
+                pageNum: pageNum
               }
               return JSON.stringify(obj);
             })()
@@ -969,7 +986,7 @@ export default {
         let sta = moment(this.business.auditTime.start, 'YYYY-MM-DD');
         let end = moment(this.business.auditTime.end, 'YYYY-MM-DD');
         if (sta.isAfter(new Date(), 'day') || end.isAfter(new Date(), 'day')) {
-          this.$emit('refuseSub', '审计时间不能超过今天，请检查');
+          this.$emit('refuseSub', '审计期间不能超过今天，请检查');
           return false;
         } else {
           return true;

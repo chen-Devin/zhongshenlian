@@ -3,13 +3,7 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3 class="main-title">
-        {{business.name===''?'项目名称':business.name}}
-        <button class="btn my-btn submit-btn pull-right btn-adjust"
-                @click="sub()"
-                :disabled="subBtn.dis"
-                v-if="!subed">{{subBtn.cont}}</button>
-        <small class="label label-primary business-label pull-right"
-               v-if="subed">已提交风评复审</small>
+        {{business.name}}
       </h3>
       <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
@@ -21,10 +15,6 @@
           </div>
         </template>
       </div>
-      <business-sub-modal v-if="showSubModal"
-                          :initBusiness="business"
-                          @submited="submited"
-                          @canceled="delCanceled"></business-sub-modal>
     </card>
   </div>
 </template>
@@ -37,7 +27,6 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
-import businessSubModal from './component/businessSubModal.vue';
 
 export default {
   name: 'businessHandleDetailSales',
@@ -84,7 +73,8 @@ export default {
           })(),
         },
         contractAmount: '',
-        contractPrice: '',
+        feeBasis: '',
+        feeRate: 0,
         report: {
           type: [
             {
@@ -119,6 +109,10 @@ export default {
                 },{
                   name: '外审字',
                   code: '07',
+                  state: false
+                },{
+                  name: '无报告',
+                  code: '08',
                   state: false
                 }
               ]
@@ -168,6 +162,84 @@ export default {
                 },{
                   name: '咨字',
                   code: '04',
+                  state: false
+                }
+              ]
+            },{
+              name: 'BH',
+              code: 'BH',
+              state: false,
+              words: [
+                {
+                  name: '审字',
+                  code: '01',
+                  state: false
+                },{
+                  name: '专字',
+                  code: '02',
+                  state: false
+                },{
+                  name: '咨字',
+                  code: '03',
+                  state: false
+                },{
+                  name: '基决审字',
+                  code: '04',
+                  state: false
+                },{
+                  name: '外汇检字',
+                  code: '05',
+                  state: false
+                },{
+                  name: '验字',
+                  code: '06',
+                  state: false
+                },{
+                  name: '外审字',
+                  code: '07',
+                  state: false
+                },{
+                  name: '无报告',
+                  code: '08',
+                  state: false
+                }
+              ]
+            },{
+              name: 'QT',
+              code: 'QT',
+              state: false,
+              words: [
+                {
+                  name: '审字',
+                  code: '01',
+                  state: false
+                },{
+                  name: '专字',
+                  code: '02',
+                  state: false
+                },{
+                  name: '咨字',
+                  code: '03',
+                  state: false
+                },{
+                  name: '基决审字',
+                  code: '04',
+                  state: false
+                },{
+                  name: '外汇检字',
+                  code: '05',
+                  state: false
+                },{
+                  name: '验字',
+                  code: '06',
+                  state: false
+                },{
+                  name: '外审字',
+                  code: '07',
+                  state: false
+                },{
+                  name: '无报告',
+                  code: '08',
                   state: false
                 }
               ]
@@ -232,19 +304,11 @@ export default {
         projectOperatingArray: []
       },
       riskAdvices: [],
-      leaderAdivces: [],
-      subBtn: {
-        dis: false,
-        cont: '提交风评复审'
-      },
-      showSubModal: false
+      leaderAdivces: []
     };
   },
   props: ['user'],
   computed: {
-    subed() {
-      return (this.business.projectStatus < 130 || this.business.projectStatus === 131) ? false : true;
-    },
     progress() {
       if (this.business.projectStatus < 20) {
           return [
@@ -421,7 +485,9 @@ export default {
             this.business.time.end = rep.data.data.endTime;
 
             this.business.contractAmount = rep.data.data.contractAmount;
-            this.business.contractPrice = rep.data.data.contractPrice;
+
+            this.business.feeBasis = rep.data.data.feeBasis;
+            this.business.feeRate = parseInt(rep.data.data.feeRate);
 
             let flag = false;
             for (let i=0; i<rep.data.data.reportType.length; i++) {
@@ -588,7 +654,9 @@ export default {
                 id: rep.data.data.reportAnnexArray[i].id,
                 name: rep.data.data.reportAnnexArray[i].annexName,
                 url: rep.data.data.reportAnnexArray[i].annexUrl,
-                state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true
+                state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true,
+                reportName: rep.data.data.reportAnnexArray[i].reportName,
+                adviceState: parseInt(rep.data.data.reportAnnexArray[i].fStatus)
               }
               this.business.reports.push(obj);
             }
@@ -618,26 +686,13 @@ export default {
     },
     pathsChan(paths) {
       this.paths = paths;
-    },
-    sub() {
-      this.showSubModal = true;
-    },
-    submited() {
-      this.showSubModal = false;
-      this.business.projectStatus = 130;
-      this.subBtn.dis = true;
-      this.subBtn.cont = '已提交';
-    },
-    delCanceled() {
-      this.showSubModal = false;
     }
   },
   components: {
     crumbs,
     card,
     business,
-    approverAdvice,
-    businessSubModal
+    approverAdvice
   }
 }
 </script>
