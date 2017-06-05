@@ -399,7 +399,7 @@ export default {
         URL: '',
         progressShow: false,
         percentage: '0%'
-      },
+      }
     };
   },
   computed: {
