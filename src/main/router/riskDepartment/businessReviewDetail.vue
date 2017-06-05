@@ -354,9 +354,9 @@ export default {
             { name: '风控初审', passed: false, active: false },
             { name: '所长终审', passed: false, active: false },
             { name: '发放编号', passed: false, active: false },
-            { name: '风控复审', passed: false, active: false },
+            { name: '处理业务', passed: false, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: false},
+              qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -367,9 +367,9 @@ export default {
             { name: '风控初审', passed: false, active: false },
             { name: '所长终审', passed: false, active: false },
             { name: '发放编号', passed: false, active: false },
-            { name: '风控复审', passed: false, active: false },
+            { name: '处理业务', passed: false, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: false},
+              qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -380,9 +380,9 @@ export default {
             { name: '风控初审', passed: false, active: true },
             { name: '所长终审', passed: false, active: false },
             { name: '发放编号', passed: false, active: false },
-            { name: '风控复审', passed: false, active: false },
+            { name: '处理业务', passed: false, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: false},
+              qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -393,9 +393,9 @@ export default {
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: false, active: true },
             { name: '发放编号', passed: false, active: false },
-            { name: '风控复审', passed: false, active: false },
+            { name: '处理业务', passed: false, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: false},
+              qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -406,9 +406,9 @@ export default {
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
             { name: '发放编号', passed: false, active: true },
-            { name: '风控复审', passed: false, active: false },
+            { name: '处理业务', passed: false, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: false},
+              qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -419,9 +419,9 @@ export default {
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
             { name: '发放编号', passed: true, active: false },
-            { name: '风控复审', passed: false, active: true },
+            { name: '处理业务', passed: false, active: true },
             {
-              qrCode: {name: '二维码完成', passed: false, active: false},
+              qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -433,9 +433,9 @@ export default {
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
             { name: '发放编号', passed: true, active: false },
-            { name: '风控复审', passed: true, active: false },
+            { name: '处理业务', passed: true, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: true},
+              qrCode: {name: '报告完成', passed: false, active: true},
               bill: {name: '开票完成', passed: false, active: true}
             },
             { name: '业务完结', passed: false, active: false }
@@ -446,9 +446,9 @@ export default {
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
             { name: '发放编号', passed: true, active: false },
-            { name: '风控复审', passed: true, active: false },
+            { name: '处理业务', passed: true, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: true},
+              qrCode: {name: '报告完成', passed: false, active: true},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -460,9 +460,9 @@ export default {
           { name: '风控初审', passed: true, active: false },
           { name: '所长终审', passed: true, active: false },
           { name: '发放编号', passed: true, active: false },
-          { name: '风控复审', passed: true, active: false },
+          { name: '处理业务', passed: true, active: false },
           {
-            qrCode: {name: '二维码完成', passed: true, active: false},
+            qrCode: {name: '报告完成', passed: true, active: false},
             bill: {name: '开票完成', passed: true, active: false}
           },
           { name: '业务完结', passed: false, active: true }

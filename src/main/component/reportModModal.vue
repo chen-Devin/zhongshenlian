@@ -1,12 +1,12 @@
 <template>
   <modal>
-    <form class="clearfix"
+    <form class="form-horizontal clearfix"
           slot="body"
           @submit.prevent
           @keyup.enter.prevent>
       <div class="form-group">
-        <label class="col-sm-2 control-label">报告名称</label>
-        <div class="col-sm-10">
+        <label class="col-xs-2 control-label">报告名称</label>
+        <div class="col-xs-10">
           <input type="text"
                  class="form-control"
                  placeholder="请输入报告名称"
@@ -14,8 +14,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">业务报告</label>
-        <el-upload class="col-sm-10"
+        <label class="col-xs-2 control-label">业务报告</label>
+        <el-upload class="col-xs-10"
+                   ref="upload"
                    :multiple="false"
                    :auto-upload="false"
                    :show-file-list="false"
@@ -32,7 +33,7 @@
         </el-upload>
       </div>
       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
+        <div class="col-xs-12">
           <div class="progress-wrap" v-show="reportUpload.progressShow">
             <div class="progress">
               <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: reportUpload.percentage}">
@@ -156,6 +157,7 @@ export default {
           annexId: this.report.id
         };
         this.reportUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
+        console.log(this.$refs);
         this.$refs.upload.submit();
       }
     },
@@ -170,7 +172,11 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+form {
+  padding-left: 10px;
+  padding-right: 10px;
   .control-label {
     width: 100%;
   }
+}
 </style>
