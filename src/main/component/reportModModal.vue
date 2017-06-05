@@ -1,186 +1,54 @@
 <template>
-  <modal alignSelf="flex-start" modalWidth="800px">
-    <form class="form-horizontal clearfix"
+  <modal>
+    <form class="clearfix"
           slot="body"
           @submit.prevent
           @keyup.enter.prevent>
-      <div class="row">
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.customerName.ver}">
-          <label class="control-label">客户名称</label>
-          <div>
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入客户名称"
-                   v-model="customer.customerName.val">
-          </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.name.ver}">
-          <label class="control-label">客户联系人</label>
-          <div>
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入客户联系人"
-                   v-model="customer.name.val">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.duty.ver}">
-          <label class="control-label">联系人职位</label>
-          <div>
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入联系人职位"
-                   v-model="customer.duty.val">
-          </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.telephone.ver}">
-          <label class="control-label">联系人电话</label>
-          <div>
-            <input type="tel"
-                   class="form-control"
-                   placeholder="请输入联系人电话"
-                   v-model="customer.telephone.val">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.department.ver}">
-          <label class="control-label">联系人部门</label>
-          <div>
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入联系人部门"
-                   v-model="customer.department.val">
-          </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.businessLicenseNumber.ver}">
-          <label class="control-label">营业执照号码</label>
-          <div>
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入营业执照号码"
-                   v-model="customer.businessLicenseNumber.val">
-          </div>
-        </div>
-      </div>
-      <div class="form-group row"
-           :class="{'has-error': !customer.registeredAddress.ver}">
-        <label class="control-label">注册地址</label>
-        <div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">报告名称</label>
+        <div class="col-sm-10">
           <input type="text"
                  class="form-control"
-                 placeholder="请输入注册地址"
-                 v-model="customer.registeredAddress.val">
+                 placeholder="请输入报告名称"
+                 v-model="report.reportName">
         </div>
       </div>
-      <div class="row">
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.assetSize.ver}">
-          <label class="control-label">资产规模</label>
-          <div>
-            <div class="input-group">
-              <masked-input type="text"
-                            class="form-control"
-                            placeholder="请输入资产规模"
-                            v-model="customer.assetSize.val"
-                            :mask="currencyMask"
-                            :guide="false"
-                            placeholderChar="#">
-              </masked-input>
-              <div class="input-group-addon">万元</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.registeredCapital.ver}">
-          <label class="control-label">注册资本</label>
-          <div>
-            <div class="input-group">
-              <masked-input type="text"
-                            class="form-control"
-                            placeholder="请输入注册资本"
-                            v-model="customer.registeredCapital.val"
-                            :mask="currencyMask"
-                            :guide="false"
-                            placeholderChar="#">
-              </masked-input>
-              <div class="input-group-addon">万元</div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">业务报告</label>
+        <el-upload class="col-sm-10"
+                   :multiple="false"
+                   :auto-upload="false"
+                   :show-file-list="false"
+                   :action="reportUpload.URL"
+                   :on-change="modFile"
+                   :on-progress="reportUploadProgress"
+                   :on-success="reportUploadSuccess">
+          <button class="my-btn submit-btn btn-sm"
+                  type="button"
+                  slot="trigger"
+                  :disabled="reportUpload.progressShow">选择文件</button>
+          <span slot="tip"
+                class="text-info">&emsp;文件大小建议不超过3Mb</span>
+        </el-upload>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="progress-wrap" v-show="reportUpload.progressShow">
+            <div class="progress">
+              <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: reportUpload.percentage}">
+                {{reportUpload.percentage}}
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="form-group">
-        <label class="control-label">客户性质</label>
-        <div>
-          <label class="checkbox-inline"
-                 v-for="(NAT, index) in customer.customerNature"
-                 :key="index">
-            <input type="checkbox"
-                   v-model="NAT.state"> {{NAT.val}}
-          </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.setUpTime.ver}">
-          <label class="control-label">成立日期</label>
-          <div>
-            <input type="date"
-                   class="form-control"
-                   placeholder="请输入成立日期"
-                   v-model="customer.setUpTime.val">
-          </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-6"
-             :class="{'has-error': !customer.industry.ver}">
-          <label class="control-label">所属行业</label>
-          <div>
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入所属行业"
-                   v-model="customer.industry.val">
-          </div>
-        </div>
-      </div>
-      <div class="form-group row"
-           :class="{'has-error': !customer.mailingAddress.ver}">
-        <label class="control-label">邮寄地址</label>
-        <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入邮寄地址"
-                 v-model="customer.mailingAddress.val">
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label class="control-label">
-            创建部门&nbsp;
-            <span>
-              {{customer.founderDepartment.val}}
-            </span>
-          </label>
-        </div>
-        <div class="form-group col-md-6">
-          <label class="control-label">
-            创建人&nbsp;
-            <span>
-              {{customer.founderName.val}}
-            </span>
-          </label>
-        </div>
+        <ul class="com-list attachment-list list-group">
+          <li class="list-group-item">
+            <span class="fa fa-file-text-o"></span>
+            <span class="text-primary title">{{file.name}}</span>
+          </li>
+        </ul>
       </div>
       <div class="alert alert-danger well-sm"
            v-show="alert.show">
@@ -197,98 +65,35 @@
               @click="cancel()">
         取消
       </button>
-      <button class="btn my-btn cancel-btn modal-default-button"
-              @click="del()">
-        删除
-      </button>
     </div>
   </modal>
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
+import { Upload } from 'element-ui';
 
 import modal from './modal.vue';
 
+Vue.use(Upload);
+
 export default {
-  name: 'customerModModal',
+  name: 'reportModModal',
   data() {
     return {
-      customer: (() => {
-        return {
-          id: {
-            val: this.initalCustomer.id
-          },
-          customerName: {
-            val: this.initalCustomer.customerName,
-            ver: this.initalCustomer.customerName === '' ? false : true
-          },
-          name: {
-            val: this.initalCustomer.name,
-            ver: this.initalCustomer.name === '' ? false : true
-          },
-          telephone: {
-            val: this.initalCustomer.telephone,
-            ver: (() => {
-              let reg = /^(1+\d{10})$/;
-              if (this.initalCustomer.telephone === '') {
-                return false;
-              } else if (!reg.test(this.initalCustomer.telephone)) {
-                return false;
-              } else {
-                return true;
-              }
-            })()
-          },
-          duty: {
-            val: this.initalCustomer.duty,
-            ver: this.initalCustomer.duty === '' ? false : true
-          },
-          department: {
-            val: this.initalCustomer.department,
-            ver: this.initalCustomer.department === '' ? false : true
-          },
-          registeredAddress: {
-            val: this.initalCustomer.registeredAddress,
-            ver: this.initalCustomer.registeredAddress === '' ? false : true
-          },
-          mailingAddress: {
-            val: this.initalCustomer.mailingAddress,
-            ver: this.initalCustomer.mailingAddress === '' ? false : true
-          },
-          businessLicenseNumber: {
-            val: this.initalCustomer.businessLicenseNumber,
-            ver: this.initalCustomer.businessLicenseNumber === '' ? false : true
-          },
-          registeredCapital: {
-            val: this.initalCustomer.registeredCapital,
-            ver: this.initalCustomer.registeredCapital === '' ? false : true
-          },
-          customerNature: this.initalCustomer.customerNature,
-          assetSize: {
-            val: this.initalCustomer.assetSize,
-            ver: this.initalCustomer.assetSize === '' ? false : true
-          },
-          industry: {
-            val: this.initalCustomer.industry,
-            ver: this.initalCustomer.industry === '' ? false : true
-          },
-          setUpTime: {
-            val: this.initalCustomer.setUpTime,
-            ver: this.initalCustomer.setUpTime === '' ? false : true
-          },
-          founderId: {
-            val: this.initalCustomer.founderId
-          },
-          founderName: {
-            val: this.initalCustomer.founderName
-          },
-          founderDepartment: {
-            val: this.initalCustomer.founderDepartment
-          }
-        };
-      })(),
+      report: {
+        id: '',
+        name: '',
+        url: '',
+        state: false,
+        reportName: '',
+        adviceState: 0,
+      },
+      file: {
+        name: ''
+      },
       alert: {
         show: false,
         cont: ''
@@ -296,125 +101,52 @@ export default {
       subBtn: {
         dis: false,
         cont: '保存'
+      },
+      reportUpload: {
+        URL: '',
+        progressShow: false,
+        percentage: '0%'
       }
     };
   },
-  props: ['initalCustomer'],
+  props: ['initBusiness'],
+  mounted() {
+    let data = {
+      command: 'handlerBusiness',
+      platform: 'web',
+      id: this.initBusiness.id,
+      type: 'projectReport'
+    };
+    this.reportUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
+  },
   methods: {
-    currencyMask,
+    modFile(file, fileList) {
+      this.file = file;
+    },
+    reportUploadProgress(event, file, fileList) {
+      this.reportUpload.progressShow = true;
+      this.reportUpload.percentage = parseInt(file.percentage)+'%';
+    },
+    reportUploadSuccess(responseData, file, fileList) {
+      if (responseData.statusCode === '10001') {
+        let obj = {
+          id: responseData.data.id,
+          name: file.name,
+          url: responseData.data.path,
+          state: false,
+          reportName: this.report.reportName,
+          adviceState: 0,
+        };
+        this.business.reports.push(obj);
+
+        setTimeout(() => {
+          this.reportUpload.percentage = '0%';
+          this.reportUpload.progressShow = false;
+        }, 500);
+      }
+    },
     save() {
-      let reg = /^(1+\d{10})$/;
-      this.alert.show = false;
-      this.alert.cont = '';
-      if (this.customer.customerName.val === '') {
-        this.customer.customerName.ver = false;
-      } else {
-        this.customer.customerName.ver = true;
-      }
-      if (this.customer.name.val === '') {
-        this.customer.name.ver = false;
-      } else {
-        this.customer.name.ver = true;
-      }
-      if (this.customer.telephone.val === '') {
-        this.customer.telephone.ver = false;
-      } else if (!reg.test(this.customer.telephone.val)) {
-        this.customer.telephone.ver = false;
-      } else {
-        this.customer.telephone.ver = true;
-      }
-      if (this.customer.duty.val === '') {
-        this.customer.duty.ver = false;
-      } else {
-        this.customer.duty.ver = true;
-      }
-      if (this.customer.department.val === '') {
-        this.customer.department.ver = false;
-      } else {
-        this.customer.department.ver = true;
-      }
-      if (this.customer.registeredAddress.val === '') {
-        this.customer.registeredAddress.ver = false;
-      } else {
-        this.customer.registeredAddress.ver = true;
-      }
-      if (this.customer.mailingAddress.val === '') {
-        this.customer.mailingAddress.ver = false;
-      } else {
-        this.customer.mailingAddress.ver = true;
-      }
-      if (this.customer.businessLicenseNumber.val === '') {
-        this.customer.businessLicenseNumber.ver = false;
-      } else {
-        this.customer.businessLicenseNumber.ver = true;
-      }
-      if (this.customer.registeredCapital.val === '') {
-        this.customer.registeredCapital.ver = false;
-      } else {
-        this.customer.registeredCapital.ver = true;
-      }
-      if (this.customer.assetSize.val === '') {
-        this.customer.assetSize.ver = false;
-      } else {
-        this.customer.assetSize.ver = true;
-      }
-      if (this.customer.setUpTime.val === '') {
-        this.customer.setUpTime.ver = false;
-      } else {
-        this.customer.setUpTime.ver = true;
-      }
-      if (this.customer.industry.val === '') {
-        this.customer.industry.ver = false;
-      } else {
-        this.customer.industry.ver = true;
-      }
-      if (!(this.customer.customerName.ver && this.customer.name.ver && this.customer.telephone.ver && this.customer.duty.ver && this.customer.department.ver && this.customer.registeredAddress.ver && this.customer.mailingAddress.ver && this.customer.businessLicenseNumber.val && this.customer.registeredCapital.ver && this.customer.assetSize.ver && this.customer.setUpTime.ver && this.customer.industry.ver)) {
-        this.alert.show = true;
-        this.alert.cont = '您有信息尚未输入或信息格式有误，请检查';
-      } else {
-        this.subBtn.dis = true;
-        this.subBtn.cont = '保存中...';
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-          method: 'post',
-          url: '/service',
-          data: qs.stringify({
-            data: (() => {
-              var obj = {
-                command: 'editCustomerInfo',
-                platform: 'web',
-                data: {
-                  id: this.customer.id.val,
-                  customerName: this.customer.customerName.val,
-                  name: this.customer.name.val,
-                  telephone: this.customer.telephone.val,
-                  duty: this.customer.duty.val,
-                  department: this.customer.department.val,
-                  registeredAddress: this.customer.registeredAddress.val,
-                  mailingAddress: this.customer.mailingAddress.val,
-                  businessLicenseNumber: this.customer.businessLicenseNumber.val,
-                  registeredCapital: this.customer.registeredCapital.val,
-                  customerNature: this.customer.customerNature,
-                  assetSize: this.customer.assetSize.val,
-                  industry: this.customer.industry.val,
-                  setUpTime: this.customer.setUpTime.val,
-                  founderId: this.customer.founderId.val,
-                  founderName: this.customer.founderName.val,
-                  founderDepartment: this.customer.founderDepartment.val
-                }
-              };
-              return JSON.stringify(obj);
-            })()
-          })
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.subBtn.cont = '已保存';
-            this.$emit('saved', this.customer);
-          } else if (rep.data.statusCode === '10012') {
-            window.location.href = 'signIn.html';
-          }
-        }, (rep) => {});
-      }
+
     },
     cancel() {
       this.$emit('canceled');
@@ -424,8 +156,7 @@ export default {
     }
   },
   components: {
-    modal,
-    maskedInput
+    modal
   }
 };
 </script>

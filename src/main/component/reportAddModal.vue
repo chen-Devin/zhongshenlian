@@ -80,7 +80,7 @@ import modal from './modal.vue';
 Vue.use(Upload);
 
 export default {
-  name: 'customerModModal',
+  name: 'reportAddModal',
   data() {
     return {
       report: {
