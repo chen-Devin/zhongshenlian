@@ -156,8 +156,7 @@ export default {
     }
   },
   components: {
-    modal,
-    maskedInput
+    modal
   }
 };
 </script>
