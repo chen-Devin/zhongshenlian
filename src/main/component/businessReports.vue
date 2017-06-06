@@ -9,11 +9,9 @@
       </button>
     </h4>
     <div class="com-list list-group">
-      <li class="list-group-item list-head">
-        <span class="title">报告列表</span>
-      </li>
-      <li class="list-group-item row">
-        <div class="col-xs-4">报告名称</div>
+      <li class="list-group-item list-head row">
+        <div class="col-xs-1">序号</div>
+        <div class="col-xs-5">报告名称</div>
         <div class="col-xs-1">附件</div>
         <div class="col-xs-1" v-if="salesShow">修改</div>
         <div class="col-xs-2">复审状态</div>
@@ -22,7 +20,8 @@
       <li class="list-group-item row"
           v-for="(REPORT, index) in business.reports"
           :key="index">
-        <div class="col-xs-4">{{REPORT.reportName}}</div>
+        <div class="col-xs-1">{{index+1+'.'}}</div>
+        <div class="col-xs-5">{{REPORT.reportName}}</div>
         <div class="col-xs-1">
           <a class="text-primary title"
              :href="REPORT.url"
@@ -174,6 +173,7 @@ export default {
     },
     added(addedReport) {
       this.business.reports.push(addedReport);
+      this.showAddModal = false;
     },
     addCanceled() {
       this.showAddModal = false;
@@ -182,7 +182,16 @@ export default {
       this.modReport = REPORT;
       this.showModModal = true;
     },
-    saved(modedReport) {},
+    saved(modedReport) {
+      for (let i = 0; i > this.business.reports.length; i++) {
+        if (this.business.reports[i].id === modedReport.id) {
+          this.business.reports.splice(i, 1, modedReport);
+          break;
+        }
+      }
+      this.modReport = {};
+      this.showModModal = false;
+    },
     modCanceled() {
       this.modReport = {};
       this.showModModal = false;
@@ -289,7 +298,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.total-amount {
-  margin-top: 30px;
+a {
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

@@ -17,7 +17,6 @@
         <label class="col-xs-2 control-label">业务报告</label>
         <el-upload class="col-xs-10"
                    ref="upload"
-                   :multiple="false"
                    :auto-upload="false"
                    :show-file-list="false"
                    :action="reportUpload.URL"
@@ -32,9 +31,9 @@
                 class="text-info">&emsp;文件大小建议不超过3Mb</span>
         </el-upload>
       </div>
-      <div class="form-group">
+      <div class="form-group" v-show="reportUpload.progressShow">
         <div class="col-xs-12">
-          <div class="progress-wrap" v-show="reportUpload.progressShow">
+          <div class="progress-wrap">
             <div class="progress">
               <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: reportUpload.percentage}">
                 {{reportUpload.percentage}}
@@ -43,7 +42,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" v-show="file.name !== ''">
         <ul class="com-list attachment-list list-group">
           <li class="list-group-item">
             <span class="fa fa-file-text-o"></span>
@@ -66,6 +65,10 @@
               @click="cancel()">
         取消
       </button>
+      <button class="btn my-btn cancel-btn modal-default-button"
+              @click="del()">
+        删除
+      </button>
     </div>
   </modal>
 </template>
@@ -87,7 +90,7 @@ export default {
     return {
       report: this.initReport,
       file: {
-        name: this.initReport.name
+        name: ''
       },
       alert: {
         show: false,
@@ -107,9 +110,11 @@ export default {
   props: ['initReport', 'initBusiness'],
   methods: {
     modReport(file, fileList) {
-      if(file.status === 'ready') {
+      console.log(file);
+      if (file.status === 'ready') {
         this.file = file;
-        fileList.splice(0, fileList.length-2);
+        fileList.splice(0, fileList.length-1);
+        console.log(fileList);
       }
     },
     reportUploadProgress(event, file, fileList) {
@@ -140,11 +145,43 @@ export default {
         });
         return false;
       } else if (this.file.name === '') {
-        this.$message({
-          message: '请先选择文件',
-          type: 'warning'
-        });
-        return false;
+        this.subBtn.cont = '保存...';
+        this.subBtn.dis = true;
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'post',
+          url: '/fileUpload',
+          data: qs.stringify({
+            data: (() => {
+              let obj = {
+                command: 'handlerBusiness',
+                platform: 'web',
+                id: this.initBusiness.id,
+                type: 'projectReport',
+                reportName: this.report.reportName,
+                annexId: this.report.id
+              }
+              return JSON.stringify(obj);
+            })()
+          })
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.report.id = this.report.id;
+            this.report.name = this.report.name;
+            this.report.url = this.report.url;
+            this.report.state = this.report.state;
+            this.report.reportName = this.report.reportName;
+            this.report.adviceState = this.report.adviceState;
+
+            setTimeout(() => {
+              this.reportUpload.percentage = '0%';
+              this.reportUpload.progressShow = false;
+              this.$emit('saved', this.report);
+            }, 500);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
+          }
+        }, (rep) => { });
       } else {
         this.subBtn.cont = '保存...';
         this.subBtn.dis = true;
@@ -157,12 +194,17 @@ export default {
           annexId: this.report.id
         };
         this.reportUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
-        console.log(this.$refs);
-        this.$refs.upload.submit();
+
+        setTimeout(() => {
+          this.$refs.upload.submit();
+        }, 100);
       }
     },
     cancel() {
       this.$emit('canceled');
+    },
+    del() {
+      this.$emit('del', this.initReport);
     }
   },
   components: {

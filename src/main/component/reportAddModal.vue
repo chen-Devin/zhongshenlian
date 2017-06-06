@@ -17,7 +17,6 @@
         <label class="col-xs-2 control-label">业务报告</label>
         <el-upload class="col-xs-10"
                    ref="upload"
-                   :multiple="false"
                    :auto-upload="false"
                    :show-file-list="false"
                    :action="reportUpload.URL"
@@ -32,9 +31,9 @@
                 class="text-info">&emsp;文件大小建议不超过3Mb</span>
         </el-upload>
       </div>
-      <div class="form-group">
+      <div class="form-group" v-show="reportUpload.progressShow">
         <div class="col-xs-12">
-          <div class="progress-wrap" v-show="reportUpload.progressShow">
+          <div class="progress-wrap">
             <div class="progress">
               <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: reportUpload.percentage}">
                 {{reportUpload.percentage}}
@@ -43,7 +42,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" v-show="file.name !== ''">
         <ul class="com-list attachment-list list-group">
           <li class="list-group-item">
             <span class="fa fa-file-text-o"></span>
@@ -114,9 +113,11 @@ export default {
   props: ['initBusiness'],
   methods: {
     modReport(file, fileList) {
+      console.log(file);
       if(file.status === 'ready') {
         this.file = file;
-        fileList.splice(0, fileList.length-2);
+        fileList.splice(0, fileList.length-1);
+        console.log(fileList);
       }
     },
     reportUploadProgress(event, file, fileList) {
@@ -164,8 +165,10 @@ export default {
           annexId: this.report.id
         };
         this.reportUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
-        console.log(this.$refs.upload);
-        this.$refs.upload.submit();
+
+        setTimeout(() => {
+          this.$refs.upload.submit();
+        }, 100);
       }
     },
     cancel() {

@@ -438,7 +438,7 @@ export default {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
         method: 'post',
         url: '/service',
-        params: {
+        data: qs.stringify({
           data: (() => {
             let obj = {
               command: 'delFile',
@@ -448,7 +448,7 @@ export default {
             }
             return JSON.stringify(obj);
           })()
-        }
+        })
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
           for (let i = 0; i < this.business.contracts.length; i++) {

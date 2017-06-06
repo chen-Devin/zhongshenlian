@@ -22,6 +22,7 @@
 
 <script>
 import axios from 'axios';
+import qs from 'qs';
 
 export default {
   name: 'comHeader',
@@ -37,7 +38,7 @@ export default {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
         method: 'post',
         url: '/service',
-        params: {
+        data: qs.stringify({
           data: (() => {
             let obj = {
               command: 'logOut',
@@ -45,7 +46,7 @@ export default {
             }
             return JSON.stringify(obj);
           })()
-        }
+        })
       }).then( (rep) => {
         if (rep.data.statusCode === '10001') {
           window.location.href = './signUp.html';

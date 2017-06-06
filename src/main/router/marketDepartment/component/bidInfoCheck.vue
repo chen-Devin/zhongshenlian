@@ -684,7 +684,6 @@ export default {
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          console.log('提交成功');
           this.getInfo();
           this.checkAdviceShow = true;
           this.adviceShow = false;
@@ -743,7 +742,6 @@ export default {
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          console.log('审核通过');
           this.getInfo();
           this.checkAdviceShow = true;
           this.directorAgreeShow = false;
@@ -842,7 +840,6 @@ export default {
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          console.log('上传完成');
           this.finishBtn = false;
         } else {
 
