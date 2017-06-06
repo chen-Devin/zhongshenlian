@@ -23449,6 +23449,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
   name: 'businessReports',
@@ -23476,6 +23484,9 @@ exports.default = {
     },
     archivesShow: function archivesShow() {
       return this.user.department === '档案部' ? true : false;
+    },
+    officeShow: function officeShow() {
+      return this.user.department === '办公室' ? true : false;
     }
   },
   props: ['initBusiness', 'user'],
@@ -23533,7 +23544,7 @@ exports.default = {
       this.showModModal = true;
     },
     saved: function saved(modedReport) {
-      for (var i = 0; i > this.business.reports.length; i++) {
+      for (var i = 0; i < this.business.reports.length; i++) {
         if (this.business.reports[i].id === modedReport.id) {
           this.business.reports.splice(i, 1, modedReport);
           break;
@@ -23552,7 +23563,7 @@ exports.default = {
       this.showDelModal = true;
     },
     deleted: function deleted(deletedReport) {
-      for (var i = 0; i > this.business.reports.length; i++) {
+      for (var i = 0; i < this.business.reports.length; i++) {
         if (this.business.reports[i].id === deletedReport.id) {
           this.business.reports.splice(i, 1);
           break;
@@ -23571,7 +23582,7 @@ exports.default = {
       this.showSubModal = true;
     },
     submited: function submited(submitedReport) {
-      for (var i = 0; i > this.business.reports.length; i++) {
+      for (var i = 0; i < this.business.reports.length; i++) {
         if (this.business.reports[i].id === submitedReport.id) {
           this.business.reports[i].adviceState = 1;
           break;
@@ -25044,9 +25055,9 @@ exports.default = {
           if (this.user.authority['发合同编号']) {
             routes.push({ name: '待发合同编号', link: '/business-review-list-office', icon: 'bid-info', openClass: 1, open: true });
           }
-          // if (this.user.authority['装订业务报告']) {
-          //   routes.push({name: '待装订业务', link: '/business-handle-list-office', icon: 'bid-info'});
-          // }
+          if (this.user.authority['装订业务报告']) {
+            routes.push({ name: '待装订业务', link: '/business-handle-list-office', icon: 'bid-info' });
+          }
           routes.push({ name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info', openClass: 1, open: true });
         } else if (this.user.department === '业务部') {
           routes = [{ name: '待审核业务', link: '/business-review-list-sales', icon: 'business-review-list-leader', openClass: 1, open: true }, { name: '待处理业务', link: '/business-handle-list-sales', icon: 'business-handle-list-sales', openClass: 1, open: true }, { name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list', openClass: 1 }, { name: '招投标信息', link: '/bid-info-list', icon: 'bid-info', openClass: 1 }];
@@ -66125,14 +66136,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("不可修改")]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c('div', {
       staticClass: "col-xs-2"
     }, [(_vm.riskShow) ? [(REPORT.adviceState === 1) ? [_c('a', {
-      staticClass: "text-success",
+      staticClass: "btn btn-success btn-sm",
       on: {
         "click": function($event) {
           _vm.judgeReport(REPORT, '通过')
         }
       }
     }, [_vm._v("通过")]), _vm._v(" "), _c('a', {
-      staticClass: "text-danger",
+      staticClass: "btn btn-danger btn-sm",
       on: {
         "click": function($event) {
           _vm.judgeReport(REPORT, '不通过')
@@ -66142,14 +66153,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "label label-warning"
     }, [_vm._v("未通过")]) : _vm._e(), _vm._v(" "), (REPORT.adviceState === 2) ? _c('span', {
       staticClass: "label label-success"
-    }, [_vm._v("已通过")]) : _vm._e()] : _vm._e(), _vm._v(" "), (!_vm.riskShow) ? [(REPORT.adviceState === 0) ? _c('a', {
-      staticClass: "label label-warning",
+    }, [_vm._v("已通过")]) : _vm._e()] : _vm._e(), _vm._v(" "), (_vm.salesShow) ? [(REPORT.adviceState === 0) ? _c('a', {
+      staticClass: "btn btn-primary",
       on: {
         "click": function($event) {
           _vm.sub(REPORT)
         }
       }
     }, [_vm._v("提交复审")]) : _vm._e(), _vm._v(" "), (REPORT.adviceState === 2) ? _c('span', {
+      staticClass: "label label-success"
+    }, [_vm._v("已通过复审")]) : _vm._e(), _vm._v(" "), (REPORT.adviceState === 1) ? _c('span', {
+      staticClass: "label label-info"
+    }, [_vm._v("等待复审")]) : _vm._e()] : _vm._e(), _vm._v(" "), (_vm.archivesShow || _vm.officeShow) ? [(REPORT.adviceState === 0) ? _c('span', {
+      staticClass: "label label-info"
+    }, [_vm._v("未通过复审")]) : _vm._e(), _vm._v(" "), (REPORT.adviceState === 2) ? _c('span', {
       staticClass: "label label-success"
     }, [_vm._v("已通过复审")]) : _vm._e(), _vm._v(" "), (REPORT.adviceState === 1) ? _c('span', {
       staticClass: "label label-info"
@@ -72618,4 +72635,4 @@ var index_esm = {
 
 /***/ })
 ],[306]);
-//# sourceMappingURL=main.1319131035ce8fbdf525.js.map
+//# sourceMappingURL=main.a4f760bedfa4863ec980.js.map

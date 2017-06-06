@@ -37,18 +37,26 @@
         <div class="col-xs-2">
           <template v-if="riskShow">
             <template v-if="REPORT.adviceState===1">
-              <a class="text-success" @click="judgeReport(REPORT, '通过')">通过</a>
-              <a class="text-danger" @click="judgeReport(REPORT, '不通过')">不通过</a>
+              <a class="btn btn-success btn-sm" @click="judgeReport(REPORT, '通过')">通过</a>
+              <a class="btn btn-danger btn-sm" @click="judgeReport(REPORT, '不通过')">不通过</a>
             </template>
             <span class="label label-warning"
                   v-if="REPORT.adviceState===0">未通过</span>
             <span class="label label-success"
                   v-if="REPORT.adviceState===2">已通过</span>
           </template>
-          <template v-if="!riskShow">
-            <a class="label label-warning"
+          <template v-if="salesShow">
+            <a class="btn btn-primary"
                v-if="REPORT.adviceState===0"
                @click="sub(REPORT)">提交复审</a>
+            <span class="label label-success"
+                  v-if="REPORT.adviceState===2">已通过复审</span>
+            <span class="label label-info"
+                  v-if="REPORT.adviceState===1">等待复审</span>
+          </template>
+          <template v-if="archivesShow || officeShow">
+            <span class="label label-info"
+                  v-if="REPORT.adviceState===0">未通过复审</span>
             <span class="label label-success"
                   v-if="REPORT.adviceState===2">已通过复审</span>
             <span class="label label-info"
@@ -127,6 +135,9 @@ export default {
     },
     archivesShow() {
       return this.user.department === '档案部' ? true : false;
+    },
+    officeShow() {
+      return this.user.department === '办公室' ? true : false;
     }
   },
   props: ['initBusiness', 'user'],
@@ -183,7 +194,7 @@ export default {
       this.showModModal = true;
     },
     saved(modedReport) {
-      for (let i = 0; i > this.business.reports.length; i++) {
+      for (let i = 0; i < this.business.reports.length; i++) {
         if (this.business.reports[i].id === modedReport.id) {
           this.business.reports.splice(i, 1, modedReport);
           break;
@@ -202,7 +213,7 @@ export default {
       this.showDelModal = true;
     },
     deleted(deletedReport) {
-      for (let i = 0; i > this.business.reports.length; i++) {
+      for (let i = 0; i < this.business.reports.length; i++) {
         if (this.business.reports[i].id === deletedReport.id) {
           this.business.reports.splice(i, 1);
           break;
@@ -221,7 +232,7 @@ export default {
       this.showSubModal = true;
     },
     submited(submitedReport) {
-      for (let i = 0; i > this.business.reports.length; i++) {
+      for (let i = 0; i < this.business.reports.length; i++) {
         if (this.business.reports[i].id === submitedReport.id) {
           this.business.reports[i].adviceState = 1;
           break;
