@@ -590,7 +590,7 @@ export default {
 		}
 	},
 	computed: {
-    //
+    //用数组的some()方法，判断数组里是否有某个元素，包含就返回true，如果是true，对应所属类型显示
 		kjsContentShow() {
 			let kjs = this.project.departmentType.some((item,index,array)=> {
 				return item === 'kjs';

@@ -496,26 +496,25 @@ export default {
         },
         departmentType: []
       },
-      adviceText: '',
-      editBtn: false,
-      brandBtn: false,
-      checkBtn: false,
-      user: {},
-      delipotentShow: true,
-      directorAgreeShow: false,
-      commonwealthShow: false,
-      finishBtn: false,
-      noticePanel: false,
-      noticeUpload: false,
-      adviceShow: false,
-      checkAdviceModal: false,
-      checkAdviceShow: false,
-      bidNotice: 'bidNotice',
-      shortlistedNotice: 'shortlistedNotice',
-      projectId: this.$route.params.id,
-      ruweiDoc: {},
-      zhongbiaoDoc: {},
-      adviceContent: ''
+      adviceText: '',  //审核不通过信息
+      editBtn: false,  //编辑按钮
+      brandBtn: false, //摘牌按钮
+      checkBtn: false, //审核通过与不通过按钮
+      user: {},        //身份信息
+      delipotentShow: true,  //摘牌情况
+      directorAgreeShow: false,  //所长审核模块显示
+      commonwealthShow: false,  //联合体显示
+      finishBtn: false,  //提交完成按钮
+      noticePanel: false,  //文件面板
+      noticeUpload: false,  //文件上传
+      adviceShow: false,  //意见显示
+      checkAdviceModal: false,  //查看意见弹出框
+      checkAdviceShow: false,  //查看意见功能显示
+      bidNotice: 'bidNotice',  //上传文件类型
+      shortlistedNotice: 'shortlistedNotice',  //上传文件类型
+      projectId: this.$route.params.id,  //项目id
+      ruweiDoc: {},  //通知书
+      zhongbiaoDoc: {}  //通知书
     }
   },
   computed: {
@@ -570,18 +569,18 @@ export default {
         }
       });
       return departmentTypeMap;
-    },
-    biddingApproverArray() {
-      for (var i = 0; i < this.project.biddingApproverArray.length; i++) {
-        if (this.project.biddingApproverArray[i].approverResult === '不通过') {
-          this.project.biddingApproverArray[i].showTaga = true;
-        }
-        else {
-          this.project.biddingApproverArray[i].showTaga = false;
-        }
-      }
-      return this.project.biddingApproverArray;
     }
+    // biddingApproverArray() {
+    //   for (var i = 0; i < this.project.biddingApproverArray.length; i++) {
+    //     if (this.project.biddingApproverArray[i].approverResult === '不通过') {
+    //       this.project.biddingApproverArray[i].showTaga = true;
+    //     }
+    //     else {
+    //       this.project.biddingApproverArray[i].showTaga = false;
+    //     }
+    //   }
+    //   return this.project.biddingApproverArray;
+    // }
   },
   methods: {
     isEdit() {
@@ -698,6 +697,7 @@ export default {
     showAdvice() {
       this.adviceShow = true;
     },
+    //摘牌
     delisting() {
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -723,6 +723,7 @@ export default {
         }
       }, (rep) => { });
     },
+    //通过
     approve() {
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -752,9 +753,11 @@ export default {
 
       });
     },
+    //入围通知书
     recRuweiDoc(fileList) {
       this.ruweiDoc = fileList[0];
     },
+    //删除入围通知书
     deleteRuweiDoc() {
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -781,9 +784,11 @@ export default {
 
       });
     },
+    //中标通知书
     recZhongbiaoDoc(fileList) {
       this.zhongbiaoDoc = fileList[0];
     },
+    //删除中标通知书
     deleteZhongbiaoDoc(fileList) {
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -810,6 +815,7 @@ export default {
 
       });
     },
+    //将原始数据分配到通知书对象里
     distributeDoc() {
       for (var i = 0; i < this.project.biddingAnnexArray.length; i++) {
         if (this.project.biddingAnnexArray[i].annexType === "bidNotice") {
@@ -823,6 +829,7 @@ export default {
         }
       }
     },
+    //通知书上传完成
     uploadFinish() {
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -848,9 +855,11 @@ export default {
 
       });
     },
+    //关闭意见显示
     closeAdviceContent() {
       this.checkAdviceModal = false;
     },
+    //查看联合体
     showCommonwealth() {
       if (this.project.contractType.type === "联合体") {
         this.commonwealthShow = true;
@@ -859,6 +868,7 @@ export default {
   },
   props: ['biddingState'],
   created() {
+    //Promise 异步调用各个显示函数，使页面分身份信息显示
     this.getInfo().then(() => {
       this.showEditBtn();
       this.showDelipotent();
