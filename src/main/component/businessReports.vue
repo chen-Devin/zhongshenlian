@@ -37,8 +37,8 @@
         <div class="col-xs-2 text-center">
           <template v-if="riskShow">
             <template v-if="REPORT.adviceState===1">
-              <a class="btn btn-success btn-sm" @click="judgeReport(REPORT, '通过')">通过</a>
-              <a class="btn btn-danger btn-sm" @click="judgeReport(REPORT, '不通过')">不通过</a>
+              <button class="btn my-btn submit-btn report-btn" type="button" @click="judgeReport(REPORT, '通过')">通过</button>
+              <button class="btn my-btn draft-btn report-btn" type="button" @click="judgeReport(REPORT, '不通过')">不通过</button>
             </template>
             <span class="label label-warning"
                   v-if="REPORT.adviceState===0">未通过</span>
@@ -46,9 +46,9 @@
                   v-if="REPORT.adviceState===2">已通过</span>
           </template>
           <template v-if="salesShow">
-            <a class="label label-success btn-report"
+            <button class="btn my-btn submit-btn report-btn" type="button"
                v-if="REPORT.adviceState===0"
-               @click="sub(REPORT)">提交复审</a>
+               @click="sub(REPORT)">提交复审</button>
             <span class="label label-success"
                   v-if="REPORT.adviceState===2">已通过复审</span>
             <span class="label label-info"
@@ -313,5 +313,11 @@ a {
 .com-list > .list-group-item {
     padding-left: 0;
     padding-right: 0;
+}
+.report-btn {
+    padding: .2em 1em .3em;
+    min-width: 76px;
+    height: 26px;
+    font-size: 12px;
 }
 </style>

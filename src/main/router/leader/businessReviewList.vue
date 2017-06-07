@@ -5,7 +5,7 @@
       <h3 class="main-title">
           业务列表
       </h3>
-      <div class="com-list list-group">
+      <div class="com-list list-group list-adjust">
         <li class="list-group-item list-head" href="javascript:void(0);">
           <span class="title">信息列表</span>
           <span class="date pull-right">创建时间</span>
