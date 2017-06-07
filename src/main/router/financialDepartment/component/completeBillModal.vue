@@ -77,9 +77,6 @@ export default {
   },
   components: {
     modal
-  },
-  created() {
-    console.log(this.business);
   }
 };
 </script>

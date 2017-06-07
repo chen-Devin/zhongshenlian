@@ -299,78 +299,6 @@
         </li>
       </ul>
     </div>
-    <div class="form-group"
-         v-if="reportUploadShow">
-      <label class="col-sm-2 control-label">业务报告</label>
-      <el-upload class="col-sm-10"
-                 :multiple="false"
-                 :action="reportUpload.URL"
-                 :on-progress="reportUploadProgress"
-                 :on-success="reportUploadSuccess"
-                 :show-file-list="false">
-        <button class="my-btn submit-btn btn-sm"
-                type="button"
-                :disabled="reportUpload.progressShow">点击上传</button>
-        <span slot="tip"
-              class="text-info">&emsp;文件大小建议不超过3Mb</span>
-      </el-upload>
-    </div>
-    <div class="form-group"
-         v-if="reportUploadShow">
-      <label class="col-sm-2 control-label"></label>
-      <div class="col-sm-2">
-        <div class="progress-wrap" v-show="reportUpload.progressShow">
-          <div class="progress">
-            <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: reportUpload.percentage}">
-              {{reportUpload.percentage}}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <label class="col-sm-2"></label>
-        <div class="col-sm-9">
-          <ul class="com-list attachment-list list-group">
-            <li class="list-group-item"
-                v-for="FILE in business.reports">
-              <span class="fa fa-file-text-o"></span>
-              <a class="text-primary title"
-                 :href="FILE.url"
-                 download>{{FILE.name}}</a>
-              <span class="pull-right">
-                <a class="text-danger"
-                   @click="reportDelFile(FILE)"
-                   v-if="!FILE.state"><i class="fa fa-times"></i></a>
-                <span class="label label-info" v-if="!FILE.state">尚未打印二维码</span>
-                <span class="label label-success" v-if="FILE.state">已打印二维码</span>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="form-group"
-         v-if="reportFileShow">
-      <label class="col-sm-2 control-label">业务报告</label>
-      <ul class="col-sm-10 com-list attachment-list list-group">
-        <li class="list-group-item"
-            v-for="FILE in business.reports">
-          <span class="fa fa-file-text-o"></span>
-          <a class="text-primary title"
-             :href="FILE.url"
-             download>{{FILE.name}}</a>
-          <span class="pull-right check-code" v-if="chanStatShow">
-            <label class="checkbox-inline">
-              <input type="checkbox" v-model="FILE.state" @change="reportStatChan(FILE)"> 打印二维码
-            </label>
-          </span>
-          <span class="pull-right" v-if="chanStatShow">
-            <span class="label label-info" v-if="!FILE.state">尚未打印二维码</span>
-            <span class="label label-success" v-if="FILE.state">已打印二维码</span>
-          </span>
-        </li>
-      </ul>
-    </div>
   </form>
 </template>
 
@@ -391,11 +319,6 @@ export default {
       paths: [],
       business: this.initBusiness,
       contractUpload: {
-        URL: '',
-        progressShow: false,
-        percentage: '0%'
-      },
-      reportUpload: {
         URL: '',
         progressShow: false,
         percentage: '0%'
@@ -448,17 +371,8 @@ export default {
         }
       }
     },
-    reportUploadShow() {
-      return (this.user.department === '业务部' && this.business.projectStatus >= 80) ? true : false;
-    },
-    reportFileShow() {
-      return (this.user.department !== '业务部' && this.business.projectStatus >= 80) ? true : false;
-    },
     contractNumShow() {
       return (this.business.projectStatus >= 80) ? true : false;
-    },
-    chanStatShow() {
-      return (this.user.department === '档案部' && this.business.projectStatus >= 80) ? true : false;
     }
   },
   props: ['initBusiness', 'user'],
@@ -470,14 +384,6 @@ export default {
       type: 'electronicContract'
     };
     this.contractUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
-
-    data = {
-      command: 'handlerBusiness',
-      platform: 'web',
-      id: this.business.id,
-      type: 'projectReport'
-    };
-    this.reportUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
 
     if (this.user.department === '业务部') {
       this.paths.push({ name: '待处理业务', url: '/business-handle-list-sales', present: false });
@@ -532,7 +438,7 @@ export default {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
         method: 'post',
         url: '/service',
-        params: {
+        data: qs.stringify({
           data: (() => {
             let obj = {
               command: 'delFile',
@@ -542,7 +448,7 @@ export default {
             }
             return JSON.stringify(obj);
           })()
-        }
+        })
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
           for (let i = 0; i < this.business.contracts.length; i++) {
@@ -552,80 +458,6 @@ export default {
             }
           }
           this.$emit('deletedFile', this.business);
-        } else if (rep.data.statusCode === '10012') {
-          window.location.href = 'signIn.html';
-        }
-      }, (rep) => { });
-    },
-    reportUploadProgress(event, file, fileList) {
-      this.reportUpload.progressShow = true;
-      this.reportUpload.percentage = parseInt(file.percentage)+'%';
-    },
-    reportUploadSuccess(responseData, file, fileList) {
-      if (responseData.statusCode === '10001') {
-        let obj = {
-          id: responseData.data.id,
-          name: file.name,
-          url: responseData.data.path,
-          state: false
-        };
-        this.business.reports.push(obj);
-        this.$emit('uploaded', this.business);
-        setTimeout(() => {
-          this.reportUpload.percentage = '0%';
-          this.reportUpload.progressShow = false;
-        }, 500);
-      }
-    },
-    reportDelFile(FILE) {
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-        method: 'post',
-        url: '/service',
-        params: {
-          data: (() => {
-            let obj = {
-              command: 'delFile',
-              platform: 'web',
-              delFileId: FILE.id,
-              type: 'projectReport'
-            }
-            return JSON.stringify(obj);
-          })()
-        }
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          for (let i = 0; i < this.business.reports.length; i++) {
-            if (this.business.reports[i].id === FILE.id) {
-              this.business.reports.splice(i, 1);
-              break;
-            }
-          }
-          this.$emit('deletedFile', this.business);
-        } else if (rep.data.statusCode === '10012') {
-          window.location.href = 'signIn.html';
-        }
-      }, (rep) => { });
-    },
-    reportStatChan(FILE) {
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-        method: 'post',
-        url: '/service',
-        params: {
-          data: (() => {
-            let obj = {
-              command: 'confirmQRcode',
-              platform: 'web',
-              projectAnnexId: FILE.id,
-              result: FILE.state ? '1' : '0'
-            }
-            return JSON.stringify(obj);
-          })()
-        }
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-
         } else if (rep.data.statusCode === '10012') {
           window.location.href = 'signIn.html';
         }

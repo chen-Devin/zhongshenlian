@@ -9,11 +9,9 @@
       </button>
     </h4>
     <div class="com-list list-group">
-      <li class="list-group-item list-head">
-        <span class="title">报告列表</span>
-      </li>
-      <li class="list-group-item row">
-        <div class="col-xs-4">报告名称</div>
+      <li class="list-group-item list-head row">
+        <div class="col-xs-1">序号</div>
+        <div class="col-xs-5">报告名称</div>
         <div class="col-xs-1">附件</div>
         <div class="col-xs-1" v-if="salesShow">修改</div>
         <div class="col-xs-2">复审状态</div>
@@ -22,7 +20,8 @@
       <li class="list-group-item row"
           v-for="(REPORT, index) in business.reports"
           :key="index">
-        <div class="col-xs-4">{{REPORT.name}}</div>
+        <div class="col-xs-1">{{index+1+'.'}}</div>
+        <div class="col-xs-5">{{REPORT.reportName}}</div>
         <div class="col-xs-1">
           <a class="text-primary title"
              :href="REPORT.url"
@@ -38,18 +37,26 @@
         <div class="col-xs-2">
           <template v-if="riskShow">
             <template v-if="REPORT.adviceState===1">
-              <a class="text-success" @click="judgeReport(REPORT, '通过')">通过</a>
-              <a class="text-danger" @click="judgeReport(REPORT, '不通过')">不通过</a>
+              <a class="btn btn-success btn-sm" @click="judgeReport(REPORT, '通过')">通过</a>
+              <a class="btn btn-danger btn-sm" @click="judgeReport(REPORT, '不通过')">不通过</a>
             </template>
             <span class="label label-warning"
                   v-if="REPORT.adviceState===0">未通过</span>
             <span class="label label-success"
                   v-if="REPORT.adviceState===2">已通过</span>
           </template>
-          <template v-if="!riskShow">
-            <a class="label label-warning"
+          <template v-if="salesShow">
+            <a class="btn btn-primary"
                v-if="REPORT.adviceState===0"
                @click="sub(REPORT)">提交复审</a>
+            <span class="label label-success"
+                  v-if="REPORT.adviceState===2">已通过复审</span>
+            <span class="label label-info"
+                  v-if="REPORT.adviceState===1">等待复审</span>
+          </template>
+          <template v-if="archivesShow || officeShow">
+            <span class="label label-info"
+                  v-if="REPORT.adviceState===0">未通过复审</span>
             <span class="label label-success"
                   v-if="REPORT.adviceState===2">已通过复审</span>
             <span class="label label-info"
@@ -95,18 +102,13 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
-import { Upload,Message } from 'element-ui';
 
 import reportAddModal from './reportAddModal.vue';
 import reportModModal from './reportModModal.vue';
 import reportDelModal from './reportDelModal.vue';
 import reportSubModal from './reportSubModal.vue';
-
-Vue.use(Upload);
-Vue.prototype.$message = Message;
 
 export default {
   name: 'businessReports',
@@ -133,6 +135,9 @@ export default {
     },
     archivesShow() {
       return this.user.department === '档案部' ? true : false;
+    },
+    officeShow() {
+      return this.user.department === '办公室' ? true : false;
     }
   },
   props: ['initBusiness', 'user'],
@@ -177,7 +182,10 @@ export default {
         this.showAddModal = true;
       }
     },
-    added(addedReport) {},
+    added(addedReport) {
+      this.business.reports.push(addedReport);
+      this.showAddModal = false;
+    },
     addCanceled() {
       this.showAddModal = false;
     },
@@ -185,7 +193,16 @@ export default {
       this.modReport = REPORT;
       this.showModModal = true;
     },
-    saved(modedReport) {},
+    saved(modedReport) {
+      for (let i = 0; i < this.business.reports.length; i++) {
+        if (this.business.reports[i].id === modedReport.id) {
+          this.business.reports.splice(i, 1, modedReport);
+          break;
+        }
+      }
+      this.modReport = {};
+      this.showModModal = false;
+    },
     modCanceled() {
       this.modReport = {};
       this.showModModal = false;
@@ -196,7 +213,7 @@ export default {
       this.showDelModal = true;
     },
     deleted(deletedReport) {
-      for (let i = 0; i > this.business.reports.length; i++) {
+      for (let i = 0; i < this.business.reports.length; i++) {
         if (this.business.reports[i].id === deletedReport.id) {
           this.business.reports.splice(i, 1);
           break;
@@ -215,7 +232,7 @@ export default {
       this.showSubModal = true;
     },
     submited(submitedReport) {
-      for (let i = 0; i > this.business.reports.length; i++) {
+      for (let i = 0; i < this.business.reports.length; i++) {
         if (this.business.reports[i].id === submitedReport.id) {
           this.business.reports[i].adviceState = 1;
           break;
@@ -292,7 +309,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.total-amount {
-  margin-top: 30px;
+a {
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

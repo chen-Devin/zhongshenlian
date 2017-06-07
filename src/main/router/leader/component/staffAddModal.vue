@@ -207,7 +207,7 @@ export default {
                 gender: this.staff.gender.val,
                 remark: this.staff.remark.val,
                 department: this.staff.department.val,
-                duity: this.staff.duties.val,
+                duity: this.staff.duties.val
               };
               return JSON.stringify(obj);
             })()
@@ -259,7 +259,6 @@ export default {
       this.departmentArray1 = rep.data.data.departmentArray;
       for (var i = 0; i < this.departmentArray1.length; i++) {
         this.departmentArray.push(this.departmentArray1[i].departmentName);
-        console.log(this.departmentArray);
       }
     }, (rep) => {});
   },

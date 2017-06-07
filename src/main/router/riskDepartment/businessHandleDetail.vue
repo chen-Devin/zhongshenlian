@@ -4,14 +4,6 @@
     <card>
       <h3 class="main-title">
         {{business.name}}
-        <div class="pull-right">
-          <template v-if="decide==='undecide'">
-            <button class="btn my-btn submit-btn" @click="approve()">通过</button>
-            <button class="btn my-btn draft-btn" @click="refuse()">不通过</button>
-          </template>
-          <small class="label label-success business-label" v-else-if="decide==='approve'">已选择通过</small>
-          <small class="label label-danger business-label" v-else-if="decide==='refuse'">已选择未通过</small>
-        </div>
       </h3>
       <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
@@ -24,14 +16,6 @@
         </template>
       </div>
     </card>
-    <business-approve-modal v-if="showApproveModal"
-                            :initalBusiness="business"
-                            @approved="approved"
-                            @canceled="appCanceled"></business-approve-modal>
-    <business-refuse-modal v-if="showRefuseModal"
-                           :initalBusiness="business"
-                           @refused="refused"
-                           @canceled="refCanceled"></business-refuse-modal>
   </div>
 </template>
 
@@ -42,8 +26,6 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
-import businessApproveModal from '../../component/businessApproveModal.vue';
-import businessRefuseModal from '../../component/businessRefuseModal.vue';
 
 export default {
   name: 'businessHandleDetailRisk',
@@ -321,22 +303,11 @@ export default {
         projectOperatingArray: []
       },
       riskAdvices: [],
-      leaderAdivces: [],
-      showApproveModal: false,
-      showRefuseModal: false
+      leaderAdivces: []
     };
   },
   props: ['user'],
   computed: {
-    decide() {
-      if (this.business.projectStatus === 130) {
-        return 'undecide';
-      } else if (this.business.projectStatus === 131) {
-        return 'refuse';
-      } else if (this.business.projectStatus === 140) {
-        return 'approve';
-      }
-    },
     progress() {
       if (this.business.projectStatus < 20) {
           return [
@@ -344,9 +315,9 @@ export default {
             { name: '风控初审', passed: false, active: false },
             { name: '所长终审', passed: false, active: false },
             { name: '发放编号', passed: false, active: false },
-            { name: '风控复审', passed: false, active: false },
+            { name: '处理业务', passed: false, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: false},
+              qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -357,9 +328,9 @@ export default {
             { name: '风控初审', passed: false, active: false },
             { name: '所长终审', passed: false, active: false },
             { name: '发放编号', passed: false, active: false },
-            { name: '风控复审', passed: false, active: false },
+            { name: '处理业务', passed: false, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: false},
+              qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -370,9 +341,9 @@ export default {
             { name: '风控初审', passed: false, active: true },
             { name: '所长终审', passed: false, active: false },
             { name: '发放编号', passed: false, active: false },
-            { name: '风控复审', passed: false, active: false },
+            { name: '处理业务', passed: false, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: false},
+              qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -383,9 +354,9 @@ export default {
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: false, active: true },
             { name: '发放编号', passed: false, active: false },
-            { name: '风控复审', passed: false, active: false },
+            { name: '处理业务', passed: false, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: false},
+              qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -396,9 +367,9 @@ export default {
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
             { name: '发放编号', passed: false, active: true },
-            { name: '风控复审', passed: false, active: false },
+            { name: '处理业务', passed: false, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: false},
+              qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -409,9 +380,9 @@ export default {
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
             { name: '发放编号', passed: true, active: false },
-            { name: '风控复审', passed: false, active: true },
+            { name: '处理业务', passed: false, active: true },
             {
-              qrCode: {name: '二维码完成', passed: false, active: false},
+              qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -423,9 +394,9 @@ export default {
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
             { name: '发放编号', passed: true, active: false },
-            { name: '风控复审', passed: true, active: false },
+            { name: '处理业务', passed: true, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: true},
+              qrCode: {name: '报告完成', passed: false, active: true},
               bill: {name: '开票完成', passed: false, active: true}
             },
             { name: '业务完结', passed: false, active: false }
@@ -436,9 +407,9 @@ export default {
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
             { name: '发放编号', passed: true, active: false },
-            { name: '风控复审', passed: true, active: false },
+            { name: '处理业务', passed: true, active: false },
             {
-              qrCode: {name: '二维码完成', passed: false, active: true},
+              qrCode: {name: '报告完成', passed: false, active: true},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -450,9 +421,9 @@ export default {
           { name: '风控初审', passed: true, active: false },
           { name: '所长终审', passed: true, active: false },
           { name: '发放编号', passed: true, active: false },
-          { name: '风控复审', passed: true, active: false },
+          { name: '处理业务', passed: true, active: false },
           {
-            qrCode: {name: '二维码完成', passed: true, active: false},
+            qrCode: {name: '报告完成', passed: true, active: false},
             bill: {name: '开票完成', passed: true, active: false}
           },
           { name: '业务完结', passed: false, active: true }
@@ -714,85 +685,13 @@ export default {
     },
     pathsChan(paths) {
       this.paths = paths;
-    },
-    approve() {
-      this.showApproveModal = true;
-    },
-    approved(id) {
-      let obj = {
-        id: id,
-        approverId: this.user.id,
-        approverName: this.user.name,
-        department: this.user.department,
-        approveResult: '通过',
-        approveOpinion: '',
-        updateAt: (()=>{
-          let t = new Date();
-          let Y = t.getFullYear();
-          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
-          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
-          return `${Y}-${M}-${D}`;
-        })(),
-        createAt: (()=>{
-          let t = new Date();
-          let Y = t.getFullYear();
-          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
-          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
-          return `${Y}-${M}-${D}`;
-        })()
-      };
-      this.business.projectApproverArray.push(obj);
-      this.riskAdvices.push(obj);
-      this.business.projectStatus = 140;
-
-      this.showApproveModal = false;
-    },
-    appCanceled() {
-      this.showApproveModal = false;
-    },
-    refuse() {
-      this.showRefuseModal = true;
-    },
-    refused(id, reason) {
-      let obj = {
-        id: id,
-        approverId: this.user.id,
-        approverName: this.user.name,
-        department: this.user.department,
-        approveResult: '不通过',
-        approveOpinion: reason,
-        updateAt: (()=>{
-          let t = new Date();
-          let Y = t.getFullYear();
-          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
-          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
-          return `${Y}-${M}-${D}`;
-        })(),
-        createAt: (()=>{
-          let t = new Date();
-          let Y = t.getFullYear();
-          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
-          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
-          return `${Y}-${M}-${D}`;
-        })()
-      };
-      this.business.projectApproverArray.push(obj);
-      this.riskAdvices.push(obj);
-      this.business.projectStatus = 131;
-
-      this.showRefuseModal = false;
-    },
-    refCanceled() {
-      this.showRefuseModal = false;
     }
   },
   components: {
     crumbs,
     card,
     business,
-    approverAdvice,
-    businessApproveModal,
-    businessRefuseModal
+    approverAdvice
   }
 }
 </script>
