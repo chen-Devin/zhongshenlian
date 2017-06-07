@@ -24706,7 +24706,14 @@ exports.default = {
   name: 'reportModModal',
   data: function data() {
     return {
-      report: this.initReport,
+      report: {
+        id: this.initReport.id,
+        name: this.initReport.name,
+        url: this.initReport.url,
+        state: this.initReport.state,
+        reportName: this.initReport.reportName,
+        adviceState: this.initReport.adviceState
+      },
       file: {
         name: ''
       },
@@ -24771,7 +24778,7 @@ exports.default = {
         this.subBtn.cont = '保存...';
         this.subBtn.dis = true;
         (0, _axios2.default)({
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
           method: 'get',
           url: '/fileUpload',
           params: {
@@ -33778,7 +33785,7 @@ exports.default = {
         this.paths = [{ name: '草稿箱', url: '/bid-info-draft', present: false }, { name: '招投标详情', url: '/bid-info-detail', present: true }];
       }
       if (this.isDraft === "notDraft") {
-        this.paths = [{ name: '招投标信息看板', url: '/bid-info-list', present: false }, { name: '招投标详情', url: '/bid-info-detail', present: true }];
+        this.paths = [{ name: '招投标信息', url: '/bid-info-list', present: false }, { name: '招投标详情', url: '/bid-info-detail', present: true }];
       }
     }
   },
@@ -34009,7 +34016,7 @@ exports.default = {
   name: 'bidInfoInput',
   data: function data() {
     return {
-      paths: [{ name: '招投标信息看板', url: '/bid-info-list', present: false }, { name: '招投标信息录入', url: '/bid-info-input', present: true }],
+      paths: [{ name: '招投标信息', url: '/bid-info-list', present: false }, { name: '招投标信息录入', url: '/bid-info-input', present: true }],
       project: { //招投标项目详细信息
         bidStartTime: function () {
           var dt = new Date();
@@ -34226,7 +34233,7 @@ exports.default = {
   name: 'bidInfoList',
   data: function data() {
     return {
-      paths: [{ name: '招投标信息看板', url: '/bid-info-list', present: true }]
+      paths: [{ name: '招投标信息', url: '/bid-info-list', present: true }]
     };
   },
 
@@ -45066,7 +45073,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"ruleRegulation.vue","sourceRoot":""}]);
+exports.push([module.i, "\n.com-list > .list-group-item[data-v-206435c0] {\n  padding-left: 30px;\n}\n.adjust-mt[data-v-206435c0] {\n  margin-top: 40px;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/router/commonUse/ruleRegulation.vue"],"names":[],"mappings":";AAAA;EACE,mBAAmB;CAAE;AAEvB;EACE,iBAAiB;CAAE","file":"ruleRegulation.vue","sourcesContent":[".com-list > .list-group-item {\n  padding-left: 30px; }\n\n.adjust-mt {\n  margin-top: 40px; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -45560,7 +45567,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\n.higher-search[data-v-654fe551] {\n  margin-top: 30px;\n}\n.com-list > .list-group-item[data-v-654fe551] {\n  padding-left: 13px;\n}\n.com-list > .list-head[data-v-654fe551] {\n  padding-left: 32px;\n}\n.search-form[data-v-654fe551] {\n  padding-left: 0;\n  padding-right: 0;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/router/commonUse/businessCompleteList.vue"],"names":[],"mappings":";AAAA;EACE,iBAAiB;CAAE;AAErB;EACE,mBAAmB;CAAE;AAEvB;EACE,mBAAmB;CAAE;AAEvB;EACE,gBAAgB;EAChB,iBAAiB;CAAE","file":"businessCompleteList.vue","sourcesContent":[".higher-search {\n  margin-top: 30px; }\n\n.com-list > .list-group-item {\n  padding-left: 13px; }\n\n.com-list > .list-head {\n  padding-left: 32px; }\n\n.search-form {\n  padding-left: 0;\n  padding-right: 0; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.higher-search[data-v-654fe551] {\n  margin-top: 30px;\n}\n.com-list > .list-group-item[data-v-654fe551] {\n  padding-left: 32px;\n}\n.com-list > .list-head[data-v-654fe551] {\n  padding-left: 32px;\n}\n.search-form[data-v-654fe551] {\n  padding-left: 0;\n  padding-right: 0;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/router/commonUse/businessCompleteList.vue"],"names":[],"mappings":";AAAA;EACE,iBAAiB;CAAE;AAErB;EACE,mBAAmB;CAAE;AAEvB;EACE,mBAAmB;CAAE;AAEvB;EACE,gBAAgB;EAChB,iBAAiB;CAAE","file":"businessCompleteList.vue","sourcesContent":[".higher-search {\n  margin-top: 30px; }\n\n.com-list > .list-group-item {\n  padding-left: 32px; }\n\n.com-list > .list-head {\n  padding-left: 32px; }\n\n.search-form {\n  padding-left: 0;\n  padding-right: 0; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -55520,7 +55527,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "search": _vm.tog
     }
   }), _vm._v(" "), _c('h3', {
-    staticClass: "main-title"
+    staticClass: "main-title adjust-mt"
   }, [_vm._v("\n      制度列表\n      "), (_vm.btnShow) ? _c('router-link', {
     staticClass: "btn my-btn submit-btn pull-right",
     attrs: {
@@ -66176,7 +66183,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("未通过")]) : _vm._e(), _vm._v(" "), (REPORT.adviceState === 2) ? _c('span', {
       staticClass: "label label-success"
     }, [_vm._v("已通过")]) : _vm._e()] : _vm._e(), _vm._v(" "), (_vm.salesShow) ? [(REPORT.adviceState === 0) ? _c('a', {
-      staticClass: "btn btn-primary",
+      staticClass: "label label-success btn-report",
       on: {
         "click": function($event) {
           _vm.sub(REPORT)
@@ -72657,4 +72664,4 @@ var index_esm = {
 
 /***/ })
 ],[306]);
-//# sourceMappingURL=main.0bf98743cded8dba45fe.js.map
+//# sourceMappingURL=main.0c5906e6bf3d01ed06e1.js.map

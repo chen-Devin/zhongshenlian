@@ -58,6 +58,10 @@ body {
   .com-list > .list-group-item {
     padding-top: 20px;
     padding-bottom: 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 35px;
+    padding-right: 25px;
     border-left: 0;
     border-right: 0; }
     .com-list > .list-group-item .date {
@@ -262,4 +266,18 @@ form {
 label.col-sm-2.control-label {
   width: 145px; }
 
-/*# sourceMappingURL=main.0bf98743cded8dba45fe.css.map*/
+.btn-report {
+  background-color: #1f6ba9;
+  color: #fff;
+  border: 2px solid #1f6ba9; }
+  .btn-report:hover {
+    background-color: #2171b2;
+    color: #fff; }
+  .btn-report:active {
+    background-color: #2171b2;
+    color: #fff; }
+  .btn-report:focus {
+    background-color: #2171B2;
+    color: #fff; }
+
+/*# sourceMappingURL=main.0c5906e6bf3d01ed06e1.css.map*/
