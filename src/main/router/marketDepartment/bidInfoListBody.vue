@@ -105,7 +105,7 @@
         录入
       </button>
     </h3>
-    <div class="com-list list-group">
+    <div class="com-list list-group list-adjust">
       <li class="list-group-item list-head">
         <span class="title">信息详情</span>
         <span class="date pull-right">创建时间</span>

@@ -8,7 +8,7 @@
           新建业务
         </router-link>
       </h3>
-      <div class="com-list list-group">
+      <div class="com-list list-group list-adjust">
         <li class="list-group-item list-head">
           <span class="title">业务列表</span>
           <span class="date pull-right">创建时间</span>

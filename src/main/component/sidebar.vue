@@ -77,7 +77,7 @@ export default {
           if (this.user.authority['装订业务报告']) {
             routes.push({name: '待装订业务', link: '/business-handle-list-office', icon: 'bid-info'});
           }
-          routes.push({name: '招投标信息看板', link: '/bid-info-list', icon: 'bid-info',openClass: 1, open:true});
+          routes.push({name: '招投标信息', link: '/bid-info-list', icon: 'bid-info',openClass: 1, open:true});
         } else if (this.user.department === '业务部') {
           routes = [
             {name: '待审核业务', link: '/business-review-list-sales', icon: 'business-review-list-leader',openClass: 1, open:true},
