@@ -24772,9 +24772,9 @@ exports.default = {
         this.subBtn.dis = true;
         (0, _axios2.default)({
           headers: { 'Content-Type': 'multipart/form-data' },
-          method: 'post',
+          method: 'get',
           url: '/fileUpload',
-          data: _qs2.default.stringify({
+          params: {
             data: function () {
               var obj = {
                 command: 'handlerBusiness',
@@ -24786,7 +24786,7 @@ exports.default = {
               };
               return JSON.stringify(obj);
             }()
-          })
+          }
         }).then(function (rep) {
           if (rep.data.statusCode === '10001') {
             _this2.report.id = _this2.report.id;
@@ -35224,26 +35224,25 @@ exports.default = {
         },
         departmentType: []
       },
-      adviceText: '',
-      editBtn: false,
-      brandBtn: false,
-      checkBtn: false,
-      user: {},
-      delipotentShow: true,
-      directorAgreeShow: false,
-      commonwealthShow: false,
-      finishBtn: false,
-      noticePanel: false,
-      noticeUpload: false,
-      adviceShow: false,
-      checkAdviceModal: false,
-      checkAdviceShow: false,
-      bidNotice: 'bidNotice',
-      shortlistedNotice: 'shortlistedNotice',
-      projectId: this.$route.params.id,
-      ruweiDoc: {},
-      zhongbiaoDoc: {},
-      adviceContent: ''
+      adviceText: '', //审核不通过信息
+      editBtn: false, //编辑按钮
+      brandBtn: false, //摘牌按钮
+      checkBtn: false, //审核通过与不通过按钮
+      user: {}, //身份信息
+      delipotentShow: true, //摘牌情况
+      directorAgreeShow: false, //所长审核模块显示
+      commonwealthShow: false, //联合体显示
+      finishBtn: false, //提交完成按钮
+      noticePanel: false, //文件面板
+      noticeUpload: false, //文件上传
+      adviceShow: false, //意见显示
+      checkAdviceModal: false, //查看意见弹出框
+      checkAdviceShow: false, //查看意见功能显示
+      bidNotice: 'bidNotice', //上传文件类型
+      shortlistedNotice: 'shortlistedNotice', //上传文件类型
+      projectId: this.$route.params.id, //项目id
+      ruweiDoc: {}, //通知书
+      zhongbiaoDoc: {} //通知书
     };
   },
 
@@ -35299,17 +35298,19 @@ exports.default = {
         }
       });
       return departmentTypeMap;
-    },
-    biddingApproverArray: function biddingApproverArray() {
-      for (var i = 0; i < this.project.biddingApproverArray.length; i++) {
-        if (this.project.biddingApproverArray[i].approverResult === '不通过') {
-          this.project.biddingApproverArray[i].showTaga = true;
-        } else {
-          this.project.biddingApproverArray[i].showTaga = false;
-        }
-      }
-      return this.project.biddingApproverArray;
     }
+    // biddingApproverArray() {
+    //   for (var i = 0; i < this.project.biddingApproverArray.length; i++) {
+    //     if (this.project.biddingApproverArray[i].approverResult === '不通过') {
+    //       this.project.biddingApproverArray[i].showTaga = true;
+    //     }
+    //     else {
+    //       this.project.biddingApproverArray[i].showTaga = false;
+    //     }
+    //   }
+    //   return this.project.biddingApproverArray;
+    // }
+
   },
   methods: {
     isEdit: function isEdit() {
@@ -35422,6 +35423,8 @@ exports.default = {
     showAdvice: function showAdvice() {
       this.adviceShow = true;
     },
+
+    //摘牌
     delisting: function delisting() {
       var _this3 = this;
 
@@ -35447,6 +35450,8 @@ exports.default = {
         } else {}
       }, function (rep) {});
     },
+
+    //通过
     approve: function approve() {
       var _this4 = this;
 
@@ -35474,9 +35479,13 @@ exports.default = {
         } else {}
       }, function (rep) {});
     },
+
+    //入围通知书
     recRuweiDoc: function recRuweiDoc(fileList) {
       this.ruweiDoc = fileList[0];
     },
+
+    //删除入围通知书
     deleteRuweiDoc: function deleteRuweiDoc() {
       var _this5 = this;
 
@@ -35501,9 +35510,13 @@ exports.default = {
         } else {}
       }, function (rep) {});
     },
+
+    //中标通知书
     recZhongbiaoDoc: function recZhongbiaoDoc(fileList) {
       this.zhongbiaoDoc = fileList[0];
     },
+
+    //删除中标通知书
     deleteZhongbiaoDoc: function deleteZhongbiaoDoc(fileList) {
       var _this6 = this;
 
@@ -35528,6 +35541,8 @@ exports.default = {
         } else {}
       }, function (rep) {});
     },
+
+    //将原始数据分配到通知书对象里
     distributeDoc: function distributeDoc() {
       for (var i = 0; i < this.project.biddingAnnexArray.length; i++) {
         if (this.project.biddingAnnexArray[i].annexType === "bidNotice") {
@@ -35541,6 +35556,8 @@ exports.default = {
         }
       }
     },
+
+    //通知书上传完成
     uploadFinish: function uploadFinish() {
       var _this7 = this;
 
@@ -35564,9 +35581,13 @@ exports.default = {
         } else {}
       }, function (rep) {});
     },
+
+    //关闭意见显示
     closeAdviceContent: function closeAdviceContent() {
       this.checkAdviceModal = false;
     },
+
+    //查看联合体
     showCommonwealth: function showCommonwealth() {
       if (this.project.contractType.type === "联合体") {
         this.commonwealthShow = true;
@@ -35577,6 +35598,7 @@ exports.default = {
   created: function created() {
     var _this8 = this;
 
+    //Promise 异步调用各个显示函数，使页面分身份信息显示
     this.getInfo().then(function () {
       _this8.showEditBtn();
       _this8.showDelipotent();
@@ -35646,7 +35668,7 @@ exports.default = {
 	},
 
 	computed: {
-		//
+		//用数组的some()方法，判断数组里是否有某个元素，包含就返回true，如果是true，对应所属类型显示
 		kjsContentShow: function kjsContentShow() {
 			var kjs = this.project.departmentType.some(function (item, index, array) {
 				return item === 'kjs';
@@ -72635,4 +72657,4 @@ var index_esm = {
 
 /***/ })
 ],[306]);
-//# sourceMappingURL=main.727c8fc7c6af6b95bc20.js.map
+//# sourceMappingURL=main.0bf98743cded8dba45fe.js.map

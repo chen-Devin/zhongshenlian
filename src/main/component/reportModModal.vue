@@ -149,9 +149,9 @@ export default {
         this.subBtn.dis = true;
         axios({
           headers: { 'Content-Type': 'multipart/form-data' },
-          method: 'post',
+          method: 'get',
           url: '/fileUpload',
-          data: qs.stringify({
+          params: {
             data: (() => {
               let obj = {
                 command: 'handlerBusiness',
@@ -163,7 +163,7 @@ export default {
               }
               return JSON.stringify(obj);
             })()
-          })
+          }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.report.id = this.report.id;
