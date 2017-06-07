@@ -171,16 +171,8 @@ export default {
   },
   methods: {
     add() {
-      if (this.business.report.amount < this.business.reports.length + 1) {
-        this.$message({
-          message: '报告数量超过要求数量',
-          type: 'warning'
-        });
-        return false;
-      } else {
-        this.addReport = {};
-        this.showAddModal = true;
-      }
+      this.addReport = {};
+      this.showAddModal = true;
     },
     added(addedReport) {
       this.business.reports.push(addedReport);
