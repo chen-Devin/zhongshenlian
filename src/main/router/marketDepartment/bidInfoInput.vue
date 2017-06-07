@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '招投标信息看板', url: '/bid-info-list', present: false },
+        { name: '招投标信息', url: '/bid-info-list', present: false },
         { name: '招投标信息录入', url: '/bid-info-input', present: true }
       ],
       project: {  //招投标项目详细信息

@@ -243,7 +243,7 @@ export default {
   margin-top: 30px;
 }
 .com-list > .list-group-item {
-    padding-left: 13px;
+    padding-left: 32px;
 }
 .com-list > .list-head {
     padding-left: 32px;
