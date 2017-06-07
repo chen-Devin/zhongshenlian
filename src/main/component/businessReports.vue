@@ -10,31 +10,31 @@
     </h4>
     <div class="com-list list-group">
       <li class="list-group-item list-head row">
-        <div class="col-xs-1">序号</div>
+        <div class="col-xs-1 text-center">序号</div>
         <div class="col-xs-5">报告名称</div>
-        <div class="col-xs-1">附件</div>
-        <div class="col-xs-1" v-if="salesShow">修改</div>
-        <div class="col-xs-2">复审状态</div>
-        <div class="col-xs-2">下载二维码</div>
+        <div class="col-xs-1 text-center">附件</div>
+        <div class="col-xs-1 text-center" v-if="salesShow">修改</div>
+        <div class="col-xs-2 text-center">复审状态</div>
+        <div class="col-xs-2 text-center">下载二维码</div>
       </li>
       <li class="list-group-item row"
           v-for="(REPORT, index) in business.reports"
           :key="index">
-        <div class="col-xs-1">{{index+1+'.'}}</div>
+        <div class="col-xs-1 text-center">{{index+1+'.'}}</div>
         <div class="col-xs-5">{{REPORT.reportName}}</div>
-        <div class="col-xs-1">
+        <div class="col-xs-1 text-center">
           <a class="text-primary title"
              :href="REPORT.url"
              download>下载</a>
         </div>
-        <div class="col-xs-1" v-if="salesShow">
+        <div class="col-xs-1 text-center" v-if="salesShow">
           <a class="text-primary title"
-             v-if="REPORT.adviceState!==2"
+             v-if="REPORT.adviceState===0"
              @click="mod(REPORT)">修改</a>
           <span class="text-primary title"
-                v-if="REPORT.adviceState===2">不可修改</span>
+                v-if="REPORT.adviceState!==0">不可修改</span>
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-2 text-center">
           <template v-if="riskShow">
             <template v-if="REPORT.adviceState===1">
               <a class="btn btn-success btn-sm" @click="judgeReport(REPORT, '通过')">通过</a>
@@ -63,7 +63,7 @@
                   v-if="REPORT.adviceState===1">等待复审</span>
           </template>
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-2 text-center">
           <template v-if="archivesShow">
             <label class="checkbox-inline">
               <input type="checkbox"

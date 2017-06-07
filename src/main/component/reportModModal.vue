@@ -148,7 +148,7 @@ export default {
         this.subBtn.cont = '保存...';
         this.subBtn.dis = true;
         axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          headers: { 'Content-Type': 'multipart/form-data' },
           method: 'post',
           url: '/fileUpload',
           data: qs.stringify({

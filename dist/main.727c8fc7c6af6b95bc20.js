@@ -24771,7 +24771,7 @@ exports.default = {
         this.subBtn.cont = '保存...';
         this.subBtn.dis = true;
         (0, _axios2.default)({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          headers: { 'Content-Type': 'multipart/form-data' },
           method: 'post',
           url: '/fileUpload',
           data: _qs2.default.stringify({
@@ -66095,27 +66095,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('li', {
     staticClass: "list-group-item list-head row"
   }, [_c('div', {
-    staticClass: "col-xs-1"
+    staticClass: "col-xs-1 text-center"
   }, [_vm._v("序号")]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-5"
   }, [_vm._v("报告名称")]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-1"
+    staticClass: "col-xs-1 text-center"
   }, [_vm._v("附件")]), _vm._v(" "), (_vm.salesShow) ? _c('div', {
-    staticClass: "col-xs-1"
+    staticClass: "col-xs-1 text-center"
   }, [_vm._v("修改")]) : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-2"
+    staticClass: "col-xs-2 text-center"
   }, [_vm._v("复审状态")]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-2"
+    staticClass: "col-xs-2 text-center"
   }, [_vm._v("下载二维码")])]), _vm._v(" "), _vm._l((_vm.business.reports), function(REPORT, index) {
     return _c('li', {
       key: index,
       staticClass: "list-group-item row"
     }, [_c('div', {
-      staticClass: "col-xs-1"
+      staticClass: "col-xs-1 text-center"
     }, [_vm._v(_vm._s(index + 1 + '.'))]), _vm._v(" "), _c('div', {
       staticClass: "col-xs-5"
     }, [_vm._v(_vm._s(REPORT.reportName))]), _vm._v(" "), _c('div', {
-      staticClass: "col-xs-1"
+      staticClass: "col-xs-1 text-center"
     }, [_c('a', {
       staticClass: "text-primary title",
       attrs: {
@@ -66123,18 +66123,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "download": ""
       }
     }, [_vm._v("下载")])]), _vm._v(" "), (_vm.salesShow) ? _c('div', {
-      staticClass: "col-xs-1"
-    }, [(REPORT.adviceState !== 2) ? _c('a', {
+      staticClass: "col-xs-1 text-center"
+    }, [(REPORT.adviceState === 0) ? _c('a', {
       staticClass: "text-primary title",
       on: {
         "click": function($event) {
           _vm.mod(REPORT)
         }
       }
-    }, [_vm._v("修改")]) : _vm._e(), _vm._v(" "), (REPORT.adviceState === 2) ? _c('span', {
+    }, [_vm._v("修改")]) : _vm._e(), _vm._v(" "), (REPORT.adviceState !== 0) ? _c('span', {
       staticClass: "text-primary title"
     }, [_vm._v("不可修改")]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c('div', {
-      staticClass: "col-xs-2"
+      staticClass: "col-xs-2 text-center"
     }, [(_vm.riskShow) ? [(REPORT.adviceState === 1) ? [_c('a', {
       staticClass: "btn btn-success btn-sm",
       on: {
@@ -66171,7 +66171,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("已通过复审")]) : _vm._e(), _vm._v(" "), (REPORT.adviceState === 1) ? _c('span', {
       staticClass: "label label-info"
     }, [_vm._v("等待复审")]) : _vm._e()] : _vm._e()], 2), _vm._v(" "), _c('div', {
-      staticClass: "col-xs-2"
+      staticClass: "col-xs-2 text-center"
     }, [(_vm.archivesShow) ? [_c('label', {
       staticClass: "checkbox-inline"
     }, [_c('input', {
@@ -72635,4 +72635,4 @@ var index_esm = {
 
 /***/ })
 ],[306]);
-//# sourceMappingURL=main.a4f760bedfa4863ec980.js.map
+//# sourceMappingURL=main.727c8fc7c6af6b95bc20.js.map
