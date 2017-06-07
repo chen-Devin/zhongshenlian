@@ -2,7 +2,7 @@
   <div class="normal-wrap">
     <h4 class="main-title">
       业务报告
-      <button class="btn btn-primary pull-right"
+      <button class="btn my-btn submit-btn pull-right"
               @click="add()"
               v-if="salesShow">
         添加业务报告
@@ -313,5 +313,13 @@ a {
   &:hover {
     cursor: pointer;
   }
+}
+.com-list .list-head {
+    padding-left: 0;
+    padding-right: 0;
+}
+.com-list > .list-group-item {
+    padding-left: 0;
+    padding-right: 0;
 }
 </style>
