@@ -45973,7 +45973,7 @@ exports = module.exports = __webpack_require__(1)(true);
 
 
 // module
-exports.push([module.i, "\na[data-v-c047b0a4]:hover {\n  cursor: pointer;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/component/businessReports.vue"],"names":[],"mappings":";AAAA;EACE,gBAAgB;CAAE","file":"businessReports.vue","sourcesContent":["a:hover {\n  cursor: pointer; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\na[data-v-c047b0a4]:hover {\n  cursor: pointer;\n}\n.com-list .list-head[data-v-c047b0a4] {\n  padding-left: 0;\n  padding-right: 0;\n}\n.com-list > .list-group-item[data-v-c047b0a4] {\n  padding-left: 0;\n  padding-right: 0;\n}\n", "", {"version":3,"sources":["C:/Users/xiaoj/Documents/tzucpa/src/main/component/businessReports.vue"],"names":[],"mappings":";AAAA;EACE,gBAAgB;CAAE;AAEpB;EACE,gBAAgB;EAChB,iBAAiB;CAAE;AAErB;EACE,gBAAgB;EAChB,iBAAiB;CAAE","file":"businessReports.vue","sourcesContent":["a:hover {\n  cursor: pointer; }\n\n.com-list .list-head {\n  padding-left: 0;\n  padding-right: 0; }\n\n.com-list > .list-group-item {\n  padding-left: 0;\n  padding-right: 0; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -66113,7 +66113,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h4', {
     staticClass: "main-title"
   }, [_vm._v("\n    业务报告\n    "), (_vm.salesShow) ? _c('button', {
-    staticClass: "btn btn-primary pull-right",
+    staticClass: "btn my-btn submit-btn pull-right",
     on: {
       "click": function($event) {
         _vm.add()
@@ -72664,4 +72664,4 @@ var index_esm = {
 
 /***/ })
 ],[306]);
-//# sourceMappingURL=main.0c5906e6bf3d01ed06e1.js.map
+//# sourceMappingURL=main.40aab86f02d5cb4d91bd.js.map
