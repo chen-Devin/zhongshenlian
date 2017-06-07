@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待审核业务', url: '/business-review-list-risk', present: false },
+        { name: '报告审核', url: '/business-review-list-risk', present: false },
         { name: '业务详情', url: `/business-review-detail-risk-${this.$route.params.id}`, present: true },
       ],
       business: {

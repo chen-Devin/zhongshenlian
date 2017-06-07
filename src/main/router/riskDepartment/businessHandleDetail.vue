@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待复审业务', url: '/business-handle-list-risk', present: false },
+        { name: '报告审核', url: '/business-handle-list-risk', present: false },
         { name: '业务详情', url: `/business-handle-detail-risk-${this.$route.params.id}`, present: false }
       ],
       business: {

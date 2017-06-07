@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待复审业务', url: '/business-handle-list-risk', present: true }
+        { name: '报告审核', url: '/business-handle-list-risk', present: true }
       ],
       businesses: [],
       page: {

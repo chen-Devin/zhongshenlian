@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       routesLeader1: [
-        {name: '待审核业务', link: '/business-review-list-leader', icon: 'business-review-list-leader',openClass: 1, open:true},
+        {name: '立项批复', link: '/business-review-list-leader', icon: 'business-review-list-leader',openClass: 1, open:true},
         {name: '待处理业务', link: '/business-handle-list-leader', icon: 'business-handle-list-sales',openClass: 1, open:true},
         {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list',openClass: 1, open:true}
       ],
@@ -80,17 +80,17 @@ export default {
           routes.push({name: '招投标信息', link: '/bid-info-list', icon: 'bid-info',openClass: 1, open:true});
         } else if (this.user.department === '业务部') {
           routes = [
-            {name: '待审核业务', link: '/business-review-list-sales', icon: 'business-review-list-leader',openClass: 1, open:true},
+            {name: '立项批复', link: '/business-review-list-sales', icon: 'business-review-list-leader',openClass: 1, open:true},
             {name: '待处理业务', link: '/business-handle-list-sales', icon: 'business-handle-list-sales',openClass: 1, open:true},
             {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list',openClass: 1},
             {name: '招投标信息', link: '/bid-info-list', icon: 'bid-info',openClass: 1}
           ];
         } else if (this.user.department === '风险评估部') {
           if (this.user.authority['业务初审']) {
-            routes.push({name: '待审核业务', link: '/business-review-list-risk', icon: 'business-review-list-leader',openClass: 1, open:true});
+            routes.push({name: '立项批复', link: '/business-review-list-risk', icon: 'business-review-list-leader',openClass: 1, open:true});
           }
           if (this.user.authority['业务复审']) {
-            routes.push({name: '待复审业务', link: '/business-handle-list-risk', icon: 'bid-info',openClass: 1 ,open:true});
+            routes.push({name: '报告审核', link: '/business-handle-list-risk', icon: 'bid-info',openClass: 1 ,open:true});
           }
           routes.push({name: '招投标信息', link: '/bid-info-list', icon: 'bid-info',openClass: 1 ,open:true});
         } else if (this.user.department === '档案部') {

@@ -268,14 +268,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="sass" scoped>
 .form-group {
   margin-bottom: 20px;
 }
 label {
-  margin-bottom: 15px !important;
+  margin-bottom: 15px;
 }
-/*.control-label {
-    width: 20% !important;
-}*/
+.form-horizontal .control-label {
+    margin-bottom: 10px;
+}
 </style>

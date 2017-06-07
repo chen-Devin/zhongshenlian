@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待审核业务', url: '/business-review-list-risk', present: true }
+        { name: '立项批复', url: '/business-review-list-risk', present: true }
       ],
       businesses: [],
       page: {

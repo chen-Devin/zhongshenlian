@@ -157,13 +157,13 @@
         <div class="row">
           <div class="col-sm-6">
             <div class="input-group">
-              <div class="input-group-addon">开始时间</div>
+              <div class="input-group-addon">起始日期</div>
               <input type="date" class="form-control" placeholder="请输入项目开始时间" v-model="business.auditTime.start" :disabled="!editable">
             </div>
           </div>
           <div class="col-sm-6">
             <div class="input-group">
-              <div class="input-group-addon">结束时间</div>
+              <div class="input-group-addon">截至日期</div>
               <input type="date" class="form-control" placeholder="请输入项目结束时间" v-model="business.auditTime.end" :disabled="!editable">
             </div>
           </div>

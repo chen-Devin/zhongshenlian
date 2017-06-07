@@ -314,13 +314,17 @@ a {
     cursor: pointer;
   }
 }
-.com-list .list-head {
-    padding-left: 0;
-    padding-right: 0;
-}
 .com-list > .list-group-item {
     padding-left: 0;
     padding-right: 0;
+    // padding-bottom: 5px;
+    line-height: 26px;
+}
+.com-list .list-head {
+    padding-left: 0;
+    padding-right: 0;
+    // padding-bottom: 20px;
+    line-height: 26px;
 }
 .report-btn {
     padding: .2em 1em .3em;
