@@ -46,7 +46,7 @@
                   v-if="REPORT.adviceState===2">已通过</span>
           </template>
           <template v-if="salesShow">
-            <a class="btn btn-primary"
+            <a class="label label-success btn-report"
                v-if="REPORT.adviceState===0"
                @click="sub(REPORT)">提交复审</a>
             <span class="label label-success"

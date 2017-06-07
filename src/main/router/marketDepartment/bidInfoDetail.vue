@@ -170,7 +170,7 @@ export default {
       }
       if (this.isDraft === "notDraft") {
         this.paths = [
-          {name: '招投标信息看板', url: '/bid-info-list', present: false},
+          {name: '招投标信息', url: '/bid-info-list', present: false},
           {name: '招投标详情', url: '/bid-info-detail', present: true}
         ]
       }

@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '招投标信息看板', url: '/bid-info-list', present: true }
+        { name: '招投标信息', url: '/bid-info-list', present: true }
       ]
     };
   },
