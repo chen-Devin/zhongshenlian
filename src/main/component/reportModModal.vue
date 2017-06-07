@@ -88,7 +88,14 @@ export default {
   name: 'reportModModal',
   data() {
     return {
-      report: this.initReport,
+      report: {
+        id: this.initReport.id,
+        name: this.initReport.name,
+        url: this.initReport.url,
+        state: this.initReport.state,
+        reportName: this.initReport.reportName,
+        adviceState: this.initReport.adviceState
+      },
       file: {
         name: ''
       },
@@ -148,7 +155,7 @@ export default {
         this.subBtn.cont = '保存...';
         this.subBtn.dis = true;
         axios({
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
           method: 'get',
           url: '/fileUpload',
           params: {

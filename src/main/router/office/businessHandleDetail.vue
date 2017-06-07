@@ -4,8 +4,6 @@
     <card>
       <h3 class="main-title">
         {{business.name}}
-        <button class="btn my-btn submit-btn pull-right" @click="sub()" v-if="!sended">装订业务</button>
-        <small class="label label-success business-label pull-right" v-if="sended">业务已装订</small>
       </h3>
       <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
@@ -18,10 +16,6 @@
         </template>
       </div>
     </card>
-    <complete-modal v-if="showModal"
-                    :initBusiness="business"
-                    @submited="submited"
-                    @canceled="canceled"></complete-modal>
   </div>
 </template>
 
@@ -32,7 +26,6 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
-import completeModal from './component/completeModal.vue';
 
 export default {
   name: 'businessHandleDetailOffice',
@@ -316,9 +309,6 @@ export default {
   },
   props: ['user'],
   computed: {
-    sended() {
-      return (this.business.projectStatus < 180) ? false : true;
-    },
     progress() {
       if (this.business.projectStatus < 20) {
           return [
@@ -696,24 +686,13 @@ export default {
     },
     pathsChan(paths) {
       this.paths = paths;
-    },
-    sub() {
-      this.showModal = true;
-    },
-    submited() {
-      this.business.projectStatus = 180;
-      this.showModal = false;
-    },
-    canceled() {
-      this.showModal = false;
     }
   },
   components: {
     crumbs,
     card,
     business,
-    approverAdvice,
-    completeModal
+    approverAdvice
   }
 }
 </script>
