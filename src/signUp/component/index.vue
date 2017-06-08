@@ -314,13 +314,14 @@ export default {
 .section {
   order: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   background: rgba(255,255,255,0.9);
   form {
-    margin: 0 70px;
+    order: 1;
+    padding: 0 59px;
     .form-group {
       border: 1px solid transparent;
       border-radius: $border-radius-large;
