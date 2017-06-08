@@ -54,7 +54,7 @@
             <span class="label label-info"
                   v-if="REPORT.adviceState===1">等待复审</span>
           </template>
-          <template v-if="archivesShow || officeShow">
+          <template v-if="!salesShow && !riskShow">
             <span class="label label-info"
                   v-if="REPORT.adviceState===0">未通过复审</span>
             <span class="label label-success"
@@ -135,9 +135,6 @@ export default {
     },
     archivesShow() {
       return this.user.department === '档案部' ? true : false;
-    },
-    officeShow() {
-      return this.user.department === '办公室' ? true : false;
     }
   },
   props: ['initBusiness', 'user'],
