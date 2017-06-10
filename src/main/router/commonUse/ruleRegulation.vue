@@ -21,6 +21,7 @@
                      :to="'/rule-regulation-detail-'+RULE.id"
                      v-for="(RULE,index) in rules"
                      :key="index">
+          <span class="label label-info" v-if="newRegulation(RULE.releaseTime)">新</span>
           <span class="title">{{RULE.title}}</span>
           <span class="date pull-right">{{RULE.releaseTime}}</span>
         </router-link>
@@ -32,6 +33,7 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
@@ -62,6 +64,9 @@ export default {
     this.getRuleLists(1);
   },
   methods: {
+    newRegulation(time) {
+      return moment().subtract(7, 'days').isSameOrBefore(time, 'day');
+    },
     tog(searchCont) {
       this.searchKeyRule = searchCont;
       if (this.searchKeyRule === '') {

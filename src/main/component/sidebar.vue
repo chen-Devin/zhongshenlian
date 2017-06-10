@@ -80,7 +80,7 @@ export default {
           routes.push({name: '招投标信息', link: '/bid-info-list', icon: 'bid-info',openClass: 1, open:true});
         } else if (this.user.department === '业务部') {
           routes = [
-            {name: '立项批复', link: '/business-review-list-sales', icon: 'business-review-list-leader',openClass: 1, open:true},
+            {name: '待审核业务', link: '/business-review-list-sales', icon: 'business-review-list-leader',openClass: 1, open:true},
             {name: '待处理业务', link: '/business-handle-list-sales', icon: 'business-handle-list-sales',openClass: 1, open:true},
             {name: '客户信息', link: '/customer-infor-list', icon: 'customer-infor-list',openClass: 1},
             {name: '招投标信息', link: '/bid-info-list', icon: 'bid-info',openClass: 1}

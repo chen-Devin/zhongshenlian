@@ -77,7 +77,7 @@ export default {
       showAddModal: false,
       page: {
         // total: this.department.totalNum,
-        totalNum: 1,
+        total: 1,
         // current: (this.department.pageNum === 0) ? 0 : 1
         current: 0
       },

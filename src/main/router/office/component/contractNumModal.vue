@@ -1,5 +1,5 @@
 <template>
-  <modal modalWidth="800px">
+  <modal alignSelf="flex-start" modalWidth="800px">
     <form class="form-horizontal clearfix"
           slot="body"
           @submit.prevent
@@ -8,7 +8,7 @@
         <label class="col-sm-2">报告类型</label>
         <div class="col-sm-10">
           <template v-for="(TYPE, index) in type">
-            <h5>{{TYPE.name}}</h5>
+            <p>{{TYPE.name}}</p>
             <label class="checkbox-inline"
                    v-for="(WORD, index) in TYPE.words"
                    :key="index">

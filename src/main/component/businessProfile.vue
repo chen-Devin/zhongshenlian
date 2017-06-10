@@ -75,9 +75,15 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">合同单价</label>
+      <label class="col-sm-2 control-label">取费依据</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.contractPrice===''?'':`${business.contractPrice}元`}}</p>
+        <p class="form-control-static">{{business.feeBasis}}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">费率</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.feeRate}}%</p>
       </div>
     </div>
     <div class="form-group">
@@ -346,7 +352,7 @@ export default {
           }
         }
         if (typeEx) {
-          out += `<h5>${this.business.report.type[i].name}</h5>
+          out += `<p>${this.business.report.type[i].name}</p>
                     <p class="form-control-static">${wordsFormat}</p>
                   <hr>`;
         }
