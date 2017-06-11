@@ -59,6 +59,7 @@
           <th class="text-center">工号</th>
           <th class="text-center">职务</th>
           <th class="text-center">所属部门</th>
+          <th class="text-center">子部门</th>
           <th class="text-center">操作</th>
         </tr>
       </thead>
@@ -71,6 +72,7 @@
           <td class="text-center">{{STAFF.jobNumber}}</td>
           <td class="text-center">{{STAFF.duties}}</td>
           <td class="text-center">{{STAFF.department}}</td>
+          <td class="text-center">{{STAFF.subDepartment}}</td>
           <td class="text-center link-wrap">
             <a class="text-primary"
                @click.prevent="mod(STAFF)">修改</a>
@@ -141,40 +143,40 @@ export default {
       }, (rep) => {});
     },
     higherSearchEvent() {
-        this.listType = 'higher';
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              let obj = {
-                command: 'staffSearch',
-                platform: 'web',
-                searchContent: '',
-                staffName: this.staffName,
-                staffNumber: this.staffNumber,
-                staffPhone: this.staffPhone,
-                pageNum: this.pageNum
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.staffs = rep.data.data.userArray;
-            this.totalNum = rep.data.data.totalNum;
-          }
-        }, (rep) => { });
-    },
-    reset() {
-        this.staffName = '';
-        this.staffNumber = '';
-        this.staffPhone = '';
-        this.searchStaffs('').then((rep) => {
+      this.listType = 'higher';
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            let obj = {
+              command: 'staffSearch',
+              platform: 'web',
+              searchContent: '',
+              staffName: this.staffName,
+              staffNumber: this.staffNumber,
+              staffPhone: this.staffPhone,
+              pageNum: this.pageNum
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
           this.staffs = rep.data.data.userArray;
           this.totalNum = rep.data.data.totalNum;
-        }, (rep) => {});
+        }
+      }, (rep) => { });
+    },
+    reset() {
+      this.staffName = '';
+      this.staffNumber = '';
+      this.staffPhone = '';
+      this.searchStaffs('').then((rep) => {
+        this.staffs = rep.data.data.userArray;
+        this.totalNum = rep.data.data.totalNum;
+      }, (rep) => {});
     },
     searchStaffs(searchCont) {
       this.listType = 'simple';

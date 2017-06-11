@@ -68,7 +68,6 @@
           <input type="text"
                  class="form-control"
                  placeholder="请输入所属部门"
-                 readonly
                  v-model="staff.department.val">
         </div>
       </div>
@@ -232,6 +231,9 @@ export default {
             this.$emit('saved', this.staff);
           } else if (rep.data.statusCode === '10012') {
             window.location.href = 'signIn.html';
+          } else {
+            this.alert.show = true;
+            this.alert.cont = rep.data.msg;
           }
         }, (rep) => { });
       }
