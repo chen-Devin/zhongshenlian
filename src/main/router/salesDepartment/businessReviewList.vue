@@ -48,6 +48,7 @@ export default {
         { name: '立项批复', url: '/business-review-list-sales', present: true }
       ],
       businesses: [],
+      addBusiness: false,
       totalPage: 1,
       page: {
         total: 0,
@@ -55,19 +56,20 @@ export default {
       }
     };
   },
-  computed: {
-    addBusiness() {
-      return this.user.authority['业务立项'];
-    }
-  },
   props: ['user'],
   created() {
     this.getInfo(1);
+    setTimeout(() => {
+      this.addBusinessJud();
+    }, 500);
   },
   watch: {
     $route: 'getInfo'
   },
   methods: {
+    addBusinessJud() {
+      this.addBusiness = this.user.authority['业务立项'];
+    },
     currentChange(newPage) {
       this.getInfo(newPage);
     },
