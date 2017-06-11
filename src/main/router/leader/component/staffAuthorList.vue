@@ -31,6 +31,7 @@
         </tr>
       </tbody>
     </table>
+    <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
   </card>
 </template>
 
@@ -40,6 +41,7 @@ import qs from 'qs';
 
 import card from '../../../component/card.vue';
 import searchBar from '../../../component/searchBar.vue';
+import myPagination from '../../../component/pagination.vue';
 
 export default {
   name: 'staffAuthorList',
@@ -50,7 +52,13 @@ export default {
         dis: false,
         cont: '编辑',
         ediStat: false,
-      }
+      },
+      searchCont: '',
+      page: {
+        total: 1,
+        current: 0
+      },
+      totalPage: 1
     }
   },
   computed: {
@@ -60,7 +68,10 @@ export default {
   },
   methods: {
     tog(searchCont) {
-      this.searchStaffs(searchCont).then((rep) => {
+      this.searchCont = searchCont;
+      this.searchStaffs(searchCont,1).then((rep) => {
+        this.page.total = parseInt(rep.data.data.totalNum);
+        this.page.current = 1;
         for(let m=0; m < rep.data.data.userArray.length; m++) {
           for(let n=0; n < rep.data.data.userArray[m].authority.length; n++) {
             let obj = {};
@@ -72,7 +83,22 @@ export default {
         this.staffs = rep.data.data.userArray;
       }, (rep) => {});
     },
-    searchStaffs(searchCont) {
+    currentChange(newPage) {
+      this.searchStaffs(this.searchCont, newPage).then((rep) => {
+        this.page.total = parseInt(rep.data.data.totalNum);
+        this.page.current = newPage;
+        for(let m=0; m < rep.data.data.userArray.length; m++) {
+          for(let n=0; n < rep.data.data.userArray[m].authority.length; n++) {
+            let obj = {};
+            obj.authName = rep.data.data.userArray[m].authority[n].name;
+            obj.stat = rep.data.data.userArray[m].authority[n].authority === '0' ? false : true;
+            rep.data.data.userArray[m].authority[n] = obj;
+          }
+        }
+        this.staffs = rep.data.data.userArray;
+      }, (rep) => {});;
+    },
+    searchStaffs(searchCont, newPage) {
       let promise = new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -83,7 +109,8 @@ export default {
               var obj = {
                 command: 'staffSearch',
                 platform: 'web',
-                searchContent: searchCont
+                searchContent: searchCont,
+                pageNum: newPage
               }
               return JSON.stringify(obj);
             })()
@@ -157,7 +184,8 @@ export default {
   },
   components: {
     card,
-    searchBar
+    searchBar,
+    myPagination
   }
 };
 </script>

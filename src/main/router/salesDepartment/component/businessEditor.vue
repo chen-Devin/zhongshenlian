@@ -137,7 +137,7 @@
         </label>
         <hr>
         <template v-for="(TYPE, index) in business.report.type" v-if="TYPE.state">
-          <h5>{{TYPE.name}}</h5>
+          <p>{{TYPE.name}}</p>
           <label class="checkbox-inline" v-for="(WORD, index) in TYPE.words" :key="index">
             <input type="checkbox" v-model="WORD.state" @change="reportTypeChan(TYPE, WORD)" :disabled="!editable"> {{WORD.name}}
           </label>
@@ -444,7 +444,9 @@ export default {
       }
       Promise.all(promiseArr).then(() => {
         if (this.business.institution.id === '') {
-          this.business.institution = this.customers[0];
+          if (this.customers.length) {
+            this.business.institution = this.customers[0];
+          }
         } else {
           for (let i = 0; i < this.customers.length; i++) {
             if (this.business.institution.id === this.customers[i].id) {
