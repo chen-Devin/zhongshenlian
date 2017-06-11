@@ -9,7 +9,7 @@
       </router-link>
     </h4>
     <h4 class="total-amount"><small>当前申请发票总计：</small><strong>{{total}}</strong>元</h4>
-    <div class="com-list list-group">
+    <div class="com-list list-group list-adjust">
       <li class="list-group-item list-head">
         <span class="title">开票列表</span>
       </li>

@@ -65,15 +65,16 @@
         </div>
         <div class="col-xs-2 text-center">
           <template v-if="archivesShow">
-            <label class="checkbox-inline">
-              <input type="checkbox"
+            <!-- <label class="checkbox-inline"> -->
+              <input class="checkbox" 
+                     type="checkbox"
                      v-model="REPORT.state"
-                     @change="reportStatChan(REPORT)"> 下载二维码
-            </label>
+                     @change="reportStatChan(REPORT)">
+            <!-- </label> -->
           </template>
           <template v-if="!archivesShow">
-            <span class="label label-info" v-if="!REPORT.state">未下载</span>
-            <span class="label label-success" v-if="REPORT.state">已下载</span>
+            <span class="label label-info adjust-download" v-if="!REPORT.state">未下载</span>
+            <span class="label label-success adjust-download" v-if="REPORT.state">已下载</span>
           </template>
         </div>
       </li>
@@ -306,13 +307,13 @@ a {
 .com-list > .list-group-item {
     padding-left: 0;
     padding-right: 0;
-    // padding-bottom: 5px;
     line-height: 26px;
+    margin-left: -20px;
+    margin-right: -20px;
 }
 .com-list .list-head {
     padding-left: 0;
     padding-right: 0;
-    // padding-bottom: 20px;
     line-height: 26px;
 }
 .report-btn {
@@ -320,5 +321,14 @@ a {
     min-width: 76px;
     height: 26px;
     font-size: 12px;
+}
+.list-adjust {
+  margin-left: 0px;
+}
+.checkbox {
+    display: inline;
+}
+.adjust-download {
+  margin-left: 5px;
 }
 </style>
