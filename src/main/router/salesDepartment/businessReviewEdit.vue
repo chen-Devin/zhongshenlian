@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '立项批复', url: '/business-review-list-sales', present: false },
+        { name: '待审核业务', url: '/business-review-list-sales', present: false },
         { name: '业务详情', url: `/business-review-edit-${this.$route.params.id}`, present: true },
       ],
       business: {
