@@ -65,10 +65,11 @@
            :class="{'has-error': !staff.department.ver}">
         <label class="control-label">所属部门</label>
         <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入所属部门"
-                 v-model="staff.department.val">
+          <select class="form-control" v-model="staff.department.val">
+            <option v-for="(DEP,index) in departments" :value="DEP" :key="index">
+              {{ DEP }}
+            </option>
+          </select>
         </div>
       </div>
       <div class="form-group">
@@ -155,6 +156,7 @@ export default {
           },
         }
       })(),
+      departments: [],
       alert: {
         show: false,
         cont: ''
@@ -166,6 +168,14 @@ export default {
     };
   },
   props: ['initalStaff'],
+  created() {
+    this.getDepartmentList().then((rep) => {
+      this.departments = [];
+      for (let i = 0; i < rep.data.data.departmentArray.length; i++) {
+        this.departments.push(rep.data.data.departmentArray[i].departmentName);
+      }
+    }, (rep) => {});
+  },
   methods: {
     save() {
       let reg = /^(1+\d{10})$/;
@@ -243,6 +253,33 @@ export default {
     },
     del() {
       this.$emit('del', this.initalStaff);
+    },
+    getDepartmentList() {
+      let promise = new Promise((resolve,reject)=>{
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'getDepartmentList',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            resolve(rep);
+          } else if (rep.data.statusCode === '10012') {
+            window.location.href = 'signIn.html';
+          } else {
+            reject(rep);
+          }
+        }, (rep) => { });
+      });
+      return promise;
     }
   },
   components: {

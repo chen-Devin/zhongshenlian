@@ -66,8 +66,8 @@
         <label class="control-label">所属部门</label>
         <div>
           <select v-model="staff.department.val" class="form-control">
-              <option v-for="option in departmentArray" :value="option">
-                {{ option }}
+              <option v-for="(DEP,index) in departments" :value="DEP" :key="index">
+                {{ DEP }}
               </option>
           </select>
         </div>
@@ -151,8 +151,17 @@ export default {
         dis: false,
         cont: '保存'
       },
-      departmentArray: []
+      departments: []
     };
+  },
+  created() {
+    this.getDepartmentList().then((rep) => {
+      this.departments = [];
+      for (let i = 0; i < rep.data.data.departmentArray.length; i++) {
+        this.departments.push(rep.data.data.departmentArray[i].departmentName);
+      }
+      this.staff.department.val = this.departments[1];
+    }, (rep) => {});
   },
   methods: {
     save() {
@@ -253,14 +262,6 @@ export default {
       });
       return promise;
     }
-  },
-  created() {
-    this.getDepartmentList().then((rep) => {
-      this.departmentArray1 = rep.data.data.departmentArray;
-      for (var i = 0; i < this.departmentArray1.length; i++) {
-        this.departmentArray.push(this.departmentArray1[i].departmentName);
-      }
-    }, (rep) => {});
   },
   components: {
     modal

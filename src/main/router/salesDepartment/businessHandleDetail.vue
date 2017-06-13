@@ -388,7 +388,7 @@ export default {
             },
             { name: '业务完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus < 160) {
+      } else if (this.business.projectStatus < 180) {
         if (this.business.billState) {
           return [
             { name: '立项申请', passed: true, active: false },
