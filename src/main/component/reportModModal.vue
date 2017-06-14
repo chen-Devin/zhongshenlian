@@ -93,6 +93,7 @@ export default {
         name: this.initReport.name,
         url: this.initReport.url,
         state: this.initReport.state,
+        archivingState: this.initReport.archivingState,
         reportName: this.initReport.reportName,
         adviceState: this.initReport.adviceState
       },
@@ -117,11 +118,9 @@ export default {
   props: ['initReport', 'initBusiness'],
   methods: {
     modReport(file, fileList) {
-      console.log(file);
       if (file.status === 'ready') {
         this.file = file;
         fileList.splice(0, fileList.length-1);
-        console.log(fileList);
       }
     },
     reportUploadProgress(event, file, fileList) {
@@ -134,6 +133,7 @@ export default {
         this.report.name = file.name;
         this.report.url = responseData.data.path;
         this.report.state = this.report.state;
+        this.report.archivingState = this.report.archivingState;
         this.report.reportName = this.report.reportName;
         this.report.adviceState = this.report.adviceState;
 
@@ -177,6 +177,7 @@ export default {
             this.report.name = this.report.name;
             this.report.url = this.report.url;
             this.report.state = this.report.state;
+            this.report.archivingState = this.report.archivingState;
             this.report.reportName = this.report.reportName;
             this.report.adviceState = this.report.adviceState;
 

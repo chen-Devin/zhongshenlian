@@ -89,8 +89,9 @@ export default {
         name: '',
         url: '',
         state: false,
+        archivingState: false,
         reportName: '',
-        adviceState: 0,
+        adviceState: 0
       },
       file: {
         name: ''
@@ -113,11 +114,9 @@ export default {
   props: ['initBusiness'],
   methods: {
     modReport(file, fileList) {
-      console.log(file);
       if(file.status === 'ready') {
         this.file = file;
         fileList.splice(0, fileList.length-1);
-        console.log(fileList);
       }
     },
     reportUploadProgress(event, file, fileList) {
@@ -130,6 +129,7 @@ export default {
         this.report.name = file.name;
         this.report.url = responseData.data.path;
         this.report.state = false;
+        this.report.archivingState = false;
         this.report.reportName = this.report.reportName;
         this.report.adviceState = 0;
 

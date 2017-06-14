@@ -15,7 +15,8 @@
         <div class="col-xs-1 text-center">附件</div>
         <div class="col-xs-1 text-center" v-if="salesShow">修改</div>
         <div class="col-xs-2 text-center">复审状态</div>
-        <div class="col-xs-2 text-center">下载二维码</div>
+        <div class="col-xs-1 text-center">二维码</div>
+        <div class="col-xs-1 text-center">归档</div>
       </li>
       <li class="list-group-item row"
           v-for="(REPORT, index) in business.reports"
@@ -63,18 +64,28 @@
                   v-if="REPORT.adviceState===1">等待复审</span>
           </template>
         </div>
-        <div class="col-xs-2 text-center">
+        <div class="col-xs-1 text-center">
           <template v-if="archivesShow">
-            <!-- <label class="checkbox-inline"> -->
-              <input class="checkbox" 
-                     type="checkbox"
-                     v-model="REPORT.state"
-                     @change="reportStatChan(REPORT)">
-            <!-- </label> -->
+            <input class="checkbox"
+                   type="checkbox"
+                   v-model="REPORT.state"
+                   @change="reportStatChan(REPORT)">
           </template>
           <template v-if="!archivesShow">
             <span class="label label-info adjust-download" v-if="!REPORT.state">未下载</span>
             <span class="label label-success adjust-download" v-if="REPORT.state">已下载</span>
+          </template>
+        </div>
+        <div class="col-xs-1 text-center">
+          <template v-if="archivesShow">
+            <input class="checkbox"
+                   type="checkbox"
+                   v-model="REPORT.archivingState"
+                   @change="reportArchivingStatChan(REPORT)">
+          </template>
+          <template v-if="!archivesShow">
+            <span class="label label-info adjust-download" v-if="!REPORT.archivingState">未归档</span>
+            <span class="label label-success adjust-download" v-if="REPORT.archivingState">已归档</span>
           </template>
         </div>
       </li>
@@ -277,6 +288,29 @@ export default {
               platform: 'web',
               projectAnnexId: FILE.id,
               result: FILE.state ? '1' : '0'
+            }
+            return JSON.stringify(obj);
+          })()
+        })
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
+    },
+    reportArchivingStatChan(FILE) {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'post',
+        url: '/service',
+        data: qs.stringify({
+          data: (() => {
+            let obj = {
+              command: 'confirmArchiving',
+              platform: 'web',
+              projectAnnexId: FILE.id,
+              result: FILE.state ? '0' : '1'
             }
             return JSON.stringify(obj);
           })()

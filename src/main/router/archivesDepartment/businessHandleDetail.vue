@@ -26,13 +26,17 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios';
+import { Message } from 'element-ui';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
 import completeModal from './component/completeModal.vue';
+
+Vue.prototype.$message = Message;
 
 export default {
   name: 'businessHandleDetailArchives',
@@ -665,6 +669,7 @@ export default {
                 name: rep.data.data.reportAnnexArray[i].annexName,
                 url: rep.data.data.reportAnnexArray[i].annexUrl,
                 state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true,
+                archivingState: rep.data.data.reportAnnexArray[i].archivingState === '0' ? false : true,
                 reportName: rep.data.data.reportAnnexArray[i].reportName,
                 adviceState: parseInt(rep.data.data.reportAnnexArray[i].fStatus)
               }
@@ -698,7 +703,21 @@ export default {
       this.paths = paths;
     },
     sub() {
-      this.showModal = true;
+      let flag = ture;
+      for (let i = 0; i < this.business.reports.length; i++) {
+        if (this.business.reports[i].state) {
+          flag = false;
+          break;
+        }
+      }
+      if (flag) {
+        this.$message({
+          message: '请先确认二维码均已下载',
+          type: 'warning'
+        });
+      } else {
+        this.showModal = true;
+      }
     },
     submited() {
       this.business.projectStatus = 180;

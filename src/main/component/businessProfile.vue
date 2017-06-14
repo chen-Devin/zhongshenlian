@@ -19,8 +19,8 @@
         <p class="form-control-static">{{business.proposer.name}}</p>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">联系电话</label>
+    <div class="form-group" v-if="false">
+      <label class="col-sm-2 control-label">项目申请人电话</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.proposer.tele}}</p>
       </div>

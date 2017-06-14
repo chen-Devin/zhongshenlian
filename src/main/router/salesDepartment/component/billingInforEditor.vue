@@ -32,7 +32,7 @@
           <p class="form-control-static">{{bill.proposer.name}}</p>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" v-if="false">
         <label class="col-sm-2 control-label">申请人电话</label>
         <div class="col-sm-9">
           <p class="form-control-static">{{bill.proposer.tele}}</p>
@@ -145,9 +145,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">开票单位</label>
+        <label class="col-sm-2 control-label">销售方单位名称</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" placeholder="请输入开票单位" v-model="bill.billingUnit">
+          <input type="text" class="form-control" placeholder="请输入销售方单位名称" v-model="bill.billingUnit">
         </div>
       </div>
       <div class="form-group">

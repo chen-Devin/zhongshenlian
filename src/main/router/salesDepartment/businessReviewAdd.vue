@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待审核业务', url: '/business-review-list-sales', present: false },
+        { name: '立项审批', url: '/business-review-list-sales', present: false },
         { name: '创建新任务', url: '/business-review-add', present: true },
       ],
       business: {
@@ -468,7 +468,7 @@ export default {
     submited(submitedBusiness) {
       this.business = submitedBusiness;
       this.$message({
-        message: '提交成功，将返回待审核业务列表',
+        message: '提交成功，将返回立项审批列表',
         type: 'success'
       });
       setTimeout(() => {
@@ -480,7 +480,7 @@ export default {
     },
     saved(savedBusiness) {
       this.business = savedBusiness;
-      this.$message('暂存成功，将返回待审核业务列表');
+      this.$message('暂存成功，将返回立项审批列表');
       setTimeout(() => {
         this.$router.push({ path: '/business-review-list-sales' });
       }, 1000);

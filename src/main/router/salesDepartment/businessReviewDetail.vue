@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待审核业务', url: '/business-review-list-sales', present: false },
+        { name: '立项审批', url: '/business-review-list-sales', present: false },
         { name: '业务详情', url: `/business-review-detail-sales-${this.$route.params.id}`, present: true },
       ],
       business: {
@@ -678,6 +678,7 @@ export default {
                 name: rep.data.data.reportAnnexArray[i].annexName,
                 url: rep.data.data.reportAnnexArray[i].annexUrl,
                 state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true,
+                archivingState: rep.data.data.reportAnnexArray[i].archivingState === '0' ? false : true,
                 reportName: rep.data.data.reportAnnexArray[i].reportName,
                 adviceState: parseInt(rep.data.data.reportAnnexArray[i].fStatus)
               }

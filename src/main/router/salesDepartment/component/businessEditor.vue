@@ -12,7 +12,7 @@
         <p class="form-control-static">{{business.proposer.name}}</p>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" v-if="false">
       <label class="col-sm-2 control-label">项目申请人电话</label>
       <div class="my-col-sm-5">
         <p class="form-control-static">{{business.proposer.tele}}</p>
