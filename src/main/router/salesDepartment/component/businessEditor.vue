@@ -434,7 +434,7 @@ export default {
   props: ['initBusiness', 'editable'],
   created() {
     bus.$on('subBusiness', () => { this.sub() });
-    bus.$on('savBusiness', () => { this.save() });
+    bus.$on('savBusiness', () => { console.log('step2'); this.save(); });
 
     this.getCustomers(1).then((rep) => {
       let pageNum = parseInt(rep.data.data.pageNum);
@@ -463,6 +463,10 @@ export default {
     }
 
     this.reportTypeChan();
+  },
+  destroyed: function() {
+    bus.$off('subBusiness');
+    bus.$off('savBusiness');
   },
   methods: {
     currencyMask,
@@ -593,6 +597,7 @@ export default {
       return promise;
     },
     save() {
+      console.log('step3');
       let promise = new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },

@@ -731,6 +731,7 @@ export default {
       }, 1000);
     },
     sav() {
+      console.log('step1');
       bus.$emit('savBusiness');
     },
     saved(savedBusiness) {
