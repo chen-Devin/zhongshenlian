@@ -209,15 +209,15 @@ form {
 .label {
   font-weight: normal;
   background-color: #fff;
-  color: #51aad6;
+  color: #38a5fe;
   letter-spacing: -.32px;
-  border: 1px solid #51aad6;
+  border: 1px solid #38a5fe;
   border-radius: 2px;
 }
 
 .label-danger {
-  border: 1px solid #e84c4c;
-  color: #e84c4c;
+  border: 1px solid #f06d58;
+  color: #f06d58;
 }
 
 //列表项宽度
@@ -228,20 +228,6 @@ label.col-sm-2.control-label {
 //业务报告按钮
 .btn-report {
   padding: .2em 1em .3em;
-  // background-color: #1f6ba9;
-  // color: #fff;
-  // &:hover {
-  //   background-color: #2171b2;
-  //   color: #fff;
-  // }
-  // &:active {
-  //   background-color: #2171b2;
-  //   color: #fff;
-  // }
-  // &:focus {
-  //   background-color: #2171B2;
-  //   color: #fff;
-  // }
 }
 
 //按钮
@@ -283,18 +269,18 @@ label.col-sm-2.control-label {
 
 //提交、保存、录入、搜索、编辑按钮
 .submit-btn {
-  background-color: #1f6ba9;
+  background-color: #64d3f8;
   border: none;
   &:hover {
-    background-color: #2171b2;
+    background-color: #53b3d3;
     color: #fff;
   }
   &:active {
-    background-color: #2171b2;
+    background-color: #53b3d3;
     color: #fff;
   }
   &:focus {
-    background-color: #2171B2;
+    background-color: #53b3d3;
     color: #fff;
   }
 }
@@ -302,14 +288,29 @@ label.col-sm-2.control-label {
 //暂存、取消、高级搜索、重置按钮
 .draft-btn {
   color: #fff;
-  background-color: #fdad03;
+  background-color: #ffc952;
   border: none;
   &:hover {
-    background-color: #d59203;
+    background-color: #d3a238;
     color: #fff;
   }
   &:active {
-    background-color: #d59203;
+    background-color: #d3a238;
+    color: #fff;
+    border: none;
+  }
+}
+
+.high-btn {
+  color: #fff;
+  background-color: #38a5fe;
+  border: none;
+  &:hover {
+    background-color: #288ada;
+    color: #fff;
+  }
+  &:active {
+    background-color: #288ada;
     color: #fff;
     border: none;
   }
@@ -317,22 +318,23 @@ label.col-sm-2.control-label {
 
 //撤销、删除按钮
 .cancel-btn {
-  background-color: #f86a50;
+  background-color: #f06d58;
   border: none;
   width: 60px;
   &:hover {
-    background-color: #c8503a;
+    background-color: #d3523e;
     color: #fff;
   }
   &:active {
-    background-color: #c8503a;
+    background-color: #d3523e;
     color: #fff;
   }
   &:focus {
-    background-color: #c8503a;
+    background-color: #d3523e;
     color: #fff;
   }
 }
+
 
 
 

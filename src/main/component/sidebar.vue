@@ -145,12 +145,14 @@ export default {
 
 .side-bar {
   position: fixed;
+  color: #797a7a;
   background-color: #283037;
   height: 100%;
   .nav-pills {
     > li {
       &:hover {
-        background-color: #51616F;
+        color: #797a7a;
+        background-color: #789ebd;
       }
       &.open-item {
         padding-left: 20%;
@@ -236,7 +238,7 @@ export default {
               background-repeat: no-repeat;
             }
           }
-          background-color: #1F6BA9;
+          background-color: #288ada;
           color: #ffffff;
       }
         padding: 1px 15px;
