@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-//通用
+// 通用
 import businessCompleteList from './commonUse/businessCompleteList.vue';
 import businessCompleteDetail from './commonUse/businessCompleteDetail.vue';
 import ruleRegulation from './commonUse/ruleRegulation.vue';
@@ -17,7 +17,7 @@ import businessProfile from '../component/businessProfile.vue';
 import businessReports from '../component/businessReports.vue';
 import operatHistory from '../component/operatHistory.vue';
 
-//所长
+// 所长
 import businessHandleDetailLeader from './leader/businessHandleDetail.vue';
 import businessHandleListLeader from './leader/businessHandleList.vue';
 import businessAnalysis from './leader/businessAnalysis.vue';
@@ -25,12 +25,12 @@ import businessReviewDetailLeader from './leader/businessReviewDetail.vue';
 import businessReviewListLeader from './leader/businessReviewList.vue';
 import staffManagementAuthor from './leader/staffManagementAuthor.vue';
 import staffManagementInfor from './leader/staffManagementInfor.vue';
-//办公室
+// 办公室
 import businessReviewListOffice from './office/businessReviewList.vue';
 import businessReviewDetailOffice from './office/businessReviewDetail.vue';
 import businessHandleListOffice from './office/businessHandleList.vue';
 import businessHandleDetailOffice from './office/businessHandleDetail.vue';
-//业务部
+// 业务部
 import businessHandleDetailSales from './salesDepartment/businessHandleDetail.vue';
 import businessHandleListSales from './salesDepartment/businessHandleList.vue';
 import businessReviewAdd from './salesDepartment/businessReviewAdd.vue';
@@ -38,18 +38,18 @@ import businessReviewDetailSales from './salesDepartment/businessReviewDetail.vu
 import businessReviewEdit from './salesDepartment/businessReviewEdit.vue';
 import businessReviewListSales from './salesDepartment/businessReviewList.vue';
 import billingInforEditor from './salesDepartment/component/billingInforEditor.vue';
-//风险评估部
+// 风险评估部
 import businessHandleDetailRisk from './riskDepartment/businessHandleDetail.vue';
 import businessHandleListRisk from './riskDepartment/businessHandleList.vue';
 import businessReviewListRisk from './riskDepartment/businessReviewList.vue';
 import businessReviewDetailRisk from './riskDepartment/businessReviewDetail.vue';
-//档案部
+// 档案部
 import businessHandleDetailArchives from './archivesDepartment/businessHandleDetail.vue';
 import businessHandleListArchives from './archivesDepartment/businessHandleList.vue';
-//财务部
+// 财务部
 import businessHandleDetailFinancial from './financialDepartment/businessHandleDetail.vue';
 import businessHandleListFinancial from './financialDepartment/businessHandleList.vue';
-//市场部
+// 市场部
 import bidInfoList from './marketDepartment/bidInfoList.vue';
 import bidInfoDetail from './marketDepartment/bidInfoDetail.vue';
 import bidInfoInput from './marketDepartment/bidInfoInput.vue';
