@@ -67,10 +67,13 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">项目取得方式</label>
-      <div class="my-col-sm-5">
-        <label class="radio-inline" v-for="(WAY, index) in getWay" :key="index">
-          <input type="radio" name="gainingMethod" v-model="business.getWay" :value="WAY" :disabled="!editable"> {{WAY}}
-        </label>
+      <div class="my-col-sm-5 check-wrap">
+        <div class="d-ib" v-for="(WAY, index) in getWay" :key="index">
+          <input class="magic-radio" type="radio" name="gainingMethod" v-model="business.getWay" :value="WAY" :disabled="!editable" :id="index">
+          <label class="radio-inline" :for="index">
+            {{WAY}}
+          </label>
+        </div>
       </div>
     </div>
     <div class="form-group">
@@ -131,16 +134,22 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">出据报告类型</label>
-      <div class="my-col-sm-5">
-        <label class="checkbox-inline" v-for="(TYPE, index) in business.report.type" :key="index">
-          <input type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable"> {{TYPE.name}}
-        </label>
-        <hr>
-        <template v-for="(TYPE, index) in business.report.type" v-if="TYPE.state">
-          <p>{{TYPE.name}}</p>
-          <label class="checkbox-inline" v-for="(WORD, index) in TYPE.words" :key="index">
-            <input type="checkbox" v-model="WORD.state" @change="reportTypeChan(TYPE, WORD)" :disabled="!editable"> {{WORD.name}}
+      <div class="my-col-sm-5 check-wrap">
+        <div class="d-ib" v-for="(TYPE, index) in business.report.type">
+          <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable" :id="index">
+          <label class="checkbox-inline" :key="index" :for="index">
+            {{TYPE.name}}
           </label>
+        </div>
+        <hr>
+        <template v-for="(TYPE, indexOuter) in business.report.type" v-if="TYPE.state">
+          <p>{{TYPE.name}}</p>
+          <div class="d-ib" v-for="(WORD, index) in TYPE.words">
+            <input class="magic-checkbox" type="checkbox" v-model="WORD.state" @change="reportTypeChan(TYPE, WORD)" :disabled="!editable" :id="index+TYPE.name">
+            <label class="checkbox-inline" :key="index" :for="index+TYPE.name">
+              {{WORD.name}}
+            </label>
+          </div>
           <hr>
         </template>
       </div>
@@ -1034,5 +1043,15 @@ export default {
   img {
     width: 42px;
   }
+}
+
+.check-wrap {
+  padding-top: 7px;
+}
+
+.form-horizontal .checkbox-inline {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
 }
 </style>

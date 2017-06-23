@@ -122,12 +122,15 @@
       </div>
       <div class="form-group">
         <label class="control-label">客户性质</label>
-        <div>
+        <div class="check-wrap" v-for="(NAT, index) in customer.customerNature">
+          <input class="magic-checkbox"
+                 type="checkbox"
+                 v-model="NAT.state"
+                 :id="index">
           <label class="checkbox-inline"
-                 v-for="(NAT, index) in customer.customerNature"
-                 :key="index">
-            <input type="checkbox"
-                   v-model="NAT.state"> {{NAT.val}}
+                 :key="index"
+                 :for="index">
+                 {{NAT.val}}
           </label>
         </div>
       </div>
@@ -435,5 +438,15 @@ export default {
 <style lang="sass" scoped>
   .control-label {
     width: 100%;
+  }
+
+  .check-wrap {
+    display: inline-block;
+  }
+
+  .form-horizontal .radio, .form-horizontal .checkbox, .form-horizontal .radio-inline, .form-horizontal .checkbox-inline {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 0px;
   }
 </style>

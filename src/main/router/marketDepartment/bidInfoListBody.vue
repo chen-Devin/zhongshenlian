@@ -63,35 +63,42 @@
       <div class="row check-pl">
         <label class="ta-l">项目状态</label>
         <div class="check-box search-checkbox">
-          <input  class="magic-checkbox" type="checkbox" name="filterState" value="3" v-model="filterState" id="1">
+          <input class="magic-checkbox" type="checkbox" name="filterState" value="3" v-model="filterState" id="1">
           <label for="1">
             已中标
           </label>
-          <label class="checkbox-inline">
-            <input type="checkbox" name="filterState" value="2" v-model="filterState"> 已入围
+          <input class="magic-checkbox" type="checkbox" name="filterState" value="2" v-model="filterState" id="2">
+          <label for="2">
+            已入围
           </label>
-          <label class="checkbox-inline">
-            <input type="checkbox" name="filterState" value="1" v-model="filterState"> 已摘牌
+          <input class="magic-checkbox" type="checkbox" name="filterState" value="1" v-model="filterState" id="3">
+          <label for="3">
+            已摘牌
           </label>
-          <label class="checkbox-inline">
-            <input type="checkbox" name="filterState" value="0" v-model="filterState"> 未摘牌
+          <input class="magic-checkbox" type="checkbox" name="filterState" value="0" v-model="filterState" id="4">
+          <label for="4">
+            未摘牌
           </label>
         </div>
       </div>
       <div class="row check-pl">
         <label class="ta-l">所属类型</label>
         <div class="check-box search-checkbox">
-          <label class="checkbox-inline">
-            <input type="checkbox" name="officeList" value="kjs" v-model="officeList"> 会计所
+          <input class="magic-checkbox" type="checkbox" name="officeList" value="kjs" v-model="officeList" id="5">
+          <label for="5">
+            会计所
           </label>
-          <label class="checkbox-inline">
-            <input type="checkbox" name="officeList" value="pgs" v-model="officeList"> 评估所
+          <input class="magic-checkbox" type="checkbox" name="officeList" value="pgs" v-model="officeList" id="6">
+          <label for="6">
+            评估所
           </label>
-          <label class="checkbox-inline">
-            <input type="checkbox" name="officeList" value="sws" v-model="officeList"> 税务所
+          <input class="magic-checkbox" type="checkbox" name="officeList" value="sws" v-model="officeList" id="7">
+          <label for="7">
+            税务所
           </label>
-          <label class="checkbox-inline">
-            <input type="checkbox" name="officeList" value="zjs" v-model="officeList"> 造价所
+          <input class="magic-checkbox" type="checkbox" name="officeList" value="zjs" v-model="officeList" id="8">
+          <label for="8">
+            造价所
           </label>
         </div>
       </div>

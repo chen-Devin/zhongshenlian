@@ -29,19 +29,23 @@
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">业务类型：</label>
-				<div class="col-sm-10">
-					<label class="checkbox-inline">
-						<input type="checkbox" v-model="project.departmentType" value="kjs"> 会计所
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" v-model="project.departmentType" value="pgs"> 评估所
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" v-model="project.departmentType" value="sws"> 税务所
-					</label>
-					<label class="checkbox-inline">
-						<input type="checkbox" v-model="project.departmentType" value="zjs"> 造价所
-					</label>
+				<div class="col-sm-10 check-wrap">
+          <input class="magic-checkbox" type="checkbox" value="kjs" v-model="project.departmentType" id="5">
+          <label for="5">
+            会计所
+          </label>
+          <input class="magic-checkbox" type="checkbox" value="pgs" v-model="project.departmentType" id="6">
+          <label for="6">
+            评估所
+          </label>
+          <input class="magic-checkbox" type="checkbox" value="sws" v-model="project.departmentType" id="7">
+          <label for="7">
+            税务所
+          </label>
+          <input class="magic-checkbox" type="checkbox" value="zjs" v-model="project.departmentType" id="8">
+          <label for="8">
+            造价所
+          </label>
 				</div>
 			</div>
 			<hr>
@@ -52,45 +56,56 @@
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">招标内容：</label>
-					<div class="col-sm-10">
-						<label class="checkbox-inline">
-							<input type="checkbox" v-model="project.kjsBiddingContent" value="年审"> 年审
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" v-model="project.kjsBiddingContent" value="专项"> 专项
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" v-model="project.kjsBiddingContent" value="咨询"> 咨询
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" v-model="project.kjsBiddingContent" value="决算"> 决算
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" v-model="project.kjsBiddingContent" value="外汇年检"> 外汇年检
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" v-model="project.kjsBiddingContent" value="验资"> 验资
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" v-model="project.kjsBiddingContent" value="外资审计"> 外资审计
-						</label>
+					<div class="col-sm-10 check-wrap">
+            <input class="magic-checkbox" type="checkbox" value="年审" v-model="project.kjsBiddingContent" id="年审">
+            <label for="年审">
+              年审
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="专项" v-model="project.kjsBiddingContent" id="专项">
+            <label for="专项">
+              专项
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="咨询" v-model="project.kjsBiddingContent" id="咨询">
+            <label for="咨询">
+              咨询
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="决算" v-model="project.kjsBiddingContent" id="决算">
+            <label for="决算">
+              决算
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="外汇年检" v-model="project.kjsBiddingContent" id="外汇年检">
+            <label for="外汇年检">
+              外汇年检
+            </label>
+					  <input class="magic-checkbox" type="checkbox" value="验资" v-model="project.kjsBiddingContent" id="验资">
+            <label for="验资">
+              验资
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="外资审计" v-model="project.kjsBiddingContent" id="外资审计">
+            <label for="外资审计">
+              外资审计
+            </label>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
-					<div class="col-sm-10">
-						<label class="radio-inline">
-							<input type="radio" v-model="project.kjsOwnershipStructure" name="kjsOwnershipStructure" value="国有"> 国有
+					<div class="col-sm-10 check-wrap">
+            <input class="magic-radio" type="radio" name="kjsOwnerStructure" v-model="project.kjsOwnershipStructure" value="国有" id="kjs国有">
+						<label for="kjs国有">
+							 国有
 						</label>
-						<label class="radio-inline">
-							<input type="radio" v-model="project.kjsOwnershipStructure" name="kjsOwnershipStructure" value="民营"> 民营
-						</label>
-						<label class="radio-inline">
-							<input type="radio" v-model="project.kjsOwnershipStructure" name="kjsOwnershipStructure" value="外资"> 外资
-						</label>
-						<label class="radio-inline">
-							<input type="radio" v-model="project.kjsOwnershipStructure" name="kjsOwnershipStructure" value="混合"> 混合
-						</label>
+            <input class="magic-radio" type="radio" name="kjsOwnerStructure" v-model="project.kjsOwnershipStructure" value="民营" id="kjs民营">
+            <label for="kjs民营">
+               民营
+            </label>
+            <input class="magic-radio" type="radio" name="kjsOwnerStructure" v-model="project.kjsOwnershipStructure" value="外资" id="kjs外资">
+            <label for="kjs外资">
+               外资
+            </label>
+            <input class="magic-radio" type="radio" name="kjsOwnerStructure" v-model="project.kjsOwnershipStructure" value="混合" id="kjs混合">
+            <label for="kjs混合">
+               混合
+            </label>
 					</div>
 				</div>
 				<div class="form-group">
@@ -118,36 +133,44 @@
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">招标内容：</label>
-					<div class="col-sm-10">
-						<label class="checkbox-inline">
-							<input type="checkbox" v-model="project.pgsBiddingContent" id="biddingContent1" value="股改"> 股改
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" v-model="project.pgsBiddingContent" id="biddingContent2" value="专项"> 专项
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" v-model="project.pgsBiddingContent" id="biddingContent3" value="咨询"> 咨询
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" v-model="project.pgsBiddingContent" id="biddingContent4" value="清产核资"> 清产核资
-						</label>
+					<div class="col-sm-10 check-wrap">
+            <input class="magic-checkbox" type="checkbox" value="股改" v-model="project.pgsBiddingContent" id="股改">
+            <label for="股改">
+              股改
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="专项" v-model="project.pgsBiddingContent" id="专项2">
+            <label for="专项2">
+              专项
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="咨询" v-model="project.pgsBiddingContent" id="咨询2">
+            <label for="咨询2">
+              咨询
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="清产核资" v-model="project.pgsBiddingContent" id="清产核资">
+            <label for="清产核资">
+              清产核资
+            </label>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
-					<div class="col-sm-10">
-						<label class="radio-inline">
-							<input type="radio" name="pgsOwnershipStructure" v-model="project.pgsOwnershipStructure" value="国有"> 国有
-						</label>
-						<label class="radio-inline">
-							<input type="radio" name="pgsOwnershipStructure" v-model="project.pgsOwnershipStructure" value="民营"> 民营
-						</label>
-						<label class="radio-inline">
-							<input type="radio" name="pgsOwnershipStructure" v-model="project.pgsOwnershipStructure" value="外资"> 外资
-						</label>
-						<label class="radio-inline">
-							<input type="radio" name="pgsOwnershipStructure" v-model="project.pgsOwnershipStructure" value="混合"> 混合
-						</label>
+					<div class="col-sm-10 check-wrap">
+            <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="国有" id="pgs国有">
+            <label for="pgs国有">
+               国有
+            </label>
+            <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="民营" id="pgs民营">
+            <label for="pgs民营">
+               民营
+            </label>
+            <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="外资" id="pgs外资">
+            <label for="pgs外资">
+               外资
+            </label>
+            <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="混合" id="pgs混合">
+            <label for="pgs混合">
+               混合
+            </label>
 					</div>
 				</div>
 				<hr>
@@ -159,27 +182,32 @@
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">招标内容：</label>
-					<div class="col-sm-10">
-						<label class="checkbox-inline">
-							<input type="checkbox" name="biddingContent" v-model="project.swsBiddingContent" id="biddingContent1" value="税鉴"> 税鉴
-						</label>
+					<div class="col-sm-10 check-wrap">
+            <input class="magic-checkbox" type="checkbox" value="税鉴" v-model="project.swsBiddingContent" id="税鉴">
+            <label for="税鉴">
+              税鉴
+            </label>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
-					<div class="col-sm-10">
-						<label class="radio-inline">
-							<input type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure1" value="国有"> 国有
-						</label>
-						<label class="radio-inline">
-							<input type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure2" value="民营"> 民营
-						</label>
-						<label class="radio-inline">
-							<input type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure3" value="外资"> 外资
-						</label>
-						<label class="radio-inline">
-							<input type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" id="ownershipStructure4" value="混合"> 混合
-						</label>
+					<div class="col-sm-10 check-wrap">
+            <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="国有" id="sws国有">
+            <label for="sws国有">
+               国有
+            </label>
+            <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="民营" id="sws民营">
+            <label for="sws民营">
+               民营
+            </label>
+            <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="外资" id="sws外资">
+            <label for="sws外资">
+               外资
+            </label>
+            <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="混合" id="sws混合">
+            <label for="sws混合">
+               混合
+            </label>
 					</div>
 				</div>
 				<hr>
@@ -191,28 +219,35 @@
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">招标内容：</label>
-					<div class="col-sm-10">
-						<label class="checkbox-inline">
-							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="概算"> 概算
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="预算"> 预算
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="结算"> 结算
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="全过程造价控制"> 全过程造价控制
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="入围"> 入围
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="一审"> 一审
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" name="biddingContent" v-model="project.zjsBiddingContent" value="二审"> 二审
-						</label>
+					<div class="col-sm-10 check-wrap">
+            <input class="magic-checkbox" type="checkbox" value="概算" v-model="project.zjsBiddingContent" id="概算">
+            <label for="概算">
+              概算
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="预算" v-model="project.zjsBiddingContent" id="预算">
+            <label for="预算">
+              预算
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="结算" v-model="project.zjsBiddingContent" id="结算">
+            <label for="结算">
+              结算
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="全过程造价控制" v-model="project.zjsBiddingContent" id="全过程造价控制">
+            <label for="全过程造价控制">
+              全过程造价控制
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="入围" v-model="project.zjsBiddingContent" id="入围4">
+            <label for="入围4">
+              入围
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="一审" v-model="project.zjsBiddingContent" id="一审">
+            <label for="一审">
+              一审
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="二审" v-model="project.zjsBiddingContent" id="二审">
+            <label for="二审">
+              二审
+            </label>
             <!--其他 还不会做-->
 						<!-- <div class="checkbox">
 						  <label for="other">
@@ -225,19 +260,23 @@
 				</div>
 				<div class="form-group">
 					<label for="zjsFundSource" class="col-sm-2 control-label">资金来源及比例：</label>
-					<div class="col-sm-10">
-						<label class="checkbox-inline">
-							<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" value="财政"> 财政
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" value="自筹"> 自筹
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" value="贷款"> 贷款
-						</label>
-						<label class="checkbox-inline">
-							<input type="checkbox" name="zjsFundSource" v-model="project.zjsFundSource" value="BT等"> BT等
-						</label>
+					<div class="col-sm-10 check-wrap">
+            <input class="magic-checkbox" type="checkbox" value="财政" v-model="project.zjsFundSource" id="财政">
+            <label for="财政">
+              财政
+            </label>
+						<input class="magic-checkbox" type="checkbox" value="自筹" v-model="project.zjsFundSource" id="自筹">
+            <label for="自筹">
+              自筹
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="贷款" v-model="project.zjsFundSource" id="贷款">
+            <label for="贷款">
+              贷款
+            </label>
+            <input class="magic-checkbox" type="checkbox" value="BT等" v-model="project.zjsFundSource" id="BT等">
+            <label for="BT等">
+              BT等
+            </label>
 					</div>
 				</div>
 				<div class="form-group">
@@ -285,12 +324,14 @@
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">合同体制：</label>
-				<div class="col-sm-10">
-					<label class="radio-inline" @click="isCommonwealth()">
-						<input type="radio" name="commonwealth" v-model="project.contractType.type" value="联合体"> 联合体
+				<div class="col-sm-10 check-wrap">
+          <input class="magic-radio" type="radio" name="commonwealth" v-model="project.contractType.type" value="联合体" id="common">
+					<label class="radio-inline" @click="isCommonwealth()" for="common">
+						联合体
 					</label>
-					<label class="radio-inline" @click="notCommonwealth()">
-						<input type="radio" name="commonwealth" v-model="project.contractType.type" value="非联合体"> 非联合体
+          <input class="magic-radio" type="radio" name="commonwealth" v-model="project.contractType.type" value="非联合体" id="nocommon">
+					<label class="radio-inline" @click="notCommonwealth()" for="nocommon">
+						非联合体
 					</label>
 				</div>
 			</div>
@@ -569,6 +610,9 @@
   }
   .row.width-adjust {
       width: 800px;
+  }
+  .check-wrap {
+    padding-top: 7px;
   }
 </style>
 
