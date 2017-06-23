@@ -49,6 +49,7 @@
     "element-ui": "^1.3.5",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.4",
+    "magic-check": "^1.0.3",
     "moment": "^2.18.1",
     "qs": "^6.4.0",
     "text-mask-addons": "^3.5.1",

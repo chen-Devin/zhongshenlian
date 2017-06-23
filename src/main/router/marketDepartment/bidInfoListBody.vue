@@ -63,8 +63,9 @@
       <div class="row check-pl">
         <label class="ta-l">项目状态</label>
         <div class="check-box search-checkbox">
-          <label class="checkbox-inline">
-            <input type="checkbox" name="filterState" value="3" v-model="filterState"> 已中标
+          <input  class="magic-checkbox" type="checkbox" name="filterState" value="3" v-model="filterState" id="1">
+          <label for="1">
+            已中标
           </label>
           <label class="checkbox-inline">
             <input type="checkbox" name="filterState" value="2" v-model="filterState"> 已入围

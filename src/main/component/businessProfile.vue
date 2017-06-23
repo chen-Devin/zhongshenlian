@@ -285,7 +285,7 @@
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title"
                :href="FILE.url"
-               download>{{FILE.name}}</a>
+               target="_blank">{{FILE.name}}</a>
             <a class="text-danger pull-right"
                @click="contractDelFile(FILE)"><i class="fa fa-times"></i></a>
           </li>
@@ -301,7 +301,7 @@
           <span class="fa fa-file-text-o"></span>
           <a class="text-primary title"
              :href="FILE.url"
-             download>{{FILE.name}}</a>
+             target="_blank">{{FILE.name}}</a>
         </li>
       </ul>
     </div>

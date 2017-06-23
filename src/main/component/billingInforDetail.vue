@@ -42,7 +42,7 @@
           <ul class="com-list attachment-list list-group">
             <li class="list-group-item" v-for="FILE in bill.billFiles">
               <span class="fa fa-file-text-o"></span>
-              <a class="text-primary title" :href="FILE.url" download>{{FILE.name}}</a>
+              <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
               <a class="text-danger pull-right" @click="delBillFile(FILE)"><i class="fa fa-times"></i></a>
             </li>
           </ul>
@@ -77,7 +77,7 @@
           <ul class="com-list attachment-list list-group">
             <li class="list-group-item" v-for="FILE in bill.receiptFiles">
               <span class="fa fa-file-text-o"></span>
-              <a class="text-primary title" :href="FILE.url" download>{{FILE.name}}</a>
+              <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
               <a class="text-danger pull-right" @click="delReceiptFile(FILE)"><i class="fa fa-times"></i></a>
             </li>
           </ul>
@@ -90,7 +90,7 @@
         <ul class="col-sm-9 com-list attachment-list list-group">
           <li class="list-group-item" v-for="FILE in bill.billFiles">
             <span class="fa fa-file-text-o"></span>
-            <a class="text-primary title" :href="FILE.url" download>{{FILE.name}}</a>
+            <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
           </li>
         </ul>
       </div>
@@ -101,7 +101,7 @@
         <ul class="col-sm-9 com-list attachment-list list-group">
           <li class="list-group-item" v-for="FILE in bill.receiptFiles">
             <span class="fa fa-file-text-o"></span>
-            <a class="text-primary title" :href="FILE.url" download>{{FILE.name}}</a>
+            <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
           </li>
         </ul>
       </div>

@@ -26,7 +26,7 @@
         <div class="col-xs-1 text-center">
           <a class="text-primary title"
              :href="REPORT.url"
-             download>下载</a>
+             target="_blank">下载</a>
         </div>
         <div class="col-xs-1 text-center" v-if="salesShow">
           <a class="text-primary title"

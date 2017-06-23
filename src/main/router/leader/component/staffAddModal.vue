@@ -226,8 +226,14 @@ export default {
             this.subBtn.cont = '已保存';
             this.staff.id.val = rep.data.data.id;
             this.$emit('added', this.staff);
+          } else if (rep.data.statusCode === '00001') {
+            this.alert.show = true;
+            this.alert.cont = '手机号码已被使用，请检查';
           } else if (rep.data.statusCode === '10012') {
             window.location.href = 'signIn.html';
+          } else {
+            this.alert.show = true;
+            this.alert.cont = rep.data.msg;
           }
         }, (rep) => { });
       }
