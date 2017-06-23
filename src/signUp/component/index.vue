@@ -378,6 +378,28 @@ export default {
   height: 53px;
 }
 
+.btn-primary {
+    color: #fff;
+    background-color: #288ada;
+    border: none;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #38a5fe;
+    border: none;
+}
+
+.btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #1f6ba9;
+    border: none;
+}
+
+.login-btn[disabled] {
+  background-color: #d7d7d7;
+}
+
 .input-group-addon {
   height: 53px;
 }

@@ -18,8 +18,8 @@
         margin-top: 10px;
     }
     .el-pager li.active {
-        border-color: #1f6ba9;
-        background-color: #1f6ba9;
+        border-color: #38a5fe;
+        background-color: #38a5fe;
         color: #fff;
         cursor: default;
     }

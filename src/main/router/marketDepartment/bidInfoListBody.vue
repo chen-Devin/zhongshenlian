@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-10 replace" v-show="!simpleSearch"></div>
         <div class="col-md-1 higher-search f-r">
-          <button class="btn my-btn draft-btn" type="button" @click="showHigherSearch()">
+          <button class="btn my-btn high-btn" type="button" @click="showHigherSearch()">
             高级搜索
             &nbsp;
             <img class="search-icon" v-if="searchDown" src="../../../img/market/search_down.svg">
