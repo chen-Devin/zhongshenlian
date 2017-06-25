@@ -17,17 +17,23 @@
       <div class="form-group">
         <label class="control-label">性别</label>
         <div>
-          <label class="radio-inline">
-            <input type="radio"
-                   name="staff-sex"
-                   value="男"
-                   v-model="staff.gender.val"> 男
+          <input type="radio"
+                 class="magic-radio"
+                 name="staff-sex"
+                 value="男"
+                 v-model="staff.gender.val"
+                 id="male">
+          <label class="radio-inline" for="male">
+            男
           </label>
-          <label class="radio-inline">
-            <input type="radio"
-                   name="staff-sex"
-                   value="女"
-                   v-model="staff.gender.val"> 女
+          <input type="radio"
+                 class="magic-radio"
+                 name="staff-sex"
+                 value="女"
+                 v-model="staff.gender.val"
+                 id="female">
+          <label class="radio-inline" for="female">
+            女
           </label>
         </div>
       </div>

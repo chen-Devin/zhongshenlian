@@ -181,12 +181,14 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">合同体制</label>
-      <div class="my-col-sm-5">
-        <label class="radio-inline">
-          <input type="radio" name="contractSystem" value="联合体" v-model="business.contractType.name" :disabled="!editable"> 联合体
+      <div class="my-col-sm-5 check-wrap">
+        <input class="magic-radio" type="radio" name="contractSystem" value="联合体" v-model="business.contractType.name" :disabled="!editable" id="common">
+        <label class="radio-inline" for="common">
+          联合体
         </label>
-        <label class="radio-inline">
-          <input type="radio" name="contractSystem" value="非联合体" v-model="business.contractType.name" :disabled="!editable"> 非联合体
+        <input class="magic-radio" type="radio" name="contractSystem" value="非联合体" v-model="business.contractType.name" :disabled="!editable" id="nocommon">
+        <label class="radio-inline" for="nocommon">
+          非联合体
         </label>
       </div>
     </div>
@@ -286,12 +288,14 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">部门合作</label>
-      <div class="my-col-sm-5">
-        <label class="radio-inline">
-          <input type="radio" name="departmentCooperation" value="有部门合作" v-model="business.departmentCoop.name" :disabled="!editable"> 有部门合作
+      <div class="my-col-sm-5 check-wrap">
+        <input class="magic-radio" type="radio" name="departmentCooperation" value="有部门合作" v-model="business.departmentCoop.name" :disabled="!editable" id="has">
+        <label class="radio-inline" for="has">
+          有部门合作
         </label>
-        <label class="radio-inline">
-          <input type="radio" name="departmentCooperation" value="无部门合作" v-model="business.departmentCoop.name" :disabled="!editable"> 无部门合作
+        <input class="magic-radio" type="radio" name="departmentCooperation" value="无部门合作" v-model="business.departmentCoop.name" :disabled="!editable" id="hasNot">
+        <label class="radio-inline" for="hasNot">
+          无部门合作
         </label>
       </div>
     </div>
