@@ -136,8 +136,8 @@
       <label class="col-sm-2 control-label">出据报告类型</label>
       <div class="my-col-sm-5 check-wrap">
         <div class="d-ib" v-for="(TYPE, index) in business.report.type">
-          <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable" :id="index">
-          <label class="checkbox-inline" :key="index" :for="index">
+          <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable" :id="TYPE.name+index">
+          <label class="checkbox-inline" :key="index" :for="TYPE.name+index">
             {{TYPE.name}}
           </label>
         </div>
