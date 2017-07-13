@@ -14,6 +14,10 @@
                      :to="businessRoute(BUSINESS)"
                      v-for="(BUSINESS, index) in businesses"
                      :key="index">
+          <span class="label label-warning"
+                v-if="BUSINESS.billState===0">未完成开票</span>
+          <span class="label label-success"
+                v-else-if="BUSINESS.billState===1">已完成开票</span>
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime.substring(0,10)}}</span>
         </router-link>
@@ -80,7 +84,8 @@ export default {
               id: rep.data.data.businessArray[i].id,
               businessName: rep.data.data.businessArray[i].businessName,
               finishTime: rep.data.data.businessArray[i].finishTime,
-              projectStatus: parseInt(rep.data.data.businessArray[i].projectStatus)
+              projectStatus: parseInt(rep.data.data.businessArray[i].projectStatus),
+              billState: parseInt(rep.data.data.businessArray[i].financeCreateBillingState)
             };
             this.businesses.push(obj);
           }

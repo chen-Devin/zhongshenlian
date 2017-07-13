@@ -100,7 +100,7 @@ export default {
     },
     currentChange(val) {
       this.pageNum = val;
-      this.getInfo();
+      this.getInfo(val);
     }
   },
   components: {

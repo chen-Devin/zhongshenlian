@@ -16,9 +16,9 @@ var app = new Vue({
 loadScript('http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js', function() {
     var obj = new WxLogin({
         id: 'wechatLogin',
-        appid: 'wx81ca4ef030385fac',
+        appid: 'wxa606acd488841da7',
         scope: 'snsapi_login',
-        redirect_uri: '/wechat',
+        redirect_uri: 'http://www.tzucpa.cn/wechat',
         state: Math.random(),
         style: 'black'
     });

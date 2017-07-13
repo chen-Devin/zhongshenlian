@@ -40,7 +40,7 @@
         </div>
         <div class="col-sm-offset-2 col-sm-9">
           <ul class="com-list attachment-list list-group">
-            <li class="list-group-item" v-for="FILE in bill.billFiles">
+            <li class="list-group-item" v-for="(FILE,index) in bill.billFiles" :key="index">
               <span class="fa fa-file-text-o"></span>
               <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
               <a class="text-danger pull-right" @click="delBillFile(FILE)"><i class="fa fa-times"></i></a>
@@ -75,7 +75,7 @@
         </div>
         <div class="col-sm-offset-2 col-sm-9">
           <ul class="com-list attachment-list list-group">
-            <li class="list-group-item" v-for="FILE in bill.receiptFiles">
+            <li class="list-group-item" v-for="(FILE,index) in bill.receiptFiles" :key="index">
               <span class="fa fa-file-text-o"></span>
               <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
               <a class="text-danger pull-right" @click="delReceiptFile(FILE)"><i class="fa fa-times"></i></a>
@@ -88,7 +88,7 @@
           发票图片
         </label>
         <ul class="col-sm-9 com-list attachment-list list-group">
-          <li class="list-group-item" v-for="FILE in bill.billFiles">
+          <li class="list-group-item" v-for="(FILE,index) in bill.billFiles" :key="index">
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
           </li>
@@ -99,7 +99,7 @@
           收款图片
         </label>
         <ul class="col-sm-9 com-list attachment-list list-group">
-          <li class="list-group-item" v-for="FILE in bill.receiptFiles">
+          <li class="list-group-item" v-for="(FILE,index) in bill.receiptFiles" :key="index">
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
           </li>
