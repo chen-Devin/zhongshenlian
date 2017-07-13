@@ -377,7 +377,7 @@ export default {
         return false;
       } else if (this.currencyToNum(this.bill.addUpAmount) + this.currencyToNum(this.bill.amount) > this.currencyToNum(this.business.contractAmount)) {
         this.$message({
-          message: '开票金额总和不能大于合同金额',
+          message: '开票金额总和不能大于合同预估金额',
           type: 'warning'
         });
         return false;

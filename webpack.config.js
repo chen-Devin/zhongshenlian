@@ -17,7 +17,7 @@ const config = {
         main: path.resolve(srcPath, 'main/index.js'),
         signIn: path.resolve(srcPath, 'signIn/index.js'),
         signUp: path.resolve(srcPath, 'signUp/index.js'),
-        vendors: ['vue', 'axios', 'lodash', 'qs']
+        vendors: ['vue', 'axios', 'jquery', 'qs']
     },
 
     output: {
@@ -185,6 +185,10 @@ const config = {
             filename: 'signUp.html',
             chunks: ['signUp', 'vendors'],
             inject: 'body'
+        }),
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendors',

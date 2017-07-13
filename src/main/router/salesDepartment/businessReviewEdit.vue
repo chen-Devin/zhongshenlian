@@ -102,6 +102,7 @@ export default {
         },
         contractAmount: '',
         feeBasis: '',
+        feeBasisExist: false,
         feeRate: 0,
         report: {
           type: [
@@ -519,6 +520,7 @@ export default {
             this.business.feeRate = parseInt(rep.data.data.feeRate);
 
             let flag = false;
+            let flag2 = false;
             for (let i=0; i<rep.data.data.reportType.length; i++) {
               for (let j=0; j<this.business.report.type.length; j++) {
                 if (rep.data.data.reportType[i].department === this.business.report.type[j].name) {
@@ -535,6 +537,9 @@ export default {
               if(rep.data.data.reportType[i].department === '会计所') {
                 flag = true;
               }
+              if(rep.data.data.reportType[i].department === '造价所') {
+                flag2 = true;
+              }
             }
             this.business.report.amount = rep.data.data.reportCopies;
             this.business.report.usage = rep.data.data.reportPurpose;
@@ -544,6 +549,8 @@ export default {
             this.business.auditTime.exist = flag;
             this.business.auditTime.start = rep.data.data.checkStartTime;
             this.business.auditTime.end = rep.data.data.checkEndTime;
+
+            this.business.feeBasisExist = flag2;
 
             this.business.contractType.name = rep.data.data.contractType.type;
             this.business.contractType.basicFee.main.name = rep.data.data.contractType.mainBasicName;
@@ -731,7 +738,6 @@ export default {
       }, 1000);
     },
     sav() {
-      console.log('step1');
       bus.$emit('savBusiness');
     },
     saved(savedBusiness) {

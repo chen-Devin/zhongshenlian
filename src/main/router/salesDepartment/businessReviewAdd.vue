@@ -86,6 +86,7 @@ export default {
         },
         contractAmount: '',
         feeBasis: '',
+        feeBasisExist: false,
         feeRate: 0,
         report: {
           type: [

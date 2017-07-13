@@ -9,7 +9,7 @@
       </router-link>
     </h4>
     <h4 class="total-amount">
-      <small>合同金额：</small><strong>{{business.contractAmount}}</strong>元&emsp;
+      <small>合同预估金额：</small><strong>{{business.contractAmount}}</strong>元&emsp;
       <small>当前申请发票总计：</small><strong>{{total}}</strong>元
     </h4>
     <div class="com-list list-group list-adjust">

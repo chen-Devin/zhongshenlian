@@ -69,18 +69,18 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">合同金额</label>
+      <label class="col-sm-2 control-label">合同预估金额</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</p>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" v-if="business.feeBasisExist">
       <label class="col-sm-2 control-label">取费依据</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.feeBasis}}</p>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" v-if="business.feeBasisExist">
       <label class="col-sm-2 control-label">费率</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.feeRate}}%</p>
@@ -281,7 +281,8 @@
       <div class="col-sm-10">
         <ul class="com-list attachment-list list-group">
           <li class="list-group-item"
-              v-for="FILE in business.contracts">
+              v-for="(FILE,index) in business.contracts"
+              :key="index">
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title"
                :href="FILE.url"
@@ -297,7 +298,8 @@
       <label class="col-sm-2 control-label">正式合同</label>
       <ul class="col-sm-9 com-list attachment-list list-group">
         <li class="list-group-item"
-            v-for="FILE in business.contracts">
+            v-for="(FILE,index) in business.contracts"
+            :key="index">
           <span class="fa fa-file-text-o"></span>
           <a class="text-primary title"
              :href="FILE.url"

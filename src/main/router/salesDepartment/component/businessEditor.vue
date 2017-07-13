@@ -21,9 +21,8 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">委托单位（客户）</label>
       <div class="my-col-sm-5">
-        <select class="form-control" v-model="business.institution" :disabled="!editable">
-          <option v-for="(CUS, index) in customers" :value="CUS" :key="index">{{CUS.customerName}}</option>
-        </select>
+        <select2 class="form-control" :options="customers" v-model="businessInstitution" :disabled="!editable">
+        </select2>
       </div>
     </div>
     <div class="form-group">
@@ -77,12 +76,12 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">合同金额</label>
+      <label class="col-sm-2 control-label">合同预估金额</label>
       <div class="my-col-sm-5">
         <div class="input-group">
           <masked-input type="text"
                         class="form-control"
-                        placeholder="请输入合同金额"
+                        placeholder="请输入合同预估金额"
                         v-model="business.contractAmount"
                         :disabled="!editable"
                         :mask="currencyMask"
@@ -93,7 +92,7 @@
         </div>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" v-if="business.feeBasisExist">
       <label class="col-sm-2 control-label">取费依据</label>
       <div class="my-col-sm-5">
         <textarea cols="10"
@@ -106,7 +105,7 @@
         </textarea>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" v-if="business.feeBasisExist">
       <label class="col-sm-2 control-label">费率</label>
       <div class="my-col-sm-5">
         <div class="input-group">
@@ -135,7 +134,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">出据报告类型</label>
       <div class="my-col-sm-5 check-wrap">
-        <div class="d-ib" v-for="(TYPE, index) in business.report.type">
+        <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index">
           <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable" :id="TYPE.name+index">
           <label class="checkbox-inline" :key="index" :for="TYPE.name+index">
             {{TYPE.name}}
@@ -144,7 +143,7 @@
         <hr>
         <template v-for="(TYPE, indexOuter) in business.report.type" v-if="TYPE.state">
           <p>{{TYPE.name}}</p>
-          <div class="d-ib" v-for="(WORD, index) in TYPE.words">
+          <div class="d-ib" v-for="(WORD, index) in TYPE.words" :key="index">
             <input class="magic-checkbox" type="checkbox" v-model="WORD.state" @change="reportTypeChan(TYPE, WORD)" :disabled="!editable" :id="index+TYPE.name">
             <label class="checkbox-inline" :key="index" :for="index+TYPE.name">
               {{WORD.name}}
@@ -387,6 +386,8 @@ import moment from 'moment';
 import { Upload } from 'element-ui';
 import maskedInput from 'vue-text-mask';
 
+import select2 from '../../../component/select2.vue';
+
 import bus from '../../../bus.js';
 import currencyMask from '../../../currencyMask.js';
 
@@ -396,6 +397,7 @@ export default {
   name: 'businessEditor',
   data() {
     return {
+      businessInstitution: 666,
       business: this.initBusiness,
       upload: {
         URL: '',
@@ -447,7 +449,7 @@ export default {
   props: ['initBusiness', 'editable'],
   created() {
     bus.$on('subBusiness', () => { this.sub() });
-    bus.$on('savBusiness', () => { console.log('step2'); this.save(); });
+    bus.$on('savBusiness', () => { this.save() });
 
     this.getCustomers(1).then((rep) => {
       let pageNum = parseInt(rep.data.data.pageNum);
@@ -459,11 +461,13 @@ export default {
         if (this.business.institution.id === '') {
           if (this.customers.length) {
             this.business.institution = this.customers[0];
+            this.businessInstitution = this.customers[0].id;
           }
         } else {
           for (let i = 0; i < this.customers.length; i++) {
             if (this.business.institution.id === this.customers[i].id) {
               this.business.institution = this.customers[i];
+              this.businessInstitution = this.customers[i].id;
               break;
             }
           }
@@ -481,6 +485,16 @@ export default {
     bus.$off('subBusiness');
     bus.$off('savBusiness');
   },
+  watch: {
+    businessInstitution(val, oldVal) {
+      for (let i = 0; i < this.customers.length; i++) {
+        if (parseInt(val) === this.customers[i].id) {
+          this.business.institution = this.customers[i];
+          break;
+        }
+      }
+    }
+  },
   methods: {
     currencyMask,
     typeChan(TYPE) {
@@ -491,22 +505,32 @@ export default {
         if (TYPE.name === '会计所') {
           this.business.auditTime.exist = false;
         }
+        if (TYPE.name === '造价所') {
+          this.business.feeBasisExist = false;
+        }
       }
     },
     reportTypeChan(TYPE, WORD) {
       let flag = false;
+      let flag2 = false;
       outermost1:
       for (let i = 0; i < this.business.report.type.length; i++) {
         if (this.business.report.type[i].name === '会计所') {
           for (let j = 0; j < this.business.report.type[i].words.length; j++) {
             if (this.business.report.type[i].words[j].state) {
               flag = true;
-              break outermost1;
+            }
+          }
+        } else if (this.business.report.type[i].name === '造价所') {
+          for (let j = 0; j < this.business.report.type[i].words.length; j++) {
+            if (this.business.report.type[i].words[j].state) {
+              flag2 = true;
             }
           }
         }
       }
       this.business.auditTime.exist = flag;
+      this.business.feeBasisExist = flag2;
 
       flag = false;
       let type = '';
@@ -581,6 +605,7 @@ export default {
           if (rep.data.statusCode === '10001') {
             for (let i = 0; i < rep.data.data.customerArray.length; i++) {
               let obj = {
+                text: rep.data.data.customerArray[i].customerName,
                 id: rep.data.data.customerArray[i].id,
                 customerName: rep.data.data.customerArray[i].customerName,
                 name: rep.data.data.customerArray[i].name,
@@ -610,7 +635,6 @@ export default {
       return promise;
     },
     save() {
-      console.log('step3');
       let promise = new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
@@ -985,7 +1009,7 @@ export default {
     },
     contractAmountCheck() {
       if (this.business.contractAmount === '') {
-        this.$emit('refuseSub', '请填写合同金额');
+        this.$emit('refuseSub', '请填写合同预估金额');
         return false;
       } else {
         let amoArr = this.business.contractAmount.split(',').reverse();
@@ -994,7 +1018,7 @@ export default {
           amoNum += parseFloat(amoArr[i])*Math.pow(1000, i);
         }
         if (amoNum <= 0) {
-          this.$emit('refuseSub', '合同金额必须大于零，请检查');
+          this.$emit('refuseSub', '合同预估金额必须大于零，请检查');
           return false;
         } else {
           return true;
@@ -1017,7 +1041,8 @@ export default {
     }
   },
   components: {
-    maskedInput
+    maskedInput,
+    select2
   }
 };
 </script>
