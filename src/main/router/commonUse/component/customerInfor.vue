@@ -8,7 +8,52 @@
         录入
       </button>
     </h3>
-    <search-bar placeholder="请输入客户关键字进行搜索" @search="search"></search-bar>
+    <!--搜索栏-->
+    <form class="search-form" @submit.prevent @keyup.enter.prevent>
+      <div class="row">
+        <div class="col-md-11">
+          <search-bar placeholder="请输入客户关键字进行搜索" @search="search" v-show="simpleSearch"></search-bar>
+        </div>
+        <div class="col-md-11 replace" v-show="!simpleSearch"></div>
+        <div class="col-md-1 higher-search f-r">
+          <button class="btn my-btn high-btn f-r customer-high-search" type="button" @click="showHigherSearch()">
+            高级搜索
+            &nbsp;
+            <img class="search-icon" v-if="searchDown" src="../../../../img/market/search_down.svg">
+            <img class="search-icon" v-if="searchUp" src="../../../../img/market/search_up.svg">
+          </button>
+        </div>
+      </div>
+    </form>
+    <!--高级搜索-->
+    <form class="form-inline higherForm" v-if="higherSearch">
+      <div class="row">
+        <div class="col-md-11">
+          <div class="col-md-4 ta-c">
+            <div class="form-group">
+              <label for="customerName">客户名称</label>
+              <input type="text" class="form-control ta-c" id="customerName" placeholder="请填写客户名称" v-model="customerName">
+            </div>
+          </div>
+          <div class="col-md-4 ta-c">
+            <div class="form-group">
+              <label for="name">客户联系人</label>
+              <input type="text" class="form-control ta-c" id="name" placeholder="请填写客户联系人" v-model="name">
+            </div>
+          </div>
+          <div class="col-md-4 ta-c">
+            <div class="form-group">
+              <label for="telephone">联系人电话</label>
+              <input type="text" class="form-control ta-c" id="telephone" placeholder="请填写联系人电话" v-model="telephone">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="search-btns ta-c">
+        <button type="button" class="btn my-btn submit-btn" @click="higherSearchEvent()">查找</button>
+        <button type="button" class="btn my-btn draft-btn" @click="reset()">重置</button>
+      </div>
+    </form>
     <table class="table table-bordered table-hover com-list">
       <thead>
         <tr>
@@ -70,13 +115,30 @@ export default {
       delCustomer: {},
       showAddModal: false,
       addCustomer: {},
-      totalPage: 1
+      totalPage: 1,
+      higherSearch: false,
+      simpleSearch: true,
+      searchDown: true,
+      searchUp: false,
+      customerName: '',
+      name: '',
+      telephone: ''
     };
   },
   props: ['customers', 'user', 'page'],
   methods: {
     search(searchCont) {
+      this.listType = 'search';
       this.$emit('search', searchCont);
+    },
+    higherSearchEvent() {
+      console.log('test');
+      this.listType = 'higherSearch';
+      let searchObj = {};
+      searchObj.customerName = this.customerName;
+      searchObj.name = this.name;
+      searchObj.telephone = this.telephone;
+      this.$emit('higherSearchEvent', searchObj);
     },
     currentChange(newPage) {
       this.$emit('pageChan', newPage);
@@ -162,7 +224,27 @@ export default {
     },
     addCanceled() {
       this.showAddModal = false;
-    }
+    },
+    //高级搜索与简单搜索切换
+    showHigherSearch() {
+      if (this.higherSearch === false) {
+        this.higherSearch = true;
+        this.simpleSearch = false;
+        this.searchUp = true;
+        this.searchDown = false;
+      } else {
+        this.higherSearch = false;
+        this.simpleSearch = true;
+        this.searchUp = false;
+        this.searchDown = true;
+      }
+    },
+    reset() {
+      this.customerName = '';
+      this.name = '';
+      this.telephone = '';
+      this.search('');
+    },
   },
   components: {
     card,
@@ -189,5 +271,34 @@ export default {
 }
 .input-icon {
   margin-top: -2px;
+}
+.search-form {
+  padding-left: 0;
+  padding-right: 0;
+  margin-top: 30px;
+  .customer-high-search {
+    margin-top: 0;
+  }
+}
+.search-btns {
+  margin-top: 20px;
+}
+.higherForm {
+  margin-top: -35px;
+  .form-group {
+    width: 100%;
+    label {
+      width: 25%;
+    }
+    input {
+      width: 70%;
+    }
+  }
+}
+.normal-wrap {
+    margin-top: 0;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 </style>
