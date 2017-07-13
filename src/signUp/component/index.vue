@@ -99,7 +99,7 @@ export default {
         gender: '',
         wechatName: '',
         wechatHeadImg: ''
-        }
+      }
     };
   },
   mounted() {
@@ -120,27 +120,17 @@ export default {
           data: (() => {
             var obj = {
               platform: 'web',
-              command: 'getUserInfo'
+              command: 'getWechatImg'
             };
             return JSON.stringify(obj);
           })()
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          this.user.id = rep.data.data.id;
-          this.user.telephone = rep.data.data.telephone;
-          this.user.name = rep.data.data.name;
-          this.user.jobNumber = rep.data.data.jobNumber;
-          this.user.department = rep.data.data.department;
-          this.user.duties = rep.data.data.duties;
-          this.user.authority = rep.data.data.authority;
-          this.user.gender = rep.data.data.gender;
-          this.user.wechatName = rep.data.data.wechatName;
           this.user.wechatHeadImg = rep.data.data.wechatHeadImg;
+        } else {
+          window.location.href = 'signIn.html';
         }
-        // else if (rep.data.statusCode === '10012') {
-        //   window.location.href = 'signIn.html';
-        // }
       }, (rep) => {
 
       });

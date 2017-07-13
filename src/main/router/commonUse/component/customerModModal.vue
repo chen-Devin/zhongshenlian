@@ -122,7 +122,7 @@
       </div>
       <div class="form-group">
         <label class="control-label">客户性质</label>
-        <div class="check-wrap" v-for="(NAT, index) in customer.customerNature">
+        <div class="check-wrap" v-for="(NAT, index) in customer.customerNature" :key="index">
           <input class="magic-checkbox"
                  type="checkbox"
                  v-model="NAT.state"
@@ -415,6 +415,11 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.subBtn.cont = '已保存';
             this.$emit('saved', this.customer);
+          } else if (rep.data.statusCode === '10013') {
+            this.subBtn.dis = false;
+            this.subBtn.cont = '保存';
+            this.alert.show = true;
+            this.alert.cont = '您输入的客户已存在';
           } else if (rep.data.statusCode === '10012') {
             window.location.href = 'signIn.html';
           }

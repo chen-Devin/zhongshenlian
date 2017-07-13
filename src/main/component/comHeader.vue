@@ -49,7 +49,7 @@ export default {
         })
       }).then( (rep) => {
         if (rep.data.statusCode === '10001') {
-          window.location.href = './signIn.html';
+          window.location.href = 'signIn.html';
         }
       }, (rep) => {});
     }
