@@ -26,5 +26,6 @@ main.container-fluid {
 .trimPadding {
   padding-left: 0;
   padding-right: 0;
+  float: left;
 }
 </style>

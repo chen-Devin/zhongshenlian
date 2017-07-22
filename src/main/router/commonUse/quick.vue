@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-
+      <div>快捷</div>
     </card>
   </div>
 </template>

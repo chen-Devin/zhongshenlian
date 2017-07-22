@@ -10,6 +10,8 @@ import ruleRegulationEdit from './commonUse/ruleRegulationEdit.vue';
 import ruleRegulationAdd from './commonUse/ruleRegulationAdd.vue';
 import customerInforList from './commonUse/customerInforList.vue';
 import Quick from './commonUse/quick.vue';
+import ToDo from './commonUse/toDo.vue';
+// import businessManage from './commonUse/business-manage.vue';
 
 import billingInfor from '../component/billingInfor.vue';
 import billingInforDetail from '../component/billingInforDetail.vue';
@@ -61,9 +63,26 @@ Vue.use(VueRouter);
 const router = new VueRouter({
     routes: [
         {
+            path: '/',
+            redirect: '/quick'
+        },
+        {
             path: '/quick',
             name: 'quick',
             component: Quick
+        },
+        {
+            path: '/to-do',
+            name: 'toDo',
+            component: ToDo
+        },
+        {
+            path: '/business-manage',
+            redirect: '/business-handle-list-leader'
+        },
+        {
+            path: '/staff-manage',
+            redirect: '/staff-management-author'
         },
         {
             path: '/business-complete-list',
