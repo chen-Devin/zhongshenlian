@@ -1,14 +1,14 @@
 <template>
-<div class="navigation">
-  <a class="fa fa-angle-double-left back-up" @click="backUp" v-if="paths.length!==1"></a>
-  <span class="back-up" v-if="paths.length===1">&nbsp;</span>
-  <ol class="breadcrumb">
-    <li :class="{active: PATH.present}" v-for="PATH in paths">
-      <router-link :to="PATH.url" v-if="!PATH.present">{{PATH.name}}</router-link>
-      <template v-else-if="PATH.present">{{PATH.name}}</template>
-    </li>
-  </ol>
-</div>
+  <div class="navigation">
+    <a class="fa fa-angle-double-left back-up" @click="backUp" v-if="paths.length!==1"></a>
+    <span class="back-up" v-if="paths.length===1">&nbsp;</span>
+    <ol class="breadcrumb">
+      <li :class="{active: PATH.present}" v-for="PATH in paths">
+        <router-link :to="PATH.url" v-if="!PATH.present">{{PATH.name}}</router-link>
+        <template v-else-if="PATH.present">{{PATH.name}}</template>
+      </li>
+    </ol>
+  </div>
 </template>
 
 <script>

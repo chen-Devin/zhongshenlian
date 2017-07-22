@@ -34,7 +34,7 @@
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime.substring(0,10)}}</span>
         </router-link>
-        <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
+        <my-pagination :totalNum="page.total" @currentChange="currentChange"></my-pagination>
       </div>
     </card>
   </div>
@@ -78,8 +78,7 @@ export default {
       page: {
         total: 0,
         current: 0
-      },
-      totalPage: 1
+      }
     };
   },
   created() {

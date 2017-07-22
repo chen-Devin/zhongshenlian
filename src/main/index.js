@@ -1,5 +1,8 @@
 import Vue from 'vue';
 
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+
 import App from './App.vue';
 import router from './router/index.js';
 import store from './store/index.js';
@@ -15,6 +18,8 @@ Vue.config.productionTip = true;
 if (!isPromise()) {
     alert('网站在ie浏览器下无法正常使用，我们建议您使用谷歌浏览浏览器或QQ浏览器');
 }
+
+Vue.use(ElementUI);
 
 var app = new Vue({
     data: {
