@@ -100,6 +100,9 @@ export default {
       });
       return promise;
     }
+  },
+  created () {
+    console.log(this.initBusiness)
   }
 };
 </script>

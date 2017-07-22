@@ -224,7 +224,7 @@ export default {
       return promise;
     },
     businessRoute(BUSINESS) {
-      return '/business-complete-detail-'+BUSINESS.id;
+      return '/business-complete-list/business-complete-detail-'+BUSINESS.id;
     }
   },
   components: {

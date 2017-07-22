@@ -78,43 +78,4 @@ export default {
     }
   }
 }
-
-.normal-wrap {
-  // li.list-group-item {
-  //   border-right: 0;
-  //   border-top: 0;
-  //   border-bottom: 0;
-  //   border-left: 1px solid $gray-light;
-  //   padding-left: 0;
-  //   padding-top: 12px;
-  //   padding-bottom: 12px;
-  //   margin-left: 5px;
-  //   &:first-child {
-  //     border-top-right-radius: 0;
-  //     border-top-left-radius: 0;
-  //   }
-  //   &:last-child {
-  //     border-bottom-right-radius: 0;
-  //     border-bottom-left-radius: 0;
-  //   }
-  //   &::before {
-  //     content: ' ';
-  //     position: absolute;
-  //     left: -4px;
-  //     top: 17px;
-  //     width: 7px;
-  //     height: 7px;
-  //     background: $gray-light;
-  //     border: 1px solid $body-bg;
-  //     border-radius: 50%;
-  //   }
-  //   > span {
-  //     display: inline-block;
-  //     position: relative;
-  //     &.time {
-  //       margin-left: 15px;
-  //     }
-  //   }
-  // }
-}
 </style>

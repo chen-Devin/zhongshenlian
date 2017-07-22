@@ -30,7 +30,7 @@
         </tr>
       </tbody>
     </table>
-    <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
+    <my-pagination :totalNum="page.total" @currentChange="currentChange"></my-pagination>
   </card>
 </template>
 
@@ -54,8 +54,7 @@ export default {
       page: {
         total: this.department.totalNum,
         current: (this.department.pageNum === 0) ? 0 : 1
-      },
-      totalPage: 1
+      }
     };
   },
   props: ['department'],
@@ -164,6 +163,9 @@ export default {
         this.ediBtn.cont = '保存';
       }
     }
+  },
+  created () {
+    console.log(this.thisDepart)
   },
   components: {
     card,

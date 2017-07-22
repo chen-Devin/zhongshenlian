@@ -148,6 +148,11 @@ const config = {
                 target: "http://101.201.149.112:8081",
                 changeOrigin: true,
                 secure: false
+            },
+            "/fileUpload": {
+                target: "http://101.201.149.112:8081",
+                changeOrigin: true,
+                secure: false
             }
         }
     },

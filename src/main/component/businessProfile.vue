@@ -314,11 +314,9 @@
 import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
-import { Upload } from 'element-ui';
 
 import bus from '../bus.js';
 
-Vue.use(Upload);
 
 export default {
   name: 'businessProfile',
@@ -422,9 +420,10 @@ export default {
 
   },
   methods: {
-    contractUploadProgress(event, file, fileList) {
-      this.contractUpload.progressShow = true;
+    contractUploadProgress(event, file, fileList) {  // file对象都有哪些属性
+      this.contractUpload.progressShow = true;       // 有空再看一下，写一个组件
       this.contractUpload.percentage = parseInt(file.percentage)+'%';
+      console.log(file);
     },
     contractUploadSuccess(responseData, file, fileList) {
       if (responseData.statusCode === '10001') {

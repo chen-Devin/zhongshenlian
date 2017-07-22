@@ -9,6 +9,7 @@ import ruleRegulationDetail from './commonUse/ruleRegulationDetail.vue';
 import ruleRegulationEdit from './commonUse/ruleRegulationEdit.vue';
 import ruleRegulationAdd from './commonUse/ruleRegulationAdd.vue';
 import customerInforList from './commonUse/customerInforList.vue';
+import Quick from './commonUse/quick.vue';
 
 import billingInfor from '../component/billingInfor.vue';
 import billingInforDetail from '../component/billingInforDetail.vue';
@@ -60,13 +61,18 @@ Vue.use(VueRouter);
 const router = new VueRouter({
     routes: [
         {
+            path: '/quick',
+            name: 'quick',
+            component: Quick
+        },
+        {
             path: '/business-complete-list',
             component: businessCompleteList
         },
         {
-            path: '/business-complete-detail-:id',
+            path: '/business-complete-list/business-complete-detail-:id',
             component: businessCompleteDetail,
-            redirect: '/business-complete-detail-:id/business-profile',
+            redirect: '/business-complete-list/business-complete-detail-:id/business-profile',
             children: [
                 {
                     path: 'business-profile',

@@ -78,7 +78,7 @@ export default {
       id: this.id,
       type: this.type
     };
-    this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);
+    this.uploadURL = '/fileUpload?data=' + JSON.stringify(data);  // 一个斜杠表示在根目录下
   },
   props: ['type','id']
 }

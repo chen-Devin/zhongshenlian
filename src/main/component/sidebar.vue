@@ -63,11 +63,10 @@ export default {
   computed: {
     routes() {
       let routes = [];
+      routes.unshift = {name: '招投标信息', link: '/bid-info-list', icon: 'bid-info',openClass: 1, open:true};
       if (this.user.department) {
         if (this.user.department === '所长') {
           routes = [
-            // {name: '职员权限管理', link: '/staff-management-author', icon: 'staff-management-author',openClass: 2, open:false},
-            // {name: '职员资料管理', link: '/staff-management-infor', icon: 'staff-management-author',openClass: 2, open:false},
             {name: '招投标信息', link: '/bid-info-list', icon: 'bid-info',openClass: 1, open:true}
           ];
         } else if (this.user.department === '办公室') {
