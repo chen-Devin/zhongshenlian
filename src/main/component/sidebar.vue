@@ -63,7 +63,7 @@ export default {
   computed: {
     routes() {
       let routes = [];
-      routes.unshift = {name: '招投标信息', link: '/bid-info-list', icon: 'bid-info',openClass: 1, open:true};
+      routes = routes.unshift({name: '我的快捷', link: '/quick', icon: 'quick',openClass: 1, open:true});
       if (this.user.department) {
         if (this.user.department === '所长') {
           routes = [
