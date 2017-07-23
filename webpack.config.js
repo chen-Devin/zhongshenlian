@@ -145,12 +145,12 @@ const config = {
         inline: true,
         proxy: {
             "/service": {
-                target: "http://101.201.149.112:8081",
+                target: "http://test.tzucpa.cn",
                 changeOrigin: true,
                 secure: false
             },
             "/fileUpload": {
-                target: "http://101.201.149.112:8081",
+                target: "http://test.tzucpa.cn",
                 changeOrigin: true,
                 secure: false
             }
@@ -181,14 +181,6 @@ const config = {
             template: path.resolve(srcPath, 'signIn/index.html'),
             filename: 'signIn.html',
             chunks: ['signIn', 'vendors'],
-            inject: 'body'
-        }),
-        new HtmlWebpackPlugin({
-            title: '天津中审联-注册',
-            favicon: 'src/img/favicon.svg',
-            template: path.resolve(srcPath, 'signUp/index.html'),
-            filename: 'signUp.html',
-            chunks: ['signUp', 'vendors'],
             inject: 'body'
         }),
         new webpack.ProvidePlugin({
