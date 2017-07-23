@@ -25,6 +25,52 @@
         </select2>
       </div>
     </div>
+    <!-- 被审计单位 -->
+    <div class="form-group">
+      <label class="col-sm-2 control-label">被审计单位</label>
+      <div class="my-col-sm-5">
+        <div class="row form-group">
+          <div class="col-sm-5">
+            <p class="form-control-static">主要单位：{{business.departmentCoop.departments.main.name}}</p>
+          </div>
+          <div class="col-sm-5">
+            <div class="input-group">
+              <div class="input-group-addon">比例</div>
+              <input type="number" class="form-control" placeholder="请输入比例" v-model.number="business.departmentCoop.departments.main.percentage" :disabled="!editable">
+              <div class="input-group-addon">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <template v-for="(COOP, index) in business.departmentCoop.departments.coop">
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">合作部门</div>
+                <input type="text" class="form-control" placeholder="请输入合作部门" v-model="COOP.name" :disabled="!editable">
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">比例</div>
+                <input type="number" class="form-control" placeholder="请输入比例" v-model.number="COOP.percentage" :disabled="!editable">
+                <div class="input-group-addon">%</div>
+              </div>
+            </div>
+            <h4 class="col-sm-1" v-if="editable">
+              <a class="text-danger" @click="delDepartments(index)">
+                <img src="../../../../img/delete_icon.svg">
+              </a>
+            </h4>
+          </template>
+          <h4 class="col-sm-1" v-if="editable">
+            <a class="text-danger" @click="addDepartments()">
+              <img src="../../../../img/add_icon.svg">
+            </a>
+          </h4>
+        </div>
+      </div>
+    </div>
+    <!-- 客户联系人 -->
     <div class="form-group">
       <label class="col-sm-2 control-label">客户联系人</label>
       <div class="my-col-sm-5">
@@ -89,32 +135,6 @@
                         placeholderChar="#">
           </masked-input>
           <div class="input-group-addon">元</div>
-        </div>
-      </div>
-    </div>
-    <div class="form-group" v-if="business.feeBasisExist">
-      <label class="col-sm-2 control-label">取费依据</label>
-      <div class="my-col-sm-5">
-        <textarea cols="10"
-                  rows="3"
-                  maxlength="100"
-                  class="form-control"
-                  placeholder="请输入取费依据"
-                  v-model="business.feeBasis"
-                  :disabled="!editable">
-        </textarea>
-      </div>
-    </div>
-    <div class="form-group" v-if="business.feeBasisExist">
-      <label class="col-sm-2 control-label">费率</label>
-      <div class="my-col-sm-5">
-        <div class="input-group">
-          <input type="number"
-                 class="form-control"
-                 placeholder="请输入费率"
-                 v-model="business.feeRate"
-                 :disabled="!editable">
-          <div class="input-group-addon">%</div>
         </div>
       </div>
     </div>
@@ -282,6 +302,32 @@
               <img src="../../../../img/add_icon.svg">
             </a>
           </h4>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" v-if="business.feeBasisExist">
+      <label class="col-sm-2 control-label">取费依据</label>
+      <div class="my-col-sm-5">
+        <textarea cols="10"
+                  rows="3"
+                  maxlength="100"
+                  class="form-control"
+                  placeholder="请输入取费依据"
+                  v-model="business.feeBasis"
+                  :disabled="!editable">
+        </textarea>
+      </div>
+    </div>
+    <div class="form-group" v-if="business.feeBasisExist">
+      <label class="col-sm-2 control-label">费率</label>
+      <div class="my-col-sm-5">
+        <div class="input-group">
+          <input type="number"
+                 class="form-control"
+                 placeholder="请输入费率"
+                 v-model="business.feeRate"
+                 :disabled="!editable">
+          <div class="input-group-addon">%</div>
         </div>
       </div>
     </div>
