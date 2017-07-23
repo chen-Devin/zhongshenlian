@@ -490,6 +490,8 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            this.business = rep.data.data;
+
             this.business.id = rep.data.data.id;
             this.business.name = rep.data.data.projectName;
 

@@ -326,6 +326,12 @@
           <p class="form-control-static">{{bill.content}}</p>
         </div>
       </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">备注</label>
+        <div class="col-sm-9">
+          <p class="form-control-static">{{bill.remark}}</p>
+        </div>
+      </div>
     </form>
   </div>
 </template>

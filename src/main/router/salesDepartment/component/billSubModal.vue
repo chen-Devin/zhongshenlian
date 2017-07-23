@@ -79,7 +79,8 @@ export default {
                   signContractAmount: this.business.contractAmount,
                   startServiceTime: this.business.time.start,
                   endServiceTime: this.business.time.end,
-                  state: this.bill.state
+                  state: this.bill.state,
+                  remark: this.bill.remark
                 }
               };
               return JSON.stringify(obj);

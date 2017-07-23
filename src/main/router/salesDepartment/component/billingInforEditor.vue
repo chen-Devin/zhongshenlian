@@ -244,6 +244,12 @@
           <input type="text" class="form-control" placeholder="请输入服务内容" v-model="bill.content">
         </div>
       </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">备注栏</label>
+        <div class="col-sm-9">
+          <textarea maxlength="50" class="form-control" rows="3" placeholder="请输入备注 最多输入50个字" v-model="bill.remark"></textarea>
+        </div>
+      </div>
     </form>
     <bill-sub-modal v-if="showSubModal" :initBill="bill" :initBusiness="business" @submited="submited" @canceled="subCanceled"></bill-sub-modal>
     <bill-del-modal v-if="showDelModal" :initBill="bill" @deleted="deleted" @canceled="delCanceled"></bill-del-modal>

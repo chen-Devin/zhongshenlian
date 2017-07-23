@@ -279,6 +279,9 @@ export default {
             return `${Y}-${M}-${D}`;
           })(),
         },
+        beingAuditedUnit: [{
+          unit: ''
+        }],
         contractType: {
           name: '非联合体',
           basicFee: {

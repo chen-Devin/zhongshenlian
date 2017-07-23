@@ -29,41 +29,22 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">被审计单位</label>
       <div class="my-col-sm-5">
-        <div class="row form-group">
-          <div class="col-sm-5">
-            <p class="form-control-static">主要单位：{{business.departmentCoop.departments.main.name}}</p>
-          </div>
-          <div class="col-sm-5">
-            <div class="input-group">
-              <div class="input-group-addon">比例</div>
-              <input type="number" class="form-control" placeholder="请输入比例" v-model.number="business.departmentCoop.departments.main.percentage" :disabled="!editable">
-              <div class="input-group-addon">%</div>
-            </div>
-          </div>
-        </div>
-        <div class="row form-group">
-          <template v-for="(COOP, index) in business.departmentCoop.departments.coop">
-            <div class="col-sm-5">
+        <div class="row form-group adjust-mb">
+          <template v-for="(Unit, index) in business.beingAuditedUnit">
+            <div class="col-sm-10">
               <div class="input-group">
-                <div class="input-group-addon">合作部门</div>
-                <input type="text" class="form-control" placeholder="请输入合作部门" v-model="COOP.name" :disabled="!editable">
-              </div>
-            </div>
-            <div class="col-sm-5">
-              <div class="input-group">
-                <div class="input-group-addon">比例</div>
-                <input type="number" class="form-control" placeholder="请输入比例" v-model.number="COOP.percentage" :disabled="!editable">
-                <div class="input-group-addon">%</div>
+                <div class="input-group-addon">单位名称</div>
+                <input type="text" class="form-control" placeholder="请输入被审计单位名称" v-model="Unit.unit" :disabled="!editable">
               </div>
             </div>
             <h4 class="col-sm-1" v-if="editable">
-              <a class="text-danger" @click="delDepartments(index)">
+              <a class="text-danger" @click="delUnits(index)">
                 <img src="../../../../img/delete_icon.svg">
               </a>
             </h4>
           </template>
           <h4 class="col-sm-1" v-if="editable">
-            <a class="text-danger" @click="addDepartments()">
+            <a class="text-danger" @click="addUnits()">
               <img src="../../../../img/add_icon.svg">
             </a>
           </h4>
@@ -706,6 +687,7 @@ export default {
                   contractAmount: this.business.contractAmount,
                   contractPrice: this.business.contractPrice,
                   reportCopies: this.business.report.amount,
+                  beingAuditedUnit: this.business.beingAuditedUnit,
                   reportType: (() => {
                     let out = [];
                     for (let i = 0; i < this.business.report.type.length; i++) {
@@ -856,6 +838,7 @@ export default {
                     contractAmount: this.business.contractAmount,
                     contractPrice: this.business.contractPrice,
                     reportCopies: this.business.report.amount,
+                    beingAuditedUnit: this.business.beingAuditedUnit,
                     reportType: (() => {
                       let out = [];
                       for (let i = 0; i < this.business.report.type.length; i++) {
@@ -1018,6 +1001,14 @@ export default {
     addDepartments() {
       this.business.departmentCoop.departments.coop.push({ name: '', percentage: 0 });
     },
+    delUnits(index) {
+      if (this.business.beingAuditedUnit.length > 1) {
+        this.business.beingAuditedUnit.splice(index, 1);
+      }
+    },
+    addUnits() {
+      this.business.beingAuditedUnit.push({ unit: '' });
+    },
     departmentsCheck() {
       if (this.business.departmentCoop.name === '有部门合作') {
         let total = this.business.departmentCoop.departments.main.percentage;
@@ -1128,5 +1119,9 @@ export default {
     margin-top: 0;
     margin-bottom: 0;
     padding-top: 0;
+}
+
+.adjust-mb {
+  margin-bottom: 0;
 }
 </style>
