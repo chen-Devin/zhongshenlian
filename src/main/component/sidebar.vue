@@ -1,35 +1,37 @@
 <template>
   <div class="menu-wrapper">
-    <el-menu default-active="1" class="el-menu-vertical-demo" :router="routerVal" :unique-opened="uniqueOpened" :default-active="activeUrl">
-      <el-submenu index="quick" class="first-level">
-        <el-menu-item slot="title" index="quick"><i class="el-icon-star-on"></i>我的快捷</el-menu-item>
+    <el-menu class="el-menu-vertical-demo" :router="routerVal" :unique-opened="uniqueOpened" :default-active="activeUrl" :default-openeds="activeOpeneds">
+      <el-submenu index="/quick" class="first-level">
+        <el-menu-item slot="title" index="/quick"><i class="el-icon-star-on"></i>我的快捷</el-menu-item>
       </el-submenu>
-      <el-submenu index="quick" class="first-level">
-        <el-menu-item slot="title" index="to-do"><i class="el-icon-date"></i>待办事项</el-menu-item>
+      <el-submenu index="/to-do" class="first-level">
+        <el-menu-item slot="title" index="/to-do"><i class="el-icon-date"></i>待办事项</el-menu-item>
       </el-submenu>
-      <el-submenu index="business-manage">
-        <el-menu-item slot="title" index="business-manage"><i class="el-icon-document"></i>业务管理</el-menu-item>
+      <el-submenu index="/business-manage">
+        <el-menu-item slot="title" index="/business-manage"><i class="el-icon-document"></i>业务管理</el-menu-item>
         <el-menu-item-group>
-          <el-menu-item index="business-manage"><i class="el-icon-information"></i>待处理业务</el-menu-item>
-          <el-menu-item index="business-complete-list"><i class="el-icon-circle-check"></i>已完成业务</el-menu-item>
-          <el-menu-item index="business-review-add"><i class="el-icon-edit"></i>新建业务</el-menu-item>
+          <el-menu-item index="/business-manage"><i class="el-icon-information"></i>待处理业务</el-menu-item>
+          <el-menu-item index="/business-complete-list"><i class="el-icon-circle-check"></i>已完成业务</el-menu-item>
+          <el-menu-item index="/business-review-add"><i class="el-icon-edit"></i>新建业务</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-submenu index="quick" class="first-level">
-        <el-menu-item slot="title" index="customer-infor-list"><i class="el-icon-message"></i>客户信息</el-menu-item>
+      <el-submenu index="/customer-infor-list" class="first-level">
+        <el-menu-item slot="title" index="/customer-infor-list">
+          <i class="el-icon-message"></i>客户信息
+        </el-menu-item>
       </el-submenu>
-      <el-submenu index="staff-manage">
-        <el-menu-item slot="title" index="staff-manage"><i class="el-icon-setting"></i>职员管理</el-menu-item>
+      <el-submenu index="0"">
+        <el-menu-item slot="title" index="0-1"><i class="el-icon-setting"></i>职员管理</el-menu-item>
         <el-menu-item-group>
-          <el-menu-item index="staff-manage">职员权限管理</el-menu-item>
-          <el-menu-item index="staff-management-infor">职员资料管理</el-menu-item>
+          <el-menu-item index="/staff-management-author">职员权限管理</el-menu-item>
+          <el-menu-item index="/staff-management-infor">职员资料管理</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-submenu index="bid-info-list" class="first-level">
-        <el-menu-item slot="title" index="bid-info-list"><i class="el-icon-picture"></i>招投标信息</el-menu-item>
+      <el-submenu index="/bid-info-list" class="first-level">
+        <el-menu-item slot="title" index="/bid-info-list"><i class="el-icon-picture"></i>招投标信息</el-menu-item>
       </el-submenu>
-      <el-submenu index="rule-regulation" class="first-level">
-        <el-menu-item slot="title" index="rule-regulation"><i class="el-icon-menu"></i>规章制度</el-menu-item>
+      <el-submenu index="/rule-regulation" class="first-level">
+        <el-menu-item slot="title" index="/rule-regulation"><i class="el-icon-menu"></i>规章制度</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>
@@ -40,12 +42,21 @@ export default {
   name: 'sideBar',
   data() {
     return {
-      activeUrl: 'quick',
+      // activeUrl: 'quick',
       routerVal: true,
       uniqueOpened: true
     };
   },
   computed: {
+    activeUrl() {
+      console.log(this.$route.path)
+      return this.$route.path;
+    },
+    activeOpeneds() {
+      let arr = [];
+      arr = [this.$route.path];
+      return arr;
+    }
     // routes() {
     //   let routes = [];
     //   routes = routes.unshift({name: '我的快捷', link: '/quick', icon: 'quick',openClass: 1, open:true});
@@ -114,7 +125,9 @@ export default {
     
   },
   created() {
-
+    setTimeout(()=>{
+      console.log(this.$route.path);
+    }, 2000);
   }
 };
 </script>
@@ -173,6 +186,9 @@ export default {
     .el-submenu__icon-arrow {
       display: none !important;
     }
+  }
+  .router-link-active {
+    color: #fff;
   }
 }
 </style>

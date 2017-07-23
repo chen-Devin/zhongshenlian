@@ -137,6 +137,7 @@ const router = new VueRouter({
         },
         {
             path: '/customer-infor-list',
+            name: 'customerInfoList',
             component: customerInforList
         },
         {
