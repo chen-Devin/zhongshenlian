@@ -147,7 +147,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">销售方单位名称</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" placeholder="请输入销售方单位名称" v-model="bill.billingUnit">
+          <p class="form-control-static">{{ billingUnit }}</p>
         </div>
       </div>
       <div class="form-group">
@@ -241,7 +241,10 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">服务内容</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" placeholder="请输入服务内容" v-model="bill.content">
+          <select class="form-control" v-model="bill.content">
+              <option disabled value="">请选择服务内容</option>
+              <option v-for="option in serviceContents">{{ option }}</option>
+            </select>
         </div>
       </div>
       <div class="form-group">
@@ -326,6 +329,49 @@ export default {
   computed: {
     contractTypeChan() {
       return (this.business.contractType.name === '联合体') ? true : false;
+    },
+    billingUnit() {
+      // console.log(this.business.contractType);
+      if (this.business.contractType.name === "联合体") {
+        return this.business.contractType.basicFee.main.name;
+      } else {
+        if (this.business.reportType[0] === "会计所") {
+          return '天津中审联有限责任会计师事务所';
+        } else if (this.business.reportType[0].department === "造价所") {
+          return '天津中审联工程造价咨询有限公司';
+        } else if (this.business.reportType[0].department === "评估所") {
+          return '天津中审联资产评估有限公司';
+        } else if (this.business.reportType[0].department === "税务所") {
+          return '天津中审联税务师事务所有限公司';
+        } else if (this.business.reportType[0].department === "BH") {
+          return '天津中审联有限责任会计师事务所滨海新区分所';
+        } else if (this.business.reportType[0].department === "QT") {
+          return '其他';
+        } else {
+          return '';
+        }
+      }
+    },
+    serviceContents() {
+      if (this.business.contractType.name === "联合体") {
+        return ['无还要改'];
+      } else {
+        if (this.business.reportType[0] === "会计所") {
+          return ['审计费', '验资费', '咨询费', '专项审计费'];
+        } else if (this.business.reportType[0].department === "造价所") {
+          return ['审计费','审核费', '咨询费'];
+        } else if (this.business.reportType[0].department === "评估所") {
+          return ['评估费'];
+        } else if (this.business.reportType[0].department === "税务所") {
+          return ['咨询费', '鉴证费'];
+        } else if (this.business.reportType[0].department === "BH") {
+          return ['会计服务费', '咨询费', '服务费', '审计费', '验资费'];
+        } else if (this.business.reportType[0].department === "QT") {
+          return ['审计费', '验资费', '咨询费', '专项审计费', '审核费', '评估费', '鉴证费', '会计服务费', '服务费'];
+        } else {
+          return '';
+        }
+      }
     }
   },
   props: ['initBusiness', 'user'],
@@ -414,6 +460,7 @@ export default {
       } else if (!this.typeCheck()) {
         return false;
       } else {
+        this.bill.billingUnit = this.billingUnit;
         this.showSubModal = true;
       }
     },

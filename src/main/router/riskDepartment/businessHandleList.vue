@@ -40,7 +40,7 @@ import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
-import pager from '../../component/pager.vue';
+import myPagination from '../../component/pagination.vue';
 
 export default {
   name: 'businessHandleListRisk',
@@ -107,7 +107,7 @@ export default {
   components: {
     crumbs,
     card,
-    pager
+    myPagination
   }
 };
 </script>

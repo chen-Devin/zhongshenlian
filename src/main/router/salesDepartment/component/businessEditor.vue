@@ -688,6 +688,7 @@ export default {
                   contractPrice: this.business.contractPrice,
                   reportCopies: this.business.report.amount,
                   beingAuditedUnit: this.business.beingAuditedUnit,
+                  feeRate: this.business.feeRate,
                   reportType: (() => {
                     let out = [];
                     for (let i = 0; i < this.business.report.type.length; i++) {
@@ -839,6 +840,7 @@ export default {
                     contractPrice: this.business.contractPrice,
                     reportCopies: this.business.report.amount,
                     beingAuditedUnit: this.business.beingAuditedUnit,
+                    feeRate: this.business.feeRate,
                     reportType: (() => {
                       let out = [];
                       for (let i = 0; i < this.business.report.type.length; i++) {

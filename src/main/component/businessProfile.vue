@@ -28,7 +28,13 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">委托单位（客户）</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.institution.customerName}}</p>
+         <p class="form-control-static">{{business.institution.customerName}}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">被审计单位</label>
+      <div class="col-sm-9">
+        <p class="form-control-static" v-for="auditedUnit in business.beingAuditedUnit">{{ auditedUnit.unit }}</p>
       </div>
     </div>
     <div class="form-group">
@@ -72,18 +78,6 @@
       <label class="col-sm-2 control-label">合同预估金额</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</p>
-      </div>
-    </div>
-    <div class="form-group" v-if="business.feeBasisExist">
-      <label class="col-sm-2 control-label">取费依据</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.feeBasis}}</p>
-      </div>
-    </div>
-    <div class="form-group" v-if="business.feeBasisExist">
-      <label class="col-sm-2 control-label">费率</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.feeRate}}%</p>
       </div>
     </div>
     <div class="form-group">
@@ -181,6 +175,18 @@
             </p>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="form-group" v-if="business.feeBasisExist">
+      <label class="col-sm-2 control-label">取费依据</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.feeBasis}}</p>
+      </div>
+    </div>
+    <div class="form-group" v-if="business.feeBasisExist">
+      <label class="col-sm-2 control-label">费率</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{business.feeRate}}%</p>
       </div>
     </div>
     <div class="form-group">

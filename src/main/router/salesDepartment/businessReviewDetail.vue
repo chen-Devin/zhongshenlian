@@ -486,6 +486,7 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.business.id = rep.data.data.id;
             this.business.name = rep.data.data.projectName;
+            this.business.beingAuditedUnit = rep.data.data.beingAuditedUnit;
 
             this.business.proposer.id = rep.data.data.applicantId;
             this.business.proposer.name = rep.data.data.applicantName;

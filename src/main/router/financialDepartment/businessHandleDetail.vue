@@ -82,6 +82,7 @@ export default {
         feeBasis: '',
         feeBasisExist: false,
         feeRate: 0,
+        reportType: [],
         report: {
           type: [
             {
@@ -471,6 +472,13 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            if (rep.data.data.reportType.length === 0) {
+              this.business.reportType = [''];
+            } else {
+              this.business.reportType = rep.data.data.reportType;
+            }
+            this.business.beingAuditedUnit = rep.data.data.beingAuditedUnit;
+
             this.business.id = rep.data.data.id;
             this.business.name = rep.data.data.projectName;
 
@@ -660,7 +668,8 @@ export default {
                   }
                   return arr;
                 })(),
-                state: parseInt(rep.data.data.projectBillingArray[i].state)
+                state: parseInt(rep.data.data.projectBillingArray[i].state),
+                remark: rep.data.data.projectBillingArray[i].remark
               };
               this.business.bills.push(obj);
             }
