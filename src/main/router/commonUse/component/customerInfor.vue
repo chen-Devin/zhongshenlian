@@ -98,7 +98,6 @@
 <script>
 import card from '../../../component/card.vue';
 import searchBar from '../../../component/searchBar.vue';
-import pager from '../../../component/pager.vue';
 import customerModModal from './customerModModal.vue';
 import customerDelModal from './customerDelModal.vue';
 import customerAddModal from './customerAddModal.vue';
