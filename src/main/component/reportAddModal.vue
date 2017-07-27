@@ -14,6 +14,16 @@
         </div>
       </div>
       <div class="form-group">
+        <label class="col-xs-2 control-label">报告编号</label>
+        <div class="col-xs-10">
+          <input type="text"
+                 class="form-control"
+                 placeholder="请输入报告编号"
+                 v-model="report.number">
+        </div>
+        <div class="col-xs-10 error" v-if="numberError">{{ numberMessage }}</div>
+      </div>
+      <div class="form-group">
         <label class="col-xs-2 control-label">业务报告</label>
         <el-upload class="col-xs-10"
                    ref="upload"
@@ -84,6 +94,7 @@ export default {
   name: 'reportAddModal',
   data() {
     return {
+      numberError: false,
       report: {
         id: '',
         name: '',
@@ -91,6 +102,7 @@ export default {
         state: false,
         archivingState: false,
         reportName: '',
+        number: '',
         adviceState: 0
       },
       file: {
@@ -138,9 +150,13 @@ export default {
           this.reportUpload.progressShow = false;
           this.$emit('added', this.report);
         }, 500);
+      } else {
+        this.numberError = true;
+        this.numberMessage = responseData.msg;
       }
     },
     save() {
+      this.numberError = false;
       if (this.report.reportName === '') {
         this.$message({
           message: '请输入报告名称',
@@ -153,6 +169,12 @@ export default {
           type: 'warning'
         });
         return false;
+      } else if (this.report.number === '') {
+        this.$message({
+          message: '请输入报告编号',
+          type: 'warning'
+        });
+        return false;
       } else {
         this.subBtn.cont = '保存...';
         this.subBtn.dis = true;
@@ -162,7 +184,8 @@ export default {
           id: this.initBusiness.id,
           type: 'projectReport',
           reportName: this.report.reportName,
-          annexId: this.report.id
+          annexId: this.report.id,
+          number: this.report.number,
         };
         this.reportUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
 
@@ -172,6 +195,7 @@ export default {
       }
     },
     cancel() {
+      this.numberError = false;
       this.$emit('canceled');
     }
   },

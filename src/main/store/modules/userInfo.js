@@ -12,7 +12,8 @@ const state = {
 		authority: [],
 		gender: '',
 		wechatName: '',
-		wechatHeadImg: ''
+		wechatHeadImg: '',
+        shortcutArray: []
 	}
 };
 
@@ -59,7 +60,8 @@ const mutations = {
 		state.user.authority = user.authority;
 		state.user.gender = user.gender;
 		state.user.wechatName = user.wechatName;
-		state.user.wechatHeadImg = user.wechatHeadImg;
+        state.user.wechatHeadImg = user.wechatHeadImg;
+		state.user.shortcutArray = user.shortcutArray;
 	}
 };
 
