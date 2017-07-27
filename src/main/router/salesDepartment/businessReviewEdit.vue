@@ -340,6 +340,7 @@ export default {
   },
   computed: {
     editStat() {
+      console.log(this.business.projectStatus);
       return this.business.projectStatus === 10 || this.business.projectStatus === 30 || this.business.projectStatus === 50;
     },
     progress() {
@@ -490,12 +491,12 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.business = rep.data.data;
+            // this.business = rep.data.data;
 
             this.business.id = rep.data.data.id;
             this.business.name = rep.data.data.projectName;
 
-            this.business.proposer.id = rep.data.data.applicantId;
+            // this.business.proposer.id = rep.data.data.applicantId;
             this.business.proposer.name = rep.data.data.applicantName;
             this.business.proposer.tele = rep.data.data.applicantPhone;
 

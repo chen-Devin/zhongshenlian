@@ -1,9 +1,10 @@
 <template>
   <main>
     <section class="section">
-      <img class="switch" src="../../img/switch.png" @click="signSwitch()">
-      <div id="wechatLogin" v-show="wechatShow"></div>
-      <form @submit.prevent @keyup.enter.prevent v-show="!wechatShow">
+      <!-- <img class="switch" src="../../img/switch.png" @click="signSwitch()"> -->
+      <button class="switch" @click="signSwitch()">切换登录方式</button>
+      <div id="wechatLogin" v-show="!wechatShow"></div>
+      <form @submit.prevent @keyup.enter.prevent v-show="wechatShow">
         <div class="form-group">
           <img :src="userHead"
                alt="头像"
