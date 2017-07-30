@@ -32,11 +32,16 @@
         <div class="row form-group adjust-mb">
           <template v-for="(Unit, index) in business.beingAuditedUnit">
             <div class="col-sm-10">
-              <div class="input-group">
-                <div class="input-group-addon">单位名称</div>
-                <input type="text" class="form-control" placeholder="请输入被审计单位名称" v-model="Unit.unit" :disabled="!editable">
+              <div class="input-group" v-if="editable">
+                <!-- <div class="input-group-addon">单位名称</div>
+                <input type="text" class="form-control" placeholder="请输入被审计单位名称" v-model="Unit.unit" :disabled="!editable"> -->
+                <select2 class="form-control" :options="bCustomers" v-model="Unit.unit" :disabled="!editable">
+                </select2>
               </div>
-            </div>
+              <div class="input-group" v-if="!editable">
+                <div>{{ Unit.unit }}</div>
+              </div>
+            </div> 
             <h4 class="col-sm-1" v-if="editable">
               <a class="text-danger" @click="delUnits(index)">
                 <img src="../../../../img/delete_icon.svg">
@@ -410,15 +415,12 @@ import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
 import moment from 'moment';
-import { Upload } from 'element-ui';
 import maskedInput from 'vue-text-mask';
 
 import select2 from '../../../component/select2.vue';
 
 import bus from '../../../bus.js';
 import currencyMask from '../../../currencyMask.js';
-
-Vue.use(Upload);
 
 export default {
   name: 'businessEditor',
@@ -432,6 +434,30 @@ export default {
         percentage: '0%'
       },
       staffs: [],
+      bCustomers: [{
+        assetSize: '',
+        businessLicenseNumber: '',
+        createAt: '',
+        customerName: '',
+        customerNature: [{
+          state: '',
+          val: ''
+        }],
+        department: '',
+        duty: '',
+        founderDepartment: '',
+        founderId: '',
+        founderName: '',
+        id: '',
+        industry: '',
+        mailingAddress: '',
+        name: '',
+        registeredAddress: '',
+        registeredCapital: '',
+        removedStatus: '',
+        telephone: '',
+        updateAt: ''
+      }],
       customers: [],
       businessType: [
         '年度报告审计',
@@ -651,7 +677,10 @@ export default {
                 founderName: rep.data.data.customerArray[i].founderName,
                 founderDepartment: rep.data.data.customerArray[i].founderDepartment
               };
+              let obj2 = obj;
+              obj2.id = obj.customerName;
               this.customers.push(obj);
+              this.bCustomers.push(obj2);
             }
             resolve(rep);
           } else if (rep.data.statusCode === '10012') {
@@ -689,6 +718,7 @@ export default {
                   reportCopies: this.business.report.amount,
                   beingAuditedUnit: this.business.beingAuditedUnit,
                   feeRate: this.business.feeRate,
+                  feeBasis: this.business.feeBasis,
                   reportType: (() => {
                     let out = [];
                     for (let i = 0; i < this.business.report.type.length; i++) {
@@ -841,6 +871,7 @@ export default {
                     reportCopies: this.business.report.amount,
                     beingAuditedUnit: this.business.beingAuditedUnit,
                     feeRate: this.business.feeRate,
+                    feeBasis: this.business.feeBasis,
                     reportType: (() => {
                       let out = [];
                       for (let i = 0; i < this.business.report.type.length; i++) {

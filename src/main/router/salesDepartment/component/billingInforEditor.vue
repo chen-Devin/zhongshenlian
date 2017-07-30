@@ -331,7 +331,6 @@ export default {
       return (this.business.contractType.name === '联合体') ? true : false;
     },
     billingUnit() {
-      // console.log(this.business.contractType);
       if (this.business.contractType.name === "联合体") {
         return this.business.contractType.basicFee.main.name;
       } else {
@@ -354,7 +353,7 @@ export default {
     },
     serviceContents() {
       if (this.business.contractType.name === "联合体") {
-        return ['无还要改'];
+        return ['无'];
       } else {
         if (this.business.reportType[0] === "会计所") {
           return ['审计费', '验资费', '咨询费', '专项审计费'];

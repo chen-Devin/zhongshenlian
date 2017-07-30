@@ -102,7 +102,7 @@ export default {
     }
   },
   created () {
-    console.log(this.initBusiness)
+    
   }
 };
 </script>

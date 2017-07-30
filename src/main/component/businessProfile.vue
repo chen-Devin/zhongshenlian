@@ -429,7 +429,6 @@ export default {
     contractUploadProgress(event, file, fileList) {  // file对象都有哪些属性
       this.contractUpload.progressShow = true;       // 有空再看一下，写一个组件
       this.contractUpload.percentage = parseInt(file.percentage)+'%';
-      console.log(file);
     },
     contractUploadSuccess(responseData, file, fileList) {
       if (responseData.statusCode === '10001') {

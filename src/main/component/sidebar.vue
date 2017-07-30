@@ -179,9 +179,7 @@ export default {
     },
   },
   created() {
-    setTimeout(() => {
-      console.log(this.user);
-    },2000)
+    
   }
 };
 </script>

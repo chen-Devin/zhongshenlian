@@ -72,6 +72,9 @@ export default {
           name: '',
           tele: ''
         },
+        beingAuditedUnit: [{
+          unit: ''
+        }],
         institution: {
           id: '',
           customerName: '',
@@ -340,7 +343,6 @@ export default {
   },
   computed: {
     editStat() {
-      console.log(this.business.projectStatus);
       return this.business.projectStatus === 10 || this.business.projectStatus === 30 || this.business.projectStatus === 50;
     },
     progress() {
@@ -495,6 +497,7 @@ export default {
 
             this.business.id = rep.data.data.id;
             this.business.name = rep.data.data.projectName;
+            this.business.beingAuditedUnit = rep.data.data.beingAuditedUnit;
 
             // this.business.proposer.id = rep.data.data.applicantId;
             this.business.proposer.name = rep.data.data.applicantName;

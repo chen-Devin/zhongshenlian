@@ -61,6 +61,9 @@ export default {
           name: '',
           tele: ''
         },
+        beingAuditedUnit: [{
+          unit: ''
+        }],
         institution: {
           id: '',
           customerName: '',

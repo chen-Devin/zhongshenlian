@@ -131,7 +131,6 @@ export default {
       this.$emit('search', searchCont);
     },
     higherSearchEvent() {
-      console.log('test');
       this.listType = 'higherSearch';
       let searchObj = {};
       searchObj.customerName = this.customerName;

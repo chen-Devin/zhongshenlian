@@ -46,7 +46,6 @@ export default {
   created() {
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.userInfo = this.$store.getters.getUser;
-      console.log(1, this.userInfo);
       this.jumpPage();
     }, () => { });
   }
