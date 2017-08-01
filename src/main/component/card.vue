@@ -22,5 +22,6 @@ section {
   background-color: $origin-color;
   border: 1px solid $section-border;
   box-shadow: 1px 2px 4px $section-border-shadow;
+  overflow: hidden;
 }
 </style>

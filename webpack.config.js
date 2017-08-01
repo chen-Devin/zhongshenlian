@@ -145,12 +145,12 @@ const config = {
         inline: true,
         proxy: {
             "/service": {
-                target: "http://www.tzucpa.cn",
+                target: "http://test.tzucpa.cn",
                 changeOrigin: true,
                 secure: false
             },
             "/fileUpload": {
-                target: "http://www.tzucpa.cn",
+                target: "http://test.tzucpa.cn",
                 changeOrigin: true,
                 secure: false
             }

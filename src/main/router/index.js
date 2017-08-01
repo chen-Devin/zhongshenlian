@@ -28,6 +28,9 @@ import businessReviewDetailLeader from './leader/businessReviewDetail.vue';
 import businessReviewListLeader from './leader/businessReviewList.vue';
 import staffManagementAuthor from './leader/staffManagementAuthor.vue';
 import staffManagementInfor from './leader/staffManagementInfor.vue';
+import companyManagement from './leader/companyManagement.vue';
+import companyInformation from './leader/component/companyInformation.vue';
+
 // 办公室
 import businessReviewListOffice from './office/businessReviewList.vue';
 import businessReviewDetailOffice from './office/businessReviewDetail.vue';
@@ -190,6 +193,15 @@ const router = new VueRouter({
         {
             path: '/staff-management-infor',
             component: staffManagementInfor
+        },
+        {
+            path: '/company-management',
+            component: companyManagement,
+            redirect: '/company-management/0',
+            children: [{
+                path: '/company-management/:id',
+                component: companyInformation
+            }]
         },
         {
             path: '/business-analysis',
