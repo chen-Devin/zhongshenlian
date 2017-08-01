@@ -695,6 +695,7 @@ export default {
       this.leaderAdivces = [];
       for (let i = 0; i < this.business.projectApproverArray.length; i++) {
         if (this.business.projectApproverArray[i].department === '风险评估部') {
+          this.business.projectApproverArray[i].approverName = '';
           this.riskAdvices.push(this.business.projectApproverArray[i]);
         } else {
           this.leaderAdivces.push(this.business.projectApproverArray[i]);

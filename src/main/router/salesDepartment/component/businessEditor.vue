@@ -41,7 +41,7 @@
               <div class="input-group" v-if="!editable">
                 <div>{{ Unit.unit }}</div>
               </div>
-            </div> 
+            </div>
             <h4 class="col-sm-1" v-if="editable">
               <a class="text-danger" @click="delUnits(index)">
                 <img src="../../../../img/delete_icon.svg">
@@ -677,8 +677,26 @@ export default {
                 founderName: rep.data.data.customerArray[i].founderName,
                 founderDepartment: rep.data.data.customerArray[i].founderDepartment
               };
-              let obj2 = obj;
-              obj2.id = obj.customerName;
+              let obj2 = {
+                text: rep.data.data.customerArray[i].customerName,
+                id: rep.data.data.customerArray[i].customerName,
+                customerName: rep.data.data.customerArray[i].customerName,
+                name: rep.data.data.customerArray[i].name,
+                telephone: rep.data.data.customerArray[i].telephone,
+                duty: rep.data.data.customerArray[i].duty,
+                department: rep.data.data.customerArray[i].department,
+                registeredAddress: rep.data.data.customerArray[i].registeredAddress,
+                mailingAddress: rep.data.data.customerArray[i].mailingAddress,
+                businessLicenseNumber: rep.data.data.customerArray[i].businessLicenseNumber,
+                registeredCapital: rep.data.data.customerArray[i].registeredCapital,
+                customerNature: rep.data.data.customerArray[i].customerNature,
+                assetSize: rep.data.data.customerArray[i].assetSize,
+                industry: rep.data.data.customerArray[i].industry,
+                setUpTime: rep.data.data.customerArray[i].setUpTime,
+                founderId: rep.data.data.customerArray[i].founderId,
+                founderName: rep.data.data.customerArray[i].founderName,
+                founderDepartment: rep.data.data.customerArray[i].founderDepartment
+              };
               this.customers.push(obj);
               this.bCustomers.push(obj2);
             }
