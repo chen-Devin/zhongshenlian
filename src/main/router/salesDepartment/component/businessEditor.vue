@@ -138,7 +138,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">出据报告类型</label>
+      <label class="col-sm-2 control-label">出具报告类型</label>
       <div class="my-col-sm-5 check-wrap">
         <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index">
           <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable" :id="TYPE.name+index">

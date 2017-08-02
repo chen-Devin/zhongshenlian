@@ -87,7 +87,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">出据报告类型</label>
+      <label class="col-sm-2 control-label">出具报告类型</label>
       <div class="col-sm-9">
         <p class="form-control-static"
            v-html="reportFormat"></p>
