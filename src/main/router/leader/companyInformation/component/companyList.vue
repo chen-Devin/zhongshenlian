@@ -4,12 +4,13 @@
       <li>造价部</li>
       <li>评估部</li>
       <li>税务部</li>
+      <li>新建公司</li>
     </ul>
   </div>
 </template>
 
 <script>
-import card from '../../../component/card.vue';
+import card from '@/main/component/card.vue';
 
 export default {
   name: 'companyList',
@@ -34,7 +35,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '../../../../scss/_variables.scss';
+@import '../../../../../scss/_variables.scss';
 
 .company-list-wrapper {
   position: relative;

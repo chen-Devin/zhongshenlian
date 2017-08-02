@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import crumbs from '../../component/crumbs.vue';
-import card from '../../component/card.vue';
-import companyList from './component/companyList.vue';
+import crumbs from '@/main/component/crumbs.vue';
+import card from '@/main/component/card.vue';
+import companyList from '@/main/router/leader/companyInformation/component/companyList.vue';
 
 export default {
   name: 'companyManagement',
@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '../../../scss/_variables.scss';
+@import '../../../../scss/_variables.scss';
   .company-wrapper {
     margin-left: 180px;
   }

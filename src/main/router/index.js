@@ -28,8 +28,8 @@ import businessReviewDetailLeader from './leader/businessReviewDetail.vue';
 import businessReviewListLeader from './leader/businessReviewList.vue';
 import staffManagementAuthor from './leader/staffManagementAuthor.vue';
 import staffManagementInfor from './leader/staffManagementInfor.vue';
-import companyManagement from './leader/companyManagement.vue';
-import companyInformation from './leader/component/companyInformation.vue';
+import companyManagement from './leader/companyInformation/companyManagement.vue';
+import companyInformation from './leader/companyInformation/component/companyInformation.vue';
 
 // 办公室
 import businessReviewListOffice from './office/businessReviewList.vue';
@@ -200,6 +200,9 @@ const router = new VueRouter({
             redirect: '/company-management/0',
             children: [{
                 path: '/company-management/:id',
+                component: companyInformation
+            }, {
+                path: '/company-management/add',
                 component: companyInformation
             }]
         },
