@@ -27,13 +27,13 @@ export default {
     };
   },
   computed: {
-    
+
   },
   methods: {
-    
+
   },
   created() {
-    
+
   },
   components: {
     crumbs,

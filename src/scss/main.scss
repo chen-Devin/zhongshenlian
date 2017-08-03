@@ -1,6 +1,9 @@
 @import './_variables.scss';
 
 // reset.css
+.search-form {
+  z-index: 1;
+}
 
 body {
   background-color: $body-bg;

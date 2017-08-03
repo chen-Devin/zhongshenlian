@@ -1,32 +1,95 @@
 <template>
   <div class="company-list-wrapper">
     <ul>
-      <li>造价部</li>
-      <li>评估部</li>
-      <li>税务部</li>
+      <li
+        v-for="(company, index) in companyList"
+        :key="index"
+        :class="{ active: company.isActive }"
+        @click="getCompanyLink(company)"
+        v-if="reload">{{ company.name }}</li>
       <li>新建公司</li>
     </ul>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import card from '@/main/component/card.vue';
 
 export default {
   name: 'companyList',
   data() {
     return {
-      
+      companyList: [{
+        name: '',
+        id: '',
+        isActive: ''
+      }],
+      reload: true
     };
   },
   computed: {
-    
+
   },
   methods: {
-    
+    getCompanyList () {
+      this.companyList = [{
+        name: '公司1',
+        id: '1'
+      }, {
+        name: '公司2',
+        id: '2'
+      }, {
+        name: '公司3',
+        id: '3'
+      }];
+      this.companyList.forEach((item, index) => {
+        if (index === 0) {
+          item.isActive = true
+        } else {
+          item.isActive = false
+        }
+      });
+      this.$router.push(`/company-management/${this.companyList[0].id}`);
+      // return new Promise((resolve, reject) => {
+      //   axios({
+      //     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+      //     method: 'get',
+      //     url: '/service',
+      //     params: {
+      //       data: (() => {
+      //         let obj = {
+      //           command: 'getCompanyList',
+      //           platform: 'web'
+      //         }
+      //         return JSON.stringify(obj);
+      //       })()
+      //     }
+      //   }).then((rep) => {
+      //     if (rep.data.statusCode === '10001') {
+      //       resolve('done');
+      //     }
+      //   }, (rep) => { });
+      // })
+    },
+    getCompanyLink (company) {
+      this.companyList.forEach((item, index) => {
+        if (company.id === item.id) {
+          item.isActive = true;
+        } else {
+          item.isActive = false;
+        }
+      })
+      this.reload = false;
+      this.reload= true;
+      this.$router.push(`/company-management/${company.id}`);
+    }
   },
   created() {
-    
+    this.getCompanyList();
+    // .then(() => {
+    //   this.$router.push(`/company-management/${this.companyList[0].id}`);
+    // }, () => { });
   },
   components: {
     card
@@ -58,6 +121,10 @@ export default {
       text-align: center;
       list-style: none;
       cursor: pointer;
+      &.active {
+        background-color: #27b1e5;
+        color: #fff;
+      }
       &:hover {
         background-color: #27b1e5;
         color: #fff;

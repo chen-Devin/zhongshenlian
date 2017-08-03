@@ -61,6 +61,7 @@ export default {
 .navbar {
   background-color: #1F6BA9;
   border-color: rgba(255,255,255,0);
+  z-index: 3;
   .navbar-brand {
     padding: 8px 15px;
     img {

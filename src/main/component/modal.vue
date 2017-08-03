@@ -29,16 +29,18 @@ export default {
 <style lang="sass" scoped>
 .modal-mask {
   position: fixed;
-  z-index: 9998;
+  z-index: 3;
   top: 0;
+  bottom: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  // width: 100%;
+  // height: 100%;
   background-color: rgba(0, 0, 0, .5);
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-y: scroll;
+  // overflow-y: scroll;
   transition: opacity .3s ease;
 }
 

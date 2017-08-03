@@ -197,12 +197,13 @@ const router = new VueRouter({
         {
             path: '/company-management',
             component: companyManagement,
-            redirect: '/company-management/0',
             children: [{
                 path: '/company-management/:id',
+                name: companyManagement,
                 component: companyInformation
             }, {
                 path: '/company-management/add',
+                name: companyManagement,
                 component: companyInformation
             }]
         },
