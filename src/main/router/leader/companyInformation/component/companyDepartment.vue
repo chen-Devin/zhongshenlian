@@ -25,24 +25,24 @@
         </tr>
       </tbody>
     </table>
-    <modal>
+    <modal v-show="showAdd">
       <div class="inputs" slot="body">
         <p>
           <span>部门编号：</span>
-          <input class="form-control" type="text" v-model="a">
+          <input class="form-control" type="text" v-model="companyDepartment.number">
         </p>
         <p>
           <span>部门名称：</span>
-          <input class="form-control" type="text" v-model="a">
+          <input class="form-control" type="text" v-model="companyDepartment.name">
         </p>
         <!-- <p>
           所属部门：
-          <input class="form-control" type="text" v-model="a">
+          <input class="form-control" type="text" v-model="companyDepartment.">
         </p> -->
-        <p>
+        <!-- <p>
           <span>所属分公司：</span>
-          <input class="form-control" type="text" v-model="a">
-        </p>
+          <input class="form-control" type="text" v-model="companyDepartment.">
+        </p> -->
         <p>
           <span>业务权限：</span>
           <el-select v-model="value" placeholder="请选择">
@@ -54,6 +54,10 @@
             </el-option>
           </el-select>
         </p>
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn submit-btn" @click="submit">保存</button>
+        <button class="btn my-btn cancel-btn" @click="cancel">取消</button>
       </div>
     </modal>
   </div>
@@ -67,13 +71,22 @@ export default {
   data() {
     return {
       options: [{
-                value: '同部门之间业务可见',
-                label: '同部门之间业务可见'
-              }, {
-                value: '同部门之间业务不可见',
-                label: '同部门之间业务不可见'
-              }],
-              value: ''
+        value: '同部门之间业务可见',
+        label: '同部门之间业务可见'
+      }, {
+        value: '同部门之间业务不可见',
+        label: '同部门之间业务不可见'
+      }],
+      value: '',
+      showAdd: false,
+      companyDepartment: {
+        id: '',
+        name: '',
+        number: '',
+        principalId: '',
+        principalName: '',
+        principalTelephone: ''
+      }
     };
   },
   computed: {
@@ -89,7 +102,13 @@ export default {
   },
   methods: {
     addShow () {
+      this.showAdd = true
+    },
+    submit () {
 
+    },
+    cancel () {
+      this.showAdd = false
     }
   },
   props: ['iniDepartmentArray', 'iniCompany'],
