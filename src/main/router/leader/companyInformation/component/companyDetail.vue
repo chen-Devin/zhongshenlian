@@ -28,7 +28,7 @@
             <div class="selections">
               <input class="magic-checkbox" type="checkbox" name="filterState" value="3" v-model="filterState" id="1">
               <label for="1">
-                已中标
+
               </label>
               <input class="magic-checkbox" type="checkbox" name="filterState" value="2" v-model="filterState" id="2">
               <label for="2">

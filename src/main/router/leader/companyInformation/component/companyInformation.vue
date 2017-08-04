@@ -12,12 +12,13 @@
       </p>
     </card>
     <card>
-      <company-department :iniCompany="company" :iniDepartmentArray="departmentArray"></company-department>
+      <company-department :iniCompany="company" :iniDepartmentArray="company.departmentArray"></company-department>
     </card>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import card from '@/main/component/card.vue';
 import companyDetail from './companyDetail.vue';
 import companyEdit from './companyEdit.vue';
@@ -32,6 +33,16 @@ export default {
         name: '',
         number: '',
         creditCode: '',
+        departmentArray: {
+          id: '',
+          name: '',
+          number: '',
+          principalId: '',
+          principalName: '',
+          authorityType: '',
+          principalTelephone: '',
+          editing: false
+        },
         legalPersonId: '',
         legalPersonName: '',
         legalPersonTelephone: '',
@@ -56,82 +67,43 @@ export default {
       return this.$route.params.id
     }
   },
+  watch: {
+    companyId: function(val, oldVal) {
+      if (val !== oldVal) {
+        this.getCompanyInfo()
+      }
+    }
+  },
   methods: {
     getCompanyInfo () {
-      this.company = {
-        id: '1',
-        name: '天津市科学技术委员会科技有限公司',
-        number: 'G001',
-        creditCode: '44030019612391L',
-        legalPersonId: 'G001',
-        legalPersonName: '王铁松',
-        legalPersonTelephone: '1',
-        principalId: '1',
-        principalName: '王铁松',
-        principalTelephone: '1',
-        mainWork: '会计、审计服务等',
-        openAccountBankName: '招商银行',
-        openAccountBankNumber: '11014714864000',
-        reportTypeArray: [{
-          reportType: '审字'
-        }, {
-          reportType: '审字'
-        }, {
-          reportType: '审字'
-        }, {
-          reportType: '审字'
-        }, {
-          reportType: '审字'
-        }, {
-          reportType: '审字'
-        }, {
-          reportType: '审字'
-        }, {
-          reportType: '审字'
-        }],
-        counselorTagArray: [{
-          counselorTag: ''
-        }]
-      };
-      this.departmentArray = [{
-        id: '1',
-        name: '业务1部',
-        number: 'Y001',
-        principalId: '1',
-        principalName: '',
-        authorityType: '同部门之间业务可见',
-        principalTelephone: ''
-      }, {
-        id: '1',
-        name: '业务1部',
-        number: 'Y001',
-        principalId: '1',
-        principalName: '',
-        authorityType: '同部门之间业务可见',
-        principalTelephone: ''
-      }]
-      // this.$router.push(`/company-management/${this.companyList[0].id}`);
-      // return new Promise((resolve, reject) => {
-      //   axios({
-      //     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-      //     method: 'get',
-      //     url: '/service',
-      //     params: {
-      //       data: (() => {
-      //         let obj = {
-      //           command: 'getCompanyInfo',
-      //           platform: 'web',
-      //           companyId: this.companyId
-      //         }
-      //         return JSON.stringify(obj);
-      //       })()
-      //     }
-      //   }).then((rep) => {
-      //     if (rep.data.statusCode === '10001') {
-      //       resolve('done');
-      //     }
-      //   }, (rep) => { });
-      // })
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getCompanyInfo',
+                platform: 'web',
+                companyId: this.companyId
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.company = rep.data.data
+            this.departmentArrayTrim(this.company)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    departmentArrayTrim (company) {
+      company.departmentArray.forEach((item, index) => {
+        item.editing = false
+      })
     },
     edit () {
       this.editing = true

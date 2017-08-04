@@ -1,8 +1,11 @@
 <template>
   <div class="company-department-wrapper">
-    <button type="button" class="btn my-btn submit-btn f-r" @click="addShow">新建部门</button>
+    <button
+      type="button"
+      class="btn my-btn submit-btn f-r"
+      @click="addShow">新建部门</button>
     <h5 class="main-title">部门信息</h5>
-    <table class="table table-bordered table-hover com-list">
+    <table class="table table-bordered table-hover com-list" v-if="reloadTable">
       <thead>
         <tr>
           <th>部门名称</th>
@@ -14,57 +17,50 @@
       </thead>
       <tbody>
         <tr v-for="department in departmentArray">
-          <td>{{ department.name }}</td>
-          <td>{{ department.number }}</td>
-          <td>{{ department.authorityType }}</td>
+          <td v-if="!department.editing">{{ department.name }}</td>
+          <td v-if="department.editing">
+            <input class="form-control ta-c" type="text" v-model="department.name">
+          </td>
+          <td v-if="!department.editing">{{ department.number }}</td>
+          <td v-if="department.editing">
+            <input class="form-control ta-c" type="text" v-model="department.number">
+          </td>
+          <td v-if="!department.editing">{{ department.authorityType }}</td>
+          <td v-if="department.editing">
+            <el-select v-model="department.authorityType" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </td>
           <td>{{ company.name }}</td>
           <td>
-            <a href="javascript:void(0);">编辑</a>
-            <a href="javascript:void(0);">删除</a>
+            <template v-if="!department.editing">
+              <a href="javascript:void(0);" @click="edit(department)">编辑</a>
+              <a href="javascript:void(0);" @click="deleteDepartment(department)">删除</a>
+            </template>
+            <template v-if="department.editing">
+              <a href="javascript:void(0);" @click="submit(department)">保存</a>
+              <a href="javascript:void(0);" @click="cancelEdit(department)">取消</a>
+            </template>
           </td>
         </tr>
       </tbody>
     </table>
-    <modal v-show="showAdd">
-      <div class="inputs" slot="body">
-        <p>
-          <span>部门编号：</span>
-          <input class="form-control" type="text" v-model="companyDepartment.number">
-        </p>
-        <p>
-          <span>部门名称：</span>
-          <input class="form-control" type="text" v-model="companyDepartment.name">
-        </p>
-        <!-- <p>
-          所属部门：
-          <input class="form-control" type="text" v-model="companyDepartment.">
-        </p> -->
-        <!-- <p>
-          <span>所属分公司：</span>
-          <input class="form-control" type="text" v-model="companyDepartment.">
-        </p> -->
-        <p>
-          <span>业务权限：</span>
-          <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-        </p>
-      </div>
-      <div slot="footer">
-        <button class="btn my-btn submit-btn" @click="submit">保存</button>
-        <button class="btn my-btn cancel-btn" @click="cancel">取消</button>
-      </div>
-    </modal>
+    <add-company-department
+      v-show="showAdd"
+      @submit="submit"
+      @cancel="cancel"></add-company-department>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import modal from '@/main/component/modal.vue';
+import addCompanyDepartment from './addCompanyDepartment.vue';
 
 export default {
   name: 'companyDepartment',
@@ -77,15 +73,17 @@ export default {
         value: '同部门之间业务不可见',
         label: '同部门之间业务不可见'
       }],
-      value: '',
       showAdd: false,
+      editing: false,
+      reloadTable: true,
       companyDepartment: {
         id: '',
         name: '',
         number: '',
         principalId: '',
         principalName: '',
-        principalTelephone: ''
+        principalTelephone: '',
+        authorityType: ''
       }
     };
   },
@@ -104,11 +102,63 @@ export default {
     addShow () {
       this.showAdd = true
     },
-    submit () {
-
-    },
     cancel () {
       this.showAdd = false
+    },
+    submit (companyDepartment) {
+      console.log(companyDepartment)
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'editCompanyDepartment',
+                platform: 'web',
+                data: {
+                  id: companyDepartment.id,
+                  name: companyDepartment.name,
+                  number: companyDepartment.number,
+                  principalId: companyDepartment.principalId,
+                  principalName: companyDepartment.principalName,
+                  principalTelephone: companyDepartment.principalTelephone,
+                  authorityType: companyDepartment.authorityType
+                }
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            companyDepartment.id = rep.data.data.companyDepartmentId
+            console.log(companyDepartment)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    edit (department) {
+      this.reloadTable = false
+      this.reloadTable = true
+      this.iniDepartmentArray.forEach((item, index) => {
+        if (item.id === department.id) {
+          item.editing = true
+        } else {
+          item.editing = false
+        }
+      })
+    },
+    cancelEdit (department) {
+      this.reloadTable = false
+      this.reloadTable = true
+      this.iniDepartmentArray.forEach((item, index) => {
+        item.editing = false
+      })
+    },
+    deleteDepartment (department) {
+
     }
   },
   props: ['iniDepartmentArray', 'iniCompany'],
@@ -116,7 +166,8 @@ export default {
 
   },
   components: {
-    modal
+    modal,
+    addCompanyDepartment
   }
 };
 </script>
@@ -141,19 +192,6 @@ export default {
         &:hover {
           background-color: #fff;
         }
-      }
-    }
-  }
-  .inputs {
-    p {
-      display: flex;
-      height: 34px;
-      line-height: 34px;
-      span {
-        width: 100px;
-      }
-      input, .el-select {
-        flex: 1;
       }
     }
   }
