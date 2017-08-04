@@ -2,7 +2,7 @@
   <div class="company-detail-wrapper">
     <card>
       <company-detail :iniCompany="company" v-show="!editing"></company-detail>
-      <company-edit  :iniCompany="company" v-show="editing"></company-edit>
+      <company-edit  :iniCompany="company" v-show="editing" :iniAddORedit="addORedit"></company-edit>
       <p class="btns">
         <button type="button" class="btn my-btn submit-btn" @click="edit" v-if="!editing">编辑</button>
         <template v-if="editing">
@@ -12,7 +12,10 @@
       </p>
     </card>
     <card>
-      <company-department :iniCompany="company" :iniDepartmentArray="company.departmentArray"></company-department>
+      <company-department 
+        :iniCompany="company"
+        :iniDepartmentArray="company.departmentArray"
+        @reloadList="reloadList"></company-department>
     </card>
   </div>
 </template>
@@ -59,7 +62,39 @@ export default {
           counselorTag: ''
         }]
       },
-      editing: false
+      companyEmpty: {
+        id: '',
+        name: '',
+        number: '',
+        creditCode: '',
+        departmentArray: [{
+          id: '',
+          name: '',
+          number: '',
+          principalId: '',
+          principalName: '',
+          authorityType: '',
+          principalTelephone: '',
+          editing: false
+        }],
+        legalPersonId: '',
+        legalPersonName: '',
+        legalPersonTelephone: '',
+        principalId: '',
+        principalName: '',
+        principalTelephone: '',
+        mainWork: '',
+        openAccountBankName: '',
+        openAccountBankNumber: '',
+        reportTypeArray: [{
+          reportType: ''
+        }],
+        counselorTagArray: [{
+          counselorTag: ''
+        }]
+      },
+      editing: false,
+      addORedit: 'edit'
     };
   },
   computed: {
@@ -69,12 +104,25 @@ export default {
   },
   watch: {
     companyId: function(val, oldVal) {
+      console.log(val, typeof val)
       if (val !== oldVal) {
-        this.getCompanyInfo()
+        if (val === 'add') {
+          this.addORedit = 'add'
+          this.editing = true
+          this.company = this.companyEmpty
+        } else if (val === 'del') {
+
+        } else {
+          this.editing = false
+          this.getCompanyInfo()
+        }
       }
     }
   },
   methods: {
+    reloadList () {
+      this.getCompanyInfo()
+    },
     getCompanyInfo () {
       return new Promise((resolve, reject) => {
         axios({

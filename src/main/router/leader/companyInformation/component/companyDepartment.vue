@@ -15,7 +15,7 @@
           <th>操作</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="haveData">
         <tr v-for="department in departmentArray">
           <td v-if="!department.editing">{{ department.name }}</td>
           <td v-if="department.editing">
@@ -50,8 +50,9 @@
         </tr>
       </tbody>
     </table>
+    <p class="ta-c" v-if="!haveData">暂无数据，请新建部门...</p>
     <add-company-department
-      v-show="showAdd"
+      v-if="showAdd"
       @submit="submit"
       @cancel="cancel"></add-company-department>
   </div>
@@ -96,6 +97,13 @@ export default {
     },
     departmentArray () {
       return this.iniDepartmentArray
+    },
+    haveData () {
+      if (this.departmentArray.length == undefined || this.departmentArray[0].id === '') {
+        return false
+      } else {
+        return true
+      }
     }
   },
   methods: {
@@ -119,6 +127,7 @@ export default {
                 platform: 'web',
                 data: {
                   id: companyDepartment.id,
+                  companyId: this.companyId,
                   name: companyDepartment.name,
                   number: companyDepartment.number,
                   principalId: companyDepartment.principalId,
@@ -133,6 +142,8 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             companyDepartment.id = rep.data.data.companyDepartmentId
+            this.showAdd = false
+            this.$emit('reloadList')
             console.log(companyDepartment)
             resolve('done');
           }
@@ -158,7 +169,28 @@ export default {
       })
     },
     deleteDepartment (department) {
-
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'delCompanyDepartment',
+                platform: 'web',
+                companyDepartmentId: department.id
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$emit('reloadList')
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
     }
   },
   props: ['iniDepartmentArray', 'iniCompany'],

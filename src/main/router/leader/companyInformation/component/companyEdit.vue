@@ -28,10 +28,10 @@
           </p>
         </el-col>
         <el-col :span="9" :offset="4">
-          <p class="input-wrapper">
+          <!-- <p class="input-wrapper">
             参审人员标签：
             <input type="text" class="form-control" v-model="company.counselorTagArray" placeholder="请输入参审人员标签">
-          </p>
+          </p> -->
           <p class="input-wrapper">
             经营范围：
             <input type="text" class="form-control" v-model="company.mainWork" placeholder="请输入经营范围">
@@ -60,38 +60,18 @@
               分管公司出具报告类型：
             </div>
             <div class="selections">
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="3" v-model="filterState" id="1">
-              <label for="1">
-                已中标
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="2" v-model="filterState" id="2">
-              <label for="2">
-                已入围
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="1" v-model="filterState" id="3">
-              <label for="3">
-                已摘牌
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="0" v-model="filterState" id="4">
-              <label for="4">
-                未摘牌
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="3" v-model="filterState" id="1">
-              <label for="1">
-                已中标
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="2" v-model="filterState" id="2">
-              <label for="2">
-                已入围
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="1" v-model="filterState" id="3">
-              <label for="3">
-                已摘牌
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="0" v-model="filterState" id="4">
-              <label for="4">
-                未摘牌
-              </label>
+              <template v-for="(item, index) in iniReportType">
+                <input class="magic-checkbox" type="checkbox" :value="item.name" v-model="typeChecked" :id="index">
+                <label :for="index">
+                  {{ item.name }}
+                </label>
+              </template>
+              <!-- <template v-for="item in company.reportType">
+                <input class="magic-checkbox" type="checkbox" value="item.selected" v-model="company.reportType">
+                <label for="1">
+                  {{ item.name }}
+                </label>
+              </template> -->
               <a href="javascript:void(0);" @click="showType">添加/删除报告类型</a>
             </div>
           </div>
@@ -104,42 +84,21 @@
       <span class="f-r" @click="closeType">x</span>
       <h5 class="main-title">添加/删除可出具报告类型</h5>
       <section>
-        <input class="magic-checkbox" type="checkbox" name="filterState" value="3" v-model="filterState" id="1">
-        <label for="1">
-          审字
-        </label>
-        <input class="magic-checkbox" type="checkbox" name="filterState" value="2" v-model="filterState" id="2">
-        <label for="2">
-          专字
-        </label>
-        <input class="magic-checkbox" type="checkbox" name="filterState" value="1" v-model="filterState" id="3">
-        <label for="3">
-          资字
-        </label>
-        <input class="magic-checkbox" type="checkbox" name="filterState" value="0" v-model="filterState" id="4">
-        <label for="4">
-          基决审字
-        </label>
-        <input class="magic-checkbox" type="checkbox" name="filterState" value="3" v-model="filterState" id="1">
-        <label for="1">
-          外汇检字
-        </label>
-        <input class="magic-checkbox" type="checkbox" name="filterState" value="2" v-model="filterState" id="2">
-        <label for="2">
-          验字
-        </label>
-        <input class="magic-checkbox" type="checkbox" name="filterState" value="1" v-model="filterState" id="3">
-        <label for="3">
-          外审字
-        </label>
-        <input class="magic-checkbox" type="checkbox" name="filterState" value="0" v-model="filterState" id="4">
-        <label for="4">
-          无报告
-        </label>
-        <input class="magic-checkbox" type="checkbox" name="filterState" value="0" v-model="filterState" id="4">
-        <label for="4">
-          <input class="form-control type-input" type="text">
-        </label>
+        <template v-for="(item, index) in iniReportType">
+          <input class="magic-checkbox" type="checkbox" :value="item.name" v-model="typeChecked" :id="index">
+          <label :for="index" v-if="!item.input">
+            {{ item.name }}
+          </label>
+          <label :for="index" v-if="item.input">
+            <input type="text" v-model="item.name">
+          </label>
+        </template>
+        <!-- <template v-for="item in company.reportType">
+          <input class="magic-checkbox" type="checkbox" value="item.name" v-model="company.reportType">
+          <label for="1">
+            {{ item.name }}
+          </label>
+        </template> -->
       </section>
     </div>
     <div slot="footer">
@@ -177,13 +136,45 @@ export default {
               }],
               openAccountBankName: '',
       typeShow: false,
-      filterState: ''
+      iniReportType: [{
+        name: '审字',
+        selected: false
+      }, {
+        name: '专字',
+        selected: false
+      }, {
+        name: '咨字',
+        selected: false
+      }, {
+        name: '基决审字',
+        selected: false
+      }, {
+        name: '外汇检字',
+        selected: false
+      }, {
+        name: '验字',
+        selected: false
+      }, {
+        name: '外审字',
+        selected: false
+      }, {
+        name: '无报告',
+        selected: false
+      }],
+      typeChecked: [],
+      addORedit: this.iniAddORedit
     };
   },
   computed: {
     company () {
       return this.iniCompany
     }
+    // reportTypeShow () {
+    //   return this.iniReportType
+    // },
+    // typeCheckedShow () {
+    //   return this.typeChecked
+    // }
   },
   methods: {
     showType () {
@@ -193,10 +184,14 @@ export default {
       this.typeShow = false;
     },
     addType () {
-
+      this.iniReportType.push({
+        name: '',
+        selected: false,
+        input: true
+      })
     }
   },
-  props: ['iniCompany'],
+  props: ['iniCompany', 'iniAddORedit'],
   created() {
 
   },

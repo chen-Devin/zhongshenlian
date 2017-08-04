@@ -13,7 +13,7 @@
           <p>公司负责人：{{ company.principalName }}</p>
         </el-col>
         <el-col :span="9" :offset="4">
-          <p>参审人员标签：{{ company.counselorTagArray }}</p>
+          <!-- <p>参审人员标签：{{ company.counselorTagArray }}</p> -->
           <p>经营范围：{{ company.mainWork }}</p>
           <p>开户银行：{{ company.openAccountBankName }}</p>
           <p>开户银行账号：{{ company.openAccountBankNumber }}</p>
@@ -26,38 +26,12 @@
               分管公司出具报告类型：
             </div>
             <div class="selections">
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="3" v-model="filterState" id="1">
-              <label for="1">
-
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="2" v-model="filterState" id="2">
-              <label for="2">
-                已入围
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="1" v-model="filterState" id="3">
-              <label for="3">
-                已摘牌
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="0" v-model="filterState" id="4">
-              <label for="4">
-                未摘牌
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="3" v-model="filterState" id="1">
-              <label for="1">
-                已中标
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="2" v-model="filterState" id="2">
-              <label for="2">
-                已入围
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="1" v-model="filterState" id="3">
-              <label for="3">
-                已摘牌
-              </label>
-              <input class="magic-checkbox" type="checkbox" name="filterState" value="0" v-model="filterState" id="4">
-              <label for="4">
-                未摘牌
-              </label>
+              <template v-for="item in company.reporttype">
+                <input class="magic-checkbox" type="checkbox" value="item.selected" v-model="company.reporttype">
+                <label for="1">
+                  {{ item.name }}
+                </label>
+              </template>
             </div>
           </div>
         </el-col>
@@ -93,7 +67,7 @@ export default {
               }],
               value: '',
       typeShow: false,
-      filterState: 3
+      filterState: []
     };
   },
   computed: {

@@ -7,7 +7,6 @@
         :class="{ active: company.isActive }"
         @click="getCompanyLink(company)"
         v-if="reload">{{ company.name }}</li>
-      <li>新建公司</li>
     </ul>
   </div>
 </template>
@@ -50,6 +49,13 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.companyList = rep.data.data.companyList
+            this.companyList.push({
+              name: '新建公司',
+              id: 'add'
+            }, {
+              name: '删除公司',
+              id: 'del'
+            })
             this.companyList.forEach((item, index) => {
               if (index === 0) {
                 item.isActive = true
