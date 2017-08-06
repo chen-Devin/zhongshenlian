@@ -2,11 +2,11 @@
   <div class="company-detail-wrapper">
     <card>
       <company-detail :iniCompany="company" v-show="!editing"></company-detail>
-      <company-edit  :iniCompany="company" v-show="editing" :iniAddORedit="addORedit"></company-edit>
+      <company-edit :iniCompany="company" v-show="editing" :iniOperateType="operateType"></company-edit>
       <p class="btns">
         <button type="button" class="btn my-btn submit-btn" @click="edit" v-if="!editing">编辑</button>
         <template v-if="editing">
-          <button type="button" class="btn my-btn draft-btn" @click="cancel">取消</button>
+          <button type="button" class="btn my-btn draft-btn" @click="cancel" v-if="cancelBtn">取消</button>
           <button type="button" class="btn my-btn submit-btn" @click="submit">保存</button>
         </template>
       </p>
@@ -17,6 +17,7 @@
         :iniDepartmentArray="company.departmentArray"
         @reloadList="reloadList"></company-department>
     </card>
+    <company-del @cancel="cancelDelete" v-if="deleteShow"></company-del>
   </div>
 </template>
 
@@ -26,6 +27,7 @@ import card from '@/main/component/card.vue';
 import companyDetail from './companyDetail.vue';
 import companyEdit from './companyEdit.vue';
 import companyDepartment from './companyDepartment.vue';
+import companyDel from './companyDel.vue';
 
 export default {
   name: 'companyInformation',
@@ -94,7 +96,9 @@ export default {
         }]
       },
       editing: false,
-      addORedit: 'edit'
+      deleteShow: false,
+      cancelBtn: true,
+      operateType: 'edit'
     };
   },
   computed: {
@@ -104,16 +108,18 @@ export default {
   },
   watch: {
     companyId: function(val, oldVal) {
-      console.log(val, typeof val)
       if (val !== oldVal) {
         if (val === 'add') {
-          this.addORedit = 'add'
           this.editing = true
           this.company = this.companyEmpty
+          this.cancelBtn = false
+          this.operateType ="new"
         } else if (val === 'del') {
-
+          this.deleteShow = true
         } else {
+          this.cancelBtn = true
           this.editing = false
+          this.operateType ="edit"
           this.getCompanyInfo()
         }
       }
@@ -159,6 +165,9 @@ export default {
     cancel () {
       this.editing = false
     },
+    cancelDelete () {
+      this.deleteShow = false
+    },
     submit () {
 
     }
@@ -170,7 +179,8 @@ export default {
     card,
     companyDetail,
     companyEdit,
-    companyDepartment
+    companyDepartment,
+    companyDel
   }
 };
 </script>

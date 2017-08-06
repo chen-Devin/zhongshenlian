@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="company-detail-box">
-    <h1 class="title">分公司信息录入</h1>
+    <h1 class="title">{{ company.name == ''? '分公司信息录入':company.name }}</h1>
     <h5 class="main-title">公司信息</h5>
     <div class="company-detail">
       <el-row>
@@ -60,7 +60,7 @@
               分管公司出具报告类型：
             </div>
             <div class="selections">
-              <template v-for="(item, index) in iniReportType">
+              <template v-for="(item, index) in iniReportType" v-if="iniSelect">
                 <input class="magic-checkbox" type="checkbox" :value="item.name" v-model="typeChecked" :id="index">
                 <label :for="index">
                   {{ item.name }}
@@ -162,12 +162,25 @@ export default {
         selected: false
       }],
       typeChecked: [],
-      addORedit: this.iniAddORedit
+      iniSelect: false
     };
+  },
+  watch: {
+    operateType: function(val, oldVal) {
+      if (val === 'new') {
+        console.log('new')
+        this.iniSelect = true
+      } else {
+        this.iniSelect = false
+      }
+    }
   },
   computed: {
     company () {
       return this.iniCompany
+    },
+    operateType () {
+      return this.iniOperateType
     }
     // reportTypeShow () {
     //   return this.iniReportType
@@ -179,6 +192,8 @@ export default {
   methods: {
     showType () {
       this.typeShow = true;
+      console.log(this.iniOperateType)
+      console.log(this.operateType)
     },
     closeType () {
       this.typeShow = false;
@@ -191,7 +206,7 @@ export default {
       })
     }
   },
-  props: ['iniCompany', 'iniAddORedit'],
+  props: ['iniCompany', 'iniOperateType'],
   created() {
 
   },

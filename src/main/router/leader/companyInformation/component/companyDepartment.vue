@@ -99,11 +99,17 @@ export default {
       return this.iniDepartmentArray
     },
     haveData () {
-      if (this.departmentArray.length == undefined || this.departmentArray[0].id === '') {
-        return false
-      } else {
-        return true
-      }
+      return false
+      // if (this.departmentArray.length == 0 || this.departmentArray[0].id === '') {
+      //   return false
+      // } else {
+      //   return true
+      // }
+    }
+  },
+  watch: {
+    departmentArray: function(val, oldVal) {
+      console.log(val, oldVal)
     }
   },
   methods: {
