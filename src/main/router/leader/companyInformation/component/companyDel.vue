@@ -101,8 +101,7 @@ export default {
             this.$message('删除公司成功')
             this.deleteInfo = false
             this.cancelOuter()
-            this.$router.push()
-            this.$emit('delSuccess')
+            this.$emit('reloadComList')
             resolve('done');
           }
         }, (rep) => { });

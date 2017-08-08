@@ -38,6 +38,9 @@
         </el-col>
       </el-row>
     </div>
+    <p class="btns">
+      <button type="button" class="btn my-btn submit-btn" @click="edit">编辑</button>
+    </p>
   </div>
 </div>
 </template>
@@ -87,6 +90,9 @@ export default {
     }
   },
   methods: {
+    edit () {
+      this.$emit('edit')
+    },
     showType () {
       this.typeShow = true;
     },
@@ -130,6 +136,11 @@ export default {
   }
   + button {
     margin-top: 10px;
+  }
+  .btns {
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: right;
   }
 }
 </style>

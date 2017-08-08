@@ -4,9 +4,9 @@
     <card>
       <h4>公司信息管理</h4>
     </card>
-    <company-list></company-list>
+    <company-list v-if="reloadList"></company-list>
     <div class="company-wrapper">
-      <router-view></router-view>
+      <router-view @reloadComList="reloadComList"></router-view>
     </div>
   </div>
 </template>
@@ -34,6 +34,13 @@ export default {
     delSuccess () {
       this.reloadList = false
       this.reloadList = true
+    },
+    reloadComList () {
+      this.reloadList = false
+      setTimeout(() => {
+        this.reloadList = true
+      }, 100)
+      console.log('submitted')
     }
   },
   created() {

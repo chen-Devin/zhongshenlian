@@ -1,15 +1,9 @@
 <template>
   <div class="company-detail-wrapper">
     <card>
-      <company-detail :iniCompany="company" v-show="!editing"></company-detail>
-      <company-edit :iniCompany="company" v-show="editing" :iniOperateType="operateType" :opertionsArray="company.opertionsArray"
-        :selectionsArray="company.selectionsArray"></company-edit>
-      <p class="btns">
-        <button type="button" class="btn my-btn submit-btn" @click="edit" v-if="!editing">编辑</button>
-        <template v-if="editing">
-          <button type="button" class="btn my-btn draft-btn" @click="cancel" v-if="cancelBtn">取消</button>
-          <button type="button" class="btn my-btn submit-btn" @click="submit">保存</button>
-        </template>
+      <company-detail :iniCompany="company" v-show="checking" @edit="edit"></company-detail>
+      <company-edit :iniCompany="company" v-show="editing" @cancel="cancel"></company-edit>
+      <input-company v-if="adding" @reloadComList="reloadComList"></input-company>
       </p>
     </card>
     <card>
@@ -18,7 +12,7 @@
         :iniDepartmentArray="company.departmentArray"
         @reloadList="reloadList"></company-department>
     </card>
-    <company-del @cancel="cancelDelete" v-if="deleteShow" @delSuccess="delSuccess"></company-del>
+    <company-del @cancel="cancelDelete" v-if="deleteShow" @reloadComList="reloadComList"></company-del>
   </div>
 </template>
 
@@ -27,6 +21,7 @@ import axios from 'axios';
 import card from '@/main/component/card.vue';
 import companyDetail from './companyDetail.vue';
 import companyEdit from './companyEdit.vue';
+import inputCompany from './inputCompany.vue';
 import companyDepartment from './companyDepartment.vue';
 import companyDel from './companyDel.vue';
 
@@ -107,7 +102,8 @@ export default {
       editing: false,
       deleteShow: false,
       cancelBtn: true,
-      operateType: 'edit'
+      adding: false,
+      checking: true
     };
   },
   computed: {
@@ -118,23 +114,29 @@ export default {
   watch: {
     companyId: function(val, oldVal) {
       if (val !== oldVal) {
-        if (val === 'add') {
-          this.editing = true
+        if (val === 'add') {  // 新建状态
+          this.editing = false
+          this.adding = true
+          this.checking = false
           this.company = this.companyEmpty
           this.cancelBtn = false
-          this.operateType ="new"
         } else if (val === 'del') {
           this.deleteShow = true
-        } else {
+          // this.adding = false
+        } else {  // 详情状态
+          this.adding = false
+          this.checking = true
           this.cancelBtn = true
           this.editing = false
-          this.operateType ="edit"
           this.getCompanyInfo()
         }
       }
     }
   },
   methods: {
+    reloadComList () {
+      this.$emit('reloadComList')
+    },
     reloadList () {
       this.getCompanyInfo()
     },
@@ -185,16 +187,15 @@ export default {
       })
     },
     edit () {
+      this.checking = false
       this.editing = true
     },
     cancel () {
       this.editing = false
+      this.checking = true
     },
     cancelDelete () {
       this.deleteShow = false
-    },
-    submit () {
-
     },
     delSuccess () {
       this.$emit('delSuccess')
@@ -207,6 +208,7 @@ export default {
     card,
     companyDetail,
     companyEdit,
+    inputCompany,
     companyDepartment,
     companyDel
   }

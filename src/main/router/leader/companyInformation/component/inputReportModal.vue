@@ -19,9 +19,9 @@
       </section>
     </div>
     <div slot="footer">
-      <button class="btn my-btn cancel-btn">删除</button>
+      <button class="btn my-btn cancel-btn" @click="deleteOptions">删除</button>
       <button class="btn my-btn draft-btn" @click="addType">添加</button>
-      <button class="btn my-btn submit-btn" @click="save">保存</button>
+      <button class="btn my-btn submit-btn" @click="saveReportOption">保存</button>
     </div>
   </modal>
 </template>
@@ -34,23 +34,6 @@ export default {
   name: '',
   data() {
     return {
-      iniReportType: [{
-        name: '审字'
-      }, {
-        name: '专字'
-      }, {
-        name: '咨字'
-      }, {
-        name: '基决审字'
-      }, {
-        name: '外汇检字'
-      }, {
-        name: '验字'
-      }, {
-        name: '外审字'
-      }, {
-        name: '无报告'
-      }],
       checked: []
     };
   },
@@ -64,44 +47,29 @@ export default {
         input: true
       })
     },
-    save () {
+    saveReportOption () {
       this.iniReportType.forEach((item, index) => {
         if (item.input) {
           delete item.input
         }
       })
-      return new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              let obj = {
-                command: 'editCompany',
-                platform: 'web',
-                data: {
-                  reportTypeOption: this.iniReportType
-                }
-              }
-              return JSON.stringify(obj);
-            })()
+      this.$emit('saveReportOption', this.iniReportType)
+    },
+    deleteOptions () {
+      let arr = []
+      this.checked.forEach((item, index) => {
+        this.iniReportType.forEach((jtem, jndex) => {
+          if (item === jtem.name) {
+            this.iniReportType.splice(jndex, 1)
           }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.$message('保存成功')
-            this.companyId = rep.data.data.companyId
-            this.$emit('saveIputModal', this.companyId)
-            this.$emit('closeIputModal')
-            resolve('done');
-          }
-        }, (rep) => { });
+        })
       })
     }
   },
   created() {
 
   },
+  props: ['iniReportType'],
   components: {
     modal
   }

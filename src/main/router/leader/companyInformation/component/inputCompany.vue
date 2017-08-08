@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="company-detail-box">
-    <h1 class="title">{{ company.name }}</h1>
+    <h1 class="title">分公司信息录入</h1>
     <h5 class="main-title">公司信息</h5>
     <div class="company-detail">
       <el-row>
@@ -61,23 +61,23 @@
             </div>
             <div class="selections">
               <el-checkbox-group v-model="checked">
-                <el-checkbox :label="item.name" v-for="(item, index) in company.reportTypeOption" :key="index"></el-checkbox>
+                <el-checkbox :label="item.name" v-for="(item, index) in iniReportType" :key="index"></el-checkbox>
               </el-checkbox-group>
-              <a href="javascript:void(0);" @click="showType">添加/删除报告类型</a>
+              <a href="javascript:void(0);" @click="inputReportModal">添加/删除报告类型</a>
             </div>
           </div>
         </el-col>
       </el-row>
     </div>
   </div>
+  <input-report-modal
+    :iniReportType="iniReportType"
+    @saveReportOption="saveReportOption"
+    @closeIputModal="closeIputModal"
+    v-if="inputReportModalShow"></input-report-modal>
   <p class="btns">
-    <button type="button" class="btn my-btn draft-btn" @click="cancel">取消</button>
     <button type="button" class="btn my-btn submit-btn" @click="submit">保存</button>
   </p>
-  <input-report-modal
-    :iniReportType="company.reportTypeOption"
-    @saveReportOption="saveReportOption"
-    v-if="inputReportModalShow"></input-report-modal>
 </div>
 </template>
 
@@ -86,7 +86,7 @@ import axios from 'axios';
 import card from '@/main/component/card.vue';
 import modal from '@/main/component/modal.vue';
 import inputReportModal from './inputReportModal.vue';
-// import editReportType from './editReportType.vue';
+import editReportType from './editReportType.vue';
 
 export default {
   name: 'companyDetail',
@@ -114,7 +114,6 @@ export default {
       iniSelect: false,
       isNew: false,
       inputReportModalShow: false,
-      companyId: '',
       company: {
         id: '',
         name: '',
@@ -151,26 +150,40 @@ export default {
         opertionsArray: [],
         selectionsArray: []
       },
+      iniReportType: [{
+        name: '审字'
+      }, {
+        name: '专字'
+      }, {
+        name: '咨字'
+      }, {
+        name: '基决审字'
+      }, {
+        name: '外汇检字'
+      }, {
+        name: '验字'
+      }, {
+        name: '外审字'
+      }, {
+        name: '无报告'
+      }],
       checked: []
     };
   },
   watch: {
-    operateType: function(val, oldVal) {
-      if (val === 'new') {
-        console.log('new')
-        this.iniSelect = true
-      } else {
-        this.iniSelect = false
-      }
-    }
+    
   },
   computed: {
-    operateType () {
-      return this.iniOperateType
-    }
+    
   },
   methods: {
-    getCompanyInfo () {
+    submit () {
+      this.company.reportTypeOption = this.iniReportType
+      let arr = []
+      this.checked.forEach((item, index) => {
+        arr.push({name: item})
+      })
+      this.company.reportType = arr
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -179,21 +192,17 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'getCompanyInfo',
+                command: 'editCompany',
                 platform: 'web',
-                companyId: this.companyId
+                data: this.company
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.company = rep.data.data
-            let arr = []
-            this.company.reportType.forEach((item, index) => {
-              arr.push(item.name)
-            })
-            this.checked = arr
+            this.$emit('reloadComList')
+            this.$message('新建公司成功')
             resolve('done');
           }
         }, (rep) => { });
@@ -202,17 +211,18 @@ export default {
     inputReportModal () {
       this.inputReportModalShow = true
     },
-    saveReportOption (iniReportType) {
-      this.$message('保存成功')
-      this.company.reportTypeOption = iniReportType
+    closeIputModal () {
       this.inputReportModalShow = false
     },
-    saveIputModal (companyId) {
-      console.log(companyId)
-      // this.$router.push('/company-management/' + companyId)
+    saveReportOption (iniReportType) {
+      this.$message('保存成功')
+      this.iniReportType = iniReportType
+      this.inputReportModalShow = false
     },
     showType () {
-      this.inputReportModalShow = true
+      this.typeShow = true;
+      console.log(this.iniOperateType)
+      console.log(this.operateType)
     },
     closeType () {
       this.typeShow = false;
@@ -227,22 +237,14 @@ export default {
       } else {
         this.selectionsArray.push('')
       }
-    },
-    cancel () {
-      this.$emit('cancel')
-    },
-    submit () {
-
     }
   },
   created() {
-    this.companyId = this.$route.params.id
-    this.getCompanyInfo()
+
   },
   components: {
     card,
     modal,
-    // editReportType,
     inputReportModal
   }
 };
@@ -272,6 +274,12 @@ export default {
       .el-select {
         flex: 1;
       }
+    }
+  }
+  .post-type {
+    display: flex;
+    .title {
+      width: 235px;
     }
   }
   + button {
