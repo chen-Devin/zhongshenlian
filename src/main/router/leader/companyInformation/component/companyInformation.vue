@@ -2,7 +2,8 @@
   <div class="company-detail-wrapper">
     <card>
       <company-detail :iniCompany="company" v-show="!editing"></company-detail>
-      <company-edit :iniCompany="company" v-show="editing" :iniOperateType="operateType"></company-edit>
+      <company-edit :iniCompany="company" v-show="editing" :iniOperateType="operateType" :opertionsArray="company.opertionsArray"
+        :selectionsArray="company.selectionsArray"></company-edit>
       <p class="btns">
         <button type="button" class="btn my-btn submit-btn" @click="edit" v-if="!editing">编辑</button>
         <template v-if="editing">
@@ -12,12 +13,12 @@
       </p>
     </card>
     <card>
-      <company-department 
+      <company-department
         :iniCompany="company"
         :iniDepartmentArray="company.departmentArray"
         @reloadList="reloadList"></company-department>
     </card>
-    <company-del @cancel="cancelDelete" v-if="deleteShow"></company-del>
+    <company-del @cancel="cancelDelete" v-if="deleteShow" @delSuccess="delSuccess"></company-del>
   </div>
 </template>
 
@@ -57,12 +58,17 @@ export default {
         mainWork: '',
         openAccountBankName: '',
         openAccountBankNumber: '',
-        reportTypeArray: [{
-          reportType: ''
+        reportType: [{
+          name: ''
+        }],
+        reportTypeOption: [{
+          name: ''
         }],
         counselorTagArray: [{
           counselorTag: ''
-        }]
+        }],
+        opertionsArray: [],
+        selectionsArray: []
       },
       companyEmpty: {
         id: '',
@@ -88,8 +94,11 @@ export default {
         mainWork: '',
         openAccountBankName: '',
         openAccountBankNumber: '',
-        reportTypeArray: [{
-          reportType: ''
+        reportType: [{
+          name: ''
+        }],
+        reportTypeOption: [{
+          name: ''
         }],
         counselorTagArray: [{
           counselorTag: ''
@@ -149,10 +158,26 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.company = rep.data.data
             this.departmentArrayTrim(this.company)
+            this.opertionsArrayTrim(this.company)
+            this.selectionsArrayTrim(this.company)
             resolve('done');
           }
         }, (rep) => { });
       })
+    },
+    opertionsArrayTrim (company) {
+      let arr = []
+      this.company.reportTypeOption.forEach((item, index) => {
+        arr.push(item.name)
+      })
+      this.company.opertionsArray = arr
+    },
+    selectionsArrayTrim (company) {
+      let arr = []
+      this.company.reportType.forEach((item, index) => {
+        arr.push(item.name)
+      })
+      this.company.selectionsArray = arr
     },
     departmentArrayTrim (company) {
       company.departmentArray.forEach((item, index) => {
@@ -170,6 +195,9 @@ export default {
     },
     submit () {
 
+    },
+    delSuccess () {
+      this.$emit('delSuccess')
     }
   },
   created() {

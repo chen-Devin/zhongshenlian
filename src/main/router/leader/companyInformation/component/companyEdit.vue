@@ -54,37 +54,17 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="20" :offset="2">
-          <div class="post-type">
-            <div class="title">
-              分管公司出具报告类型：
-            </div>
-            <div class="selections">
-              <template v-for="(item, index) in iniReportType" v-if="iniSelect">
-                <input class="magic-checkbox" type="checkbox" :value="item.name" v-model="typeChecked" :id="index">
-                <label :for="index">
-                  {{ item.name }}
-                </label>
-              </template>
-              <!-- <template v-for="item in company.reportType">
-                <input class="magic-checkbox" type="checkbox" value="item.selected" v-model="company.reportType">
-                <label for="1">
-                  {{ item.name }}
-                </label>
-              </template> -->
-              <a href="javascript:void(0);" @click="showType">添加/删除报告类型</a>
-            </div>
-          </div>
-        </el-col>
+        <input-report-type @inputReportModal="inputReportModal" v-if=""></input-report-type>
+        <edit-report-type v-if=""></edit-report-type>
       </el-row>
     </div>
   </div>
-  <modal class="type-modal" modalWidth="550px" v-if="typeShow">
+  <!-- <modal class="type-modal" modalWidth="550px" v-if="typeShow">
     <div slot="body">
       <span class="f-r" @click="closeType">x</span>
       <h5 class="main-title">添加/删除可出具报告类型</h5>
       <section>
-        <template v-for="(item, index) in iniReportType">
+        <template v-for="(item, index) in iniReportType" v-if="iniSelect">
           <input class="magic-checkbox" type="checkbox" :value="item.name" v-model="typeChecked" :id="index">
           <label :for="index" v-if="!item.input">
             {{ item.name }}
@@ -93,12 +73,10 @@
             <input type="text" v-model="item.name">
           </label>
         </template>
-        <!-- <template v-for="item in company.reportType">
-          <input class="magic-checkbox" type="checkbox" value="item.name" v-model="company.reportType">
-          <label for="1">
-            {{ item.name }}
-          </label>
-        </template> -->
+        <el-checkbox-group v-model="selectionsArray" v-if="!iniSelect">
+          <el-checkbox v-for="item in selectionsArray"></el-checkbox>
+        </el-checkbox-group>
+        <p>{{ selectionsArray }}</p>
       </section>
     </div>
     <div slot="footer">
@@ -106,13 +84,20 @@
       <button class="btn my-btn draft-btn" @click="addType">添加</button>
       <button class="btn my-btn submit-btn">保存</button>
     </div>
-  </modal>
+  </modal> -->
+  <input-report-modal
+    @saveIputModal="saveIputModal"
+    @closeIputModal="closeIputModal"
+    v-if="inputReportModalShow"></input-report-modal>
 </div>
 </template>
 
 <script>
 import card from '@/main/component/card.vue';
 import modal from '@/main/component/modal.vue';
+import inputReportType from './inputReportType.vue';
+import inputReportModal from './inputReportModal.vue';
+import editReportType from './editReportType.vue';
 
 export default {
   name: 'companyDetail',
@@ -136,33 +121,10 @@ export default {
               }],
               openAccountBankName: '',
       typeShow: false,
-      iniReportType: [{
-        name: '审字',
-        selected: false
-      }, {
-        name: '专字',
-        selected: false
-      }, {
-        name: '咨字',
-        selected: false
-      }, {
-        name: '基决审字',
-        selected: false
-      }, {
-        name: '外汇检字',
-        selected: false
-      }, {
-        name: '验字',
-        selected: false
-      }, {
-        name: '外审字',
-        selected: false
-      }, {
-        name: '无报告',
-        selected: false
-      }],
       typeChecked: [],
-      iniSelect: false
+      iniSelect: false,
+      isNew: false,
+      inputReportModalShow: false
     };
   },
   watch: {
@@ -182,14 +144,18 @@ export default {
     operateType () {
       return this.iniOperateType
     }
-    // reportTypeShow () {
-    //   return this.iniReportType
-    // },
-    // typeCheckedShow () {
-    //   return this.typeChecked
-    // }
   },
   methods: {
+    inputReportModal () {
+      this.inputReportModalShow = true
+    },
+    closeIputModal () {
+      this.inputReportModalShow = false
+    },
+    saveIputModal (companyId) {
+      console.log(companyId)
+      // this.$router.push('/company-management/' + companyId)
+    },
     showType () {
       this.typeShow = true;
       console.log(this.iniOperateType)
@@ -199,20 +165,27 @@ export default {
       this.typeShow = false;
     },
     addType () {
-      this.iniReportType.push({
-        name: '',
-        selected: false,
-        input: true
-      })
+      if (this.operateType === 'new') {
+        this.iniReportType.push({
+          name: '',
+          selected: false,
+          input: true
+        })
+      } else {
+        this.selectionsArray.push('')
+      }
     }
   },
-  props: ['iniCompany', 'iniOperateType'],
+  props: ['iniCompany', 'iniOperateType', 'opertionsArray', 'selectionsArray'],
   created() {
 
   },
   components: {
     card,
-    modal
+    modal,
+    inputReportType,
+    editReportType,
+    inputReportModal
   }
 };
 </script>
@@ -241,12 +214,6 @@ export default {
       .el-select {
         flex: 1;
       }
-    }
-  }
-  .post-type {
-    display: flex;
-    .title {
-      width: 235px;
     }
   }
   + button {

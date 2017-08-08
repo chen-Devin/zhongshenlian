@@ -23,14 +23,18 @@ export default {
       paths: [
         { name: '信息管理', url: '/business-review-list-leader', present: true },
         { name: '公司信息管理', url: '/business-review-list-leader', present: true }
-      ]
+      ],
+      reloadList: true
     };
   },
   computed: {
 
   },
   methods: {
-
+    delSuccess () {
+      this.reloadList = false
+      this.reloadList = true
+    }
   },
   created() {
 

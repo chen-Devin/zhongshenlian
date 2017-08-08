@@ -26,11 +26,12 @@
               分管公司出具报告类型：
             </div>
             <div class="selections">
-              <template v-for="item in company.reporttype">
-                <input class="magic-checkbox" type="checkbox" value="item.selected" v-model="company.reporttype">
-                <label for="1">
+              <template v-for="item in company.reportTypeOption">
+                <i class="fa fa-check-square-o" aria-hidden="true" v-if="item.selected"></i>
+                <i class="fa fa-square-o" aria-hidden="true" v-else></i>
+                <span>
                   {{ item.name }}
-                </label>
+                </span>
               </template>
             </div>
           </div>
@@ -72,6 +73,16 @@ export default {
   },
   computed: {
     company () {
+      this.iniCompany.reportTypeOption.forEach((item, index) => {
+        this.iniCompany.reportType.forEach((jtem, index) => {
+          if (item.name == jtem.name) {
+            item.selected = true
+          } else {
+            // item.selected = false
+          }
+        })
+      })
+      console.log(this.iniCompany)
       return this.iniCompany
     }
   },

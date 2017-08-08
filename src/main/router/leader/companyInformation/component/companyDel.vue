@@ -4,9 +4,9 @@
       <div slot="body">
         <h5 class="main-title">请选择要删除的公司</h5>
         <el-checkbox-group v-model="checked">
-          <el-checkbox 
+          <el-checkbox
             :label="item.id"
-            v-for="(item, index) in companyList" 
+            v-for="(item, index) in companyList"
             :key="index">{{ item.name }}</el-checkbox>
         </el-checkbox-group>
       </div>
@@ -76,6 +76,11 @@ export default {
       this.deleteInfo = true
     },
     deleteCompany () {
+      let arr = []
+      this.checked.forEach((item, index) => {
+        arr.push({name: item})
+      })
+      this.checked = arr
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -93,6 +98,11 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            this.$message('删除公司成功')
+            this.deleteInfo = false
+            this.cancelOuter()
+            this.$router.push()
+            this.$emit('delSuccess')
             resolve('done');
           }
         }, (rep) => { });
