@@ -14,7 +14,7 @@
 <script>
 import crumbs from '@/main/component/crumbs.vue';
 import card from '@/main/component/card.vue';
-import companyList from '@/main/router/leader/companyInformation/component/companyList.vue';
+import companyList from './component/companyList.vue';
 
 export default {
   name: 'companyManagement',
@@ -45,7 +45,7 @@ export default {
     },
     noticeJump (comId) {
       this.comId = comId
-      this.$router.push(`/company-management/${comId}`);
+      this.$router.push(`/functional-management/${comId}`);
     }
   },
   created() {

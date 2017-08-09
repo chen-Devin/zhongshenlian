@@ -219,10 +219,10 @@
         <label class="col-sm-2 control-label">送达方式</label>
         <div class="col-sm-9">
           <label class="radio-inline">
-            <input type="radio" name="sendWay" value="快递" v-model="bill.way"> 快递
+            <input type="radio" name="sendWay" value="申请人送达" v-model="bill.way"> 申请人送达
           </label>
           <label class="radio-inline">
-            <input type="radio" name="sendWay" value="申请人送达" v-model="bill.way"> 申请人送达
+            <input type="radio" name="sendWay" value="快递" v-model="bill.way"> 快递
           </label>
         </div>
       </div>
@@ -314,7 +314,7 @@ export default {
           let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
           return `${Y}-${M}-${D}`;
         })(),
-        way: '快递',
+        way: '申请人送达',
         receiver: '',
         receiveAdd: '',
         content: '',

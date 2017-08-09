@@ -2,7 +2,7 @@
   <div class="company-list-wrapper">
     <ul>
       <li
-        v-for="(company, index) in companyList"
+        v-for="(company, index) in departmentArray"
         :key="index"
         :class="{ active: company.isActive }"
         @click="getCompanyLink(company)"
@@ -16,10 +16,10 @@ import axios from 'axios';
 import card from '@/main/component/card.vue';
 
 export default {
-  name: 'companyList',
+  name: 'departmentList',
   data() {
     return {
-      companyList: [{
+      departmentArray: [{
         name: '',
         id: '',
         isActive: ''
@@ -31,7 +31,8 @@ export default {
 
   },
   methods: {
-    getCompanyList () {
+    getDepartmentList () {
+      console.log('list')
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -40,7 +41,7 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'getCompanyList',
+                command: 'getInfoDepartmentList',
                 platform: 'web'
               }
               return JSON.stringify(obj);
@@ -48,15 +49,15 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.companyList = rep.data.data.companyList
-            this.companyList.push({
-              name: '新建公司',
+            this.departmentArray = rep.data.data.departmentArray
+            this.departmentArray.push({
+              name: '新建部门',
               id: 'add'
             }, {
-              name: '删除公司',
+              name: '删除部门',
               id: 'del'
             })
-            this.companyList.forEach((item, index) => {
+            this.departmentArray.forEach((item, index) => {
               if (index === 0) {
                 item.isActive = true
               } else {
@@ -68,23 +69,23 @@ export default {
         }, (rep) => { });
       })
     },
-    getCompanyLink (company) {
-      this.companyList.forEach((item, index) => {
-        if (company.id === item.id) {
-          item.isActive = true;
+    getCompanyLink (department) {
+      this.departmentArray.forEach((item, index) => {
+        if (department.id === item.id) {
+          item.isActive = true
         } else {
-          item.isActive = false;
+          item.isActive = false
         }
       })
-      this.reload = false;
-      this.reload= true;
-      this.jumpId = company.id
+      this.reload = false
+      this.reload= true
+      this.jumpId = department.id
       this.$emit('noticeJump', this.jumpId)
     }
   },
   created() {
-    this.getCompanyList().then(() => {
-      this.jumpId = this.companyList[0].id
+    this.getDepartmentList().then(() => {
+      this.jumpId = this.departmentArray[0].id
       this.$emit('noticeJump', this.jumpId)
     }, () => { });
   },

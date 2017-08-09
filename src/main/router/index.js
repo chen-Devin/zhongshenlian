@@ -30,6 +30,8 @@ import staffManagementAuthor from './leader/staffManagementAuthor.vue';
 import staffManagementInfor from './leader/staffManagementInfor.vue';
 import companyManagement from './leader/companyInformation/companyManagement.vue';
 import companyInformation from './leader/companyInformation/component/companyInformation.vue';
+import functionalManagement from './leader/functionalInformation/functionalManagement.vue';
+import functionalInformation from './leader/functionalInformation/component/functionalInformation.vue';
 
 // 办公室
 import businessReviewListOffice from './office/businessReviewList.vue';
@@ -65,10 +67,6 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes: [
-        // {
-        //     path: '/',
-        //     redirect: '/quick'
-        // },
         {
             path: '/quick',
             name: 'quick',
@@ -201,6 +199,15 @@ const router = new VueRouter({
                 path: '/company-management/:id',
                 name: companyManagement,
                 component: companyInformation
+            }]
+        },
+        {
+            path: '/functional-management',
+            component: functionalManagement,
+            children: [{
+                path: '/functional-management/:id',
+                name: functionalManagement,
+                component: functionalInformation
             }]
         },
         {

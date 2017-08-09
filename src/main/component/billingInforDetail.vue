@@ -123,7 +123,7 @@
           <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</p>
         </div>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label class="col-sm-2 control-label">开票申请人</label>
         <div class="col-sm-9">
           <p class="form-control-static">{{bill.proposer.name}}</p>
@@ -229,7 +229,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="form-group">
         <label class="col-sm-2 control-label">累计开票金额</label>
         <div class="col-sm-9">

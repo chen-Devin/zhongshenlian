@@ -1,16 +1,10 @@
 <template>
   <div class="company-detail-wrapper">
     <card>
-      <company-detail :iniCompany="company" v-if="checking" @edit="edit"></company-detail>
+      <company-detail :iniDepartment="department" v-if="checking" @edit="edit"></company-detail>
       <company-edit v-if="editing" @cancel="cancel" @editSuccess="editSuccess"></company-edit>
       <input-company v-if="adding" @reloadComList="reloadComList"></input-company>
       </p>
-    </card>
-    <card>
-      <company-department
-        :iniCompany="company"
-        :iniDepartmentArray="company.departmentArray"
-        @reloadList="reloadList"></company-department>
     </card>
     <company-del @cancel="cancelDelete" v-if="deleteShow" @reloadComList="reloadComList"></company-del>
   </div>
@@ -29,106 +23,50 @@ export default {
   name: 'companyInformation',
   data() {
     return {
-      company: {
+      department: {
         id: '',
         name: '',
         number: '',
-        creditCode: '',
-        departmentArray: {
-          id: '',
-          name: '',
-          number: '',
-          principalId: '',
-          principalName: '',
-          authorityType: '',
-          principalTelephone: '',
-          editing: false
-        },
-        legalPersonId: '',
-        legalPersonName: '',
-        legalPersonTelephone: '',
-        principalId: '',
-        principalName: '',
         principalTelephone: '',
-        mainWork: '',
-        openAccountBankName: '',
-        openAccountBankNumber: '',
-        reportType: [{
+        authority: [{
           name: ''
-        }],
-        reportTypeOption: [{
-          name: ''
-        }],
-        counselorTagArray: [{
-          counselorTag: ''
-        }],
-        opertionsArray: [],
-        selectionsArray: []
+        }]
       },
-      companyEmpty: {
+      departmentEmpty: {
         id: '',
         name: '',
         number: '',
-        creditCode: '',
-        departmentArray: [{
-          id: '',
-          name: '',
-          number: '',
-          principalId: '',
-          principalName: '',
-          authorityType: '',
-          principalTelephone: '',
-          editing: false
-        }],
-        legalPersonId: '',
-        legalPersonName: '',
-        legalPersonTelephone: '',
-        principalId: '',
-        principalName: '',
         principalTelephone: '',
-        mainWork: '',
-        openAccountBankName: '',
-        openAccountBankNumber: '',
-        reportType: [{
+        authority: [{
           name: ''
-        }],
-        reportTypeOption: [{
-          name: ''
-        }],
-        counselorTagArray: [{
-          counselorTag: ''
         }]
       },
       editing: false,
       deleteShow: false,
-      cancelBtn: true,
       adding: false,
       checking: true
     };
   },
   computed: {
-    companyId () {
+    departmentId () {
       return this.$route.params.id
     }
   },
   watch: {
-    companyId: function(val, oldVal) {
+    departmentId: function(val, oldVal) {
       if (val !== oldVal) {
         if (val === 'add') {  // 新建状态
           this.editing = false
           this.adding = true
           this.checking = false
           this.company = this.companyEmpty
-          this.cancelBtn = false
         } else if (val === 'del') {
           this.deleteShow = true
-          // this.adding = false
         } else {  // 详情状态
           this.adding = false
           this.checking = true
-          this.cancelBtn = true
           this.editing = false
-          this.getCompanyInfo()
+          this.getDepartmentInfo()
         }
       }
     }
@@ -138,13 +76,13 @@ export default {
       this.$emit('reloadComList')
     },
     reloadList () {
-      this.getCompanyInfo()
+      this.getDepartmentInfo()
     },
     editSuccess () {
       this.checking = true
       this.editing = false
     },
-    getCompanyInfo () {
+    getDepartmentInfo () {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -153,43 +91,43 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'getCompanyInfo',
+                command: 'getDepartmentInfo',
                 platform: 'web',
-                companyId: this.companyId
+                departmentId: this.departmentId
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.company = rep.data.data
-            this.departmentArrayTrim(this.company)
-            this.opertionsArrayTrim(this.company)
-            this.selectionsArrayTrim(this.company)
+            this.department = rep.data.data
+            // this.departmentArrayTrim(this.company)
+            // this.opertionsArrayTrim(this.company)
+            // this.selectionsArrayTrim(this.company)
             resolve('done');
           }
         }, (rep) => { });
       })
     },
-    opertionsArrayTrim (company) {
-      let arr = []
-      this.company.reportTypeOption.forEach((item, index) => {
-        arr.push(item.name)
-      })
-      this.company.opertionsArray = arr
-    },
-    selectionsArrayTrim (company) {
-      let arr = []
-      this.company.reportType.forEach((item, index) => {
-        arr.push(item.name)
-      })
-      this.company.selectionsArray = arr
-    },
-    departmentArrayTrim (company) {
-      company.departmentArray.forEach((item, index) => {
-        item.editing = false
-      })
-    },
+    // opertionsArrayTrim (company) {
+    //   let arr = []
+    //   this.company.reportTypeOption.forEach((item, index) => {
+    //     arr.push(item.name)
+    //   })
+    //   this.company.opertionsArray = arr
+    // },
+    // selectionsArrayTrim (company) {
+    //   let arr = []
+    //   this.company.reportType.forEach((item, index) => {
+    //     arr.push(item.name)
+    //   })
+    //   this.company.selectionsArray = arr
+    // },
+    // departmentArrayTrim (company) {
+    //   company.departmentArray.forEach((item, index) => {
+    //     item.editing = false
+    //   })
+    // },
     edit () {
       this.checking = false
       this.editing = true
@@ -206,7 +144,7 @@ export default {
     }
   },
   created() {
-    this.getCompanyInfo()
+    this.getDepartmentInfo()
   },
   components: {
     card,

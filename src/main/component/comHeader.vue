@@ -8,7 +8,7 @@
           </a>
         </div>
         <h4 class="navbar-text brand-name">
-          天津中审联会计师管理系统
+          天津中审联办公管理系统
         </h4>
         <p class="navbar-text navbar-right">
           <span>{{user.name}} 欢迎您</span>

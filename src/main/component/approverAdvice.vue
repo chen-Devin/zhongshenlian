@@ -9,7 +9,7 @@
       </li>
       <li class="list-group-item" v-for="(ADVICE, index) in advices" :key="index">
         <span>{{index+1+'.'}}</span>
-        <span class="people">{{ADVICE.approverName}}</span>
+        <!-- <span class="people">{{ADVICE.approverName}}</span> -->
         <span class="pull-right">
           <a v-if="ADVICE.approveResult==='不通过'" @click="open(ADVICE.approveOpinion)">查看原因</a>
           <span class="label label-success" v-if="ADVICE.approveResult==='通过'">已通过</span>
