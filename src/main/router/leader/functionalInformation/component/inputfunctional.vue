@@ -1,8 +1,8 @@
 <template>
 <div>
   <div class="company-detail-box">
-    <h1 class="title">分公司信息录入</h1>
-    <h5 class="main-title">公司信息</h5>
+    <h1 class="title">职能部门信息录入</h1>
+    <h5 class="main-title">部门信息</h5>
     <div class="company-detail">
       <el-row>
         <el-col :span="9" :offset="2">

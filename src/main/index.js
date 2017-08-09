@@ -15,9 +15,9 @@ import '../scss/main.scss';
 
 Vue.config.productionTip = true;
 
-if (!isPromise()) {
-    alert('网站在ie浏览器下无法正常使用，我们建议您使用谷歌浏览浏览器或QQ浏览器');
-}
+// if (!isPromise()) {
+//     alert('网站在ie浏览器下无法正常使用，我们建议您使用谷歌浏览浏览器或QQ浏览器');
+// }
 
 Vue.use(ElementUI);
 

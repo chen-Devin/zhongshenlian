@@ -1,23 +1,22 @@
 <template>
   <div class="company-detail-wrapper">
     <card>
-      <company-detail :iniDepartment="department" v-if="checking" @edit="edit"></company-detail>
-      <company-edit v-if="editing" @cancel="cancel" @editSuccess="editSuccess"></company-edit>
-      <input-company v-if="adding" @reloadComList="reloadComList"></input-company>
+      <functional-detail :iniDepartment="department" v-if="checking" @edit="edit"></functional-detail>
+      <functional-edit v-if="editing" @cancel="cancel" @editSuccess="editSuccess"></functional-edit>
+      <input-functional v-if="adding" @reloadComList="reloadComList"></input-functional>
       </p>
     </card>
-    <company-del @cancel="cancelDelete" v-if="deleteShow" @reloadComList="reloadComList"></company-del>
+    <functional-del @cancel="cancelDelete" v-if="deleteShow" @reloadComList="reloadComList"></functional-del>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import card from '@/main/component/card.vue';
-import companyDetail from './companyDetail.vue';
-import companyEdit from './companyEdit.vue';
-import inputCompany from './inputCompany.vue';
-import companyDepartment from './companyDepartment.vue';
-import companyDel from './companyDel.vue';
+import functionalDetail from './functionalDetail.vue';
+import functionalEdit from './functionalEdit.vue';
+import inputFunctional from './inputfunctional.vue';
+import functionalDel from './functionalDel.vue';
 
 export default {
   name: 'companyInformation',
@@ -148,11 +147,10 @@ export default {
   },
   components: {
     card,
-    companyDetail,
-    companyEdit,
-    inputCompany,
-    companyDepartment,
-    companyDel
+    functionalDetail,
+    functionalEdit,
+    inputFunctional,
+    functionalDel
   }
 };
 </script>

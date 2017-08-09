@@ -7,7 +7,7 @@
           <el-checkbox
             :label="item.id"
             v-for="(item, index) in departmentArray"
-            :key="index">{{ item.departmentName }}</el-checkbox>
+            :key="index">{{ item.name }}</el-checkbox>
         </el-checkbox-group>
       </div>
       <div slot="footer">
@@ -21,7 +21,7 @@
         <p>删除以后不可恢复，确认删除吗？</p>
       </div>
       <div slot="footer">
-        <button class="btn my-btn cancel-btn" type="button" @click="deleteCompany">确认</button>
+        <button class="btn my-btn cancel-btn" type="button" @click="deleteDepartment">确认</button>
         <button class="btn my-btn draft-btn" type="button" @click="cancelInner">取消</button>
       </div>
     </modal>
@@ -33,11 +33,11 @@ import axios from 'axios';
 import modal from '@/main/component/modal.vue';
 
 export default {
-  name: 'companyDel',
+  name: 'functionalDel',
   data() {
     return {
       departmentArray: [{
-        departmentName: '',
+        name: '',
         id: ''
       }],
       checked: [],
@@ -57,7 +57,7 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'getDepartmentList',
+                command: 'getInfoDepartmentList',
                 platform: 'web'
               }
               return JSON.stringify(obj);
@@ -65,7 +65,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.departmentArray = rep.data.data.departmentArray
+            this.departmentArray = rep.data.data.departmentList
             resolve('done');
           }
         }, (rep) => { });
@@ -74,7 +74,7 @@ export default {
     showDeleteInfo () {
       this.deleteInfo = true
     },
-    deleteCompany () {
+    deleteDepartment () {
       let arr = []
       this.checked.forEach((item, index) => {
         arr.push({name: item})
@@ -90,7 +90,7 @@ export default {
               let obj = {
                 command: 'delDepartment',
                 platform: 'web',
-                companyId: this.checked
+                departmentId: this.checked
               }
               return JSON.stringify(obj);
             })()

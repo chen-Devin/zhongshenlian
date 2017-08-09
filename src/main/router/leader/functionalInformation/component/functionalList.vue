@@ -2,7 +2,7 @@
   <div class="company-list-wrapper">
     <ul>
       <li
-        v-for="(company, index) in departmentArray"
+        v-for="(company, index) in departmentList"
         :key="index"
         :class="{ active: company.isActive }"
         @click="getCompanyLink(company)"
@@ -19,7 +19,7 @@ export default {
   name: 'departmentList',
   data() {
     return {
-      departmentArray: [{
+      departmentList: [{
         name: '',
         id: '',
         isActive: ''
@@ -49,15 +49,15 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.departmentArray = rep.data.data.departmentArray
-            this.departmentArray.push({
+            this.departmentList = rep.data.data.departmentList
+            this.departmentList.push({
               name: '新建部门',
               id: 'add'
             }, {
               name: '删除部门',
               id: 'del'
             })
-            this.departmentArray.forEach((item, index) => {
+            this.departmentList.forEach((item, index) => {
               if (index === 0) {
                 item.isActive = true
               } else {
@@ -70,7 +70,7 @@ export default {
       })
     },
     getCompanyLink (department) {
-      this.departmentArray.forEach((item, index) => {
+      this.departmentList.forEach((item, index) => {
         if (department.id === item.id) {
           item.isActive = true
         } else {
@@ -85,7 +85,7 @@ export default {
   },
   created() {
     this.getDepartmentList().then(() => {
-      this.jumpId = this.departmentArray[0].id
+      this.jumpId = this.departmentList[0].id
       this.$emit('noticeJump', this.jumpId)
     }, () => { });
   },

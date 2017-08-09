@@ -2,9 +2,9 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h4>公司信息管理</h4>
+      <h4>职能部门信息管理</h4>
     </card>
-    <company-list v-if="reloadList" @noticeJump="noticeJump"></company-list>
+    <functional-list v-if="reloadList" @noticeJump="noticeJump"></functional-list>
     <div class="company-wrapper">
       <router-view @reloadComList="reloadComList"></router-view>
     </div>
@@ -14,7 +14,7 @@
 <script>
 import crumbs from '@/main/component/crumbs.vue';
 import card from '@/main/component/card.vue';
-import companyList from './component/companyList.vue';
+import functionalList from './component/functionalList.vue';
 
 export default {
   name: 'companyManagement',
@@ -54,7 +54,7 @@ export default {
   components: {
     crumbs,
     card,
-    companyList
+    functionalList
   }
 };
 </script>
