@@ -149,7 +149,7 @@ const router = new VueRouter({
             component: customerInfoAdd
         },
         {
-            path: '/customer-infor-list/detail',
+            path: '/customer-infor-list/detail/:id',
             name: customerInfoDetail,
             component: customerInfoDetail
         },

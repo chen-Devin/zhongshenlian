@@ -45,7 +45,7 @@
         </p>
       </div>
     </modal>
-    <customer-info-edit v-if="inputEdit"></customer-info-edit>
+    <customer-info-edit v-if="inputEdit" :iniNewCustomerInfo="newCustomerInfo" :iniIsEdit="isEdit"></customer-info-edit>
   </div>
 </template>
 
@@ -108,7 +108,8 @@ export default {
         removedStatus: '',
         createAt: '',
         updateAt: ''
-      }
+      },
+      isEdit: false
     }
   },
   computed: {
@@ -141,6 +142,8 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            this.newCustomerInfo = rep.data.data
+            console.log(this.newCustomerInfo)
             this.loading = false
             this.success = true
             setTimeout(() => {
@@ -149,9 +152,7 @@ export default {
               this.success = false
               this.initInput = false
               this.inputEdit = true
-              this.newCustomerInfo = 
             }, 1000)
-            this.
             resolve('done');
           }
         }, (rep) => { });

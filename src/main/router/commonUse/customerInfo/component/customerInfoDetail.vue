@@ -1,7 +1,7 @@
 <template>
   <div class="customer-info-add">
     <crumbs :paths="paths"></crumbs>
-    <customer-info-edit></customer-info-edit>
+    <customer-info-edit :iniNewCustomerInfo="customerInfo" :iniIsEdit="isEdit"></customer-info-edit>
   </div>
 </template>
 
@@ -19,7 +19,36 @@ export default {
       paths: [
         { name: '客户信息', url: '/customer-infor-list', present: false },
         { name: '客户信息详情', url: '/customer-infor-list/add', present: true }
-      ]
+      ],
+      customerInfo: {
+        id: '',
+        customerName: '',
+        name: '',
+        telephone: '',
+        duty: '',
+        department: '',
+        registeredAddress: '',
+        mailingAddress: '',
+        businessLicenseNumber: '',
+        registeredCapital: '',
+        customerNature: '',
+        assetSize: '',
+        setUpTime: '',
+        industry: '',
+        companyFounder: '',
+        founderId: '',
+        founderName: '',
+        founderDepartment: '',
+        code: '',
+        legalPersonTelephone: '',
+        mainWork: '',
+        customerIndustryId: '',
+        customerNatureId: '',
+        removedStatus: '',
+        createAt: '',
+        updateAt: ''
+      },
+      isEdit: true
     }
   },
   methods: {

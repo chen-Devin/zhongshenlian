@@ -59,9 +59,7 @@
       <thead>
         <tr>
           <th class="text-center">客户名称</th>
-          <th class="text-center">客户联系人</th>
-          <th class="text-center">联系人职位</th>
-          <th class="text-center">联系人电话</th>
+          <th class="text-center">社会统一信用代码</th>
           <th class="text-center">操作</th>
         </tr>
       </thead>
@@ -69,12 +67,10 @@
         <tr v-for="(CUSTOMER, index) in thisCustomers"
             :key="index">
           <td class="text-center">{{CUSTOMER.customerName}}</td>
-          <td class="text-center">{{CUSTOMER.name}}</td>
-          <td class="text-center">{{CUSTOMER.duty}}</td>
-          <td class="text-center">{{CUSTOMER.telephone}}</td>
+          <td class="text-center">{{CUSTOMER.code}}</td>
           <td class="text-center link-wrap">
             <a class="text-primary"
-               @click.prevent="mod(CUSTOMER)">修改</a>
+               @click.prevent="mod(CUSTOMER)">查看</a>
           </td>
         </tr>
       </tbody>
@@ -145,7 +141,8 @@ export default {
     mod(CUSTOMER) {
       // this.modCustomer = CUSTOMER;
       // this.showModModal = true;
-      this.$router.push('/customer-infor-list/detail')
+      console.log(CUSTOMER)
+      // this.$router.push('/customer-infor-list/detail')
     },
     del(CUSTOMER) {
       this.delCustomer = CUSTOMER;
