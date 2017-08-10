@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h4>职能部门信息管理</h4>
+      <h4>职能部门信息管理1</h4>
     </card>
     <functional-list v-if="reloadList" @noticeJump="noticeJump"></functional-list>
     <div class="company-wrapper">
