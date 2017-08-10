@@ -8,7 +8,9 @@ import ruleRegulation from './commonUse/ruleRegulation.vue';
 import ruleRegulationDetail from './commonUse/ruleRegulationDetail.vue';
 import ruleRegulationEdit from './commonUse/ruleRegulationEdit.vue';
 import ruleRegulationAdd from './commonUse/ruleRegulationAdd.vue';
-import customerInforList from './commonUse/customerInforList.vue';
+import customerInforList from './commonUse/customerInfo/customerInforList.vue';
+import customerInfoAdd from './commonUse/customerInfo/component/customerInfoAdd.vue';
+import customerInfoDetail from './commonUse/customerInfo/component/customerInfoDetail.vue';
 import Quick from './commonUse/quick.vue';
 import ToDo from './commonUse/toDo.vue';
 // import businessManage from './commonUse/business-manage.vue';
@@ -140,6 +142,16 @@ const router = new VueRouter({
             path: '/customer-infor-list',
             name: 'customerInfoList',
             component: customerInforList
+        },
+        {
+            path: '/customer-infor-list/add',
+            name: customerInfoAdd,
+            component: customerInfoAdd
+        },
+        {
+            path: '/customer-infor-list/detail',
+            name: customerInfoDetail,
+            component: customerInfoDetail
         },
         {
             path: '/business-review-list-leader',

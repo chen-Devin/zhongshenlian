@@ -13,7 +13,7 @@
 <script>
 import axios from 'axios';
 
-import crumbs from '../../component/crumbs.vue';
+import crumbs from '@/main/component/crumbs.vue';
 import customerInfor from './component/customerInfor.vue';
 
 export default {

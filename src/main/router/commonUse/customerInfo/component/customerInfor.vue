@@ -2,11 +2,12 @@
   <card>
     <h3 class="main-title">
       客户列表
-      <button class="btn my-btn submit-btn pull-right"
-              @click="add()">
-        <!-- <img class="input-icon" src="../../../../img/market/input.svg">&nbsp; -->
-        录入
-      </button>
+      <!-- <router-link :to="{ path: '/customer-info-list/add' }"> -->
+        <button class="btn my-btn submit-btn pull-right" @click="add">
+          <!-- <img class="input-icon" src="../../../../img/market/input.svg">&nbsp; -->
+          录入
+        </button>
+      <!-- </router-link> -->
     </h3>
     <!--搜索栏-->
     <form class="search-form" @submit.prevent @keyup.enter.prevent>
@@ -19,8 +20,8 @@
           <button class="btn my-btn high-btn f-r customer-high-search" type="button" @click="showHigherSearch()">
             高级搜索
             &nbsp;
-            <img class="search-icon" v-if="searchDown" src="../../../../img/market/search_down.svg">
-            <img class="search-icon" v-if="searchUp" src="../../../../img/market/search_up.svg">
+            <img class="search-icon" v-if="searchDown" src="../../../../../img/market/search_down.svg">
+            <img class="search-icon" v-if="searchUp" src="../../../../../img/market/search_up.svg">
           </button>
         </div>
       </div>
@@ -96,12 +97,12 @@
 </template>
 
 <script>
-import card from '../../../component/card.vue';
-import searchBar from '../../../component/searchBar.vue';
+import card from '@/main/component/card.vue';
+import searchBar from '@/main/component/searchBar.vue';
 import customerModModal from './customerModModal.vue';
 import customerDelModal from './customerDelModal.vue';
 import customerAddModal from './customerAddModal.vue';
-import myPagination from '../../../component/pagination.vue';
+import myPagination from '@/main/component/pagination.vue';
 
 export default {
   name: 'customerInfor',
@@ -142,8 +143,9 @@ export default {
       this.$emit('pageChan', newPage);
     },
     mod(CUSTOMER) {
-      this.modCustomer = CUSTOMER;
-      this.showModModal = true;
+      // this.modCustomer = CUSTOMER;
+      // this.showModModal = true;
+      this.$router.push('/customer-infor-list/detail')
     },
     del(CUSTOMER) {
       this.delCustomer = CUSTOMER;
@@ -151,8 +153,9 @@ export default {
       this.showDelModal = true;
     },
     add() {
-      this.addCustomer = {};
-      this.showAddModal = true;
+      // this.addCustomer = {};
+      // this.showAddModal = true;
+      this.$router.push('/customer-infor-list/add')
     },
     saved(modedCustomer) {
       for (let i=0; i < this.thisCustomers.length; i++) {

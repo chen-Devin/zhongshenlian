@@ -21,7 +21,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import modal from '../../../component/modal.vue';
+import modal from '@/main/component/modal.vue';
 
 export default {
   name: 'customerDelModal',

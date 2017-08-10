@@ -1,5 +1,5 @@
 <template>
-  <modal alignSelf="flex-start" modalWidth="800px">
+  <!-- <modal class="add-width" alignSelf="flex-start" modalWidth="800px">
     <form class="form-horizontal clearfix"
           slot="body"
           @submit.prevent
@@ -190,21 +190,20 @@
         {{alert.cont}}
       </div>
     </form>
-    <div slot="footer" class="ta-c">
-      <button class="btn my-btn submit-btn modal-default-button"
+    <div class="ta-c" slot="footer">
+      <button class="btn my-btn submit-btn"
               @click="save()"
               :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
-      <button class="btn my-btn draft-btn modal-default-button"
+      <button class="btn my-btn draft-btn"
               @click="cancel()">
         取消
       </button>
-      <button class="btn my-btn cancel-btn modal-default-button"
-              @click="del()">
-        删除
-      </button>
     </div>
+  </modal> -->
+  <modal class="add-width" modalWidth="800px">
+    
   </modal>
 </template>
 
@@ -213,8 +212,8 @@ import axios from 'axios';
 import qs from 'qs';
 import maskedInput from 'vue-text-mask';
 
-import modal from '../../../component/modal.vue';
-import currencyMask from '../../../currencyMask.js';
+import modal from '@/main/component/modal.vue';
+import currencyMask from '../../../../currencyMask.js';
 
 export default {
   name: 'customerModModal',
@@ -223,76 +222,82 @@ export default {
       customer: (() => {
         return {
           id: {
-            val: this.initalCustomer.id
+            val: ''
           },
           customerName: {
-            val: this.initalCustomer.customerName,
-            ver: this.initalCustomer.customerName === '' ? false : true
+            val: '',
+            ver: true
           },
           name: {
-            val: this.initalCustomer.name,
-            ver: this.initalCustomer.name === '' ? false : true
+            val: '',
+            ver: true
           },
           telephone: {
-            val: this.initalCustomer.telephone,
-            ver: (() => {
-              let reg = /^(1+\d{10})$/;
-              if (this.initalCustomer.telephone === '') {
-                return false;
-              } else if (!reg.test(this.initalCustomer.telephone)) {
-                return false;
-              } else {
-                return true;
-              }
-            })()
+            val: '',
+            ver: true
           },
           duty: {
-            val: this.initalCustomer.duty,
-            ver: this.initalCustomer.duty === '' ? false : true
+            val: '',
+            ver: true
           },
           department: {
-            val: this.initalCustomer.department,
-            ver: this.initalCustomer.department === '' ? false : true
+            val: '',
+            ver: true
           },
           registeredAddress: {
-            val: this.initalCustomer.registeredAddress,
-            ver: this.initalCustomer.registeredAddress === '' ? false : true
+            val: '',
+            ver: true
           },
           mailingAddress: {
-            val: this.initalCustomer.mailingAddress,
-            ver: this.initalCustomer.mailingAddress === '' ? false : true
+            val: '',
+            ver: true
           },
           businessLicenseNumber: {
-            val: this.initalCustomer.businessLicenseNumber,
-            ver: this.initalCustomer.businessLicenseNumber === '' ? false : true
+            val: '',
+            ver: true
           },
           registeredCapital: {
-            val: this.initalCustomer.registeredCapital,
-            ver: this.initalCustomer.registeredCapital === '' ? false : true
+            val: '',
+            ver: true
           },
-          customerNature: this.initalCustomer.customerNature,
+          customerNature: [
+            { val: '央企', state: false },
+            { val: '国企', state: false },
+            { val: '私企', state: false },
+            { val: '行政事业单位', state: false },
+            { val: '内资', state: false },
+            { val: '外资', state: false },
+            { val: '金融机构', state: false },
+            { val: '其他', state: false }
+          ],
           assetSize: {
-            val: this.initalCustomer.assetSize,
-            ver: this.initalCustomer.assetSize === '' ? false : true
+            val: '',
+            ver: true
           },
           industry: {
-            val: this.initalCustomer.industry,
-            ver: this.initalCustomer.industry === '' ? false : true
+            val: '',
+            ver: true
           },
           setUpTime: {
-            val: this.initalCustomer.setUpTime,
-            ver: this.initalCustomer.setUpTime === '' ? false : true
+            val: (() => {
+              let t = new Date();
+              let Y = t.getFullYear();
+              let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+              let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
+              return `${Y}-${M}-${D}`;
+            })(),
+            ver: true
           },
           founderId: {
-            val: this.initalCustomer.founderId
+            val: this.user.id
           },
           founderName: {
-            val: this.initalCustomer.founderName
+            val: this.user.name
           },
           founderDepartment: {
-            val: this.initalCustomer.founderDepartment
+            val: this.user.department
           }
-        };
+        }
       })(),
       alert: {
         show: false,
@@ -304,7 +309,7 @@ export default {
       }
     };
   },
-  props: ['initalCustomer'],
+  props: ['user'],
   methods: {
     currencyMask,
     save() {
@@ -386,10 +391,9 @@ export default {
           data: qs.stringify({
             data: (() => {
               var obj = {
-                command: 'editCustomerInfo',
+                command: 'addCustomerInfo',
                 platform: 'web',
                 data: {
-                  id: this.customer.id.val,
                   customerName: this.customer.customerName.val,
                   name: this.customer.name.val,
                   telephone: this.customer.telephone.val,
@@ -413,8 +417,9 @@ export default {
           })
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            this.customer.id.val = rep.data.data.id;
             this.subBtn.cont = '已保存';
-            this.$emit('saved', this.customer);
+            this.$emit('added', this.customer);
           } else if (rep.data.statusCode === '10013') {
             this.subBtn.dis = false;
             this.subBtn.cont = '保存';
@@ -423,14 +428,11 @@ export default {
           } else if (rep.data.statusCode === '10012') {
             window.location.href = 'signIn.html';
           }
-        }, (rep) => {});
+        }, (rep) => { });
       }
     },
     cancel() {
       this.$emit('canceled');
-    },
-    del() {
-      this.$emit('del', this.initalCustomer);
     }
   },
   components: {
@@ -441,8 +443,13 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  .control-label {
-    width: 100%;
+  .form-horizontal .control-label {
+      text-align: right;
+      margin-bottom: 0;
+      padding-top: 7px;
+      font-weight: normal;
+      text-align: left;
+      width: 100%;
   }
 
   .check-wrap {
