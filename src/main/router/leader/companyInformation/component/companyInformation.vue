@@ -141,6 +141,7 @@ export default {
       this.getCompanyInfo()
     },
     editSuccess () {
+      this.getCompanyInfo()
       this.checking = true
       this.editing = false
     },
