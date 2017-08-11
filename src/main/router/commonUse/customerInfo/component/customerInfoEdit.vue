@@ -1,4 +1,5 @@
 <template>
+<div>
   <card class="customer-info-edit">
     <p class="btns f-r">
       <template v-if="!isEdit">
@@ -7,11 +8,12 @@
       </template>
       <template v-if="isEdit">
         <button class="btn my-btn submit-btn" @click="edit">编辑</button>
-        <button class="btn my-btn cancel-btn" @click="deleteCustomer">删除</button>
+        <button class="btn my-btn cancel-btn" @click="deleteCustomerShow">删除</button>
       </template>
     </p>
     <h4 class="main-title" v-if="!isEdit">客户信息录入</h4>
-    <h4 class="main-title" v-if="isEdit">{{ newCustomerInfo.customerName }}</h4>
+    <h4 class="main-title" v-if="isEdit">
+      {{ newCustomerInfo.customerName === ''? '未命名': newCustomerInfo.customerName }}</h4>
     <div class="edit-form">
       <el-row>
         <el-col :span="12">
@@ -23,7 +25,8 @@
         <el-col :span="12">
           <p>
             <span class="title">公司联系人:</span>
-            <input class="form-control" type="text" placeholder="请输入公司联系人" v-model="newCustomerInfo.name">
+            <input class="form-control" type="text" placeholder="请输入公司联系人" v-model="newCustomerInfo.name"  v-if="!isEdit">
+            <span v-if="isEdit">{{ newCustomerInfo.name }}</span>
           </p>
         </el-col>
       </el-row>
@@ -32,13 +35,14 @@
         <el-col :span="12">
           <p>
             <span class="title">客户ID：</span>
-            <span>{{  }}</span>
+            <span>{{ newCustomerInfo.id }}</span>
           </p>
         </el-col>
         <el-col :span="12">
           <p>
             <span class="title">联系人电话：</span>
-            <input class="form-control" type="text" placeholder="请输入联系人电话" v-model="newCustomerInfo.telephone">
+            <input class="form-control" type="text" placeholder="请输入联系人电话" v-model="newCustomerInfo.telephone" v-if="!isEdit">
+            <span v-if="isEdit">{{ newCustomerInfo.telephone }}</span>
           </p>
         </el-col>
       </el-row>
@@ -52,7 +56,8 @@
         <el-col :span="12">
           <p>
             <span class="title">联系人职务：</span>
-            <input class="form-control" type="text" placeholder="请输入联系人职务" v-model="newCustomerInfo.duty">
+            <input class="form-control" type="text" placeholder="请输入联系人职务" v-model="newCustomerInfo.duty" v-if="!isEdit">
+            <span v-if="isEdit">{{ newCustomerInfo.duty }}</span>
           </p>
         </el-col>
       </el-row>
@@ -61,13 +66,14 @@
         <el-col :span="12">
           <p>
             <span class="title">经营范围：</span>
-            <span>{{  }}</span>
+            <span>{{ newCustomerInfo.mainWork }}</span>
           </p>
         </el-col>
         <el-col :span="12">
           <p>
             <span class="title">联系人部门：</span>
-            <input class="form-control" type="text" placeholder="请输入联系人部门" v-model="newCustomerInfo.department">
+            <input class="form-control" type="text" placeholder="请输入联系人部门" v-model="newCustomerInfo.department" v-if="!isEdit">
+            <span v-if="isEdit">{{ newCustomerInfo.department }}</span>
           </p>
         </el-col>
       </el-row>
@@ -95,7 +101,8 @@
         <el-col :span="12">
           <p>
             <span class="title">创建人：</span>
-            <input class="form-control" type="text" placeholder="请输入创建人" v-model="newCustomerInfo.companyFounder">
+            <input class="form-control" type="text" placeholder="请输入创建人" v-model="newCustomerInfo.companyFounder" v-if="!isEdit">
+            <span v-if="isEdit">{{ newCustomerInfo.companyFounder }}</span>
           </p>
         </el-col>
       </el-row>
@@ -109,7 +116,9 @@
         <el-col :span="12">
           <p>
             <span class="title">创建时间：</span>
-            <input class="form-control" type="text" placeholder="请输入创建时间" v-model="newCustomerInfo.createAt">
+            <input class="form-control" type="text" placeholder="请输入创建时间" v-model="newCustomerInfo.createAt"
+             v-if="!isEdit">
+            <span v-if="isEdit">{{ newCustomerInfo.createAt }}</span>
           </p>
         </el-col>
       </el-row>
@@ -151,20 +160,27 @@
       </el-row>
     </div>
   </card>
+  <modal v-if="showDeleteCustomer">
+    <div slot="body">
+      <p>删除客户信息将不可见并无法恢复，确认删除吗？</p>
+    </div>
+    <div slot="footer">
+      <button class="btn my-btn cancel-btn" @click="cancelDelete">取消</button>
+      <button class="btn my-btn submit-btn" @click="deleteCustomer">确定</button>
+    </div>
+  </modal>
+</div>
 </template>
 
 <script>
 import axios from 'axios';
 import card from '@/main/component/card.vue';
+import modal from '@/main/component/modal.vue';
 
 export default {
   name: 'customerModModal',
   data() {
     return {
-      paths: [
-        { name: '客户信息', url: '/customer-infor-list', present: false },
-        { name: '客户信息录入', url: '/customer-infor-list/add', present: true }
-      ],
       newCustomerInfo: this.iniNewCustomerInfo,
       disSubmit: true,
       loading: true,
@@ -178,11 +194,27 @@ export default {
         value: '同部门之间不可见',
         label: '同部门之间不可见'
       }],
-      value: ''
+      value: '',
+      showDeleteCustomer: false
+    }
+  },
+  computed: {
+    
+  },
+  watch: {
+    iniNewCustomerInfo: function(val, oldVal) {
+      if (val.id !== oldVal.id) {
+        this.newCustomerInfo = val
+      }
     }
   },
   methods: {
     save () {
+      if (!this.isEdit) {
+        this.saveCommand = 'editCustomerInfo'
+      } else {
+        this.saveCommand = 'addCustomerInfo'
+      }
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -191,7 +223,7 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'addCustomerInfo',
+                command: this.saveCommand,
                 platform: 'web',
                 data: this.newCustomerInfo
               }
@@ -213,15 +245,47 @@ export default {
       this.$router.push('/customer-infor-list')
     },
     edit () {
-
+      this.isEdit = !this.isEdit
+    },
+    deleteCustomerShow () {
+      this.showDeleteCustomer = true
+    },
+    cancelDelete () {
+      this.showDeleteCustomer = false
     },
     deleteCustomer () {
-
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'delCustomerInfo',
+                platform: 'web',
+                id: this.newCustomerInfo.id
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message('删除客户信息成功')
+            this.$router.push('/customer-infor-list')
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
     }
+  },
+  created () {
+    console.log('edit')
   },
   props: ['iniNewCustomerInfo', 'iniIsEdit'],
   components: {
-    card
+    card,
+    modal
   }
 };
 </script>

@@ -53,6 +53,7 @@ export default {
   },
   watch: {
     departmentId: function(val, oldVal) {
+      console.log(this.departmentId)
       if (val !== oldVal) {
         if (val === 'add') {  // 新建状态
           this.editing = false

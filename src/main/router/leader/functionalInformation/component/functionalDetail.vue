@@ -51,7 +51,6 @@ export default {
   },
   computed: {
     department () {
-      console.log(this.iniDepartment)
       // this.iniDepartment.authority.forEach((item, index) => {
       //   this.iniDepartment.reportType.forEach((jtem, index) => {
       //     if (item.name == jtem.name) {

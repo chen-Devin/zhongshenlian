@@ -145,12 +145,12 @@ const router = new VueRouter({
         },
         {
             path: '/customer-infor-list/add',
-            name: customerInfoAdd,
+            name: 'customerInfoAdd',
             component: customerInfoAdd
         },
         {
             path: '/customer-infor-list/detail/:id',
-            name: customerInfoDetail,
+            name: 'customerInfoDetail',
             component: customerInfoDetail
         },
         {
@@ -209,7 +209,7 @@ const router = new VueRouter({
             component: companyManagement,
             children: [{
                 path: '/company-management/:id',
-                name: companyManagement,
+                name: 'companyManagement',
                 component: companyInformation
             }]
         },
@@ -218,7 +218,7 @@ const router = new VueRouter({
             component: functionalManagement,
             children: [{
                 path: '/functional-management/:id',
-                name: functionalManagement,
+                name: 'functionalManagement',
                 component: functionalInformation
             }]
         },

@@ -29,7 +29,18 @@ export default {
     };
   },
   computed: {
-    
+    path1 () {
+      return this.$route.path
+    }
+  },
+  watch: {
+    path1: function(val, oldVal) {
+      if (val !== oldVal) {
+        if (val === '/functional-management') {
+          this.$router.push(`/functional-management/${this.comId}`)
+        }
+      }
+    }
   },
   methods: {
     delSuccess () {

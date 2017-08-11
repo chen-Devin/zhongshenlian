@@ -76,28 +76,12 @@
       </tbody>
     </table>
     <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
-    <customer-mod-modal v-if="showModModal"
-                        :initalCustomer="modCustomer"
-                        @del="del"
-                        @saved="saved"
-                        @canceled="modCanceled"></customer-mod-modal>
-    <customer-del-modal v-if="showDelModal"
-                        :initalCustomer="delCustomer"
-                        @deleted="deleted"
-                        @canceled="delCanceled"></customer-del-modal>
-    <customer-add-modal v-if="showAddModal"
-                        :user="user"
-                        @added="added"
-                        @canceled="addCanceled"></customer-add-modal>
   </card>
 </template>
 
 <script>
 import card from '@/main/component/card.vue';
 import searchBar from '@/main/component/searchBar.vue';
-import customerModModal from './customerModModal.vue';
-import customerDelModal from './customerDelModal.vue';
-import customerAddModal from './customerAddModal.vue';
 import myPagination from '@/main/component/pagination.vue';
 
 export default {
@@ -141,8 +125,8 @@ export default {
     mod(CUSTOMER) {
       // this.modCustomer = CUSTOMER;
       // this.showModModal = true;
-      console.log(CUSTOMER)
-      // this.$router.push('/customer-infor-list/detail')
+      console.log(CUSTOMER.id)
+      this.$router.push('/customer-infor-list/detail/' + CUSTOMER.id)
     },
     del(CUSTOMER) {
       this.delCustomer = CUSTOMER;
@@ -247,9 +231,6 @@ export default {
   components: {
     card,
     searchBar,
-    customerModModal,
-    customerDelModal,
-    customerAddModal,
     myPagination
   }
 };

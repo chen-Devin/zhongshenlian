@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     getDepartmentList () {
-      console.log('list')
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },

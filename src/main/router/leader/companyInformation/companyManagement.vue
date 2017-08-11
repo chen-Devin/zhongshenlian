@@ -29,7 +29,19 @@ export default {
     };
   },
   computed: {
-    
+    path1 () {
+      console.log(this.$route.path)
+      return this.$route.path
+    }
+  },
+  watch: {
+    path1: function(val, oldVal) {
+      if (val !== oldVal) {
+        if (val === '/company-management') {
+          this.$router.push(`/company-management/${this.comId}`)
+        }
+      }
+    }
   },
   methods: {
     delSuccess () {
@@ -45,11 +57,12 @@ export default {
     },
     noticeJump (comId) {
       this.comId = comId
-      this.$router.push(`/company-management/${comId}`);
+      this.$router.push(`/company-management/${comId}`)
     }
   },
   created() {
     this.noticeJump(this.comId)
+    console.log(this.$route.path)
   },
   components: {
     crumbs,

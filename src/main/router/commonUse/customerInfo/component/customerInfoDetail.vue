@@ -48,11 +48,41 @@ export default {
         createAt: '',
         updateAt: ''
       },
-      isEdit: true
+      isEdit: true,
+      customerInfoId: ''
     }
   },
   methods: {
-    
+    getCustomerInfo () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getCustomerInfo',
+                platform: 'web',
+                id: this.customerInfoId
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            resolve(rep.data.data);
+          }
+        }, (rep) => { });
+      })
+    }
+  },
+  created() {
+    this.customerInfoId = this.$route.params.id
+    this.getCustomerInfo().then((data) => {
+      this.customerInfo = data
+      console.log(this.customerInfo)
+    })
   },
   components: {
     card,
