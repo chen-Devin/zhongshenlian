@@ -30,7 +30,6 @@ export default {
   },
   computed: {
     path1 () {
-      console.log(this.$route.path)
       return this.$route.path
     }
   },
@@ -62,7 +61,6 @@ export default {
   },
   created() {
     this.noticeJump(this.comId)
-    console.log(this.$route.path)
   },
   components: {
     crumbs,

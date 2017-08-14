@@ -76,7 +76,9 @@
   </p>
   <input-report-modal
     :iniReportType="company.reportTypeOption"
+    :iniSelecions="checked"
     @saveReportOption="saveReportOption"
+    @closeTypeModal="closeTypeModal"
     v-if="inputReportModalShow"></input-report-modal>
 </div>
 </template>
@@ -94,18 +96,6 @@ export default {
       options: [{
         value: '招商银行',
         label: '招商银行'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
       }],
       openAccountBankName: '',
       inputReportModalShow: false,
@@ -196,6 +186,11 @@ export default {
     saveReportOption (iniReportType) {
       this.$message('保存成功')
       this.company.reportTypeOption = iniReportType
+      this.inputReportModalShow = false
+    },
+    closeTypeModal (iniReportType, selections) {
+      this.company.reportTypeOption = iniReportType
+      this.company.reportType = selections
       this.inputReportModalShow = false
     },
     showType () {

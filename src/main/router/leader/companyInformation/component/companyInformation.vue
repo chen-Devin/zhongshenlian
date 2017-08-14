@@ -107,6 +107,10 @@ export default {
     };
   },
   computed: {
+    companyPath () {
+      // console.log(this.$route.path)
+      return this.$route.path
+    },
     companyId () {
       return this.$route.params.id
     }
@@ -208,6 +212,15 @@ export default {
   },
   created() {
     this.getCompanyInfo()
+    setTimeout(() => {
+      if (this.companyPath === '/company-management/add') {
+        this.editing = false
+        this.adding = true
+        this.checking = false
+        this.company = this.companyEmpty
+        this.cancelBtn = false
+      }
+    }, 100)
   },
   components: {
     card,

@@ -72,8 +72,9 @@
   </div>
   <input-report-modal
     :iniReportType="iniReportType"
+    :iniSelecions="checked"
     @saveReportOption="saveReportOption"
-    @closeIputModal="closeIputModal"
+    @closeTypeModal="closeTypeModal"
     v-if="inputReportModalShow"></input-report-modal>
   <p class="btns">
     <button type="button" class="btn my-btn submit-btn" @click="submit">保存</button>
@@ -93,22 +94,10 @@ export default {
   data() {
     return {
       options: [{
-                value: '招商银行',
-                label: '招商银行'
-              }, {
-                value: '选项2',
-                label: '双皮奶'
-              }, {
-                value: '选项3',
-                label: '蚵仔煎'
-              }, {
-                value: '选项4',
-                label: '龙须面'
-              }, {
-                value: '选项5',
-                label: '北京烤鸭'
-              }],
-              openAccountBankName: '',
+        value: '招商银行',
+        label: '招商银行'
+      }],
+      openAccountBankName: '',
       typeShow: false,
       typeChecked: [],
       iniSelect: false,
@@ -211,7 +200,9 @@ export default {
     inputReportModal () {
       this.inputReportModalShow = true
     },
-    closeIputModal () {
+    closeTypeModal (iniReportType, selections) {
+      this.iniReportType = iniReportType
+      this.checked = selections
       this.inputReportModalShow = false
     },
     saveReportOption (iniReportType) {
@@ -221,8 +212,6 @@ export default {
     },
     showType () {
       this.typeShow = true;
-      console.log(this.iniOperateType)
-      console.log(this.operateType)
     },
     closeType () {
       this.typeShow = false;

@@ -126,7 +126,7 @@
         <el-col :span="12">
           <p>
             <span class="title">客户性质：</span>
-            <span>{{ newCustomerInfo.customerNatureId }}</span>
+            <span>{{ newCustomerInfo.customerNature }}</span>
           </p>
         </el-col>
         <el-col :span="12">

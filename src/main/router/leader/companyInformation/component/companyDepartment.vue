@@ -40,7 +40,7 @@
           <td>
             <template v-if="!department.editing">
               <a href="javascript:void(0);" @click="edit(department)">编辑</a>
-              <a href="javascript:void(0);" @click="deleteDepartment(department)">删除</a>
+              <a href="javascript:void(0);" @click="deleteDepartmentShow(department)">删除</a>
             </template>
             <template v-if="department.editing">
               <a href="javascript:void(0);" @click="submit(department)">保存</a>
@@ -55,6 +55,15 @@
       v-if="showAdd"
       @submit="submit"
       @cancel="cancel"></add-company-department>
+    <modal v-if="deleteDepShow">
+      <div slot="body">
+        删除后，部门信息不可恢复，是否确定删除？
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn cancel-btn" type="button" @click="deleteDepartment">确定</button>
+        <button class="btn my-btn submit-btn" type="button" @click="cancelDelete">取消</button>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -77,6 +86,7 @@ export default {
       showAdd: false,
       editing: false,
       reloadTable: true,
+      deleteDepShow: false,
       companyDepartment: {
         id: '',
         name: '',
@@ -85,7 +95,8 @@ export default {
         principalName: '',
         principalTelephone: '',
         authorityType: ''
-      }
+      },
+      operateDep: ''
     };
   },
   computed: {
@@ -150,7 +161,6 @@ export default {
             companyDepartment.id = rep.data.data.companyDepartmentId
             this.showAdd = false
             this.$emit('reloadList')
-            console.log(companyDepartment)
             resolve('done');
           }
         }, (rep) => { });
@@ -174,7 +184,15 @@ export default {
         item.editing = false
       })
     },
-    deleteDepartment (department) {
+    deleteDepartmentShow (department) {
+      this.operateDep = department
+      this.deleteDepShow = true
+    },
+    cancelDelete () {
+      this.deleteDepShow = false
+    },
+    deleteDepartment () {
+      let department = this.operateDep
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -192,6 +210,8 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            this.deleteDepShow = false
+            this.$message('已成功删除部门')
             this.$emit('reloadList')
             resolve('done');
           }
