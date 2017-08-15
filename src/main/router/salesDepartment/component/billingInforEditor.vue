@@ -165,6 +165,9 @@
         <label class="col-sm-2 control-label">
           单位名称<span class="text-danger">*</span>
         </label>
+        <!-- <div class="col-sm-9">
+          <p class="form-control-static">{{ business.institution.customerName }}</p>
+        </div> -->
         <div class="col-sm-9">
           <input type="text" class="form-control" placeholder="请输入单位名称" v-model="bill.unit.name">
         </div>
