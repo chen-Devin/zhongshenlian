@@ -81,7 +81,6 @@ export default {
     this.customerInfoId = this.$route.params.id
     this.getCustomerInfo().then((data) => {
       this.customerInfo = data
-      console.log(this.customerInfo)
     })
   },
   components: {

@@ -1,5 +1,5 @@
 <template>
-  <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
+  <form class="form-horizontal normal-wrap business-editor" @submit.prevent @keyup.enter.prevent>
     <div class="form-group">
       <label class="col-sm-2 control-label">项目名称</label>
       <div class="my-col-sm-5">
@@ -20,10 +20,14 @@
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">委托单位（客户）</label>
-      <div class="my-col-sm-5">
-        <select2 class="form-control" :options="customers" v-model="businessInstitution" :disabled="!editable">
-        </select2>
-      </div>
+      <el-select v-model="business.institution.customerName" filterable placeholder="请选择" @change="changeCustomer" :disabled="!editable">
+        <el-option
+          v-for="item in customerList"
+          :key="item.id"
+          :label="item.customerName"
+          :value="item.id">
+        </el-option>
+      </el-select>
     </div>
     <!-- 被审计单位 -->
     <div class="form-group">
@@ -33,10 +37,14 @@
           <template v-for="(Unit, index) in business.beingAuditedUnit">
             <div class="col-sm-10">
               <div class="input-group" v-if="editable">
-                <!-- <div class="input-group-addon">单位名称</div>
-                <input type="text" class="form-control" placeholder="请输入被审计单位名称" v-model="Unit.unit" :disabled="!editable"> -->
-                <select2 class="form-control" :options="bCustomers" v-model="Unit.unit" :disabled="!editable">
-                </select2>
+                <el-select v-model="Unit.unit" filterable placeholder="请选择">
+                  <el-option
+                    v-for="item in customerList"
+                    :key="item.id"
+                    :label="item.customerName"
+                    :value="item.customerName">
+                  </el-option>
+                </el-select>
               </div>
               <div class="input-group" v-if="!editable">
                 <div>{{ Unit.unit }}</div>
@@ -60,7 +68,7 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">客户联系人</label>
       <div class="my-col-sm-5">
-        <p class="form-control-static">{{business.institution.name}}</p>
+        <p class="form-control-static">{{ business.institution.name }}</p>
       </div>
     </div>
     <div class="form-group">
@@ -417,8 +425,6 @@ import qs from 'qs';
 import moment from 'moment';
 import maskedInput from 'vue-text-mask';
 
-import select2 from '../../../component/select2.vue';
-
 import bus from '../../../bus.js';
 import currencyMask from '../../../currencyMask.js';
 
@@ -426,7 +432,6 @@ export default {
   name: 'businessEditor',
   data() {
     return {
-      businessInstitution: 666,
       business: this.initBusiness,
       upload: {
         URL: '',
@@ -458,7 +463,6 @@ export default {
         telephone: '',
         updateAt: ''
       }],
-      customers: [],
       businessType: [
         '年度报告审计',
         '中期报告审计',
@@ -488,7 +492,20 @@ export default {
       getWay: [
         '直接委托',
         '中标委托'
-      ]
+      ],
+      customerList: [{
+        id: '',
+        customerName: '',
+        name: '',
+        telephone: ''
+      }],
+      checkedCustomer: '',
+      // business.institution: {
+      //   id: '',
+      //   customerName: '',
+      //   name: '',
+      //   telephone: ''
+      // }
     };
   },
   computed: {
@@ -504,29 +521,7 @@ export default {
     bus.$on('subBusiness', () => { this.sub() });
     bus.$on('savBusiness', () => { this.save() });
 
-    this.getCustomers(1).then((rep) => {
-      let pageNum = parseInt(rep.data.data.pageNum);
-      let promiseArr = [];
-      for (let i = 2; i <= pageNum; i++) {
-        promiseArr.push(this.getCustomers(i));
-      }
-      Promise.all(promiseArr).then(() => {
-        if (this.business.institution.id === '') {
-          if (this.customers.length) {
-            this.business.institution = this.customers[0];
-            this.businessInstitution = this.customers[0].id;
-          }
-        } else {
-          for (let i = 0; i < this.customers.length; i++) {
-            if (this.business.institution.id === this.customers[i].id) {
-              this.business.institution = this.customers[i];
-              this.businessInstitution = this.customers[i].id;
-              break;
-            }
-          }
-        }
-      });
-    }, () => { });
+    this.getCustomerListWithoutPage()
 
     if (this.business.type === '') {
       this.business.type = this.businessType[0];
@@ -538,18 +533,15 @@ export default {
     bus.$off('subBusiness');
     bus.$off('savBusiness');
   },
-  watch: {
-    businessInstitution(val, oldVal) {
-      for (let i = 0; i < this.customers.length; i++) {
-        if (parseInt(val) === this.customers[i].id) {
-          this.business.institution = this.customers[i];
-          break;
-        }
-      }
-    }
-  },
   methods: {
     currencyMask,
+    changeCustomer (val) {
+      this.customerList.forEach((item, index, array) => {
+        if (val == item.id) {
+          this.business.institution = item
+        }
+      })
+    },
     typeChan(TYPE) {
       if (!TYPE.state) {
         for (let i = 0; i < TYPE.words.length; i++) {
@@ -638,7 +630,7 @@ export default {
       });
       return promise;
     },
-    getCustomers(pageNum) {
+    getCustomerListWithoutPage() {
       let promise = new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -647,59 +639,15 @@ export default {
           params: {
             data: (() => {
               var obj = {
-                command: 'getCustomerList',
-                platform: 'web',
-                pageNum: pageNum
+                command: 'getCustomerListWithoutPage',
+                platform: 'web'
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            for (let i = 0; i < rep.data.data.customerArray.length; i++) {
-              let obj = {
-                text: rep.data.data.customerArray[i].customerName,
-                id: rep.data.data.customerArray[i].id,
-                customerName: rep.data.data.customerArray[i].customerName,
-                name: rep.data.data.customerArray[i].name,
-                telephone: rep.data.data.customerArray[i].telephone,
-                duty: rep.data.data.customerArray[i].duty,
-                department: rep.data.data.customerArray[i].department,
-                registeredAddress: rep.data.data.customerArray[i].registeredAddress,
-                mailingAddress: rep.data.data.customerArray[i].mailingAddress,
-                businessLicenseNumber: rep.data.data.customerArray[i].businessLicenseNumber,
-                registeredCapital: rep.data.data.customerArray[i].registeredCapital,
-                customerNature: rep.data.data.customerArray[i].customerNature,
-                assetSize: rep.data.data.customerArray[i].assetSize,
-                industry: rep.data.data.customerArray[i].industry,
-                setUpTime: rep.data.data.customerArray[i].setUpTime,
-                founderId: rep.data.data.customerArray[i].founderId,
-                founderName: rep.data.data.customerArray[i].founderName,
-                founderDepartment: rep.data.data.customerArray[i].founderDepartment
-              };
-              let obj2 = {
-                text: rep.data.data.customerArray[i].customerName,
-                id: rep.data.data.customerArray[i].customerName,
-                customerName: rep.data.data.customerArray[i].customerName,
-                name: rep.data.data.customerArray[i].name,
-                telephone: rep.data.data.customerArray[i].telephone,
-                duty: rep.data.data.customerArray[i].duty,
-                department: rep.data.data.customerArray[i].department,
-                registeredAddress: rep.data.data.customerArray[i].registeredAddress,
-                mailingAddress: rep.data.data.customerArray[i].mailingAddress,
-                businessLicenseNumber: rep.data.data.customerArray[i].businessLicenseNumber,
-                registeredCapital: rep.data.data.customerArray[i].registeredCapital,
-                customerNature: rep.data.data.customerArray[i].customerNature,
-                assetSize: rep.data.data.customerArray[i].assetSize,
-                industry: rep.data.data.customerArray[i].industry,
-                setUpTime: rep.data.data.customerArray[i].setUpTime,
-                founderId: rep.data.data.customerArray[i].founderId,
-                founderName: rep.data.data.customerArray[i].founderName,
-                founderDepartment: rep.data.data.customerArray[i].founderDepartment
-              };
-              this.customers.push(obj);
-              this.bCustomers.push(obj2);
-            }
+            this.customerList = rep.data.data.customerList
             resolve(rep);
           } else if (rep.data.statusCode === '10012') {
             window.location.href = 'signIn.html';
@@ -725,7 +673,7 @@ export default {
                   contractNo: this.business.number,
                   requester: this.business.institution.customerName,
                   requesterId: this.business.institution.id,
-                  requesterName: this.business.institution.name,
+                  requesterName: this.business.institution.name,  // 客户联系人
                   requesterPhone: this.business.institution.telephone,
                   reportPurpose: this.business.report.usage,
                   startTime: this.business.time.start,
@@ -861,6 +809,8 @@ export default {
         return false;
       } else if (!this.departmentsCheck()) {
         return false;
+      } else if (this.business.institution.id === '') {
+        this.$message.warning('请选择委托单位')
       } else {
         let promise = new Promise((resolve, reject) => {
           axios({
@@ -1129,14 +1079,13 @@ export default {
     }
   },
   components: {
-    maskedInput,
-    select2
+    maskedInput
   }
 };
 </script>
 
 <style lang="sass" scoped>
-.normal-wrap {
+.business-editor {
   a.fa {
     text-decoration: none;
     &:hover {
@@ -1153,26 +1102,31 @@ export default {
   textarea {
     resize: none;
   }
-}
-.text-danger {
-  text-decoration: none;
-  cursor: pointer;
-  img {
-    width: 42px;
+  .text-danger {
+    text-decoration: none;
+    cursor: pointer;
+    img {
+      width: 42px;
+    }
+  }
+
+  .check-wrap {
+    padding-top: 7px;
+  }
+
+  .form-horizontal .checkbox-inline {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 0;
+  }
+
+  .adjust-mb {
+    margin-bottom: 0;
+  }
+
+  .el-select {
+      width: 500px;
   }
 }
 
-.check-wrap {
-  padding-top: 7px;
-}
-
-.form-horizontal .checkbox-inline {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-}
-
-.adjust-mb {
-  margin-bottom: 0;
-}
 </style>

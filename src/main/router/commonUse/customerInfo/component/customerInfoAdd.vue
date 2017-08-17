@@ -143,7 +143,6 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.newCustomerInfo = rep.data.data
-            console.log(this.newCustomerInfo)
             this.loading = false
             this.success = true
             setTimeout(() => {
@@ -154,6 +153,17 @@ export default {
               this.inputEdit = true
             }, 1000)
             resolve('done');
+          } else {
+            this.loading = false
+            this.fail = true
+            setTimeout(() => {
+              this.customer = {
+                customerName: '',
+                code: ''
+              }
+              this.modalShow = false
+              this.$message(rep.data.msg)
+            }, 1000)
           }
         }, (rep) => { });
       })
