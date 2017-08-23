@@ -28,7 +28,7 @@
           <div class="form-group">
             <label for="projectName">项目金额</label>
             <div class="input-group">
-              <select class="form-control" v-model="sea.amount" @change="search()">
+              <select class="form-control" v-model="sea.amount">
                 <option :value="AMO" v-for="(AMO, index) in amounts" :key="index">{{AMO}}</option>
               </select>
               <div class="input-group-addon">元</div>
@@ -38,7 +38,7 @@
         <div class="col-md-4 ta-c">
           <div class="form-group">
             <label for="agency">业务类型</label>
-            <select class="form-control type" v-model="sea.type" @change="search()">
+            <select class="form-control type" v-model="sea.type">
               <option :value="TYPE" v-for="(TYPE, index) in types" :key="index">{{TYPE}}</option>
             </select>
           </div>
@@ -54,8 +54,7 @@
             <input type="date"
                    class="form-control"
                    placeholder="请输入时间区间起"
-                   v-model.trim="sea.time.start"
-                   @change="search()">
+                   v-model.trim="sea.time.start">
           </div>
         </div>
         <div class="col-md-4 ta-c">
@@ -64,18 +63,16 @@
             <input type="date"
                    class="form-control"
                    placeholder="请输入时间区间止"
-                   v-model.trim="sea.time.end"
-                   @change="search()">
+                   v-model.trim="sea.time.end">
           </div>
         </div>
         <div class="col-md-4">
-
+          <div class="search-btns ta-c f-r">
+            <button type="button" class="btn my-btn submit-btn" @click="higherSearchEvent()">查找</button>
+            <button type="button" class="btn my-btn draft-btn" @click="reset()">重置</button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="search-btns ta-c f-r">
-      <button type="button" class="btn my-btn submit-btn" @click="higherSearchEvent()">查找</button>
-      <button type="button" class="btn my-btn draft-btn" @click="reset()">重置</button>
     </div>
   </form>
 </template>
@@ -90,8 +87,19 @@ export default {
         requesterName: '',
         applicantName: '',
         time: {
-          start: '',
-          end: ''
+          start: null,
+          end: null
+        },
+        amount: '所有',
+        type: '所有',
+      },
+      seaEmpty: {
+        requester: '',
+        requesterName: '',
+        applicantName: '',
+        time: {
+          start: null,
+          end: null
         },
         amount: '所有',
         type: '所有',
@@ -132,8 +140,18 @@ export default {
     };
   },
   methods: {
-    search() {
-      this.$emit('search', this.sea);
+    higherSearchEvent () {
+      if (this.sea.amount === '所有') {
+        this.sea.amount = ''
+      }
+      if (this.sea.type === '所有') {
+        this.sea.type = ''
+      }
+      this.$emit('higherSearchEvent', this.sea)
+    },
+    reset () {
+      this.$emit('reset')
+      this.sea = this.seaEmpty
     }
   }
 };
@@ -168,6 +186,6 @@ export default {
   margin-right: 30px;
 }
 .search-btns {
-  margin-top: -65px;
+  margin-right: 10px;
 }
 </style>

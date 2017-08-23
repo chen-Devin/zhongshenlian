@@ -2,6 +2,7 @@
   <div class="customer-info-add">
     <crumbs :paths="paths"></crumbs>
     <card v-if="initInput">
+      <button class="btn my-btn submit-btn f-r" type="button" @click="toggleType">人工录入</button>
       <h1 class="title">客户信息录入</h1>
       <p>请输入企业全称或社会统一信用代码获取工商局返回信息</p>
       <div class="message-box">
@@ -24,6 +25,7 @@
         <button class="btn my-btn submit-btn" type="button" :disabled="disSubmit" @click="submit">确定</button>
       </p>
     </card>
+    <customer-info-manual v-if="manual" :iniNewCustomerInfo="newCustomerInfo"></customer-info-manual>
     <modal class="load-modal" v-if="modalShow">
       <div slot="body" class="loading">
         <template v-if="loading">
@@ -55,6 +57,7 @@ import card from '@/main/component/card.vue';
 import crumbs from '@/main/component/crumbs.vue';
 import modal from '@/main/component/modal.vue';
 import customerInfoEdit from './customerInfoEdit.vue';
+import customerInfoManual from './customerInfoManual.vue';
 
 export default {
   name: 'customerModModal',
@@ -70,6 +73,7 @@ export default {
       loading: true,
       success: false,
       fail: false,
+      manual: false,
       options: [{
         value: '同部门之间可见',
         label: '同部门之间可见'
@@ -101,7 +105,7 @@ export default {
         founderName: '',
         founderDepartment: '',
         code: '',
-        legalPersonTelephone: '',
+        operName: '',
         mainWork: '',
         customerIndustryId: '',
         customerNatureId: '',
@@ -109,7 +113,7 @@ export default {
         createAt: '',
         updateAt: ''
       },
-      isEdit: false
+      isEdit: false,
     }
   },
   computed: {
@@ -122,6 +126,10 @@ export default {
     }
   },
   methods: {
+    toggleType () {
+      this.initInput = false
+      this.manual = true
+    },
     submit () {
       this.modalShow = true
       return new Promise((resolve, reject) => {
@@ -173,7 +181,8 @@ export default {
     card,
     crumbs,
     modal,
-    customerInfoEdit
+    customerInfoEdit,
+    customerInfoManual
   }
 };
 </script>
@@ -183,6 +192,7 @@ export default {
     .title {
       font-size: 18px;
       text-align: center;
+      margin-top: 40px;
       + p {
         font-size: 13px;
         text-align: center;

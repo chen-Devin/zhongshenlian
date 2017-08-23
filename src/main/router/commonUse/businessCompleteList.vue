@@ -43,7 +43,7 @@
 <script>
 import axios from 'axios';
 
-import businessCompleteSearchBar from './component/businessCompleteSearchBar.vue';
+import businessCompleteSearchBar from '@/main/component/businessCompleteSearchBar.vue';
 import searchBar from '../../component/searchBar.vue';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
