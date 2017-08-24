@@ -26,16 +26,10 @@
           <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</p>
         </div>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label class="col-sm-2 control-label">开票申请人</label>
         <div class="col-sm-9">
           <p class="form-control-static">{{bill.proposer.name}}</p>
-        </div>
-      </div>
-      <div class="form-group" v-if="false">
-        <label class="col-sm-2 control-label">申请人电话</label>
-        <div class="col-sm-9">
-          <p class="form-control-static">{{bill.proposer.tele}}</p>
         </div>
       </div>
       <div class="form-group">
@@ -126,7 +120,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="form-group">
         <label class="col-sm-2 control-label">累计开票金额</label>
         <div class="col-sm-9">
@@ -165,11 +159,11 @@
         <label class="col-sm-2 control-label">
           单位名称<span class="text-danger">*</span>
         </label>
-        <!-- <div class="col-sm-9">
-          <p class="form-control-static">{{ business.institution.customerName }}</p>
-        </div> -->
         <div class="col-sm-9">
-          <input type="text" class="form-control" placeholder="请输入单位名称" v-model="bill.unit.name">
+          <select class="form-control" v-model="bill.unit.name" :disabled="nonFirst">
+              <option disabled value="">请选择单位名称</option>
+              <option v-for="option in companyNameOptions">{{ option }}</option>
+          </select>
         </div>
       </div>
       <div class="form-group">
@@ -177,7 +171,7 @@
           纳税人识别号<span class="text-danger">*</span>
         </label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" placeholder="请输入纳税人识别号" v-model="bill.taxpayerID">
+          <input type="text" class="form-control" placeholder="请输入纳税人识别号" v-model="bill.taxpayerID" :disabled="nonFirst">
         </div>
       </div>
       <div class="form-group">
@@ -185,7 +179,7 @@
           单位地址<span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>
         </label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" placeholder="请输入单位地址" v-model="bill.unit.address">
+          <input type="text" class="form-control" placeholder="请输入单位地址" v-model="bill.unit.address" :disabled="nonFirst">
         </div>
       </div>
       <div class="form-group">
@@ -193,7 +187,7 @@
           单位电话<span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>
         </label>
         <div class="col-sm-9">
-          <input type="tel" class="form-control" placeholder="请输入单位电话" v-model="bill.unit.tele">
+          <input type="tel" class="form-control" placeholder="请输入单位电话" v-model="bill.unit.tele" :disabled="nonFirst">
         </div>
       </div>
       <div class="form-group">
@@ -201,7 +195,7 @@
           开户银行<span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>
         </label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" placeholder="请输入开户银行" v-model="bill.unit.depositBank">
+          <input type="text" class="form-control" placeholder="请输入开户银行" v-model="bill.unit.depositBank" :disabled="nonFirst">
         </div>
       </div>
       <div class="form-group">
@@ -209,7 +203,7 @@
           开户账号<span class="text-danger" v-show="bill.type==='增值税专用发票'">*</span>
         </label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" placeholder="请输入开户账号" v-model="bill.unit.account">
+          <input type="text" class="form-control" placeholder="请输入开户账号" v-model="bill.unit.account" :disabled="nonFirst">
         </div>
       </div>
       <div class="form-group">
@@ -264,14 +258,13 @@
 
 <script>
 import Vue from 'vue';
-import { Message } from 'element-ui';
+import axios from 'axios';
 import maskedInput from 'vue-text-mask';
 
 import billSubModal from './billSubModal.vue';
 import billDelModal from './billDelModal.vue';
 import currencyMask from '../../../currencyMask.js';
 
-Vue.prototype.$message = Message;
 
 export default {
   name: 'billingInforEditor',
@@ -284,6 +277,7 @@ export default {
         { name: '新增开票申请', url: `/business-handle-detail-sales-${this.$route.params.id}/billing-infor/billing-infor-editor`, present: true }
       ],
       business: this.initBusiness,
+      nonFirst: false,
       bill: {
         id: '',
         proposer: {
@@ -327,6 +321,9 @@ export default {
       },
       showSubModal: false,
       showDelModal: false,
+      companyName: [{
+        name: ''
+      }]
     };
   },
   computed: {
@@ -374,6 +371,13 @@ export default {
           return '';
         }
       }
+    },
+    companyNameOptions () {
+      let arr = []
+      this.companyName.forEach((item, index, array) => {
+        arr.push(item.unit)
+      })
+      return arr
     }
   },
   props: ['initBusiness', 'user'],
@@ -486,6 +490,47 @@ export default {
     delCanceled() {
       this.showDelModal = false;
     },
+    getBillingCompanyName () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getBillingCompanyName',
+                platform: 'web',
+                id: this.business.id
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.companyName = rep.data.data.companyName
+            console.log(this.companyName)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    judgeIsFirst (isFirst) {  // 判断是否第一次开票
+      if (isFirst === '0') {
+        this.nonFirst = true
+        this.bill.unit.name = this.business.bills[0].unit.name
+        this.bill.taxpayerID = this.business.bills[0].taxpayerID
+        this.bill.unit.address = this.business.bills[0].unit.address
+        this.bill.unit.tele = this.business.bills[0].unit.tele
+        this.bill.unit.depositBank = this.business.bills[0].unit.depositBank
+        this.bill.unit.account = this.business.bills[0].unit.account
+      }
+    }
+  },
+  created () {
+    console.log(this.$route.params.isFirst)
+    this.judgeIsFirst(this.$route.params.isFirst)
+    this.getBillingCompanyName()
   },
   components: {
     billSubModal,

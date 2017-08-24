@@ -3,7 +3,7 @@
     <h3 class="main-title">
       客户列表
       <!-- <router-link :to="{ path: '/customer-info-list/add' }"> -->
-        <button class="btn my-btn submit-btn pull-right" @click="add">
+        <button class="btn my-btn submit-btn pull-right" @click="add" v-if="canInput">
           <!-- <img class="input-icon" src="../../../../img/market/input.svg">&nbsp; -->
           录入
         </button>
@@ -95,6 +95,7 @@ export default {
       delCustomer: {},
       showAddModal: false,
       addCustomer: {},
+      user: {},
       totalPage: 1,
       higherSearch: false,
       simpleSearch: true,
@@ -102,10 +103,11 @@ export default {
       searchUp: false,
       customerName: '',
       name: '',
-      telephone: ''
+      telephone: '',
+      canInput: false
     };
   },
-  props: ['customers', 'user', 'page'],
+  props: ['customers', 'page'],
   methods: {
     search(searchCont) {
       this.listType = 'search';
@@ -123,9 +125,6 @@ export default {
       this.$emit('pageChan', newPage);
     },
     mod(CUSTOMER) {
-      // this.modCustomer = CUSTOMER;
-      // this.showModModal = true;
-      console.log(CUSTOMER.id)
       this.$router.push('/customer-infor-list/detail/' + CUSTOMER.id)
     },
     del(CUSTOMER) {
@@ -134,8 +133,6 @@ export default {
       this.showDelModal = true;
     },
     add() {
-      // this.addCustomer = {};
-      // this.showAddModal = true;
       this.$router.push('/customer-infor-list/add')
     },
     saved(modedCustomer) {
@@ -226,7 +223,15 @@ export default {
       this.name = '';
       this.telephone = '';
       this.search('');
-    },
+    }
+  },
+  created () {
+    this.$store.dispatch('fetchUserInfo').then(() => {
+      this.user = this.$store.getters.getUser;
+      if (this.user.department === '所长') {
+        this.canInput = true
+      }
+    }, () => { });
   },
   components: {
     card,

@@ -1,5 +1,5 @@
 <template>
-  <business-handle-list></business-handle-list>
+  <business-handle-list department="leader"></business-handle-list>
 </template>
 
 <script>

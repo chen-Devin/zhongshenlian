@@ -7,7 +7,7 @@
         <button class="btn my-btn cancel-btn" @click="cancel">取消</button>
       </template>
       <template v-if="isEdit">
-        <button class="btn my-btn submit-btn" @click="edit">编辑</button>
+        <button class="btn my-btn submit-btn" @click="edit" v-if="canEdit">编辑</button>
         <button class="btn my-btn cancel-btn" @click="deleteCustomerShow">删除</button>
       </template>
     </p>
@@ -200,7 +200,9 @@ export default {
         label: '同部门之间不可见'
       }],
       value: '',
-      showDeleteCustomer: false
+      user: {},
+      showDeleteCustomer: false,
+      canEdit: true
     }
   },
   computed: {
@@ -285,7 +287,18 @@ export default {
     }
   },
   created () {
-    console.log('edit')
+    this.$store.dispatch('fetchUserInfo').then(() => {
+      this.user = this.$store.getters.getUser;
+      if (this.user.department === '办公室') {
+        this.user.authority.forEach((item, index, array) => {
+          if (item.name === "客户信息修改") {
+            if (item.authority === "0") {
+              this.canEdit = false
+            }
+          }
+        })
+      }
+    }, () => { });
   },
   props: ['iniNewCustomerInfo', 'iniIsEdit'],
   components: {

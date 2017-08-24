@@ -5,6 +5,7 @@
       <el-menu-item index="/business-handle-list-financial" v-if="financial"><i class="el-icon-message"></i>待开发票</el-menu-item>
       <el-menu-item index="/business-review-list-office" v-if="officeContract"><i class="el-icon-message"></i>待发合同编号</el-menu-item>
       <el-menu-item index="/business-handle-list-office" v-if="officeBinding"><i class="el-icon-message"></i>待装订业务</el-menu-item>
+      <el-menu-item index="/customer-infor-list" v-if="officeCustomer"><i class="el-icon-message"></i>客户信息管理</el-menu-item>
       <el-menu-item index="/business-review-list-sales" v-if="sales"><i class="el-icon-circle-check"></i>立项审批</el-menu-item>
       <el-menu-item index="/business-review-list-risk" v-if="riskReview"><i class="el-icon-circle-check"></i>立项审批</el-menu-item>
       <el-submenu index="to-do" v-if="leader">
@@ -144,6 +145,13 @@ export default {
         }
       } else {
         return false;
+      }
+    },
+    officeCustomer() {
+      if (this.user.department === '办公室') {
+        return true
+      } else {
+        return false
       }
     },
     riskReview() {

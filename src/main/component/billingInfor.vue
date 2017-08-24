@@ -3,7 +3,7 @@
     <h4 class="main-title">
       开票列表
       <router-link class="btn btn-primary pull-right"
-                   to="billing-infor-editor"
+                   :to="billingInforEditorLink"
                    v-if="addBillShow">
         新增开票申请
       </router-link>
@@ -58,6 +58,13 @@ export default {
     },
     addBillShow() {
       return this.user.department === '业务部' ? true : false;
+    },
+    billingInforEditorLink () {
+      if (this.business.bills.length === 0) {
+        return 'billing-infor-editor/' + 1
+      } else {
+        return 'billing-infor-editor/' + 0
+      }
     }
   },
   props: ['initBusiness', 'user'],

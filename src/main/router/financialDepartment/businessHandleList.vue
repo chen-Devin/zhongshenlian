@@ -1,5 +1,5 @@
 <template>
-  <business-handle-list iconType="bill"></business-handle-list>
+  <business-handle-list iconType="bill" department="financial"></business-handle-list>
 </template>
 
 <script>

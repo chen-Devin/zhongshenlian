@@ -13,8 +13,8 @@
             <button type="button" class="btn my-btn high-btn f-r" @click="showHigherSearch()">
               高级搜索
               &nbsp;
-              <!-- <img v-if="searchDown" class="search-icon" src="../../../img/market/search_down.svg">
-              <img v-if="searchUp" class="search-icon" src="../../../img/market/search_up.svg"> -->
+              <img v-if="searchDown" class="search-icon" src="../../img/market/search_down.svg">
+              <img v-if="searchUp" class="search-icon" src="../../img/market/search_up.svg">
             </button>
           </div>
         </div>
@@ -73,7 +73,7 @@ import card from '@/main/component/card.vue';
 import myPagination from '@/main/component/pagination.vue';
 
 export default {
-  name: 'businessHandleListSales',
+  name: 'businessHandleList',
   data() {
     return {
       paths: [
@@ -88,6 +88,8 @@ export default {
       higherSearch: false,
       searchCont: '',
       currentPage: 1,
+      searchDown: true,
+      searchUp: false,
       sea: {
         requester: '',
         requesterName: '',
@@ -125,6 +127,18 @@ export default {
   },
   methods: {
     getInfo() {
+      let start = ''
+      let end = ''
+      if (this.sea.time.start === null) {
+        start = ''
+      } else {
+        start = this.sea.time.start
+      }
+      if (this.sea.time.end === null) {
+        end = ''
+      } else {
+        end = this.sea.time.end
+      }
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
         method: 'get',
@@ -135,8 +149,8 @@ export default {
               command: 'getBusinessReviewing',
               platform: 'web',
               searchContent: this.searchCont,
-              beginTime: this.sea.time.start,
-              endTime: this.sea.time.end,
+              beginTime: start,
+              endTime: end,
               businessAmount: this.sea.amount,
               businessType: this.sea.type,
               requester: this.sea.requester,
@@ -168,7 +182,11 @@ export default {
       }, (rep) => { });
     },
     businessRoute(BUSINESS) {
-      return '/business-handle-detail-sales-'+BUSINESS.id;
+      if (this.department = 'office') {
+        return '/business-review-detail-office-' +BUSINESS.id;
+      } else {
+        return '/business-handle-detail-' + this.department + '-' +BUSINESS.id;
+      }
     },
     currentChange(val) {
       this.currentPage = val;
@@ -178,22 +196,26 @@ export default {
       if (this.higherSearch === false) {
         this.higherSearch = true;
         this.simpleSearch = false;
-        // this.searchUp = true;
-        // this.searchDown = false;
+        this.searchUp = true;
+        this.searchDown = false;
       } else {
         this.higherSearch = false;
         this.simpleSearch = true;
-        // this.searchUp = false;
-        // this.searchDown = true;
+        this.searchUp = false;
+        this.searchDown = true;
       }
     },
     higherSearchEvent (sea) {
       this.sea = sea
+      this.searchCont = ''
       this.currentPage = 1
       this.getInfo()
     },
     tog(searchCont) {
       this.searchCont = searchCont
+      this.sea = this.seaEmpty
+      this.currentPage = 1
+      this.getInfo()
     },
     reset () {
       this.currentPage = 1
@@ -201,7 +223,7 @@ export default {
       this.getInfo()
     }
   },
-  props: ['iconType'],
+  props: ['iconType', 'department'],
   components: {
     crumbs,
     card,

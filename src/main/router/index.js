@@ -311,7 +311,7 @@ const router = new VueRouter({
                     component: billingInforDetail
                 },
                 {
-                    path: 'billing-infor-editor',
+                    path: 'billing-infor-editor/:isFirst',
                     component: billingInforEditor
                 },
                 {
