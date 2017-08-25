@@ -2,7 +2,6 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-
       <form class="search-form" @submit.prevent @keyup.enter.prevent>
         <div class="row">
           <div class="col-md-11">
@@ -80,6 +79,7 @@ export default {
         { name: '待处理业务', url: '/business-handle-list-sales', present: true }
       ],
       businesses: [],
+      thiDepartment: this.department,
       totalPage: 1,
       totalNum: 1,
       checkShow: false,
@@ -182,7 +182,7 @@ export default {
       }, (rep) => { });
     },
     businessRoute(BUSINESS) {
-      if (this.department = 'office') {
+      if (this.thiDepartment === 'office') {
         return '/business-review-detail-office-' +BUSINESS.id;
       } else {
         return '/business-handle-detail-' + this.department + '-' +BUSINESS.id;

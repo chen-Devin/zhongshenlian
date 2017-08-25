@@ -2,6 +2,7 @@
   <div class="normal-wrap">
     <h4 class="main-title">
       业务报告
+      {{ business.reports.length }}
       <button class="btn my-btn submit-btn pull-right"
               @click="add()"
               v-if="salesShow">
@@ -180,8 +181,12 @@ export default {
   },
   methods: {
     add() {
-      this.addReport = {};
-      this.showAddModal = true;
+      if (this.business.reports.length > 3) {
+        this.$message.error('最多上传4份业务报告')
+      } else {
+        this.addReport = {};
+        this.showAddModal = true;
+      }
     },
     added(addedReport) {
       this.business.reports.push(addedReport);

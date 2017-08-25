@@ -15,7 +15,8 @@
       <div class="com-list list-grou list-adjust">
         <li class="list-group-item list-head">
           <span class="title">信息列表</span>
-          <span class="date pull-right">创建时间</span>
+          <span class="date pull-right">修改时间</span>
+          <span class="date pull-right title-mr">创建时间</span>
         </li>
         <router-link class="list-group-item"
                      :to="'/rule-regulation-detail-'+RULE.id"
@@ -23,7 +24,8 @@
                      :key="index">
           <span class="label label-info" v-if="newRegulation(RULE.releaseTime)">新</span>
           <span class="title">{{RULE.title}}</span>
-          <span class="date pull-right">{{RULE.releaseTime}}</span>
+          <span class="date pull-right">{{ RULE.updateAt }}</span>
+          <span class="date pull-right content-mr">{{RULE.releaseTime}}</span>
         </router-link>
       </div>
       <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
@@ -106,7 +108,8 @@ export default {
             let obj = {
               id: rep.data.data.regulationsArray[i].id,
               title: rep.data.data.regulationsArray[i].title,
-              releaseTime: rep.data.data.regulationsArray[i].releaseTime
+              releaseTime: rep.data.data.regulationsArray[i].releaseTime,
+              updateAt: rep.data.data.regulationsArray[i].updateAt
             };
             this.rules.push(obj);
           }
@@ -139,7 +142,8 @@ export default {
             let obj = {
               id: rep.data.data.regulationsArray[i].id,
               title: rep.data.data.regulationsArray[i].title,
-              releaseTime: rep.data.data.regulationsArray[i].releaseTime
+              releaseTime: rep.data.data.regulationsArray[i].releaseTime,
+              updateAt: rep.data.data.regulationsArray[i].updateAt
             };
             this.rules.push(obj);
           }
@@ -164,5 +168,11 @@ export default {
   }
   .adjust-mt {
     margin-top: 40px;
+  }
+  .title-mr {
+    margin-right: 45px;
+  }
+  .content-mr {
+    margin-right: 30px;
   }
 </style>

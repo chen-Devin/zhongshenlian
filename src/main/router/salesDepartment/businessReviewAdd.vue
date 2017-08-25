@@ -3,7 +3,7 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3 class="main-title">
-        新建业务
+        新建项目
         <div class="pull-right">
           <button class="btn my-btn submit-btn" @click="sub()">提交</button>
           <button class="btn my-btn draft-btn" @click="sav()">暂存</button>

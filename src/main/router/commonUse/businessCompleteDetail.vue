@@ -6,7 +6,7 @@
         {{business.name}}
       </h3>
       <div class="normal-wrap">
-        <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
+        <business :initBusiness="business" :user="user" :progress="progress"></business>
         <template v-if="approverAdviceShow">
           <hr>
           <div class="row">
@@ -33,7 +33,7 @@ export default {
     return {
       paths: [
         { name: '已完成业务', url: '/business-complete-list', present: false },
-        { name: '业务详情', url: `/business-complete-detail-${this.$route.params.id}`, present: false }
+        { name: '业务详情', url: `/business-complete-list/business-complete-detail-${this.$route.params.id}`, present: true }
       ],
       business: {
         id: this.$route.params.id,
@@ -690,10 +690,10 @@ export default {
           this.leaderAdivces.push(this.business.projectApproverArray[i]);
         }
       }
-    },
-    pathsChan(paths) {
-      this.paths = paths;
     }
+    // pathsChan(paths) {
+    //   this.paths = paths;
+    // }
   },
   components: {
     crumbs,

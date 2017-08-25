@@ -3,7 +3,7 @@
     <h3 class="main-title">
       客户列表
       <!-- <router-link :to="{ path: '/customer-info-list/add' }"> -->
-        <button class="btn my-btn submit-btn pull-right" @click="add" v-if="canInput">
+        <button class="btn my-btn submit-btn pull-right" @click="add">
           <!-- <img class="input-icon" src="../../../../img/market/input.svg">&nbsp; -->
           录入
         </button>
@@ -103,8 +103,7 @@ export default {
       searchUp: false,
       customerName: '',
       name: '',
-      telephone: '',
-      canInput: false
+      telephone: ''
     };
   },
   props: ['customers', 'page'],
@@ -228,9 +227,6 @@ export default {
   created () {
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser;
-      if (this.user.department === '所长') {
-        this.canInput = true
-      }
     }, () => { });
   },
   components: {

@@ -5,7 +5,7 @@
       <h3 class="main-title">
         业务列表
         <router-link class="btn my-btn submit-btn pull-right add-btn" to="/business-review-add" tag="button" v-if="addBusiness">
-          新建业务
+          新建项目
         </router-link>
       </h3>
       <div class="com-list list-group list-adjust">
