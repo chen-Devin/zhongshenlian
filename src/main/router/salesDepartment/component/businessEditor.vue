@@ -1,24 +1,33 @@
 <template>
   <form class="form-horizontal normal-wrap business-editor" @submit.prevent @keyup.enter.prevent>
+    <p>基础信息</p>
     <div class="form-group">
-      <label class="col-sm-2 control-label">项目名称</label>
-      <div class="my-col-sm-5">
-        <input type="text" class="form-control" placeholder="请输入项目名称" v-model="business.name" :disabled="!editable">
+      <label class="col-sm-1">项目名称:</label>
+      <div class="col-sm-11">
+        <input type="text" class="form-control" placeholder="请输入项目名称" v-model="business.name" :disabled="!editable" required>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">提交申请人</label>
-      <div class="my-col-sm-5">
-        <p class="form-control-static">{{business.proposer.name}}</p>
+      <label class="col-sm-2 ">业务范围与审计目标:</label>
+      <div class="col-sm-10">
+        <textarea required rows='5' class="form-control" placeholder="请输入项目名称" v-model="business.name" :disabled="!editable"></textarea>
       </div>
     </div>
-    <div class="form-group" v-if="false">
-      <label class="col-sm-2 control-label">项目申请人电话</label>
-      <div class="my-col-sm-5">
-        <p class="form-control-static">{{business.proposer.tele}}</p>
-      </div>
+    <div class="form-group col-sm-4">
+      <label>提交申请人:</label>
+        <input class="btn-bg" type="text" name="name" placeholder="name" v-model="business.proposer.name" required>
     </div>
-    <div class="form-group">
+    <div class="form-group col-sm-4">
+      <label>客户联系人:</label>
+      <input class="btn-bg" type="text" name="name" placeholder="name" v-model="business.proposer.tele" required>
+    </div>
+    <div class="form-group col-sm-4">
+      <label>计划工期:</label>
+      <input type="date" v-model="business.time.start" required>
+      <span class="btn-bg">至</span>
+      <input type="date" v-model="business.time.end" required>
+    </div>
+    <div class="form-group col-sm-4">
       <label class="col-sm-2 control-label">委托单位（客户）</label>
       <el-select v-model="business.institution.customerName" filterable placeholder="请选择" @change="changeCustomer" :disabled="!editable">
         <el-option
@@ -29,6 +38,15 @@
         </el-option>
       </el-select>
     </div>
+    <div class="form-group col-sm-4">
+      <label class="col-sm-2 control-label">业务类型</label>
+      <div class="my-col-sm-5">
+        <select class="form-control" v-model="business.type" :disabled="!editable">
+          <option v-for="(TYPE, index) in businessType" :value="TYPE" :key="index">{{TYPE}}</option>
+        </select>
+      </div>
+    </div>
+    
     <!-- 被审计单位 -->
     <div class="form-group">
       <label class="col-sm-2 control-label">被审计单位</label>
@@ -71,14 +89,7 @@
         <p class="form-control-static">{{ business.institution.name }}</p>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">业务类型</label>
-      <div class="my-col-sm-5">
-        <select class="form-control" v-model="business.type" :disabled="!editable">
-          <option v-for="(TYPE, index) in businessType" :value="TYPE" :key="index">{{TYPE}}</option>
-        </select>
-      </div>
-    </div>
+
     <div class="form-group">
       <label class="col-sm-2 control-label">项目经理</label>
       <div class="my-col-sm-5">
@@ -1085,6 +1096,11 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.btn-bg{
+  background-color: #F0F0F0;
+  border:none;
+  border-radius:2px;
+}
 .business-editor {
   a.fa {
     text-decoration: none;
@@ -1093,11 +1109,11 @@ export default {
     }
   }
   .my-col-sm-5 {
-    width: 600px;
+    //width: 600px;
     float: left;
   }
   label.col-sm-2.control-label {
-    width: 145px;
+    //width: 145px;
   }
   textarea {
     resize: none;
