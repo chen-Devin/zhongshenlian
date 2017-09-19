@@ -1,4 +1,5 @@
 <template>
+  <!--
   <form class="form-horizontal normal-wrap business-editor" @submit.prevent @keyup.enter.prevent>
     <p>基础信息</p>
     <div class="form-group">
@@ -45,9 +46,7 @@
           <option v-for="(TYPE, index) in businessType" :value="TYPE" :key="index">{{TYPE}}</option>
         </select>
       </div>
-    </div>
-    
-    <!-- 被审计单位 -->
+    </div> 
     <div class="form-group">
       <label class="col-sm-2 control-label">被审计单位</label>
       <div class="my-col-sm-5">
@@ -82,14 +81,12 @@
         </div>
       </div>
     </div>
-    <!-- 客户联系人 -->
     <div class="form-group">
       <label class="col-sm-2 control-label">客户联系人</label>
       <div class="my-col-sm-5">
         <p class="form-control-static">{{ business.institution.name }}</p>
       </div>
     </div>
-
     <div class="form-group">
       <label class="col-sm-2 control-label">项目经理</label>
       <div class="my-col-sm-5">
@@ -427,6 +424,74 @@
       </div>
     </div>
   </form>
+-->
+  <el-form :model="business" :rules="rules" ref="business" label-width="100px" class="demo-business">
+    <el-form-item label="项目名称" prop="name">
+      <el-input v-model="business.name"></el-input>
+    </el-form-item>
+    <!---->
+    <el-form-item label="业务范围与审计目标" prop="name">
+      <el-input v-model="business.name" type="textarea"></el-input>
+    </el-form-item>
+    <!-- <el-form-item label="活动区域" prop="region">
+      <el-select v-model="business.region" placeholder="请选择活动区域">
+        <el-option label="区域一" value="shanghai"></el-option>
+        <el-option label="区域二" value="beijing"></el-option>
+      </el-select>
+    </el-form-item> -->
+    <el-row>
+      <el-col :span="8">
+        <el-form-item label="提交申请人">
+          <el-input v-model="business.proposer.name" :disabled="true"></el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="客户联系人">
+          <el-input v-model="business.proposer.tele" :disabled="true"></el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="计划工期" required>
+          <el-col :span="11">
+            <el-form-item prop="time.start">
+              <el-date-picker type="date" placeholder="选择日期" v-model="business.time.start" style="width: 100%;"></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col class="line" :span="2">至</el-col>
+          <el-col :span="11">
+           <el-form-item prop="time.end">
+             <el-date-picker type="date" placeholder="选择日期" v-model="business.time.end" style="width: 100%;"></el-date-picker>
+           </el-form-item>
+          </el-col>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    
+    <el-form-item label="即时配送" prop="delivery">
+      <el-switch on-text="" off-text="" v-model="business.delivery"></el-switch>
+    </el-form-item>
+    <el-form-item label="活动性质" prop="type">
+      <el-checkbox-group v-model="business.type">
+        <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
+        <el-checkbox label="地推活动" name="type"></el-checkbox>
+        <el-checkbox label="线下主题活动" name="type"></el-checkbox>
+        <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
+      </el-checkbox-group>
+    </el-form-item>
+    <el-form-item label="特殊资源" prop="resource">
+      <el-radio-group v-model="business.resource">
+        <el-radio label="线上品牌商赞助"></el-radio>
+        <el-radio label="线下场地免费"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+    <el-form-item label="活动形式" prop="desc">
+      <el-input type="textarea" v-model="business.desc"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="submitForm('business')">立即创建</el-button>
+      <el-button @click="resetForm('business')">重置</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
@@ -511,6 +576,29 @@ export default {
         telephone: ''
       }],
       checkedCustomer: '',
+      rules: {
+        name: [
+          { required: true, message: '请输入项目名称', trigger: 'blur' }
+        ],
+        region: [
+          { required: true, message: '请选择活动区域', trigger: 'change' }
+        ],
+        date1: [
+          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+        ],
+        date2: [
+          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+        ],
+        type: [
+          { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
+        ],
+        resource: [
+          { required: true, message: '请选择活动资源', trigger: 'change' }
+        ],
+        desc: [
+          { required: true, message: '请填写活动形式', trigger: 'blur' }
+        ]
+      }
       // business.institution: {
       //   id: '',
       //   customerName: '',
