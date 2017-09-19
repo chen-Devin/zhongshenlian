@@ -1097,9 +1097,6 @@ export default {
 
 <style lang="sass" scoped>
 .btn-bg{
-  background-color: #F0F0F0;
-  border:none;
-  border-radius:2px;
 }
 .business-editor {
   a.fa {

@@ -1,5 +1,5 @@
 <template>
-  <li v-for="treeNode in treeData">
+  <!-- <li v-for="treeNode in treeData">
               <span class="rd-tree-ion" :class="{'ion-arrow-down-b': treeNode.expand, 'ion-arrow-right-b': !treeNode.expand, 'rd-ion-hidden': (!treeNode.children || treeNode.children.length == 0)}" @click.stop="expandChild(treeNode)"></span>
               <label class="rd-checkbox-wrapper">
                   <div class="rd-checkbox">
@@ -24,7 +24,7 @@
               <ul class="rd-tree-child-node" v-if="treeNode.expand && treeNode.children && treeNode.children.length > 0">
                   <tree-node :tree-data="treeNode.children"></tree-node>
               </ul>
-          </li>
+          </li> -->
 </template>
 
 <script>
