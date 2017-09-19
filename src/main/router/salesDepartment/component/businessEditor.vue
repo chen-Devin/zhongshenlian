@@ -425,20 +425,14 @@
     </div>
   </form>
 -->
-  <el-form :model="business" :rules="rules" ref="business" label-width="100px" class="demo-business">
+  <el-form :model="business" :rules="rules" ref="business" label-width="100px" class="demo-business" :disabled="!editable">
+    <el-row><el-form-item label="基础信息"></el-form-item></el-row>
     <el-form-item label="项目名称" prop="name">
-      <el-input v-model="business.name"></el-input>
+      <el-input v-model="business.name" :disabled="!editable"></el-input>
     </el-form-item>
-    <!---->
-    <el-form-item label="业务范围与审计目标" prop="name">
-      <el-input v-model="business.name" type="textarea"></el-input>
+    <el-form-item label="业务范围与审计目标" prop="scope" required>
+      <el-input v-model="business.scope" :disabled="!editable" type="textarea"></el-input>
     </el-form-item>
-    <!-- <el-form-item label="活动区域" prop="region">
-      <el-select v-model="business.region" placeholder="请选择活动区域">
-        <el-option label="区域一" value="shanghai"></el-option>
-        <el-option label="区域二" value="beijing"></el-option>
-      </el-select>
-    </el-form-item> -->
     <el-row>
       <el-col :span="8">
         <el-form-item label="提交申请人">
@@ -454,38 +448,175 @@
         <el-form-item label="计划工期" required>
           <el-col :span="11">
             <el-form-item prop="time.start">
-              <el-date-picker type="date" placeholder="选择日期" v-model="business.time.start" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" placeholder="选择日期" v-model="business.time.start" style="width: 100%;" :disabled="!editable"></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col class="line" :span="2">至</el-col>
           <el-col :span="11">
            <el-form-item prop="time.end">
-             <el-date-picker type="date" placeholder="选择日期" v-model="business.time.end" style="width: 100%;"></el-date-picker>
+             <el-date-picker type="date" placeholder="选择日期" v-model="business.time.end" style="width: 100%;" :disabled="!editable"></el-date-picker>
            </el-form-item>
           </el-col>
         </el-form-item>
       </el-col>
-    </el-row>
-    
-    <el-form-item label="即时配送" prop="delivery">
+    </el-row>   
+   <!--  <el-form-item label="即时配送" prop="delivery">
       <el-switch on-text="" off-text="" v-model="business.delivery"></el-switch>
+    </el-form-item> -->
+    <el-row>
+      <el-col :span="8">
+        <el-form-item label="委托单位(客户）" required>
+          <el-select v-model="business.institution.customerName" placeholder="选择客户" :disabled="!editable">
+            <el-option 
+              v-for="item in customerList"
+              :key="item.id"
+              :label="item.customerName"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="业务类型" required>
+          <el-select  v-model="business.type" placeholder="选择类型" :disabled="!editable">
+            <el-option 
+            v-for="(TYPE, index) in businessType" 
+            :value="TYPE" 
+            :key="index">  
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="项目取得方式" required>
+          <el-select  v-model="business.getWay" :disabled="!editable">
+            <el-option 
+              v-for="item in getWay"
+              :value="item" 
+              >
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row> 
+    <el-row>
+      <el-col :span="20">
+        <label required>被审计单位</label>
+          <template v-for="(Unit, index) in business.beingAuditedUnit">
+            <div class="input-group" v-if="editable">
+              <el-select v-model="Unit.unit" filterable placeholder="请选择">
+                <el-option
+                  v-for="item in customerList"
+                  :key="item.id"
+                  :label="item.customerName"
+                  :value="item.customerName">
+                </el-option>
+              </el-select>
+            </div>
+            <div class="input-group" v-if="!editable">
+              <div>{{ Unit.unit }}</div>
+            </div>
+            <h4 class="d-ib f-l" v-if="editable">
+              <a class="text-danger" @click="delUnits(index)">
+                <img src="../../../../img/delete_icon.svg">
+              </a>
+            </h4>
+          </template>
+      </el-col>
+      <el-col :span="4">
+        <h4 class="d-ib f-l" v-if="editable">
+          <a class="text-danger" @click="addUnits()">
+            <img src="../../../../img/add_icon.svg">
+          </a>
+        </h4>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="8">
+        <el-form-item label="项目经理" required>
+          <el-select v-model="customerList" filterable placeholder="选择客户" :disabled="!editable">
+            <el-option
+              v-for="item in customerList"
+              :key="item.id"
+              :label="item.customerName"
+              :value="item.customerName">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="合同预估金额" required>
+          <div class="input-group">
+            <masked-input type="text" placeholder="请输入合同预估金额"  v-model="business.contractAmount"
+                          :disabled="!editable"
+                          :mask="currencyMask"
+                          :guide="false"
+                          placeholderChar="#">
+            </masked-input>
+            <div class="input-group-addon">元</div>
+          </div>  
+        </el-form-item>
+      </el-col>
+    </el-row> 
+    <el-form-item label="报价依据"  placeholder="请输入报价依据" required>
+      <el-input v-model="business.basisQuote" :disabled="!editable" ></el-input>
     </el-form-item>
-    <el-form-item label="活动性质" prop="type">
-      <el-checkbox-group v-model="business.type">
-        <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-        <el-checkbox label="地推活动" name="type"></el-checkbox>
-        <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-        <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-      </el-checkbox-group>
-    </el-form-item>
-    <el-form-item label="特殊资源" prop="resource">
-      <el-radio-group v-model="business.resource">
-        <el-radio label="线上品牌商赞助"></el-radio>
-        <el-radio label="线下场地免费"></el-radio>
+    <el-row><el-form-item label="报告信息"></el-form-item></el-row>
+    <label class="col-sm-2 control-label">出具报告类型</label>
+    <div class="form-group">
+      <div class="my-col-sm-5 check-wrap">
+          <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index">
+            <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable" :id="TYPE.name+index">
+            <label class="checkbox-inline" :key="index" :for="TYPE.name+index">
+              {{TYPE.name}}
+            </label>
+          </div>
+          <hr>
+          <template v-for="(TYPE, indexOuter) in business.report.type" v-if="TYPE.state">
+            <p>{{TYPE.name}}</p>
+            <div class="d-ib" v-for="(WORD, index) in TYPE.words" :key="index">
+              <input class="magic-checkbox" type="checkbox" v-model="WORD.state" @change="reportTypeChan(TYPE, WORD)" :disabled="!editable" :id="index+TYPE.name">
+              <label class="checkbox-inline" :key="index" :for="index+TYPE.name">
+                {{WORD.name}}
+              </label>
+            </div>
+            <hr>
+          </template>
+      </div>
+    </div>
+    <el-row>
+      <el-col :span="8">
+        <el-form-item label="报告数量">
+          <el-input placeholder="请输入被报告数量" v-model="business.report.amount" :disabled="!editable"></el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="报告用途">
+          <el-input placeholder="请输入被报告用途" type="text" v-model="business.report.usage" :disabled="!editable"></el-input>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row><el-form-item label="合同体制信息"></el-form-item></el-row>
+    <el-form-item label="合同体制" required>
+      <el-radio-group v-model="business.contractType.name">
+        <el-radio  v-model="business.contractType.name" label="1" value="联合体" :disabled="!editable" id="common">联合体</el-radio>
+        <el-radio  v-model="business.contractType.name" label="2" value="非联合体" :disabled="!editable" id="nocommon">非联合体</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="活动形式" prop="desc">
-      <el-input type="textarea" v-model="business.desc"></el-input>
+    <el-form-item label="部门协作" required>
+      <el-radio-group v-model="business.departmentCoop.name">
+        <el-radio  v-model="business.departmentCoop.name" label="1" value="有部门合作" :disabled="!editable" id="has">有部门合作</el-radio>
+        <el-radio  v-model="business.departmentCoop.name" label="2" value="无部门合作" :disabled="!editable" id="hasNot">无部门合作</el-radio>
+      </el-radio-group>
+    </el-form-item>
+    <el-row><el-form-item label="人员信息"></el-form-item></el-row>
+    <el-form-item label="参审注师" required>
+      <el-input type="text" placeholder="请输入参审注师" v-model="business.reviewCPA.name" :disabled="!editable">
+      </el-input>
+    </el-form-item>
+    <el-form-item label="参审助理" required>
+      <el-input type="text" placeholder="请输入参审助理" v-model="business.reviewAssistant.name" :disabled="!editable">
+      </el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('business')">立即创建</el-button>
@@ -540,6 +671,7 @@ export default {
         updateAt: ''
       }],
       businessType: [
+        '选择类型',
         '年度报告审计',
         '中期报告审计',
         '专项资金收支使用情况审计',
@@ -573,7 +705,8 @@ export default {
         id: '',
         customerName: '',
         name: '',
-        telephone: ''
+        telephone: '',
+        value: ''
       }],
       checkedCustomer: '',
       rules: {
@@ -769,6 +902,7 @@ export default {
                 data: {
                   id: this.business.id,
                   projectName: this.business.name,
+                  businessScope: this.business.scope,
                   contractNo: this.business.number,
                   requester: this.business.institution.customerName,
                   requesterId: this.business.institution.id,
@@ -1194,11 +1328,11 @@ export default {
     }
   }
   .my-col-sm-5 {
-    //width: 600px;
+    width: 600px;
     float: left;
   }
   label.col-sm-2.control-label {
-    //width: 145px;
+    width: 145px;
   }
   textarea {
     resize: none;
