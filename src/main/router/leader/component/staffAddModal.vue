@@ -1,83 +1,105 @@
 <template>
-  <modal>
+  <modal modalWidth="600px">
     <form class="form-horizontal clearfix"
           slot="body"
           @submit.prevent
           @keyup.enter.prevent>
-      <div class="form-group"
-           :class="{'has-error': !staff.name.ver}">
-        <label class="control-label">姓名</label>
-        <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入职员姓名"
-                 v-model="staff.name.val">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="control-label">性别</label>
-        <div>
-          <input type="radio"
-                 class="magic-radio"
-                 name="staff-sex"
-                 value="男"
-                 v-model="staff.gender.val"
-                 id="male">
-          <label class="radio-inline" for="male">
-            男
-          </label>
-          <input type="radio"
-                 class="magic-radio"
-                 name="staff-sex"
-                 value="女"
-                 v-model="staff.gender.val"
-                 id="female">
-          <label class="radio-inline" for="female">
-            女
-          </label>
-        </div>
-      </div>
-      <div class="form-group"
-           :class="{'has-error': !staff.telephone.ver}">
-        <label class="control-label">手机号</label>
-        <div>
-          <input type="tel"
-                 class="form-control"
-                 placeholder="请输入职员手机号码"
-                 v-model="staff.telephone.val">
-        </div>
-      </div>
-      <div class="form-group"
-           :class="{'has-error': !staff.jobNumber.ver}">
-        <label class="control-label">工号</label>
-        <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入工号"
-                 v-model="staff.jobNumber.val">
-        </div>
-      </div>
-      <div class="form-group"
-           :class="{'has-error': !staff.duties.ver}">
-        <label class="control-label">职务</label>
-        <div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入职务"
-                 v-model="staff.duties.val">
-        </div>
-      </div>
-      <div class="form-group"
-           :class="{'has-error': !staff.department.ver}">
-        <label class="control-label">所属部门</label>
-        <div>
-          <select v-model="staff.department.val" class="form-control">
-              <option v-for="(DEP,index) in departments" :value="DEP" :key="index">
-                {{ DEP }}
-              </option>
-          </select>
-        </div>
-      </div>
+      <el-row :gutter="50">
+        <el-col :span="12">
+          <div class="form-group"
+               :class="{'has-error': !staff.name.ver}">
+            <label class="control-label">姓名</label>
+            <div>
+              <input type="text"
+                     class="form-control"
+                     placeholder="请输入职员姓名"
+                     v-model="staff.name.val">
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div class="form-group">
+            <label class="control-label">性别</label>
+            <div>
+              <input type="radio"
+                     class="magic-radio"
+                     name="staff-sex"
+                     value="男"
+                     v-model="staff.gender.val"
+                     id="male">
+              <label class="radio-inline" for="male">
+                男
+              </label>
+              <input type="radio"
+                     class="magic-radio"
+                     name="staff-sex"
+                     value="女"
+                     v-model="staff.gender.val"
+                     id="female">
+              <label class="radio-inline" for="female">
+                女
+              </label>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row :gutter="50">
+        <el-col :span="12">
+          <div class="form-group"
+               :class="{'has-error': !staff.telephone.ver}">
+            <label class="control-label">手机号</label>
+            <div>
+              <input type="tel"
+                     class="form-control"
+                     placeholder="请输入职员手机号码"
+                     v-model="staff.telephone.val">
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div class="form-group"
+               :class="{'has-error': !staff.jobNumber.ver}">
+            <label class="control-label">工号</label>
+            <div>
+              <input type="text"
+                     class="form-control"
+                     placeholder="请输入工号"
+                     v-model="staff.jobNumber.val">
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row :gutter="50">
+        <el-col :span="12">
+          <div class="form-group"
+               :class="{'has-error': !staff.duties.ver}">
+            <label class="control-label">职务</label>
+            <div>
+              <input type="text"
+                     class="form-control"
+                     placeholder="请输入职务"
+                     v-model="staff.duties.val">
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div class="form-group"
+               :class="{'has-error': !staff.department.ver}">
+            <label class="control-label">所属部门</label>
+            <div>
+              <select v-model="staff.department.val" class="form-control">
+                  <option v-for="(DEP,index) in departments" :value="DEP" :key="index">
+                    {{ DEP }}
+                  </option>
+              </select>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+      
+      
+      
+      
       <div class="form-group">
         <label class="control-label">备注</label>
         <div>
@@ -282,6 +304,10 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+form {
+  padding-left: 20px;
+  padding-right: 20px;
+}
 .form-group {
   margin-bottom: 20px;
 }
@@ -289,6 +315,7 @@ label {
   margin-bottom: 15px;
 }
 .form-horizontal .control-label {
+    width: 100%;
     margin-bottom: 10px;
 }
 </style>

@@ -1,8 +1,6 @@
 <template>
   <div class="company-detail-wrapper">
     <card>
-      <company-detail :iniCompany="company" v-if="checking" @edit="edit"></company-detail>
-      <company-edit v-if="editing" @cancel="cancel" @editSuccess="editSuccess"></company-edit>
       <input-company v-if="adding" @reloadComList="reloadComList"></input-company>
       </p>
     </card>
@@ -144,11 +142,7 @@ export default {
     reloadList () {
       this.getCompanyInfo()
     },
-    editSuccess () {
-      this.getCompanyInfo()
-      this.checking = true
-      this.editing = false
-    },
+    
     getCompanyInfo () {
       return new Promise((resolve, reject) => {
         axios({
@@ -195,14 +189,8 @@ export default {
         item.editing = false
       })
     },
-    edit () {
-      this.checking = false
-      this.editing = true
-    },
-    cancel () {
-      this.editing = false
-      this.checking = true
-    },
+    
+    
     cancelDelete () {
       this.deleteShow = false
     },

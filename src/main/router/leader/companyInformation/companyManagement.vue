@@ -11,17 +11,25 @@
         <router-view @reloadComList="reloadComList"></router-view>
       </div>
     </div>
-    <div v-else>
-      <multi-level></multi-level>
+    <div class="depart-wrapper" v-else>
+      <card class="tree">
+        <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+      </card>
+      <card class="detail">
+        <company-detail :iniCompany="company" v-if="checking" @edit="edit"></company-detail>
+        <company-edit v-if="editing" @cancel="cancel" @editSuccess="editSuccess"></company-edit>
+      </card>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import crumbs from '@/main/component/crumbs.vue';
 import card from '@/main/component/card.vue';
 import companyList from '@/main/router/leader/companyInformation/component/companyList.vue';
-import multiLevel from '@/main/component/multiLevel.vue';
+import companyDetail from './component/companyDetail.vue';
+import companyEdit from './component/companyEdit.vue';
 
 export default {
   name: 'companyManagement',
@@ -33,7 +41,84 @@ export default {
       ],
       reloadList: true,
       functionShow: true,
-      comId: ''
+      comId: '',
+      checking: true,
+      editing: false,
+      company: {
+        id: '',
+        name: '',
+        number: '',
+        creditCode: '',
+        departmentArray: {
+          id: '',
+          name: '',
+          number: '',
+          principalId: '',
+          principalName: '',
+          authorityType: '',
+          principalTelephone: '',
+          editing: false
+        },
+        legalPersonId: '',
+        legalPersonName: '',
+        legalPersonTelephone: '',
+        principalId: '',
+        principalName: '',
+        principalTelephone: '',
+        mainWork: '',
+        openAccountBankName: '',
+        openAccountBankNumber: '',
+        reportType: [{
+          name: ''
+        }],
+        reportTypeOption: [{
+          name: ''
+        }],
+        counselorTagArray: [{
+          counselorTag: ''
+        }],
+        opertionsArray: [],
+        selectionsArray: []
+      },
+      data: [{
+               label: '一级 1',
+               children: [{
+                 label: '二级 1-1',
+                 children: [{
+                   label: '三级 1-1-1'
+                 }]
+               }]
+             }, {
+               label: '一级 2',
+               children: [{
+                 label: '二级 2-1',
+                 children: [{
+                   label: '三级 2-1-1'
+                 }]
+               }, {
+                 label: '二级 2-2',
+                 children: [{
+                   label: '三级 2-2-1'
+                 }]
+               }]
+             }, {
+               label: '一级 3',
+               children: [{
+                 label: '二级 3-1',
+                 children: [{
+                   label: '三级 3-1-1'
+                 }]
+               }, {
+                 label: '二级 3-2',
+                 children: [{
+                   label: '三级 3-2-1'
+                 }]
+               }]
+             }],
+             defaultProps: {
+                       children: 'children',
+                       label: 'label'
+                     }
     };
   },
   computed: {
@@ -67,16 +152,54 @@ export default {
     },
     switchDepart () {
       this.functionShow = !this.functionShow
-    }
+    },
+    getFullCompanyList () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getFullCompanyList',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            console.log(rep.data.data)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    editSuccess () {
+          this.getCompanyInfo()
+          this.checking = true
+          this.editing = false
+        },
+    edit () {
+          this.checking = false
+          this.editing = true
+        },
+    cancel () {
+          this.editing = false
+          this.checking = true
+        }
   },
   created() {
     this.noticeJump(this.comId)
+    this.getFullCompanyList()
   },
   components: {
     crumbs,
     card,
     companyList,
-    multiLevel
+    companyDetail,
+    companyEdit
   }
 };
 </script>
@@ -85,5 +208,14 @@ export default {
 @import '../../../../scss/_variables.scss';
   .company-wrapper {
     margin-left: 180px;
+  }
+  .depart-wrapper {
+    display: flex;
+    > .tree {
+      width: 220px;
+    }
+    > .detail {
+      flex: 1;
+    }
   }
 </style>

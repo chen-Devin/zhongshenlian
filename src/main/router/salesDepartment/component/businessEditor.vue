@@ -426,7 +426,7 @@
   </form>
 -->
   <el-form :model="business" :rules="rules" ref="business" label-width="100px" class="demo-business" :disabled="!editable">
-    <el-row><el-form-item label="基础信息1"></el-form-item></el-row>
+    <el-row><el-form-item label="基础信息"></el-form-item></el-row>
     <el-form-item label="项目名称" prop="name">
       <el-input v-model="business.name" :disabled="!editable"></el-input>
     </el-form-item>
