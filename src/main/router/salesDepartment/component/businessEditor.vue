@@ -334,7 +334,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">部门合作</label>
+      <label class="col-sm-2 control-label">部门协作</label>
       <div class="my-col-sm-5 check-wrap">
         <input class="magic-radio" type="radio" name="departmentCooperation" value="有部门合作" v-model="business.departmentCoop.name" :disabled="!editable" id="has">
         <label class="radio-inline" for="has">
@@ -440,49 +440,12 @@
         </el-form-item>
       </el-col>
       <el-col :span="8">
-        <el-form-item label="客户联系人">
-          <el-input v-model="business.proposer.tele" :disabled="true"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="计划工期" required>
-          <el-col :span="11">
-            <el-form-item prop="time.start">
-              <el-date-picker type="date" placeholder="选择日期" v-model="business.time.start" style="width: 100%;" :disabled="!editable"></el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col class="line" :span="2">至</el-col>
-          <el-col :span="11">
-           <el-form-item prop="time.end">
-             <el-date-picker type="date" placeholder="选择日期" v-model="business.time.end" style="width: 100%;" :disabled="!editable"></el-date-picker>
-           </el-form-item>
-          </el-col>
-        </el-form-item>
-      </el-col>
-    </el-row>   
-   <!--  <el-form-item label="即时配送" prop="delivery">
-      <el-switch on-text="" off-text="" v-model="business.delivery"></el-switch>
-    </el-form-item> -->
-    <el-row>
-      <el-col :span="8">
-        <el-form-item label="委托单位(客户）" required>
-          <el-select v-model="business.institution.customerName" placeholder="选择客户" :disabled="!editable">
-            <el-option 
-              v-for="item in customerList"
-              :key="item.id"
-              :label="item.customerName"
-              :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
         <el-form-item label="业务类型" required>
           <el-select  v-model="business.type" placeholder="选择类型" :disabled="!editable">
             <el-option 
             v-for="(TYPE, index) in businessType" 
             :value="TYPE" 
-            :key="index">  
+            :key="index">
             </el-option>
           </el-select>
         </el-form-item>
@@ -498,50 +461,31 @@
           </el-select>
         </el-form-item>
       </el-col>
-    </el-row> 
-    <el-row>
-      <el-col :span="20">
-        <label required>被审计单位</label>
-          <template v-for="(Unit, index) in business.beingAuditedUnit">
-            <div class="input-group" v-if="editable">
-              <el-select v-model="Unit.unit" filterable placeholder="请选择">
-                <el-option
-                  v-for="item in customerList"
-                  :key="item.id"
-                  :label="item.customerName"
-                  :value="item.customerName">
-                </el-option>
-              </el-select>
-            </div>
-            <div class="input-group" v-if="!editable">
-              <div>{{ Unit.unit }}</div>
-            </div>
-            <h4 class="d-ib f-l" v-if="editable">
-              <a class="text-danger" @click="delUnits(index)">
-                <img src="../../../../img/delete_icon.svg">
-              </a>
-            </h4>
-          </template>
-      </el-col>
-      <el-col :span="4">
-        <h4 class="d-ib f-l" v-if="editable">
-          <a class="text-danger" @click="addUnits()">
-            <img src="../../../../img/add_icon.svg">
-          </a>
-        </h4>
-      </el-col>
     </el-row>
     <el-row>
       <el-col :span="8">
+        <el-form-item label="委托单位(客户）" required>
+          <el-select v-model="business.institution.customerName" filterable @change="changeCustomer" placeholder="选择客户" :disabled="!editable">
+            <el-option 
+              v-for="item in customerList"
+              :key="item.id"
+              :label="item.customerName"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
         <el-form-item label="项目经理" required>
-          <el-select v-model="customerList" filterable placeholder="选择客户" :disabled="!editable">
+          <input type="text" class="form-control" placeholder="请输入项目经理" v-model="business.manager.name" :disabled="!editable">
+          <!-- <el-select v-model="customerList" filterable placeholder="选择客户" :disabled="!editable">
             <el-option
               v-for="item in customerList"
               :key="item.id"
               :label="item.customerName"
               :value="item.customerName">
             </el-option>
-          </el-select>
+          </el-select> -->
         </el-form-item>
       </el-col>
       <el-col :span="8">
@@ -553,18 +497,79 @@
                           :guide="false"
                           placeholderChar="#">
             </masked-input>
-            <div class="input-group-addon">元</div>
+            <span>元</span>
           </div>  
         </el-form-item>
       </el-col>
     </el-row> 
+    <el-row>
+      <el-col :span="8">
+        <el-form-item label="客户联系人">
+          <el-input v-model="business.proposer.tele" :disabled="true"></el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="计划工期" required>
+          <el-col :span="11">
+            <el-form-item >
+              <el-date-picker type="date" placeholder="选择日期" v-model="business.time.start" style="width: 100%;" :disabled="!editable"></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col class="line" :span="2">至</el-col>
+          <el-col :span="11">
+           <el-form-item >
+             <el-date-picker type="date" placeholder="选择日期" v-model="business.time.end" style="width: 100%;" :disabled="!editable"></el-date-picker>
+           </el-form-item>
+          </el-col>
+        </el-form-item>
+      </el-col>
+    </el-row>
     <el-form-item label="报价依据"  placeholder="请输入报价依据" required>
       <el-input v-model="business.basisQuote" :disabled="!editable" ></el-input>
     </el-form-item>
-    <el-row><el-form-item label="报告信息"></el-form-item></el-row>
+    <el-row>
+      <el-col :span="20">
+        <el-form-item label="被审计单位" required>
+          <template class="addition" v-for="(Unit, index) in business.beingAuditedUnit">
+            <el-row>
+              <el-col :span="22">
+                <div v-if="editable">
+                  <el-select v-model="Unit.unit" filterable placeholder="请选择">
+                    <el-option
+                      v-for="item in customerList"
+                      :key="item.id"
+                      :label="item.customerName"
+                      :value="item.customerName">
+                    </el-option>
+                  </el-select>
+                </div>
+                <div class="input-group" v-if="!editable">
+                  <div>{{ Unit.unit }}</div>
+                </div>
+              </el-col>
+              <el-col :span="2">
+                <a class="text-danger" @click="delUnits(index)" v-if="editable">
+                  <img src="../../../../img/delete_icon.svg">
+                </a>
+              </el-col>
+            </el-row>
+          </template>
+        </el-form-item>
+      </el-col>
+      <el-col :span="2">
+        <h4 class="d-ib f-l" v-if="editable">
+          <a class="text-danger" @click="addUnits()">
+            <img src="../../../../img/add_icon.svg">
+          </a>
+        </h4>
+      </el-col>
+    </el-row>   
+    <el-row>
+      <el-form-item label="报告信息"></el-form-item>
+    </el-row>
     <label class="col-sm-2 control-label">出具报告类型</label>
     <div class="form-group">
-      <div class="my-col-sm-5 check-wrap">
+      <div class="check-wrap">
           <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index">
             <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable" :id="TYPE.name+index">
             <label class="checkbox-inline" :key="index" :for="TYPE.name+index">
@@ -597,18 +602,212 @@
       </el-col>
     </el-row>
     <el-row><el-form-item label="合同体制信息"></el-form-item></el-row>
-    <el-form-item label="合同体制" required>
+    <!-- <el-form-item label="合同体制" required>
       <el-radio-group v-model="business.contractType.name">
         <el-radio  v-model="business.contractType.name" label="1" value="联合体" :disabled="!editable" id="common">联合体</el-radio>
         <el-radio  v-model="business.contractType.name" label="2" value="非联合体" :disabled="!editable" id="nocommon">非联合体</el-radio>
       </el-radio-group>
-    </el-form-item>
-    <el-form-item label="部门协作" required>
+    </el-form-item> -->
+    <div class="form-group">
+      <label class="col-sm-2 control-label">合同体制</label>
+      <div class="my-col-sm-5 check-wrap">
+        <input class="magic-radio" type="radio" name="contractSystem" value="联合体" v-model="business.contractType.name" :disabled="!editable" id="common">
+        <label class="radio-inline" for="common">
+          联合体
+        </label>
+        <input class="magic-radio" type="radio" name="contractSystem" value="非联合体" v-model="business.contractType.name" :disabled="!editable" id="nocommon">
+        <label class="radio-inline" for="nocommon">
+          非联合体
+        </label>
+      </div>
+    </div>
+    <div class="form-group" v-if="contractTypeChan">
+      <label class="col-sm-12 control-label">基本取费</label>
+      <div class="my-col-sm-5">
+        <div class="row form-group">
+          <div class="col-sm-5">
+            <div class="input-group">
+              <div class="input-group-addon">主办方</div>
+              <input type="text" class="form-control" placeholder="请输入主办方" v-model="business.contractType.basicFee.main.name" :disabled="!editable">
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="input-group">
+              <div class="input-group-addon">比例</div>
+              <input type="number" class="form-control" placeholder="请输入比例" v-model.number="business.contractType.basicFee.main.percentage" :disabled="!editable">
+              <div class="input-group-addon">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <template v-for="(DEPEND, index) in business.contractType.basicFee.depend">
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">协办方</div>
+                <input type="text" class="form-control" placeholder="请输入协办方" v-model="DEPEND.name" :disabled="!editable">
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">比例</div>
+                <input type="number" class="form-control" placeholder="请输入比例" v-model.number="DEPEND.percentage" :disabled="!editable">
+                <div class="input-group-addon">%</div>
+              </div>
+            </div>
+            <h4 class="col-sm-1" v-if="editable">
+              <a class="text-danger" @click="delBasicFee(index)">
+                <img src="../../../../img/delete_icon.svg">
+              </a>
+            </h4>
+          </template>
+          <h4 class="col-sm-1" v-if="editable">
+            <a class="text-danger" @click="addBasicFee()">
+              <img src="../../../../img/add_icon.svg">
+            </a>
+          </h4>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" v-if="contractTypeChan">
+      <label class="col-sm-12 control-label">效益取费</label>
+      <div class="my-col-sm-5">
+        <div class="row form-group">
+          <div class="col-sm-5">
+            <div class="input-group">
+              <div class="input-group-addon">主办方</div>
+              <input type="text" class="form-control" placeholder="请输入主办方" v-model="business.contractType.benefitFee.main.name" :disabled="!editable">
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="input-group">
+              <div class="input-group-addon">比例</div>
+              <input type="number" class="form-control" placeholder="请输入比例" v-model.number="business.contractType.benefitFee.main.percentage" :disabled="!editable">
+              <div class="input-group-addon">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group" >
+          <template v-for="(DEPEND, index) in business.contractType.benefitFee.depend">
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">协办方</div>
+                <input type="text" class="form-control" placeholder="请输入协办方" v-model="DEPEND.name" :disabled="!editable">
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">比例</div>
+                <input type="number" class="form-control" placeholder="请输入比例" v-model.number="DEPEND.percentage" :disabled="!editable">
+                <div class="input-group-addon">%</div>
+              </div>
+            </div>
+            <h4 class="col-sm-1" v-if="editable">
+              <a class="text-danger" @click="delBenefitFee(index)">
+                <img src="../../../../img/delete_icon.svg">
+              </a>
+            </h4>
+          </template>
+          <h4 class="col-sm-1" v-if="editable">
+            <a class="text-danger" @click="addBenefitFee()">
+              <img src="../../../../img/add_icon.svg">
+            </a>
+          </h4>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" v-if="business.feeBasisExist">
+      <label class="col-sm-2 control-label">取费依据</label>
+      <div class="my-col-sm-5">
+        <textarea cols="10"
+                  rows="3"
+                  maxlength="100"
+                  class="form-control"
+                  placeholder="请输入取费依据"
+                  v-model="business.feeBasis"
+                  :disabled="!editable">
+        </textarea>
+      </div>
+    </div>
+    <div class="form-group" v-if="business.feeBasisExist">
+      <label class="col-sm-2 control-label">费率</label>
+      <div class="my-col-sm-5">
+        <div class="input-group">
+          <input type="number"
+                 class="form-control"
+                 placeholder="请输入费率"
+                 v-model="business.feeRate"
+                 :disabled="!editable">
+          <div class="input-group-addon">%</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">部门协作</label>
+      <div class="my-col-sm-5 check-wrap">
+        <input class="magic-radio" type="radio" name="departmentCooperation" value="有部门合作" v-model="business.departmentCoop.name" :disabled="!editable" id="has">
+        <label class="radio-inline" for="has">
+          有部门合作
+        </label>
+        <input class="magic-radio" type="radio" name="departmentCooperation" value="无部门合作" v-model="business.departmentCoop.name" :disabled="!editable" id="hasNot">
+        <label class="radio-inline" for="hasNot">
+          无部门合作
+        </label>
+      </div>
+    </div>
+    <div class="form-group" v-if="departmentCoopChan">
+      <label class="col-sm-2 control-label">合作部门</label>
+      <div class="my-col-sm-5">
+        <div class="row form-group">
+          <div class="col-sm-5">
+            <p class="form-control-static">主要部门：{{business.departmentCoop.departments.main.name}}</p>
+          </div>
+          <div class="col-sm-5">
+            <div class="input-group">
+              <div class="input-group-addon">比例</div>
+              <input type="number" class="form-control" placeholder="请输入比例" v-model.number="business.departmentCoop.departments.main.percentage" :disabled="!editable">
+              <div class="input-group-addon">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <template v-for="(COOP, index) in business.departmentCoop.departments.coop">
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">合作部门</div>
+                <input type="text" class="form-control" placeholder="请输入合作部门" v-model="COOP.name" :disabled="!editable">
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="input-group">
+                <div class="input-group-addon">比例</div>
+                <input type="number" class="form-control" placeholder="请输入比例" v-model.number="COOP.percentage" :disabled="!editable">
+                <div class="input-group-addon">%</div>
+              </div>
+            </div>
+            <h4 class="col-sm-1" v-if="editable">
+              <a class="text-danger" @click="delDepartments(index)">
+                <img src="../../../../img/delete_icon.svg">
+              </a>
+            </h4>
+          </template>
+          <h4 class="col-sm-1" v-if="editable">
+            <a class="text-danger" @click="addDepartments()">
+              <img src="../../../../img/add_icon.svg">
+            </a>
+          </h4>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- <el-form-item label="部门协作" required>
       <el-radio-group v-model="business.departmentCoop.name">
         <el-radio  v-model="business.departmentCoop.name" label="1" value="有部门合作" :disabled="!editable" id="has">有部门合作</el-radio>
         <el-radio  v-model="business.departmentCoop.name" label="2" value="无部门合作" :disabled="!editable" id="hasNot">无部门合作</el-radio>
       </el-radio-group>
-    </el-form-item>
+    </el-form-item> -->
     <el-row><el-form-item label="人员信息"></el-form-item></el-row>
     <el-form-item label="参审注师" required>
       <el-input type="text" placeholder="请输入参审注师" v-model="business.reviewCPA.name" :disabled="!editable">
@@ -618,10 +817,10 @@
       <el-input type="text" placeholder="请输入参审助理" v-model="business.reviewAssistant.name" :disabled="!editable">
       </el-input>
     </el-form-item>
-    <el-form-item>
+    <!-- <el-form-item>
       <el-button type="primary" @click="submitForm('business')">立即创建</el-button>
       <el-button @click="resetForm('business')">重置</el-button>
-    </el-form-item>
+    </el-form-item> -->
   </el-form>
 </template>
 
@@ -713,23 +912,8 @@ export default {
         name: [
           { required: true, message: '请输入项目名称', trigger: 'blur' }
         ],
-        region: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
-        ],
-        date1: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-        ],
-        date2: [
-          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-        ],
-        type: [
-          { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-        ],
-        resource: [
-          { required: true, message: '请选择活动资源', trigger: 'change' }
-        ],
-        desc: [
-          { required: true, message: '请填写活动形式', trigger: 'blur' }
+        scope:[
+          { required: true, message: '请输入业务范围与审计目标', trigger: 'blur' }
         ]
       }
       // business.institution: {
@@ -1058,6 +1242,7 @@ export default {
                   data: {
                     id: this.business.id,
                     projectName: this.business.name,
+                    businessScope: this.business.scope,
                     contractNo: this.business.number,
                     requester: this.business.institution.customerName,
                     requesterId: this.business.institution.id,
@@ -1318,50 +1503,17 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.delete{
+  margin-top: -72px;
+  margin-left: 220px;
+}
+.addition{
+  position: relative;
+}
 .btn-bg{
 }
-.business-editor {
-  a.fa {
-    text-decoration: none;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-  .my-col-sm-5 {
-    width: 600px;
-    float: left;
-  }
-  label.col-sm-2.control-label {
-    width: 145px;
-  }
-  textarea {
-    resize: none;
-  }
-  .text-danger {
-    text-decoration: none;
-    cursor: pointer;
-    img {
-      width: 42px;
-    }
-  }
+.demo-business {
 
-  .check-wrap {
-    padding-top: 7px;
-  }
-
-  .form-horizontal .checkbox-inline {
-      margin-top: 0;
-      margin-bottom: 0;
-      padding-top: 0;
-  }
-
-  .adjust-mb {
-    margin-bottom: 0;
-  }
-
-  .el-select {
-      width: 500px;
-  }
 }
 
 </style>
