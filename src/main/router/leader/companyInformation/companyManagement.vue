@@ -5,7 +5,7 @@
       <button class="btn my-btn" @click="switchDepart">职能部门</button>
       <button class="btn my-btn" @click="switchDepart">业务部门</button>
     </card>
-    <div v-if="functionShow">
+    <div v-if="!functionShow">
       <company-list v-if="reloadList" @noticeJump="noticeJump"></company-list>
       <div class="company-wrapper">
         <router-view @reloadComList="reloadComList"></router-view>
@@ -13,7 +13,7 @@
     </div>
     <div class="depart-wrapper" v-else>
       <card class="tree">
-        <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+        <el-tree :data="treeData" :props="defaultProps" :highlight-current="highlightCurrent" :expand-on-click-node="expandOnClickNode" @node-click="handleNodeClick"></el-tree>
       </card>
       <card class="detail">
         <company-detail :iniCompany="company" v-if="checking" @edit="edit"></company-detail>
@@ -27,6 +27,7 @@
 import axios from 'axios';
 import crumbs from '@/main/component/crumbs.vue';
 import card from '@/main/component/card.vue';
+import TreeDataHandle from '@/main/component/tree-data-handle.js';
 import companyList from '@/main/router/leader/companyInformation/component/companyList.vue';
 import companyDetail from './component/companyDetail.vue';
 import companyEdit from './component/companyEdit.vue';
@@ -80,45 +81,26 @@ export default {
         opertionsArray: [],
         selectionsArray: []
       },
-      data: [{
-               label: '一级 1',
-               children: [{
-                 label: '二级 1-1',
-                 children: [{
-                   label: '三级 1-1-1'
-                 }]
-               }]
-             }, {
-               label: '一级 2',
-               children: [{
-                 label: '二级 2-1',
-                 children: [{
-                   label: '三级 2-1-1'
-                 }]
-               }, {
-                 label: '二级 2-2',
-                 children: [{
-                   label: '三级 2-2-1'
-                 }]
-               }]
-             }, {
-               label: '一级 3',
-               children: [{
-                 label: '二级 3-1',
-                 children: [{
-                   label: '三级 3-1-1'
-                 }]
-               }, {
-                 label: '二级 3-2',
-                 children: [{
-                   label: '三级 3-2-1'
-                 }]
-               }]
-             }],
-             defaultProps: {
-                       children: 'children',
-                       label: 'label'
-                     }
+      treeData: [{
+        label: '天津中审联',
+        children: [{
+          label: '二级 1-1',
+          children: [{
+            label: '三级 1-1-1',
+            children: [{
+              label: 1
+            }, {
+              label: 2
+            }]
+          }]
+        }]
+      }],
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      },
+      highlightCurrent: true,
+      expandOnClickNode: false
     };
   },
   computed: {
@@ -170,7 +152,8 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            console.log(rep.data.data)
+            console.log(rep.data.data.companyArray)
+            this.treeData = TreeDataHandle(rep.data.data.companyArray)
             resolve('done');
           }
         }, (rep) => { });
@@ -199,7 +182,8 @@ export default {
     card,
     companyList,
     companyDetail,
-    companyEdit
+    companyEdit,
+    TreeDataHandle
   }
 };
 </script>
