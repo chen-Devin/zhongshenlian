@@ -430,9 +430,9 @@
     <el-form-item label="项目名称" prop="name">
       <el-input v-model="business.name" :disabled="!editable"></el-input>
     </el-form-item>
-    <el-form-item label="业务范围与审计目标" prop="scope" required>
+    <!-- <el-form-item label="业务范围与审计目标" prop="scope" required>
       <el-input v-model="business.scope" :disabled="!editable" type="textarea"></el-input>
-    </el-form-item>
+    </el-form-item> -->
     <el-row>
       <el-col :span="8">
         <el-form-item label="提交申请人">
@@ -478,14 +478,6 @@
       <el-col :span="8">
         <el-form-item label="项目经理" required>
           <input type="text" class="form-control" placeholder="请输入项目经理" v-model="business.manager.name" :disabled="!editable">
-          <!-- <el-select v-model="customerList" filterable placeholder="选择客户" :disabled="!editable">
-            <el-option
-              v-for="item in customerList"
-              :key="item.id"
-              :label="item.customerName"
-              :value="item.customerName">
-            </el-option>
-          </el-select> -->
         </el-form-item>
       </el-col>
       <el-col :span="8">
@@ -567,7 +559,55 @@
     <el-row>
       <el-form-item label="报告信息"></el-form-item>
     </el-row>
-    <label class="col-sm-2 control-label">出具报告类型</label>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">出具报告类型</label>
+      <div class="my-col-sm-5 check-wrap">
+        <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index">
+          <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable" :id="TYPE.name+index">
+          <label class="checkbox-inline" :key="index" :for="TYPE.name+index">
+            {{TYPE.name}}
+          </label>
+        </div>
+        <hr>
+        <template v-for="(TYPE, indexOuter) in business.report.type" v-if="TYPE.state">
+          <p>{{TYPE.name}}</p>
+          <div class="d-ib" v-for="(WORD, index) in TYPE.words" :key="index">
+            <input class="magic-checkbox" type="checkbox" v-model="WORD.state" @change="reportTypeChan(TYPE, WORD)" :disabled="!editable" :id="index+TYPE.name">
+            <label class="checkbox-inline" :key="index" :for="index+TYPE.name">
+              {{WORD.name}}
+            </label>
+          </div>
+          <hr>
+        </template>
+      </div>
+    </div>
+    <div class="form-group" v-show="false">
+      <label class="col-sm-2 control-label">项目编号</label>
+      <div class="my-col-sm-5">
+        <p class="form-control-static">{{business.number}}</p>
+      </div>
+    </div>
+    <div class="form-group" v-if="business.auditTime.exist">
+      <label class="col-sm-12 control-label">审计期间</label>
+      <div class="my-col-sm-5">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">起始日期</div>
+              <input type="date" class="form-control" placeholder="请输入项目开始时间" v-model="business.auditTime.start" :disabled="!editable">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">截至日期</div>
+              <input type="date" class="form-control" placeholder="请输入项目结束时间" v-model="business.auditTime.end" :disabled="!editable">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <label class="col-sm-2 control-label">出具报告类型</label>
     <div class="form-group">
       <div class="check-wrap">
           <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index">
@@ -589,6 +629,31 @@
           </template>
       </div>
     </div>
+    <div class="form-group" v-show="false">
+      <label class="col-sm-2 control-label">项目编号</label>
+      <div class="my-col-sm-5">
+        <p class="form-control-static">{{business.number}}</p>
+      </div>
+    </div>
+    <div class="form-group" v-if="business.auditTime.exist">
+      <label class="col-sm-2 control-label">审计期间</label>
+      <div class="my-col-sm-5">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">起始日期</div>
+              <input type="date" class="form-control" placeholder="请输入项目开始时间" v-model="business.auditTime.start" :disabled="!editable">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">截至日期</div>
+              <input type="date" class="form-control" placeholder="请输入项目结束时间" v-model="business.auditTime.end" :disabled="!editable">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
     <el-row>
       <el-col :span="8">
         <el-form-item label="报告数量">
@@ -964,7 +1029,8 @@ export default {
           TYPE.words[i].state = false;
         }
         if (TYPE.name === '会计所') {
-          this.business.auditTime.exist = false;
+          this.business.auditT
+          ime.exist = false;
         }
         if (TYPE.name === '造价所') {
           this.business.feeBasisExist = false;
