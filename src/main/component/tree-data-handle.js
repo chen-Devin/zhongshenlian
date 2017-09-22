@@ -20,8 +20,10 @@ function treeHanlde(arr) {
     // 二级
     arr.forEach((item, index) => {
       obj.children.push({
+          id: item.id,
           label: item.name,
-          children: item.departmentArray
+          children: item.departmentArray,
+          level: 2
       })
     })
     // 其他
@@ -29,11 +31,14 @@ function treeHanlde(arr) {
       item.children.forEach((jtem) => {
         jtem.label = jtem.name
         jtem.children = jtem.projectDepartmentArray
+        jtem.level = 3
         jtem.children.forEach((ktem) => {
           ktem.label = ktem.name
           ktem.children = ktem.groupArray
+          ktem.level = 4
           ktem.children.forEach((mtem) => {
             mtem.label = mtem.name
+            mtem.level = 5
           })
         })
       })

@@ -31,7 +31,6 @@ import businessReviewListLeader from './leader/businessReviewList.vue';
 import staffManagementAuthor from './leader/staffManagementAuthor.vue';
 import staffManagementInfor from './leader/staffManagementInfor.vue';
 import companyManagement from './leader/companyInformation/companyManagement.vue';
-import companyInformation from './leader/companyInformation/component/companyInformation.vue';
 import functionalManagement from './leader/functionalInformation/functionalManagement.vue';
 import functionalInformation from './leader/functionalInformation/component/functionalInformation.vue';
 
@@ -206,12 +205,7 @@ const router = new VueRouter({
         },
         {
             path: '/company-management',
-            component: companyManagement,
-            children: [{
-                path: '/company-management/:id',
-                name: 'companyManagement',
-                component: companyInformation
-            }]
+            component: companyManagement
         },
         {
             path: '/functional-management',

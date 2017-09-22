@@ -27,11 +27,8 @@ export default {
       reload: true
     };
   },
-  computed: {
-
-  },
   methods: {
-    getCompanyList () {
+    getInfoDepartmentList () {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -40,7 +37,7 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'getCompanyList',
+                command: 'getInfoDepartmentList',
                 platform: 'web'
               }
               return JSON.stringify(obj);
@@ -48,14 +45,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.companyList = rep.data.data.companyList
-            this.companyList.push({
-              name: '新建公司',
-              id: 'add'
-            }, {
-              name: '删除公司',
-              id: 'del'
-            })
+            this.companyList = rep.data.data.departmentList
             this.companyList.forEach((item, index) => {
               if (index === 0) {
                 item.isActive = true
@@ -78,14 +68,12 @@ export default {
       })
       this.reload = false;
       this.reload= true;
-      this.jumpId = company.id
-      this.$emit('noticeJump', this.jumpId)
+      this.$emit('switchFunction', company.id)
     }
   },
   created() {
-    this.getCompanyList().then(() => {
-      this.jumpId = this.companyList[0].id
-      this.$emit('noticeJump', this.jumpId)
+    this.getInfoDepartmentList().then(() => {
+      // this.jumpId = this.companyList[0].id
     }, () => { });
   },
   components: {

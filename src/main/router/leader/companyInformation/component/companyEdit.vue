@@ -7,7 +7,7 @@
       <el-row>
         <el-col :span="9" :offset="2">
           <p class="input-wrapper">
-            公司编号：
+            公司简称：
             <input type="text" class="form-control" v-model="company.number" placeholder="请输入公司编号">
           </p>
           <p class="input-wrapper">
@@ -28,10 +28,10 @@
           </p>
         </el-col>
         <el-col :span="9" :offset="4">
-          <!-- <p class="input-wrapper">
+          <p class="input-wrapper">
             参审人员标签：
-            <input type="text" class="form-control" v-model="company.counselorTagArray" placeholder="请输入参审人员标签">
-          </p> -->
+            <input type="text" class="form-control" v-model="company.counselorTag" placeholder="请输入参审人员标签">
+          </p>
           <p class="input-wrapper">
             经营范围：
             <input type="text" class="form-control" v-model="company.mainWork" placeholder="请输入经营范围">
@@ -50,6 +50,10 @@
           <p class="input-wrapper">
             开户银行账号：
             <input type="text" class="form-control" v-model="company.openAccountBankNumber" placeholder="请输入开户账号">
+          </p>
+          <p class="input-wrapper">
+            人员数量：
+            <input type="text" class="form-control" v-model="company.staffNum" placeholder="请输入人员数量">
           </p>
         </el-col>
       </el-row>
@@ -99,87 +103,11 @@ export default {
       }],
       openAccountBankName: '',
       inputReportModalShow: false,
-      company: {
-        id: '',
-        name: '',
-        number: '',
-        creditCode: '',
-        departmentArray: {
-          id: '',
-          name: '',
-          number: '',
-          principalId: '',
-          principalName: '',
-          authorityType: '',
-          principalTelephone: '',
-          editing: false
-        },
-        legalPersonId: '',
-        legalPersonName: '',
-        legalPersonTelephone: '',
-        principalId: '',
-        principalName: '',
-        principalTelephone: '',
-        mainWork: '',
-        openAccountBankName: '',
-        openAccountBankNumber: '',
-        reportType: [{
-          name: ''
-        }],
-        reportTypeOption: [{
-          name: ''
-        }],
-        counselorTagArray: [{
-          counselorTag: ''
-        }],
-        opertionsArray: [],
-        selectionsArray: []
-      },
+      company: this.iniCompany,
       checked: []
     };
   },
-  watch: {
-    companyId: function(val, oldVal) {
-      if (val !== oldVal) {
-        this.getCompanyInfo()
-      }
-    }
-  },
-  computed: {
-    companyId () {
-      return this.$route.params.id
-    }
-  },
   methods: {
-    getCompanyInfo () {
-      return new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              let obj = {
-                command: 'getCompanyInfo',
-                platform: 'web',
-                companyId: this.companyId
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.company = rep.data.data
-            let arr = []
-            this.company.reportType.forEach((item, index) => {
-              arr.push(item.name)
-            })
-            this.checked = arr
-            resolve('done');
-          }
-        }, (rep) => { });
-      })
-    },
     inputReportModal () {
       this.inputReportModalShow = true
     },
@@ -197,7 +125,7 @@ export default {
       this.inputReportModalShow = true
     },
     cancel () {
-      this.$emit('cancel')
+      this.$emit('cancel', 2)
     },
     submit () {
       let arr = []
@@ -222,7 +150,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.$emit('editSuccess')
+            this.$emit('editSuccess', 2, rep.data.data.companyId)
             this.$message('编辑公司信息成功')
             resolve('done');
           }
@@ -230,9 +158,7 @@ export default {
       })
     }
   },
-  created() {
-    this.getCompanyInfo()
-  },
+  props: ['iniCompany'],
   components: {
     card,
     modal,

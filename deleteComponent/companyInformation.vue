@@ -1,15 +1,5 @@
 <template>
   <div class="company-detail-wrapper">
-    <card>
-      <input-company v-if="adding" @reloadComList="reloadComList"></input-company>
-      </p>
-    </card>
-    <card>
-      <company-department
-        :iniCompany="company"
-        :iniDepartmentArray="company.departmentArray"
-        @reloadList="reloadList"></company-department>
-    </card>
     <company-del @cancel="cancelDelete" v-if="deleteShow" @reloadComList="reloadComList"></company-del>
   </div>
 </template>

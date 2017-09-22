@@ -6,17 +6,18 @@
     <div class="company-detail">
       <el-row>
         <el-col :span="9" :offset="2">
-          <p>公司编号：{{ company.number }}</p>
+          <p>公司简称：{{ company.number }}</p>
           <p>公司名称：{{ company.name }}</p>
           <p>社会统一信用代码：{{ company.creditCode }}</p>
           <p>公司法人：{{ company.legalPersonName }}</p>
           <p>公司负责人：{{ company.principalName }}</p>
         </el-col>
         <el-col :span="9" :offset="4">
-          <!-- <p>参审人员标签：{{ company.counselorTagArray }}</p> -->
+          <p>参审人员标签：{{ company.counselorTag }}</p>
           <p>经营范围：{{ company.mainWork }}</p>
           <p>开户银行：{{ company.openAccountBankName }}</p>
           <p>开户银行账号：{{ company.openAccountBankNumber }}</p>
+          <p>人员数量：{{ company.staffNum }}</p>
         </el-col>
       </el-row>
       <el-row>
@@ -40,6 +41,8 @@
     </div>
     <p class="btns">
       <button type="button" class="btn my-btn submit-btn" @click="edit">编辑</button>
+      <button type="button" class="btn my-btn draft-btn" @click="add">新增部门</button>
+      <button type="button" class="btn my-btn cancel-btn" @click="deleteDep">删除</button>
     </p>
   </div>
 </div>
@@ -90,7 +93,13 @@ export default {
   },
   methods: {
     edit () {
-      this.$emit('edit')
+      this.$emit('edit', 2)
+    },
+    add () {
+      this.$emit('add', 2)
+    },
+    deleteDep () {
+      this.$emit('deleteDep', 2)
     },
     showType () {
       this.typeShow = true;
