@@ -22,7 +22,7 @@
           <el-menu-item index="/customer-infor-list"><i class="el-icon-message"></i>客户信息管理</el-menu-item>
           <!-- <el-menu-item index="{2}"><i class="el-icon-circle-check"></i>业务信息管理</el-menu-item> -->
           <!-- <el-menu-item index="/functional-management"><i class="el-icon-edit"></i>职能部门信息管理</el-menu-item> -->
-          <el-menu-item index="/company-management"><i class="el-icon-edit"></i>公司信息管理</el-menu-item>
+          <!-- <el-menu-item index="/company-management"><i class="el-icon-edit"></i>公司信息管理</el-menu-item> -->
           <!-- <el-menu-item index="{5}"><i class="el-icon-edit"></i>外部协办方信息管理</el-menu-item> -->
         </el-menu-item-group>
       </el-submenu>
