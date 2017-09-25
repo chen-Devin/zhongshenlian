@@ -81,6 +81,7 @@
            :iniCompany3="companyDepartment" 
            @edit="edit"
            @cancel="cancel"
+           @editSuccess="editSuccess"
            v-else></company-department-edit>
           <modal v-if="addShow3">
             <div slot="body">
@@ -104,7 +105,7 @@
               </el-form>
             </div>
             <div slot="footer">
-              <button class="btn my-btn submit-btn">保存</button>
+              <button class="btn my-btn submit-btn" @click="save(3)">保存</button>
               <button class="btn my-btn cancel-btn" @click="addShow3=false">取消</button>
             </div>
           </modal>
@@ -114,43 +115,45 @@
             </div>
             <div slot="footer">
               <button class="btn my-btn cancel-btn" @click="deleteShow3=false">取消</button>
-              <button class="btn my-btn submit-btn">确定</button>
+              <button class="btn my-btn submit-btn" @click="confirmDelete(3)">确定</button>
             </div>
           </modal>
         </template>
         <!--第四级 项目部-->
-        <!-- <project-department-detail 
-          :iniCompany="company" 
-          @edit="edit" 
-          @add="add" 
-          @deleteDep="deleteDep"></project-department-detail> -->
-        <!-- <project-department-edit :iniCompany="company"></project-department-edit> -->
-        <modal v-if="addShow4">
-          <div slot="body">
-            <el-form 
-              :model="form4" 
-              :rules="form4Rules" 
-              ref="form4" 
-              label-width="100px">
-              <el-form-item label="小组名称" prop="groupName">
-                <el-input v-model="form4.groupName"></el-input>
-              </el-form-item>
-            </el-form>
-          </div>
-          <div slot="footer">
-            <button class="btn my-btn submit-btn">保存</button>
-            <button class="btn my-btn cancel-btn" @click="addShow4=false">取消</button>
-          </div>
-        </modal>
-        <modal v-if="deleteShow4">
-          <div slot="body">
-            删除后部门信息将不可恢复，是否确定删除？
-          </div>
-          <div slot="footer">
-            <button class="btn my-btn cancel-btn" @click="deleteShow4=false">取消</button>
-            <button class="btn my-btn submit-btn">确定</button>
-          </div>
-        </modal>
+        <template v-if="show4">
+          <project-department-detail 
+            :iniCompany4="ProjectDepartment" 
+            @edit="edit" 
+            @add="add" 
+            @deleteDep="deleteDep" v-if="detailShow4"></project-department-detail>
+          <project-department-edit :iniCompany4="ProjectDepartment" v-else></project-department-edit>
+          <modal v-if="addShow4">
+            <div slot="body">
+              <el-form 
+                :model="form4" 
+                :rules="form4Rules" 
+                ref="form4" 
+                label-width="100px">
+                <el-form-item label="小组名称" prop="groupName">
+                  <el-input v-model="form4.groupName"></el-input>
+                </el-form-item>
+              </el-form>
+            </div>
+            <div slot="footer">
+              <button class="btn my-btn submit-btn">保存</button>
+              <button class="btn my-btn cancel-btn" @click="addShow4=false">取消</button>
+            </div>
+          </modal>
+          <modal v-if="deleteShow4">
+            <div slot="body">
+              删除后部门信息将不可恢复，是否确定删除？
+            </div>
+            <div slot="footer">
+              <button class="btn my-btn cancel-btn" @click="deleteShow4=false">取消</button>
+              <button class="btn my-btn submit-btn">确定</button>
+            </div>
+          </modal>
+        </template>
         <!--第五级 小组-->
         <!-- <group-detail :iniCompany="company" @edit="edit"></group-detail>
         <group-detail-edit :iniCompany="company" @edit="edit"></group-detail-edit> -->
@@ -271,6 +274,7 @@ export default {
       deleteShow4: false,
       detailShow2: true,
       detailShow3: true,
+      detailShow4: true,
       companyId: '',
       functionId: '',
       form2: {
@@ -447,6 +451,30 @@ export default {
         }, (rep) => { });
       })
     },
+    getProjectDepartmentInfo (id) {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getProjectDepartmentInfo',
+                platform: 'web',
+                projectDepartmentId: id
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.ProjectDepartment = rep.data.data
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
     editCompanyDepartment () {
       this.form2.companyId = this.companyId
       return new Promise((resolve, reject) => {
@@ -472,7 +500,8 @@ export default {
         }, (rep) => { });
       })
     },
-    delCompany () {
+    editProjectDepartment () {
+      this.form3.companyId = this.companyId
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -481,9 +510,61 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'editCompanyDepartment',
+                command: 'editProjectDepartment',
                 platform: 'web',
-                companyId: this.companyId
+                data: this.form3
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message(rep.data.msg)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    delCompany () {
+      let arr = []
+      let obj = {}
+      obj.name = this.companyId
+      arr.push(obj)
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'delCompany',
+                platform: 'web',
+                companyId: arr
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message(rep.data.msg)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    delCompanyDepartment () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'delCompanyDepartment',
+                platform: 'web',
+                companyDepartmentId: 3
               }
               return JSON.stringify(obj);
             })()
@@ -501,9 +582,7 @@ export default {
         this.getCompanyInfo(id)
         this.detailShow2 = true
       } else if (level === 3) {
-        this.getCompanyDepartmentInfo(data.id)
-        this.show2 = false
-        this.show3 = true
+        this.getCompanyDepartmentInfo(id)
         this.detailShow3 = true
       }
     },
@@ -512,6 +591,8 @@ export default {
         this.detailShow2 = false
       } else if (level === 3) {
         this.detailShow3 = false
+      } else if (level === 4) {
+        this.detailShow4 = false
       }
     },
     add (level) {
@@ -535,12 +616,18 @@ export default {
     confirmDelete (level) {
       if (level === 2) {
         this.delCompany()
+      } else if (level === 3) {
+        this.delCompanyDepartment()
       }
     },
     save (level) {
       if (level === 2) {
         this.editCompanyDepartment().then(() => {
           this.addShow2 = false
+        }, () => {})
+      } else if (level ===3) {
+        this.editProjectDepartment().then(() => {
+          this.addShow3 = false
         }, () => {})
       }
     },
@@ -562,6 +649,11 @@ export default {
         this.getCompanyDepartmentInfo(data.id)
         this.show2 = false
         this.show3 = true
+      } else if (data.level === 4) {
+        this.getProjectDepartmentInfo(data.id)
+        this.show2 = false
+        this.show3 = false
+        this.show4 = true
       }
       
     }

@@ -33,20 +33,6 @@ export default {
     return {
     };
   },
-  // computed: {
-  //   company () {
-  //   //   this.iniCompany3.reportTypeOption.forEach((item, index) => {
-  //   //     this.iniCompany3.reportType.forEach((jtem, index) => {
-  //   //       if (item.name == jtem.name) {
-  //   //         item.selected = true
-  //   //       } else {
-  //   //         // item.selected = false
-  //   //       }
-  //   //     })
-  //   //   })
-  //   //   return this.iniCompany3
-  //   // }
-  // },
   methods: {
     edit () {
       this.$emit('edit', 3)
