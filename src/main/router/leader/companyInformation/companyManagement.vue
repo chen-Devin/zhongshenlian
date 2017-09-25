@@ -19,97 +19,105 @@
       </card>
       <card class="detail">
         <!--第二级 公司-->
-        <company-detail 
-          :iniCompany="company" 
-          @edit="edit" 
-          @add="add" 
-          @deleteDep="deleteDep"
-          v-if="detailShow2"></company-detail>
-        <company-edit
-         :iniCompany="company"
-         @cancel="cancel"
-         @editSuccess="editSuccess"
-         v-else></company-edit>
-        <modal v-if="addShow2">
-          <div slot="body">
-            <el-form 
-              :model="form2" 
-              :rules="form2Rules" 
-              ref="form2" 
-              label-width="100px">
-              <el-form-item label="部门编号" prop="number">
-                <el-input v-model="form2.number"></el-input>
-              </el-form-item>
-              <el-form-item label="部门名称" prop="name">
-                <el-input v-model="form2.name"></el-input>
-              </el-form-item>
-              <el-form-item label="部门负责人" prop="principalTelephone">
-                <el-input v-model="form2.principalTelephone"></el-input>
-              </el-form-item>
-              <el-form-item label="参审注师人数" prop="counselorNum">
-                <el-input v-model="form2.counselorNum"></el-input>
-              </el-form-item>
-              <el-form-item label="参审助理人数" prop="assistantNum">
-                <el-input v-model="form2.assistantNum"></el-input>
-              </el-form-item>
-            </el-form>
-          </div>
-          <div slot="footer">
-            <button class="btn my-btn submit-btn" @click="save(2)">保存</button>
-            <button class="btn my-btn cancel-btn" @click="addShow2=false">取消</button>
-          </div>
-        </modal>
-        <modal v-if="deleteShow2">
-          <div slot="body">
-            删除后公司信息将不可恢复，是否确定删除？
-          </div>
-          <div slot="footer">
-            <button class="btn my-btn cancel-btn" @click="deleteShow2=false">取消</button>
-            <button class="btn my-btn submit-btn" @click="confirmDelete(2)">确定</button>
-          </div>
-        </modal>
+        <template v-if="show2">
+          <company-detail 
+            :iniCompany2="company" 
+            @edit="edit" 
+            @add="add" 
+            @deleteDep="deleteDep"
+            v-if="detailShow2"></company-detail>
+          <company-edit
+           :iniCompany2="company"
+           @cancel="cancel"
+           @editSuccess="editSuccess"
+           v-else></company-edit>
+          <modal v-if="addShow2">
+            <div slot="body">
+              <el-form 
+                :model="form2" 
+                :rules="form2Rules" 
+                ref="form2" 
+                label-width="100px">
+                <el-form-item label="部门编号" prop="number">
+                  <el-input v-model="form2.number"></el-input>
+                </el-form-item>
+                <el-form-item label="部门名称" prop="name">
+                  <el-input v-model="form2.name"></el-input>
+                </el-form-item>
+                <el-form-item label="部门负责人" prop="principalTelephone">
+                  <el-input v-model="form2.principalTelephone"></el-input>
+                </el-form-item>
+                <el-form-item label="参审注师人数" prop="counselorNum">
+                  <el-input v-model="form2.counselorNum"></el-input>
+                </el-form-item>
+                <el-form-item label="参审助理人数" prop="assistantNum">
+                  <el-input v-model="form2.assistantNum"></el-input>
+                </el-form-item>
+              </el-form>
+            </div>
+            <div slot="footer">
+              <button class="btn my-btn submit-btn" @click="save(2)">保存</button>
+              <button class="btn my-btn cancel-btn" @click="addShow2=false">取消</button>
+            </div>
+          </modal>
+          <modal v-if="deleteShow2">
+            <div slot="body">
+              删除后公司信息将不可恢复，是否确定删除？
+            </div>
+            <div slot="footer">
+              <button class="btn my-btn cancel-btn" @click="deleteShow2=false">取消</button>
+              <button class="btn my-btn submit-btn" @click="confirmDelete(2)">确定</button>
+            </div>
+          </modal>
+        </template>
         <!--第三级 业务部-->
-        <!-- <company-department-detail
-         :iniCompany="company" 
-         @edit="edit"
-         @add="add"
-         @deleteDep="deleteDep"></company-department-detail> -->
-        <!-- <company-department-edit :iniCompany="company" @edit="edit"></company-department-edit> -->
-        <modal v-if="addShow3">
-          <div slot="body">
-            <el-form 
-              :model="form3" 
-              :rules="form3Rules" 
-              ref="form3" 
-              label-width="100px">
-              <el-form-item label="项目部名称" prop="name">
-                <el-input v-model="form3.name"></el-input>
-              </el-form-item>
-              <el-form-item label="项目部人数" prop="number">
-                <el-input v-model="form3.number"></el-input>
-              </el-form-item>
-              <el-form-item label="项目部经理" prop="principalTelephone">
-                <el-input v-model="form3.principalTelephone"></el-input>
-              </el-form-item>
-              <el-form-item label="分公司简称" prop="companyAbbreviation">
-                <el-input v-model="form3.companyAbbreviation"></el-input>
-              </el-form-item>
-            </el-form>
-          </div>
-          <div slot="footer">
-            <button class="btn my-btn submit-btn">保存</button>
-            <button class="btn my-btn cancel-btn" @click="addShow3=false">取消</button>
-          </div>
-        </modal>
-        <modal v-if="deleteShow3">
-          <div slot="body">
-            删除后部门信息将不可恢复，是否确定删除？
-          </div>
-          <div slot="footer">
-            <button class="btn my-btn cancel-btn" @click="deleteShow3=false">取消</button>
-            <button class="btn my-btn submit-btn">确定</button>
-          </div>
-        </modal>
+        <template v-if="show3">
+          <company-department-detail
+           :iniCompany3="companyDepartment" 
+           @edit="edit"
+           @add="add"
+           @deleteDep="deleteDep" v-if="detailShow3"></company-department-detail>
+          <company-department-edit
+           :iniCompany3="companyDepartment" 
+           @edit="edit"
+           @cancel="cancel"
+           v-else></company-department-edit>
+          <modal v-if="addShow3">
+            <div slot="body">
+              <el-form 
+                :model="form3" 
+                :rules="form3Rules" 
+                ref="form3" 
+                label-width="100px">
+                <el-form-item label="项目部名称" prop="name">
+                  <el-input v-model="form3.name"></el-input>
+                </el-form-item>
+                <el-form-item label="项目部人数" prop="number">
+                  <el-input v-model="form3.number"></el-input>
+                </el-form-item>
+                <el-form-item label="项目部经理" prop="principalTelephone">
+                  <el-input v-model="form3.principalTelephone"></el-input>
+                </el-form-item>
+                <el-form-item label="分公司简称" prop="companyAbbreviation">
+                  <el-input v-model="form3.companyAbbreviation"></el-input>
+                </el-form-item>
+              </el-form>
+            </div>
+            <div slot="footer">
+              <button class="btn my-btn submit-btn">保存</button>
+              <button class="btn my-btn cancel-btn" @click="addShow3=false">取消</button>
+            </div>
+          </modal>
+          <modal v-if="deleteShow3">
+            <div slot="body">
+              删除后部门信息将不可恢复，是否确定删除？
+            </div>
+            <div slot="footer">
+              <button class="btn my-btn cancel-btn" @click="deleteShow3=false">取消</button>
+              <button class="btn my-btn submit-btn">确定</button>
+            </div>
+          </modal>
+        </template>
         <!--第四级 项目部-->
         <!-- <project-department-detail 
           :iniCompany="company" 
@@ -163,6 +171,7 @@ import companyDetail from './component/companyDetail.vue';
 import companyDepartmentDetail from './component/companyDepartmentDetail.vue';
 import projectDepartmentDetail from './component/projectDepartmentDetail.vue';
 import companyEdit from './component/companyEdit.vue';
+import companyDepartmentEdit from './component/companyDepartmentEdit.vue';
 
 export default {
   name: 'companyManagement',
@@ -213,6 +222,17 @@ export default {
         opertionsArray: [],
         selectionsArray: []
       },
+      companyDepartment: {
+        assistantNum: '',
+        counselorNum: '',
+        createAt: '',
+        id: '',
+        name: '',
+        number: '',
+        principalTelephone: '',
+        removeStatus: '',
+        updateAt: ''
+      },
       functionInfo: {
         id: '',
         name: '',
@@ -241,6 +261,8 @@ export default {
       highlightCurrent: true,
       expandOnClickNode: false,
       defaultExpandAll: true,
+      show2: true,
+      show3: false,
       addShow2: false,
       addShow3: false,
       addShow4: false,
@@ -248,6 +270,7 @@ export default {
       deleteShow3: false,
       deleteShow4: false,
       detailShow2: true,
+      detailShow3: true,
       companyId: '',
       functionId: '',
       form2: {
@@ -418,7 +441,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.company = rep.data.data
+            this.companyDepartment = rep.data.data
             resolve('done');
           }
         }, (rep) => { });
@@ -477,18 +500,25 @@ export default {
       if (level === 2) {
         this.getCompanyInfo(id)
         this.detailShow2 = true
+      } else if (level === 3) {
+        this.getCompanyDepartmentInfo(data.id)
+        this.show2 = false
+        this.show3 = true
+        this.detailShow3 = true
       }
     },
     edit (level) {
       if (level === 2) {
         this.detailShow2 = false
+      } else if (level === 3) {
+        this.detailShow3 = false
       }
     },
     add (level) {
       if (level === 2) {
         this.addShow2 = true
       } else if (level === 3) {
-        
+        this.addShow3 = true
       } else if (level === 4) {
         
       }
@@ -517,13 +547,21 @@ export default {
     cancel (level) {
       if (level === 2) {
         this.detailShow2 = true
-      }
+      } else if (level === 3)
+        // this.Show2 = false
+        // this.show3 = true
+        this.detailShow3 = true
     },
     selectNode (data) {
       if (data.level === 2) {
         this.getCompanyInfo(data.id)
+        this.show2 = true
+        this.show3 = false
+        this.show4 = false
       } else if (data.level === 3) {
         this.getCompanyDepartmentInfo(data.id)
+        this.show2 = false
+        this.show3 = true
       }
       
     }
@@ -542,6 +580,7 @@ export default {
     companyDepartmentDetail,
     projectDepartmentDetail,
     companyEdit,
+    companyDepartmentEdit,
     TreeDataHandle
   }
 };

@@ -79,8 +79,8 @@ export default {
   },
   computed: {
     company () {
-      this.iniCompany.reportTypeOption.forEach((item, index) => {
-        this.iniCompany.reportType.forEach((jtem, index) => {
+      this.iniCompany2.reportTypeOption.forEach((item, index) => {
+        this.iniCompany2.reportType.forEach((jtem, index) => {
           if (item.name == jtem.name) {
             item.selected = true
           } else {
@@ -88,7 +88,7 @@ export default {
           }
         })
       })
-      return this.iniCompany
+      return this.iniCompany2
     }
   },
   methods: {
@@ -111,7 +111,7 @@ export default {
 
     }
   },
-  props: ['iniCompany'],
+  props: ['iniCompany2'],
   created() {
 
   },

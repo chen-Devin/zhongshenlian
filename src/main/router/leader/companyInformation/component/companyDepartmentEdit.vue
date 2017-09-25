@@ -1,0 +1,142 @@
+<template>
+<div>
+  <div class="company-detail-box">
+    <h1 class="title">{{ iniCompany3.name }}</h1>
+    <h5 class="main-title">公司信息</h5>
+    <div class="company-detail">
+      <el-row>
+        <el-col :span="9" :offset="2">
+          <p class="input-wrapper">
+            部门名称：
+            <input type="text" class="form-control" v-model="iniCompany3.name" placeholder="请输入部门名称" required>
+          </p>
+          <p class="input-wrapper">
+            部门编号：
+            <input type="text" class="form-control" v-model="iniCompany3.number" placeholder="请输入部门编号">
+          </p>
+          <p class="input-wrapper">
+            部门负责人
+            <input type="text" class="form-control" v-model="iniCompany3.principalTelephone" placeholder="请输入部门负责人">
+          </p>
+          <p class="input-wrapper">
+            参审注师人数：
+            <input type="text" class="form-control" v-model="iniCompany3.counselorNum" placeholder="请输入参审注师人数">
+          </p>
+          <p class="input-wrapper">
+            参审助理人数：
+            <input type="text" class="form-control" v-model="iniCompany3.assistantNum" placeholder="请输入参审助理人数">
+          </p>
+        </el-col>  
+      </el-row>  
+    </div>
+  </div>
+  <p class="btns">
+    <button type="button" class="btn my-btn draft-btn" @click="cancel">取消</button>
+    <button type="button" class="btn my-btn submit-btn" @click="submit">保存</button>
+  </p>
+</div>
+</template>
+
+<script>
+import axios from 'axios';
+import card from '@/main/component/card.vue';
+import modal from '@/main/component/modal.vue';
+
+export default {
+  name: 'companyDepartmentEdit',
+  data() {
+    return {
+      
+    };
+  },
+  methods: {
+    cancel () {
+      this.$emit('cancel', 3)
+    },
+    submit () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'editCompanyDepartment',
+                platform: 'web',
+                data: this.iniCompany3
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$emit('editSuccess', 3, rep.data.data.companyId)
+            this.$message('编辑部门信息成功')
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    }
+  },
+  props: ['iniCompany3'],
+  components: {
+    card,
+    modal
+  }
+};
+</script>
+
+<style lang="sass" scoped>
+@import '../../../../../scss/_variables.scss';
+
+.company-detail-box {
+  > .title {
+    font-size: 15px;
+    margin: 0;
+    text-align: center;
+  }
+  .company-detail {
+    width: 100%;
+    background-color: #fafafa;
+    padding: 10px 30px;
+    .input-wrapper {
+      display: flex;
+      height: 34px;
+      line-height: 34px;
+      .form-control {
+        display: inline-block;
+        flex: 1;
+      }
+      .el-select {
+        flex: 1;
+      }
+    }
+  }
+  + button {
+    margin-top: 10px;
+  }
+}
+.type-modal {
+  h5 {
+    margin: 0;
+    margin-bottom: 20px;
+  }
+  section {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 50px 20px;
+    background-color: #fafafa;
+    .type-input {
+      height: 20px;
+      width: 100px;
+      padding: 0;
+    }
+  }
+}
+.btns {
+  margin-top: 10px;
+  margin-bottom: 0;
+  text-align: right;
+}
+</style>

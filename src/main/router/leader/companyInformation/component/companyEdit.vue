@@ -103,7 +103,7 @@ export default {
       }],
       openAccountBankName: '',
       inputReportModalShow: false,
-      company: this.iniCompany,
+      company: this.iniCompany2,
       checked: []
     };
   },
@@ -158,7 +158,7 @@ export default {
       })
     }
   },
-  props: ['iniCompany'],
+  props: ['iniCompany2'],
   components: {
     card,
     modal,
