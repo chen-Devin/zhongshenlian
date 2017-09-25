@@ -1,3 +1,4 @@
+
 <template>
   <!--
   <form class="form-horizontal normal-wrap business-editor" @submit.prevent @keyup.enter.prevent>
@@ -455,8 +456,8 @@
           <el-select  v-model="business.getWay" :disabled="!editable">
             <el-option 
               v-for="item in getWay"
-              :value="item" 
-              >
+              :value="item"
+              :key="item">
             </el-option>
           </el-select>
         </el-form-item>
