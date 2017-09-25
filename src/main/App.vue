@@ -53,5 +53,8 @@ export default {
 </script>
 
 <style lang="sass">
-
+  .el-tree {
+    background-color: #fafafa;
+    border: none;
+  }
 </style>

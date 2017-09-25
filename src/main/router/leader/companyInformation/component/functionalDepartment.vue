@@ -10,13 +10,13 @@
           <p>部门名称：{{ company.name }}</p>
           <p>是否有部门负责人：{{ company.principalTelephone }}</p>
           <p>人员数量：{{ company.staffNum }}</p>
-          <p>分管权限业务：{{ company.authority }}</p>
+          <p>分管业务权限：{{ company.authority }}</p>
         </el-col>
       </el-row>
     </div>
     <p class="btns">
       <button type="button" class="btn my-btn submit-btn" @click="edit">编辑</button>
-      <button type="button" class="btn my-btn cancel-btn" @click="deleteDep">删除</button>
+      <button type="button" class="btn my-btn cancel-btn" @click="deleteDep">删除部门</button>
     </p>
   </div>
 </div>

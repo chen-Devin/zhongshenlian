@@ -10,6 +10,10 @@
       <div class="company-wrapper">
         <card>
           <functional-department :functionInfo="functionInfo"></functional-department>
+          <functional-edit 
+            :functionInfo="functionInfo" 
+            @cancel="cancel" 
+            @save="save"></functional-edit>
         </card>
       </div>
     </div>
@@ -158,6 +162,7 @@ import card from '@/main/component/card.vue';
 import modal from '@/main/component/modal.vue';
 import TreeDataHandle from '@/main/component/tree-data-handle.js';
 import functionalDepartment from '@/main/router/leader/companyInformation/component/functionalDepartment.vue';
+import functionalEdit from '@/main/router/leader/companyInformation/component/functionalEdit.vue';
 import companyList from '@/main/router/leader/companyInformation/component/companyList.vue';
 import companyDetail from './component/companyDetail.vue';
 import companyDepartmentDetail from './component/companyDepartmentDetail.vue';
@@ -508,6 +513,9 @@ export default {
       }
     },
     save (level) {
+      if (level === 'function') {
+        
+      }
       if (level === 2) {
         this.editCompanyDepartment().then(() => {
           this.addShow2 = false
@@ -515,6 +523,9 @@ export default {
       }
     },
     cancel (level) {
+      if (level === 'function') {
+        
+      }
       if (level === 2) {
         this.detailShow2 = true
       }
@@ -525,7 +536,6 @@ export default {
       } else if (data.level === 3) {
         this.getCompanyDepartmentInfo(data.id)
       }
-      
     }
   },
   created() {
@@ -537,6 +547,7 @@ export default {
     card,
     modal,
     functionalDepartment,
+    functionalEdit,
     companyList,
     companyDetail,
     companyDepartmentDetail,
