@@ -1,10 +1,33 @@
 <template>
-  <div class="main">
+  <div class="main staff-manage">
     <crumbs :paths="paths"></crumbs>
-    <staff-author-list></staff-author-list>
+    <card>
+      <button class="btn my-btn" @click="switchDepart">职能部门</button>
+      <button class="btn my-btn" @click="switchDepart">业务部门</button>
+    </card>
+    <!-- <staff-author-list></staff-author-list>
     <department-author v-for="(DEP, index) in departments"
                        :department="DEP"
-                       :key="index"></department-author>
+                       :key="index"></department-author> -->
+    <div class="left-contain">
+      <card class="card">
+        <div class="depart-filter">
+          <h5>部门筛选</h5>
+          <div class="content-contain">
+            <el-tree :data="treeData" :props="defaultProps" :highlight-current="highlightCurrent" :expand-on-click-node="expandOnClickNode" :default-expand-all="defaultExpandAll" @node-click="selectNode"></el-tree>
+          </div>
+        </div>
+        <div class="staff-filter">
+          <h5>职员筛选</h5>
+          <div class="content-contain">
+            
+          </div>
+        </div>
+      </card>
+    </div>
+    <div class="right-contain">
+      <card></card>
+    </div>
   </div>
 </template>
 
@@ -12,6 +35,8 @@
 import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
+import card from '../../component/card.vue';
+import TreeDataHandle from '@/main/component/tree-data-handle.js';
 import departmentAuthor from './component/departmentAuthor.vue';
 import staffAuthorList from './component/staffAuthorList.vue';
 
@@ -22,7 +47,28 @@ export default {
       paths: [
         { name: '职员权限管理', url: '/author-management-author', present: true }
       ],
-      departments: []
+      departments: [],
+      treeData: [{
+        label: '天津中审联',
+        children: [{
+          label: '二级 1-1',
+          children: [{
+            label: '三级 1-1-1',
+            children: [{
+              label: 1
+            }, {
+              label: 2
+            }]
+          }]
+        }]
+      }],
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      },
+      highlightCurrent: true,
+      expandOnClickNode: false,
+      defaultExpandAll: true,
     };
   },
   created() {
@@ -109,10 +155,45 @@ export default {
         }, (rep) => { });
       });
       return promise;
+    },
+    getFullCompanyList () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getFullCompanyList',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.treeData = TreeDataHandle(rep.data.data.companyArray)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    selectNode (data) {
+      if (data.level === 2) {
+        this.getCompanyInfo(data.id)
+      } else if (data.level === 3) {
+        this.getCompanyDepartmentInfo(data.id)
+      }
     }
+  },
+  created () {
+    this.getFullCompanyList()
   },
   components: {
     crumbs,
+    card,
+    TreeDataHandle,
     departmentAuthor,
     staffAuthorList
   }
@@ -120,5 +201,32 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-
+  .staff-manage {
+    .left-contain {
+      float: left;
+      width: 400px;
+      .card {
+        margin-top: 0;
+      }
+      .depart-filter {
+        .content-contain {
+          width: 100%;
+          height: 400px;
+          overflow: auto;
+          background-color: #fafafa;
+        }
+      }
+      .staff-filter {
+        .content-contain {
+          width: 100%;
+          height: 400px;
+          overflow: hidden;
+          background-color: #fafafa;
+        }
+      }
+    }
+    .right-contain {
+      width: 100%;
+    }
+  }
 </style>
