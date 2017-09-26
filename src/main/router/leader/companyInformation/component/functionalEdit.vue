@@ -1,26 +1,26 @@
 <template>
 <div>
   <div class="company-detail-box">
-    <h1 class="title">{{ company.name }}</h1>
+    <h1 class="title">{{ functionInfoEdit.name }}</h1>
     <h5 class="main-title">部门信息</h5>
     <div class="company-detail">
       <el-row>
         <el-col :span="9" :offset="2">
           <p class="input-wrapper">
             部门编号：
-            <input type="text" class="form-control" v-model="company.number" placeholder="请输入部门编号">
+            <input type="text" class="form-control" v-model="functionInfoEdit.number" placeholder="请输入部门编号">
           </p>
           <p class="input-wrapper">
             部门名称：
-            <input type="text" class="form-control" v-model="company.name" placeholder="请输入部门名称">
+            <input type="text" class="form-control" v-model="functionInfoEdit.name" placeholder="请输入部门名称">
           </p>
           <p class="input-wrapper">
             是否有部门负责人：
-            <input type="text" class="form-control" v-model="company.principalTelephone" placeholder="请输入是否有部门负责人">
+            <input type="text" class="form-control" v-model="functionInfoEdit.principalTelephone" placeholder="请输入是否有部门负责人">
           </p>
           <p class="input-wrapper">
             人员数量：
-            <input type="text" class="form-control" v-model="company.staffNum" placeholder="请输入人员数量">
+            <input type="text" class="form-control" v-model="functionInfoEdit.staffNum" placeholder="请输入人员数量">
           </p>
           <p class="input-wrapper">
             分管业务权限：
@@ -36,7 +36,7 @@
     </div>
     <p class="btns">
       <button type="button" class="btn my-btn draft-btn" @click="cancel">取消</button>
-      <button type="button" class="btn my-btn submit-btn" @click="save">保存</button>
+      <button type="button" class="btn my-btn submit-btn" @click="submit">保存</button>
     </p>
   </div>
 </div>
@@ -54,27 +54,42 @@ export default {
       authority: []
     };
   },
-  computed: {
-    // company () {
-    //   return this.functionInfo
-    // }
-  },
-  watch: {
-    functionInfo (val, oldVal) {
-      if (val !== oldVal) {
-        this.company = val
-      }
-    }
-  },
   methods: {
     cancel () {
-      this.$emit('cancel', 'function')
+      this.$emit('cancel', 0)
     },
-    save () {
-      this.$emit('save', 'function')
-    }
+    submit () {
+      let arr = []
+      this.checked.forEach((item, index) => {
+        arr.push({name: item})
+      })
+      this.company.reportType = arr
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'editDepartment',
+                platform: 'web',
+                data: this.functionInfoEdit
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$emit('editSuccess', 2, rep.data.data.companyId)
+            this.$message('编辑公司信息成功')
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
   },
-  props: ['functionInfo'],
+  props: ['functionInfoEdit'],
   created() {
 
   },
