@@ -20,13 +20,25 @@
         <div class="staff-filter">
           <h5>职员筛选</h5>
           <div class="content-contain">
-            
+            <ul class="staff-list" v-if="reloadStaffList">
+              <li 
+                :class="{ active: item.isActive }" 
+                v-for="(item, index) in staffAllList" 
+                :key="index"
+                @click="selectStaff(item)">
+                <span>{{ item.jobNumber }}</span>
+                <span>{{ item.name }}</span>
+                <span>{{ item.duty }}</span>
+              </li>
+            </ul>
           </div>
         </div>
       </card>
     </div>
     <div class="right-contain">
-      <card></card>
+      <card>
+        <staff-detail></staff-detail>
+      </card>
     </div>
   </div>
 </template>
@@ -39,6 +51,7 @@ import card from '../../component/card.vue';
 import TreeDataHandle from '@/main/component/tree-data-handle.js';
 import departmentAuthor from './component/departmentAuthor.vue';
 import staffAuthorList from './component/staffAuthorList.vue';
+import staffDetail from './staffDetail.vue';
 
 export default {
   name: 'staffManagementAuthor',
@@ -69,93 +82,18 @@ export default {
       highlightCurrent: true,
       expandOnClickNode: false,
       defaultExpandAll: true,
+      staffFilterId: '',
+      staffFilterType: '',
+      staffAllList: [{
+        jobNumber: '',
+        name: '',
+        duty: '',
+        isActive: false
+      }],
+      reloadStaffList: true
     };
   },
-  created() {
-    this.getDepartmentInfo().then((rep) => {
-      for (let i = 0; i < rep.data.data.departmentArray.length; i++) {
-        this.getStaffInfo(rep.data.data.departmentArray[i].departmentName).then((rep) => {
-          for(let j=0; j < rep.data.data.staffArray.length; j++) {
-            let arr = [];
-            for(let k=0; k < rep.data.data.authorityArray.length; k++) {
-              for(let m=0; m < rep.data.data.staffArray[j].authority.length; m++) {
-                if (rep.data.data.authorityArray[k].name === rep.data.data.staffArray[j].authority[m].name) {
-                  let obj = {
-                    authName: rep.data.data.staffArray[j].authority[m].name,
-                    stat: rep.data.data.staffArray[j].authority[m].authority === '0' ? false : true,
-                  };
-                  arr.push(obj);
-                  break;
-                }
-              }
-            }
-            rep.data.data.staffArray[j].authority = arr;
-          }
-          this.departments.push(rep.data.data);
-        }, (rep) => {});
-      }
-    }, (rep) => { });
-  },
-  watch: {
-    $route: 'getDepartmentInfo'
-  },
   methods: {
-    getDepartmentInfo() {
-      let promise = new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              var obj = {
-                command: 'getDepartmentList',
-                platform: 'web'
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            resolve(rep);
-          } else if (rep.data.statusCode === '10012') {
-            window.location.href = 'signIn.html';
-          } else {
-            reject(rep);
-          }
-        }, (rep) => { });
-      });
-      return promise;
-    },
-    getStaffInfo(department) {
-      let promise = new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              var obj = {
-                command: 'getStaffArrayByDepartment',
-                platform: 'web',
-                department: department,
-                pageNum: 1
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            resolve(rep);
-          } else if (rep.data.statusCode === '10012') {
-            window.location.href = 'signIn.html';
-          } else {
-            reject(rep);
-          }
-        }, (rep) => { });
-      });
-      return promise;
-    },
     getFullCompanyList () {
       return new Promise((resolve, reject) => {
         axios({
@@ -179,12 +117,56 @@ export default {
         }, (rep) => { });
       })
     },
+    staffFilter () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'staffFilter',
+                platform: 'web',
+                id: this.staffFilterId,
+                // type: this.staffFilterType
+                type: 'department'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.staffAllList = []
+            this.staffAllList[0] = rep.data.data.principal
+            this.staffAllList = this.staffAllList.concat(rep.data.data.staffList)
+            console.log(this.staffAllList)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
     selectNode (data) {
+      this.staffFilterId = data.id
       if (data.level === 2) {
-        this.getCompanyInfo(data.id)
+        this.staffFilterType = 'company'
       } else if (data.level === 3) {
-        this.getCompanyDepartmentInfo(data.id)
+        this.staffFilterType = 'companyDepartment'
+      } else if (data.level === 4) {
+        this.staffFilterType = 'projectDepartment'
+      } else if (data.level === 5) {
+        this.staffFilterType = 'group'
       }
+      this.staffFilter()
+    },
+    selectStaff (staff) {
+      this.staffAllList.forEach((item) => {
+        item.isActive = false
+      })
+      staff.isActive = true
+      this.reloadStaffList = false
+      this.reloadStaffList = true
+      console.log(staff)
     }
   },
   created () {
@@ -195,7 +177,8 @@ export default {
     card,
     TreeDataHandle,
     departmentAuthor,
-    staffAuthorList
+    staffAuthorList,
+    staffDetail
   }
 }
 </script>
@@ -220,8 +203,30 @@ export default {
         .content-contain {
           width: 100%;
           height: 400px;
-          overflow: hidden;
+          padding-top: 10px;
+          overflow: auto;
           background-color: #fafafa;
+          .staff-list {
+            margin: 0;
+            padding: 0;
+            font-size: 0;
+            li {
+              height: 36px;
+              line-height: 36px;
+              font-size: 14px;
+              list-style: none;
+              cursor: pointer;
+              &:hover {
+                background-color: #e4e8f1;
+              }
+              span {
+                margin-left: 45px;
+              }
+              &.active {
+                background-color: #edf7ff;
+              }
+            }
+          }
         }
       }
     }
