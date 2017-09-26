@@ -1,30 +1,26 @@
 <template>
 <div>
   <div class="company-detail-box">
-    <h1 class="title">{{ iniCompanyEdit3.name }}</h1>
+    <h1 class="title">{{ iniCompanyEdit4.name }}</h1>
     <h5 class="main-title">公司信息</h5>
     <div class="company-detail">
       <el-row>
         <el-col :span="9" :offset="2">
           <p class="input-wrapper">
-            部门名称：
-            <input type="text" class="form-control" v-model="iniCompanyEdit3.name" placeholder="请输入部门名称" required>
+            项目部名称：
+            <input type="text" class="form-control" v-model="iniCompanyEdit4.name" placeholder="请输入项目部名称" required>
           </p>
           <p class="input-wrapper">
-            部门编号：
-            <input type="text" class="form-control" v-model="iniCompanyEdit3.number" placeholder="请输入部门编号">
+            项目部人数：
+            <input type="text" class="form-control" v-model="iniCompanyEdit4.number" placeholder="请输入项目部人数">
           </p>
           <p class="input-wrapper">
-            部门负责人
-            <input type="text" class="form-control" v-model="iniCompanyEdit3.principalTelephone" placeholder="请输入部门负责人">
+            项目部经理：
+            <input type="text" class="form-control" v-model="iniCompanyEdit4.principalTelephone" placeholder="请输入项目部经理">
           </p>
           <p class="input-wrapper">
-            参审注师人数：
-            <input type="text" class="form-control" v-model="iniCompanyEdit3.counselorNum" placeholder="请输入参审注师人数">
-          </p>
-          <p class="input-wrapper">
-            参审助理人数：
-            <input type="text" class="form-control" v-model="iniCompanyEdit3.assistantNum" placeholder="请输入参审助理人数">
+            公司简称：
+            <input type="text" class="form-control" v-model="iniCompanyEdit4.companyAbbreviation" placeholder="请输入公司简称">
           </p>
         </el-col>  
       </el-row>  
@@ -51,7 +47,7 @@ export default {
   },
   methods: {
     cancel () {
-      this.$emit('cancel', 3)
+      this.$emit('cancel', 4)
     },
     submit () {
       return new Promise((resolve, reject) => {
@@ -62,24 +58,25 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'editCompanyDepartment',
+                command: 'editProjectDepartment',
                 platform: 'web',
-                data: this.iniCompanyEdit3
+                data: this.iniCompanyEdit4
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.$emit('editSuccess', 3, rep.data.data.companyDepartmentId)
-            this.$message('编辑部门信息成功')
+            console.log(rep.data.data)
+            this.$emit('editSuccess', 4, rep.data.data.id)
+            this.$message('编辑项目部门信息成功')
             resolve('done');
           }
         }, (rep) => { });
       })
     }
   },
-  props: ['iniCompanyEdit3'],
+  props: ['iniCompanyEdit4'],
   components: {
     card,
     modal

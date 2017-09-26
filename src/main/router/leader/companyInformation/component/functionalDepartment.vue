@@ -40,7 +40,9 @@ export default {
     }
   },
   methods: {
-
+    edit () {
+      this.$emit('edit', 0)
+    },
   },
   props: ['functionInfo'],
   created() {

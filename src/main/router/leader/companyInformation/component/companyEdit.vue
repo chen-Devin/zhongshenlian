@@ -1,40 +1,40 @@
 <template>
 <div>
   <div class="company-detail-box">
-    <h1 class="title">{{ company.name }}</h1>
+    <h1 class="title">{{ iniCompanyEdit2.name }}</h1>
     <h5 class="main-title">公司信息</h5>
     <div class="company-detail">
       <el-row>
         <el-col :span="9" :offset="2">
           <p class="input-wrapper">
             公司简称：
-            <input type="text" class="form-control" v-model="company.number" placeholder="请输入公司编号">
+            <input type="text" class="form-control" v-model="iniCompanyEdit2.number" placeholder="请输入公司编号">
           </p>
           <p class="input-wrapper">
             公司名称：
-            <input type="text" class="form-control" v-model="company.name" placeholder="请输入公司名称">
+            <input type="text" class="form-control" v-model="iniCompanyEdit2.name" placeholder="请输入公司名称">
           </p>
           <p class="input-wrapper">
             社会统一信用代码：
-            <input type="text" class="form-control" v-model="company.creditCode" placeholder="请输入信用代码">
+            <input type="text" class="form-control" v-model="iniCompanyEdit2.creditCode" placeholder="请输入信用代码">
           </p>
           <p class="input-wrapper">
             公司法人：
-            <input type="text" class="form-control" v-model="company.legalPersonName" placeholder="请输入公司法人">
+            <input type="text" class="form-control" v-model="iniCompanyEdit2.legalPersonName" placeholder="请输入公司法人">
           </p>
           <p class="input-wrapper">
             公司负责人：
-            <input type="text" class="form-control" v-model="company.principalName" placeholder="请输入公司负责人">
+            <input type="text" class="form-control" v-model="iniCompanyEdit2.principalName" placeholder="请输入公司负责人">
           </p>
         </el-col>
         <el-col :span="9" :offset="4">
           <p class="input-wrapper">
             参审人员标签：
-            <input type="text" class="form-control" v-model="company.counselorTag" placeholder="请输入参审人员标签">
+            <input type="text" class="form-control" v-model="iniCompanyEdit2.counselorTag" placeholder="请输入参审人员标签">
           </p>
           <p class="input-wrapper">
             经营范围：
-            <input type="text" class="form-control" v-model="company.mainWork" placeholder="请输入经营范围">
+            <input type="text" class="form-control" v-model="iniCompanyEdit2.mainWork" placeholder="请输入经营范围">
           </p>
           <p class="input-wrapper">
             开户银行：
@@ -49,11 +49,11 @@
           </p>
           <p class="input-wrapper">
             开户银行账号：
-            <input type="text" class="form-control" v-model="company.openAccountBankNumber" placeholder="请输入开户账号">
+            <input type="text" class="form-control" v-model="iniCompanyEdit2.openAccountBankNumber" placeholder="请输入开户账号">
           </p>
           <p class="input-wrapper">
             人员数量：
-            <input type="text" class="form-control" v-model="company.staffNum" placeholder="请输入人员数量">
+            <input type="text" class="form-control" v-model="iniCompanyEdit2.staffNum" placeholder="请输入人员数量">
           </p>
         </el-col>
       </el-row>
@@ -65,7 +65,7 @@
             </div>
             <div class="selections">
               <el-checkbox-group v-model="checked">
-                <el-checkbox :label="item.name" v-for="(item, index) in company.reportTypeOption" :key="index"></el-checkbox>
+                <el-checkbox :label="item.name" v-for="(item, index) in iniCompanyEdit2.reportTypeOption" :key="index"></el-checkbox>
               </el-checkbox-group>
               <a href="javascript:void(0);" @click="showType">添加/删除报告类型</a>
             </div>
@@ -78,12 +78,12 @@
     <button type="button" class="btn my-btn draft-btn" @click="cancel">取消</button>
     <button type="button" class="btn my-btn submit-btn" @click="submit">保存</button>
   </p>
-  <input-report-modal
-    :iniReportType="company.reportTypeOption"
+  <!-- <input-report-modal
+    :iniReportType="iniCompanyEdit2.reportTypeOption"
     :iniSelecions="checked"
     @saveReportOption="saveReportOption"
     @closeTypeModal="closeTypeModal"
-    v-if="inputReportModalShow"></input-report-modal>
+    v-if="inputReportModalShow"></input-report-modal> -->
 </div>
 </template>
 
@@ -158,7 +158,7 @@ export default {
       })
     }
   },
-  props: ['iniCompany2'],
+  props: ['iniCompanyEdit2'],
   components: {
     card,
     modal,
