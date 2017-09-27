@@ -28,7 +28,7 @@ import businessHandleListLeader from './leader/businessHandleList.vue';
 import businessAnalysis from './leader/businessAnalysis.vue';
 import businessReviewDetailLeader from './leader/businessReviewDetail.vue';
 import businessReviewListLeader from './leader/businessReviewList.vue';
-import staffManagementAuthor from './leader/staffManagementAuthor.vue';
+import staffManagementAuthor from './leader/staff/staffManagementAuthor.vue';
 import staffManagementInfor from './leader/staffManagementInfor.vue';
 import companyManagement from './leader/companyInformation/companyManagement.vue';
 import functionalManagement from './leader/functionalInformation/functionalManagement.vue';
