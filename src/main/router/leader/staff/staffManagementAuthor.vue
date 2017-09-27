@@ -51,6 +51,7 @@
         <education-bg></education-bg>
       </card> 
     </div>
+    <staff-add-modal></staff-add-modal>
   </div>
 </template>
 
@@ -61,10 +62,14 @@ import card from '@/main/component/card.vue';
 import modal from '@/main/component/modal.vue';
 import TreeDataHandle from '@/main/component/tree-data-handle.js';
 import staffDetail from './component/staffDetail.vue';
+<<<<<<< HEAD
 import authoritySet from './component/authoritySet.vue';
 import salaryDetail from './component/salaryDetail.vue';
 import bonusDetail from './component/bonusDetail.vue';
 import educationBg from './component/educationBg.vue';
+=======
+import staffAddModal from './component/staffAddModal.vue';
+>>>>>>> 157c237c78dfeaa9420c843435d075025f1df31c
 
 export default {
   name: 'staffManagementAuthor',
@@ -192,10 +197,14 @@ export default {
     card,
     TreeDataHandle,
     staffDetail,
+<<<<<<< HEAD
     authoritySet,
     salaryDetail,
     bonusDetail,
     educationBg
+=======
+    staffAddModal
+>>>>>>> 157c237c78dfeaa9420c843435d075025f1df31c
   }
 }
 </script>
