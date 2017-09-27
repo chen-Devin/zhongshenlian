@@ -166,7 +166,9 @@ export default {
       staff.isActive = true
       this.reloadStaffList = false
       this.reloadStaffList = true
-      console.log(staff)
+    },
+    switchDepart () {
+      
     }
   },
   created () {

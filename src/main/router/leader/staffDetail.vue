@@ -15,7 +15,7 @@
       <div class="basic-form">
         <el-row>
           <el-col :span="12">
-            <el-form :label-position="labelPosition" label-width="80px" :model="staff" :rules="staffRules" ref="staff">
+            <el-form :label-position="labelPosition" label-width="100px" :model="staff" :rules="staffRules" ref="staff">
               <el-form-item label="姓名" prop="name">
                 <el-input v-model="staff.name" :disabled="!editAble"></el-input>
               </el-form-item>
@@ -40,10 +40,19 @@
               <el-form-item label="是否为部门负责人" prop="isPrincipal">
                 <el-input v-model="staff.isPrincipal" :disabled="!editAble"></el-input>
               </el-form-item>
+              <el-form-item label="所属业务部">
+                <el-input v-model="staff.companyDepartment" :disabled="!editAble"></el-input>
+              </el-form-item>
+              <el-form-item label="所属项目部">
+                <el-input v-model="staff.projectDepartment" :disabled="!editAble"></el-input>
+              </el-form-item>
             </el-form>
           </el-col>
           <el-col :span="12">
             <el-form :label-position="labelPosition" label-width="130px" :model="staff" :rules="staffRules" ref="staff">
+              <el-form-item label="所属小组">
+                <el-input v-model="staff.group" :disabled="!editAble"></el-input>
+              </el-form-item>
               <el-form-item label="职位" prop="duties">
                 <el-input v-model="staff.duties" :disabled="!editAble"></el-input>
               </el-form-item>
@@ -59,7 +68,7 @@
               <el-form-item label="入职时间" prop="entryTime">
                 <el-input v-model="staff.entryTime" :disabled="!editAble"></el-input>
               </el-form-item>
-              <el-form-item label="合同到期日" prop="expireTime">
+              <el-form-item label="合同到期日">
                 <el-input v-model="staff.expireTime" :disabled="!editAble"></el-input>
               </el-form-item>
               <el-form-item label="劳动合同">
@@ -69,10 +78,22 @@
           </el-col>
         </el-row>
         <el-row>
+        </el-row>
+        <el-row>
+          <el-form :label-position="labelPosition" label-width="130px" :rules="staffRules">
+            <el-form-item label="单科成绩" prop="singleSubjects">
+              <el-checkbox-group v-model="staff.singleSubjectsArray">
+                <el-checkbox :label="option" v-for="(option, index) in scoresOption" :key="index" disabled>{{ option }}</el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+          </el-form>
+        </el-row>
+        <!-- <p>{{ staff }}</p> -->
+        <el-row>
           <el-form :label-position="labelPosition" label-width="130px" :model="staff" :rules="staffRules" ref="staff">
-            <el-form-item label="单科成绩">
-              <el-checkbox-group v-model="staff.singleSubjects">
-                <el-checkbox :label="option" name="type" v-for="(option, index) in scoresOption" :key="index"></el-checkbox>
+            <el-form-item label="执行证书" prop="professionalCertificate">
+              <el-checkbox-group v-model="staff.PCSelected">
+                <el-checkbox :label="option" :value="option" v-for="(option, index) in staff.PCOptions" :key="index" disabled></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </el-form>
@@ -110,7 +131,7 @@ export default {
         jonTitle: '',
         entryTime: '',
         expireTime: '',
-        singleSubjects: '',
+        singleSubjects: ['会计'],
         professionalCertificate: [{
           name: '',
           value: ''
@@ -125,6 +146,8 @@ export default {
         nation: '',
         shortcutArray: []
       },
+      singleSubjects: ['会计'],
+      professionalCertificate: [],
       editAble: false,
       staffRules: {
         telephone: [
@@ -168,13 +191,20 @@ export default {
         ],
         isPrincipal:  [
           { required: true, message: '请输入是否为部门负责人', trigger: 'blur' }
+        ],
+        singleSubjects: [
+          { required: true, message: '请选择单科成绩', trigger: 'blur' }
+        ],
+        professionalCertificate: [
+          { required: true, message: '请选择职业证书', trigger: 'blur' }
         ]
       },
-      scoresOption: ['会计', '财务成本管理', '税务', '经济法', '公司战略管理', '审计']
+      scoresOption: ['会计', '财务成本管理', '税务', '经济法', '公司战略管理', '审计'],
+      certificatesOption: ['注册会计师', '注册审计师', '注册造价工程师', '注册资产评估师', '注册土地评估师', '暂无']
     };
   },
   methods: {
-    getUserInfo () {
+    getStaffInfo () {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -183,8 +213,9 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'getUserInfo',
-                platform: 'web'
+                command: 'getStaffInfo',
+                platform: 'web',
+                id: '1'
               }
               return JSON.stringify(obj);
             })()
@@ -192,6 +223,7 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.staff = rep.data.data
+            this.staff = this.staffDataHandle(this.staff)
             resolve('done');
           }
         }, (rep) => { });
@@ -202,10 +234,22 @@ export default {
     },
     cancel () {
       this.editAble = false
+    },
+    staffDataHandle (staff) {
+      this.staff.singleSubjectsArray = this.staff.singleSubjects.split('，')
+      this.staff.PCOptions = this.staff.professionalCertificate.map((item) => {
+        return item.name
+      })
+      this.staff.PCSelected = this.staff.professionalCertificate.map((item) => {
+        if (item.value === '1') {
+          return item.name
+        }
+      })
+      return staff
     }
   },
   created () {
-    this.getUserInfo()
+    this.getStaffInfo()
   }
 }
 </script>
