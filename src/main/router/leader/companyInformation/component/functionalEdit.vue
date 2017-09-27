@@ -20,7 +20,7 @@
           </p>
           <p class="input-wrapper">
             人员数量：
-            <input type="text" class="form-control" v-model="functionInfoEdit.staffNum" placeholder="请输入人员数量">
+            <span>{{functionInfoEdit.staffNum}}</span>
           </p>
           <p class="input-wrapper">
             <el-checkbox-group v-model="functionInfoEdit.checked">
@@ -103,9 +103,8 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            console.log(rep.data.data)
-            // this.$emit('editSuccess', 2, rep.data.data.companyId)
-            this.$message('编辑公司信息成功')
+            this.$emit('editSuccess', 0, rep.data.data.id)
+            this.$message('编辑职能部门信息成功')
             resolve('done');
           }
         }, (rep) => { });
