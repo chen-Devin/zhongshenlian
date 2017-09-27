@@ -12,8 +12,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="所属业务部">
-          <el-select v-model="departmentSelected" placeholder="请选择所属业务部">
-            <el-option 
+          <el-select v-model="departmentSelected" placeholder="请选择所属业务部" @change="changeDepartment">
+            <el-option
               :label="department.name" 
               :value="department.id" 
               v-for="(department, index) in departmentList" 
@@ -21,20 +21,20 @@
           </el-select>
         </el-form-item>
         <el-form-item label="所属项目部">
-          <el-select v-model="companySelected" placeholder="请选择所属项目部">
+          <el-select v-model="projectSelected" placeholder="请选择所属项目部" @change="changeProject">
             <el-option 
-              :label="company.name" 
-              :value="company.id" 
-              v-for="(company, index) in companyList" 
+              :label="project.name" 
+              :value="project.id" 
+              v-for="(project, index) in projectList" 
               :key="index"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="所属小组">
-          <el-select v-model="companySelected" placeholder="请选择所属小组">
+          <el-select v-model="groupSelected" placeholder="请选择所属小组">
             <el-option 
-              :label="company.name" 
-              :value="company.id" 
-              v-for="(company, index) in companyList" 
+              :label="group.name" 
+              :value="group.id" 
+              v-for="(group, index) in groupList" 
               :key="index"></el-option>
           </el-select>
         </el-form-item>
@@ -63,10 +63,9 @@ export default {
         name: '',
         id: ''
       }],
-      departmentList: [{
-        name: '',
-        id: ''
-      }],
+      departmentList: [],
+      projectList: [],
+      groupList: [],
       subBtn: {
         dis: false,
         cont: '保存'
@@ -80,7 +79,9 @@ export default {
         ]
       },
       companySelected: '',
-      departmentSelected: ''
+      departmentSelected: '',
+      projectSelected: '',
+      groupSelected: ''
     };
   },
   methods: {
@@ -102,7 +103,6 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.companyList = rep.data.data.companyList
-            console.log(this.companyList)
             resolve('done');
           }
         }, (rep) => { });
@@ -127,13 +127,12 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.departmentList = rep.data.data.departmentList
-            // console.log(this.companyList)
             resolve('done');
           }
         }, (rep) => { });
       })
     },
-    getCompanyList () {
+    getProjectDepartmentByComDepartment (id) {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -142,22 +141,22 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'getCompanyList',
-                platform: 'web'
+                command: 'getProjectDepartmentByComDepartment',
+                platform: 'web',
+                companyDepartmentId: id
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.companyList = rep.data.data.companyList
-            console.log(this.companyList)
+            this.projectList = rep.data.data.departmentList
             resolve('done');
           }
         }, (rep) => { });
       })
     },
-    getCompanyList () {
+    getGroupListByProjectDepartment (id) {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -166,16 +165,16 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'getCompanyList',
-                platform: 'web'
+                command: 'getGroupListByProjectDepartment',
+                platform: 'web',
+                projectDepartmentId: id
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.companyList = rep.data.data.companyList
-            console.log(this.companyList)
+            this.groupList = rep.data.data.departmentList
             resolve('done');
           }
         }, (rep) => { });
@@ -183,6 +182,12 @@ export default {
     },
     changeCompany (value) {
       this.getCompanyDepartmentListByCom(value)
+    },
+    changeDepartment (value) {
+      this.getProjectDepartmentByComDepartment(value)
+    },
+    changeProject (value) {
+      this.getGroupListByProjectDepartment(value)
     },
     cancel() {
       this.$emit('cancel');
