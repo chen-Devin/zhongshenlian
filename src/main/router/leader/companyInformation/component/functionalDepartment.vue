@@ -10,8 +10,19 @@
           <p>部门名称：{{ company.name }}</p>
           <p>是否有部门负责人：{{ company.principalTelephone }}</p>
           <p>人员数量：{{ company.staffNum }}</p>
-          <p>分管业务权限：{{ company.authority }}</p>
         </el-col>
+      </el-row>
+      <el-row>
+          <el-col :span="24" :offset="2"> 
+            <el-checkbox-group v-model="company.checked">
+              分管业务权限：
+              <el-checkbox 
+                :label="item.name" 
+                v-for="(item, index) in company.companyList" 
+                :key="index"
+                disabled>{{ item.name }}</el-checkbox>
+            </el-checkbox-group>
+          </el-col>
       </el-row>
     </div>
     <p class="btns">
@@ -30,12 +41,11 @@ export default {
   name: 'companyDetail',
   data() {
     return {
-      // company: this.functionInfo
+      // 
     };
   },
   computed: {
     company () {
-      console.log(this.functionInfo)
       return this.functionInfo
     }
   },

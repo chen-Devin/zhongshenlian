@@ -5,7 +5,7 @@
     <h5 class="main-title">部门信息</h5>
     <div class="company-detail">
       <el-row>
-        <el-col :span="9" :offset="2">
+        <el-col :span="15" :offset="4">
           <p class="input-wrapper">
             部门编号：
             <input type="text" class="form-control" v-model="functionInfoEdit.number" placeholder="请输入部门编号">
@@ -23,12 +23,12 @@
             <input type="text" class="form-control" v-model="functionInfoEdit.staffNum" placeholder="请输入人员数量">
           </p>
           <p class="input-wrapper">
-            分管业务权限：
-            <el-checkbox-group v-model="authority">
-              <el-checkbox label="kjs">会计所</el-checkbox>
-              <el-checkbox label="sjs">审计所</el-checkbox>
-              <el-checkbox label="pgs">评估所</el-checkbox>
-              <el-checkbox label="zjs">造价所</el-checkbox>
+            <el-checkbox-group v-model="functionInfoEdit.checked">
+              分管业务权限：
+              <el-checkbox 
+                :label="item.name" 
+                v-for="(item, index) in functionInfoEdit.companyList"
+                :key="index">{{ item.name }}</el-checkbox>
             </el-checkbox-group>
           </p>
         </el-col>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import card from '@/main/component/card.vue';
 import modal from '@/main/component/modal.vue';
 
@@ -60,10 +61,31 @@ export default {
     },
     submit () {
       let arr = []
-      this.checked.forEach((item, index) => {
-        arr.push({name: item})
+      let checked_len = this.functionInfoEdit.checked.length
+      this.functionInfoEdit.companyList.forEach((item, index) => {
+        let i = 0
+        let flag = 0
+        while(i < checked_len) {
+          if (item.name === this.functionInfoEdit.checked[i]) {
+            flag = 1
+            break
+          }
+          i++
+        }
+        if (flag === 1) {
+          arr.push({
+            name: item.name,
+            removeStatus: '0'
+          })
+        } else {
+          arr.push({
+            name: item.name,
+            removeStatus: '1'
+          })
+        }
       })
-      this.company.reportType = arr
+      this.functionInfoEdit.authority = arr
+      console.log(arr)
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -81,13 +103,14 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.$emit('editSuccess', 2, rep.data.data.companyId)
+            console.log(rep.data.data)
+            // this.$emit('editSuccess', 2, rep.data.data.companyId)
             this.$message('编辑公司信息成功')
             resolve('done');
           }
         }, (rep) => { });
       })
-    },
+    }
   },
   props: ['functionInfoEdit'],
   created() {

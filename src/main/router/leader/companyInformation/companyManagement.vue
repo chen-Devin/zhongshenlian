@@ -12,7 +12,7 @@
           <functional-department 
             :functionInfo="functionInfo"
             @edit="edit"
-            @deleteDep v-if="funcDetailShow"></functional-department>
+            @deleteDep="deleteDep" v-if="funcDetailShow"></functional-department>
           <functional-edit 
             :functionInfoEdit="functionInfoEdit"
             @edit="edit" 
@@ -314,14 +314,22 @@ export default {
         name: '',
         number: '',
         principalTelephone: '',
-        authority: ''
+        authority: [{
+          id: '',
+          name: '',
+          removeStatus: ''
+        }]
       },
       functionInfoEdit: {
         id: '',
         name: '',
         number: '',
         principalTelephone: '',
-        authority: ''
+        authority: [{
+          id: '',
+          name: '',
+          removeStatus: ''
+        }]
       },
       treeData: [{
         label: '天津中审联',
@@ -440,6 +448,12 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.functionInfo = rep.data.data
+            let arr = []
+            this.functionInfo.authority.forEach((item, index) => {
+              arr.push(item.name)
+            })
+            this.functionInfo.checked = arr
+            console.log(arr)
             this.functionInfoEdit = Object.assign({}, this.functionInfo)
             resolve('done');
           }
