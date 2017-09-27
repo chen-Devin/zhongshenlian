@@ -53,6 +53,9 @@ export default {
     edit () {
       this.$emit('edit', 0)
     },
+    deleteDep () {
+      this.$emit('deleteDep', 0)
+    }
   },
   props: ['functionInfo'],
   created() {

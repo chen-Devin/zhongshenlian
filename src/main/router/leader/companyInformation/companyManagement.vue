@@ -15,11 +15,20 @@
             @deleteDep="deleteDep" v-if="funcDetailShow"></functional-department>
           <functional-edit 
             :functionInfoEdit="functionInfoEdit"
-            @edit="edit" 
             @cancel="cancel" 
+            @editSuccess="editSuccess"
             @save="save" v-else></functional-edit>
         </card>
       </div>
+      <modal v-if="deleteFunction">
+        <div slot="body">
+          删除后公司信息将不可恢复，是否确定删除？
+        </div>
+        <div slot="footer">
+          <button class="btn my-btn cancel-btn" @click="deleteFunction=false">取消</button>
+          <button class="btn my-btn submit-btn" @click="confirmDelete(0)">确定</button>
+        </div>
+      </modal>
     </div>
     <div class="depart-wrapper" v-else>
       <card class="tree">
@@ -358,6 +367,7 @@ export default {
       addShow2: false,
       addShow3: false,
       addShow4: false,
+      deleteFunction: false,
       deleteShow2: false,
       deleteShow3: false,
       deleteShow4: false,
@@ -453,8 +463,8 @@ export default {
               arr.push(item.name)
             })
             this.functionInfo.checked = arr
-            console.log(arr)
             this.functionInfoEdit = Object.assign({}, this.functionInfo)
+            console.log(1)
             resolve('done');
           }
         }, (rep) => { });
@@ -734,8 +744,41 @@ export default {
         }, (rep) => { });
       })
     },
+    delDepartment () {
+      let arr = []
+      let obj = {}
+      obj.name = this.functionInfo.id
+      arr.push(obj)
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'delDepartment',
+                platform: 'web',
+                departmentId: arr
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            console.log(1)
+            this.$message(rep.data.msg)
+            this.deleteFunction = false
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
     editSuccess (level, id) {
-      if (level === 2) {
+      if (level === 0) {
+        this.getDepartmentInfo(id)
+        this.funcDetailShow = true
+      } else if (level === 2) {
         this.getCompanyInfo(id)
         this.detailShow2 = true
       } else if (level === 3) {
@@ -767,7 +810,9 @@ export default {
       }
     },
     deleteDep (level) {
-      if (level === 2) {
+      if (level === 0) {
+        this.deleteFunction = true
+      } else if (level === 2) {
         this.deleteShow2 = true
       } else if (level === 3) {
         this.deleteShow3 = true
@@ -776,7 +821,9 @@ export default {
       }
     },
     confirmDelete (level) {
-      if (level === 2) {
+      if (level === 0 ) {
+        this.delDepartment()
+      } else if (level === 2) {
         this.delCompany()
       } else if (level === 3) {
         this.delCompanyDepartment()
