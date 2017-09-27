@@ -5,10 +5,6 @@
       <button class="btn my-btn" @click="switchDepart">职能部门</button>
       <button class="btn my-btn" @click="switchDepart">业务部门</button>
     </card>
-    <!-- <staff-author-list></staff-author-list>
-    <department-author v-for="(DEP, index) in departments"
-                       :department="DEP"
-                       :key="index"></department-author> -->
     <div class="left-contain">
       <card class="card">
         <div class="depart-filter">
@@ -33,6 +29,9 @@
             </ul>
           </div>
         </div>
+        <p class="ta-c">
+          <a href="javascript:void(0);">添加职员</a>
+        </p>
       </card>
     </div>
     <div class="right-contain">
@@ -45,13 +44,11 @@
 
 <script>
 import axios from 'axios';
-
-import crumbs from '../../component/crumbs.vue';
-import card from '../../component/card.vue';
+import crumbs from '@/main/component/crumbs.vue';
+import card from '@/main/component/card.vue';
+import modal from '@/main/component/modal.vue';
 import TreeDataHandle from '@/main/component/tree-data-handle.js';
-import departmentAuthor from './component/departmentAuthor.vue';
-import staffAuthorList from './component/staffAuthorList.vue';
-import staffDetail from './staffDetail.vue';
+import staffDetail from './component/staffDetail.vue';
 
 export default {
   name: 'staffManagementAuthor',
@@ -168,7 +165,7 @@ export default {
       this.reloadStaffList = true
     },
     switchDepart () {
-      
+
     }
   },
   created () {
@@ -178,8 +175,6 @@ export default {
     crumbs,
     card,
     TreeDataHandle,
-    departmentAuthor,
-    staffAuthorList,
     staffDetail
   }
 }
@@ -229,6 +224,9 @@ export default {
               }
             }
           }
+        }
+        + p {
+          padding-top: 10px;
         }
       }
     }
