@@ -39,6 +39,7 @@
         <staff-detail></staff-detail>
       </card>
     </div>
+    <staff-add-modal></staff-add-modal>
   </div>
 </template>
 
@@ -49,6 +50,7 @@ import card from '@/main/component/card.vue';
 import modal from '@/main/component/modal.vue';
 import TreeDataHandle from '@/main/component/tree-data-handle.js';
 import staffDetail from './component/staffDetail.vue';
+import staffAddModal from './component/staffAddModal.vue';
 
 export default {
   name: 'staffManagementAuthor',
@@ -175,7 +177,8 @@ export default {
     crumbs,
     card,
     TreeDataHandle,
-    staffDetail
+    staffDetail,
+    staffAddModal
   }
 }
 </script>
