@@ -200,7 +200,8 @@ export default {
     authoritySet,
     salaryDetail,
     bonusDetail,
-    educationBg
+    educationBg,
+    authForm
   }
 }
 </script>
