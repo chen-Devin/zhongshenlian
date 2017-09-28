@@ -1,65 +1,103 @@
 <template>
   <div class="svg-wrap">
-    <svg>
-      
+    <svg width="860" height="100" xmlns="http://www.w3.org/2000/svg">
+      <circle :cx="radiusX[0]" cy="40" :r="radiusActive(state[0].active)" :fill="colorActive(state[0].active)"/>
+      <line x1="50" y1="40" x2="190" y2="40" style="stroke:rgb(186,186,186);stroke-width:.5"/>
+      <text x="22" y="68" fill="rgb(0,0,1)" font-size="13">{{ state[0].name }}</text>
+      <text x="22" y="85" fill="rgb(186,186,186)" font-size="13">{{ state[0].time }}</text>
+
+      <circle :cx="radiusX[1]" cy="40" :r="radiusActive(state[1].active)" :fill="colorActive(state[1].active)"/>
+      <line x1="190" y1="40" x2="330" y2="40" style="stroke:rgb(186,186,186);stroke-width:.5"/>
+      <text x="162" y="68" fill="rgb(0,0,1)" font-size="13">{{ state[1].name }}</text>
+      <text x="162" y="85" fill="rgb(186,186,186)" font-size="13">{{ state[1].time }}</text>
+
+      <circle :cx="radiusX[2]" cy="40" :r="radiusActive(state[2].active)" :fill="colorActive(state[2].active)"/>
+      <line x1="330" y1="40" x2="470" y2="40" style="stroke:rgb(186,186,186);stroke-width:.5"/>
+      <text x="302" y="68" fill="rgb(0,0,1)" font-size="13">{{ state[2].name }}</text>
+      <text x="302" y="85" fill="rgb(186,186,186)" font-size="13">{{ state[2].time }}</text>
+
+      <circle :cx="radiusX[3]" cy="40" :r="radiusActive(state[3].active)" :fill="colorActive(state[3].active)"/>
+      <line x1="470" y1="40" x2="610" y2="40" style="stroke:rgb(186,186,186);stroke-width:.5"/>
+      <text x="442" y="68" fill="rgb(0,0,1)" font-size="13">{{ state[3].name }}</text>
+      <text x="442" y="85" fill="rgb(186,186,186)" font-size="13">{{ state[3].time }}</text>
+
+      <circle :cx="radiusX[4]" cy="40" :r="radiusActive(state[4].active)" :fill="colorActive(state[4].active)"/>
+      <line x1="610" y1="40" x2="750" y2="40" style="stroke:rgb(186,186,186);stroke-width:.5"/>
+      <text x="582" y="68" fill="rgb(0,0,1)" font-size="13">{{ state[4].name }}</text>
+      <text x="582" y="85" fill="rgb(186,186,186)" font-size="13">{{ state[4].time }}</text>
+
+      <circle :cx="radiusX[5]" cy="40" :r="radiusActive(state[5].active)" :fill="colorActive(state[5].active)"/>
+      <text x="722" y="68" fill="rgb(0,0,1)" font-size="13">{{ state[5].name }}</text>
+      <text x="722" y="85" fill="rgb(186,186,186)" font-size="13">{{ state[5].time }}</text>
     </svg>
-    <!-- <svg width="800" height="150">
-      <circle cx="100" cy="60" :r="active(progress[0].active).radius" :fill="passed(progress[0].passed, progress[0].active).cirCol"></circle>
-      <text x="65" y="90" :fill="active(progress[0].active).texCol">{{progress[0].name}}</text>
-      <line x1="100" y1="60" x2="200" y2="60" style="stroke-width:1" :style="{stroke: passed(progress[0].passed).linCol}"></line>
-
-      <circle cx="200" cy="60" :r="active(progress[1].active).radius" :fill="passed(progress[1].passed, progress[1].active).cirCol"></circle>
-      <text x="165" y="90" :fill="active(progress[1].active).texCol">{{progress[1].name}}</text>
-      <line x1="200" y1="60" x2="300" y2="60" style="stroke-width:1" :style="{stroke: passed(progress[1].passed).linCol}"></line>
-
-      <circle cx="300" cy="60" :r="active(progress[2].active).radius" :fill="passed(progress[2].passed, progress[2].active).cirCol"></circle>
-      <text x="265" y="90" :fill="active(progress[2].active).texCol">{{progress[2].name}}</text>
-      <line x1="300" y1="60" x2="400" y2="60" style="stroke-width:1" :style="{stroke: passed(progress[2].passed).linCol}"></line>
-
-      <circle cx="400" cy="60" :r="active(progress[3].active).radius" :fill="passed(progress[3].passed, progress[3].active).cirCol"></circle>
-      <text x="365" y="90" :fill="active(progress[3].active).texCol">{{progress[3].name}}</text>
-      <line x1="400" y1="60" x2="500" y2="60" style="stroke-width:1" :style="{stroke: passed(progress[3].passed).linCol}"></line>
-
-      <circle cx="500" cy="60" :r="active(progress[4].active).radius" :fill="passed(progress[4].passed, progress[4].active).cirCol"></circle>
-      <text x="465" y="90" :fill="active(progress[4].active).texCol">{{progress[4].name}}</text>
-      <line x1="500" y1="60" x2="600" y2="90" style="stroke-width:1" :style="{stroke: passed(progress[4].passed).linCol}"></line>
-      <line x1="500" y1="60" x2="600" y2="30" style="stroke-width:1" :style="{stroke: passed(progress[4].passed).linCol}"></line>
-
-      <circle cx="600" cy="90" :r="active(progress[5].qrCode.active).radius" :fill="passed(progress[5].qrCode.passed, progress[5].qrCode.active).cirCol"></circle>
-      <text x="565" y="120" :fill="active(progress[5].qrCode.active).texCol">{{progress[5].qrCode.name}}</text>
-      <line x1="600" y1="90" x2="700" y2="60" style="stroke-width:1" :style="{stroke: passed(progress[5].qrCode.passed).linCol}"></line>
-
-      <circle cx="600" cy="30" :r="active(progress[5].bill.active).radius" :fill="passed(progress[5].bill.passed, progress[5].bill.active).cirCol"></circle>
-      <text x="565" y="60" :fill="active(progress[5].bill.active).texCol">{{progress[5].bill.name}}</text>
-      <line x1="600" y1="30" x2="700" y2="60" style="stroke-width:1" :style="{stroke: passed(progress[5].bill.passed).linCol}"></line>
-
-      <circle cx="700" cy="60" :r="active(progress[6].active).radius" :fill="passed(progress[6].passed, progress[6].active).cirCol"></circle>
-      <text x="665" y="90" :fill="active(progress[6].active).texCol">{{progress[6].name}}</text>
-    </svg> -->
   </div>
 </template>
 
 <script>
 export default {
-  name: 'progressBar',
-  props: ['progress'],
+  name: 'stateSvg',
+  data() {
+    return {
+      radius: 6,
+      activeRadius: 10,
+      state: [{
+        name: '发出申请',
+        time: '2017-09-16 11:21',
+        active: true
+      }, {
+        name: '发出申请',
+        time: '2017-09-16 11:21',
+        active: false
+      }, {
+        name: '发出申请',
+        time: '2017-09-16 11:21',
+        active: false
+      }, {
+        name: '发出申请',
+        time: '2017-09-16 11:21',
+        active: false
+      }, {
+        name: '发出申请',
+        time: '2017-09-16 11:21',
+        active: false
+      }, {
+        name: '发出申请',
+        time: '2017-09-16 11:21',
+        active: false
+      }]
+    }
+  },
+  computed: {
+    radiusX () {
+      let baseX = 50
+      let arr = new Array(6).fill(0)
+      let i = 0
+      while (i < arr.length) {
+        arr[i] = baseX + i * 140
+        i++
+      }
+      return arr
+    }
+  },
+  // props: ['state'],
   methods: {
-    active(ACT) {
-      if (ACT) {
-        return {radius: 5, texCol: '#337ab7'};
+    radiusActive (active) {
+      if (active) {
+        return this.activeRadius
       } else {
-        return {radius: 3, texCol: '#666'};
+        return this.radius
       }
     },
-    passed(PAS, ACT) {
-      if (ACT) {
-        return {cirCol: '#337ab7', linCol: '#777'};
-      } else if (PAS) {
-        return {cirCol: '#337ab7', linCol: 'rgba(51,122,183,0.6)'};
+    colorActive (active) {
+      if (active) {
+        return '#85e2ff'
       } else {
-        return {cirCol: '#777', linCol: '#777'};
+        return '#bababa'
       }
     }
+  },
+  created () {
+
   }
 };
 </script>

@@ -78,8 +78,23 @@
         </el-row>
       </div>
     </card>
-    <card>
+    <card class="card3">
+      <div class="f-l">报销状态：</div>
       <state-svg></state-svg>
+      <div class="f-l">
+        状态描述：
+      </div>
+      <el-input
+        type="textarea"
+        :rows="3"
+        placeholder="请输入内容"
+        v-model="textarea"
+        disabled>
+      </el-input>
+      <p class="btns">
+        <button class="btn my-btn submit-btn">审批通过</button>
+        <button class="btn my-btn cancel-btn">驳回</button>
+      </p>
     </card>
   </div>
 </template>
@@ -127,7 +142,8 @@ export default {
           account: 999,
           address: ''
         }]
-      }]
+      }],
+      textarea: ''
     };
   },
   methods: {
@@ -179,6 +195,12 @@ export default {
             border: none;
           }
         }
+      }
+    }
+    .card3 {
+      .btns {
+        margin-top: 20px;
+        text-align: center;
       }
     }
   } 
