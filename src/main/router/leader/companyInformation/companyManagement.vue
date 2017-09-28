@@ -464,7 +464,6 @@ export default {
             })
             this.functionInfo.checked = arr
             this.functionInfoEdit = Object.assign({}, this.functionInfo)
-            console.log(1)
             resolve('done');
           }
         }, (rep) => { });
