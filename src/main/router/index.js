@@ -22,6 +22,11 @@ import businessProfile from '../component/businessProfile.vue';
 import businessReports from '../component/businessReports.vue';
 import operatHistory from '../component/operatHistory.vue';
 
+  // 报销
+import expensesList from './commonUse/expenses/expensesList.vue'
+import expensesRecord from './commonUse/expenses/component/expensesRecord.vue'
+import expensesDetail from './commonUse/expenses/component/expensesDetail.vue'
+
 // 所长
 import businessHandleDetailLeader from './leader/businessHandleDetail.vue';
 import businessHandleListLeader from './leader/businessHandleList.vue';
@@ -120,6 +125,18 @@ const router = new VueRouter({
                     component: operatHistory
                 }
             ]
+        },
+        {
+            path: '/expenses-list',
+            component: expensesList
+        },
+        {
+            path: '/expenses-record',
+            component: expensesRecord
+        },
+        {
+            path: '/expenses-detail',
+            component: expensesDetail
         },
         {
             path: '/rule-regulation',

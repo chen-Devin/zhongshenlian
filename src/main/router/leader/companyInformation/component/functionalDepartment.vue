@@ -8,7 +8,7 @@
         <el-col :span="9" :offset="2">
           <p>部门编号：{{ company.number }}</p>
           <p>部门名称：{{ company.name }}</p>
-          <p>是否有部门负责人：{{ company.principalTelephone }}</p>
+          <p>是否有部门负责人：{{ company.principalTelephone===''?'否':'是' }}</p>
           <p>人员数量：{{ company.staffNum }}</p>
         </el-col>
       </el-row>

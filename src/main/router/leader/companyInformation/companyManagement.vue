@@ -13,7 +13,7 @@
             :functionInfo="functionInfo"
             @edit="edit"
             @deleteDep="deleteDep" v-if="funcDetailShow"></functional-department>
-          <functional-edit 
+          <functional-edit
             :functionInfoEdit="functionInfoEdit"
             @cancel="cancel" 
             @editSuccess="editSuccess"
@@ -361,7 +361,7 @@ export default {
       highlightCurrent: true,
       expandOnClickNode: false,
       defaultExpandAll: true,
-      show2: true,
+      show2: false,
       show3: false,
       show4: false,
       addShow2: false,
@@ -766,7 +766,6 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            console.log(1)
             this.$message(rep.data.msg)
             this.deleteFunction = false
             resolve('done');
@@ -884,7 +883,6 @@ export default {
     }
   },
   created() {
-    this.noticeJump(this.comId)
     this.getFullCompanyList()
   },
   components: {

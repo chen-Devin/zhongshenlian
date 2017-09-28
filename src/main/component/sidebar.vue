@@ -48,6 +48,7 @@
       <el-menu-item index="/bid-info-list" v-if="!leader"><i class="el-icon-picture"></i>招投标信息</el-menu-item>
       <el-menu-item index="/bid-info-draft" v-if="market"><i class="el-icon-picture"></i>草稿箱</el-menu-item>
       <el-menu-item index="/rule-regulation"><i class="el-icon-menu"></i>规章制度</el-menu-item>
+      <el-menu-item index="/expenses-list"><i class="el-icon-edit"></i>报销申请</el-menu-item>
       <!-- <el-submenu index="reimbursement-application">
         <template slot="title"><i class="el-icon-document"></i>报销申请</template>
         <el-menu-item-group>

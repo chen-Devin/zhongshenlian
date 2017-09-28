@@ -16,7 +16,7 @@
           </p>
           <p class="input-wrapper">
             是否有部门负责人：
-            <input type="text" class="form-control" v-model="functionInfoEdit.principalTelephone" placeholder="请输入是否有部门负责人">
+            <span>{{ company.principalTelephone===''?'否':'是' }}</span>
           </p>
           <p class="input-wrapper">
             人员数量：

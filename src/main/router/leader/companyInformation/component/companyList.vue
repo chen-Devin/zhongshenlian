@@ -49,6 +49,7 @@ export default {
             this.companyList.forEach((item, index) => {
               if (index === 0) {
                 item.isActive = true
+                this.getCompanyLink(item)
               } else {
                 item.isActive = false
               }

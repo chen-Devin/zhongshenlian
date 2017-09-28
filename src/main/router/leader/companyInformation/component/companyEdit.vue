@@ -53,7 +53,7 @@
           </p>
           <p class="input-wrapper">
             人员数量：
-            <input type="text" class="form-control" v-model="iniCompanyEdit2.staffNum" placeholder="请输入人员数量">
+            <span>{{ iniCompanyEdit2.staffNum }}</span>
           </p>
         </el-col>
       </el-row>
