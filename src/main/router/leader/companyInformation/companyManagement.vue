@@ -32,7 +32,17 @@
     </div>
     <div class="depart-wrapper" v-else>
       <card class="tree">
-        <el-tree :data="treeData" :props="defaultProps" :highlight-current="highlightCurrent" :expand-on-click-node="expandOnClickNode" :default-expand-all="defaultExpandAll" @node-click="selectNode" v-if="reloadList"></el-tree>
+        <el-tree 
+          :data="treeData" 
+          :props="defaultProps" 
+          :highlight-current="highlightCurrent" 
+          :expand-on-click-node="expandOnClickNode" 
+          :default-expand-all="defaultExpandAll" 
+          @node-click="selectNode" 
+          v-if="reloadList"></el-tree>
+        <div class="add">
+          <a href="javascript:void(0);" @click="addCompany">新建公司</a>
+        </div>
       </card>
       <card class="detail">
         <!--第二级 公司-->
@@ -268,16 +278,6 @@ export default {
         name: '',
         number: '',
         creditCode: '',
-        departmentArray: {
-          id: '',
-          name: '',
-          number: '',
-          principalId: '',
-          principalName: '',
-          authorityType: '',
-          principalTelephone: '',
-          editing: false
-        },
         legalPersonId: '',
         legalPersonName: '',
         legalPersonTelephone: '',
@@ -295,9 +295,56 @@ export default {
         }],
         counselorTagArray: [{
           counselorTag: ''
-        }],
-        opertionsArray: [],
-        selectionsArray: []
+        }]
+      },
+      companyEditEmpty: {
+        id: '',
+        name: '',
+        number: '',
+        creditCode: '',
+        legalPersonId: '',
+        legalPersonName: '',
+        legalPersonTelephone: '',
+        principalId: '',
+        principalName: '',
+        principalTelephone: '',
+        mainWork: '',
+        openAccountBankName: '',
+        openAccountBankNumber: '',
+        reportType: [
+          {
+            name: '审字'
+          }
+        ],
+        reportTypeOption: [
+          {
+            name: '审字'
+          }, 
+          {
+            name: '专字'
+          },
+          {
+            name: '咨字'
+          },
+          {
+            name: '基决审字'
+          },
+          {
+            name: '外汇检字'
+          },
+          {
+            name: '验字'
+          },
+          {
+            name: '外审字'
+          },
+          {
+            name: '无报告'
+          }
+        ],
+        counselorTagArray: [{
+          counselorTag: ''
+        }]
       },
       companyDepartment: {
         assistantNum: '',
@@ -535,6 +582,11 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.company = rep.data.data
+            let arr = []
+            this.company.reportType.forEach((item, index) => {
+              arr.push(item.name)
+            })
+            this.company.reportTypeArray = arr
             this.companyEdit = Object.assign({}, this.company)
             resolve('done');
           }
@@ -948,11 +1000,20 @@ export default {
         this.reloadList = true
       }, 200)
     },
+    addCompany () {
+      this.show2 = true
+      this.show3 = false
+      this.show4 = false
+      this.show5 = false
+      this.detailShow2 = false
+      this.companyEdit = Object.assign({}, this.companyEditEmpty)
+    },
     selectNode (data) {
       this.operateId = data.id
       if (data.level === 2) {
         this.getCompanyInfo(this.operateId)
         this.show2 = true
+        this.detailShow2 = true
         this.show3 = false
         this.show4 = false
         this.show5 = false
@@ -961,12 +1022,14 @@ export default {
         this.show2 = false
         this.show4 = false
         this.show3 = true
+        this.detailShow3 = true
         this.show5 = false
       } else if (data.level === 4) {
         this.getProjectDepartmentInfo(this.operateId)
         this.show2 = false
         this.show3 = false
         this.show4 = true
+        this.detailShow4 = true
         this.show5 = false
       } else if (data.level === 5) {
         this.getDepartmentGroupInfo(this.operateId)
@@ -974,6 +1037,7 @@ export default {
         this.show3 = false
         this.show4 = false
         this.show5 = true
+        this.detailShow5 = true
       }
     }
   },
@@ -1009,6 +1073,10 @@ export default {
     display: flex;
     > .tree {
       width: 220px;
+      > .add {
+        padding-top: 10px;
+        text-align: center;
+      }
     }
     > .detail {
       flex: 1;

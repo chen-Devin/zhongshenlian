@@ -1,23 +1,23 @@
 <template>
 <div>
   <div class="company-detail-box">
-    <h1 class="title">{{ company.name }}</h1>
+    <h1 class="title">{{ iniCompany2.name }}</h1>
     <h5 class="main-title">公司信息</h5>
     <div class="company-detail">
       <el-row>
         <el-col :span="9" :offset="2">
-          <p>公司简称：{{ company.number }}</p>
-          <p>公司名称：{{ company.name }}</p>
-          <p>社会统一信用代码：{{ company.creditCode }}</p>
-          <p>公司法人：{{ company.legalPersonName }}</p>
-          <p>公司负责人：{{ company.principalName }}</p>
+          <p>公司简称：{{ iniCompany2.number }}</p>
+          <p>公司名称：{{ iniCompany2.name }}</p>
+          <p>社会统一信用代码：{{ iniCompany2.creditCode }}</p>
+          <p>公司法人：{{ iniCompany2.legalPersonName }}</p>
+          <p>公司负责人：{{ iniCompany2.principalName }}</p>
         </el-col>
         <el-col :span="9" :offset="4">
-          <p>参审人员标签：{{ company.counselorTag }}</p>
-          <p>经营范围：{{ company.mainWork }}</p>
-          <p>开户银行：{{ company.openAccountBankName }}</p>
-          <p>开户银行账号：{{ company.openAccountBankNumber }}</p>
-          <p>人员数量：{{ company.staffNum }}</p>
+          <p>参审人员标签：{{ iniCompany2.counselorTag }}</p>
+          <p>经营范围：{{ iniCompany2.mainWork }}</p>
+          <p>开户银行：{{ iniCompany2.openAccountBankName }}</p>
+          <p>开户银行账号：{{ iniCompany2.openAccountBankNumber }}</p>
+          <p>人员数量：{{ iniCompany2.staffNum }}</p>
         </el-col>
       </el-row>
       <el-row>
@@ -27,13 +27,16 @@
               分管公司出具报告类型：
             </div>
             <div class="selections">
-              <template v-for="item in company.reportTypeOption">
+              <!-- <template v-for="item in iniCompany2.reportTypeOption">
                 <i class="fa fa-check-square-o" aria-hidden="true" v-if="item.selected"></i>
                 <i class="fa fa-square-o" aria-hidden="true" v-else></i>
                 <span>
                   {{ item.name }}
                 </span>
-              </template>
+              </template> -->
+              <el-checkbox-group v-model="iniCompany2.reportTypeArray">
+                <el-checkbox :label="item.name" v-for="(item, index) in iniCompany2.reportTypeOption" :key="index" disabled></el-checkbox>
+              </el-checkbox-group>
             </div>
           </div>
         </el-col>
@@ -78,18 +81,18 @@ export default {
     };
   },
   computed: {
-    company () {
-      this.iniCompany2.reportTypeOption.forEach((item, index) => {
-        this.iniCompany2.reportType.forEach((jtem, index) => {
-          if (item.name == jtem.name) {
-            item.selected = true
-          } else {
-            // item.selected = false
-          }
-        })
-      })
-      return this.iniCompany2
-    }
+    // company () {
+    //   this.iniCompany2.reportTypeOption.forEach((item, index) => {
+    //     this.iniCompany2.reportType.forEach((jtem, index) => {
+    //       if (item.name == jtem.name) {
+    //         item.selected = true
+    //       } else {
+    //         // item.selected = false
+    //       }
+    //     })
+    //   })
+    //   return this.iniCompany2
+    // }
   },
   methods: {
     edit () {

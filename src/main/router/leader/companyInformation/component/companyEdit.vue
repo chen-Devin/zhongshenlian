@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="company-detail-box">
-    <h1 class="title">{{ iniCompanyEdit2.name }}</h1>
+    <h1 class="title">{{ iniCompanyEdit2.name }}{{ iniCompanyEdit2 }}</h1>
     <h5 class="main-title">公司信息</h5>
     <div class="company-detail">
       <el-row>
@@ -64,7 +64,7 @@
               分管公司出具报告类型：
             </div>
             <div class="selections">
-              <el-checkbox-group v-model="checked">
+              <el-checkbox-group v-model="iniCompanyEdit2.reportTypeArray">
                 <el-checkbox :label="item.name" v-for="(item, index) in iniCompanyEdit2.reportTypeOption" :key="index"></el-checkbox>
               </el-checkbox-group>
               <a href="javascript:void(0);" @click="showType">添加/删除报告类型</a>
@@ -78,12 +78,12 @@
     <button type="button" class="btn my-btn draft-btn" @click="cancel">取消</button>
     <button type="button" class="btn my-btn submit-btn" @click="submit">保存</button>
   </p>
-  <!-- <input-report-modal
+  <input-report-modal
     :iniReportType="iniCompanyEdit2.reportTypeOption"
-    :iniSelecions="checked"
+    :selected="iniCompanyEdit2.reportTypeArray"
     @saveReportOption="saveReportOption"
     @closeTypeModal="closeTypeModal"
-    v-if="inputReportModalShow"></input-report-modal> -->
+    v-if="inputReportModalShow"></input-report-modal>
 </div>
 </template>
 
@@ -107,10 +107,10 @@ export default {
       checked: []
     };
   },
+  // watch: {
+
+  // },
   methods: {
-    inputReportModal () {
-      this.inputReportModalShow = true
-    },
     saveReportOption (iniReportType) {
       this.$message('保存成功')
       this.company.reportTypeOption = iniReportType
@@ -129,10 +129,10 @@ export default {
     },
     submit () {
       let arr = []
-      this.checked.forEach((item, index) => {
+      this.iniCompanyEdit2.reportTypeArray.forEach((item, index) => {
         arr.push({name: item})
       })
-      this.company.reportType = arr
+      this.iniCompanyEdit2.reportType = arr
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -143,7 +143,7 @@ export default {
               let obj = {
                 command: 'editCompany',
                 platform: 'web',
-                data: this.company
+                data: this.iniCompanyEdit2
               }
               return JSON.stringify(obj);
             })()
