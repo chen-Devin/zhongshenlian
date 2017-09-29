@@ -25,7 +25,9 @@ import operatHistory from '../component/operatHistory.vue';
   // 报销
 import expensesList from './commonUse/expenses/expensesList.vue'
 import expensesRecord from './commonUse/expenses/component/expensesRecord.vue'
-import expensesDetail from './commonUse/expenses/component/expensesDetail.vue'
+import expensesTrip from './commonUse/expenses/component/expensesTrip.vue'
+import expensesSpecial from './commonUse/expenses/component/expensesSpecial.vue'
+import expensesApply from './commonUse/expenses/component/expensesApply.vue'
 
 // 所长
 import businessHandleDetailLeader from './leader/businessHandleDetail.vue';
@@ -135,8 +137,16 @@ const router = new VueRouter({
             component: expensesRecord
         },
         {
-            path: '/expenses-detail',
-            component: expensesDetail
+            path: '/expenses-trip',
+            component: expensesTrip
+        },
+        {
+            path: '/expenses-special',
+            component: expensesSpecial
+        },
+        {
+            path: '/expenses-apply',
+            component: expensesApply
         },
         {
             path: '/rule-regulation',

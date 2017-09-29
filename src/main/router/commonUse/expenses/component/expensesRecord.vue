@@ -56,7 +56,8 @@ export default {
   },
   methods: {
     checkDetail (item) {
-      this.$router.push('/expenses-detail')
+      // this.$router.push('/expenses-trip')
+      this.$router.push('/expenses-special')
     }
   },
   components: {

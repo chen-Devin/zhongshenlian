@@ -3,7 +3,7 @@
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
     <card>
-      <button class="btn my-btn submit-btn f-r">申请报销</button>
+      <button class="btn my-btn submit-btn f-r" @click="applyExpense">申请报销</button>
       <h5 class="main-title">报销列表</h5>
     </card>
     <card>
@@ -60,6 +60,9 @@ export default {
     checkDetail (item) {
       console.log(item)
       this.$router.push('/expenses-record')
+    },
+    applyExpense () {
+      this.$router.push('/expenses-apply')
     }
   },
   components: {

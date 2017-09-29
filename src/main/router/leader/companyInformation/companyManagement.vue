@@ -32,7 +32,7 @@
     </div>
     <div class="depart-wrapper" v-else>
       <card class="tree">
-        <el-tree :data="treeData" :props="defaultProps" :highlight-current="highlightCurrent" :expand-on-click-node="expandOnClickNode" :default-expand-all="defaultExpandAll" @node-click="selectNode"></el-tree>
+        <el-tree :data="treeData" :props="defaultProps" :highlight-current="highlightCurrent" :expand-on-click-node="expandOnClickNode" :default-expand-all="defaultExpandAll" @node-click="selectNode" v-if="reloadList"></el-tree>
       </card>
       <card class="detail">
         <!--第二级 公司-->
@@ -177,8 +177,19 @@
           </modal>
         </template>
         <!--第五级 小组-->
-        <!-- <group-detail :iniCompany="company" @edit="edit"></group-detail>
-        <group-detail-edit :iniCompany="company" @edit="edit"></group-detail-edit> -->
+        <template v-if="show5">
+          <group-detail :iniCompany5="group" @edit="edit" @deleteDep="deleteDep" v-if="detailShow5"></group-detail>
+          <group-edit :iniCompanyEdit5="groupEdit" @cancel="cancel" @editSuccess="editSuccess" v-else></group-edit>
+          <modal v-if="deleteShow5">
+            <div slot="body">
+              删除后小组信息将不可恢复，是否确定删除？
+            </div>
+            <div slot="footer">
+              <button class="btn my-btn cancel-btn" @click="deleteShow5=false">取消</button>
+              <button class="btn my-btn submit-btn" @click="confirmDelete(5)">确定</button>
+            </div>
+          </modal>
+        </template>
       </card>
     </div>
   </div>
@@ -196,9 +207,11 @@ import companyList from '@/main/router/leader/companyInformation/component/compa
 import companyDetail from './component/companyDetail.vue';
 import companyDepartmentDetail from './component/companyDepartmentDetail.vue';
 import projectDepartmentDetail from './component/projectDepartmentDetail.vue';
+import groupDetail from './component/groupDetail.vue';
 import companyEdit from './component/companyEdit.vue';
 import companyDepartmentEdit from './component/companyDepartmentEdit.vue';
 import projectDepartmentEdit from './component/projectDepartmentEdit.vue';
+import groupEdit from './component/groupEdit.vue';
 
 export default {
   name: 'companyManagement',
@@ -318,6 +331,10 @@ export default {
         removeStatus: '',
         updateAt: ''
       },
+      group: {
+        groupName: '',
+        id: ''
+      },
       functionInfo: {
         id: '',
         name: '',
@@ -364,6 +381,7 @@ export default {
       show2: false,
       show3: false,
       show4: false,
+      show5: false,
       addShow2: false,
       addShow3: false,
       addShow4: false,
@@ -371,9 +389,11 @@ export default {
       deleteShow2: false,
       deleteShow3: false,
       deleteShow4: false,
+      deleteShow5: false,
       detailShow2: true,
       detailShow3: true,
       detailShow4: true,
+      detailShow5: true,
       funcDetailShow: true,
       companyId: '',
       functionId: '',
@@ -472,20 +492,6 @@ export default {
     switchFunction (id) {
       this.getDepartmentInfo(id)
     },
-    delSuccess () {
-      this.reloadList = false
-      this.reloadList = true
-    },
-    reloadComList () {
-      this.reloadList = false
-      setTimeout(() => {
-        this.reloadList = true
-      }, 100)
-    },
-    noticeJump (comId) {
-      this.comId = comId
-      this.$router.push(`/company-management/${comId}`)
-    },
     getFullCompanyList () {
       return new Promise((resolve, reject) => {
         axios({
@@ -580,6 +586,31 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.projectDepartment = rep.data.data
             this.projectDepartmentEdit = Object.assign({}, this.projectDepartment)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    getDepartmentGroupInfo (id) {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getDepartmentGroupInfo',
+                platform: 'web',
+                groupId: id
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.group = rep.data.data
+            this.groupEdit = Object.assign({}, this.group)
             resolve('done');
           }
         }, (rep) => { });
@@ -684,6 +715,7 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.$message(rep.data.msg)
             this.deleteShow2 = false
+            this.reloadTree()
             resolve('done');
           }
         }, (rep) => { });
@@ -709,6 +741,7 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.$message(rep.data.msg)
             this.deleteShow3 = false
+            this.reloadTree()
             resolve('done');
           }
         }, (rep) => { });
@@ -738,6 +771,37 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.$message(rep.data.msg)
             this.deleteShow4 = false
+            this.reloadTree()
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    delDepartmentGroup () {
+      let arr = []
+      let obj = {}
+      obj.name = this.operateId
+      arr.push(obj)
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'delDepartmentGroup',
+                platform: 'web',
+                groupId: arr
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message(rep.data.msg)
+            this.deleteShow5 = false
+            this.reloadTree()
             resolve('done');
           }
         }, (rep) => { });
@@ -767,6 +831,7 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.$message(rep.data.msg)
             this.deleteFunction = false
+            this.reloadTree()
             resolve('done');
           }
         }, (rep) => { });
@@ -785,7 +850,12 @@ export default {
       } else if (level === 4) {
         this.getProjectDepartmentInfo(id)
         this.detailShow4 = true
+      } else if (level === 5) {
+        this.getDepartmentGroupInfo(id)
+        this.detailShow5 = true
       }
+      this.getFullCompanyList()
+      // this.reloadTree()
     },
     edit (level) {
       if (level === 0) {
@@ -796,6 +866,8 @@ export default {
         this.detailShow3 = false
       } else if (level === 4) {
         this.detailShow4 = false
+      } else if (level === 5) {
+        this.detailShow5 = false
       }
     },
     add (level) {
@@ -816,6 +888,8 @@ export default {
         this.deleteShow3 = true
       } else if (level === 4) {
         this.deleteShow4 = true
+      } else if (level === 5) {
+        this.deleteShow5 = true
       }
     },
     confirmDelete (level) {
@@ -827,6 +901,8 @@ export default {
         this.delCompanyDepartment()
       } else if (level === 4) {
         this.delProjectDepartment()
+      } else if (level === 5) {
+        this.delDepartmentGroup()
       }
     },
     save (level) {
@@ -854,12 +930,23 @@ export default {
       if (level === 2) {
         this.detailShow2 = true
       } else if (level === 3) {
-        // this.Show2 = false
-        // this.show3 = true
         this.detailShow3 = true
       } else if (level === 4) {
         this.detailShow4 = true
+      } else if (level === 5) {
+        this.detailShow5 = true
       }
+    },
+    reloadTree () {
+      this.getFullCompanyList()
+      this.show2 = false
+      this.show3 = false
+      this.show4 = false
+      this.show5 = false
+      this.reloadList = false
+      setTimeout(() => {
+        this.reloadList = true
+      }, 200)
     },
     selectNode (data) {
       this.operateId = data.id
@@ -868,16 +955,25 @@ export default {
         this.show2 = true
         this.show3 = false
         this.show4 = false
+        this.show5 = false
       } else if (data.level === 3) {
         this.getCompanyDepartmentInfo(this.operateId)
         this.show2 = false
         this.show4 = false
         this.show3 = true
+        this.show5 = false
       } else if (data.level === 4) {
         this.getProjectDepartmentInfo(this.operateId)
         this.show2 = false
         this.show3 = false
         this.show4 = true
+        this.show5 = false
+      } else if (data.level === 5) {
+        this.getDepartmentGroupInfo(this.operateId)
+        this.show2 = false
+        this.show3 = false
+        this.show4 = false
+        this.show5 = true
       }
     }
   },
@@ -894,9 +990,11 @@ export default {
     companyDetail,
     companyDepartmentDetail,
     projectDepartmentDetail,
+    groupDetail,
     companyEdit,
     companyDepartmentEdit,
     projectDepartmentEdit,
+    groupEdit,
     TreeDataHandle
   }
 };
