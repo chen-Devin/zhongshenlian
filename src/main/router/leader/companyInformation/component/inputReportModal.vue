@@ -4,24 +4,23 @@
       <i class="fa fa-times close" aria-hidden="true" @click="close"></i>
       <h5 class="main-title">添加/删除可出具报告类型</h5>
       <section>
-        <p>{{ iniReportType }} {{ selected }}</p>
         <el-checkbox-group v-model="operateArray">
-          <el-checkbox :label="item" v-for="(item, index) in selected" :key="index" disabled></el-checkbox>
-          <el-checkbox :label="item" v-for="(item, index) in restType" :key="index"></el-checkbox>
-        </el-checkbox-group>
-        <!-- <el-checkbox-group v-model="checked">
-          <el-checkbox
+          <el-checkbox 
+            :label="item.name" 
+            v-for="(item, index) in selectedArray" 
+            :key="index" 
+            disabled></el-checkbox>
+          <el-checkbox 
             :label="item.name"
-            v-for="(item, index) in reportType"
-            :key="index"
-            v-if="!item.input"></el-checkbox>
-          <el-checkbox
-            v-for="(item, index) in reportType"
-            :key="index"
-            v-if="item.input">
-            <input type="text" name="" v-model="item.name">
+            v-for="(item, index) in restType" 
+            :key="index">
           </el-checkbox>
-        </el-checkbox-group> -->
+          <el-checkbox
+            v-for="(item, index) in addTypeArray"
+            :key="index">
+            <input type="text" v-model="item.name">
+          </el-checkbox>
+        </el-checkbox-group>
       </section>
     </div>
     <div slot="footer">
@@ -40,59 +39,47 @@ export default {
   name: '',
   data() {
     return {
-      // checked: [],
       reportType: this.iniReportType,
-      // reportTypeCopy: [],
-      // selectionsCopy: [],
       operateArray: [],
-      restType: []
+      restType: [],
+      addTypeArray: [],
+      selectedArray: []
     };
   },
   computed: {
-
+    options () {
+      return this.selectedArray.concat(this.restType).concat(this.addTypeArray)
+    }
   },
   methods: {
-    // addType () {
-    //   console.log(this.reportTypeCopy)
-    //   this.reportType.push({
-    //     name: '',
-    //     input: true
-    //   })
-    // },
-    // saveReportOption () {
-    //   this.reportType.forEach((item, index) => {
-    //     if (item.input) {
-    //       delete item.input
-    //     }
-    //   })
-    //   this.$emit('saveReportOption', this.reportType)
-    // },
-    // deleteOptions () {
-    //   console.log(this.reportTypeCopy)
-    //   let arr = []
-    //   this.checked.forEach((item, index) => {
-    //     this.reportType.forEach((jtem, jndex) => {
-    //       if (item === jtem.name) {
-    //         this.reportType.splice(jndex, 1)
-    //       }
-    //     })
-    //     this.selected.forEach((ktem, kndex) => {
-    //       if (item === ktem) {
-    //         this.selected.splice(kndex, 1)
-    //       }
-    //     })
-    //   })
-    // },
+    addType () {
+      this.addTypeArray.push({
+        name: ''
+      })
+    },
+    saveReportOption () {
+      let arr = []
+      this.options.forEach((item) => {
+        if (item.name) {
+          arr.push(item)
+        }
+      })
+      this.$emit('saveReportOption', arr)
+    },
+    deleteOptions () {
+      this.operateArray.forEach((item) => {
+        this.restType.filter((jtem, jndex, array) => {
+          if (item === jtem.name) {
+            array.splice(jndex, 1)
+          }
+        })
+      })
+    },
     close () {
-      this.$emit('closeTypeModal', this.reportTypeCopy, this.selectionsCopy)
+      this.$emit('closeTypeModal')
     }
   },
   created() {
-    // this.repotTypeOptionCopy = this.iniReportType
-    // let objCopy = this.iniReportType.slice()
-    // let objCopy2 = this.selected.slice()
-    // this.reportTypeCopy = objCopy
-    // this.selectionsCopy = objCopy2
     let arr = []
     this.iniReportType.forEach((item, index) => {
       var flag = 0
@@ -102,10 +89,17 @@ export default {
         }
       })
       if (!flag) {
-        arr.push(item.name)
+        arr.push({
+          name: item.name
+        })
       }
     })
     this.restType = arr
+    this.selected.forEach((item) => {
+      this.selectedArray.push({
+        name: item
+      })
+    })
   },
   props: ['iniReportType', 'selected'],
   components: {

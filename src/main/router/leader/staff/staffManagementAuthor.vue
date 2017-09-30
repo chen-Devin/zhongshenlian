@@ -1,16 +1,22 @@
 <template>
   <div class="main staff-manage">
     <crumbs :paths="paths"></crumbs>
-    <card>
-      <button class="btn my-btn" @click="switchDepart">职能部门</button>
-      <button class="btn my-btn" @click="switchDepart">业务部门</button>
+    <card class="top-card">
+      <button class="btn my-btn" :class="{ active: functionActive }" @click="switchDepart">职能部门</button>
+      <button class="btn my-btn" :class="{ active: departActive }" @click="switchFunction">业务部门</button>
     </card>
     <div class="left-contain">
       <card class="card">
         <div class="depart-filter">
           <h5>部门筛选</h5>
           <div class="content-contain">
-            <el-tree :data="treeData" :props="defaultProps" :highlight-current="highlightCurrent" :expand-on-click-node="expandOnClickNode" :default-expand-all="defaultExpandAll" @node-click="selectNode"></el-tree>
+            <el-tree 
+              :data="treeData" 
+              :props="defaultProps" 
+              :highlight-current="highlightCurrent" 
+              :expand-on-click-node="expandOnClickNode" 
+              :default-expand-all="defaultExpandAll" 
+              @node-click="selectNode"></el-tree>
           </div>
         </div>
         <div class="staff-filter">
@@ -35,21 +41,35 @@
       </card>
     </div>
     <div class="right-contain">
-      <card>
-        <staff-detail></staff-detail>
-      </card>
-      <card>
-        <authority-set></authority-set>
-      </card>
-      <card>
-        <salary-detail></salary-detail>
-      </card>
-      <card>
-        <bonus-detail></bonus-detail>
-      </card>
-      <card>
-        <education-bg></education-bg>
-      </card> 
+      <template v-if="staffShow">
+        <card>
+          <staff-detail :staff="staff"></staff-detail>
+        </card>
+        <card>
+          <authority-set></authority-set>
+        </card>
+        <card v-if="!isOpen">
+          <p class="check-more">
+            <a href="javascript:void(0);" @click="checkMore">查看更多信息</a>
+          </p>
+        </card>
+      </template>
+      <template  v-if="isOpen">
+        <card>
+          <salary-detail></salary-detail>
+        </card>
+        <card>
+          <bonus-detail></bonus-detail>
+        </card>
+        <card>
+          <education-bg></education-bg>
+        </card>
+        <card v-if="isOpen">
+          <p class="check-more">
+            <a href="javascript:void(0);" @click="foldMore">收起</a>
+          </p>
+        </card>
+      </template>
     </div>
     <staff-add-modal @cancel="cancel" v-if="addShow"></staff-add-modal>
   </div>
@@ -94,18 +114,58 @@ export default {
         children: 'children',
         label: 'label'
       },
+      functionActive: true,
+      departActive: false,
       highlightCurrent: true,
       expandOnClickNode: false,
       defaultExpandAll: true,
+      isOpen: false,
       addShow: false,
+      staffShow: false,
       staffFilterId: '',
       staffFilterType: '',
-      staffAllList: [{
-        jobNumber: '',
+      staffAllList: [
+        // {
+          // jobNumber: '',
+          // name: '',
+          // duty: '',
+          // isActive: false
+        // }
+      ],
+      staff: {
+        id: '',
+        telephone: '',
         name: '',
-        duty: '',
-        isActive: false
-      }],
+        gender: '',
+        jobNumber: '',
+        department: '',
+        subDepartment: '',
+        duties: '',
+        authority: [{
+          name: '',
+          authority: ''
+        }],
+        idCard: '',
+        email: '',
+        education: '',
+        jonTitle: '',
+        entryTime: '',
+        expireTime: '',
+        singleSubjects: ['会计'],
+        professionalCertificate: [{
+          name: '',
+          value: ''
+        }],
+        companyDepartment: '',
+        projectDepartment: '',
+        group: '',
+        isPrincipal: '',
+        isHaveCertificate: '',
+        wechatName: '',
+        wechatHeadImg: '',
+        nation: '',
+        shortcutArray: []
+      },
       reloadStaffList: true
     };
   },
@@ -128,6 +188,36 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.treeData = TreeDataHandle(rep.data.data.companyArray)
+            console.log(this.treeData)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    getInfoDepartmentList () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getInfoDepartmentList',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.treeData = []
+            this.treeData = rep.data.data.departmentList.map((item) => {
+              item.label = item.name
+              item.children = []
+              return item
+            })
+            console.log(rep.data.data.departmentList, this.treeData)
             resolve('done');
           }
         }, (rep) => { });
@@ -158,9 +248,51 @@ export default {
             this.staffAllList = this.staffAllList.concat(rep.data.data.staffList)
             console.log(this.staffAllList)
             resolve('done');
+          } else {
+            this.staffAllList = []
+            this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       })
+    },
+    getStaffInfo (id) {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getStaffInfo',
+                platform: 'web',
+                id: 1  // ly没给id
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.staff = rep.data.data
+            this.staff = this.staffDataHandle(this.staff)
+            resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
+    staffDataHandle (staff) {
+      staff.singleSubjectsArray = staff.singleSubjects.split('，')
+      staff.PCOptions = staff.professionalCertificate.map((item) => {
+        return item.name
+      })
+      staff.PCSelected = staff.professionalCertificate.map((item) => {
+        if (item.value === '1') {
+          return item.name
+        }
+      })
+      return staff
     },
     selectNode (data) {
       this.staffFilterId = data.id
@@ -173,6 +305,8 @@ export default {
       } else if (data.level === 5) {
         this.staffFilterType = 'group'
       }
+      this.staffShow = false
+      this.isOpen = false
       this.staffFilter()
     },
     selectStaff (staff) {
@@ -182,19 +316,44 @@ export default {
       staff.isActive = true
       this.reloadStaffList = false
       this.reloadStaffList = true
+      this.getStaffInfo().then(() => {
+        console.log(this.staff)
+        this.staffShow = true
+      }, () => {})
     },
     switchDepart () {
-
+      this.functionActive = true
+      this.departActive = false
+      this.staffShow = false
+      this.isOpen = false
+      this.treeData = []
+      this.staffAllList = []
+      this.getInfoDepartmentList()
+    },
+    switchFunction () {
+      this.functionActive = false
+      this.departActive = true
+      this.staffShow = false
+      this.isOpen = false
+      this.treeData = []
+      this.staffAllList = []
+      this.getFullCompanyList()
     },
     showAdd () {
       this.addShow = true
     },
     cancel () {
       this.addShow = false
+    },
+    checkMore () {
+      this.isOpen = true
+    },
+    foldMore () {
+      this.isOpen = false
     }
   },
   created () {
-    this.getFullCompanyList()
+    this.getInfoDepartmentList()
   },
   components: {
     crumbs,
@@ -212,6 +371,13 @@ export default {
 
 <style lang="sass" scoped>
   .staff-manage {
+    .top-card {
+      .my-btn {
+        &.active {
+          color: #f00;
+        }
+      }
+    }
     .left-contain {
       float: left;
       width: 400px;
@@ -263,6 +429,9 @@ export default {
     .right-contain {
       // width: 100%;
       margin-left: 400px;
+      .check-more {
+        text-align: center;
+      }
     }
   }
 </style>

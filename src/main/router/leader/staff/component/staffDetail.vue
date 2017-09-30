@@ -83,7 +83,7 @@
           <el-form :label-position="labelPosition" label-width="130px" :rules="staffRules">
             <el-form-item label="单科成绩" prop="singleSubjects">
               <el-checkbox-group v-model="staff.singleSubjectsArray">
-                <el-checkbox :label="option" v-for="(option, index) in scoresOption" :key="index" disabled>{{ option }}</el-checkbox>
+                <el-checkbox :label="option" v-for="(option, index) in scoresOption" :key="index" :disabled="!editAble">{{ option }}</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </el-form>
@@ -93,7 +93,7 @@
           <el-form :label-position="labelPosition" label-width="130px" :model="staff" :rules="staffRules" ref="staff">
             <el-form-item label="执行证书" prop="professionalCertificate">
               <el-checkbox-group v-model="staff.PCSelected">
-                <el-checkbox :label="option" :value="option" v-for="(option, index) in staff.PCOptions" :key="index" disabled></el-checkbox>
+                <el-checkbox :label="option" :value="option" v-for="(option, index) in staff.PCOptions" :key="index" :disabled="!editAble"></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </el-form>
@@ -112,41 +112,7 @@ export default {
   data() {
     return {
       labelPosition: 'left',
-      staff: {
-        id: '',
-        telephone: '',
-        name: '',
-        gender: '',
-        jobNumber: '',
-        department: '',
-        subDepartment: '',
-        duties: '',
-        authority: [{
-          name: '',
-          authority: ''
-        }],
-        idCard: '',
-        email: '',
-        education: '',
-        jonTitle: '',
-        entryTime: '',
-        expireTime: '',
-        singleSubjects: ['会计'],
-        professionalCertificate: [{
-          name: '',
-          value: ''
-        }],
-        companyDepartment: '',
-        projectDepartment: '',
-        group: '',
-        isPrincipal: '',
-        isHaveCertificate: '',
-        wechatName: '',
-        wechatHeadImg: '',
-        nation: '',
-        shortcutArray: []
-      },
-      singleSubjects: ['会计'],
+      singleSubjects: [],
       professionalCertificate: [],
       editAble: false,
       staffRules: {
@@ -204,53 +170,14 @@ export default {
     };
   },
   methods: {
-    getStaffInfo () {
-      return new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              let obj = {
-                command: 'getStaffInfo',
-                platform: 'web',
-                id: '1'
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.staff = rep.data.data
-            this.staff = this.staffDataHandle(this.staff)
-            resolve('done');
-          }
-        }, (rep) => { });
-      })
-    },
     edit () {
       this.editAble = true
     },
     cancel () {
       this.editAble = false
-    },
-    staffDataHandle (staff) {
-      this.staff.singleSubjectsArray = this.staff.singleSubjects.split('，')
-      this.staff.PCOptions = this.staff.professionalCertificate.map((item) => {
-        return item.name
-      })
-      this.staff.PCSelected = this.staff.professionalCertificate.map((item) => {
-        if (item.value === '1') {
-          return item.name
-        }
-      })
-      return staff
     }
   },
-  created () {
-    this.getStaffInfo()
-  }
+  props: ['staff']
 }
 </script>
 
@@ -260,6 +187,10 @@ export default {
       .basic-form {
         margin-top: 30px;
       }
+    }
+    form {
+      padding-left: 0;
+      padding-right: 20px;
     }
   }
 </style>

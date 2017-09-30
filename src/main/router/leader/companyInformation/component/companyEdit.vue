@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="company-detail-box">
-    <h1 class="title">{{ iniCompanyEdit2.name }}{{ iniCompanyEdit2 }}</h1>
+    <h1 class="title">{{ iniCompanyEdit2.name }}</h1>
     <h5 class="main-title">公司信息</h5>
     <div class="company-detail">
       <el-row>
@@ -113,12 +113,10 @@ export default {
   methods: {
     saveReportOption (iniReportType) {
       this.$message('保存成功')
-      this.company.reportTypeOption = iniReportType
+      this.iniCompanyEdit2.reportTypeOption = iniReportType
       this.inputReportModalShow = false
     },
-    closeTypeModal (iniReportType, selections) {
-      this.company.reportTypeOption = iniReportType
-      this.company.reportType = selections
+    closeTypeModal () {
       this.inputReportModalShow = false
     },
     showType () {
