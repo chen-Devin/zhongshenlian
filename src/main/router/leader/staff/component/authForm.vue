@@ -2,10 +2,15 @@
   <div>
     <h5 class="main-title">
       权限设置
-      <button type="button"
-              class="btn my-btn submit-btn pull-right"
-              @click="ediBtnTog()"
-              :disabled="ediBtn.dis">{{ediBtn.cont}}</button>
+      <div class="f-r o-h">
+        <template v-if="!editAble">
+          <button class="btn my-btn submit-btn" @click="edit">编辑</button>
+        </template>
+        <template v-else>
+          <button class="btn my-btn submit-btn" @click="save">保存</button>
+          <button class="btn my-btn draft-btn" @click="cancel">取消</button>
+        </template>
+      </div>
     </h5>
     <table class="table table-bordered table-hover com-list">
       <thead>
@@ -25,7 +30,7 @@
               :key="index">
             <input type="checkbox"
                    v-model="jtem.stat"
-                   :disabled="!ediBtn.ediStat">
+                   :disabled="!editAble">
           </td>
         </tr>
       </tbody>
@@ -42,30 +47,18 @@ export default {
   data() {
     return {
       thisDepart: this.department,
-      ediBtn: {
-        dis: false,
-        cont: '编辑',
-        ediStat: false,
-      },
+      editAble: false,
       authorityArray: [],
       authorityData: [],
     };
   },
   props: ['id'],
-  filters: {
-    transBoolean (value) {
-      return value === '0' ? false : true
-    }
-  },
   methods: {
-    ediBtnTog() {
-      if (this.ediBtn.ediStat) {
-        this.ediBtn.ediStat = false;
-        this.ediBtn.cont = '编辑';
-      } else {
-        this.ediBtn.ediStat = true;
-        this.ediBtn.cont = '保存';
-      }
+    edit () {
+      this.editAble = true
+    },
+    cancel () {
+      this.editAble = false
     },
     getStaffAuthority (id) {
       return new Promise((resolve, reject) => {
@@ -103,18 +96,35 @@ export default {
                 jtem.stat = jtem.authority === '0' ? false : true
               })
             })
-            // this.resultArray.forEach((item, index) => {
-            //   console.log(item)
-            // })
-            // this.authorityData.push({
-            //   companyName: 
-            // })
             this.loadTable = true
             resolve('done');
           }
         }, (rep) => { });
       })
     },
+    save () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'editStaffAuthority',
+                platform: 'web',
+                staffId: '1'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    }
   },
   created () {
     this.getStaffAuthority(this.id)

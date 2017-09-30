@@ -43,7 +43,7 @@
     <div class="right-contain">
       <template v-if="staffShow">
         <card>
-          <staff-detail :staff="staff"></staff-detail>
+          <staff-detail :staff="staff" :type="type"></staff-detail>
         </card>
         <card>
           <authority-set></authority-set>
@@ -326,6 +326,7 @@ export default {
       this.departActive = false
       this.staffShow = false
       this.isOpen = false
+      this.type = 'function'
       this.treeData = []
       this.staffAllList = []
       this.getInfoDepartmentList()
@@ -335,6 +336,7 @@ export default {
       this.departActive = true
       this.staffShow = false
       this.isOpen = false
+      this.type = 'department'
       this.treeData = []
       this.staffAllList = []
       this.getFullCompanyList()

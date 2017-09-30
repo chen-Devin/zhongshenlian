@@ -40,17 +40,17 @@
               <el-form-item label="是否为部门负责人" prop="isPrincipal">
                 <el-input v-model="staff.isPrincipal" :disabled="!editAble"></el-input>
               </el-form-item>
-              <el-form-item label="所属业务部">
+              <el-form-item label="所属业务部" v-if="type==='department'">
                 <el-input v-model="staff.companyDepartment" :disabled="!editAble"></el-input>
               </el-form-item>
-              <el-form-item label="所属项目部">
+              <el-form-item label="所属项目部" v-if="type==='department'">
                 <el-input v-model="staff.projectDepartment" :disabled="!editAble"></el-input>
               </el-form-item>
             </el-form>
           </el-col>
           <el-col :span="12">
             <el-form :label-position="labelPosition" label-width="130px" :model="staff" :rules="staffRules" ref="staff">
-              <el-form-item label="所属小组">
+              <el-form-item label="所属小组" v-if="type==='department'">
                 <el-input v-model="staff.group" :disabled="!editAble"></el-input>
               </el-form-item>
               <el-form-item label="职位" prop="duties">
@@ -177,7 +177,7 @@ export default {
       this.editAble = false
     }
   },
-  props: ['staff']
+  props: ['staff', 'type']
 }
 </script>
 

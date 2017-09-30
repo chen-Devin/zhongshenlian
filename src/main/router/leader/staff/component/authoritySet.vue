@@ -1,38 +1,7 @@
 <template>
   <div class="staff-wrapper">
     <div class="basic-contain">
-      <div class="f-r o-h">
-        <!-- <template v-if="!editAble">
-          <button class="btn my-btn submit-btn" @click="edit">编辑权限</button>
-        </template>
-        <template v-else>
-          <button class="btn my-btn submit-btn">保存</button>
-          <button class="btn my-btn draft-btn" @click="cancel">取消</button>
-        </template> -->
-      </div>
-      <!-- <h5 class="main-title">权限设置</h5> -->
       <div class="basic-form"> 
-         <!-- <el-table
-           :data="resultArray"
-           border
-           style="width: 100%">
-           <el-table-column prop="arr1"
-             label="权限名称"
-             :row-key="arr1"
-             width="150">
-             <el-table-column 
-             prop="companyName"
-             label="公司名称"
-             width="150">
-             </el-table-column>
-           </el-table-column>
-           <el-table-column :row-class-name="arr1">
-           </el-table-column>
-           <el-table-column >
-           </el-table-column>
-           <el-table-column >
-           </el-table-column>
-         </el-table>      -->
         <auth-form></auth-form>
       </div>
     </div>    
