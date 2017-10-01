@@ -7,7 +7,7 @@
           <button class="btn my-btn submit-btn" @click="add">新增</button>
         </template>
         <template v-else>
-          <button class="btn my-btn submit-btn">保存</button>
+          <button class="btn my-btn submit-btn" @click="save">保存</button>
           <button class="btn my-btn draft-btn" @click="cancel">取消</button>
         </template>
       </div>
@@ -61,6 +61,7 @@ export default {
   data() {
     return {
       editAble: false,
+      educationArrayEmpty: [],
       educationArray: [{
        certificateNumber: '',
        createAt: '',
@@ -104,23 +105,41 @@ export default {
       this.editAble = true
     },
     add () {
-      //
+      this.editAble = true
+      this.educationArray.push(this.educationArrayEmpty)
     },
     cancel () {
       this.editAble = false
+      this.getUserEducationInfo()
+    },
+    save () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'editEducationalExperience',
+                platform: 'web',
+                educationalExperience: this.educationArray
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success('保存成功')
+            resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+          this.getUserEducationInfo()
+          this.editAble = false
+        }, (rep) => { });
+      })
     }
-    // staffDataHandle (staff) {
-    //   this.staff.singleSubjectsArray = this.staff.singleSubjects.split('，')
-    //   this.staff.PCOptions = this.staff.professionalCertificate.map((item) => {
-    //     return item.name
-    //   })
-    //   this.staff.PCSelected = this.staff.professionalCertificate.map((item) => {
-    //     if (item.value === '1') {
-    //       return item.name
-    //     }
-    //   })
-    //   return staff
-    // }
   },
   created () {
     this.getUserEducationInfo()

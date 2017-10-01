@@ -4,10 +4,10 @@
       <div class="f-r o-h">
         <template v-if="!editAble">
           <button class="btn my-btn submit-btn" @click="edit">编辑</button>
-          <button class="btn my-btn cancel-btn">删除员工</button>
+          <button class="btn my-btn cancel-btn" @click="deleteStaff">删除员工</button>
         </template>
         <template v-else>
-          <button class="btn my-btn submit-btn">保存</button>
+          <button class="btn my-btn submit-btn" @click="save">保存</button>
           <button class="btn my-btn draft-btn" @click="cancel">取消</button>
         </template>
       </div>
@@ -100,21 +100,23 @@
         </el-row>
       </div>
     </div>
-    
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   name: 'staffDetail',
   data() {
     return {
+      editAble: false,
       labelPosition: 'left',
       singleSubjects: [],
       professionalCertificate: [],
-      editAble: false,
+      staff: {
+
+      },
       staffRules: {
         telephone: [
           {required: true, message: '请输入手机号', trigger: 'blur'}
@@ -170,14 +172,102 @@ export default {
     };
   },
   methods: {
+    getStaffInfo (id) {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getStaffInfo',
+                platform: 'web',
+                id: 1  // ly没给id
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.staff = rep.data.data
+            this.staff = this.staffDataHandle(this.staff)
+            resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
+    staffDataHandle (staff) {
+      staff.singleSubjectsArray = staff.singleSubjects.split('，')
+      staff.PCOptions = staff.professionalCertificate.map((item) => {
+        return item.name
+      })
+      staff.PCSelected = staff.professionalCertificate.map((item) => {
+        if (item.value === '1') {
+          return item.name
+        }
+      })
+      return staff
+    },
+    save () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'editUser',
+                platform: 'web',
+                editUserId: this.staff.id,
+                userName: this.staff.name,
+                gender: this.staff.gender,
+                phone: this.staff.telephone,
+                jobNumber: this.staff.jobNumber,
+                duity: this.staff.duties,
+                idCard: this.staff.idCard,
+                email: this.staff.email,
+                education: this.staff.education,
+                jonTitle: this.staff.jonTitle,
+                entryTime: this.staff.entryTime,
+                expireTime: this.staff.expireTime,
+                singleSubjects: this.staff.singleSubjects,
+                professionalCertificate: this.staff.professionalCertificate,
+                isPrincipal: this.staff.isPrincipal,
+                isHaveCertificate: this.staff.isHaveCertificate
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success('保存成功')
+            resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+          this.getStaffInfo()
+          this.editAble = false
+        }, (rep) => { });
+      })
+    },
     edit () {
       this.editAble = true
     },
     cancel () {
       this.editAble = false
+    },
+    deleteStaff () {
+      this.$message.error('删除接口有问题')
     }
   },
-  props: ['staff', 'type']
+  props: ['type'],
+  created () {
+    this.getStaffInfo()
+  }
 }
 </script>
 

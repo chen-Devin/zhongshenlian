@@ -43,7 +43,8 @@
     <div class="right-contain">
       <template v-if="staffShow">
         <card>
-          <staff-detail :staff="staff" :type="type"></staff-detail>
+          <staff-detail 
+            :type="type"></staff-detail>
         </card>
         <card>
           <authority-set></authority-set>
@@ -188,7 +189,6 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.treeData = TreeDataHandle(rep.data.data.companyArray)
-            console.log(this.treeData)
             resolve('done');
           }
         }, (rep) => { });
@@ -246,7 +246,6 @@ export default {
             this.staffAllList = []
             this.staffAllList[0] = rep.data.data.principal
             this.staffAllList = this.staffAllList.concat(rep.data.data.staffList)
-            console.log(this.staffAllList)
             resolve('done');
           } else {
             this.staffAllList = []
@@ -254,45 +253,6 @@ export default {
           }
         }, (rep) => { });
       })
-    },
-    getStaffInfo (id) {
-      return new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              let obj = {
-                command: 'getStaffInfo',
-                platform: 'web',
-                id: 1  // ly没给id
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.staff = rep.data.data
-            this.staff = this.staffDataHandle(this.staff)
-            resolve('done');
-          } else {
-            this.$message.error(rep.data.msg)
-          }
-        }, (rep) => { });
-      })
-    },
-    staffDataHandle (staff) {
-      staff.singleSubjectsArray = staff.singleSubjects.split('，')
-      staff.PCOptions = staff.professionalCertificate.map((item) => {
-        return item.name
-      })
-      staff.PCSelected = staff.professionalCertificate.map((item) => {
-        if (item.value === '1') {
-          return item.name
-        }
-      })
-      return staff
     },
     selectNode (data) {
       this.staffFilterId = data.id
@@ -316,10 +276,9 @@ export default {
       staff.isActive = true
       this.reloadStaffList = false
       this.reloadStaffList = true
-      this.getStaffInfo().then(() => {
-        console.log(this.staff)
+      // this.getStaffInfo().then(() => {
         this.staffShow = true
-      }, () => {})
+      // }, () => {})
     },
     switchDepart () {
       this.functionActive = true

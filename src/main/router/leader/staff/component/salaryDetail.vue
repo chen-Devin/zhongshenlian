@@ -7,7 +7,7 @@
           <button class="btn my-btn submit-btn" @click="add">新增</button>
         </template>
         <template v-else>
-          <button class="btn my-btn submit-btn">保存</button>
+          <button class="btn my-btn submit-btn" @click="save">保存</button>
           <button class="btn my-btn draft-btn" @click="cancel">取消</button>
         </template>
       </div>
@@ -204,6 +204,41 @@
           </el-row>
         </el-form>      
       </div>
+      <table class="table table-bordered table-hover table-input">
+        <thead>
+          <tr>
+            <td class="text-center">日期</td>
+            <td class="text-center">发放金额</td>
+            <td class="text-center">报销金额</td>
+            <td class="text-center">备注说明</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in recordArray"
+              :key="index">
+            <td class="text-center">
+              <el-input type="text"
+                     v-model="item.date"
+                     :disabled="!editAble"></el-input>
+            </td>
+            <td class="text-center">
+              <el-input type="text"
+                     v-model="item.releaseAmount"
+                     :disabled="!editAble"></el-input>
+            </td>
+            <td class="text-center">
+              <el-input type="text"
+                     v-model="item.reimburseAmount"
+                     :disabled="!editAble"></el-input>
+            </td>
+            <td class="text-center">
+              <el-input type="text"
+                     v-model="item.remark"
+                     :disabled="!editAble"></el-input>
+            </td>
+          </tr>
+        </tbody>
+      </table> 
     </div>    
   </div>
 </template>
@@ -248,7 +283,20 @@ export default {
       basicRules: {
 
       },
-      labelPosition: 'left'
+      labelPosition: 'left',
+      recordArray: [],
+      recordArrayEmpty: [
+        {
+          id: '',
+          releaseAmount: '',
+          reimburseAmount: '',
+          date: '',
+          remark: '',
+          removeStatus: '',
+          createAt: '',
+          updateAt: ''
+        }
+      ]
     };
   },
   methods: {
@@ -279,30 +327,134 @@ export default {
         }, (rep) => { });
       })
     },
+    getSalaryReleaseRecordInfo () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getSalaryReleaseRecordInfo',
+                platform: 'web',
+                staffId: '1'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.recordArray = rep.data.data.recordArray
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
     edit () {
       this.editAble = true
     },
     add () {
-      //
+      this.editAble = true
+      this.recordArray.push(this.recordArrayEmpty)
     },
     cancel () {
       this.editAble = false
+      this.getUserSalaryInfo()
+      this.getSalaryReleaseRecordInfo()
+    },
+    editSalaryReleaseRecord () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'editSalaryReleaseRecord',
+                platform: 'web',
+                recordArray: this.recordArray
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success('保存成功')
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+          this.editAble = false
+          resolve('done');
+        }, (rep) => { });
+      })
+    },
+    editSalary () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'editSalary',
+                platform: 'web',
+                salary: {
+                  id: '', // ??? 奖金id是什么
+                  userId: '',  // ??? 项目用户id又是什么
+                  postSalary: this.baseSalaryJson.postSalary,
+                  wagePay: this.baseSalaryJson.wagePay,
+                  communicationSubsidy: this.subsidyJson.communicationSubsidy,
+                  dutyPaid: this.subsidyJson.dutyPaid,
+                  healthSubsidy: this.subsidyJson.healthSubsidy,
+                  heatingSubsidy: this.subsidyJson.heatingSubsidy,
+                  housingSubsidy: this.subsidyJson.housingSubsidy,
+                  nonSubsidy: this.subsidyJson.nonSubsidy,
+                  overtimePay: this.subsidyJson.overtimePay,
+                  subsidy: this.subsidyJson.subsidy,
+                  trafficSubsidy: this.subsidyJson.trafficSubsidy,
+                  deductible: this.deductibleJson.deductible,
+                  housingFund: this.deductibleJson.housingFund,
+                  medicalInsurance: this.deductibleJson.medicalInsurance,
+                  membershipFees: this.deductibleJson.membershipFees,
+                  pension: this.deductibleJson.pension,
+                  personalAnnuity: this.deductibleJson.personalAnnuity,
+                  tax: this.deductibleJson.tax,
+                  unemploymentInsurance: this.deductibleJson.unemploymentInsurance,
+                  basicPerformance: this.performanceSalaryJson.basicPerformance,
+                  performanceSalary: this.performanceSalaryJson.performanceSalary
+                }
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success('保存成功')
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+          this.editAble = false
+          resolve('done');
+        }, (rep) => { });
+      })
+    },
+    save () {
+      this.editSalaryReleaseRecord().then(() => {
+        this.editSalary().then(() => {
+          this.getUserSalaryInfo()
+          this.getSalaryReleaseRecordInfo()
+        }, () => {})
+      }, () => {})
+      
     }
-    // staffDataHandle (staff) {
-    //   this.staff.singleSubjectsArray = this.staff.singleSubjects.split('，')
-    //   this.staff.PCOptions = this.staff.professionalCertificate.map((item) => {
-    //     return item.name
-    //   })
-    //   this.staff.PCSelected = this.staff.professionalCertificate.map((item) => {
-    //     if (item.value === '1') {
-    //       return item.name
-    //     }
-    //   })
-    //   return staff
-    // }
   },
+  props: ['staffId'],
   created () {
     this.getUserSalaryInfo()
+    this.getSalaryReleaseRecordInfo()
   }
 }
 </script>

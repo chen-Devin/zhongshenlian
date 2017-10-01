@@ -38,13 +38,14 @@
           <el-menu-item index="/business-complete-list"><i class="el-icon-circle-check"></i>已完成业务</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-submenu index="staff-manage" v-if="leader">
+      <!-- <el-submenu index="staff-manage" v-if="leader">
         <template slot="title"><i class="el-icon-setting"></i>职员管理</template>
         <el-menu-item-group>
-          <el-menu-item index="/staff-management-author"><i class="el-icon-setting"></i>职员权限管理</el-menu-item>
+          <el-menu-item index="/staff-management-author"><i class="el-icon-setting"></i>职员管理</el-menu-item>
           <el-menu-item index="/staff-management-infor"><i class="el-icon-setting"></i>职员资料管理</el-menu-item>
         </el-menu-item-group>
-      </el-submenu>
+      </el-submenu> -->
+      <el-menu-item index="/staff-management-author" v-if="leader"><i class="el-icon-setting"></i>职员管理</el-menu-item>
       <el-menu-item index="/bid-info-list" v-if="!leader"><i class="el-icon-picture"></i>招投标信息</el-menu-item>
       <el-menu-item index="/bid-info-draft" v-if="market"><i class="el-icon-picture"></i>草稿箱</el-menu-item>
       <el-menu-item index="/rule-regulation"><i class="el-icon-menu"></i>规章制度</el-menu-item>

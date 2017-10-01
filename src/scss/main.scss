@@ -404,6 +404,13 @@ label.col-sm-2.control-label {
   overflow: hidden;
 }
 
+// element style
 
+.el-input.is-disabled .el-input__inner {
+    background-color: #fafafa;
+    border-color: #d1dbe5;
+    color: #666;
+    cursor: not-allowed;
+}
 
 
