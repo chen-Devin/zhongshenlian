@@ -13,68 +13,67 @@
       </div>
       <h5 class="main-title">奖金信息</h5>
       <div class="basic-form"> 
-        <el-form label-width="100px">
+        <el-form :label-position="labelPosition" label-width="90px">
           <el-row>
-            <el-col :span="10" :pull="2">
-              <el-form-item label="发放形式">
+            <el-col :span="12">
+              <el-form-item label-width="80px" label="发放形式">
                 <el-input :disabled="!editAble" v-model="bonusArray[0].releaseModus"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="10" :push="5">
+            <el-col :span="12">
               <el-form-item label="工资卡账户">
                 <el-input :disabled="!editAble" v-model="bonusArray[0].salaryCardAccount"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
         </el-form>
-        <el-table :disabled="!editAble"
-               :data="bonusArray"
-               style="width: 100%">
-               <el-table-column
-                 prop="batchNumber" 
-                 label="批次编号"
-                 width="180">
-                 <template scope="scope">
-                 <el-input v-model=scope.row.batchNumber :disabled="!editAble"></el-input>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 prop="applyPersonTelephone"
-                 label="申请人"
-                 width="180">
-                 <template scope="scope">
-                   <el-input v-model=scope.row.applyPersonTelephone :disabled="!editAble"></el-input>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 prop="applyDate"
-                 label="申请日期">
-                 <template scope="scope">
-                   <el-input v-model=scope.row.applyDate :disabled="!editAble"></el-input>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 prop="releaseDate"
-                 label="发放日期">
-                 <template scope="scope">
-                   <el-input v-model=scope.row.releaseDate :disabled="!editAble"></el-input>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 prop="amount"
-                 label="发放金额">
-                 <template scope="scope">
-                   <el-input v-model=scope.row.amount :disabled="!editAble"></el-input>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 prop="remark"
-                 label="备注说明">
-                 <template scope="scope">
-                   <el-input v-model=scope.row.remark :disabled="!editAble"></el-input>
-                 </template>
-               </el-table-column>
-        </el-table>     
+        <table class="table table-bordered table-hover table-input">
+          <thead>
+            <tr>
+              <td class="text-center">批次编号</td>
+              <td class="text-center">申请人</td>
+              <td class="text-center">申请日期</td>
+              <td class="text-center">发放日期</td>
+              <td class="text-center">发放金额</td>
+              <td class="text-center">备注说明</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in bonusArray"
+                :key="index">
+              <td class="text-center">
+                <el-input type="text"
+                       v-model="item.batchNumber"
+                       :disabled="!editAble"></el-input>
+              </td>
+              <td class="text-center">
+                <el-input type="text"
+                       v-model="item.applyPersonTelephone"
+                       :disabled="!editAble"></el-input>
+              </td>
+              <td class="text-center">
+                <el-input type="text"
+                       v-model="item.applyDate"
+                       :disabled="!editAble"></el-input>
+              </td>
+              <td class="text-center">
+                <el-input type="text"
+                       v-model="item.releaseDate"
+                       :disabled="!editAble"></el-input>
+              </td>
+              <td class="text-center">
+                <el-input type="text"
+                       v-model="item.amount"
+                       :disabled="!editAble"></el-input>
+              </td>
+              <td class="text-center">
+                <el-input type="text"
+                       v-model="item.remark"
+                       :disabled="!editAble"></el-input>
+              </td>
+            </tr>
+          </tbody>
+        </table>    
       </div>
     </div>    
   </div>
@@ -102,7 +101,8 @@ export default {
         removeStatus: '',
         salaryCardAccount: '',
         updateAt: '',
-      }]  
+      }],
+      labelPosition: 'left'
     };
   },
   methods: {

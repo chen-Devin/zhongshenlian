@@ -13,40 +13,41 @@
       </div>
       <h5 class="main-title">教育背景</h5>
       <div class="basic-form"> 
-        <el-table
-               :data="educationArray"
-               style="width: 100%">
-               <el-table-column
-                 prop="schoolName"
-                 label="学校名称"
-                 width="180">
-                 <template scope="scope">
-                   <el-input v-model=scope.row.schoolName :disabled="!editAble"></el-input>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 prop="education"
-                 label="学历"
-                 width="180">
-                 <template scope="scope">
-                   <el-input v-model=scope.row.education :disabled="!editAble"></el-input>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 prop="startTime"
-                 label="就读时间">
-                 <template scope="scope">
-                   <el-input v-model=scope.row.startTime :disabled="!editAble"></el-input>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 prop="endTime"
-                 label="毕业时间">
-                 <template scope="scope">
-                   <el-input v-model=scope.row.endTime :disabled="!editAble"></el-input>
-                 </template>
-               </el-table-column>
-        </el-table>       
+        <table class="table table-bordered table-hover table-input">
+          <thead>
+            <tr>
+              <td class="text-center">学校名称</td>
+              <td class="text-center">学历</td>
+              <td class="text-center">就读时间</td>
+              <td class="text-center">毕业时间</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in educationArray"
+                :key="index">
+              <td class="text-center">
+                <el-input type="text"
+                       v-model="item.schoolName"
+                       :disabled="!editAble"></el-input>
+              </td>
+              <td class="text-center">
+                <el-input type="text"
+                       v-model="item.education"
+                       :disabled="!editAble"></el-input>
+              </td>
+              <td class="text-center">
+                <el-input type="text"
+                       v-model="item.startTime"
+                       :disabled="!editAble"></el-input>
+              </td>
+              <td class="text-center">
+                <el-input type="text"
+                       v-model="item.endTime"
+                       :disabled="!editAble"></el-input>
+              </td>
+            </tr>
+          </tbody>
+        </table>     
       </div>
     </div>    
   </div>
