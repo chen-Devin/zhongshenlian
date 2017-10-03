@@ -1,7 +1,12 @@
 <template>
   <div id="app">
-    <com-header :user="user"></com-header>
-    <index :user="user"></index>
+    <!-- <com-header :user="user"></com-header> -->
+    <side-bar :user="user"></side-bar>
+    <div class="page-main">
+      <com-header :user="user"></com-header>
+      <router-view :user="user"></router-view>
+    </div>
+    <!-- <index :user="user"></index> -->
     <!--<com-footer></com-footer>-->
   </div>
 </template>
@@ -9,6 +14,7 @@
 <script>
 import comFooter from './component/comFooter.vue';
 import comHeader from './component/comHeader.vue';
+import sideBar from './component/sideBar.vue';
 import index from './component/index.vue';
 
 export default {
@@ -22,6 +28,7 @@ export default {
   components: {
     comFooter,
     comHeader,
+    sideBar,
     index
   },
   methods: {
@@ -56,5 +63,10 @@ export default {
   .el-tree {
     background-color: #fafafa;
     border: none;
+  }
+  #app {
+    .page-main {
+      margin-left: 200px;
+    }
   }
 </style>

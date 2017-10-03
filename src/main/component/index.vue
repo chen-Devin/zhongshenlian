@@ -1,7 +1,7 @@
 <template>
   <main class="container-fluid">
     <div class="row">
-      <side-bar class="col-md-2 trimPadding" :user="user"></side-bar>
+      <!-- <side-bar class="col-md-2 trimPadding" :user="user"></side-bar> -->
       <router-view class="col-md-10 col-md-offset-2" :user="user"></router-view>
     </div>
   </main>

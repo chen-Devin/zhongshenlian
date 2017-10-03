@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top adjust-left">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="#">
@@ -11,10 +11,10 @@
           天津中审联办公管理系统
         </h4>
         <p class="navbar-text navbar-right">
-          <span>{{user.name}} 欢迎您</span>
+          <!-- <span>{{user.name}} 欢迎您</span> -->
           <a class="navbar-link" @click="signOut()">退出</a>
         </p>
-        <img :src="userHead" alt="头像" class="img-circle img-head navbar-right">
+        <!-- <img :src="userHead" alt="头像" class="img-circle img-head navbar-right"> -->
       </div><!-- /.container-fluid -->
     </nav>
   </header>
@@ -27,11 +27,6 @@ import qs from 'qs';
 export default {
   name: 'comHeader',
   props: ['user'],
-  computed: {
-    userHead() {
-      return this.user.wechatHeadImg || require('../../img/head.jpg');
-    }
-  },
   methods: {
     signOut() {
       axios({
@@ -59,9 +54,12 @@ export default {
 
 <style lang="sass" scoped>
 .navbar {
-  background-color: #1F6BA9;
+  background-color: #3B93DF;
   border-color: rgba(255,255,255,0);
   z-index: 3;
+  &.adjust-left {
+    left: 200px;
+  }
   .navbar-brand {
     padding: 8px 15px;
     img {
@@ -91,7 +89,6 @@ export default {
       color: rgba(240,240,240,1);
       line-height: 1em;
       padding: 0 10px;
-      border-left: 1px solid rgba(255,255,255,1);
       cursor: pointer;
     }
   }

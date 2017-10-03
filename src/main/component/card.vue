@@ -17,7 +17,9 @@ export default {
 
 section {
   position: relative;
-  margin: 30px 10px;
+  margin-top: 23px;
+  margin-left: 30px;
+  margin-right: 30px;
   padding: 10px 20px;
   background-color: $origin-color;
   border: 1px solid $section-border;
