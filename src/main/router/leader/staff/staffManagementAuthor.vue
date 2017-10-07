@@ -350,7 +350,7 @@ export default {
           width: 100%;
           height: 400px;
           overflow: auto;
-          background-color: #fafafa;
+          background-color: #F9FBFE;
         }
       }
       .staff-filter {
@@ -359,7 +359,7 @@ export default {
           height: 400px;
           padding-top: 10px;
           overflow: auto;
-          background-color: #fafafa;
+          background-color: #F9FBFE;
           .staff-list {
             margin: 0;
             padding: 0;
@@ -377,7 +377,7 @@ export default {
                 margin-left: 45px;
               }
               &.active {
-                background-color: #edf7ff;
+                background-color: #DBEAFE;
               }
             }
           }

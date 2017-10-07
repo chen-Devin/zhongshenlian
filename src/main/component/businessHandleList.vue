@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <form class="search-form" @submit.prevent @keyup.enter.prevent>
+      <!-- <form class="search-form" @submit.prevent @keyup.enter.prevent>
         <div class="row">
           <div class="col-md-11">
             <search-bar placeholder="请输入关键字进行搜索" @search="tog" v-show="simpleSearch"></search-bar>
@@ -21,7 +21,7 @@
       <business-complete-search-bar 
         @higherSearchEvent="higherSearchEvent"
         @reset="reset"
-        v-if="higherSearch"></business-complete-search-bar>
+        v-if="higherSearch"></business-complete-search-bar> -->
       <h3 class="main-title">
         业务列表
       </h3>

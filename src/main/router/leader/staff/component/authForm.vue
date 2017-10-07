@@ -12,7 +12,7 @@
         </template>
       </div>
     </h5>
-    <table class="table table-bordered table-hover com-list">
+    <table class="table table-bordered table-hover">
       <thead>
         <tr>
           <td class="text-center staff-max">公司名称</td>
@@ -136,17 +136,5 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.com-list {
-  thead {
-    background-color: #E6E6E6;
-    th {
-      width: 33.3%;
-    }
-  }
-  .link-wrap {
-    a:hover {
-      cursor: pointer;
-    }
-  }
-}
+
 </style>

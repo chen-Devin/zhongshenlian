@@ -1,8 +1,8 @@
 <template>
-  <div class="main">
+  <div class="bid-info-list">
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
-    <card>
+    <card class="card">
       <!--招投标列表子组件-->
       <bid-info-list-body></bid-info-list-body>
     </card>
@@ -36,5 +36,9 @@ export default {
 </script>
 
 <style lang="sass">
-
+  .bid-info-list {
+    > .card {
+      
+    }
+  }
 </style>

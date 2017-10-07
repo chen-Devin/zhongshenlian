@@ -10,7 +10,7 @@
       <!-- </router-link> -->
     </h3>
     <!--搜索栏-->
-    <form class="search-form" @submit.prevent @keyup.enter.prevent>
+    <!-- <form class="search-form" @submit.prevent @keyup.enter.prevent>
       <div class="row">
         <div class="col-md-11">
           <search-bar placeholder="请输入客户关键字进行搜索" @search="search" v-show="simpleSearch"></search-bar>
@@ -25,9 +25,9 @@
           </button>
         </div>
       </div>
-    </form>
+    </form> -->
     <!--高级搜索-->
-    <form class="form-inline higherForm" v-if="higherSearch">
+    <!-- <form class="form-inline higherForm" v-if="higherSearch">
       <div class="row">
         <div class="col-md-11">
           <div class="col-md-4 ta-c">
@@ -54,8 +54,8 @@
         <button type="button" class="btn my-btn submit-btn" @click="higherSearchEvent()">查找</button>
         <button type="button" class="btn my-btn draft-btn" @click="reset()">重置</button>
       </div>
-    </form>
-    <table class="table table-bordered table-hover com-list">
+    </form> -->
+    <table class="table table-bordered table-hover">
       <thead>
         <tr>
           <th class="text-center">客户名称</th>

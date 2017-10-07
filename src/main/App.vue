@@ -60,10 +60,6 @@ export default {
 </script>
 
 <style lang="sass">
-  .el-tree {
-    background-color: #fafafa;
-    border: none;
-  }
   #app {
     .page-main {
       margin-left: 200px;

@@ -20,7 +20,7 @@ section {
   margin-top: 23px;
   margin-left: 30px;
   margin-right: 30px;
-  padding: 10px 20px;
+  // padding: 10px 20px;
   background-color: $origin-color;
   border: 1px solid $section-border;
   box-shadow: 1px 2px 4px $section-border-shadow;

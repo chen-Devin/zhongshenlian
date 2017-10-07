@@ -3,7 +3,7 @@
       <el-pagination
         @current-change="handleCurrentChange"
         layout="total, prev, pager, next"
-        :page-size="20"
+        :page-size="1"
         :total="totalItems">
       </el-pagination>
     </div>
