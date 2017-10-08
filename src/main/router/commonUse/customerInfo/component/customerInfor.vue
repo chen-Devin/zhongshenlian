@@ -60,7 +60,7 @@
         <tr>
           <th class="text-center">客户名称</th>
           <th class="text-center">社会统一信用代码</th>
-          <th class="text-center">操作</th>
+          <th class="text-center">录入时间</th>
         </tr>
       </thead>
       <tbody>
