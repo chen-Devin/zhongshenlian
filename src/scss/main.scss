@@ -20,6 +20,13 @@ body {
   font-size: 15px;
 }
 
+.vice-title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 30px;
+  font-size: 13px;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   margin-top: 0;
@@ -147,6 +154,11 @@ h1, h2, h3, h4, h5, h6 {
         border: none;
       }
     }
+    > .el-tree-node__content {
+      > .el-tree-node__label {
+        font-size: 13px;
+      }
+    }
   }
 }
 
@@ -261,6 +273,11 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
 }
 
+// btns
+.btns {
+  margin-right: 10px;
+}
+
 .d-ib {
   display: inline-block;
 }
@@ -326,28 +343,9 @@ label.col-sm-2.control-label {
 }
 
 //按钮
-.btn-primary {
-  background-color: #0074d3;
-  border: none;
-  &:hover {
-    background-color: #1276d0;
-    color: #ffffff;
-  }
-  &:active {
-    background-color: #1276d0;
-    color: #ffffff;
-  }
-}
-
-.btn-primary:active:focus {
-  color: #fff;
-  background-color: #1276d0;
-  border-color: none;
-}
-
 .my-btn {
   min-width: 100px;
-  height: 40px;
+  height: 30px;
   font-family: "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: #fff;
@@ -358,54 +356,35 @@ label.col-sm-2.control-label {
   }
 }
 
-.btn-mb {
-  margin-top: -5px;
-}
-
 //提交、保存、录入、搜索、编辑按钮
 .submit-btn {
-  background-color: #64d3f8;
+  background-color: #50bef7;
   border: none;
   &:hover {
-    background-color: #53b3d3;
+    background-color: #168fcd;
     color: #fff;
   }
   &:active {
-    background-color: #53b3d3;
+    background-color: #168fcd;
     color: #fff;
   }
   &:focus {
-    background-color: #53b3d3;
+    background-color: #168fcd;
     color: #fff;
   }
 }
 
-//暂存、取消、高级搜索、重置按钮
+//暂存、取消、重置按钮
 .draft-btn {
   color: #fff;
-  background-color: #ffc952;
+  background-color: #8ad637;
   border: none;
   &:hover {
-    background-color: #d3a238;
+    background-color: #6eb620;
     color: #fff;
   }
   &:active {
-    background-color: #d3a238;
-    color: #fff;
-    border: none;
-  }
-}
-
-.high-btn {
-  color: #fff;
-  background-color: #38a5fe;
-  border: none;
-  &:hover {
-    background-color: #288ada;
-    color: #fff;
-  }
-  &:active {
-    background-color: #288ada;
+    background-color: #6eb620;
     color: #fff;
     border: none;
   }
@@ -413,19 +392,19 @@ label.col-sm-2.control-label {
 
 //撤销、删除按钮
 .cancel-btn {
-  background-color: #f06d58;
+  background-color: #fc7d71;
   border: none;
   width: 60px;
   &:hover {
-    background-color: #d3523e;
+    background-color: #e05043;
     color: #fff;
   }
   &:active {
-    background-color: #d3523e;
+    background-color: #e05043;
     color: #fff;
   }
   &:focus {
-    background-color: #d3523e;
+    background-color: #e05043;
     color: #fff;
   }
 }
@@ -493,6 +472,46 @@ label.col-sm-2.control-label {
   margin-top: 67px;
   margin-right: 48px;
   margin-bottom: 25px;
+}
+
+.el-tabs  {
+  > .el-tabs__header {
+    margin-bottom: 0;
+    border-bottom: none;
+    > .el-tabs__nav-wrap {
+      > .el-tabs__nav-scroll {
+        > .el-tabs__nav {
+          > .el-tabs__active-bar {
+            display: none;
+          }
+          > .el-tabs__item {
+            position: relative;
+            height: 46px;
+            line-height: 46px;
+            font-size: 15px;
+            border-right: 1px solid #f9f9f9;
+            &.is-active {
+              color: #50BAF0;
+              &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 32px;
+                width: 0;
+                height: 0;
+                border-left: 16px solid transparent;
+                border-right: 16px solid transparent;
+                border-bottom: 8px solid #DBEAFE;
+                transform: translateX(-50%);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 

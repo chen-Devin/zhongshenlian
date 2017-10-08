@@ -199,7 +199,7 @@ export default {
       }
     }
     .message-box {
-      background-color: #fafafa;
+      background-color: #f9fbfe;
       padding: 20px 50px;
       p {
         display: flex;

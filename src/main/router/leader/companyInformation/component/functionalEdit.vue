@@ -2,10 +2,10 @@
 <div>
   <div class="company-detail-box">
     <h1 class="title">{{ functionInfoEdit.name }}</h1>
-    <h5 class="main-title">部门信息</h5>
+    <h5 class="vice-title">部门信息</h5>
     <div class="company-detail">
       <el-row>
-        <el-col :span="15" :offset="4">
+        <el-col :span="9" :offset="2">
           <p class="input-wrapper">
             部门编号：
             <input type="text" class="form-control" v-model="functionInfoEdit.number" placeholder="请输入部门编号">
@@ -22,6 +22,10 @@
             人员数量：
             <span>{{functionInfoEdit.staffNum}}</span>
           </p>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24" :offset="2">
           <p class="input-wrapper">
             <el-checkbox-group v-model="functionInfoEdit.checked">
               分管业务权限：
@@ -129,11 +133,12 @@ export default {
   > .title {
     font-size: 15px;
     margin: 0;
+    margin-top: 20px;
     text-align: center;
   }
   .company-detail {
     width: 100%;
-    background-color: #fafafa;
+    background-color: #f9fdfe;
     padding: 10px 30px;
     .input-wrapper {
       display: flex;
@@ -156,7 +161,8 @@ export default {
   }
   .btns {
     margin-top: 10px;
-    margin-bottom: 0;
+    margin-bottom: 10px;
+    margin-right: 15px;
     text-align: right;
   }
 }

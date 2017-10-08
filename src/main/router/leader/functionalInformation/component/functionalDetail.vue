@@ -99,7 +99,7 @@ export default {
   }
   .company-detail {
     width: 100%;
-    background-color: #fafafa;
+    background-color: #f9fbfe;
     padding: 10px 30px;
   }
   .post-type {

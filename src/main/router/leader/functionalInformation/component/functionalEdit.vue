@@ -257,7 +257,7 @@ export default {
   }
   .company-detail {
     width: 100%;
-    background-color: #fafafa;
+    background-color: #f9fbfe;
     padding: 10px 30px;
     .input-wrapper {
       display: flex;
@@ -285,7 +285,7 @@ export default {
     box-sizing: border-box;
     width: 100%;
     padding: 50px 20px;
-    background-color: #fafafa;
+    background-color: #f9fbfe;
     .type-input {
       height: 20px;
       width: 100px;

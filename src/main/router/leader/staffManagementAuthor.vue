@@ -219,7 +219,7 @@ export default {
           width: 100%;
           height: 400px;
           overflow: auto;
-          background-color: #fafafa;
+          background-color: #f9fbfe;
         }
       }
       .staff-filter {
@@ -228,7 +228,7 @@ export default {
           height: 400px;
           padding-top: 10px;
           overflow: auto;
-          background-color: #fafafa;
+          background-color: #f9fbfe;
           .staff-list {
             margin: 0;
             padding: 0;

@@ -2,7 +2,7 @@
 <div>
   <div class="company-detail-box">
     <h1 class="title">{{ company.name }}</h1>
-    <h5 class="main-title">部门信息</h5>
+    <h5 class="vice-title">部门信息</h5>
     <div class="company-detail">
       <el-row>
         <el-col :span="9" :offset="2">
@@ -75,11 +75,12 @@ export default {
   > .title {
     font-size: 15px;
     margin: 0;
+    margin-top: 20px;
     text-align: center;
   }
   .company-detail {
     width: 100%;
-    background-color: #fafafa;
+    background-color: #f9fbfe;
     padding: 10px 30px;
   }
   .post-type {
@@ -93,7 +94,8 @@ export default {
   }
   .btns {
     margin-top: 10px;
-    margin-bottom: 0;
+    margin-bottom: 10px;
+    margin-right: 15px;
     text-align: right;
   }
 }

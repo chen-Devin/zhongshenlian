@@ -56,7 +56,7 @@ export default {
     .type-box {
       padding-top: 20px;
       padding-bottom: 20px;
-      background-color: #fafafa;
+      background-color: #f9fbfe;
       text-align: center;
       .el-radio-group {
         margin-top: 10px;

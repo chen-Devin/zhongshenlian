@@ -2,7 +2,7 @@
 <div>
   <div class="company-department-detail-box">
     <h1 class="title">{{ iniCompanyEdit5.groupName }}</h1>
-    <h5 class="main-title">公司信息</h5>
+    <h5 class="vice-title">公司信息</h5>
     <div class="company-department-detail">
       <el-row>
         <el-col :span="9" :offset="2">
@@ -84,7 +84,7 @@ export default {
   }
   .company-department-detail {
     width: 100%;
-    background-color: #fafafa;
+    background-color: #f9fbfe;
     padding: 10px 30px;
   }
   .post-type {

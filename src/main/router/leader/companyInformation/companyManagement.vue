@@ -1,12 +1,20 @@
 <template>
-  <div class="main">
+  <div class="company-management">
     <crumbs :paths="paths"></crumbs>
-    <card>
-      <button class="btn my-btn" @click="functionShow = true">职能部门</button>
-      <button class="btn my-btn" @click="functionShow = false">业务部门</button>
+    <card class="card-top">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane 
+          :label="tab.label" 
+          :name="tab.name"
+          v-for="(tab, index) in tabList"
+          :key="index"></el-tab-pane>
+      </el-tabs>
     </card>
-    <div v-if="functionShow">
-      <company-list v-if="reloadList" @switchFunction="switchFunction"></company-list>
+    <div class="function-wrapper" v-if="functionShow">
+      <company-list 
+        class="company-list" 
+        v-if="reloadList" 
+        @switchFunction="switchFunction"></company-list>
       <div class="company-wrapper">
         <card>
           <functional-department 
@@ -32,6 +40,7 @@
     </div>
     <div class="depart-wrapper" v-else>
       <card class="tree">
+        <h5 class="vice-title">部门筛选</h5>
         <el-tree 
           :data="treeData" 
           :props="defaultProps" 
@@ -63,8 +72,9 @@
               <el-form 
                 :model="form2" 
                 :rules="form2Rules" 
-                ref="form2" 
-                label-width="100px">
+                ref="form2"
+                :label-position="labelPosition"
+                label-width="120px">
                 <el-form-item label="部门编号" prop="number">
                   <el-input v-model="form2.number"></el-input>
                 </el-form-item>
@@ -115,7 +125,8 @@
               <el-form 
                 :model="form3" 
                 :rules="form3Rules" 
-                ref="form3" 
+                ref="form3"
+                :label-position="labelPosition"
                 label-width="100px">
                 <el-form-item label="项目部名称" prop="name">
                   <el-input v-model="form3.name"></el-input>
@@ -164,7 +175,8 @@
               <el-form 
                 :model="form4" 
                 :rules="form4Rules" 
-                ref="form4" 
+                ref="form4"
+                :label-position="labelPosition" 
                 label-width="100px">
                 <el-form-item label="小组名称" prop="groupName">
                   <el-input v-model="form4.groupName"></el-input>
@@ -227,6 +239,18 @@ export default {
   name: 'companyManagement',
   data() {
     return {
+      labelPosition: 'left',
+      tabList: [
+        {
+          label: '职能部门',
+          name: 'function'
+        },
+        {
+          label: '业务部门',
+          name: 'business'
+        }
+      ],
+      activeName: 'function',
       paths: [
         { name: '信息管理', url: '/business-review-list-leader', present: true },
         { name: '公司信息管理', url: '/business-review-list-leader', present: true }
@@ -505,6 +529,14 @@ export default {
     };
   },
   methods: {
+    handleClick(tab, event) {
+      if (tab.name === 'function') {
+        this.functionShow = true
+      } else if (tab.name === 'business') {
+        this.functionShow = false
+      }
+      console.log(tab.name, event)
+    },
     getDepartmentInfo (id) {
       this.functionId = id
       return new Promise((resolve, reject) => {
@@ -1066,13 +1098,31 @@ export default {
 
 <style lang="sass" scoped>
 @import '../../../../scss/_variables.scss';
-  .company-wrapper {
-    margin-left: 180px;
+  .company-management {
+    > .card-top {
+      padding-top: 7px;
+      padding-bottom: 7px;
+    }
+    > .function-wrapper {
+      padding-left: 20px;
+      > .company-list {
+        
+      }
+    }
   }
   .depart-wrapper {
     display: flex;
     > .tree {
-      width: 220px;
+      width: 260px;
+      margin-right: 0;
+      padding-top: 18px;
+      padding-left: 17px;
+      padding-right: 17px;
+      padding-bottom: 18px;
+      font-size: 13px;
+      > .vice-title {
+        margin-left: 0;
+      }
       > .add {
         padding-top: 10px;
         text-align: center;
@@ -1080,6 +1130,9 @@ export default {
     }
     > .detail {
       flex: 1;
+      margin-left: 10px;
+      padding-top: 20px;
+      padding-bottom: 20px;
     }
   }
 </style>

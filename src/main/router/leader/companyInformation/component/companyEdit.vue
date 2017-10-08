@@ -2,7 +2,7 @@
 <div>
   <div class="company-detail-box">
     <h1 class="title">{{ iniCompanyEdit2.name }}</h1>
-    <h5 class="main-title">公司信息</h5>
+    <h5 class="vice-title">公司信息</h5>
     <div class="company-detail">
       <el-row>
         <el-col :span="9" :offset="2">
@@ -176,7 +176,7 @@ export default {
   }
   .company-detail {
     width: 100%;
-    background-color: #fafafa;
+    background-color: #f9fbfe;
     padding: 10px 30px;
     .input-wrapper {
       display: flex;
@@ -204,7 +204,7 @@ export default {
     box-sizing: border-box;
     width: 100%;
     padding: 50px 20px;
-    background-color: #fafafa;
+    background-color: #f9fbfe;
     .type-input {
       height: 20px;
       width: 100px;

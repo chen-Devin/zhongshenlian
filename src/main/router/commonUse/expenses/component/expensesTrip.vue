@@ -228,7 +228,7 @@ export default {
       margin-top: 20px;
       padding-top: 10px;
       padding-bottom: 10px;
-      border-top: 1px solid #fafafa;
+      border-top: 1px solid #f9fbfe;
       overflow: hidden;
       .el-select {
         width: 50%;
@@ -246,7 +246,7 @@ export default {
         padding-left: 10px;
         padding-bottom: 10px;
         margin-top: 10px;
-        background-color: #fafafa;
+        background-color: #f9fbfe;
         .el-row {
           line-height: 36px;
           margin-bottom: 10px;
@@ -274,7 +274,7 @@ export default {
         .el-row {
           padding-top: 5px;
           padding-bottom: 5px;
-          border-bottom: 1px solid #fafafa;
+          border-bottom: 1px solid #f9fbfe;
           &:nth-child(2), &:last-child {
             border: none;
           }

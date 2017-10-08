@@ -104,7 +104,7 @@ export default {
     .list-wrap {
       width: 100%;
       padding-top: 10px;
-      background-color: #fafafa;
+      background-color: #f9fbfe;
     }
   }
 </style>
