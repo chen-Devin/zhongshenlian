@@ -11,7 +11,10 @@
         </el-radio-group>
       </div>
       <div class="btn-contain">
-        <button class="btn my-btn submit-btn" :disabled="confirm">确定</button>
+        <button 
+          class="btn my-btn submit-btn" 
+          :disabled="confirm"
+          @click="apply">确定</button>
       </div>
     </card>
   </div>
@@ -42,7 +45,13 @@ export default {
     }
   },
   methods: {
-    
+    apply () {
+      if (this.type === '差旅费报销') {
+        this.$router.push('/expenses-trip/new')
+      } else if (this.type === '特殊报销') {
+        this.$router.push('/expenses-special/new')
+      }
+    }
   },
   components: {
     crumbs,

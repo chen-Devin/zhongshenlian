@@ -3,7 +3,7 @@
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h5 class="main-title">报销金额总数：</h5>
+      <h5 class="main-title">报销金额总计：</h5>
     </card>
     <card>
       <table class="table table-bordered table-hover com-list">
@@ -16,10 +16,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in recordList">
+          <tr v-for="(item, index) in expensesRecords">
             <td class="ta-c">{{ item.name }}</td>
-            <td class="ta-c">{{ item.abstract }}</td>
-            <td class="ta-c">{{ item.account }}</td>
+            <td class="ta-c">{{ item.summary }}</td>
+            <td class="ta-c">{{ item.amount }}</td>
             <td class="ta-c">
               <a href="javascript:void(0);" @click="checkDetail(item)">查看</a>
             </td>
@@ -46,19 +46,60 @@ export default {
         { name: '报销列表', url: '/expenses-list', present: false },
         { name: '报销单据', url: '/expenses-record', present: true }
       ],
-      recordList: [{
-        id: 1,
-        name: '张三',
-        abstract: '天津中审联会计师事务所项目报销申请',
-        account: 500000.00
-      }]
+      expensesRecords: [{
+        id: '',
+        name: '',
+        summary: '',
+        amount: ''
+      }],
+      pageNum: 1
     };
   },
   methods: {
     checkDetail (item) {
-      // this.$router.push('/expenses-trip')
-      this.$router.push('/expenses-special')
+      if (this.$route.params.type === '差旅费报销') {
+        this.$router.push('/expenses-trip/' + item.id)
+      } else if (this.$route.params.type === '特殊报销') {
+        this.$router.push('/expenses-special/' + item.id)
+      }
+    },
+    getExpensesRecords () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getExpensesRecords',
+                platform: 'web',
+                pageNum: this.pageNum,
+                idR: this.$route.params.id
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.expensesRecords = rep.data.data.expensesRecords
+            this.totalAmount = rep.data.data.totalAmount
+            this.expensesRecords = [{
+                                      id: 1,
+                                      name: '张三',
+                                      summary: '天津中审联会计师事务所项目报销申请',
+                                      amount: 500000.00
+                                    }]
+            resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
     }
+  },
+  created () {
+    this.getExpensesRecords()
   },
   components: {
     crumbs,

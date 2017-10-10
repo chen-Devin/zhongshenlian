@@ -1,51 +1,64 @@
 <template>
-  <div class="main">
+  <div class="quick">
     <crumbs :paths="paths"></crumbs>
-    <card>
-      <div class="quick-wrapper">
-        <quick-link v-for="(link, index) in linksArray" :iniLink="link" :iniItemIndex="index" :key="index"></quick-link>
-        <div class="operate" @click="showAddItem">
-          添加/删除
-        </div>
+    <!-- <p>{{ linksArray }}</p> -->
+    <div class="quick-wrapper">
+      <quick-link v-for="(link, index) in linksArray" :iniLink="link" :iniItemIndex="index" :key="index"></quick-link>
+      <div class="operate" @click="showAddItem">
+        添加/删除
       </div>
-      <div class="to-wrapper">
-        <p>待办事项（{{ itemCounts }}）</p>
-        <el-table
-          :data="tableData"
-          stripe
-          style="width: 100%">
-          <el-table-column
-            prop="title"
-            label="标题"
-            style="width: 50%">
-          </el-table-column>
-          <el-table-column
-            prop="type"
-            label="事项类别"
-            style="width: 50%">
-          </el-table-column>
-        </el-table>
-        <p class="more" style="width: 100%">
-          <router-link to="/business-review-list-leader">
-            查看更多
-          </router-link>
-        </p>
-      </div>
-      <modal modal-width="700px" v-if="addItem">
-        <div class="items-wrap" slot="body">
-          <div class="item-column" v-for="(item, index) in quickArray" :key="index">
-            <p class="title">{{ item.title }}</p>
-            <el-checkbox-group v-model="shortcutArray">
-              <el-checkbox :label="innerItem" v-for="(innerItem, index) in item.detailArray" :key="index"></el-checkbox>
-            </el-checkbox-group>
+    </div>
+    <el-row>
+      <el-col :span="12">
+        <p class="todo-title">待办事项（{{ itemCounts }}）</p>
+        <card class="card">
+          <div class="to-wrapper">
+            <table class="table table-bordered table-hover table-list">
+              <thead>
+                <tr>
+                  <th>标题</th>
+                  <th>事项类别</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr 
+                  v-for="(project, index) in tableData" 
+                  @click="checkMessage(project)" 
+                  :key="index">
+                  <td>{{ project.title }}</td>
+                  <td>{{ project.type }}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+        </card>
+      </el-col>
+      <el-col :span="12">
+        <p class="todo-title">规章制度</p>
+        <card class="card rule-card">
+          <div class="to-wrapper">
+            <p class="title">规章制度</p>
+            <div class="content">
+              123
+            </div>
+          </div>
+        </card>
+      </el-col>
+    </el-row>
+    <modal modal-width="700px" v-if="addItem">
+      <div class="items-wrap" slot="body">
+        <div class="item-column" v-for="(item, index) in quickArray" :key="index">
+          <p class="title">{{ item.title }}</p>
+          <el-checkbox-group v-model="shortcutArray">
+            <el-checkbox :label="innerItem" v-for="(innerItem, index) in item.detailArray" :key="index"></el-checkbox>
+          </el-checkbox-group>
         </div>
-        <div slot="footer">
-          <el-button type="primary" @click="submit">确定</el-button>
-          <el-button @click="cancel">取消</el-button>
-        </div>
-      </modal>
-    </card>
+      </div>
+      <div slot="footer">
+        <el-button type="primary" @click="submit">确定</el-button>
+        <el-button @click="cancel">取消</el-button>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -108,11 +121,11 @@ export default {
         }, {
           icon: 'el-icon-star-on',
           linkTo: '/customer-infor-list',
-          title: '客户信息管理'
+          title: '客户信息'
         }, {
           icon: 'el-icon-star-on',
-          linkTo: '',
-          title: '公司信息管理'
+          linkTo: '/company-management',
+          title: '公司信息'
         }, {
           icon: 'el-icon-star-on',
           linkTo: '',
@@ -215,6 +228,9 @@ export default {
           window.location.href = 'signIn.html';
         }
       }, (rep) => { });
+    },
+    checkMessage (project) {
+      console.log(project)
     }
   },
   props: [''],
@@ -235,48 +251,83 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  .quick-wrapper {
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 50px;
-  }
-  .to-wrapper {
-    .more {
-      padding: 10px 0;
-      border: 1px solid #eee;
-      text-align: center;
-    }
-  }
-  .operate {
-    display: inline-block;
-    box-sizing: border-box;
-    width: 80px;
-    height: 90px;
-    padding-top: 35px;
-    text-align: center;
-    border-radius: 5px;
-    color: #fff;
-    margin: 0 10px;
-    background-color: #9E9E9E;
-    cursor: pointer;
-  }
-  .items-wrap {
-    display: flex;
-    justify-content: space-between;
-    .item-column {
+  .quick {
+    padding-right: 20px;
+    > .quick-wrapper {
       display: flex;
-      flex-direction: column;
       justify-content: flex-start;
-      margin-right: 20px;
+      margin-top: 39px;
+      margin-left: 30px;
+      margin-bottom: 33px;
     }
-  }
-  .el-checkbox {
-    display: block;
-  }
-  .el-checkbox+.el-checkbox {
-    margin-left: 0;
-  }
-  .el-checkbox__label {
-    font-weight: normal;
+    > .el-row {
+      > .el-col {
+        > .todo-title {
+          margin-left: 30px;
+        }
+        > .card {
+          margin-right: 0;
+          &.rule-card {
+            height: 260px;
+            padding-top: 14px;
+            padding-bottom: 28px;
+            padding-left: 20px;
+            padding-right: 20px;
+            > .to-wrapper {
+              > .title {
+                height: 20px;
+                line-height: 20px;
+                text-align: center;
+                font-size: 14px;
+              }
+              > .content {
+                height: 188px;
+                background-color: #f9fdfe;
+                overflow: auto;
+              }
+            }
+          }
+        }
+      }
+    }
+    .to-wrapper {
+      .more {
+        padding: 10px 0;
+        border: 1px solid #eee;
+        text-align: center;
+      }
+    }
+    .operate {
+      display: inline-block;
+      box-sizing: border-box;
+      width: 80px;
+      height: 90px;
+      padding-top: 35px;
+      text-align: center;
+      border-radius: 5px;
+      color: #fff;
+      margin: 0 10px;
+      background-color: #9E9E9E;
+      cursor: pointer;
+    }
+    .items-wrap {
+      display: flex;
+      justify-content: space-between;
+      .item-column {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-right: 20px;
+      }
+    }
+    .el-checkbox {
+      display: block;
+    }
+    .el-checkbox+.el-checkbox {
+      margin-left: 0;
+    }
+    .el-checkbox__label {
+      font-weight: normal;
+    }
   }
 </style>

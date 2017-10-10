@@ -19,9 +19,9 @@
         </thead>
         <tbody>
           <tr v-for="(item, index) in expensesList" @click="checkDetail(item)">
-            <td class="ta-c">{{ item.company }}</td>
-            <td class="ta-c">{{ item.depart }}</td>
-            <td class="ta-c">{{ item.applicant }}</td>
+            <td class="ta-c">{{ item.companyName }}</td>
+            <td class="ta-c">{{ item.departmentName }}</td>
+            <td class="ta-c">{{ item.applicantName.name }}</td>
             <td class="ta-c">{{ item.type }}</td>
             <td class="ta-c">{{ item.time }}</td>
           </tr>
@@ -46,24 +46,55 @@ export default {
         { name: '报销申请', url: '/expenses-list', present: false },
         { name: '报销列表', url: '/expenses-list', present: true }
       ],
+      pageNum: 1,
       expensesList: [{
-        id: 1,
-        company: '天津中审联会计师事务所有限责任公司',
-        depart: '业务部',
-        applicant: '李四',
-        type: '差旅费报销',
-        time: '2017-07-23 19:03:11'
+        id: '',
+        companyName: '',
+        departmentName: '',
+        applicantName: {},
+        type: '',
+        time: ''
       }]
     };
   },
   methods: {
+    getExpensesList () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getExpensesList',
+                platform: 'web',
+                pageNum: this.pageNum
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.expensesList = rep.data.data.expensesList
+            resolve('done');
+          } else {
+            
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
     checkDetail (item) {
       console.log(item)
-      this.$router.push('/expenses-record')
+      this.$router.push('/expenses-record/' + item.id + '/' + item.type)
     },
     applyExpense () {
       this.$router.push('/expenses-apply')
     }
+  },
+  created () {
+    this.getExpensesList()
   },
   components: {
     crumbs,

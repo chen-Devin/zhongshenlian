@@ -1,8 +1,9 @@
 <template>
   <div class="expense-table">
-    <h5>差旅费报销/特殊报销</h5>
+    <h5 v-if="type==='差旅费报销'">差旅费报销</h5>
+    <h5 v-if="type==='特殊报销'">特殊报销</h5>
     <!-- 差旅费table -->
-    <table border="1">
+    <table border="1" v-if="type==='差旅费报销'">
       <tbody>
         <tr>
           <td class="table-label">出差起始日期：</td>
@@ -11,7 +12,7 @@
               v-model="startDate"
               type="date"
               placeholder="选择出差起始日期"
-              disabled>
+              :disabled="!editAble">
             </el-date-picker>
           </td>
           <td class="table-label">出差结束日期：</td>
@@ -20,18 +21,18 @@
               v-model="startDate"
               type="date"
               placeholder="选择出差结束日期"
-              disabled>
+              :disabled="!editAble">
             </el-date-picker>
           </td>
         </tr>
         <tr>
           <td class="table-label">出差地：</td>
           <td>
-            <el-input v-model="input" placeholder="请填写出差地" disabled></el-input>
+            <el-input v-model="input" placeholder="请填写出差地" :disabled="!editAble"></el-input>
           </td>
           <td class="table-label">出差事由</td>
           <td>
-            <el-radio-group v-model="reason" disabled>
+            <el-radio-group v-model="reason" :disabled="!editAble">
               <el-radio label="审计"></el-radio>
               <el-radio label="培训"></el-radio>
               <el-radio label="会议"></el-radio>
@@ -43,34 +44,34 @@
         <tr>
           <td class="table-label">总计金额：</td>
           <td colspan="3">
-            <el-input v-model="input" placeholder="请填写总计金额" disabled></el-input>
+            <el-input v-model="input" placeholder="请填写总计金额" :disabled="!editAble"></el-input>
           </td>
         </tr>
         <tr>
           <td class="table-label">摘要：</td>
           <td colspan="3">
-            <el-input v-model="input" placeholder="请填写摘要" disabled></el-input>
+            <el-input v-model="input" placeholder="请填写摘要" :disabled="!editAble"></el-input>
           </td>
         </tr>
       </tbody>
     </table>
     <!-- 特殊费table -->
-    <table border="1">
+    <table border="1" v-if="type==='特殊报销'">
       <tbody>
         <tr>
           <td class="table-label">报销数量：</td>
           <td>
-            <el-input v-model="input" placeholder="请填写报销数量" disabled></el-input>
+            <el-input v-model="input" placeholder="请填写报销数量" :disabled="!editAble"></el-input>
           </td>
           <td class="table-label">报销金额：</td>
           <td>
-            <el-input v-model="input" placeholder="请填写报销金额" disabled></el-input>
+            <el-input v-model="input" placeholder="请填写报销金额" :disabled="!editAble"></el-input>
           </td>
         </tr>
         <tr>
           <td class="table-label">备注：</td>
           <td colspan="3">
-            <el-input v-model="input" placeholder="请填写备注" disabled></el-input>
+            <el-input v-model="input" placeholder="请填写备注" :disabled="!editAble"></el-input>
           </td>
         </tr>
       </tbody>
@@ -84,9 +85,10 @@ export default {
   data() {
     return {
       reason: '',
-      startDate: '2017-09-15'
+      startDate: ''
     };
   },
+  props: ['type', 'editAble'],
   methods: {
   
   },

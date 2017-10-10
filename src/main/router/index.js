@@ -133,15 +133,15 @@ const router = new VueRouter({
             component: expensesList
         },
         {
-            path: '/expenses-record',
+            path: '/expenses-record/:id/:type',
             component: expensesRecord
         },
         {
-            path: '/expenses-trip',
+            path: '/expenses-trip/:id',
             component: expensesTrip
         },
         {
-            path: '/expenses-special',
+            path: '/expenses-special/:id',
             component: expensesSpecial
         },
         {

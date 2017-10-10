@@ -3,12 +3,12 @@
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h5 class="main-title">可报销金额：1</h5>
+      <h5 class="main-title" v-if="!editAble">可报销金额：1</h5>
       <div class="title-wrapper">
         <el-row>
           <el-col :span="6">
             报销方式：
-            <el-select v-model="typeSelected" placeholder="请选择报销方式" disabled>
+            <el-select v-model="typeSelected" placeholder="请选择报销方式" :disabled="!editAble">
               <el-option
                 v-for="item in typeOptions"
                 :key="item"
@@ -17,13 +17,13 @@
               </el-option>
             </el-select>
           </el-col>
-          <el-col :span="6" class="number">
+          <el-col :span="6" class="number" v-if="contractNumberShow">
             合同号：
-            <el-input v-model="input" placeholder="请填写合同号" disabled></el-input>
+            <el-input v-model="input" placeholder="请填写合同号" :disabled="!editAble"></el-input>
           </el-col>
           <el-col :span="6">
             开票类型：
-            <el-select v-model="classSelected" placeholder="请选择开票类型" disabled>
+            <el-select v-model="classSelected" placeholder="请选择开票类型" :disabled="!editAble">
               <el-option
                 v-for="item in classOptions"
                 :key="item"
@@ -33,13 +33,15 @@
             </el-select>
           </el-col>
           <el-col :span="6">
-            申请人：张三
+            申请人：{{ user.name }}
           </el-col>
         </el-row>
       </div>
     </card>
     <card class="card2">
-      <expense-table></expense-table>
+      <expense-table
+        type="差旅费报销"
+        :editAble="editAble"></expense-table>
       <div class="message-box">
         <el-row>
           <el-col :span="12">
@@ -47,7 +49,7 @@
           </el-col>
           <el-col :span="12">
             预算所属公司：
-            <el-select v-model="companySelected" placeholder="请选择预算所属公司" disabled>
+            <el-select v-model="companySelected" placeholder="请选择预算所属公司" :disabled="!editAble">
               <el-option
                 v-for="item in companyOptions"
                 :key="item"
@@ -63,7 +65,7 @@
           </el-col>
           <el-col :span="12">
             预算所属部门：
-            <el-select v-model="departmentSelected" placeholder="请选择预算所属部门" disabled>
+            <el-select v-model="departmentSelected" placeholder="请选择预算所属部门" :disabled="!editAble">
               <el-option
                 v-for="item in departmentOptions"
                 :key="item"
@@ -74,9 +76,12 @@
           </el-col>
         </el-row>
       </div>
-      <div class="electronical-bill">
-        <div class="title">
+      <div class="electronical-bill" v-if="electric || paper">
+        <div class="title" v-if="electric">
           电子发票报销
+        </div>
+        <div class="title" v-if="paper">
+          纸质发票报销
         </div>
         <el-row class="table-title">
           <el-col :span="4" :offset="4">
@@ -94,17 +99,21 @@
             {{ item.type }}
           </el-col>
           <el-col :span="4">
-            <el-input v-model="item.numbers" placeholder="请填写张数" disabled></el-input> 张
+            <el-input 
+              v-model="item.numbers" 
+              placeholder="请填写张数" 
+              :disabled="!editAble"
+              @change="changeNumbers(item)"></el-input> 张
           </el-col>
           <el-col :span="4">
-            <el-input v-model="item.accounts" placeholder="请填写金额" disabled></el-input> 元
+            <el-input v-model="item.amounts" placeholder="请填写金额" :disabled="!editAble"></el-input> 元
           </el-col>
           <el-col :span="4">
             <div v-for="(each, jndex) in item.list" :key="jndex" class="each">
-              <el-input v-model="each.account" placeholder="请填写单笔金额" disabled></el-input> 元
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" :disabled="!editAble"></el-input> 元
             </div>
           </el-col>
-          <el-col :span="7">
+          <el-col :span="7" v-if="electric">
             <div v-for="(each, jndex) in item.list" :key="jndex" class="each">
               <!-- <a href="each.address">下载</a> -->
               <el-upload
@@ -115,14 +124,17 @@
                 :file-list="fileList">
                 <el-button size="small" type="primary">上传文件</el-button>
                 <span>建议文件大小不超过300kb</span>
-                <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
               </el-upload>
             </div>
           </el-col>
         </el-row>
       </div>
+      <p class="btns ta-c" v-if="editAble">
+        <button class="btn my-btn submit-btn">提交审批</button>
+        <button class="btn my-btn cancel-btn">取消</button>
+      </p>
     </card>
-    <card class="card3">
+    <card class="card3" v-if="!editAble">
       <div class="f-l">报销状态：</div>
       <state-svg></state-svg>
       <div class="f-l">
@@ -133,15 +145,11 @@
         :rows="3"
         placeholder="请输入内容"
         v-model="textarea"
-        disabled>
+        :disabled="!editAble">
       </el-input>
-      <p class="btns">
+      <p class="btns" v-if="!editAble">
         <button class="btn my-btn submit-btn">审批通过</button>
         <button class="btn my-btn cancel-btn">驳回</button>
-      </p>
-      <p class="btns">
-        <button class="btn my-btn submit-btn">提交审批</button>
-        <button class="btn my-btn cancel-btn">取消</button>
       </p>
     </card>
   </div>
@@ -163,50 +171,101 @@ export default {
         { name: '报销列表', url: '/expenses-list', present: false },
         { name: '报销详情', url: '/expenses-detail', present: true }
       ],
-      recordList: [{
-        id: 1,
-        name: '张三',
-        abstract: '天津中审联会计师事务所项目报销申请',
-        account: 500000.00
-      }],
-      electronicalBills: [{
-        type: '交通费票据',
-        numbers: '4',
-        accounts: '999',
-        list: [{
-          account: 333,
-          address: ''
-        }, {
-          account: 333,
-          address: ''
-        }, {
-          account: 333,
-          address: ''
-        }]
-      }, {
-        type: '住宿费票据',
-        numbers: '1',
-        accounts: '999',
-        list: [{
-          account: 999,
-          address: ''
-        }]
-      }],
+      electronicalBills: [
+        {
+          type: '交通费票据',
+          numbers: 1,
+          amounts: '',
+          list: [{
+            amount: '',
+            address: ''
+          }]
+        }, 
+        {
+          type: '住宿费票据',
+          numbers: 1,
+          amounts: '',
+          list: [{
+            amount: '',
+            address: ''
+          }]
+        },
+        {
+          type: '本地餐费票据',
+          numbers: 1,
+          amounts: '',
+          list: [{
+            amount: '',
+            address: ''
+          }]
+        },
+        {
+          type: '外部餐费票据',
+          numbers: 1,
+          amounts: '',
+          list: [{
+            amount: '',
+            address: ''
+          }]
+        }
+      ],
       textarea: '',
       typeOptions: ['合同报销', '非合同报销'],
       classOptions: ['纸质发票报销', '电子发票报销'],
       companyOptions: ['会计所', '造价所', '评估所', '税务所'],
       departmentOptions: [],
-      typeSelected: '非合同报销',
+      typeSelected: '',
       classSelected: '',
       companySelected: '',
-      departmentSelected: ''
+      departmentSelected: '',
+      editAble: this.$route.params.id === 'new' ? true : false,
+      user: {}
     };
   },
+  computed: {
+    contractNumberShow () {
+      if (this.typeSelected === '合同报销') {
+        return true
+      } else {
+        return false
+      }
+    },
+    electric () {
+      if (this.classSelected === '电子发票报销') {
+        return true
+      } else {
+        return false
+      }
+    },
+    paper () {
+      if (this.classSelected === '纸质发票报销') {
+        return true
+      } else {
+        return false
+      }
+    }
+  },
   methods: {
+    changeNumbers (item) {
+      if (item.numbers === '') {
+        item.numbers = 0
+        item.list = []
+      } else {
+        item.list = []
+        item.list = new Array(parseInt(item.numbers)).fill({
+          amount: '',
+          address: ''
+        })
+      }
+    },
     checkDetail (item) {
       
     }
+  },
+  created () {
+    this.$store.dispatch('fetchUserInfo').then(() => {
+      this.user = this.$store.getters.getUser
+    }, () => { })
   },
   components: {
     crumbs,

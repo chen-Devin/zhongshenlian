@@ -4,7 +4,7 @@
     <side-bar :user="user"></side-bar>
     <div class="page-main">
       <com-header :user="user"></com-header>
-      <router-view :user="user"></router-view>
+      <router-view class="main-contain" :user="user"></router-view>
     </div>
     <!-- <index :user="user"></index> -->
     <!--<com-footer></com-footer>-->
@@ -63,6 +63,9 @@ export default {
   #app {
     .page-main {
       margin-left: 200px;
+      > .main-contain {
+        margin-top: 50px;
+      }
     }
   }
 </style>
