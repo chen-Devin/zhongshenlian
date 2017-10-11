@@ -1,14 +1,19 @@
 <template>
   <card>
     <h3 class="main-title">
-      客户列表
+      客户信息
       <!-- <router-link :to="{ path: '/customer-info-list/add' }"> -->
-        <button class="btn my-btn submit-btn pull-right" @click="add">
+        <button class="btn my-btn submit-btn pull-right f-r" @click="add">
           <!-- <img class="input-icon" src="../../../../img/market/input.svg">&nbsp; -->
-          录入
+          客户录入
         </button>
       <!-- </router-link> -->
+        <search-bar 
+          class="f-r"
+          :searchItems="searchItems"
+          @search="search"></search-bar>
     </h3>
+    
     <!--搜索栏-->
     <!-- <form class="search-form" @submit.prevent @keyup.enter.prevent>
       <div class="row">
@@ -66,11 +71,12 @@
       <tbody>
         <tr v-for="(CUSTOMER, index) in thisCustomers"
             :key="index">
-          <td class="text-center">{{CUSTOMER.customerName}}</td>
+          <td class="text-center link-wrap" @click.prevent="mod(CUSTOMER)">{{CUSTOMER.customerName}}</td>
           <td class="text-center">{{CUSTOMER.code}}</td>
-          <td class="text-center link-wrap">
-            <a class="text-primary"
-               @click.prevent="mod(CUSTOMER)">查看</a>
+          <td class="text-center">
+            <!-- <a class="text-primary"
+               @click.prevent="mod(CUSTOMER)">查看</a> -->
+               {{CUSTOMER.setUpTime}}
           </td>
         </tr>
       </tbody>
@@ -103,7 +109,25 @@ export default {
       searchUp: false,
       customerName: '',
       name: '',
-      telephone: ''
+      telephone: '',
+      searchItems: [
+        {
+          label: '',
+          value: ''
+        },
+        {
+          label: '',
+          value: ''
+        },
+        {
+          label: '',
+          value: ''
+        },
+        {
+          label: '',
+          value: ''
+        }
+      ],
     };
   },
   props: ['customers', 'page'],
@@ -238,6 +262,19 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.text-center {
+  text-align: left;
+  padding-left:55px;
+}
+.table-bordered {
+  margin-top: 30px;
+}
+.pull-right {
+  margin-right: 30px;
+}
+.f-r {
+    float: right;
+  }
 .com-list {
   border: 1px solid #E6E6E6;
   thead {
