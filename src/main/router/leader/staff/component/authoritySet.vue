@@ -92,6 +92,9 @@ export default {
 <style lang="sass" scoped>
   .staff-wrapper {
     .basic-contain {
+        padding-left: 40px;
+        padding-right: 20px;
+        padding-bottom: 20px;
       .basic-form {
         margin-top: 30px;
       }

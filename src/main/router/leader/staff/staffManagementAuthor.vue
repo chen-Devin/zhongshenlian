@@ -1,9 +1,16 @@
 <template>
   <div class="main staff-manage">
     <crumbs :paths="paths"></crumbs>
-    <card class="top-card">
-      <button class="btn my-btn" :class="{ active: functionActive }" @click="switchDepart">职能部门</button>
-      <button class="btn my-btn" :class="{ active: departActive }" @click="switchFunction">业务部门</button>
+    <card class="card-top">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane 
+          :label="tab.label" 
+          :name="tab.name"
+          v-for="(tab, index) in tabList"
+          :key="index"></el-tab-pane>
+      </el-tabs>
+      <!-- <button class="btn my-btn" :class="{ active: functionActive }" @click="switchDepart">职能部门</button>
+      <button class="btn my-btn" :class="{ active: departActive }" @click="switchFunction">业务部门</button> -->
     </card>
     <div class="left-contain">
       <card class="card">
@@ -49,7 +56,7 @@
         <card>
           <authority-set></authority-set>
         </card>
-        <card v-if="!isOpen">
+        <card v-if="!isOpen" class="basic-contain">
           <p class="check-more">
             <a href="javascript:void(0);" @click="checkMore">查看更多信息</a>
           </p>
@@ -65,7 +72,7 @@
         <card>
           <education-bg></education-bg>
         </card>
-        <card v-if="isOpen">
+        <card v-if="isOpen" class="basic-contain">
           <p class="check-more">
             <a href="javascript:void(0);" @click="foldMore">收起</a>
           </p>
@@ -115,6 +122,17 @@ export default {
         children: 'children',
         label: 'label'
       },
+      tabList: [
+        {
+          label: '职能部门',
+          name: 'function'
+        },
+        {
+          label: '业务部门',
+          name: 'business'
+        }
+      ],
+      activeName: "function",
       functionActive: true,
       departActive: false,
       highlightCurrent: true,
@@ -171,6 +189,27 @@ export default {
     };
   },
   methods: {
+    handleClick(tab, event) {
+      if (tab.name === 'function') {
+        this.functionActive = true
+        this.departActive = false
+        this.staffShow = false
+        this.isOpen = false
+        this.type = 'function'
+        this.treeData = []
+        this.staffAllList = []
+        this.getInfoDepartmentList()
+      } else if (tab.name === 'business') {
+        this.functionActive = false
+        this.departActive = true
+        this.staffShow = false
+        this.isOpen = false
+        this.type = 'department'
+        this.treeData = []
+        this.staffAllList = []
+        this.getFullCompanyList()
+      }
+    },
     getFullCompanyList () {
       return new Promise((resolve, reject) => {
         axios({
@@ -280,26 +319,26 @@ export default {
         this.staffShow = true
       // }, () => {})
     },
-    switchDepart () {
-      this.functionActive = true
-      this.departActive = false
-      this.staffShow = false
-      this.isOpen = false
-      this.type = 'function'
-      this.treeData = []
-      this.staffAllList = []
-      this.getInfoDepartmentList()
-    },
-    switchFunction () {
-      this.functionActive = false
-      this.departActive = true
-      this.staffShow = false
-      this.isOpen = false
-      this.type = 'department'
-      this.treeData = []
-      this.staffAllList = []
-      this.getFullCompanyList()
-    },
+    // switchDepart () {
+    //   this.functionActive = true
+    //   this.departActive = false
+    //   this.staffShow = false
+    //   this.isOpen = false
+    //   this.type = 'function'
+    //   this.treeData = []
+    //   this.staffAllList = []
+    //   this.getInfoDepartmentList()
+    // },
+    // switchFunction () {
+    //   this.functionActive = false
+    //   this.departActive = true
+    //   this.staffShow = false
+    //   this.isOpen = false
+    //   this.type = 'department'
+    //   this.treeData = []
+    //   this.staffAllList = []
+    //   this.getFullCompanyList()
+    // },
     showAdd () {
       this.addShow = true
     },
@@ -331,13 +370,13 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+  h5 {
+    padding: 16px;
+  }
   .staff-manage {
-    .top-card {
-      .my-btn {
-        &.active {
-          color: #f00;
-        }
-      }
+    .card-top {
+      padding-top: 7px;
+      padding-bottom: 7px;
     }
     .left-contain {
       float: left;
@@ -349,6 +388,7 @@ export default {
         .content-contain {
           width: 100%;
           height: 400px;
+          padding-left:10px;
           overflow: auto;
           background-color: #F9FBFE;
         }
@@ -390,9 +430,14 @@ export default {
     .right-contain {
       // width: 100%;
       margin-left: 400px;
-      .check-more {
-        text-align: center;
-      }
+      .basic-contain{
+        margin-bottom: 20px;
+        .check-more {
+          text-align: center;
+          line-height: 18px;
+          height: 18px;
+        } 
+      }  
     }
   }
 </style>

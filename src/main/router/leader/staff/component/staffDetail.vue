@@ -274,6 +274,11 @@ export default {
 <style lang="sass" scoped>
   .staff-wrapper {
     .basic-contain {
+      padding-left: 40px;
+      padding-right: 20px;
+      .main-title {
+        margin-left: 0;
+      }
       .basic-form {
         margin-top: 30px;
       }

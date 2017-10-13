@@ -12,7 +12,7 @@
         </template>
       </div>
     </h5>
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover basic-form">
       <thead>
         <tr>
           <td class="text-center staff-max">公司名称</td>
@@ -136,5 +136,10 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-
+  .main-title {
+    margin-left: 0;
+  }
+  .basic-form {
+    margin-top: 30px;
+  }
 </style>

@@ -462,6 +462,12 @@ export default {
 <style lang="sass" scoped>
   .salary-wrapper {
     .basic-contain {
+      padding-left: 40px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      .main-title {
+        margin-left: 0;
+      }
       .basic-form {
         margin-top: 30px;
         > form {
