@@ -1,6 +1,7 @@
 <template>
   <div class="main staff-manage">
-    <crumbs :paths="paths"></crumbs>
+    <crumbs :paths="paths1" v-if="functionActive"></crumbs>
+    <crumbs :paths="paths2" v-else></crumbs>
     <card class="card-top">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane 
@@ -103,8 +104,13 @@ export default {
   name: 'staffManagementAuthor',
   data() {
     return {
-      paths: [
-        { name: '职员权限管理', url: '/author-management-author', present: true }
+      paths1: [
+        { name: '职员管理', url: '/author-management-author', present: true },
+        { name: '职能部门', url: '/author-management-author', present: true }
+      ],
+      paths2: [
+        { name: '职员管理', url: '/author-management-author', present: true },
+        { name: '业务部门', url: '/author-management-author', present: true }
       ],
       departments: [],
       treeData: [{
@@ -468,9 +474,10 @@ export default {
       .basic-contain{
         margin-bottom: 20px;
         .check-more {
+          margin: 0;
           text-align: center;
-          line-height: 18px;
-          height: 18px;
+          line-height: 40px;
+          height: 40px;
         } 
       }  
     }
