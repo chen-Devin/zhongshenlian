@@ -403,6 +403,7 @@ export default {
 <style lang="sass" scoped>
   .addi {
     margin-top: -38px;
+    margin-right: 40px;
   }
   h5 {
     padding: 16px;

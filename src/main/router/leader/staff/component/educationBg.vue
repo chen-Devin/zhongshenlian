@@ -151,7 +151,7 @@ export default {
   .staff-wrapper {
     .basic-contain {
       padding-left: 40px;
-      padding-right: 20px;
+      padding-right: 40px;
       padding-bottom: 20px;
       .main-title {
         margin-left: 0;
