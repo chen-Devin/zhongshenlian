@@ -535,7 +535,6 @@ export default {
       } else if (tab.name === 'business') {
         this.functionShow = false
       }
-      console.log(tab.name, event)
     },
     getDepartmentInfo (id) {
       this.functionId = id

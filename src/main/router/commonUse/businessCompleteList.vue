@@ -4,7 +4,7 @@
     <card>
       <form class="search-form" @submit.prevent @keyup.enter.prevent>
         <div class="row">
-          <div class="col-md-11">
+          <div class="f-r">
             <search-bar placeholder="请输入关键字进行搜索" @search="tog" v-show="simpleSearch"></search-bar>
           </div>
           <div class="col-md-10 replace" v-show="!simpleSearch"></div>
@@ -42,7 +42,6 @@
 
 <script>
 import axios from 'axios';
-
 import businessCompleteSearchBar from '@/main/component/businessCompleteSearchBar.vue';
 import searchBar from '../../component/searchBar.vue';
 import crumbs from '../../component/crumbs.vue';
@@ -238,6 +237,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.f-r {
+  float: right;
+}
 .higher-search {
   margin-top: 30px;
 }

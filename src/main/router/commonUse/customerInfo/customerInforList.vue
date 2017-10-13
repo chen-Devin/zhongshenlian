@@ -21,7 +21,8 @@ export default {
   data() {
     return {
       paths: [
-        { name: '客户信息', url: '/customer-infor-list', present: true }
+        { name: '信息管理',url: '/customer-infor-list', present: true },
+        { name: '客户信息', url: '/customer-infor-list', present: true }  
       ],
       customers: [],
       page: {

@@ -1,7 +1,7 @@
 <template>
   <div class="main staff-manage">
     <crumbs :paths="paths"></crumbs>
-    <card>
+    <card class="card-top">
       <button class="btn my-btn" @click="switchDepart">职能部门</button>
       <button class="btn my-btn" @click="switchDepart">业务部门</button>
     </card>
@@ -208,6 +208,10 @@ export default {
 
 <style lang="sass" scoped>
   .staff-manage {
+    .card-top {
+        padding-top: 7px;
+        padding-bottom: 7px;
+      }
     .left-contain {
       float: left;
       width: 400px;
