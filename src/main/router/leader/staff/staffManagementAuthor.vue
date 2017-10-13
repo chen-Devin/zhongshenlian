@@ -9,6 +9,8 @@
           v-for="(tab, index) in tabList"
           :key="index"></el-tab-pane>
       </el-tabs>
+      <search-bar class="f-r addi" :searchItems="searchItems"
+      @search="search"></search-bar>
       <!-- <button class="btn my-btn" :class="{ active: functionActive }" @click="switchDepart">职能部门</button>
       <button class="btn my-btn" :class="{ active: departActive }" @click="switchFunction">业务部门</button> -->
     </card>
@@ -95,6 +97,7 @@ import salaryDetail from './component/salaryDetail.vue';
 import bonusDetail from './component/bonusDetail.vue';
 import educationBg from './component/educationBg.vue';
 import staffAddModal from './component/staffAddModal.vue';
+import searchBar from '@/main/component/searchBar.vue'
 
 export default {
   name: 'staffManagementAuthor',
@@ -122,6 +125,24 @@ export default {
         children: 'children',
         label: 'label'
       },
+      searchItems: [
+        {
+          label: '',
+          value: ''
+        },
+        {
+          label: '',
+          value: ''
+        },
+        {
+          label: '',
+          value: ''
+        },
+        {
+          label: '',
+          value: ''
+        }
+      ],
       tabList: [
         {
           label: '职能部门',
@@ -189,6 +210,15 @@ export default {
     };
   },
   methods: {
+    search(searchObj) {
+      // this.reloadPagination = false
+      // setTimeout(() => {
+      //   this.reloadPagination = true
+      // }, 200)
+      // this.pageNum = 1
+      // this.searchObj = searchObj
+      // this.getBiddingList()
+    },
     handleClick(tab, event) {
       if (tab.name === 'function') {
         this.functionActive = true
@@ -364,12 +394,16 @@ export default {
     salaryDetail,
     bonusDetail,
     educationBg,
-    staffAddModal
+    staffAddModal,
+    searchBar
   }
 }
 </script>
 
 <style lang="sass" scoped>
+  .addi {
+    margin-top: -38px;
+  }
   h5 {
     padding: 16px;
   }

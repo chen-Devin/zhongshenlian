@@ -2,7 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <search-bar placeholder="输入关键字搜索规章制度" @search="tog"></search-bar>
+      <search-bar placeholder="输入关键字搜索规章制度" @search="tog" class="f-r"></search-bar>
       <h3 class="main-title adjust-mt">
         制度列表
         <router-link class="btn my-btn submit-btn pull-right"
