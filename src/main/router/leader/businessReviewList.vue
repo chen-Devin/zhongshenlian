@@ -1,34 +1,57 @@
 <template>
   <div class="main">
     <crumbs :paths="paths"></crumbs>
+    <card class="card-tabs">
+      <el-tabs class="f-l" v-model="activeName" @tab-click="tabClick">
+        <el-tab-pane 
+          :label="tab.label" 
+          :name="tab.name"
+          v-for="(tab, index) in tabList"
+          :key="index"></el-tab-pane>
+      </el-tabs>
+      <search-bar class="f-r" 
+        :searchItems="searchItems"
+        @search="search"></search-bar>
+    </card>
     <card>
-      <h3 class="main-title">
-          业务列表
-      </h3>
-      <div class="com-list list-group list-adjust">
-        <li class="list-group-item list-head" href="javascript:void(0);">
-          <span class="title">信息列表</span>
-          <span class="date pull-right">创建时间</span>
-        </li>
-        <router-link class="list-group-item"
-                     :to="'/business-review-detail-leader-'+BUSINESS.id"
-                     v-for="(BUSINESS, index) in businesses"
-                     :key="index">
-          <span class="label label-warning"
-                v-if="BUSINESS.projectStatus===10">尚未完成</span>
-          <span class="label label-info"
-                v-else-if="BUSINESS.projectStatus===20||BUSINESS.projectStatus===40">已提交待审核</span>
-          <span class="label label-danger"
-                v-else-if="BUSINESS.projectStatus===30||BUSINESS.projectStatus===50">已审核未通过</span>
-          <span class="label label-success"
-                v-else-if="BUSINESS.projectStatus===60">待上传合同</span>
-          <span class="label label-primary"
-                v-else-if="BUSINESS.projectStatus===70">待发合同编号</span>
-          <span class="title">{{BUSINESS.businessName}}</span>
-          <span class="date pull-right">{{BUSINESS.finishTime.substring(0,10)}}</span>
-        </router-link>
-        <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
-      </div>
+      <table class="table table-bordered table-hover table-list">
+        <thead>
+          <tr>
+            <th>项目名称</th>
+            <th>分管公司</th>
+            <th v-if="projectShow">发起时间</th>
+            <th v-else>项目发起人</th>
+            <th v-if="projectShow">状态</th>
+            <th v-else>变更申请人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr 
+            v-for="(project, index) in businessArray"
+            @click="jumpLink(project)" 
+            :key="index">
+            <td v-if="projectShow">{{ project.businessName }}</td>
+            <td v-else>{{ project.projectName }}</td>
+            <td>{{ project.companyName }}</td>
+            <td v-if="projectShow">{{ project.finishTime.substring(0,10) }}</td>
+            <td v-else>{{ project.applicant }}</td>
+            <td v-if="projectShow">
+              <span class="label label-danger"
+                    v-if="project.projectStatus==='0010'">尚未完成</span>
+              <span class="label label-info"
+                    v-else-if="project.projectStatus==='0020'||project.projectStatus==='0040'">已提交待审核</span>
+              <span class="label label-warning"
+                    v-else-if="project.projectStatus==='0030'||project.projectStatus==='0050'">已审核未通过</span>
+              <span class="label label-success"
+                    v-else-if="project.projectStatus==='0060'">待上传合同</span>
+              <span class="label label-primary"
+                    v-else-if="project.projectStatus==='0070'">待发合同编号</span>
+            </td>
+            <td v-else>{{ project.applyer }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
     </card>
   </div>
 </template>
@@ -39,6 +62,7 @@ import axios from 'axios';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import myPagination from '../../component/pagination.vue';
+import searchBar from '@/main/component/searchBar.vue'
 
 export default {
   name: 'businessReviewListLeader',
@@ -47,25 +71,54 @@ export default {
       paths: [
         { name: '立项批复', url: '/business-review-list-leader', present: true }
       ],
-      businesses: [],
+      businessArray: [],
       totalPage: 1,
+      pageNum: 1,
       page: {
         total: 0,
         current: 0
-      }
+      },
+      activeName: 'project',
+      tabList: [
+        {
+          label: '项目审批',
+          name: 'project'
+        },
+        {
+          label: '合同变更审批',
+          name: 'change'
+        }
+      ],
+      searchItems: [],
+      projectShow: true
     };
   },
   created() {
-    this.getInfo(1);
+    this.getBusinessChecking();
   },
   watch: {
-    $route: 'getInfo'
+    $route: 'getBusinessChecking'
   },
   methods: {
-    currentChange(newPage) {
-      this.getInfo(newPage);
+    jumpLink (project) {
+      this.$router.push('/business-review-detail-leader-'+project.id)
     },
-    getInfo(newPage) {
+    tabClick (tab, event) {
+      if (tab.name === 'project') {
+        this.projectShow = true
+        this.pageNum = 1
+        this.getBusinessChecking()
+      } else if (tab.name === 'change') {
+        this.projectShow = false
+        this.pageNum = 1
+        this.getContractChangeList()
+      }
+    },
+    currentChange(newPage) {
+      this.pageNum = newPage
+      this.getBusinessChecking();
+    },
+    getBusinessChecking() {
       axios({
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
         method: 'get',
@@ -75,35 +128,58 @@ export default {
             var obj = {
               command: 'getBusinessChecking',
               platform: 'web',
-              pageNum: newPage
+              pageNum: this.pageNum
             }
             return JSON.stringify(obj);
           })()
         }
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          this.page.total = parseInt(rep.data.data.totalNum);
-          this.page.current = newPage;
-          this.businesses.length = 0;
-          for (let i = 0; i < rep.data.data.businessArray.length; i++) {
-            let obj = {
-              id: rep.data.data.businessArray[i].id,
-              businessName: rep.data.data.businessArray[i].businessName,
-              finishTime: rep.data.data.businessArray[i].finishTime,
-              projectStatus: parseInt(rep.data.data.businessArray[i].projectStatus)
-            };
-            this.businesses.push(obj);
-          }
+          this.page.total = parseInt(rep.data.data.totalNum)
+          this.page.current = this.pageNum
+          this.businessArray = rep.data.data.businessArray
         } else if (rep.data.statusCode === '10012') {
           window.location.href = 'signIn.html';
         }
       }, (rep) => { });
+    },
+    getContractChangeList () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getContractChangeList',
+                platform: 'web',
+                pageNum: this.pageNum
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.page.total = parseInt(rep.data.data.totalNum)
+            this.page.current = this.pageNum
+            this.businessArray = rep.data.data.businessArray
+            resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
+    search () {
+
     }
   },
   components: {
     crumbs,
     card,
-    myPagination
+    myPagination,
+    searchBar
   }
 }
 </script>

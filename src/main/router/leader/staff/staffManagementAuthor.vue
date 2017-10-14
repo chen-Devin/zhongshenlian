@@ -2,7 +2,7 @@
   <div class="main staff-manage">
     <crumbs :paths="paths1" v-if="functionActive"></crumbs>
     <crumbs :paths="paths2" v-else></crumbs>
-    <card class="card-top">
+    <card class="card-tabs">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane 
           :label="tab.label" 
@@ -12,8 +12,6 @@
       </el-tabs>
       <search-bar class="f-r addi" :searchItems="searchItems"
       @search="search"></search-bar>
-      <!-- <button class="btn my-btn" :class="{ active: functionActive }" @click="switchDepart">职能部门</button>
-      <button class="btn my-btn" :class="{ active: departActive }" @click="switchFunction">业务部门</button> -->
     </card>
     <div class="left-contain">
       <card class="card">
@@ -415,7 +413,7 @@ export default {
     padding: 16px;
   }
   .staff-manage {
-    .card-top {
+    .card-tabs {
       padding-top: 7px;
       padding-bottom: 7px;
     }

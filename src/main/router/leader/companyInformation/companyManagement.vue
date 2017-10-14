@@ -1,7 +1,7 @@
 <template>
   <div class="company-management">
     <crumbs :paths="paths"></crumbs>
-    <card class="card-top">
+    <card class="card-tabs">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane 
           :label="tab.label" 
@@ -1098,7 +1098,7 @@ export default {
 <style lang="sass" scoped>
 @import '../../../../scss/_variables.scss';
   .company-management {
-    > .card-top {
+    > .card-tabs {
       padding-top: 7px;
       padding-bottom: 7px;
     }
