@@ -3,11 +3,11 @@
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
     <card>
-      <button class="btn my-btn submit-btn f-r" @click="applyExpense">申请报销</button>
+      <button class="btn my-btn submit-btn f-r addi" @click="applyExpense">申请报销</button>
       <h5 class="main-title">报销列表</h5>
     </card>
     <card>
-      <table class="table table-bordered table-hover com-list">
+      <table class="table table-bordered table-hover table-list">
         <thead>
           <tr>
             <th class="text-center">公司</th>
@@ -105,13 +105,14 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  .com-list thead {
-      background-color: #E6E6E6;
+  .addi {
+    margin-top: 14px;
+    margin-right: 40px;
   }
-  .table-bordered > tbody > tr {
-    cursor: pointer;
-  }
-  .table-bordered > tbody > tr > td {
-      border: none;
-  }
+  // .table-bordered > tbody > tr {
+  //   cursor: pointer;
+  // }
+  // .table-bordered > tbody > tr > td {
+  //     border: none;
+  // }
 </style>

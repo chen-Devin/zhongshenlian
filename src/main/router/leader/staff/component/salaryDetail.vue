@@ -204,7 +204,7 @@
           </el-row>
         </el-form>      
       </div>
-      <table class="table table-bordered table-hover table-input">
+      <table class="table table-inner table-hover table-input">
         <thead>
           <tr>
             <td class="text-center">日期</td>
