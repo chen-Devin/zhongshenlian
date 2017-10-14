@@ -13,7 +13,7 @@
       </div>
       <h5 class="main-title">教育背景</h5>
       <div class="basic-form"> 
-        <table class="table table-bordered table-hover table-input">
+        <table class="table table-inner table-hover table-input">
           <thead>
             <tr>
               <td class="text-center">学校名称</td>

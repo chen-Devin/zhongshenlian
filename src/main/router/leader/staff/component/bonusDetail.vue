@@ -27,7 +27,7 @@
             </el-col>
           </el-row>
         </el-form>
-        <table class="table table-bordered table-hover table-input">
+        <table class="table table-inner table-hover table-input">
           <thead>
             <tr>
               <td class="text-center">批次编号</td>
@@ -188,8 +188,12 @@ export default {
       }
       .basic-form {
         margin-top: 30px;
+        padding: 0;
       }
     }
+  }
+  .table-inner {
+    margin-top: 0;
   }
   // .table-input {
   //   tbody {

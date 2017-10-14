@@ -2,6 +2,35 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
+      <h3 class="main-title">
+        已完成业务
+          <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
+      </h3>
+      <table class="table table-bordered table-hover table-list">
+        <thead>
+          <tr>
+            <th class="text-center">合同号</th>
+            <th class="text-center">项目名称</th>
+            <th class="text-center">项目经理</th>
+            <th class="text-center">分管公司</th>
+            <th class="text-center">立项时间</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(BUSINESS, index) in businesses"
+              :key="index"
+              @click.prevent="mod(BUSINESS)">
+            <td class="text-center">{{BUSINESS.contractNo}}合同号</td>
+            <td class="text-center link-wrap">{{BUSINESS.businessName}}</td>
+            <td class="text-center">{{BUSINESS.projectManager}}项目经理</td>
+            <td class="text-center">{{分管公司}}分管公司</td>
+            <td class="text-center">立项时间</td>
+          </tr>
+        </tbody>
+      </table>
+      <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
+    </card>
+    <!-- <card>
       <form class="search-form" @submit.prevent @keyup.enter.prevent>
         <div class="row">
           <div class="f-r">
@@ -36,7 +65,7 @@
         </router-link>
         <my-pagination :totalNum="page.total" @currentChange="currentChange"></my-pagination>
       </div>
-    </card>
+    </card> -->
   </div>
 </template>
 
@@ -87,6 +116,9 @@ export default {
     $route: 'getInfo'
   },
   methods: {
+    mod(BUSINESS) {
+    this.$router.push('/business-complete-list/business-complete-detail-'+BUSINESS.id)
+    },
     seaTypeChan() {
       this.get(1);
       this.seaInit();
@@ -221,9 +253,6 @@ export default {
         }, (rep) => { });
       });
       return promise;
-    },
-    businessRoute(BUSINESS) {
-      return '/business-complete-list/business-complete-detail-'+BUSINESS.id;
     }
   },
   components: {
@@ -237,8 +266,14 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.f-r {
-  float: right;
+.text-center {
+  text-align: left; 
+}
+.table-bordered {
+  margin-top: 30px;
+}
+.pull-right {
+  margin-right: 30px;
 }
 .higher-search {
   margin-top: 30px;

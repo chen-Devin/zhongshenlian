@@ -411,6 +411,15 @@ export default {
     margin-top: -38px;
     margin-right: 40px;
   }
+  .content-contain {
+    width: 100%;
+    height: 400px;
+    padding-top: 10px;
+    padding-left:10px;
+    padding-right: 10px;
+    overflow: auto;
+    background-color: #F9FBFE;
+  }
   h5 {
     padding: 16px;
   }
@@ -422,25 +431,8 @@ export default {
     .left-contain {
       float: left;
       width: 400px;
-      .card {
-        margin-top: 0;
-      }
-      .depart-filter {
-        .content-contain {
-          width: 100%;
-          height: 400px;
-          padding-left:10px;
-          overflow: auto;
-          background-color: #F9FBFE;
-        }
-      }
       .staff-filter {
         .content-contain {
-          width: 100%;
-          height: 400px;
-          padding-top: 10px;
-          overflow: auto;
-          background-color: #F9FBFE;
           .staff-list {
             margin: 0;
             padding: 0;
@@ -470,7 +462,7 @@ export default {
     }
     .right-contain {
       // width: 100%;
-      margin-left: 400px;
+      margin-left: 380px;
       .basic-contain{
         margin-bottom: 20px;
         .check-more {

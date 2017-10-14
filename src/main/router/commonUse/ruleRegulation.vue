@@ -2,6 +2,34 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
+      <h3 class="main-title">
+        规章制度
+          <button class="btn my-btn submit-btn pull-right f-r" @click="add">
+            新建制度
+          </button>
+          <search-bar  @search="tog" class="f-r"></search-bar>
+      </h3>
+      <table class="table table-bordered table-hover table-list">
+        <thead>
+          <tr>
+            <th class="text-center">制度名称</th>
+            <th class="text-center">创建时间</th>
+            <th class="text-center">最新修订时间</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(RULE,index) in rules"
+              :key="index"
+              @click.prevent="mod(RULE)">
+            <td class="text-center link-wrap">{{RULE.title}}</td>
+            <td class="text-center">{{RULE.releaseTime}}</td>
+            <td class="text-center">{{ RULE.updateAt }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
+    </card>
+   <!--  <card>
       <search-bar placeholder="输入关键字搜索规章制度" @search="tog" class="f-r"></search-bar>
       <h3 class="main-title adjust-mt">
         制度列表
@@ -29,14 +57,13 @@
         </router-link>
       </div>
       <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
-    </card>
+    </card> -->
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import moment from 'moment';
-
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import searchBar from '../../component/searchBar.vue';
@@ -66,6 +93,12 @@ export default {
     this.getRuleLists(1);
   },
   methods: {
+    mod(RULE) {
+      this.$router.push('/rule-regulation-detail-'+RULE.id)
+    },
+    add() {
+      this.$router.push('/rule-regulation-add')
+    },
     newRegulation(time) {
       return moment().subtract(7, 'days').isSameOrBefore(time, 'day');
     },
@@ -163,6 +196,16 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+  .pull-right {
+    margin-right: 30px;
+  }
+  .text-center {
+    text-align: left;
+    padding-left:55px;
+  }
+  .table-bordered {
+    margin-top: 30px;
+  }
   .com-list > .list-group-item {
       padding-left: 30px;
   }
