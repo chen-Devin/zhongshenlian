@@ -105,12 +105,12 @@ export default {
   data() {
     return {
       paths1: [
-        { name: '职员管理', url: '/author-management-author', present: true },
-        { name: '职能部门', url: '/author-management-author', present: true }
+        { name: '职员管理', url: '/staff-management-author', present: false },
+        { name: '职能部门', url: '/staff-management-author', present: true }
       ],
       paths2: [
-        { name: '职员管理', url: '/author-management-author', present: true },
-        { name: '业务部门', url: '/author-management-author', present: true }
+        { name: '职员管理', url: '/staff-management-author', present: false },
+        { name: '业务部门', url: '/staff-management-author', present: true }
       ],
       departments: [],
       treeData: [{

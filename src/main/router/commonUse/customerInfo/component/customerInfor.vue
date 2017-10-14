@@ -60,7 +60,7 @@
         <button type="button" class="btn my-btn draft-btn" @click="reset()">重置</button>
       </div>
     </form> -->
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover table-list">
       <thead>
         <tr>
           <th class="text-center">客户名称</th>
@@ -70,8 +70,9 @@
       </thead>
       <tbody>
         <tr v-for="(CUSTOMER, index) in thisCustomers"
-            :key="index">
-          <td class="text-center link-wrap" @click.prevent="mod(CUSTOMER)">{{CUSTOMER.customerName}}</td>
+            :key="index"
+            @click.prevent="mod(CUSTOMER)">
+          <td class="text-center link-wrap">{{CUSTOMER.customerName}}</td>
           <td class="text-center">{{CUSTOMER.code}}</td>
           <td class="text-center">
             <!-- <a class="text-primary"
