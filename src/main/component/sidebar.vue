@@ -6,10 +6,9 @@
     <el-menu class="el-menu-vertical-demo" :router="routerVal" :default-active="activeUrl" :unique-opened="uniqueOpened" @open="handleOpen">
       <el-menu-item index="/quick" v-if="leader">我的快捷</el-menu-item>
       <el-menu-item index="/business-handle-list-financial" v-if="financial">待开发票</el-menu-item>
-      <el-menu-item index="/business-review-list-office" v-if="officeContract">待发合同编号</el-menu-item>
+      <el-menu-item index="/business-review-list-office" v-if="officeContract">进行中业务</el-menu-item>
       <el-menu-item index="/business-handle-list-office" v-if="officeBinding">待装订业务</el-menu-item>
       <el-menu-item index="/customer-infor-list" v-if="officeCustomer">客户信息管理</el-menu-item>
-      <el-menu-item index="/business-review-list-sales" v-if="sales">立项审批</el-menu-item>
       <el-menu-item index="/business-review-list-risk" v-if="riskReview">立项审批</el-menu-item>
       <el-submenu index="to-do" v-if="leader">
         <template slot="title">待办事项</template>
@@ -34,7 +33,7 @@
         <template slot="title">项目管理</template>
         <!-- <el-menu-item-group> -->
           <el-menu-item index="/business-complete-list">已完成业务</el-menu-item>
-          <el-menu-item index="/business-review-add" v-if="establish">立项业务</el-menu-item>
+          <el-menu-item index="/business-review-list-sales" v-if="establish">立项业务</el-menu-item>
           <el-menu-item index="/business-handle-list-leader" v-if="leader">进行中业务</el-menu-item>
           <el-menu-item index="/business-handle-list-sales" v-if="sales">进行中业务</el-menu-item>
           <el-menu-item index="/business-handle-list-archives" v-if="archives">进行中业务</el-menu-item>
@@ -54,6 +53,7 @@
       <el-menu-item index="/bid-info-draft" v-if="market">草稿箱</el-menu-item>
       <el-menu-item index="/rule-regulation">规章制度</el-menu-item>
       <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+      <el-menu-item index="/contract-change">合同变更</el-menu-item>
       <!-- <el-submenu index="reimbursement-application">
         <template slot="title">报销申请</template>
         <el-menu-item-group>

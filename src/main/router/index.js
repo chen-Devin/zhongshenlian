@@ -54,6 +54,7 @@ import businessReviewDetailSales from './salesDepartment/businessReviewDetail.vu
 import businessReviewEdit from './salesDepartment/businessReviewEdit.vue';
 import businessReviewListSales from './salesDepartment/businessReviewList.vue';
 import billingInforEditor from './salesDepartment/component/billingInforEditor.vue';
+import contractChange from './salesDepartment/contractChange/contractChange.vue';
 // 风险评估部
 import businessHandleDetailRisk from './riskDepartment/businessHandleDetail.vue';
 import businessHandleListRisk from './riskDepartment/businessHandleList.vue';
@@ -344,6 +345,10 @@ const router = new VueRouter({
                     component: operatHistory
                 }
             ]
+        },
+        {
+            path: '/contract-change',
+            component: contractChange
         },
         {
             path: '/business-review-list-risk',

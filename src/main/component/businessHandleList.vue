@@ -1,8 +1,40 @@
 <template>
   <div class="main">
     <crumbs :paths="paths"></crumbs>
+    <card class="card-tabs" v-if="department === 'sales'">
+      <el-tabs class="f-l" v-model="activeNameSales" @tab-click="tabClickSales">
+        <el-tab-pane 
+          :label="tab.label" 
+          :name="tab.name"
+          v-for="(tab, index) in tabListSales"
+          :key="index"></el-tab-pane>
+      </el-tabs>
+      <router-link class="btn my-btn submit-btn pull-right add-btn" to="/business-review-add" tag="button" v-if="addBusiness">
+        新建项目
+      </router-link>
+      <search-bar 
+        class="f-r" 
+        :searchItems="searchItems"
+        @search="search"></search-bar>
+    </card>
+    <card class="card-tabs" v-if="department === 'office'">
+      <el-tabs class="f-l" v-model="activeNameOffice" @tab-click="tabClickOffice">
+        <el-tab-pane 
+          :label="tab.label" 
+          :name="tab.name"
+          v-for="(tab, index) in tabListOffice"
+          :key="index"></el-tab-pane>
+      </el-tabs>
+      <router-link class="btn my-btn submit-btn pull-right add-btn" to="/business-review-add" tag="button" v-if="addBusiness">
+        新建项目
+      </router-link>
+      <search-bar 
+        class="f-r" 
+        :searchItems="searchItems"
+        @search="search"></search-bar>
+    </card>
     <card>
-      <h3 class="main-title">
+      <h3 class="main-title" v-if="department === 'leader' || department === 'archives'">
         进行中业务
           <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
@@ -49,65 +81,6 @@
       </table>
       <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
     </card>
-    <!-- <card> -->
-      <!-- <form class="search-form" @submit.prevent @keyup.enter.prevent>
-        <div class="row">
-          <div class="col-md-11">
-            <search-bar placeholder="请输入关键字进行搜索" @search="tog" v-show="simpleSearch"></search-bar>
-          </div>
-          <div class="col-md-10 replace" v-show="!simpleSearch"></div>
-          <div class="col-md-1 higher-search f-r">
-            <button type="button" class="btn my-btn high-btn f-r" @click="showHigherSearch()">
-              高级搜索
-              &nbsp;
-              <img v-if="searchDown" class="search-icon" src="../../img/market/search_down.svg">
-              <img v-if="searchUp" class="search-icon" src="../../img/market/search_up.svg">
-            </button>
-          </div>
-        </div>
-      </form>
-      <business-complete-search-bar 
-        @higherSearchEvent="higherSearchEvent"
-        @reset="reset"
-        v-if="higherSearch"></business-complete-search-bar> -->
-     <!--  <h3 class="main-title">
-        业务列表
-      </h3>
-      <div class="com-list list-group list-adjust">
-        <li class="list-group-item list-head" href="javascript:void(0);">
-          <span class="title">信息列表</span>
-          <span class="date pull-right">创建时间</span>
-        </li>
-        <router-link class="list-group-item"
-                     :to="businessRoute(BUSINESS)"
-                     v-for="(BUSINESS, index) in businesses"
-                     :key="index">
-          <template v-if="checkShow">
-            <span class="label label-warning"
-                  v-if="BUSINESS.projectStatus<130">未复审</span>
-            <span class="label label-info"
-                  v-else-if="BUSINESS.projectStatus===130">待复审</span>
-            <span class="label label-danger"
-                  v-else-if="BUSINESS.projectStatus===131">未通过</span>
-            <span class="label label-success"
-                  v-else-if="BUSINESS.projectStatus===140">已通过</span>
-            <span class="label label-primary"
-                  v-else-if="BUSINESS.projectStatus===150">已上传二维码</span>
-            <span class="label label-default"
-                  v-else-if="BUSINESS.projectStatus===180">已完成</span>
-          </template>
-          <template v-if="billShow">
-            <span class="label label-warning"
-                  v-if="BUSINESS.billState===0">未完成开票</span>
-            <span class="label label-success"
-                  v-else-if="BUSINESS.billState===1">已完成开票</span>
-          </template>
-          <span class="title">{{BUSINESS.businessName}}</span>
-          <span class="date pull-right">{{BUSINESS.finishTime.substring(0,10)}}</span>
-        </router-link>
-        <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
-      </div>
-    </card> -->
   </div>
 </template>
 
@@ -124,7 +97,41 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待处理业务', url: '/business-handle-list-sales', present: true }
+        { name: '进行中业务', url: '/business-handle-list-sales', present: true }
+      ],
+      activeNameSales: 'report',
+      activeNameOffice: 'review',
+      tabListSales: [
+        {
+          label: '待上传报告',
+          name: 'report'
+        },
+        {
+          label: '待开票业务',
+          name: 'bill'
+        }
+      ],
+      tabListOffice: [
+        {
+          label: '待审核合同',
+          name: 'review'
+        },
+        {
+          label: '待盖章',
+          name: 'signet'
+        },
+        {
+          label: '待发放编号',
+          name: 'number'
+        },
+        {
+          label: '待装订归档',
+          name: 'binding'
+        },
+        {
+          label: '合同变更执行',
+          name: 'change'
+        }
       ],
       businesses: [],
       thiDepartment: this.department,
@@ -174,6 +181,15 @@ export default {
     $route: 'getInfo'
   },
   methods: {
+    tabClickSales () {  // 尚未给接口
+
+    },
+    tabClickOffice () {  // 尚未给接口
+
+    },
+    search () {
+
+    },
     mod(BUSINESS) {
       if (this.thiDepartment === 'office') {
         this.$router.push('/business-review-detail-office-' +BUSINESS.id)
@@ -293,9 +309,6 @@ export default {
 <style lang="sass" scoped>
 .text-center {
   text-align: left; 
-}
-.table-bordered {
-  margin-top: 30px;
 }
 .pull-right {
   margin-right: 30px;

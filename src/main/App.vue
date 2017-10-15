@@ -36,7 +36,7 @@ export default {
       if (this.userInfo.department === '所长') {
         // this.$router.push('/quick');
       } else if (this.userInfo.department === '业务部') {
-        this.$router.push('/business-review-list-sales');
+        // this.$router.push('/business-review-list-sales');
       } else if (this.userInfo.department === '风险评估部') {
         this.$router.push('/business-complete-list');
       } else if (this.userInfo.department === '市场部') {

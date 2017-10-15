@@ -2,6 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
+      <button class="btn my-btn submit-btn f-r" @click="showChangeModal">合同变更</button>
       <h3 class="main-title">
         {{business.name}}
       </h3>
@@ -16,6 +17,10 @@
         </template>
       </div>
     </card>
+    <change-modal
+      v-if="changeModalShow"
+      :projectId="business.id"
+      @cancel="cancel"></change-modal>
   </div>
 </template>
 
@@ -27,6 +32,7 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
+import changeModal from '@/main/router/salesDepartment/contractChange/changeModal.vue';
 
 export default {
   name: 'businessHandleDetailSales',
@@ -306,7 +312,8 @@ export default {
         projectOperatingArray: []
       },
       riskAdvices: [],
-      leaderAdivces: []
+      leaderAdivces: [],
+      changeModalShow: false
     };
   },
   props: ['user'],
@@ -444,6 +451,12 @@ export default {
     $route: 'getInfo'
   },
   methods: {
+    showChangeModal () {
+      this.changeModalShow = true
+    },
+    cancel () {
+      this.changeModalShow = false
+    },
     getInfo() {
       let promise = new Promise((resolve, reject) => {
         axios({
@@ -710,7 +723,8 @@ export default {
     crumbs,
     card,
     business,
-    approverAdvice
+    approverAdvice,
+    changeModal
   }
 }
 </script>

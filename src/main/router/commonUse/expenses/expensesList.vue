@@ -79,7 +79,6 @@ export default {
             this.expensesList = rep.data.data.expensesList
             resolve('done');
           } else {
-            
             this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
@@ -109,10 +108,4 @@ export default {
     margin-top: 14px;
     margin-right: 40px;
   }
-  // .table-bordered > tbody > tr {
-  //   cursor: pointer;
-  // }
-  // .table-bordered > tbody > tr > td {
-  //     border: none;
-  // }
 </style>

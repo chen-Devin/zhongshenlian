@@ -3,14 +3,14 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3 class="main-title">
-        新建项目
+        立项申请
         <div class="pull-right">
           <button class="btn my-btn submit-btn" @click="sub()">提交</button>
           <button class="btn my-btn draft-btn" @click="sav()">暂存</button>
           <button class="btn my-btn cancel-btn" @click="del()">撤销</button>
         </div>
       </h3>
-      <progress-bar :progress="progress"></progress-bar>
+      <!-- <progress-bar :progress="progress"></progress-bar> -->
       <business-editor :initBusiness="business"
                        :editable="editable"
                        @saved="saved"
@@ -45,8 +45,8 @@ export default {
   data() {
     return {
       paths: [
-        { name: '立项审批', url: '/business-review-list-sales', present: false },
-        { name: '创建新任务', url: '/business-review-add', present: true },
+        { name: '立项业务', url: '/business-review-list-sales', present: false },
+        { name: '立项申请', url: '/business-review-add', present: true },
       ],
       business: {
         id: '',

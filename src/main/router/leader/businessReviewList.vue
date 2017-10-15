@@ -9,7 +9,8 @@
           v-for="(tab, index) in tabList"
           :key="index"></el-tab-pane>
       </el-tabs>
-      <search-bar class="f-r" 
+      <search-bar 
+        class="f-r" 
         :searchItems="searchItems"
         @search="search"></search-bar>
     </card>

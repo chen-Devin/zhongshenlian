@@ -2,8 +2,8 @@
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper" :style="{alignSelf: alignSelf}">
-        <div class="modal-container" :style="{width: modalWidth}">
-          <div class="modal-body">
+        <div class="modal-container" :style="{width: modalWidth, padding: setPadding}">
+          <div class="modal-body" :style="{padding: setPadding}">
             <slot name="body">
               default body
             </slot>
@@ -22,7 +22,7 @@
 <script>
 export default {
   name: 'modal',
-  props: ['alignSelf','modalWidth']
+  props: ['alignSelf','modalWidth', 'setPadding']
 }
 </script>
 
@@ -34,13 +34,10 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  // width: 100%;
-  // height: 100%;
   background-color: rgba(0, 0, 0, .5);
   display: flex;
   justify-content: center;
   align-items: center;
-  // overflow-y: scroll;
   transition: opacity .3s ease;
 }
 
@@ -66,15 +63,6 @@ export default {
 .modal-default-button {
   float: right;
 }
-
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
 
 .modal-enter {
   opacity: 0;

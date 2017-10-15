@@ -22,7 +22,7 @@ section {
   margin-right: 30px;
   // padding: 10px 20px;
   background-color: $origin-color;
-  border: 1px solid $section-border;
+  // border: 1px solid $section-border;
   box-shadow: 1px 2px 4px $section-border-shadow;
   overflow: hidden;
 }
