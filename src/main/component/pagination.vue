@@ -16,6 +16,7 @@
         color: #48576a;
         text-align: right;
         margin-top: 10px;
+        margin-bottom: 20px;
     }
     .el-pager li.active {
         border-color: #38a5fe;

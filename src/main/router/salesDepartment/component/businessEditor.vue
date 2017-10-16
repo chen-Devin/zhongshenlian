@@ -2,9 +2,9 @@
   <div>
     <el-form 
       :model="business" 
-      :label-position="labelPosition" 
-      :rules="rules" 
-      ref="business" 
+      :label-position="labelPosition"
+      :rules="rules"
+      ref="business"
       label-width="100px" 
       class="business-editor" 
       :disabled="!editable">
@@ -15,14 +15,14 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="项目名称" prop="name">
-              <el-input v-model="business.name" :disabled="!editable"></el-input>
+              <el-input v-model="business.projectName" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item label="业务范围与审计目标" label-width="150px" prop="scope" required>
-              <el-input v-model="business.scope" :disabled="!editable" type="textarea"></el-input>
+              <el-input v-model="business.businessScope" :disabled="!editable" type="textarea"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -34,7 +34,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="业务类型" required>
-              <el-select  v-model="business.type" placeholder="选择类型" :disabled="!editable">
+              <el-select  v-model="business.type" placeholder="选择业务类型" :disabled="!editable">
                 <el-option 
                 v-for="(TYPE, index) in businessType" 
                 :value="TYPE" 
@@ -45,7 +45,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="项目取得方式" label-width="120px" required>
-              <el-select  v-model="business.getWay" :disabled="!editable">
+              <el-select  v-model="business.getWay" placeholder="选择项目取得方式" :disabled="!editable">
                 <el-option 
                   v-for="item in getWay"
                   :value="item"
@@ -70,7 +70,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="项目经理" required>
-              <div class="manager-input" @click="showStaffModal">
+              <div class="manager-input" :class="{ disabled : !editable }" @click="showStaffModal('projectManager')">
                 点击选择项目经理
                 <i class="fa fa-x fa-user f-r" aria-hidden="true"></i>
               </div>
@@ -319,7 +319,7 @@
                 </div>
               </div>
             </div>
-            <div class="row form-group" >
+            <div class="row form-group">
               <template v-for="(DEPEND, index) in business.contractType.benefitFee.depend">
                 <div class="col-sm-5">
                   <div class="input-group">
@@ -423,7 +423,7 @@
                 :key="index">
                 </el-option>
               </el-select> -->
-              <i class="fa fa-x fa-user-plus c-p" style="color:#50bef7;" aria-hidden="true" @click="showStaffModal"></i>
+              <i class="fa fa-x fa-user-plus c-p" :class="{'c-na': !editable }" style="color:#50bef7;" aria-hidden="true" @click="showStaffModal('reviewCPA')"></i>
             </el-form-item>
           </el-col>
         </el-row>
@@ -432,7 +432,7 @@
             <el-form-item label="参审助理" required>
               <!-- <el-input type="text" placeholder="请输入参审助理" v-model="business.reviewAssistant.name" :disabled="!editable">
               </el-input> -->
-              <i class="fa fa-x fa-user-plus c-p" style="color:#50bef7;" aria-hidden="true" @click="showStaffModal"></i>
+              <i class="fa fa-x fa-user-plus c-p" :class="{'c-na': !editable }" style="color:#50bef7;" aria-hidden="true" @click="showStaffModal('reviewAssistant')"></i>
             </el-form-item>
           </el-col>
         </el-row>
@@ -440,6 +440,8 @@
     </el-form>
     <select-staff-modal 
       v-if="staffModalShow"
+      :staffModalIdentity="staffModalIdentity"
+      :staffModalSelect="staffModalSelect"
       @cancel="cancel"></select-staff-modal>
   </div>
 </template>
@@ -541,7 +543,9 @@ export default {
           { required: true, message: '请输入业务范围与审计目标', trigger: 'blur' }
         ]
       },
-      staffModalShow: false
+      staffModalShow: false,
+      staffModalIdentity: '',
+      staffModalSelect: ''
     };
   },
   computed: {
@@ -571,8 +575,20 @@ export default {
   },
   methods: {
     currencyMask,
-    showStaffModal () {
-      this.staffModalShow = true
+    showStaffModal (type) {
+      if (this.editable) {
+        if (type === 'projectManager') {
+          this.staffModalIdentity = '项目经理'
+          this.staffModalSelect = 'radio'
+        } else if (type === 'reviewCPA') {
+          this.staffModalIdentity = '参审注师'
+          this.staffModalSelect = 'check'
+        } else if (type === 'reviewAssistant') {
+          this.staffModalIdentity = '参审助理'
+          this.staffModalSelect = 'check'
+        }
+        this.staffModalShow = true
+      }
     },
     cancel () {
       this.staffModalShow = false
@@ -1145,14 +1161,22 @@ export default {
       background-color: #fff;
       border: 1px solid #bfcbd9;
       border-radius: 4px;
-      i {
-        color: #50bef7; 
-        margin-top: 10px;
-      }
       &:hover {
         cursor: pointer;
         color: #8391a5; 
         border-color: #8391a5;
+      }
+      &.disabled {
+        background-color: #fafafa;
+        &:hover {
+          cursor: not-allowed;
+          color: #666; 
+          border-color: #bfcbd9;
+        }
+      }
+      i {
+        color: #50bef7; 
+        margin-top: 10px;
       }
     }
   }

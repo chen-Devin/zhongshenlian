@@ -3,7 +3,7 @@
     <div slot="body">
       <div class="list-header">
         <span>
-          选择{{  }}
+          选择{{ staffModalIdentity }}
         </span>
         <search-bar 
           class="f-r" 
@@ -58,7 +58,6 @@ export default {
   data() {
     return {
       paddingValue: 0,
-      radio: true,
       staffArray: [
         {
           name: '哈哈1',
@@ -85,6 +84,16 @@ export default {
       emptyString: '',
       staffRadio: ''
     };
+  },
+  props: ['staffModalIdentity', 'staffModalSelect'],
+  computed: {
+    radio () {
+      if (this.staffModalSelect === 'radio') {
+        return true
+      } else if (this.staffModalSelect === 'check') {
+        return false
+      }
+    }
   },
   methods: {
     changeCheck (event) {

@@ -9,9 +9,6 @@
           v-for="(tab, index) in tabListSales"
           :key="index"></el-tab-pane>
       </el-tabs>
-      <router-link class="btn my-btn submit-btn pull-right add-btn" to="/business-review-add" tag="button" v-if="addBusiness">
-        新建项目
-      </router-link>
       <search-bar 
         class="f-r" 
         :searchItems="searchItems"
@@ -25,9 +22,6 @@
           v-for="(tab, index) in tabListOffice"
           :key="index"></el-tab-pane>
       </el-tabs>
-      <router-link class="btn my-btn submit-btn pull-right add-btn" to="/business-review-add" tag="button" v-if="addBusiness">
-        新建项目
-      </router-link>
       <search-bar 
         class="f-r" 
         :searchItems="searchItems"
@@ -79,7 +73,11 @@
           </tr>
         </tbody>
       </table>
-      <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
+      <my-pagination 
+        :iniTotalPage="totalPage" 
+        :totalNum="totalNum" 
+        @currentChange="currentChange"
+        v-if="reloadPagination"></my-pagination>
     </card>
   </div>
 </template>
@@ -142,7 +140,6 @@ export default {
       simpleSearch: true,
       higherSearch: false,
       searchCont: '',
-      currentPage: 1,
       searchDown: true,
       searchUp: false,
       sea: {
@@ -166,7 +163,11 @@ export default {
         },
         amount: '',
         type: '',
-      }
+      },
+      searchItems: [],
+      salesType: 0,
+      pageNum: 1,
+      reloadPagination: true
     };
   },
   created() {
@@ -175,16 +176,32 @@ export default {
     } else {
       this.checkShow = true
     }
-    this.getInfo(1);
+    if (this.department === 'sales') {
+      this.getUnDealListOfBusinessUnit()
+    } else if (this.department === 'leader') {
+      //  office leader archives
+    }
+    
   },
   watch: {
     $route: 'getInfo'
   },
+  props: ['iconType', 'department'],
   methods: {
-    tabClickSales () {  // 尚未给接口
-
+    tabClickSales (tab, event) {  // 尚未给接口
+      this.pageNum = 1
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 500)
+      if (tab.name === 'report') {
+        this.salesType = 0
+      } else if (tab.name === 'bill') {
+        this.salesType = 1
+      }
+      this.getUnDealListOfBusinessUnit()
     },
-    tabClickOffice () {  // 尚未给接口
+    tabClickOffice (tab, event) {  // 尚未给接口
 
     },
     search () {
@@ -196,6 +213,32 @@ export default {
       } else {
         this.$router.push('/business-handle-detail-' + this.department + '-' +BUSINESS.id)
       }
+    },
+    getUnDealListOfBusinessUnit () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getUnDealListOfBusinessUnit',
+                platform: 'web',
+                type: this.salesType,
+                pageNum: this.pageNum
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.businesses = rep.data.data.businessArray
+            this.totalNum = parseInt(rep.data.data.totalNum)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
     },
     getInfo() {
       let start = ''
@@ -227,7 +270,7 @@ export default {
               requester: this.sea.requester,
               requesterName: this.sea.requesterName,
               applicantName: this.sea.applicantName,
-              pageNum: this.currentPage
+              pageNum: this.pageNum
             }
             return JSON.stringify(obj);
           })()
@@ -261,8 +304,10 @@ export default {
       }
     },
     currentChange(val) {
-      this.currentPage = val;
-      this.getInfo();
+      this.pageNum = val;
+      if (this.department === 'sales') {
+        this.getUnDealListOfBusinessUnit()
+      }
     },
     showHigherSearch() {
       if (this.higherSearch === false) {
@@ -280,22 +325,21 @@ export default {
     higherSearchEvent (sea) {
       this.sea = sea
       this.searchCont = ''
-      this.currentPage = 1
+      this.pageNum = 1
       this.getInfo()
     },
     tog(searchCont) {
       this.searchCont = searchCont
       this.sea = this.seaEmpty
-      this.currentPage = 1
+      this.pageNum = 1
       this.getInfo()
     },
     reset () {
-      this.currentPage = 1
+      this.pageNum = 1
       this.sea = this.seaEmpty
       this.getInfo()
     }
   },
-  props: ['iconType', 'department'],
   components: {
     crumbs,
     card,

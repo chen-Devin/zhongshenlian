@@ -53,6 +53,7 @@
       <el-menu-item index="/bid-info-draft" v-if="market">草稿箱</el-menu-item>
       <el-menu-item index="/rule-regulation">规章制度</el-menu-item>
       <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+      <el-menu-item index="/bill-apply">开票申请</el-menu-item>
       <el-menu-item index="/contract-change">合同变更</el-menu-item>
       <!-- <el-submenu index="reimbursement-application">
         <template slot="title">报销申请</template>

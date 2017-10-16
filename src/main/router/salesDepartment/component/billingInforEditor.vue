@@ -7,14 +7,59 @@
         <button class="btn my-btn cancel-btn" @click="del()">撤销</button>
       </div>
     </h4>
+    <p>{{ business }}</p>
+    <div class="project-message">
+      <el-row>
+        <el-col :span="8">
+          项目编号：{{ business.contractNo }}
+        </el-col>
+        <el-col :span="8">
+          项目名称：{{ business.projectName }}
+        </el-col>
+        <el-col :span="8">
+          合同金额：{{ business.contractAmount }}
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="8">
+          开票申请人：{{ bill.proposer.name }}
+        </el-col>
+        <el-col :span="8">
+          申请时间：
+        </el-col>
+        <el-col :span="8">
+          累计开票金额：
+        </el-col>
+      </el-row>
+    </div>
+    <div class="bill-message">
+      <!-- <el-form 
+        :model="bill" 
+        :label-position="labelPosition"
+        :rules="rules"
+        ref="bill"
+        label-width="100px" 
+        class="bill-form">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="本次开票金额" prop="name">
+              <el-input v-model="bill.projectName"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            
+          </el-col>
+        </el-row>
+      </el-form> -->
+    </div>
     <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
       <div class="form-group">
         <label class="col-sm-2 control-label">签订合同编号</label>
         <div class="col-sm-9">
-          <p class="form-control-static">{{business.number}}</p>
+          <p class="form-control-static">{{business.contractNo}}</p>
         </div>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label class="col-sm-2 control-label">项目名称</label>
         <div class="col-sm-9">
           <p class="form-control-static">{{business.name}}</p>
@@ -26,101 +71,6 @@
           <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</p>
         </div>
       </div>
-      <!-- <div class="form-group">
-        <label class="col-sm-2 control-label">开票申请人</label>
-        <div class="col-sm-9">
-          <p class="form-control-static">{{bill.proposer.name}}</p>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">委托单位联系人</label>
-        <div class="col-sm-9">
-          <p class="form-control-static">{{business.institution.name}}</p>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">联系人电话</label>
-        <div class="col-sm-9">
-          <p class="form-control-static">{{business.institution.telephone}}</p>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">计划工期</label>
-        <div class="col-sm-9">
-          <div class="row">
-            <div class="col-sm-6">
-              <p class="form-control-static">开始时间：{{business.time.start}}</p>
-            </div>
-            <div class="col-sm-6">
-              <p class="form-control-static">结束时间：{{business.time.end}}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">合同体制</label>
-        <div class="col-sm-9">
-          <p class="form-control-static">{{business.contractType.name}}</p>
-        </div>
-      </div>
-      <div class="form-group" v-if="contractTypeChan">
-        <label class="col-sm-2 control-label">基本取费</label>
-        <div class="col-sm-9">
-          <div class="row form-group">
-            <div class="col-sm-6">
-              <p class="form-control-static">
-                主办方：{{business.contractType.basicFee.main.name}}
-              </p>
-            </div>
-            <div class="col-sm-5">
-              <p class="form-control-static">
-                比例：{{business.contractType.basicFee.main.percentage}}%
-              </p>
-            </div>
-          </div>
-          <div class="row form-group" v-for="(DEPEND, index) in business.contractType.basicFee.depend" :key="index">
-            <div class="col-sm-6">
-              <p class="form-control-static">
-                协办方：{{DEPEND.name}}
-              </p>
-            </div>
-            <div class="col-sm-5">
-              <p class="form-control-static">
-                比例：{{DEPEND.percentage}}%
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="form-group" v-if="contractTypeChan">
-        <label class="col-sm-2 control-label">效益取费</label>
-        <div class="col-sm-9">
-          <div class="row form-group">
-            <div class="col-sm-6">
-              <p class="form-control-static">
-                主办方：{{business.contractType.benefitFee.main.name}}
-              </p>
-            </div>
-            <div class="col-sm-5">
-              <p class="form-control-static">
-                比例：{{business.contractType.benefitFee.main.percentage}}%
-              </p>
-            </div>
-          </div>
-          <div class="row form-group" v-for="(DEPEND, index) in business.contractType.benefitFee.depend" :key="index">
-            <div class="col-sm-6">
-              <p class="form-control-static">
-                协办方：{{DEPEND.name}}
-              </p>
-            </div>
-            <div class="col-sm-5">
-              <p class="form-control-static">
-                比例：{{DEPEND.percentage}}%
-              </p>
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div class="form-group">
         <label class="col-sm-2 control-label">累计开票金额</label>
         <div class="col-sm-9">
@@ -249,10 +199,10 @@
         <div class="col-sm-9">
           <textarea maxlength="50" class="form-control" rows="3" placeholder="请输入备注 最多输入50个字" v-model="bill.remark"></textarea>
         </div>
-      </div>
+      </div> -->
     </form>
-    <bill-sub-modal v-if="showSubModal" :initBill="bill" :initBusiness="business" @submited="submited" @canceled="subCanceled"></bill-sub-modal>
-    <bill-del-modal v-if="showDelModal" :initBill="bill" @deleted="deleted" @canceled="delCanceled"></bill-del-modal>
+   <!--  <bill-sub-modal v-if="showSubModal" :initBill="bill" :business="business" @submited="submited" @canceled="subCanceled"></bill-sub-modal>
+    <bill-del-modal v-if="showDelModal" :initBill="bill" @deleted="deleted" @canceled="delCanceled"></bill-del-modal> -->
   </div>
 </template>
 
@@ -276,8 +226,8 @@ export default {
         { name: '开票信息', url: `/business-handle-detail-sales-${this.$route.params.id}/billing-infor`, present: false },
         { name: '新增开票申请', url: `/business-handle-detail-sales-${this.$route.params.id}/billing-infor/billing-infor-editor`, present: true }
       ],
-      business: this.initBusiness,
       nonFirst: false,
+      user: {},
       bill: {
         id: '',
         proposer: {
@@ -327,6 +277,10 @@ export default {
     };
   },
   computed: {
+    requestTime () {
+      let nd = new Date()
+      return nd.getFullYear() + '-' + nd.getMonth() + '-' + nd.getDate()
+    },
     contractTypeChan() {
       return (this.business.contractType.name === '联合体') ? true : false;
     },
@@ -380,7 +334,7 @@ export default {
       return arr
     }
   },
-  props: ['initBusiness', 'user'],
+  props: ['business'],
   mounted() {
     this.$emit('pathsChan', this.paths);
 
@@ -528,9 +482,12 @@ export default {
     }
   },
   created () {
-    console.log(this.$route.params.isFirst)
-    this.judgeIsFirst(this.$route.params.isFirst)
-    this.getBillingCompanyName()
+    // console.log(this.$route.params.isFirst)
+    // this.judgeIsFirst(this.$route.params.isFirst)
+    // this.getBillingCompanyName()
+    this.$store.dispatch('fetchUserInfo').then(() => {
+      this.user = this.$store.getters.getUser
+    }, () => { })
   },
   components: {
     billSubModal,
