@@ -1,459 +1,613 @@
 <template>
-  <div>
-    <div class="page-header">
-      <h4>
-        招投标信息详情
-      </h4>
-    </div>
-    <form class="form-horizontal" @submit.prevent @keyup.enter.prevent>
-      <button type="button" class="btn my-btn submit-btn f-r mt" @click="isEdit" v-if="editBtn">编辑</button>
-      <button type="button" class="btn my-btn submit-btn f-r mt" @click="delisting" v-if="brandBtn">摘牌</button>
-      <div class="form-group">
-        <label for="projectName" class="col-sm-2 control-label">项目名称：</label>
-        <div class="col-sm-6">
-          {{project.projectName}}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="tenderPerson" class="col-sm-2 control-label">招标人：</label>
-        <div class="col-sm-10">
-          {{ project.tenderPerson }}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="agency" class="col-sm-2 control-label">招标代理机构：</label>
-        <div class="col-sm-10">
-          {{ project.agency }}
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">业务类型：</label>
-        <div class="col-sm-10">
-          <span v-for="item in departmentTypeMap">{{ item + " " }}</span>
-        </div>
-      </div>
-      <!--会计所单独内容-->
-      <div v-if="kjsContentShow">
-        <div class="form-group">
-          <label class="col-sm-2 control-label">会计所：</label>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">招标内容：</label>
-          <div class="col-sm-10">
-            <span v-for="item in project.kjsBiddingContent">{{ item + " " }}</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
-          <div class="col-sm-10">
-            {{ project.kjsOwnershipStructure }}
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="totalAssets" class="col-sm-2 control-label">资产总额：</label>
-          <div class="col-sm-10">
-            <div class="input-group">
-              {{ project.totalAssets + "元" }}
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="location" class="col-sm-2 control-label">坐落地点：</label>
-          <div class="col-sm-10">
-            {{ project.location }}
-          </div>
-        </div>
-        <hr>
-      </div>
-      <!--评估所单独内容-->
-      <div v-if="pgsContentShow">
-        <div class="form-group">
-          <label class="col-sm-2 control-label">评估所：</label>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">招标内容：</label>
-          <div class="col-sm-10">
-            <span v-for="item in project.pgsBiddingContent">{{ item + " " }}</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
-          <div class="col-sm-10">
-            {{ project.pgsOwnershipStructure }}
-          </div>
-        </div>
-        <hr>
-      </div>
-      <!--税务所单独内容-->
-      <div v-if="swsContentShow">
-        <div class="form-group">
-          <label class="col-sm-2 control-label">税务所：</label>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">招标内容：</label>
-          <div class="col-sm-10">
-            <span v-for="item in project.swsBiddingContent">{{ item + " " }}</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="ownershipStructure" class="col-sm-2 control-label">股权结构：</label>
-          <div class="col-sm-10">
-            {{ project.swsOwnershipStructure }}
-          </div>
-        </div>
-        <hr>
-      </div>
-      <!--造价所单独内容-->
-      <div v-if="zjsContentShow">
-        <div class="form-group">
-          <label class="col-sm-2 control-label">造价所：</label>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">招标内容：</label>
-          <div class="col-sm-10">
-            <span v-for="item in project.zjsBiddingContent">{{ item + " " }}</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="zjsFundSource" class="col-sm-2 control-label">资金来源及比例：</label>
-          <div class="col-sm-10">
-            <span v-for="item in project.zjsFundSource">{{ item + " " }}</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="scale" class="col-sm-2 control-label">建设规模：</label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-sm-4">
-                {{ project.zjsArea }}
-              </div>
-              <div class="col-sm-4">
-                {{ project.zjsLength }}
-              </div>
-              <div class="col-sm-4">
-                {{ project.totalAssets }}
+  <div class="bid-info-check">   
+    <h4 class="main-title">
+      招投标信息
+    </h4>
+    <el-form
+      :model="project" 
+      :label-position="labelPosition" 
+      :rules="rules" 
+      ref="project" 
+      label-width="100px" 
+      class="project-editor" 
+      :disabled="!editable"
+      required>
+      <div class="basic-message">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="招投标公告来源"  label-width = "140px" prop="source">
+              <el-input v-model="project.name" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="报名截止日期：" label-width = "130px" required>
+              <el-input v-model="project.name" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="招投标公告发布人："  label-width = "150px" required>
+              <el-input v-model="project.name" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="报名相关费用：" label-width = "120px">
+              <el-input v-model="project.name" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="招投标公告发布日期："  label-width = "170px" required>
+              <el-input v-model="project.name" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="报名开标日期：" label-width = "120px">
+              <el-input v-model="project.bidStartTime" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="中审联招投标公告编号："  label-width = "180px" required>
+              <el-input v-model="project.name" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="公告开标日期：" label-width = "120px">
+              <el-input v-model="project.openBidDate" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="招投项目名称：" label-width = "130px" required>
+              <el-input v-model="project.projectName" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="公告开标地点：" label-width = "120px">
+              <el-input v-model="project.openBidPlace" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="标段划分：" required>
+              <el-input v-model="project.name" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="审计限制：">
+              <el-input v-model="project.serviceTerm" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="招标人：" required>
+              <el-input v-model="project.tenderPerson" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="投资人资质条件/能力：">
+              <el-input type="textarea" v-model="project.investmentConditions" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="招标代理机构："  label-width = "120px">
+              <el-input v-model="project.agency" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="中标/入围：" required>
+              <el-input v-model="project.name" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="中标单位数量：" label-width="120px">
+              <el-input v-model="project.biddingNumber" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <p>{{ project }}</p>
+        <el-row>
+          <el-col :span="12" v-if="!editable">
+            <div class="business-type">
+              <h5>业务类型：</h5>
+              <div>
+                <span v-for="item in departmentTypeMap">{{ item + " " }}</span>
               </div>
             </div>
-          </div>
-        </div>
-        <!-- 建设地点坐落地点重复-->
-        <div class="form-group">
-          <label for="location" class="col-sm-2 control-label">建设地点：</label>
-          <div class="col-sm-10">
-            {{ project.zjsLocation }}
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="serviceTerm" class="col-sm-2 control-label">服务期限：</label>
-          <div class="col-sm-10">
-            {{ project.serviceTerm }}
-          </div>
-        </div>
-        <hr>
-      </div>
-      <div class="form-group">
-        <label for="serviceTerm" class="col-sm-2 control-label">审计期限：</label>
-        <div class="col-sm-10">
-          {{ project.serviceTerm }}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="investmentConditions" class="col-sm-2 control-label">投资人资质条件、能力：</label>
-        <div class="col-sm-10">
-          {{ project.investmentConditions }}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="investmentConditions" class="col-sm-2 control-label">合同体制：</label>
-        <div class="col-sm-10">
-          {{ project.contractType.type }}
-        </div>
-      </div>
+            <!--会计所单独内容-->
+            <div v-if="kjsContentShow">
+              <div class="form-group">
+                <h5>会计所</h5>
+              </div>
+              <div class="form-group">
+                <h5>招标内容：
+                  <span class="ml-10 mr-10" v-for="item in project.kjsBiddingContent">{{ item + " " }}</span>
+                </h5>
+              </div>
+              <div class="form-group">
+                <h5>
+                  股权结构：
+                  <span class="ml-10">
+                    {{ project.kjsOwnershipStructure }}
+                  </span>
+                </h5>
+              </div>
+              <div class="form-group">
+                <h5>
+                  资产总额：
+                  <span class="ml-10">{{ project.totalAssets + "元" }}</span>
+                </h5>
+              </div>
+              <div class="form-group">
+                <h5>
+                  坐落地点：
+                  <span class="ml-10">{{ project.location }}</span>
+                </h5>
+              </div>   
+            </div>
+            <!--评估所单独内容-->
+            <div v-if="pgsContentShow">
+              <div class="form-group">
+                <h5>评估所</h5>
+              </div>
+              <div class="form-group">
+                <h5>
+                  招标内容：
+                  <span class="ml-10" v-for="item in project.pgsBiddingContent">{{item + " " }}</span>
+                </h5>
+              </div>
+              <div class="form-group">
+                <h5>
+                股权结构：
+                <span class="ml-10">{{ project.pgsOwnershipStructure }}</span>
+                </h5>
+              </div>             
+            </div>
+            <!--税务所单独内容-->
+            <div v-if="swsContentShow">
+              <div class="form-group">
+                <h5>税务所</h5>
+              </div>
+              <div class="form-group">
+                <h5>
+                  招标内容：
+                  <span class="ml-10" v-for="item in project.swsBiddingContent">{{ item + " " }}</span>
+                </h5>
+              </div>
+              <div class="form-group">
+                <h5>股权结构：
+                  <span class="ml-10">
+                    {{ project.swsOwnershipStructure }}
+                  </span>
+                </h5>
+              </div>       
+            </div>
+            <!--造价所单独内容-->
+            <div v-if="zjsContentShow">
+              <div class="form-group">
+                <h5>造价所</h5>
+              </div>
+              <div class="form-group">
+                <h5>
+                  招标内容：
+                    <span v-for="item in project.zjsBiddingContent">{{ item + " " }}</span>
+                </h5>
+              </div>
+              <div class="form-group">
+                <h5>
+                  资金来源及比例:
+                  <span class="ml-10" v-for="item in project.zjsFundSource">{{ item + " " }}</span>
+                </h5>
+              </div>
+              <div class="form-group">
+                <h5>建设规模：
+                  <span class="ml-10">{{ project.zjsArea }}</span>
+                  <span class="ml-10">{{ project.zjsLength }}</span>
+                  <span class="ml-10">{{ project.totalAssets }}</span>
+                </h5>
+              </div>
+              <div class="form-group">
+                <h5>建设地点： 
+                    <span class="ml-10">
+                      {{ project.zjsLocation }}
+                    </span>
+                </h5>
+              </div>
+            </div>
+          </el-col>
+          <el-col :span="12" v-else>
+            <div class="business-type">
+              <h4>业务类型：</h4>
+              <div class="col-sm-10 check-wrap">
+                <input class="magic-checkbox" type="checkbox" value="kjs" v-model="project.departmentType" id="5">
+                <label for="5">
+                  会计所
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="pgs" v-model="project.departmentType" id="6">
+                <label for="6">
+                  评估所
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="sws" v-model="project.departmentType" id="7">
+                <label for="7">
+                  税务所
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="zjs" v-model="project.departmentType" id="8">
+                <label for="8">
+                  造价所
+                </label>
+              </div>
+            </div>
+            
+            <!--会计所单独内容-->
+            <div v-if="kjsContentShow">
+              <div class="form-group">
+                <label>会计所：</label>
+              </div>
+              <div class="form-group">
+                <label>招标内容：</label>
+                <div class="col-sm-10 check-wrap">
+                  <input class="magic-checkbox" type="checkbox" value="年审" v-model="project.kjsBiddingContent" id="年审">
+                  <label for="年审">
+                    年审
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="专项" v-model="project.kjsBiddingContent" id="专项">
+                  <label for="专项">
+                    专项
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="咨询" v-model="project.kjsBiddingContent" id="咨询">
+                  <label for="咨询">
+                    咨询
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="决算" v-model="project.kjsBiddingContent" id="决算">
+                  <label for="决算">
+                    决算
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="外汇年检" v-model="project.kjsBiddingContent" id="外汇年检">
+                  <label for="外汇年检">
+                    外汇年检
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="验资" v-model="project.kjsBiddingContent" id="验资">
+                  <label for="验资">
+                    验资
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="外资审计" v-model="project.kjsBiddingContent" id="外资审计">
+                  <label for="外资审计">
+                    外资审计
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="ownershipStructure">股权结构：</label>
+                <div class="col-sm-10 check-wrap">
+                  <input class="magic-radio" type="radio" name="kjsOwnerStructure" v-model="project.kjsOwnershipStructure" value="国有" id="kjs国有">
+                  <label for="kjs国有">
+                     国有
+                  </label>
+                  <input class="magic-radio" type="radio" name="kjsOwnerStructure" v-model="project.kjsOwnershipStructure" value="民营" id="kjs民营">
+                  <label for="kjs民营">
+                     民营
+                  </label>
+                  <input class="magic-radio" type="radio" name="kjsOwnerStructure" v-model="project.kjsOwnershipStructure" value="外资" id="kjs外资">
+                  <label for="kjs外资">
+                     外资
+                  </label>
+                  <input class="magic-radio" type="radio" name="kjsOwnerStructure" v-model="project.kjsOwnershipStructure" value="混合" id="kjs混合">
+                  <label for="kjs混合">
+                     混合
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>资产总额：</label>
+                <div class="col-sm-10">
+                  <div class="input-group half-width">
+                    <masked-input type="text" class="form-control" placeholder="请输入资产总额" v-model="project.totalAssets" :mask="currencyMask" :guide="false" placeholderChar="#">
+                    </masked-input>
+                    <div class="input-group-addon">元</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="location">坐落地点：</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control half-width" id="location" v-model="project.location" name="location" placeholder="请输入坐落地点">
+                </div>
+              </div>
+              
+            </div>
+            <!--评估所单独内容-->
+            <div v-if="pgsContentShow">
+              <div class="form-group">
+                <label>评估所：</label>
+              </div>
+              <div class="form-group">
+                <label>招标内容：</label>
+                <div class="col-sm-10 check-wrap">
+                  <input class="magic-checkbox" type="checkbox" value="股改" v-model="project.pgsBiddingContent" id="股改">
+                  <label for="股改">
+                    股改
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="专项" v-model="project.pgsBiddingContent" id="专项2">
+                  <label for="专项2">
+                    专项
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="咨询" v-model="project.pgsBiddingContent" id="咨询2">
+                  <label for="咨询2">
+                    咨询
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="清产核资" v-model="project.pgsBiddingContent" id="清产核资">
+                  <label for="清产核资">
+                    清产核资
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="ownershipStructure">股权结构：</label>
+                <div class="col-sm-10 check-wrap">
+                  <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="国有" id="pgs国有">
+                  <label for="pgs国有">
+                     国有
+                  </label>
+                  <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="民营" id="pgs民营">
+                  <label for="pgs民营">
+                     民营
+                  </label>
+                  <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="外资" id="pgs外资">
+                  <label for="pgs外资">
+                     外资
+                  </label>
+                  <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="混合" id="pgs混合">
+                  <label for="pgs混合">
+                     混合
+                  </label>
+                </div>
+              </div>
+              
+            </div>
+            <!--税务所单独内容-->
+            <div v-if="swsContentShow">
+              <div class="form-group">
+                <label>税务所：</label>
+              </div>
+              <div class="form-group">
+                <label>招标内容：</label>
+                <div class="col-sm-10 check-wrap">
+                  <input class="magic-checkbox" type="checkbox" value="税鉴" v-model="project.swsBiddingContent" id="税鉴">
+                  <label for="税鉴">
+                    税鉴
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="ownershipStructure">股权结构：</label>
+                <div class="col-sm-10 check-wrap">
+                  <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="国有" id="sws国有">
+                  <label for="sws国有">
+                     国有
+                  </label>
+                  <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="民营" id="sws民营">
+                  <label for="sws民营">
+                     民营
+                  </label>
+                  <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="外资" id="sws外资">
+                  <label for="sws外资">
+                     外资
+                  </label>
+                  <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="混合" id="sws混合">
+                  <label for="sws混合">
+                     混合
+                  </label>
+                </div>
+              </div>
+              
+            </div>
+            <!--造价所单独内容-->
+            <div v-if="zjsContentShow">
+              <div class="form-group">
+                <label>造价所：</label>
+              </div>
+              <div class="form-group">
+                <label>招标内容：</label>
+                <div class="col-sm-10 check-wrap">
+                  <input class="magic-checkbox" type="checkbox" value="概算" v-model="project.zjsBiddingContent" id="概算">
+                  <label for="概算">
+                    概算
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="预算" v-model="project.zjsBiddingContent" id="预算">
+                  <label for="预算">
+                    预算
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="结算" v-model="project.zjsBiddingContent" id="结算">
+                  <label for="结算">
+                    结算
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="全过程造价控制" v-model="project.zjsBiddingContent" id="全过程造价控制">
+                  <label for="全过程造价控制">
+                    全过程造价控制
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="入围" v-model="project.zjsBiddingContent" id="入围4">
+                  <label for="入围4">
+                    入围
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="一审" v-model="project.zjsBiddingContent" id="一审">
+                  <label for="一审">
+                    一审
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="二审" v-model="project.zjsBiddingContent" id="二审">
+                  <label for="二审">
+                    二审
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="zjsFundSource">资金来源及比例：</label>
+                <div class="col-sm-10 check-wrap">
+                  <input class="magic-checkbox" type="checkbox" value="财政" v-model="project.zjsFundSource" id="财政">
+                  <label for="财政">
+                    财政
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="自筹" v-model="project.zjsFundSource" id="自筹">
+                  <label for="自筹">
+                    自筹
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="贷款" v-model="project.zjsFundSource" id="贷款">
+                  <label for="贷款">
+                    贷款
+                  </label>
+                  <input class="magic-checkbox" type="checkbox" value="BT等" v-model="project.zjsFundSource" id="BT等">
+                  <label for="BT等">
+                    BT等
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="scale">建设规模：</label>
+                <div class="col-sm-10">
+                  <div class="row adjust-half-width">
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="scale" v-model="project.zjsArea" name="zjsArea" placeholder="请输入建设面积">
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="scale" v-model="project.zjsLength" name="zjsLength" placeholder="请输入长度">
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="scale" v-model="project.zjsTotalInvestment" name="zjsTotalInvestment" placeholder="请输入总投资额">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="zjsLocation">建设地点：</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control half-width" id="zjsLocation" v-model="project.zjsLocation" name="zjsLocation" placeholder="请输入建设地点">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="serviceTerm">服务期限：</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control half-width" id="serviceTerm" v-model="project.serviceTerm" name="serviceTerm" placeholder="请输入服务期限">
+                </div>
+              </div>
+              
+            </div>
+          </el-col>
+          <!-- <el-col :span="12">
+            <div class="form-group">
+              <label for="investmentConditions" class="col-sm-2 control-label">合同体制：</label>
+              <div class="col-sm-10">
+                {{ project.contractType.type }}
+              </div>
+            </div>
+            <div v-show="commonwealthShow">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">基本取费：</label>
+                <div class="col-sm-10">
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <div class="row">
+                        <div class="col-sm-4">主办方</div>
+                        <div class="col-sm-8">{{ project.contractType.mainBasicName }}</div>
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-5">
+                        <div class="row">
+                          <div class="col-sm-4">比例</div>
+                          <div class="col-sm-8">{{ project.contractType.mainBasicRate + "%"}}</div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                      </div>
+                      <div class="form-group" v-for="(item, index) in project.contractType.subBasicArray">
+                          <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                              <div class="row">
+                                <div class="col-sm-5">
+                                  <div class="row">
+                                    <div class="col-sm-4">协办方</div>
+                                    <div class="col-sm-8">{{ item.name }}</div>
+                                  </div>
+                                  <div class="col-sm-1"></div>
+                                  <div class="col-sm-5">
+                                    <div class="row">
+                                      <div class="col-sm-4">比例</div>
+                                      <div class="col-sm-8">{{ item.rate + "%" }}</div>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                  </div>
+                                      <div class="form-group">
+                                        <label class="col-sm-2 control-label">效益取费：</label>
+                                        <div class="col-sm-10">
+                                          <div class="row">
+                                            <div class="col-sm-5">
+                                              <div class="row">
+                                                <div class="col-sm-4">主办方</div>
+                                                <div class="col-sm-8">{{ project.contractType.mainEfficiencyName }}</div>
 
-      <div v-show="commonwealthShow">
-        <div class="form-group">
-          <label class="col-sm-2 control-label">基本取费：</label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-sm-5">
-                <div class="row">
-                  <div class="col-sm-4">主办方</div>
-                  <div class="col-sm-8">{{ project.contractType.mainBasicName }}</div>
-                </div>
-              </div>
-              <div class="col-sm-1"></div>
-              <div class="col-sm-5">
-                <div class="row">
-                  <div class="col-sm-4">比例</div>
-                  <div class="col-sm-8">{{ project.contractType.mainBasicRate + "%"}}</div>
-                </div>
-              </div>
-              <div class="col-sm-1">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-group" v-for="(item, index) in project.contractType.subBasicArray">
-          <label class="col-sm-2 control-label"></label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-sm-5">
-                <div class="row">
-                  <div class="col-sm-4">协办方</div>
-                  <div class="col-sm-8">{{ item.name }}</div>
-                </div>
-              </div>
-              <div class="col-sm-1"></div>
-              <div class="col-sm-5">
-                <div class="row">
-                  <div class="col-sm-4">比例</div>
-                  <div class="col-sm-8">{{ item.rate + "%" }}</div>
-                </div>
-              </div>
-              <div class="col-sm-1">
 
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">效益取费：</label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-sm-5">
-                <div class="row">
-                  <div class="col-sm-4">主办方</div>
-                  <div class="col-sm-8">{{ project.contractType.mainEfficiencyName }}</div>
-                </div>
-              </div>
-              <div class="col-sm-1"></div>
-              <div class="col-sm-5">
-                <div class="row">
-                  <div class="col-sm-4">比例</div>
-                  <div class="col-sm-8">{{ project.contractType.mainEfficiencyRate + "%" }}</div>
-                </div>
-              </div>
-              <div class="col-sm-1">
-
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-group" v-for="(item, index) in project.contractType.subEfficiencyArray">
-          <label class="col-sm-2 control-label"></label>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="col-sm-5">
-                <div class="row">
-                  <div class="col-sm-4">协办方</div>
-                  <div class="col-sm-8">{{ item.name }}</div>
-                </div>
-              </div>
-              <div class="col-sm-1"></div>
-              <div class="col-sm-5">
-                <div class="row">
-                  <div class="col-sm-4">比例</div>
-                  <div class="col-sm-8">{{ item.rate + "%" }}</div>
-                </div>
-              </div>
-              <div class="col-sm-1">
-
-              </div>
-            </div>
-          </div>
-        </div>
+          </el-col> -->
+          <!-- <el-col :span="12">
+            <el-form-item label="招标控制价格：" label-width="120px">
+              <el-input v-model="project.controlPrice" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col> -->
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="招标公告附件：" label-width="130px" required>
+              <el-input v-model="project.biddingNumber" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="备注">
+              <el-input type="textarea" v-model="project.remark" :disabled="!editable"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </div>
-      <div class="form-group">
-        <label for="biddingNumber" class="col-sm-2 control-label">中标单位数量：</label>
-        <div class="col-sm-10">
-          {{ project.biddingNumber }}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="controlPrice" class="col-sm-2 control-label">招标控制价：</label>
-        <div class="col-sm-10">
-          {{ project.controlPrice + "元"}}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="bidStartTime" class="col-sm-2 control-label">招标报名时间：</label>
-        <div class="col-sm-10">
-          {{ project.bidStartTime }}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="bidDocumentPrice" class="col-sm-2 control-label">招标文件价格：</label>
-        <div class="col-sm-10">
-          {{project.bidDocumentPrice + "元"}}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="quotations" class="col-sm-2 control-label">报价方式：</label>
-        <div class="col-sm-10">
-          {{ project.quotations }}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="tenderValidityPeriod" class="col-sm-2 control-label">投标有效期：</label>
-        <div class="col-sm-10">
-          {{ project.tenderValidityPeriod + "天"}}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="bidBond" class="col-sm-2 control-label">投标保证金：</label>
-        <div class="col-sm-10">
-          {{ project.bidBond + "元"}}
-        </div>
-      </div>
-      <!--标书费-->
-      <div class="form-group">
-        <label for="tenderFee" class="col-sm-2 control-label">标书费：</label>
-        <div class="col-sm-10">
-          {{ project.tenderFee + "元"}}
-        </div>
-      </div>
-      <!--中标服务费-->
-      <div class="form-group">
-        <label for="winningServiceFee" class="col-sm-2 control-label">中标服务费：</label>
-        <div class="col-sm-10">
-          {{ project.winningServiceFee + "元"}}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="openBidDate" class="col-sm-2 control-label">开标时间：</label>
-        <div class="col-sm-10">
-          {{ project.openBidDate }}
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="openBidPlace" class="col-sm-2 control-label">开标地点：</label>
-        <div class="col-sm-10">
-          {{ project.openBidPlace }}
-        </div>
-      </div>
-      <!--备注-->
-      <div class="form-group">
-        <label for="remark" class="col-sm-2 control-label">备注：</label>
-        <div class="col-sm-10">
-          {{ project.remark }}
-        </div>
-      </div>
-      <hr>
-      <!-- 摘牌信息 一会加上-->
-      <div v-if="delipotentShow">
-        <table class="table table-bordered table-handle">
-          <thead>
-            <tr>
-              <td>
-                摘牌情况
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">摘牌部门：</label>
-                  <div class="col-sm-10">
-                    {{ project.subDepartment }}
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="remark" class="col-sm-2 control-label">摘牌人员：</label>
-                  <div class="col-sm-10">
-                    {{ project.delipotentName }}
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="form-group">
-          <label for="remark" class="col-sm-3 control-label">{{ project.delipotentTime }}</label>
-        </div>
-      </div>
-      <!-- 所长通过不通过-->
-      <div v-if="directorAgreeShow">
-        <div class="form-group">
-          <label for="remark" class="col-sm-1 control-label"></label>
-          <div class="col-sm-11">
-            <button type="button" class="btn my-btn submit-btn" @click="approve()">通过</button>
-            <button type="button" class="btn my-btn draft-btn" @click="showAdvice()">不通过</button>
-          </div>
-        </div>
-      </div>
-      <modal v-if="adviceShow">
-        <div slot="body">
-          <h4 class="adviceTitle">
-            请填写修改意见
-          </h4>
-          <textarea class="form-control" rows="8" placeholder="请填写修改意见，不超过500个字" v-model="adviceText"></textarea>
-        </div>
-        <div slot="footer">
-          <button type="button" class="btn my-btn submit-btn" @click="adviceUpload">提交</button>
-          <button type="button" class="btn my-btn draft-btn" @click="adviceCancel">取消</button>
-        </div>
-      </modal>
-      <!--调用组件的审核意见-->
-      <div class="form-group">
-        <approver-advice class="advice"  v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
-      </div>
-      <!-- 入围或中标通知书-->
-      <div v-if="noticePanel">
-        <table class="table table-bordered table-handle table-contract">
-          <thead>
-            <tr>
-              <td>电子合同附件</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="row">
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">入围通知书：</label>
-                    <div class="col-sm-8">
-                      <a :href="ruweiDoc.url" target="_blank">{{ ruweiDoc.name }}</a>
-                    </div>
-                    <div class="col-sm-2">
-                      <upload-report :type="shortlistedNotice" :id="projectId" @uploadList="recRuweiDoc" @deleteDoc="deleteRuweiDoc" v-if="noticeUpload"></upload-report>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">中标通知书：</label>
-                    <div class="col-sm-8">
-                      <a :href="zhongbiaoDoc.url" target="_blank">{{ zhongbiaoDoc.name }}</a>
-                    </div>
-                    <div class="col-sm-2">
-                      <upload-report :type="bidNotice" :id="projectId" @uploadList="recZhongbiaoDoc" @deleteDoc="deleteZhongbiaoDoc" v-if="noticeUpload"></upload-report>
-                    </div>
-                  </div>
-                </div>
-                <div class="row" v-if="finishBtn">
-                  <div class="form-group">
-                    <label class="col-sm-1 control-label"></label>
-                    <div class="col-sm-11">
-                      <button type="button" class="btn my-btn submit-btn" @click="uploadFinish()">上传完成</button>
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </form>
+    </el-form>
   </div>
 </template>
 
 <style lang="sass" scoped>
+  .bid-info-check {
+    > .project-editor {
+      padding-left: 20px;
+    }
+    .business-type {
+      h5 {
+        display: inline-block;
+        height: 40px;
+        line-height: 40px;
+        margin-bottom: 22px;
+        + div {
+          display: inline-block;
+          margin-bottom: 10px;
+          span {
+            margin-left: 10px;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+    .el-col {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
 	.control-label {
 		padding-top: 1px;
-	}
-	.f-r {
-		float: right;
 	}
 	.el-upload-list {
         margin-left: 20px;
@@ -473,6 +627,12 @@
   }
   .mt {
     margin-top: -10px;
+  }
+  .ml-10 {
+    margin-left: 10px;
+  }
+  .mr-10 {
+    margin-right: 10px;
   }
 </style>
 
@@ -495,6 +655,19 @@ export default {
           subEfficiencyArray: [{ "name": '', "rate": 0 }]
         },
         departmentType: []
+      },
+      editable: false,
+      labelPosition: 'left',
+      rules: {
+        source: [
+          { required: true, message: '请输入公告来源',trigger: 'blur'}
+        ]
+        // name: [
+        //   { required: true, message: '请输入项目名称', trigger: 'blur' }
+        // ],
+        // scope:[
+        //   { required: true, message: '请输入业务范围与审计目标', trigger: 'blur' }
+        // ]
       },
       adviceText: '',  //审核不通过信息
       editBtn: false,  //编辑按钮
