@@ -10,10 +10,10 @@
               <span>项目名称</span>
               <el-select v-model="projectId" placeholder="请选择项目" style="width:100%;">
                 <el-option
-                  v-for="item in options"
+                  v-for="item in projects"
                   :key="item.value"
-                  :label="item.label"
-                  :value="item.projectId">
+                  :label="item.projectName"
+                  :value="item.id">
                 </el-option>
               </el-select>
             </p>
@@ -70,7 +70,7 @@
           </el-row>
         </el-form>
       </div> -->
-      <billing-info :business="business"></billing-info>
+      <billing-info :business="business" :user="user" @cancel="cancel"></billing-info>
     </card>
   </div>
 </template>
@@ -90,16 +90,11 @@ export default {
       ],
       apply: true,
       projectId: '',
-      options: [{
-        label: '同部门之间可见',
-        projectId: '1096'
-      }, {
-        label: '同部门之间不可见',
-        projectId: '1096'
-      }],
+      projects: [],
       bill: {
 
       },
+      user: {},
       labelPosition: 'left',
       rules: {
         name: [
@@ -141,17 +136,48 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.business = rep.data.data
-            console.log(this.business)
             resolve('done');
           }
         }, (rep) => { });
       })
+    },
+    getProjectByPerson () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getProjectByPerson',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.projects = rep.data.data.resultArray
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    cancel () {
+      this.apply = true
     },
     jump () {
       this.getBusinessInfo().then(() => {
         this.apply = false
       }, () => {})
     }
+  },
+  created () {
+    this.$store.dispatch('fetchUserInfo').then(() => {
+      this.user = this.$store.getters.getUser
+    }, () => { })
+    this.getProjectByPerson()
   },
   components: {
     card,
