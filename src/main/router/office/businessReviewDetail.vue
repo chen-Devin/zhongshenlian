@@ -2,12 +2,13 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <p>{{ business }}</p>
       <h3 class="main-title">
         业务详情
         <button class="btn my-btn submit-btn pull-right mr-10" @click="sel()" v-if="sendAble">发放合同编号</button>
         <button class="btn my-btn submit-btn pull-right mr-10" @click="checkContract" v-if="reviewAble">审核通过</button>
         <button class="btn my-btn draft-btn pull-right mr-10" @click="showChangeModal" v-if="reviewAble">金额变更</button>
+        <button class="btn my-btn submit-btn pull-right mr-10" @click="showSealModal" v-if="signAble">确定盖章</button>
+        <button class="btn my-btn submit-btn pull-right mr-10" @click="showUploadContract" v-if="signAble">上传合同</button>
         <small class="label label-success pull-right mr-10" v-if="sended">合同编号已经发放</small>
       </h3>
       <progress-bar :progress="progress"></progress-bar>
@@ -24,7 +25,20 @@
                         :initBusiness="business"
                         @submited="submited"
                         @canceled="canceled"></contract-num-modal>
-    <contract-change-modal></contract-change-modal>
+    <contract-change-modal
+      v-if="changeModalShow"
+      :initBusiness="business"
+      @changeSuccess="changeSuccess"
+      @cancel="cancel"></contract-change-modal>
+    <seal-contract-modal
+      v-if="sealModalShow"
+      :initBusiness="business"
+      @changeSuccess="changeSuccess"
+      @cancel="cancel"></seal-contract-modal>
+    <upload-contract-modal
+      :initBusiness="business"
+      @changeSuccess="changeSuccess"
+      @cancel="cancel"></upload-contract-modal>
   </div>
 </template>
 
@@ -37,6 +51,8 @@ import businessProfile from '../../component/businessProfile.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
 import contractNumModal from './component/contractNumModal.vue';
 import contractChangeModal from './component/contractChangeModal.vue';
+import sealContractModal from './component/sealContractModal.vue';
+import uploadContractModal from './component/uploadContractModal.vue';
 import progressBar from '../../component/progressBarSVG.vue';
 
 export default {
@@ -48,6 +64,8 @@ export default {
         { name: '业务详情', url: `/business-review-detail-office-${this.$route.params.id}`, present: true }
       ],
       changeModalShow: false,
+      sealModalShow: false,
+      uploadContractShow: false,
       business: {
         id: this.$route.params.id,
         name: '',
@@ -326,14 +344,17 @@ export default {
     reviewAble () {
       return (this.business.projectStatus === 60) ? true : false
     },
+    signAble () {
+      return (this.business.projectStatus === 70) ? true : false
+    },
     sendAble () {
       return (this.business.projectStatus === 90) ? true : false
     },
     sended() {
-      return (this.business.projectStatus < 80) ? false : true;
+      return (this.business.projectStatus === 100) ? true : false
     },
     progress() {
-      if (this.business.projectStatus < 20) {
+      if (this.business.projectStatus === 20) {
           return [
             { name: '立项申请', passed: false, active: false },
             { name: '风控初审', passed: false, active: false },
@@ -347,24 +368,10 @@ export default {
             },
             { name: '业务完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus < 40) {
-          return [
-            { name: '立项申请', passed: false, active: true },
-            { name: '风控初审', passed: false, active: false },
-            { name: '所长终审', passed: false, active: false },
-            { name: '合同审核', passed: false, active: false },
-            { name: '合同盖章', passed: false, active: false },
-            { name: '发放编号', passed: false, active: false },
-            {
-              qrCode: {name: '报告完成', passed: false, active: false},
-              bill: {name: '开票完成', passed: false, active: false}
-            },
-            { name: '业务完结', passed: false, active: false }
-          ];
-      } else if (this.business.projectStatus < 60) {
+      } else if (this.business.projectStatus === 40) {
           return [
             { name: '立项申请', passed: true, active: false },
-            { name: '风控初审', passed: false, active: true },
+            { name: '风控初审', passed: true, active: true },
             { name: '所长终审', passed: false, active: false },
             { name: '合同审核', passed: false, active: false },
             { name: '合同盖章', passed: false, active: false },
@@ -375,11 +382,11 @@ export default {
             },
             { name: '业务完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus < 80) {
+      } else if (this.business.projectStatus === 60) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
-            { name: '所长终审', passed: false, active: true },
+            { name: '所长终审', passed: true, active: true },
             { name: '合同审核', passed: false, active: false },
             { name: '合同盖章', passed: false, active: false },
             { name: '发放编号', passed: false, active: false },
@@ -389,21 +396,35 @@ export default {
             },
             { name: '业务完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus < 130) {
+      } else if (this.business.projectStatus === 70) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
-            { name: '合同审核', passed: false, active: false },
+            { name: '合同审核', passed: true, active: true },
             { name: '合同盖章', passed: false, active: false },
-            { name: '发放编号', passed: false, active: true },
+            { name: '发放编号', passed: false, active: false },
             {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus < 150) {
+      } else if (this.business.projectStatus === 80) {
+          return [
+            { name: '立项申请', passed: true, active: false },
+            { name: '风控初审', passed: true, active: false },
+            { name: '所长终审', passed: true, active: false },
+            { name: '合同审核', passed: true, active: false },
+            { name: '合同盖章', passed: true, active: true },
+            { name: '发放编号', passed: false, active: false },
+            {
+              qrCode: {name: '报告完成', passed: false, active: false},
+              bill: {name: '开票完成', passed: false, active: false}
+            },
+            { name: '业务完结', passed: false, active: false }
+          ];
+      } else if (this.business.projectStatus === 100) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -417,7 +438,7 @@ export default {
             },
             { name: '业务完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus < 160) {
+      } else if (this.business.projectStatus === 121) {
         if (this.business.billState) {
           return [
             { name: '立项申请', passed: true, active: false },
@@ -449,7 +470,7 @@ export default {
             { name: '业务完结', passed: false, active: false }
           ];
         }
-      } else {
+      } else if (this.business.projectStatus === 130) {
         return [
           { name: '立项申请', passed: true, active: false },
           { name: '风控初审', passed: true, active: false },
@@ -477,6 +498,20 @@ export default {
     showChangeModal () {
       this.changeModalShow = true
     },
+    showSealModal () {
+      this.sealModalShow = true
+    },
+    showUploadContract () {
+      this.uploadContractShow = true
+    },
+    cancel () {
+      this.changeModalShow = false
+      this.sealModalShow = false
+    },
+    changeSuccess () {
+      this.getInfo()
+      this.cancel()
+    },
     checkContract () {
       return new Promise((resolve, reject) => {
         axios({
@@ -496,6 +531,7 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.$message.success(rep.data.msg)
+            this.getInfo()
             resolve('done')
           } else {
             this.$message.error(rep.data.msg)
@@ -776,6 +812,8 @@ export default {
     approverAdvice,
     contractNumModal,
     contractChangeModal,
+    sealContractModal,
+    uploadContractModal,
     progressBar
   }
 }

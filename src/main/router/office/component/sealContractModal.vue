@@ -1,23 +1,16 @@
 <template>
   <modal class="contract-change">
     <div slot="body">
-      <h5>合同金额变更</h5>
-      <hr>
       <p>
-        <span style="width:120px;">合同预估金额：</span>
-        {{ business.contractAmount }} 元
-      </p>
-      <p class="d-f">
-        <span style="width:120px;">合同变更金额：</span>
-        <el-input v-model="applyAccount"></el-input>
+        操作状态不可撤销，是否确定盖章？
       </p>
     </div>
     <div slot="footer">
-      <button class="btn my-btn submit-btn"
-              @click="changeContractAccount">
+      <button class="btn my-btn cancel-btn"
+              @click="sealContract">
         确定
       </button>
-      <button class="btn my-btn draft-btn"
+      <button class="btn my-btn submit-btn"
               @click="cancel">
         取消
       </button>
@@ -30,11 +23,10 @@ import axios from 'axios';
 import modal from '../../../component/modal.vue';
 
 export default {
-  name: 'contractChangeModal',
+  name: 'sealContractModal',
   data() {
     return {
-      applyAccount: '',
-      business: this.initBusiness
+      
     };
   },
   props: ['initBusiness'],
@@ -42,7 +34,7 @@ export default {
     cancel () {
       this.$emit('cancel')
     },
-    changeContractAccount () {
+    sealContract () {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -51,10 +43,9 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'changeContractAccount',
+                command: 'sealContract',
                 platform: 'web',
-                projectId: this.business.id,
-                applyAccount: this.applyAccount
+                projectId: this.initBusiness.id
               }
               return JSON.stringify(obj);
             })()
@@ -69,7 +60,7 @@ export default {
           }
         }, (rep) => { });
       })
-    }
+    },
   },
   components: {
     modal

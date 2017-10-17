@@ -46,7 +46,7 @@ export default {
       } else if (this.userInfo.department === '档案部') {
         this.$router.push('/business-handle-list-archives');
       } else if (this.userInfo.department === '办公室') {
-        this.$router.push('/business-complete-list');
+        // this.$router.push('/business-complete-list');
       }
     }
   },

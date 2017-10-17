@@ -57,7 +57,11 @@ export default {
 }
 
 .modal-body {
-  margin: 20px 0;
+  margin: 10px 0;
+}
+
+.modal-footer {
+  border-top: none;
 }
 
 .modal-default-button {
