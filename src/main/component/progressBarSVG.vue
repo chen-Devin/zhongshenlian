@@ -1,6 +1,5 @@
 <template>
   <div class="svg-wrap">
-    <!-- <p>{{ progress }}</p> -->
     <svg width="1000" height="150">
       <circle cx="100" cy="60" :r="active(progress[0].active).radius" :fill="passed(progress[0].passed, progress[0].active).cirCol"></circle>
       <text x="65" y="90" :fill="active(progress[0].active).texCol">{{progress[0].name}}</text>
