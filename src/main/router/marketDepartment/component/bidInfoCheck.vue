@@ -116,7 +116,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <p>{{ project }}</p>
         <el-row>
           <el-col :span="12" v-if="!editable">
             <div class="business-type">
