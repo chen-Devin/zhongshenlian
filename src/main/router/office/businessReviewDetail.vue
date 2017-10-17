@@ -2,10 +2,13 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
+      <p>{{ business.projectStatus }}</p>
       <h3 class="main-title">
         业务详情
-        <button class="btn my-btn submit-btn pull-right" @click="sel()" v-if="!sended">发放合同编号</button>
-        <small class="label label-success pull-right" v-if="sended">合同编号已经发放</small>
+        <button class="btn my-btn submit-btn pull-right mr-10" @click="sel()" v-if="!sended">发放合同编号</button>
+        <button class="btn my-btn submit-btn pull-right mr-10" @click="sel()" v-if="!sended">审核通过</button>
+        <button class="btn my-btn draft-btn pull-right mr-10" @click="sel()" v-if="!sended">金额变更</button>
+        <small class="label label-success pull-right mr-10" v-if="sended">合同编号已经发放</small>
       </h3>
       <progress-bar :progress="progress"></progress-bar>
       <business-profile :initBusiness="business" :user="user"></business-profile>
@@ -326,8 +329,9 @@ export default {
             { name: '立项申请', passed: false, active: false },
             { name: '风控初审', passed: false, active: false },
             { name: '所长终审', passed: false, active: false },
+            { name: '合同审核', passed: false, active: false },
+            { name: '合同盖章', passed: false, active: false },
             { name: '发放编号', passed: false, active: false },
-            { name: '处理业务', passed: false, active: false },
             {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
@@ -339,8 +343,9 @@ export default {
             { name: '立项申请', passed: false, active: true },
             { name: '风控初审', passed: false, active: false },
             { name: '所长终审', passed: false, active: false },
+            { name: '合同审核', passed: false, active: false },
+            { name: '合同盖章', passed: false, active: false },
             { name: '发放编号', passed: false, active: false },
-            { name: '处理业务', passed: false, active: false },
             {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
@@ -352,8 +357,9 @@ export default {
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: false, active: true },
             { name: '所长终审', passed: false, active: false },
+            { name: '合同审核', passed: false, active: false },
+            { name: '合同盖章', passed: false, active: false },
             { name: '发放编号', passed: false, active: false },
-            { name: '处理业务', passed: false, active: false },
             {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
@@ -365,8 +371,9 @@ export default {
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: false, active: true },
+            { name: '合同审核', passed: false, active: false },
+            { name: '合同盖章', passed: false, active: false },
             { name: '发放编号', passed: false, active: false },
-            { name: '处理业务', passed: false, active: false },
             {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
@@ -378,8 +385,9 @@ export default {
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
+            { name: '合同审核', passed: false, active: false },
+            { name: '合同盖章', passed: false, active: false },
             { name: '发放编号', passed: false, active: true },
-            { name: '处理业务', passed: false, active: false },
             {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
@@ -391,8 +399,9 @@ export default {
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
+            { name: '合同审核', passed: false, active: false },
+            { name: '合同盖章', passed: false, active: false },
             { name: '发放编号', passed: true, active: false },
-            { name: '处理业务', passed: false, active: true },
             {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
@@ -405,6 +414,8 @@ export default {
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
+            { name: '合同审核', passed: false, active: false },
+            { name: '合同盖章', passed: false, active: false },
             { name: '发放编号', passed: true, active: false },
             { name: '处理业务', passed: true, active: false },
             {
@@ -418,6 +429,8 @@ export default {
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
+            { name: '合同审核', passed: false, active: false },
+            { name: '合同盖章', passed: false, active: false },
             { name: '发放编号', passed: true, active: false },
             { name: '处理业务', passed: true, active: false },
             {
@@ -432,6 +445,8 @@ export default {
           { name: '立项申请', passed: true, active: false },
           { name: '风控初审', passed: true, active: false },
           { name: '所长终审', passed: true, active: false },
+          { name: '合同审核', passed: false, active: false },
+          { name: '合同盖章', passed: false, active: false },
           { name: '发放编号', passed: true, active: false },
           { name: '处理业务', passed: true, active: false },
           {

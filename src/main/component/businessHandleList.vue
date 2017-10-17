@@ -166,6 +166,7 @@ export default {
       },
       searchItems: [],
       salesType: 0,
+      officeType: 0,
       pageNum: 1,
       reloadPagination: true
     };
@@ -180,6 +181,8 @@ export default {
       this.getUnDealListOfBusinessUnit()
     } else if (this.department === 'leader') {
       //  office leader archives
+    } else if (this.department === 'office') {
+      this.getUnDealListOfOffice()
     }
     
   },
@@ -202,7 +205,23 @@ export default {
       this.getUnDealListOfBusinessUnit()
     },
     tabClickOffice (tab, event) {  // 尚未给接口
-
+      this.pageNum = 1
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 500)
+      if (tab.name === 'review') {
+        this.officeType = 0
+      } else if (tab.name === 'signet') {
+        this.officeType = 1
+      } else if (tab.name === 'number') {
+        this.officeType = 2
+      } else if (tab.name === 'binding') {
+        this.officeType = 3
+      }  else if (tab.name === 'change') {
+        this.officeType = 4
+      }
+      this.getUnDealListOfOffice()
     },
     search () {
 
@@ -226,6 +245,32 @@ export default {
                 command: 'getUnDealListOfBusinessUnit',
                 platform: 'web',
                 type: this.salesType,
+                pageNum: this.pageNum
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.businesses = rep.data.data.businessArray
+            this.totalNum = parseInt(rep.data.data.totalNum)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    getUnDealListOfOffice () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getUnDealListOfOffice',
+                platform: 'web',
+                type: this.officeType,
                 pageNum: this.pageNum
               }
               return JSON.stringify(obj);
@@ -307,6 +352,8 @@ export default {
       this.pageNum = val;
       if (this.department === 'sales') {
         this.getUnDealListOfBusinessUnit()
+      } else if (this.department === 'office') {
+        this.getUnDealListOfOffice()
       }
     },
     showHigherSearch() {

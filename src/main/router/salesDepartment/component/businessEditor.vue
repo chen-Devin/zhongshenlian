@@ -496,7 +496,6 @@ export default {
         updateAt: ''
       }],
       businessType: [
-        '选择类型',
         '年度报告审计',
         '中期报告审计',
         '专项资金收支使用情况审计',
