@@ -15,21 +15,21 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="项目名称" prop="name">
-              <el-input v-model="business.projectName" :disabled="!editable"></el-input>
+              <el-input v-model="business.name" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item label="业务范围与审计目标" label-width="150px" prop="scope" required>
-              <el-input v-model="business.businessScope" :disabled="!editable" type="textarea"></el-input>
+              <el-input v-model="business.scope" :disabled="!editable" type="textarea"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
             <el-form-item label="提交申请人">
-              <el-input v-model="business.proposer.name" :disabled="true"></el-input>
+              <el-input v-model="user.name" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -93,7 +93,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="客户联系人">
-              <el-input v-model="business.proposer.tele" :disabled="true"></el-input>
+              <el-input v-model="user.telephone" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="16">
@@ -442,6 +442,7 @@
       v-if="staffModalShow"
       :staffModalIdentity="staffModalIdentity"
       :staffModalSelect="staffModalSelect"
+      @selected="selected"
       @cancel="cancel"></select-staff-modal>
   </div>
 </template>
@@ -463,6 +464,7 @@ export default {
     return {
       labelPosition: 'left',
       business: this.initBusiness,
+      user: {},
       upload: {
         URL: '',
         progressShow: false,
@@ -558,6 +560,9 @@ export default {
   },
   props: ['initBusiness', 'editable'],
   created() {
+    this.$store.dispatch('fetchUserInfo').then(() => {
+      this.user = this.$store.getters.getUser
+    }, () => { })
     bus.$on('subBusiness', () => { this.sub() });
     bus.$on('savBusiness', () => { this.save() });
 
@@ -575,6 +580,15 @@ export default {
   },
   methods: {
     currencyMask,
+    selected (type, val) {
+      if (type === '项目经理') {
+        this.business.manager === val
+      } else if (type === '参审注师') {
+        this.business.reviewCPA = val
+      } else if (type === '参审助理') {
+        this.business.reviewAssistant = val
+      }
+    },
     showStaffModal (type) {
       if (this.editable) {
         if (type === 'projectManager') {
@@ -730,6 +744,9 @@ export default {
                   id: this.business.id,
                   projectName: this.business.name,
                   businessScope: this.business.scope,
+                  applicantId: this.user.id,
+                  applicantName: this.user.name,
+                  applicantPhone: this.user.telephone,
                   contractNo: this.business.number,
                   requester: this.business.institution.customerName,
                   requesterId: this.business.institution.id,
@@ -886,6 +903,10 @@ export default {
                     id: this.business.id,
                     projectName: this.business.name,
                     businessScope: this.business.scope,
+                    applicantId: this.user.id,
+                    applicantName: this.user.name,
+                    applicantPhone: this.user.telephone,
+
                     contractNo: this.business.number,
                     requester: this.business.institution.customerName,
                     requesterId: this.business.institution.id,

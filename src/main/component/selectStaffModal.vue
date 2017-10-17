@@ -10,38 +10,41 @@
           :searchItems="searchItems"
           @search="search"></search-bar>
       </div>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th v-if="radio">单选</th>
-            <th v-else>多选</th>
-            <th>姓名</th>
-            <th>职务</th>
-            <th>所属部门</th>
-            <th>公司简称</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="(staff, index) in staffArray"
-            :key="index">
-            <td v-if="radio">
-              <el-radio :label="staff.name" v-model="staffRadio">{{ emptyString }}</el-radio>
-            </td>
-            <td v-else>
-              <el-checkbox v-model="staff.checked"></el-checkbox>
-            </td>
-            <td>{{ staff.name }}</td>
-            <td>{{ staff.duty }}</td>
-            <td>{{ staff.department }}</td>
-            <td>{{ staff.companyName }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th v-if="radio">单选</th>
+              <th v-else>多选</th>
+              <th>姓名</th>
+              <th>职务</th>
+              <th>所属部门</th>
+              <th>公司简称</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(staff, index) in staffArray"
+              :key="index">
+              <td v-if="radio">
+                <el-radio :label="staff" v-model="staffRadio">{{ emptyString }}</el-radio>
+              </td>
+              <td v-else>
+                <!-- <el-checkbox v-model="staff.checked"></el-checkbox> -->
+                <input type="checkbox" v-model="staff.checked">
+              </td>
+              <td>{{ staff.name }}</td>
+              <td>{{ staff.duty }}</td>
+              <td>{{ staff.department }}</td>
+              <td>{{ staff.companyName }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div slot="footer">
       <p class="btns">
-        <button class="btn my-btn submit-btn">确定</button>
+        <button class="btn my-btn submit-btn" @click="submit">确定</button>
         <button class="btn my-btn cancel-btn" @click="cancel">取消</button>
       </p>
     </div>
@@ -58,31 +61,11 @@ export default {
   data() {
     return {
       paddingValue: 0,
-      staffArray: [
-        {
-          name: '哈哈1',
-          duty: '所长',
-          department: '造价所',
-          companyName: '造价所',
-          checked: false
-        },
-        {
-          name: '哈哈2',
-          duty: '所长',
-          department: '造价所',
-          companyName: '造价所',
-          checked: false
-        },
-        {
-          name: '哈哈3',
-          duty: '所长',
-          department: '造价所',
-          companyName: '造价所',
-          checked: false
-        }
-      ],
+      staffArray: [],
       emptyString: '',
-      staffRadio: ''
+      staffRadio: '',
+      searchItems: [],
+      reload: true
     };
   },
   props: ['staffModalIdentity', 'staffModalSelect'],
@@ -96,12 +79,65 @@ export default {
     }
   },
   methods: {
-    changeCheck (event) {
-      console.log(event)
+    reloadSelect () {
+      console.log(1)
+      this.reload = false
+      setTimeout(() => {
+        this.reload = true
+      }, 1000)
+    },
+    getUserList () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getUserList',
+                platform: 'web',
+                pageNum: 1
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            // this.$message.success(rep.data.msg)
+            this.staffArray = rep.data.data.userArray
+            this.staffArray.forEach((item) => {
+              item.checked = false
+            })
+            resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
+    submit () {
+      if (this.staffModalSelect === 'radio') {
+        this.$emit('selected', this.staffModalIdentity, this.staffRadio)
+      } else if (this.staffModalSelect === 'check') {
+        let checkList = []
+        this.staffArray.forEach((item) => {
+          if (item.checked) {
+            checkList.push(item)
+          }
+        })
+        this.$emit('selected', this.staffModalIdentity, checkList)
+      }
     },
     cancel() {
       this.$emit('cancel')
+    },
+    search () {
+
     }
+  },
+  created () {
+    this.getUserList()
   },
   components: {
     modal,
@@ -125,6 +161,10 @@ export default {
         > span {
           line-height: 30px;
         }
+      }
+      .table-wrapper {
+        height: 200px;
+        overflow: auto;
       }
       table {
         border: none;

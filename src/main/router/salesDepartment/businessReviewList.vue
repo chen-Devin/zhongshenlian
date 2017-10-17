@@ -90,7 +90,7 @@ export default {
   },
   props: ['user'],
   created() {
-    this.getBusinessChecking();
+    this.getUnDealListOfBusinessUnit();
     setTimeout(() => {
       this.addBusinessJud();
     }, 500);
@@ -102,7 +102,7 @@ export default {
     tabClick(tab, event) {
       if (tab.name === 'business') {
         this.pageNum = 1
-        this.getBusinessChecking()
+        this.getUnDealListOfBusinessUnit()
       } else if (tab.name === 'draft') {
         this.pageNum = 1
         this.getBusinessUnFinished()
@@ -116,33 +116,62 @@ export default {
     },
     currentChange(newPage) {
       this.pageNum = newPage
-      this.getBusinessChecking();
+      // this.getBusinessChecking();
     },
-    getBusinessChecking() {
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-        method: 'get',
-        url: '/service',
-        params: {
-          data: (() => {
-            var obj = {
-              command: 'getBusinessChecking',
-              platform: 'web',
-              pageNum: this.pageNum
-            }
-            return JSON.stringify(obj);
-          })()
-        }
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          this.page.total = parseInt(rep.data.data.totalNum);
-          this.page.current = this.pageNum;
-          this.businessArray = rep.data.data.businessArray;
-        } else if (rep.data.statusCode === '10012') {
-          window.location.href = 'signIn.html';
-        }
-      }, (rep) => { });
+    getUnDealListOfBusinessUnit () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getUnDealListOfBusinessUnit',
+                platform: 'web',
+                type: 2,
+                pageNum: this.pageNum
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.page.total = parseInt(rep.data.data.totalNum)
+            this.page.current = this.pageNum
+            this.businessArray = rep.data.data.businessArray
+            resolve('done')
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
     },
+    // getBusinessChecking() {
+    //   axios({
+    //     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+    //     method: 'get',
+    //     url: '/service',
+    //     params: {
+    //       data: (() => {
+    //         var obj = {
+    //           command: 'getBusinessChecking',
+    //           platform: 'web',
+    //           pageNum: this.pageNum
+    //         }
+    //         return JSON.stringify(obj);
+    //       })()
+    //     }
+    //   }).then((rep) => {
+    //     if (rep.data.statusCode === '10001') {
+    //       this.page.total = parseInt(rep.data.data.totalNum);
+    //       this.page.current = this.pageNum;
+    //       this.businessArray = rep.data.data.businessArray;
+    //     } else if (rep.data.statusCode === '10012') {
+    //       window.location.href = 'signIn.html';
+    //     }
+    //   }, (rep) => { });
+    // },
     getBusinessUnFinished () {
       return new Promise((resolve, reject) => {
         axios({
