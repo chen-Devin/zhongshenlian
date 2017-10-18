@@ -102,7 +102,11 @@ export default {
   },
   methods: {
     jumpLink (project) {
-      this.$router.push('/business-review-detail-leader-'+project.id)
+      if (this.projectShow) {
+        this.$router.push('/business-review-detail-leader-'+project.id)
+      } else {
+        this.$router.push('/contract-change-check/'+project.id)
+      }
     },
     tabClick (tab, event) {
       if (tab.name === 'project') {
