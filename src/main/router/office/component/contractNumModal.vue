@@ -1,5 +1,5 @@
 <template>
-  <modal alignSelf="flex-start" modalWidth="800px">
+  <modal modalWidth="800px">
     <form class="form-horizontal clearfix"
           slot="body"
           @submit.prevent

@@ -230,13 +230,13 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">参审注师</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.reviewCPA.name}}</p>
+        <p class="form-control-static">{{ reviewCPAsName }}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">参审助理</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{business.reviewAssistant.name}}</p>
+        <p class="form-control-static">{{ reviewAssistantsName }}</p>
       </div>
     </div>
     <div class="form-group">
@@ -338,6 +338,24 @@ export default {
     };
   },
   computed: {
+    reviewCPAsName () {
+      let arr = []
+      if (this.business.reviewCPA.name instanceof Array) {
+        this.business.reviewCPA.name.forEach((item) => {
+          arr.push(item.name)
+        })
+      }
+      return arr.join(',')
+    },
+    reviewAssistantsName () {
+      let arr = []
+      if (this.business.reviewAssistant.name instanceof Array) {
+        this.business.reviewAssistant.name.forEach((item) => {
+          arr.push(item.name)
+        })
+      }
+      return arr.join(',')
+    },
     contractTypeChan() {
       return (this.business.contractType.name === '联合体') ? true : false;
     },

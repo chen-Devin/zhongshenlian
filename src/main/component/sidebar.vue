@@ -136,11 +136,7 @@ export default {
     },
     officeContract() {
       if (this.user.department === '办公室') {
-        if (this.user.authority['发合同编号']) {
           return true;
-        } else {
-          return false;
-        }
       } else {
         return false;
       }

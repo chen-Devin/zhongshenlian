@@ -25,51 +25,6 @@
       </p>
     </card>
     <card v-else>
-      <!-- <h4>开票申请</h4>
-      <div class="project-message">
-        <el-row>
-          <el-col :span="8">
-            项目编号：
-          </el-col>
-          <el-col :span="8">
-            项目名称：
-          </el-col>
-          <el-col :span="8">
-            合同金额：
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8">
-            开票申请人：
-          </el-col>
-          <el-col :span="8">
-            申请时间：
-          </el-col>
-          <el-col :span="8">
-            累计开票金额：
-          </el-col>
-        </el-row>
-      </div>
-      <div class="bill-message">
-        <el-form 
-          :model="bill" 
-          :label-position="labelPosition"
-          :rules="rules"
-          ref="bill"
-          label-width="100px" 
-          class="bill-form">
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="本次开票金额" prop="name">
-                <el-input v-model="bill.projectName"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              
-            </el-col>
-          </el-row>
-        </el-form>
-      </div> -->
       <billing-info :business="business" :user="user" @cancel="cancel"></billing-info>
     </card>
   </div>

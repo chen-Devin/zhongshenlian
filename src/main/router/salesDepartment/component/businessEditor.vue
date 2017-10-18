@@ -71,7 +71,7 @@
           <el-col :span="8">
             <el-form-item label="项目经理" required>
               <div class="manager-input" :class="{ disabled : !editable }" @click="showStaffModal('projectManager')">
-                点击选择项目经理
+                {{ projectManager }}
                 <i class="fa fa-x fa-user f-r" aria-hidden="true"></i>
               </div>
             </el-form-item>
@@ -423,6 +423,7 @@
                 :key="index">
                 </el-option>
               </el-select> -->
+              <span>{{ reviewCPAsName }}</span>
               <i class="fa fa-x fa-user-plus c-p" :class="{'c-na': !editable }" style="color:#50bef7;" aria-hidden="true" @click="showStaffModal('reviewCPA')"></i>
             </el-form-item>
           </el-col>
@@ -432,6 +433,7 @@
             <el-form-item label="参审助理" required>
               <!-- <el-input type="text" placeholder="请输入参审助理" v-model="business.reviewAssistant.name" :disabled="!editable">
               </el-input> -->
+              <span>{{ reviewAssistantsName }}</span>
               <i class="fa fa-x fa-user-plus c-p" :class="{'c-na': !editable }" style="color:#50bef7;" aria-hidden="true" @click="showStaffModal('reviewAssistant')"></i>
             </el-form-item>
           </el-col>
@@ -439,7 +441,7 @@
       </div>
     </el-form>
     <select-staff-modal 
-      v-if="staffModalShow"
+      v-show="staffModalShow"
       :staffModalIdentity="staffModalIdentity"
       :staffModalSelect="staffModalSelect"
       @selected="selected"
@@ -555,6 +557,39 @@ export default {
     },
     departmentCoopChan() {
       return (this.business.departmentCoop.name === '有部门合作') ? true : false;
+    },
+    projectManager () {
+      if (this.business.manager.name) {
+        return this.business.manager.name
+      } else {
+        return '点击选择项目经理'
+      }
+    },
+    reviewCPAsName () {
+      let arr = []
+      if (this.business.reviewCPA instanceof Array) {
+        this.business.reviewCPA.forEach((item) => {
+          arr.push(item.name)
+        })
+        let str = arr.join(',')
+        return str
+      } else {
+        let arr = []
+        return arr.join(',')
+      }
+    },
+    reviewAssistantsName () {
+      let arr = []
+      if (this.business.reviewAssistant instanceof Array) {
+        this.business.reviewAssistant.forEach((item) => {
+          arr.push(item.name)
+        })
+        let str = arr.join(',')
+        return str
+      } else {
+        let arr = []
+        return arr.join(',')
+      }
     }
   },
   props: ['initBusiness', 'editable'],
@@ -580,13 +615,15 @@ export default {
   methods: {
     currencyMask,
     selected (type, val) {
+      console.log(val)
       if (type === '项目经理') {
-        this.business.manager === val
+        this.business.manager = val
       } else if (type === '参审注师') {
         this.business.reviewCPA = val
       } else if (type === '参审助理') {
         this.business.reviewAssistant = val
       }
+      this.cancel()
     },
     showStaffModal (type) {
       if (this.editable) {
@@ -809,11 +846,11 @@ export default {
                   trialTeacherId: this.business.reviewCPA.id,
                   trialTeacherName: this.business.reviewCPA.name,
                   //手动输入
-                  trialTeacher: this.business.reviewCPA.name,
+                  trialTeacher: this.business.reviewCPA,
                   trialAssistantId: this.business.reviewAssistant.id,
                   trialAssistantName: this.business.reviewAssistant.name,
                   //手动输入
-                  trialAssistant: this.business.reviewAssistant.name,
+                  trialAssistant: this.business.reviewAssistant,
                   lastOffice: this.business.lastOffice,
                   getWay: this.business.getWay,
                   contractType: (() => {
