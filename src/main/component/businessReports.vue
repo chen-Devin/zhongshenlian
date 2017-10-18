@@ -6,7 +6,7 @@
       <button class="btn my-btn submit-btn pull-right"
               @click="add()"
               v-if="salesShow">
-        添加业务报告
+        上传报告
       </button>
     </h4>
     <div class="com-list list-group">

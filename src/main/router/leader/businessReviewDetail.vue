@@ -7,7 +7,7 @@
         <div class="pull-right">
           <template v-if="decide==='undecide'">
             <button class="btn my-btn submit-btn" @click="approve()">通过</button>
-            <button class="btn my-btn draft-btn" @click="refuse()">不通过</button>
+            <button class="btn my-btn draft-btn mr-10" @click="refuse()">不通过</button>
           </template>
           <small class="label label-success" v-else-if="decide==='approve'">已选择通过</small>
           <small class="label label-danger" v-else-if="decide==='refuse'">已选择未通过</small>
@@ -712,6 +712,8 @@ export default {
             resolve(this.business);
           } else if (rep.data.statusCode === '10012') {
             window.location.href = 'signIn.html';
+          } else {
+            this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       });

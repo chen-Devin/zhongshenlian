@@ -1,14 +1,14 @@
 <template>
   <div>
-    <search-bar 
-      class="f-r"
-      :searchItems="searchItems"
-      @search="search"></search-bar>
     <h3 class="main-title">
       招投标审批
-      <button class="btn my-btn submit-btn type-btn f-r" @click="input()" v-if="inputBtn">
+      <button class="btn my-btn submit-btn type-btn f-r mr-20" @click="input()" v-if="inputBtn">
         录入
       </button>
+      <search-bar 
+        class="f-r"
+        :searchItems="searchItems"
+        @search="search"></search-bar>
     </h3>
     <table class="table table-bordered table-hover table-list">
       <thead>
@@ -215,6 +215,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+  .main-title {
+    margin-bottom: 30px;
+  }
   .f-r {
   	float: right;
   }

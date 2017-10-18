@@ -31,12 +31,16 @@ body {
   font-size: 13px;
 }
 
+label {
+    font-weight: normal;
+}
+
 //标题
 .main-title {
   margin-top: 22px;
   margin-bottom: 17px;
   margin-left: 40px;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .vice-title {
@@ -223,6 +227,15 @@ h1, h2, h3, h4, h5, h6 {
       > .el-tree-node__label {
         font-size: 13px;
       }
+    }
+  }
+}
+
+// el-form
+.el-form {
+  .el-form-item {
+    .el-form-item__label {
+      font-size: 13px;
     }
   }
 }

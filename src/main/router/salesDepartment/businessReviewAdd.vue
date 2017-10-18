@@ -7,10 +7,9 @@
         <div class="pull-right">
           <button class="btn my-btn submit-btn" @click="sub()">提交</button>
           <button class="btn my-btn draft-btn" @click="sav()">暂存</button>
-          <button class="btn my-btn cancel-btn" @click="del()">撤销</button>
+          <button class="btn my-btn cancel-btn mr-10" @click="del()">撤销</button>
         </div>
       </h3>
-      <!-- <progress-bar :progress="progress"></progress-bar> -->
       <business-editor :initBusiness="business"
                        :editable="editable"
                        @saved="saved"
