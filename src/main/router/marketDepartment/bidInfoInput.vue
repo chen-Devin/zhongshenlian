@@ -5,6 +5,7 @@
     <card>
       <!--招投标信息编辑子组件-->
       <bid-info-check :iniProject="project"
+                     editable = true
                      inputType="录入"
                      @submit="submit"
                      @saveDraft="saveDraft"
@@ -78,7 +79,7 @@ export default {
           if (date < 10) {
             date = "0" + date;
           }
-          let dateStr = year + "-" + month + "-" + date + "T08:30";
+          let dateStr = year + "-" + month + "-" + date;
           return dateStr;
         })(),
         // requestTime () {
