@@ -4,6 +4,7 @@
     <card>
       <!--查看招投标信息-->
       <bid-info-check
+        :iniProject="project"
         inputType="编辑"
         @submit="submit"
         @saveDraft="saveDraft"
@@ -80,10 +81,10 @@ export default {
     		}, (rep) => {});
   	},
     //判断是查看还是编辑页面
-  	isEdit() {
-  		this.editShow = true;
-  		this.checkShow = false;
-  	},
+  	// isEdit() {
+  	// 	this.editShow = true;
+  	// 	this.checkShow = false;
+  	// },
     //编辑页面提交
     submit(project) {
       // project.departmentType = this.departmentType;

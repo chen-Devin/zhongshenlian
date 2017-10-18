@@ -750,16 +750,17 @@ export default {
   name: 'bidInfoCheck',
   data() {
     return {
-      project: {
-        biddingStatus: '',
-        contractType: {
-          mainBasicRate: 0,
-          mainEfficiencyRate: 0,
-          subBasicArray: [{ "name": '', "rate": 0 }],
-          subEfficiencyArray: [{ "name": '', "rate": 0 }]
-        },
-        departmentType: []
-      },
+      project: this.iniProject,
+      // project: {
+      //   biddingStatus: '',
+      //   contractType: {
+      //     mainBasicRate: 0,
+      //     mainEfficiencyRate: 0,
+      //     subBasicArray: [{ "name": '', "rate": 0 }],
+      //     subEfficiencyArray: [{ "name": '', "rate": 0 }]
+      //   },
+      //   departmentType: []
+      // },
       cancelModal: false,
       commonwealthShow: false,
       editable: false,
@@ -858,6 +859,7 @@ export default {
   methods: {
     currencyMask,
     chooseType(inputType) {
+         console.log(88888);
       if (this.inputType === '录入') {
         console.log(456476);
         this.editable = true;
@@ -1182,10 +1184,8 @@ export default {
       }
     }
   },
-  props: ['biddingState', 'inputType'],
+  props: ['biddingState','iniProject','inputType', 'editable'],
   created() {
-    this.chooseType(inputType);
-    console.log(12345);
     //Promise 异步调用各个显示函数，使页面分身份信息显示
     this.getInfo().then(() => {
       this.showEditBtn();
