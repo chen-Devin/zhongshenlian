@@ -3,7 +3,15 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <!--查看招投标信息-->
-      <bid-info-check @isEdit="isEdit" v-if="checkShow"></bid-info-check>
+      <bid-info-check
+        inputType="编辑"
+        @submit="submit"
+        @saveDraft="saveDraft"
+        @delBasicFee="delBasicFee"
+        @addBasicFee="addBasicFee"
+        @delEfficiencyFee="delEfficiencyFee"
+        @addEfficiencyFee="addEfficiencyFee"
+        @quedingDelete="quedingDelete"></bid-info-check>
       <!--编辑招投标信息-->
       <!-- <bid-info-edit :iniProject="project"
                      inputType="编辑"
@@ -43,7 +51,8 @@ export default {
       editShow: false, //招投标信息编辑页面显示
       checkShow: true, //招投标信息查看页面显示
       id: '',          //获取地址栏id参数
-      isDraft: ''      //获取地址栏判断草稿还是详情参数
+      isDraft: '' ,     //获取地址栏判断草稿还是详情参数
+      inputType: ''
     }
   },
   methods: {
@@ -77,7 +86,7 @@ export default {
   	},
     //编辑页面提交
     submit(project) {
-      project.departmentType = this.departmentType;
+      // project.departmentType = this.departmentType;
       axios({
         headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
         method: 'post',
@@ -102,7 +111,7 @@ export default {
     },
     //编辑页面存草稿
     saveDraft(project) {
-      project.departmentType = this.departmentType;
+      // project.departmentType = this.departmentType;
       axios({
           headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
           method: 'post',
@@ -139,6 +148,10 @@ export default {
     },
     //编辑页面删除
     quedingDelete(id) {
+      let arr = []
+      let obj = {}
+      obj.name = this.id
+      arr.push(obj)
       axios({
           headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
           method: 'post',
@@ -148,7 +161,7 @@ export default {
               var obj = {
                 command: 'delBiddingInfo',
                 platform: 'web',
-                id: this.id
+                id: arr
               };
               return JSON.stringify(obj);
             })()

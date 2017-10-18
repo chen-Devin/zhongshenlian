@@ -152,6 +152,14 @@ export default {
 		},
 		//删除草稿箱
 		delBiddingInfo() {
+			let arr = []
+			this.checkedProjects.forEach((item) => {
+				let obj = {}
+				obj.name = item;
+				arr.push(obj)
+			})
+			console.log(this.checkedProjects)
+			console.log(arr)
 			axios({
 			  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
 			  method: 'get',
@@ -161,7 +169,7 @@ export default {
 			      let obj = {
 			        command: 'delBiddingInfo',
 			        platform: 'web',
-			        id: this.checkedProjects
+			        id: arr
 			      }
 			      return JSON.stringify(obj);
 			    })()
@@ -170,7 +178,9 @@ export default {
 	    		if (rep.data.statusCode === '10001') {
 		    		this.delModal = false;
 						this.delShow = false;
-						getList();
+						this.getList();
+	    		} else {
+	    			this.$message.error(rep.data.msg)
 	    		}
 	  		}, (rep) => {});
 		},
