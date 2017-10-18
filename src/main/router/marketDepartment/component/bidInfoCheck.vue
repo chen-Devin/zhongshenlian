@@ -2,6 +2,31 @@
   <div class="bid-info-check">   
     <h4 class="main-title">
       招投标信息
+      <button 
+        class="btn my-btn submit-btn pull-right f-r" 
+        v-if="editBtn" 
+        @click="edit">编辑</button>
+      <button 
+        class="btn my-btn submit-btn pull-right f-r" 
+        v-if="brandBtn" 
+        @click="edit">摘牌</button>
+      <template v-else>
+        <button 
+          v-if="editable"
+          type="button" 
+          class="btn f-r my-btn cancel-btn btn-mr" 
+          @click="cancel()">撤销</button>
+        <button 
+          v-if="editable"
+          type="button" 
+          class="btn f-r my-btn draft-btn btn-mr" 
+          @click="saveDraft(project)">存为草稿</button>
+        <button 
+          v-if="editable"
+          type="button" 
+          class="btn f-r my-btn submit-btn btn-mr" 
+          @click="submit(project)">提交</button> 
+      </template>
     </h4>
     <el-form
       :model="project" 
@@ -16,31 +41,31 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="招投标公告来源"  label-width = "140px" prop="source">
-              <el-input v-model="project.name" :disabled="!editable"></el-input>
+              <el-input v-model="project.biddingSource" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="报名截止日期：" label-width = "130px" required>
-              <el-input v-model="project.name" :disabled="!editable"></el-input>
+              <el-input v-model="project.endTime" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="招投标公告发布人："  label-width = "150px" required>
-              <el-input v-model="project.name" :disabled="!editable"></el-input>
+              <span>{{project.publishName}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="报名相关费用：" label-width = "120px">
-              <el-input v-model="project.name" :disabled="!editable"></el-input>
+              <el-input v-model="project.relateFee" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="招投标公告发布日期："  label-width = "170px" required>
-              <el-input v-model="project.name" :disabled="!editable"></el-input>
+              <el-input v-model="project.publishTime" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -52,7 +77,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="中审联招投标公告编号："  label-width = "180px" required>
-              <el-input v-model="project.name" :disabled="!editable"></el-input>
+              <el-input v-model="project.biddingSerial" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -76,7 +101,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="标段划分：" required>
-              <el-input v-model="project.name" :disabled="!editable"></el-input>
+              <el-input v-model="project.biddingDivision" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -107,7 +132,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="中标/入围：" required>
-              <el-input v-model="project.name" :disabled="!editable"></el-input>
+              <el-input v-model="project.wtf" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -580,6 +605,12 @@
 </template>
 
 <style lang="sass" scoped>
+  .basic-message {
+    margin-top: 30px;
+  }
+  .pull-right {
+    margin-right: 30px;
+  }
   .bid-info-check {
     > .project-editor {
       padding-left: 20px;
@@ -755,8 +786,8 @@ export default {
     // }
   },
   methods: {
-    isEdit() {
-      this.$emit('isEdit');
+    edit() {
+      this.editable = true
     },
     getInfo() {
       let pro = new Promise((resolve, reject) => {
