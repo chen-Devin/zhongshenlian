@@ -198,7 +198,6 @@ export default {
     },
     totalAmount () {
       let total = 0
-      console.log('totl')
       if (this.business.projectBillingArray.length !== 0) {
         this.business.projectBillingArray.forEach((item) => {
           total += Number(item.billingAmount)

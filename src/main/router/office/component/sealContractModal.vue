@@ -35,32 +35,8 @@ export default {
       this.$emit('cancel')
     },
     sealContract () {
-      return new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              let obj = {
-                command: 'sealContract',
-                platform: 'web',
-                projectId: this.initBusiness.id
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.$message.success(rep.data.msg)
-            this.$emit('changeSuccess')
-            resolve('done')
-          } else {
-            this.$message.error(rep.data.msg)
-          }
-        }, (rep) => { });
-      })
-    },
+      this.$emit('changeSuccess', 'upload')
+    }
   },
   components: {
     modal

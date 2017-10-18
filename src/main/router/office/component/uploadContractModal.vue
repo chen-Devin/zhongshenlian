@@ -9,16 +9,20 @@
           取消
         </button>
         <button class="btn my-btn submit-btn f-r mr-10"
-                @click="sealContract">
+                @click="submitUpload">
           确认上传
         </button>
       </div>
       <div class="contract-contain">
         <el-upload
-          action="https://jsonplaceholder.typicode.com/posts/"
+          ref="upload"
+          :action="actionUrl"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove">
+          :on-remove="handleRemove"
+          :on-change='handleChange'
+          :file-list='fileList'
+          :auto-upload="autoUpload">
           <i class="el-icon-plus"></i>
         </el-upload>
         <el-dialog v-model="dialogVisible" size="tiny">
@@ -41,7 +45,11 @@ export default {
   data() {
     return {
       dialogImageUrl: '',
-      dialogVisible: false
+      dialogVisible: false,
+      autoUpload: false,
+      actionUrl: '',
+      fileList: [],
+      formdata: new FormData()
     };
   },
   props: ['initBusiness'],
@@ -53,36 +61,40 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
+    handleChange (file, fileList) {
+      this.fileList = fileList
+    },
+    submitUpload () {
+      this.fileList.forEach((item, index, array) => {
+        this.formdata.append('file', item.raw)
+      })
+      let data = (() => {
+        let obj = {
+          command: 'handlerBusiness',
+          platform: 'web',
+          id: this.initBusiness.id,
+          type: 'electronicContract'
+        }
+        return JSON.stringify(obj)
+      })()
+      let urlString = '/fileUpload?data=' + data
+      axios({
+        headers: { 'Content-Type': 'multipart/form-data' },
+        method: 'post',
+        url: urlString,
+        data: this.formdata
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.$message.success('合同上传成功')
+          this.$emit('changeSuccess')
+        } else {
+          this.$message.error(rep.data.msg)
+        }
+      }, (rep) => { })
+    },
     cancel () {
       this.$emit('cancel')
-    },
-    sealContract () {
-      return new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              let obj = {
-                command: 'sealContract',
-                platform: 'web',
-                projectId: this.initBusiness.id
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.$message.success(rep.data.msg)
-            this.$emit('changeSuccess')
-            resolve('done')
-          } else {
-            this.$message.error(rep.data.msg)
-          }
-        }, (rep) => { });
-      })
-    },
+    }
   },
   components: {
     modal

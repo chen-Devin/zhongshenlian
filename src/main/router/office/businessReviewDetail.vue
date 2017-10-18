@@ -4,12 +4,13 @@
     <card>
       <h3 class="main-title">
         业务详情
+        <button class="btn my-btn submit-btn pull-right mr-10" @click="showPackModal" v-if="packAble">归档装订</button>
         <button class="btn my-btn submit-btn pull-right mr-10" @click="sel()" v-if="sendAble">发放合同编号</button>
         <button class="btn my-btn submit-btn pull-right mr-10" @click="checkContract" v-if="reviewAble">审核通过</button>
         <button class="btn my-btn draft-btn pull-right mr-10" @click="showChangeModal" v-if="reviewAble">金额变更</button>
         <button class="btn my-btn submit-btn pull-right mr-10" @click="showSealModal" v-if="signAble">确定盖章</button>
-        <button class="btn my-btn submit-btn pull-right mr-10" @click="showUploadContract" v-if="signAble">上传合同</button>
-        <small class="label label-success pull-right mr-10" v-if="sended">合同编号已经发放</small>
+        <!-- <button class="btn my-btn submit-btn pull-right mr-10" @click="showUploadContract" v-if="signAble">上传合同</button> -->
+        <!-- <small class="label label-success pull-right mr-10" v-if="sended">合同编号已经发放</small> -->
       </h3>
       <progress-bar :progress="progress"></progress-bar>
       <business-profile :initBusiness="business" :user="user"></business-profile>
@@ -36,9 +37,15 @@
       @changeSuccess="changeSuccess"
       @cancel="cancel"></seal-contract-modal>
     <upload-contract-modal
+      v-if="uploadContractShow"
       :initBusiness="business"
       @changeSuccess="changeSuccess"
       @cancel="cancel"></upload-contract-modal>
+    <pack-contract-modal
+      v-if="packModalShow"
+      :initBusiness="business"
+      @changeSuccess="changeSuccess"
+      @cancel="cancel"></pack-contract-modal>
   </div>
 </template>
 
@@ -53,6 +60,7 @@ import contractNumModal from './component/contractNumModal.vue';
 import contractChangeModal from './component/contractChangeModal.vue';
 import sealContractModal from './component/sealContractModal.vue';
 import uploadContractModal from './component/uploadContractModal.vue';
+import packContractModal from './component/packContractModal.vue';
 import progressBar from '../../component/progressBarSVG.vue';
 
 export default {
@@ -60,12 +68,13 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待发合同编号', url: '/business-review-list-office', present: false },
+        { name: '进行中业务', url: '/business-review-list-office', present: false },
         { name: '业务详情', url: `/business-review-detail-office-${this.$route.params.id}`, present: true }
       ],
       changeModalShow: false,
       sealModalShow: false,
       uploadContractShow: false,
+      packModalShow: false,
       business: {
         id: this.$route.params.id,
         name: '',
@@ -348,10 +357,13 @@ export default {
       return (this.business.projectStatus === 70) ? true : false
     },
     sendAble () {
-      return (this.business.projectStatus === 90) ? true : false
+      return (this.business.projectStatus === 80) ? true : false
     },
-    sended() {
-      return (this.business.projectStatus === 100) ? true : false
+    // sended() {
+    //   return (this.business.projectStatus === 90) ? true : false
+    // },
+    packAble () {
+      return (this.business.projectStatus === 90) ? true : false
     },
     progress() {
       if (this.business.projectStatus === 20) {
@@ -504,13 +516,22 @@ export default {
     showUploadContract () {
       this.uploadContractShow = true
     },
+    showPackModal () {
+      this.packModalShow = true
+    },
     cancel () {
       this.changeModalShow = false
       this.sealModalShow = false
+      this.uploadContractShow = false
+      this.packModalShow = false
     },
-    changeSuccess () {
-      this.getInfo()
-      this.cancel()
+    changeSuccess (next) {
+      if (next === 'upload') {
+        this.showUploadContract()
+      } else {
+        this.getInfo()
+        this.cancel()
+      }
     },
     checkContract () {
       return new Promise((resolve, reject) => {
@@ -798,7 +819,7 @@ export default {
     },
     submited(contNum) {
       this.business.number = contNum;
-      this.business.projectStatus = 80;
+      this.business.projectStatus = 90;
       this.showModal = false;
     },
     canceled() {
@@ -814,6 +835,7 @@ export default {
     contractChangeModal,
     sealContractModal,
     uploadContractModal,
+    packContractModal,
     progressBar
   }
 }

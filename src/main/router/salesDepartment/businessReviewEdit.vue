@@ -7,12 +7,12 @@
         <div class="pull-right">
           <template v-if="editStat">
             <template v-if="!editable">
-              <button class="btn my-btn submit-btn" @click="edi()">编辑</button>
+              <button class="btn my-btn submit-btn mr-10" @click="edi()">编辑</button>
             </template>
             <template v-if="editable">
               <button class="btn my-btn submit-btn" @click="sub()">提交</button>
               <button class="btn my-btn draft-btn" @click="sav()">暂存</button>
-              <button class="btn my-btn cancel-btn" @click="del()">撤销</button>
+              <button class="btn my-btn cancel-btn mr-10" @click="del()">撤销</button>
             </template>
           </template>
         </div>
@@ -497,6 +497,7 @@ export default {
 
             this.business.id = rep.data.data.id;
             this.business.name = rep.data.data.projectName;
+            this.business.scope = rep.data.data.businessScope;
             this.business.beingAuditedUnit = rep.data.data.beingAuditedUnit;
 
             // this.business.proposer.id = rep.data.data.applicantId;
@@ -596,12 +597,12 @@ export default {
             //手动输入
             // this.business.reviewCPA.id = rep.data.data.trialTeacherId;
             // this.business.reviewCPA.name = rep.data.data.trialTeacherName;
-            this.business.reviewCPA.name = rep.data.data.trialTeacher;
+            this.business.reviewCPA = rep.data.data.trialTeacher;
 
             //手动输入
             // this.business.reviewAssistant.id = rep.data.data.trialAssistantId;
             // this.business.reviewAssistant.name = rep.data.data.trialAssistantName;
-            this.business.reviewAssistant.name = rep.data.data.trialAssistant;
+            this.business.reviewAssistant = rep.data.data.trialAssistant;
 
             this.business.lastOffice = rep.data.data.lastOffice;
             this.business.getWay = rep.data.data.getWay;
@@ -711,6 +712,9 @@ export default {
             resolve(this.business);
           } else if (rep.data.statusCode === '10012') {
             window.location.href = 'signIn.html';
+          } else {
+            this.$message.error(rep.data.msg)
+            this.$router.push('/business-review-list-sales')
           }
         }, (rep) => { });
       });
