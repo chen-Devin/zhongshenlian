@@ -5,7 +5,7 @@
       <!--查看招投标信息-->
       <bid-info-check @isEdit="isEdit" v-if="checkShow"></bid-info-check>
       <!--编辑招投标信息-->
-      <bid-info-edit :iniProject="project"
+      <!-- <bid-info-edit :iniProject="project"
                      inputType="编辑"
                      @submit="submit"
                      @saveDraft="saveDraft"
@@ -14,7 +14,7 @@
                      @delEfficiencyFee="delEfficiencyFee"
                      @addEfficiencyFee="addEfficiencyFee"
                      @quedingDelete="quedingDelete"
-                     v-if="editShow"></bid-info-edit>
+                     v-if="editShow"></bid-info-edit> -->
     </card>
   </div>
 </template>
