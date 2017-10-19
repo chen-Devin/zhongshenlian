@@ -255,7 +255,7 @@ const router = new VueRouter({
             component: businessAnalysis
         },
         {
-            path: '/business-review-list-office',
+            path: '/business-handle-list-office',
             component: businessReviewListOffice
         },
         {
