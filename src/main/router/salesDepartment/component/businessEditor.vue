@@ -702,7 +702,6 @@ export default {
           }
         }
       }
-
       if (flag) {
         this.business.number = `${type}-${word}-${year}-XXXX`;
       } else {

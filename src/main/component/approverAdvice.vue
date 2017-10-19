@@ -66,6 +66,7 @@ export default {
 <style lang="sass" scoped>
 .approver-advice {
   .approver-list {
+    padding-bottom: 15px;
     .list-head {
       margin-left: 0;
       margin-right: 0;

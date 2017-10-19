@@ -53,7 +53,8 @@ export default {
       checkShow: true, //招投标信息查看页面显示
       id: '',          //获取地址栏id参数
       isDraft: '' ,     //获取地址栏判断草稿还是详情参数
-      inputType: ''
+      inputType: '',
+      editable: ''
     }
   },
   methods: {
@@ -139,6 +140,7 @@ export default {
       this.project.contractType.subBasicArray.splice(index,1);
     },
     addBasicFee() {
+      console.log(123);
       this.project.contractType.subBasicArray.push({"name":'',"rate": 0});
     },
     delEfficiencyFee(index) {

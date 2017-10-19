@@ -82,20 +82,22 @@ export default {
           let dateStr = year + "-" + month + "-" + date;
           return dateStr;
         })(),
-        // requestTime () {
-        //   let nd = new Date()
-        //   let y = nd.getFullYear()
-        //   let m = nd.getMonth() + 1
-        //   let d = nd.getDate()
-        //   if (m < 10) {
-        //     m = '0' + m
-        //   }
-        //   if (d < 10) {
-        //     d = '0' + d
-        //   }
-        //   return y + '-' + m + '-' + d
-        // },
+        endTime: (() => {
+          let dt = new Date();
+          let year = dt.getFullYear();
+          let month = dt.getMonth() + 1;
+          if (month < 10) {
+            month = "0" + month;
+          }
+          let date = dt.getDate();
+          if (date < 10) {
+            date = "0" + date;
+          }
+          let dateStr = year + "-" + month + "-" + date;
+          return dateStr;
+        })(),
         contractType: {
+          type: '非联合体',
           mainBasicRate: 0,
           mainEfficiencyRate: 0,
           subBasicArray: [{ "name": '', "rate": 0 }],

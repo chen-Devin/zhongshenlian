@@ -77,7 +77,8 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="中审联招投标公告编号："  label-width = "180px" required>
-              <el-input v-model="project.biddingSerial" :disabled="!editable"></el-input>
+              <span>{{project.biddingSerial}}</span>
+              <!-- <el-input v-model="project.biddingSerial" :disabled="!editable"></el-input> -->
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -123,7 +124,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="24">
+          <el-col :span="12">
             <el-form-item label="招标代理机构："  label-width = "120px">
               <el-input v-model="project.agency" :disabled="!editable"></el-input>
             </el-form-item>
@@ -163,7 +164,7 @@
             </div>
             <!--会计所单独内容-->
             <div v-if="kjsContentShow">
-              <div>
+              <div class="form-group">
                 <h5>会计所</h5>
               </div>
               <div class="form-group">
@@ -542,11 +543,122 @@
               <hr>
             </div>
           </el-col>
-        </el-row>  
+          <el-col :span="12">
+            <div class="system-message">
+              <div class="business-type">
+                <h5>合同体制信息：</h5>
+                <div>
+                  <input class="magic-radio" type="radio" name="contractSystem" value="联合体" v-model="project.contractType.type" :disabled="!editable" id="common">
+                  <label class="radio-inline"  for="common">
+                    联合体
+                  </label>
+                  <input class="magic-radio" type="radio" name="contractSystem" value="非联合体" v-model="project.contractType.type" :disabled="!editable" id="nocommon">
+                  <label class="radio-inline" for="nocommon">
+                    非联合体
+                  </label>
+                </div>
+              </div>
+              <div class="form-group bgc-fff business-type" v-show="contractTypeChan">
+                <h5>基本取费</h5>
+                <div class="my-col-sm-5">
+                  <div class="row form-group">
+                    <div class="col-sm-5">
+                      <div class="input-group">
+                        <div class="input-group-addon">主办方</div>
+                        <input type="text" class="form-control" placeholder="请输入主办方" v-model="project.contractType.mainBasicName" :disabled="!editable">
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="input-group">
+                        <div class="input-group-addon">比例</div>
+                        <input type="number" class="form-control" placeholder="请输入比例" v-model.number="project.contractType.mainBasicRate" :disabled="!editable">
+                        <div class="input-group-addon">%</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <template v-for="(item, index) in project.contractType.subBasicArray">
+                      <div class="col-sm-5">
+                        <div class="input-group">
+                          <div class="input-group-addon">协办方</div>
+                          <input type="text" class="form-control" placeholder="请输入协办方" v-model="item.name" :disabled="!editable">
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="input-group">
+                          <div class="input-group-addon">比例</div>
+                          <input type="number" class="form-control" placeholder="请输入比例" v-model="item.rate" :disabled="!editable">
+                          <div class="input-group-addon">%</div>
+                        </div>
+                      </div>
+                      <h4 class="col-sm-1" v-if="editable">
+                        <a class="text-danger" @click="delBasicFee(index)">
+                          <img src="../../../../img/delete_icon.svg">
+                        </a>
+                      </h4>
+                    </template>
+                    <h4 class="col-sm-1" v-if="editable">
+                      <a class="text-danger" @click="addBasicFee()">
+                        <img src="../../../../img/add_icon.svg">
+                      </a>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group bgc-fff business-type" v-show="contractTypeChan">
+                <h5>效益取费</h5>
+                <div class="my-col-sm-5">
+                  <div class="row form-group">
+                    <div class="col-sm-5">
+                      <div class="input-group">
+                        <div class="input-group-addon">主办方</div>
+                        <input type="text" class="form-control" placeholder="请输入主办方" v-model="project.contractType.mainEfficiencyName" :disabled="!editable">
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="input-group">
+                        <div class="input-group-addon">比例</div>
+                        <input type="number" class="form-control" placeholder="请输入比例" v-model.number="project.contractType.mainEfficiencyRate" :disabled="!editable">
+                        <div class="input-group-addon">%</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <template v-for="(item, index) in project.contractType.subEfficiencyArray">
+                      <div class="col-sm-5">
+                        <div class="input-group">
+                          <div class="input-group-addon">协办方</div>
+                          <input type="text" class="form-control" placeholder="请输入协办方" v-model="item.name" :disabled="!editable">
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="input-group">
+                          <div class="input-group-addon">比例</div>
+                          <input type="number" class="form-control" placeholder="请输入比例" v-model.number="item.rate" :disabled="!editable">
+                          <div class="input-group-addon">%</div>
+                        </div>
+                      </div>
+                      <h4 class="col-sm-1" v-if="editable">
+                        <a class="text-danger" @click="delEfficiencyFee(index)">
+                          <img src="../../../../img/delete_icon.svg">
+                        </a>
+                      </h4>
+                    </template>
+                    <h4 class="col-sm-1" v-if="editable">
+                      <a class="text-danger" @click="addEfficiencyFee()">
+                        <img src="../../../../img/add_icon.svg">
+                      </a>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div> 
+          </el-col>
+        </el-row> 
       </div>
       <!-- 摘牌信息 一会加上-->
-      <div v-if="delipotentShow">
-        <table class="table table-bordered table-handle">
+      <div v-if="delipotentShow" class="contract-pad">
+        <table class="table table-bordered table-hover table-list">
           <thead>
             <tr>
               <td>
@@ -558,30 +670,35 @@
             <tr>
               <td>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">摘牌部门：</label>
-                  <div class="col-sm-10">
+                  <h5>摘牌部门：
+                    <span>
                     {{ project.subDepartment }}
-                  </div>
+                    </span>
+                  </h5>  
                 </div>
                 <div class="form-group">
-                  <label for="remark" class="col-sm-2 control-label">摘牌人员：</label>
-                  <div class="col-sm-10">
+                  <h5>摘牌人员：
+                    <span>
                     {{ project.delipotentName }}
-                  </div>
+                    </span>
+                  </h5> 
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="remark" class="col-sm-3 control-label">{{ project.delipotentTime }}</label>
-        </div>
+        </div> -->
+      </div>
+      <div>
+        <approver-advice class="advice" v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
       </div>
       <!-- 所长通过不通过-->
       <div v-if="directorAgreeShow">
         <div class="form-group">
           <label for="remark" class="col-sm-1 control-label"></label>
-          <div class="col-sm-11">
+          <div class="col-sm-11 form-group">
             <button type="button" class="btn my-btn submit-btn" @click="approve()">通过</button>
             <button type="button" class="btn my-btn draft-btn" @click="showAdvice()">不通过</button>
           </div>
@@ -600,12 +717,12 @@
         </div>
       </modal>
       <!--调用组件的审核意见-->
-      <div class="form-group">
-        <approver-advice class="advice"  v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
-      </div>
+      <!-- <div class="form-group">
+        <approver-advice class="advice" v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
+      </div> -->
       <!-- 入围或中标通知书-->
-      <div v-if="noticePanel">
-        <table class="table table-bordered table-handle table-contract">
+      <div v-if="noticePanel" class="contract-pad" >
+        <table class="table table-bordered table-hover">
           <thead>
             <tr>
               <td>电子合同附件</td>
@@ -664,6 +781,11 @@
 </template>
 
 <style lang="sass" scoped>
+  .contract-pad{
+    padding-left:15px;
+    padding-right:15px;
+    padding-bottom: 15px;
+  }
   .addi {
      padding: 6px 12px;
      font-size: 14px;
@@ -762,8 +884,6 @@ export default {
       //   departmentType: []
       // },
       cancelModal: false,
-      commonwealthShow: false,
-      editable: false,
       labelPosition: 'left',
       rules: {
         source: [
@@ -775,7 +895,7 @@ export default {
       brandBtn: false, //摘牌按钮
       checkBtn: false, //审核通过与不通过按钮
       user: {},        //身份信息
-      delipotentShow: true,  //摘牌情况
+      delipotentShow: false,  //摘牌情况
       directorAgreeShow: false,  //所长审核模块显示
       commonwealthShow: false,  //联合体显示
       finishBtn: false,  //提交完成按钮
@@ -792,6 +912,10 @@ export default {
     }
   },
   computed: {
+    contractTypeChan() {
+      return (this.project.contractType.type === '联合体') ? true : false;
+      console.log(124324)
+    },
     kjsContentShow() {
       let kjs = this.project.departmentType.some((item, index, array) => {
         return item === 'kjs';
@@ -843,30 +967,26 @@ export default {
         }
       });
       return departmentTypeMap;
+    },
+    biddingApproverArray() {
+      for (var i = 0; i < this.project.biddingApproverArray.length; i++) {
+        if (this.project.biddingApproverArray[i].approverResult === '不通过') {
+          this.project.biddingApproverArray[i].showTaga = true;
+        }
+        else {
+          this.project.biddingApproverArray[i].showTaga = false;
+        }
+      }
+      return this.project.biddingApproverArray;
     }
-    // biddingApproverArray() {
-    //   for (var i = 0; i < this.project.biddingApproverArray.length; i++) {
-    //     if (this.project.biddingApproverArray[i].approverResult === '不通过') {
-    //       this.project.biddingApproverArray[i].showTaga = true;
-    //     }
-    //     else {
-    //       this.project.biddingApproverArray[i].showTaga = false;
-    //     }
-    //   }
-    //   return this.project.biddingApproverArray;
-    // }
   },
   methods: {
     currencyMask,
-    chooseType(inputType) {
-         console.log(88888);
-      if (this.inputType === '录入') {
-        console.log(456476);
-        this.editable = true;
-        console.log(234);
-      } else {
-        console.log("hellowheoow")
-      }
+    isCommonwealth() {
+      this.commonwealthShow = true;
+    },
+    notCommonwealth() {
+      this.commonwealthShow = false;
     },
     submit(project) {
       this.$emit('submit',project);
@@ -884,22 +1004,16 @@ export default {
       this.$emit('quedingDelete',this.project.id);
     },
     delBasicFee(index) {
-      this.$emit('delBasicFee',index);
+      this.project.contractType.subBasicArray.splice(index,1);
     },
     addBasicFee() {
-      this.$emit('addBasicFee');
+      this.project.contractType.subBasicArray.push({"name":'',"rate": 0});
     },
     delEfficiencyFee(index) {
-      this.$emit('delEfficiencyFee',index);
+      this.project.contractType.subEfficiencyArray.splice(index,1);
     },
     addEfficiencyFee() {
-      this.$emit('addEfficiencyFee');
-    },
-    isCommonwealth() {
-      this.commonwealthShow = true;
-    },
-    notCommonwealth() {
-      this.commonwealthShow = false;
+      this.project.contractType.subEfficiencyArray.push({"name":'',"rate": 0});
     },
     edit() {
       this.editable = true
@@ -953,6 +1067,8 @@ export default {
     showDelipotent() {
       if (this.project.biddingStatus === "0" || this.project.biddingStatus === "5") {
         this.delipotentShow = false;
+      } else if (this.project.biddingStatus === "1") {
+        this.delipotentShow = true;
       }
     },
     showDirectorAgree() {
@@ -1035,6 +1151,7 @@ export default {
         if (rep.data.statusCode === '10001') {
           this.brandBtn = false;
           this.getInfo();
+          console.log(123);
           this.delipotentShow = true;
         } else {
 
