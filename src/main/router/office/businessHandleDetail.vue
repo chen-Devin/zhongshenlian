@@ -2,8 +2,13 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
+      <button class="btn my-btn submit-btn pull-right mr-10" @click="showPackModal" v-if="packAble">归档装订</button>
+      <button class="btn my-btn submit-btn pull-right mr-10" @click="sel()" v-if="sendAble">发放合同编号</button>
+      <button class="btn my-btn submit-btn pull-right mr-10" @click="checkContract" v-if="reviewAble">审核通过</button>
+      <button class="btn my-btn draft-btn pull-right mr-10" @click="showChangeModal" v-if="reviewAble">金额变更</button>
+      <button class="btn my-btn submit-btn pull-right mr-10" @click="showSealModal" v-if="signAble">确定盖章</button>
       <h3 class="main-title">
-        {{business.name}}
+        {{ business.name }} {{ business.projectStatus }}
       </h3>
       <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
@@ -16,6 +21,30 @@
         </template>
       </div>
     </card>
+    <contract-num-modal v-if="showModal"
+      :initBusiness="business"
+      @submited="submited"
+      @canceled="canceled"></contract-num-modal>
+    <contract-change-modal
+      v-if="changeModalShow"
+      :initBusiness="business"
+      @changeSuccess="changeSuccess"
+      @cancel="cancel"></contract-change-modal>
+    <seal-contract-modal
+      v-if="sealModalShow"
+      :initBusiness="business"
+      @changeSuccess="changeSuccess"
+      @cancel="cancel"></seal-contract-modal>
+    <upload-contract-modal
+      v-if="uploadContractShow"
+      :initBusiness="business"
+      @changeSuccess="changeSuccess"
+      @cancel="cancel"></upload-contract-modal>
+    <pack-contract-modal
+      v-if="packModalShow"
+      :initBusiness="business"
+      @changeSuccess="changeSuccess"
+      @cancel="cancel"></pack-contract-modal>
   </div>
 </template>
 
@@ -26,6 +55,11 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
+import contractNumModal from './component/contractNumModal.vue';
+import contractChangeModal from './component/contractChangeModal.vue';
+import sealContractModal from './component/sealContractModal.vue';
+import uploadContractModal from './component/uploadContractModal.vue';
+import packContractModal from './component/packContractModal.vue';
 
 export default {
   name: 'businessHandleDetailOffice',
@@ -35,6 +69,10 @@ export default {
         { name: '进行中业务', url: '/business-handle-list-office', present: false },
         { name: '业务详情', url: `/business-handle-detail-office-${this.$route.params.id}`, present: true }
       ],
+      changeModalShow: false,
+      sealModalShow: false,
+      uploadContractShow: false,
+      packModalShow: false,
       business: {
         id: this.$route.params.id,
         name: '',
@@ -311,10 +349,25 @@ export default {
   },
   props: ['user'],
   computed: {
+    reviewAble () {
+      return (this.business.projectStatus === 60) ? true : false
+    },
+    signAble () {
+      return (this.business.projectStatus === 70) ? true : false
+    },
+    sendAble () {
+      return (this.business.projectStatus === 80) ? true : false
+    },
+    // sended() {
+    //   return (this.business.projectStatus === 90) ? true : false
+    // },
+    packAble () {
+      return (this.business.projectStatus === 90) ? true : false
+    },
     progress() {
-      if (this.business.projectStatus === 20) {
+      if (this.business.projectStatus === 20 || this.business.projectStatus === 30) {
           return [
-            { name: '立项申请', passed: false, active: false },
+            { name: '立项申请', passed: true, active: true },
             { name: '风控初审', passed: false, active: false },
             { name: '所长终审', passed: false, active: false },
             { name: '合同审核', passed: false, active: false },
@@ -326,7 +379,7 @@ export default {
             },
             { name: '业务完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus === 40) {
+      } else if (this.business.projectStatus === 40 || this.business.projectStatus === 50) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: true },
@@ -382,16 +435,30 @@ export default {
             },
             { name: '业务完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus === 100) {
+      } else if (this.business.projectStatus === 90) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
-            { name: '合同审核', passed: false, active: false },
-            { name: '合同盖章', passed: false, active: false },
-            { name: '发放编号', passed: true, active: false },
+            { name: '合同审核', passed: true, active: false },
+            { name: '合同盖章', passed: true, active: false },
+            { name: '发放编号', passed: true, active: true },
             {
               qrCode: {name: '报告完成', passed: false, active: false},
+              bill: {name: '开票完成', passed: false, active: false}
+            },
+            { name: '业务完结', passed: false, active: false }
+          ];
+      } else if (this.business.projectStatus === 110) {
+          return [
+            { name: '立项申请', passed: true, active: false },
+            { name: '风控初审', passed: true, active: false },
+            { name: '所长终审', passed: true, active: false },
+            { name: '合同审核', passed: true, active: false },
+            { name: '合同盖章', passed: true, active: false },
+            { name: '发放编号', passed: true, active: false },
+            {
+              qrCode: {name: '报告完成', passed: true, active: true},
               bill: {name: '开票完成', passed: false, active: false}
             },
             { name: '业务完结', passed: false, active: false }
@@ -402,13 +469,13 @@ export default {
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
             { name: '所长终审', passed: true, active: false },
-            { name: '合同审核', passed: false, active: false },
-            { name: '合同盖章', passed: false, active: false },
+            { name: '合同审核', passed: true, active: false },
+            { name: '合同盖章', passed: true, active: false },
             { name: '发放编号', passed: true, active: false },
             { name: '处理业务', passed: true, active: false },
             {
-              qrCode: {name: '报告完成', passed: false, active: true},
-              bill: {name: '开票完成', passed: false, active: true}
+              qrCode: {name: '报告完成', passed: false, active: false},
+              bill: {name: '开票完成', passed: true, active: true}
             },
             { name: '业务完结', passed: false, active: false }
           ];
@@ -430,18 +497,18 @@ export default {
         }
       } else if (this.business.projectStatus === 130) {
         return [
-          { name: '立项申请', passed: true, active: false },
-          { name: '风控初审', passed: true, active: false },
-          { name: '所长终审', passed: true, active: false },
-          { name: '合同审核', passed: false, active: false },
-          { name: '合同盖章', passed: false, active: false },
-          { name: '发放编号', passed: true, active: false },
-          { name: '处理业务', passed: true, active: false },
+          { name: '立项申请', passed: true, active: true },
+          { name: '风控初审', passed: true, active: true },
+          { name: '所长终审', passed: true, active: true },
+          { name: '合同审核', passed: true, active: true },
+          { name: '合同盖章', passed: true, active: true },
+          { name: '发放编号', passed: true, active: true },
+          { name: '处理业务', passed: true, active: true },
           {
-            qrCode: {name: '报告完成', passed: true, active: false},
-            bill: {name: '开票完成', passed: true, active: false}
+            qrCode: {name: '报告完成', passed: true, active: true},
+            bill: {name: '开票完成', passed: true, active: true}
           },
-          { name: '业务完结', passed: false, active: true }
+          { name: '业务完结', passed: true, active: true }
         ];
       }
     },
@@ -456,6 +523,59 @@ export default {
     $route: 'getInfo'
   },
   methods: {
+    showChangeModal () {
+      this.changeModalShow = true
+    },
+    showSealModal () {
+      this.sealModalShow = true
+    },
+    showUploadContract () {
+      this.uploadContractShow = true
+    },
+    showPackModal () {
+      this.packModalShow = true
+    },
+    cancel () {
+      this.changeModalShow = false
+      this.sealModalShow = false
+      this.uploadContractShow = false
+      this.packModalShow = false
+    },
+    changeSuccess (next) {
+      if (next === 'upload') {
+        this.showUploadContract()
+      } else {
+        this.getInfo()
+        this.cancel()
+      }
+    },
+    checkContract () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'checkContract',
+                platform: 'web',
+                projectId: this.business.id
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success(rep.data.msg)
+            this.getInfo()
+            resolve('done')
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
     getInfo() {
       let promise = new Promise((resolve, reject) => {
         axios({
@@ -726,7 +846,12 @@ export default {
     crumbs,
     card,
     business,
-    approverAdvice
+    approverAdvice,
+    contractNumModal,
+    contractChangeModal,
+    sealContractModal,
+    uploadContractModal,
+    packContractModal
   }
 }
 </script>

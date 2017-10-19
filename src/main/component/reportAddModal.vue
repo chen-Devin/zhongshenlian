@@ -1,19 +1,11 @@
 <template>
-  <modal>
-    <form class="form-horizontal clearfix"
-          slot="body"
-          @submit.prevent
-          @keyup.enter.prevent>
-      <div class="form-group">
-        <label class="col-xs-2 control-label">报告名称</label>
-        <div class="col-xs-10">
-          <input type="text"
-                 class="form-control"
-                 placeholder="请输入报告名称"
-                 v-model="report.reportName">
-        </div>
+  <modal class="report-add">
+    <div slot="body">
+      <div class="d-f">
+        <h5 class="name">报告名称：</h5>
+        <el-input v-model="report.reportName" placeholder="请输入报告名称"></el-input>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label class="col-xs-2 control-label">报告编号</label>
         <div class="col-xs-10">
           <input type="text"
@@ -22,21 +14,67 @@
                  v-model="report.number">
         </div>
         <div class="col-xs-10 error" v-if="numberError">{{ numberMessage }}</div>
-      </div>
-      <div class="form-group">
-        <label class="col-xs-2 control-label">业务报告</label>
-        <el-upload class="col-xs-10"
-                   ref="upload"
-                   :auto-upload="false"
+      </div> -->
+      <div class="d-f">
+        <h5 class="name2">选择文件：</h5>
+        <el-upload ref="upload"
                    :show-file-list="false"
-                   :action="reportUpload.URL"
+                   :action="reportURL"
                    :on-change="modReport"
                    :on-progress="reportUploadProgress"
                    :on-success="reportUploadSuccess">
           <button class="my-btn submit-btn btn-sm"
                   type="button"
                   slot="trigger"
-                  :disabled="reportUpload.progressShow">选择文件</button>
+                  :disabled="reportUpload.progressShow">审计报告</button>
+          <span slot="tip"
+                class="text-info">&emsp;文件大小建议不超过3Mb</span>
+        </el-upload>
+      </div>
+      <div class="d-f">
+        <h5 class="name2"></h5>
+        <el-upload ref="upload"
+                   :show-file-list="false"
+                   :action="reportScheduleURL"
+                   :on-change="modReport"
+                   :on-progress="reportUploadProgress"
+                   :on-success="reportUploadSuccess">
+          <button class="my-btn submit-btn btn-sm"
+                  type="button"
+                  slot="trigger"
+                  :disabled="reportUpload.progressShow">报告附表</button>
+          <span slot="tip"
+                class="text-info">&emsp;文件大小建议不超过3Mb</span>
+        </el-upload>
+      </div>
+      <div class="d-f">
+        <h5 class="name2"></h5>
+        <el-upload ref="upload"
+                   :show-file-list="false"
+                   :action="annotationURL"
+                   :on-change="modReport"
+                   :on-progress="reportUploadProgress"
+                   :on-success="reportUploadSuccess">
+          <button class="my-btn submit-btn btn-sm"
+                  type="button"
+                  slot="trigger"
+                  :disabled="reportUpload.progressShow">报表附注</button>
+          <span slot="tip"
+                class="text-info">&emsp;文件大小建议不超过3Mb</span>
+        </el-upload>
+      </div>
+      <div class="d-f">
+        <h5 class="name2"></h5>
+        <el-upload ref="upload"
+                   :show-file-list="false"
+                   :action="remarkURL"
+                   :on-change="modReport"
+                   :on-progress="reportUploadProgress"
+                   :on-success="reportUploadSuccess">
+          <button class="my-btn submit-btn btn-sm"
+                  type="button"
+                  slot="trigger"
+                  :disabled="reportUpload.progressShow">备注</button>
           <span slot="tip"
                 class="text-info">&emsp;文件大小建议不超过3Mb</span>
         </el-upload>
@@ -64,12 +102,11 @@
            v-show="alert.show">
         {{alert.cont}}
       </div>
-    </form>
+    </div>
     <div slot="footer" class="ta-c">
       <button class="btn my-btn submit-btn modal-default-button"
-              @click="save()"
-              :disabled="subBtn.dis">
-        {{subBtn.cont}}
+              @click="cancel()" :disabled="btnDis">
+        保存
       </button>
       <button class="btn my-btn draft-btn modal-default-button"
               @click="cancel()">
@@ -95,6 +132,7 @@ export default {
   data() {
     return {
       numberError: false,
+      projectId: '',
       report: {
         id: '',
         name: '',
@@ -120,8 +158,57 @@ export default {
         URL: '',
         progressShow: false,
         percentage: '0%'
-      }
+      },
+      reportURL: '',
+      reportScheduleURL: '',
+      annotationURL: '',
+      remarkURL: ''
     };
+  },
+  computed: {
+    btnDis () {
+      if (this.report.reportName) {
+        return false
+      } else {
+        return true
+      }
+    },
+    reportURL () {
+      let obj = {
+        command: 'handlerBusiness',
+        platform: 'web',
+        id: this.projectId,
+        type: 'projectReport'
+      }
+      return '/fileUpload' + JSON.stringify(obj)
+    },
+    reportScheduleURL () {
+      let obj = {
+        command: 'handlerBusiness',
+        platform: 'web',
+        id: this.projectId,
+        type: 'projectReport'
+      }
+      return '/fileUpload' + JSON.stringify(obj)
+    },
+    annotationURL () {
+      let obj = {
+        command: 'handlerBusiness',
+        platform: 'web',
+        id: this.projectId,
+        type: 'projectReport'
+      }
+      return '/fileUpload' + JSON.stringify(obj)
+    },
+    remarkURL () {
+      let obj = {
+        command: 'handlerBusiness',
+        platform: 'web',
+        id: this.projectId,
+        type: 'projectReport'
+      }
+      return '/fileUpload' + JSON.stringify(obj)
+    }
   },
   props: ['initBusiness'],
   methods: {
@@ -176,8 +263,6 @@ export default {
         });
         return false;
       } else {
-        this.subBtn.cont = '保存...';
-        this.subBtn.dis = true;
         let data = {
           command: 'handlerBusiness',
           platform: 'web',
@@ -206,11 +291,17 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-form {
-  padding-left: 10px;
-  padding-right: 10px;
-  .control-label {
-    width: 100%;
+  .report-add {
+    .name {
+      width: 100px;
+      line-height: 36px;
+    }
+    .name2 {
+      width: 80px;
+      line-height: 30px;
+    }
+    .d-f {
+      margin: 10px 0;
+    }
   }
-}
 </style>

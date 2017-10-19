@@ -23,9 +23,9 @@
       </template>
     </card>
     <contract-num-modal v-if="showModal"
-                        :initBusiness="business"
-                        @submited="submited"
-                        @canceled="canceled"></contract-num-modal>
+      :initBusiness="business"
+      @submited="submited"
+      @canceled="canceled"></contract-num-modal>
     <contract-change-modal
       v-if="changeModalShow"
       :initBusiness="business"
