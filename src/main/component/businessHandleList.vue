@@ -227,11 +227,11 @@ export default {
 
     },
     mod(BUSINESS) {
-      if (this.thiDepartment === 'office') {
-        this.$router.push('/business-review-detail-office-' +BUSINESS.id)
-      } else {
+      // if (this.thiDepartment === 'office') {
+      //   this.$router.push('/business-review-detail-office-' +BUSINESS.id)
+      // } else {
         this.$router.push('/business-handle-detail-' + this.department + '-' +BUSINESS.id)
-      }
+      // }
     },
     getUnDealListOfBusinessUnit () {
       return new Promise((resolve, reject) => {
@@ -342,11 +342,11 @@ export default {
       }, (rep) => { });
     },
     businessRoute(BUSINESS) {
-      if (this.thiDepartment === 'office') {
-        return '/business-review-detail-office-' +BUSINESS.id;
-      } else {
+      // if (this.thiDepartment === 'office') {
+      //   return '/business-handle-detail-office-' +BUSINESS.id;
+      // } else {
         return '/business-handle-detail-' + this.department + '-' +BUSINESS.id;
-      }
+      // }
     },
     currentChange(val) {
       this.pageNum = val;
