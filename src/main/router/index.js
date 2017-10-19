@@ -35,6 +35,7 @@ import businessHandleListLeader from './leader/businessHandleList.vue';
 import businessAnalysis from './leader/businessAnalysis.vue';
 import businessReviewDetailLeader from './leader/businessReviewDetail.vue';
 import businessReviewListLeader from './leader/businessReviewList.vue';
+import contractChangeCheck from './leader/contractChangeCheck/contractChangeCheck.vue';
 import staffManagementAuthor from './leader/staff/staffManagementAuthor.vue';
 import staffManagementInfor from './leader/staffManagementInfor.vue';
 import companyManagement from './leader/companyInformation/companyManagement.vue';
@@ -184,6 +185,10 @@ const router = new VueRouter({
         {
             path: '/business-review-list-leader',
             component: businessReviewListLeader
+        },
+        {
+            path: '/contract-change-check/:id',
+            component: contractChangeCheck
         },
         {
             path: '/business-review-detail-leader-:id',

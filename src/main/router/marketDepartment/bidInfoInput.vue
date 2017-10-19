@@ -4,7 +4,8 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <!--招投标信息编辑子组件-->
-      <bid-info-edit :iniProject="project"
+      <bid-info-check :iniProject="project"
+                     editable = true
                      inputType="录入"
                      @submit="submit"
                      @saveDraft="saveDraft"
@@ -12,7 +13,7 @@
                      @addBasicFee="addBasicFee"
                      @delEfficiencyFee="delEfficiencyFee"
                      @addEfficiencyFee="addEfficiencyFee"
-                     @quedingDelete="quedingDelete"></bid-info-edit>
+                     @quedingDelete="quedingDelete"></bid-info-check>
     </card>
   </div>
 </template>
@@ -25,7 +26,7 @@ import { Message } from 'element-ui';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
-import bidInfoEdit from './component/bidInfoEdit.vue';
+import bidInfoCheck from './component/bidInfoCheck.vue';
 
 Vue.prototype.$message = Message;
 
@@ -37,6 +38,7 @@ export default {
         { name: '招投标信息', url: '/bid-info-list', present: false },
         { name: '招投标信息录入', url: '/bid-info-input', present: true }
       ],
+      inputType: '',
       project: {  //招投标项目详细信息
         bidStartTime: (() => {
           let dt = new Date();
@@ -66,6 +68,33 @@ export default {
           let dateStr = year + "-" + month + "-" + date + "T08:30";
           return dateStr;
         })(),
+        publishTime: (() => {
+          let dt = new Date();
+          let year = dt.getFullYear();
+          let month = dt.getMonth() + 1;
+          if (month < 10) {
+            month = "0" + month;
+          }
+          let date = dt.getDate();
+          if (date < 10) {
+            date = "0" + date;
+          }
+          let dateStr = year + "-" + month + "-" + date;
+          return dateStr;
+        })(),
+        // requestTime () {
+        //   let nd = new Date()
+        //   let y = nd.getFullYear()
+        //   let m = nd.getMonth() + 1
+        //   let d = nd.getDate()
+        //   if (m < 10) {
+        //     m = '0' + m
+        //   }
+        //   if (d < 10) {
+        //     d = '0' + d
+        //   }
+        //   return y + '-' + m + '-' + d
+        // },
         contractType: {
           mainBasicRate: 0,
           mainEfficiencyRate: 0,
@@ -201,7 +230,7 @@ export default {
   components: {
     crumbs,
     card,
-    bidInfoEdit
+    bidInfoCheck
   }
 }
 </script>
