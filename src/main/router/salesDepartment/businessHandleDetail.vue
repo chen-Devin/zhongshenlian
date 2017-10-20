@@ -1,11 +1,11 @@
 <template>
-  <div class="main">
+  <div class="business-handle-wrapper">
     <crumbs :paths="paths"></crumbs>
-    <card>
-      <button class="btn my-btn cancel-btn f-r" @click="showChangeModal">合同变更申请</button>
-      <button class="btn my-btn submit-btn f-r" @click="showContract">查看合同</button>
+    <card class="card">
+      <button class="btn my-btn cancel-btn f-r mr-10" @click="showChangeModal">合同变更申请</button>
+      <button class="btn my-btn submit-btn f-r mr-10" @click="showContract">查看合同</button>
       <h3 class="main-title">
-        {{business.name}} {{ business.projectStatus }}
+        {{business.name}} {{ business.financeCreateBillingState }} {{ business.projectStatus }}
       </h3>
       <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
@@ -22,6 +22,10 @@
       v-if="changeModalShow"
       :projectId="business.id"
       @cancel="cancel"></change-modal>
+    <check-contract
+      v-if="checkContractShow"
+      :businessId="business.id"
+      @cancel="cancel"></check-contract>
   </div>
 </template>
 
@@ -34,6 +38,7 @@ import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
 import changeModal from '@/main/router/salesDepartment/contractChange/changeModal.vue';
+import checkContract from '@/main/router/salesDepartment/component/checkContract.vue';
 
 export default {
   name: 'businessHandleDetailSales',
@@ -314,7 +319,8 @@ export default {
       },
       riskAdvices: [],
       leaderAdivces: [],
-      changeModalShow: false
+      changeModalShow: false,
+      checkContractShow: false
     };
   },
   props: ['user'],
@@ -390,7 +396,7 @@ export default {
             },
             { name: '业务完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus === 90) {
+      } else if (this.business.projectStatus === 90 || this.business.projectStatus === 100 || this.business.projectStatus === 110 || this.business.projectStatus === 111 || this.business.projectStatus === 112) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -404,7 +410,7 @@ export default {
             },
             { name: '业务完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus === 110) {
+      } else if (this.business.projectStatus === 120) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -418,8 +424,7 @@ export default {
             },
             { name: '业务完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus === 121) {
-        if (this.business.billState) {
+      } else if (this.business.financeCreateBillingState === 1) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -427,30 +432,47 @@ export default {
             { name: '合同审核', passed: true, active: false },
             { name: '合同盖章', passed: true, active: false },
             { name: '发放编号', passed: true, active: false },
-            { name: '处理业务', passed: true, active: false },
             {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: true, active: true}
             },
             { name: '业务完结', passed: false, active: false }
           ];
-        } else {
-          return [
-            { name: '立项申请', passed: true, active: false },
-            { name: '风控初审', passed: true, active: false },
-            { name: '所长终审', passed: true, active: false },
-            { name: '合同审核', passed: false, active: false },
-            { name: '合同盖章', passed: false, active: false },
-            { name: '发放编号', passed: true, active: false },
-            { name: '处理业务', passed: true, active: false },
-            {
-              qrCode: {name: '报告完成', passed: false, active: true},
-              bill: {name: '开票完成', passed: false, active: false}
-            },
-            { name: '业务完结', passed: false, active: false }
-          ];
-        }
-      } else if (this.business.projectStatus === 130) {
+      } 
+      // else if (this.business.projectStatus === 121) {
+      //   if (this.business.billState) {
+      //     return [
+      //       { name: '立项申请', passed: true, active: false },
+      //       { name: '风控初审', passed: true, active: false },
+      //       { name: '所长终审', passed: true, active: false },
+      //       { name: '合同审核', passed: true, active: false },
+      //       { name: '合同盖章', passed: true, active: false },
+      //       { name: '发放编号', passed: true, active: false },
+      //       { name: '处理业务', passed: true, active: false },
+      //       {
+      //         qrCode: {name: '报告完成', passed: false, active: false},
+      //         bill: {name: '开票完成', passed: true, active: true}
+      //       },
+      //       { name: '业务完结', passed: false, active: false }
+      //     ];
+      //   } else {
+      //     return [
+      //       { name: '立项申请', passed: true, active: false },
+      //       { name: '风控初审', passed: true, active: false },
+      //       { name: '所长终审', passed: true, active: false },
+      //       { name: '合同审核', passed: false, active: false },
+      //       { name: '合同盖章', passed: false, active: false },
+      //       { name: '发放编号', passed: true, active: false },
+      //       { name: '处理业务', passed: true, active: false },
+      //       {
+      //         qrCode: {name: '报告完成', passed: false, active: true},
+      //         bill: {name: '开票完成', passed: false, active: false}
+      //       },
+      //       { name: '业务完结', passed: false, active: false }
+      //     ];
+      //   }
+      // } 
+      else if (this.business.projectStatus === 130) {
         return [
           { name: '立项申请', passed: true, active: true },
           { name: '风控初审', passed: true, active: true },
@@ -478,11 +500,15 @@ export default {
     $route: 'getInfo'
   },
   methods: {
+    showContract () {
+      this.checkContractShow = true
+    },
     showChangeModal () {
       this.changeModalShow = true
     },
     cancel () {
       this.changeModalShow = false
+      this.checkContractShow = false
     },
     getInfo() {
       let promise = new Promise((resolve, reject) => {
@@ -537,6 +563,8 @@ export default {
 
             this.business.feeBasis = rep.data.data.feeBasis;
             this.business.feeRate = parseInt(rep.data.data.feeRate);
+            this.business.financeCreateBillingState = parseInt(rep.data.data.financeCreateBillingState);
+            this.business.financeReceivablesState = parseInt(rep.data.data.financeReceivablesState);
 
             let flag = false;
             let flag2 = false;
@@ -705,15 +733,15 @@ export default {
             }
 
             this.business.reports = [];
-            for (let i = 0; i < rep.data.data.reportAnnexArray.length; i++) {
+            for (let i = 0; i < rep.data.data.reportArray.length; i++) {
               let obj = {
-                id: rep.data.data.reportAnnexArray[i].id,
-                name: rep.data.data.reportAnnexArray[i].annexName,
-                url: rep.data.data.reportAnnexArray[i].annexUrl,
-                state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true,
-                archivingState: rep.data.data.reportAnnexArray[i].archivingState === '0' ? false : true,
-                reportName: rep.data.data.reportAnnexArray[i].reportName,
-                adviceState: parseInt(rep.data.data.reportAnnexArray[i].fStatus)
+                id: rep.data.data.reportArray[i].id,
+                name: rep.data.data.reportArray[i].reportName,
+                number: rep.data.data.reportArray[i].number,
+                downloadStatus: rep.data.data.reportArray[i].downloadStatus,
+                QRcodeUrl: rep.data.data.reportArray[i].QRcodeUrl,
+                archivingState: rep.data.data.reportArray[i].archivingState,
+                FStatus: parseInt(rep.data.data.reportArray[i].FStatus)
               }
               this.business.reports.push(obj);
             }
@@ -751,13 +779,18 @@ export default {
     card,
     business,
     approverAdvice,
-    changeModal
+    changeModal,
+    checkContract
   }
 }
 </script>
 
 <style lang="sass" scoped>
-  .btn-adjust {
-    width: 106px;
+  .business-handle-wrapper {
+    .card {
+      > .btn {
+        margin-top: 20px;
+      }
+    }
   }
 </style>
