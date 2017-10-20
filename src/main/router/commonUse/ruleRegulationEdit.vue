@@ -5,11 +5,13 @@
       <h3 class="main-title">
         编辑制度
         <div class="pull-right">
-          <button type="button" class="btn my-btn submit-btn" @click="saveEdit()">保存</button>
-          <button type="button" class="btn my-btn draft-btn" @click="cancel()">取消</button>
-          <button type="button" class="btn my-btn cancel-btn" @click="del()">删除</button>
+          <button type="button" class="btn my-btn submit-btn mr-10" @click="saveEdit()">保存</button>
+          <button type="button" class="btn my-btn draft-btn mr-10" @click="cancel()">取消</button>
+          <button type="button" class="btn my-btn cancel-btn mr-20" @click="del()">删除</button>
         </div>
       </h3>
+    </card>
+    <card>
       <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
         <div class="form-group">
           <label class="col-sm-2 control-label">标题</label>
@@ -166,6 +168,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.pull-right {
+  margin-top: -7px;
+}
 .normal-wrap {
   textarea {
     resize: vertical;

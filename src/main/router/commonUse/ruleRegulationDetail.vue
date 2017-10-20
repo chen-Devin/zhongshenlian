@@ -4,8 +4,10 @@
     <card>
       <h3 class="main-title">
         {{detail.title}}
-        <button class="btn my-btn submit-btn pull-right" type="button" :user="user" v-if="btnShow" @click="editRule()">编辑</button>
+        <button class="btn my-btn submit-btn pull-right mr-20" type="button" :user="user" v-if="btnShow" @click="editRule()">编辑</button>
       </h3>
+    </card>
+    <card>
       <p class="content-area">{{detail.content}}</p>
       <div class="row">
         <div class="col-md-10"></div>
@@ -97,6 +99,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.pull-right{
+  margin-top: -7px;
+}
 p {
   margin-left: 25px;
   margin-right: 25px;

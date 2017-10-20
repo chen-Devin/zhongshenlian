@@ -33,7 +33,7 @@
       :label-position="labelPosition" 
       :rules="rules" 
       ref="project" 
-      label-width="100px" 
+      label-width="120px" 
       class="project-editor" 
       :disabled="!editable"
       required>
@@ -45,7 +45,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="报名截止日期：" label-width = "130px" required>
+            <el-form-item label="报名截止日期：" required>
               <el-input v-model="project.endTime" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
@@ -56,9 +56,10 @@
               <span>{{project.publishName}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="报名相关费用：" label-width = "120px">
-              <el-input v-model="project.relateFee" :disabled="!editable"></el-input>
+          <el-col :span="12" class="d-f">
+              <span style="width: 160px">报名相关费用：</span>
+              <input v-model="project.relateFee" :disabled="!editable" class="form-control">
+              <span class="addi">万元</span>
             </el-form-item>
           </el-col>
         </el-row>
@@ -69,7 +70,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="报名开标日期：" label-width = "120px">
+            <el-form-item label="报名开标日期：">
               <el-input v-model="project.bidStartTime" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
@@ -82,31 +83,31 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="公告开标日期：" label-width = "120px">
+            <el-form-item label="公告开标日期：">
               <el-input v-model="project.openBidDate" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招投项目名称：" label-width = "130px" required>
+            <el-form-item label="招投项目名称：" label-width = "120px" required>
               <el-input v-model="project.projectName" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="公告开标地点：" label-width = "120px">
+            <el-form-item label="公告开标地点：">
               <el-input v-model="project.openBidPlace" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="标段划分：" required>
+            <el-form-item label="标段划分：" label-width = "120px" required>
               <el-input v-model="project.biddingDivision" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="审计限制：">
+            <el-form-item label="审计限制：" label-width="120px">
               <el-input v-model="project.serviceTerm" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
@@ -118,16 +119,23 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="投资人资质条件/能力：">
+            <el-form-item label="投资人资质条件/能力：" label-width="120px">
               <el-input type="textarea" v-model="project.investmentConditions" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招标代理机构："  label-width = "120px">
+            <el-form-item label="招标代理机构：" >
               <el-input v-model="project.agency" :disabled="!editable"></el-input>
             </el-form-item>
+          </el-col>
+          <el-col :span="12" class="d-f">
+            <!-- <el-form-item label="招标控制价格："  label-width = "120px" class="d-f"> -->
+              <span style="width: 160px">招标控制价格：</span>
+              <input v-model="project.controlPrice" :disabled="!editable" class="form-control">
+              <span class="addi">万元</span>
+            <!-- </el-form-item> -->
           </el-col>
         </el-row>
         <el-row>
@@ -143,11 +151,11 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="招标公告附件：" label-width="130px" required>
               <el-input v-model="project.biddingNumber" :disabled="!editable"></el-input>
             </el-form-item>
-          </el-col>
+          </el-col> -->
           <el-col :span="12">
             <el-form-item label="备注">
               <el-input type="textarea" v-model="project.remark" :disabled="!editable"></el-input>
@@ -788,6 +796,7 @@
   }
   .addi {
      padding: 6px 12px;
+     width: 70px;
      font-size: 14px;
      font-weight: normal;
      color: #555555;
@@ -833,6 +842,7 @@
   }
 	.control-label {
 		padding-top: 1px;
+    margin-left: 10px;
 	}
 	.el-upload-list {
         margin-left: 20px;
@@ -914,7 +924,6 @@ export default {
   computed: {
     contractTypeChan() {
       return (this.project.contractType.type === '联合体') ? true : false;
-      console.log(124324)
     },
     kjsContentShow() {
       let kjs = this.project.departmentType.some((item, index, array) => {
@@ -1067,7 +1076,7 @@ export default {
     showDelipotent() {
       if (this.project.biddingStatus === "0" || this.project.biddingStatus === "5") {
         this.delipotentShow = false;
-      } else if (this.project.biddingStatus === "1") {
+      } else if (this.project.biddingStatus === "1"||this.project.biddingStatus === "2"||this.project.biddingStatus === "3"||this.project.biddingStatus === "4") {
         this.delipotentShow = true;
       }
     },

@@ -4,7 +4,7 @@
     <card>
       <h3 class="main-title">
         规章制度
-          <button class="btn my-btn submit-btn pull-right f-r" @click="add">
+          <button class="btn my-btn submit-btn pull-right f-r" @click="add" v-if="btnShow">
             新建制度
           </button>
           <search-bar  @search="tog" class="f-r"></search-bar>
@@ -80,12 +80,12 @@ export default {
       searchKeyRule: '',
       pageNum: 1,
       totalPage: 1,
-      totalNum: 1
+      totalNum: 1,
     };
   },
   computed: {
     btnShow() {
-      return this.user.department === '所长';
+      return (this.user.department === '所长')? true:false;
     }
   },
   props: ['user'],
