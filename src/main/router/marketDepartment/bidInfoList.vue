@@ -4,7 +4,7 @@
     <crumbs :paths="paths"></crumbs>
     <card class="card">
       <!--招投标列表子组件-->
-      <bid-info-list-body></bid-info-list-body>F
+      <bid-info-list-body></bid-info-list-body>
     </card>
   </div>
 </template>
