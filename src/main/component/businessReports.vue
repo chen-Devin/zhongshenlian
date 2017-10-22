@@ -3,94 +3,43 @@
     <h4 class="main-title">
       业务报告
       {{ business.reports.length }}
-      <button class="btn my-btn submit-btn pull-right"
+      <!-- 确认上传 -->
+      <button class="btn my-btn cancel-btn f-r mr-10">上传完成</button>
+      <button class="btn my-btn submit-btn pull-right mr-10"
               @click="add()"
               v-if="salesShow">
         上传报告
       </button>
     </h4>
-    <div class="com-list list-group">
-      <li class="list-group-item list-head row">
-        <div class="col-xs-1 text-center">序号</div>
-        <div class="col-xs-5">报告名称</div>
-        <div class="col-xs-1 text-center">附件</div>
-        <div class="col-xs-1 text-center" v-if="salesShow">修改</div>
-        <div class="col-xs-2 text-center">复审状态</div>
-        <div class="col-xs-1 text-center">二维码</div>
-        <div class="col-xs-1 text-center">归档</div>
-      </li>
-      <li class="list-group-item row"
-          v-for="(REPORT, index) in business.reports"
+    <!-- <p>{{ business.reports[0] }}</p> -->
+    <table class="table table-bordered table-list">
+      <thead>
+        <tr>
+          <th class="ta-c">报告编号</th>
+          <th class="ta-c">报告名称</th>
+          <th class="ta-c">复审状态</th>
+          <th class="ta-c">附件下载</th>
+          <th class="ta-c">二维码</th>
+          <th class="ta-c">归档状态</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr 
+          v-for="(REPORT, index) in business.reports" 
           :key="index">
-        <div class="col-xs-1 text-center">{{index+1+'.'}}</div>
-        <div class="col-xs-5">{{REPORT.reportName}}</div>
-        <div class="col-xs-1 text-center">
-          <a class="text-primary title"
-             :href="REPORT.url"
-             target="_blank">下载</a>
-        </div>
-        <div class="col-xs-1 text-center" v-if="salesShow">
-          <a class="text-primary title"
-             v-if="REPORT.adviceState===0"
-             @click="mod(REPORT)">修改</a>
-          <span class="text-primary title"
-                v-if="REPORT.adviceState!==0">不可修改</span>
-        </div>
-        <div class="col-xs-2 text-center">
-          <template v-if="riskShow">
-            <template v-if="REPORT.adviceState===1">
-              <button class="btn my-btn submit-btn report-btn" type="button" @click="judgeReport(REPORT, '通过')">通过</button>
-              <button class="btn my-btn draft-btn report-btn" type="button" @click="judgeReport(REPORT, '不通过')">不通过</button>
-            </template>
-            <span class="label label-warning"
-                  v-if="REPORT.adviceState===0">未通过</span>
-            <span class="label label-success"
-                  v-if="REPORT.adviceState===2">已通过</span>
-          </template>
-          <template v-if="salesShow">
-            <button class="btn my-btn submit-btn report-btn" type="button"
-               v-if="REPORT.adviceState===0"
-               @click="sub(REPORT)">提交复审</button>
-            <span class="label label-success"
-                  v-if="REPORT.adviceState===2">已通过复审</span>
-            <span class="label label-info"
-                  v-if="REPORT.adviceState===1">等待复审</span>
-          </template>
-          <template v-if="!salesShow && !riskShow">
-            <span class="label label-info"
-                  v-if="REPORT.adviceState===0">未通过复审</span>
-            <span class="label label-success"
-                  v-if="REPORT.adviceState===2">已通过复审</span>
-            <span class="label label-info"
-                  v-if="REPORT.adviceState===1">等待复审</span>
-          </template>
-        </div>
-        <div class="col-xs-1 text-center">
-          <template v-if="archivesShow">
-            <input class="checkbox"
-                   type="checkbox"
-                   v-model="REPORT.state"
-                   @change="reportStatChan(REPORT)">
-          </template>
-          <template v-if="!archivesShow">
-            <span class="label label-info adjust-download" v-if="!REPORT.state">未下载</span>
-            <span class="label label-success adjust-download" v-if="REPORT.state">已下载</span>
-          </template>
-        </div>
-        <div class="col-xs-1 text-center">
-          <template v-if="archivesShow">
-            <input class="checkbox"
-                   type="checkbox"
-                   v-model="REPORT.archivingState"
-                   @change="reportArchivingStatChan(REPORT)">
-          </template>
-          <template v-if="!archivesShow">
-            <span class="label label-info adjust-download" v-if="!REPORT.archivingState">未归档</span>
-            <span class="label label-success adjust-download" v-if="REPORT.archivingState">已归档</span>
-          </template>
-        </div>
-      </li>
-    </div>
+          <td class="ta-c">{{ REPORT.number === '' ? '暂无' : REPORT.number }}</td>
+          <td class="ta-c">{{ REPORT.name }}</td>
+          <td class="ta-c">{{ FStatusMap[Number(REPORT.FStatus)] }}</td>
+          <td class="ta-c">
+            <a href="javascript:void(0);">
+              <span class="fa fa-file-text-o"></span>
+            </a>
+          </td>
+          <td class="ta-c">{{ REPORT.QRcodeUrl === '' ? '未生成' : '已生成' }}</td>
+          <td class="ta-c">{{ archivingStateMap[Number(REPORT.archivingState)] }}</td>
+        </tr>
+      </tbody>
+    </table>
     <report-add-modal v-if="showAddModal"
                       :initBusiness="business"
                       @added="added"
@@ -136,7 +85,9 @@ export default {
       showAddModal: false,
       addReport: {},
       showSubModal: false,
-      subReport: {}
+      subReport: {},
+      FStatusMap: ['未复审', '未通过', '已通过'],
+      archivingStateMap: ['未归档', '已归档']
     };
   },
   computed: {

@@ -405,7 +405,7 @@ export default {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
-            { name: '业务完结', passed: false, active: false }
+            { name: '业务完结', passed: false, active: true }
           ];
       } else if (this.business.projectStatus === 70) {
           return [
@@ -523,6 +523,17 @@ export default {
     $route: 'getInfo'
   },
   methods: {
+    sel() {
+      this.showModal = true
+    },
+    canceled() {
+      this.showModal = false
+    },
+    submited(contNum) {
+      this.business.number = contNum;
+      this.business.projectStatus = 90;
+      this.showModal = false;
+    },
     showChangeModal () {
       this.changeModalShow = true
     },

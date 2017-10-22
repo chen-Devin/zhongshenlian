@@ -65,7 +65,7 @@ export default {
           if (date < 10) {
             date = "0" + date;
           }
-          let dateStr = year + "-" + month + "-" + date + "T08:30";
+          let dateStr = year + "-" + month + "-" + date;
           return dateStr;
         })(),
         publishTime: (() => {

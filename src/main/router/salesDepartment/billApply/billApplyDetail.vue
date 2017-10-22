@@ -1,36 +1,16 @@
 <template>
   <div class="customer-info-add">
     <crumbs :paths="paths"></crumbs>
-    <card>
-      <h1 class="title">开票申请</h1>
-      <div class="message-box">
-        <el-row>
-          <el-col :span="12" :offset="6">
-            <p>
-              <span>项目名称</span>
-              <el-select v-model="projectId" placeholder="请选择项目" style="width:100%;">
-                <el-option
-                  v-for="item in projects"
-                  :key="item.value"
-                  :label="item.projectName"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-            </p>
-          </el-col>
-        </el-row>
-      </div>
-      <p>
-        <button class="btn my-btn submit-btn" type="button" :disabled="disSubmit" @click="jump">确定</button>
-      </p>
+    <card v-if="loaded">
+      <billing-info :business="business" :user="user" @cancel="cancel"></billing-info>
     </card>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import card from '@/main/component/card.vue';
-import crumbs from '@/main/component/crumbs.vue';
+import axios from 'axios'
+import card from '@/main/component/card.vue'
+import crumbs from '@/main/component/crumbs.vue'
 import billingInfo from './billingInfo.vue'
 
 export default {
@@ -38,23 +18,24 @@ export default {
   data() {
     return {
       paths: [
-        { name: '开票申请', url: '/bill-apply', present: true }
+        { name: '开票详情', url: '/bill-apply', present: true }
       ],
-      projectId: '',
-      projects: []
-    }
-  },
-  computed: {
-    disSubmit () {
-      if (this.projectId === '') {
-        return true
-      } else {
-        return false
-      }
+      user: {},
+      labelPosition: 'left',
+      rules: {
+        name: [
+          { required: true, message: '请输入项目名称', trigger: 'blur' }
+        ],
+        scope:[
+          { required: true, message: '请输入业务范围与审计目标', trigger: 'blur' }
+        ]
+      },
+      business: {},
+      loaded: false
     }
   },
   methods: {
-    getProjectByPerson () {
+    getBusinessInfo () {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -63,30 +44,37 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'getProjectByPerson',
-                platform: 'web'
+                command: 'getBusinessInfo',
+                platform: 'web',
+                id: this.$route.params.id
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.projects = rep.data.data.resultArray
+            this.business = rep.data.data
             resolve('done');
           }
         }, (rep) => { });
       })
     },
-    jump () {
-      this.$router.push('/bill-apply-add/' + this.projectId)
+    cancel () {
+      this.$router.push('/bill-apply')
     }
   },
   created () {
-    this.getProjectByPerson()
+    this.$store.dispatch('fetchUserInfo').then(() => {
+      this.user = this.$store.getters.getUser
+    }, () => { })
+    this.getBusinessInfo().then(() => {
+      this.loaded = true
+    }, () => {})
   },
   components: {
     card,
-    crumbs
+    crumbs,
+    billingInfo
   }
 };
 </script>

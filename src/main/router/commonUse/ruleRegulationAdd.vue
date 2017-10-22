@@ -3,16 +3,16 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3 class="main-title">
-        新建制度
-        <div class="pull-right">
-          <button type="button" class="btn my-btn submit-btn" @click="saveEdit()">保存</button>
-          <button type="button" class="btn my-btn draft-btn" @click="cancel()">取消</button>
-        </div>
+        规章制度录入
+        <button type="button" class="btn my-btn submit-btn mr-20 f-r" @click="saveEdit()">保存</button>
+        <button type="button" class="btn my-btn draft-btn f-r mr-10" @click="cancel()">取消</button> 
       </h3>
-      <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
+    </card>
+    <card>  
+      <div class="form-horizontal present-wrap" @submit.prevent @keyup.enter.prevent>
         <div class="form-group">
-          <label class="col-sm-2 control-label">标题</label>
-          <div class="col-sm-9">
+          <label class="col-sm-2 self-label ml-40">标题</label>
+          <div class="col-sm-10">
             <input type="text"
                    class="form-control"
                    placeholder="请输入标题"
@@ -20,8 +20,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label">正文</label>
-          <div class="col-sm-9">
+          <label class="col-sm-2 self-label ml-40">正文</label>
+          <div class="col-sm-10">
             <textarea cols="50"
                       rows="30"
                       class="form-control"
@@ -32,8 +32,8 @@
         </div>
         <rule-can-modal v-if="showCanModal"
                         @deleted="canDeleted"
-                        @canceled="canCanceled"></rule-can-modal>
-      </form>
+                        @canceled="canCanceled"></rule-can-modal> 
+      </div>   
     </card>
   </div>
 </template>
@@ -112,15 +112,43 @@ export default {
   },
   components: {
     crumbs,
-    card
+    card,
+    ruleCanModal
   }
 }
 </script>
 
 <style lang="sass" scoped>
-.normal-wrap {;
+.f-r {
+  margin-top: -7px;
+}
+ input{
+ background-color: #F9FBFE;
+ border: 1px solid #DADADA;
+ border-radius: 2px;
+ }
+.self-label{
+  width: 60px;
+  padding-right: 0;
+  padding-top: 7px;
+}
+.present-wrap {
+  overflow: hidden;
+
+  padding-top: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 20px;
+
+}
   textarea {
     resize: vertical;
+    background-color: #F9FBFE;
+    border: 1px solid #DADADA;
+    border-radius: 2px;
   }
-}
+  .btn-group {
+    float: right;
+    margin-top: -10px;
+  }
 </style>

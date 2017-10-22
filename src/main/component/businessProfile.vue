@@ -320,7 +320,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
-
+import card from '@/main/component/card.vue'
 import bus from '../bus.js';
 
 
@@ -441,7 +441,6 @@ export default {
     //   this.paths.push({ name: '业务概况', url: `/business-handle-detail-archives-${this.$route.params.id}/business-profile`, present: true });
     // }
     // this.$emit('pathsChan', this.paths);
-
   },
   methods: {
     contractUploadProgress(event, file, fileList) {  // file对象都有哪些属性
