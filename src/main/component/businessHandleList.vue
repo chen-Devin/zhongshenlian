@@ -32,6 +32,18 @@
         进行中业务
           <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
+      <h3 class="main-title" v-if="financialType === '0'">
+        待开发票
+          <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
+      </h3>
+      <h3 class="main-title" v-if="financialType === '1'">
+        待上传截图
+          <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
+      </h3>
+      <h3 class="main-title" v-if="financialType === '2'">
+        开票撤销复核
+          <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
+      </h3>
       <table class="table table-bordered table-hover table-list">
         <thead>
           <tr>
@@ -47,7 +59,7 @@
               @click.prevent="mod(BUSINESS)">
             <td class="text-center link-wrap">{{BUSINESS.businessName}}</td>
             <td class="text-center">{{BUSINESS.projectManager}}</td>
-            <td class="text-center">{{立项时间}}</td>
+            <td class="text-center">立项时间</td>
             <td class="text-center">
               <template v-if="checkShow">
                 <span class="label label-warning"
@@ -167,11 +179,13 @@ export default {
       searchItems: [],
       salesType: 0,
       officeType: 0,
+      financeType: 0,
       pageNum: 1,
       reloadPagination: true
     };
   },
   created() {
+    console.log(this.department)
     if (this.iconType === "bill") {
       this.billShow = true
     } else {
@@ -183,11 +197,23 @@ export default {
       //  office leader archives
     } else if (this.department === 'office') {
       this.getUnDealListOfOffice()
+    } else if (this.department === 'archives') {
+      this.getUnDealListOfArchives()
+    } else if (this.department === 'financial') {
+      this.getUnDealListOfFinance()
     }
-    
+  },
+  computed: {
+    financialType () {
+      return this.$route.params.type
+    }
   },
   watch: {
-    $route: 'getInfo'
+    financialType: function (val, oldVal) {
+      if (val !== oldVal) {
+        this.getUnDealListOfFinance()
+      }
+    }
   },
   props: ['iconType', 'department'],
   methods: {
@@ -259,6 +285,31 @@ export default {
         }, (rep) => { });
       })
     },
+    getUnDealListOfArchives () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getUnDealListOfArchives',
+                platform: 'web',
+                pageNum: this.pageNum
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.businesses = rep.data.data.businessArray
+            this.totalNum = parseInt(rep.data.data.totalNum)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
     getUnDealListOfOffice () {
       return new Promise((resolve, reject) => {
         axios({
@@ -285,62 +336,88 @@ export default {
         }, (rep) => { });
       })
     },
-    getInfo() {
-      let start = ''
-      let end = ''
-      if (this.sea.time.start === null) {
-        start = ''
-      } else {
-        start = this.sea.time.start
-      }
-      if (this.sea.time.end === null) {
-        end = ''
-      } else {
-        end = this.sea.time.end
-      }
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-        method: 'get',
-        url: '/service',
-        params: {
-          data: (() => {
-            var obj = {
-              command: 'getBusinessReviewing',
-              platform: 'web',
-              searchContent: this.searchCont,
-              beginTime: start,
-              endTime: end,
-              businessAmount: this.sea.amount,
-              businessType: this.sea.type,
-              requester: this.sea.requester,
-              requesterName: this.sea.requesterName,
-              applicantName: this.sea.applicantName,
-              pageNum: this.pageNum
-            }
-            return JSON.stringify(obj);
-          })()
-        }
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          this.totalPage = parseInt(rep.data.data.pageNum);
-          this.totalNum = parseInt(rep.data.data.totalNum);
-          this.businesses.length = 0;
-          for (let i = 0; i < rep.data.data.businessArray.length; i++) {
-            let obj = {
-              id: rep.data.data.businessArray[i].id,
-              businessName: rep.data.data.businessArray[i].businessName,
-              projectManager: rep.data.data.businessArray[i].projectManager,
-              finishTime: rep.data.data.businessArray[i].finishTime,
-              projectStatus: parseInt(rep.data.data.businessArray[i].projectStatus),
-              billState: parseInt(rep.data.data.businessArray[i].financeCreateBillingState)
-            };
-            this.businesses.push(obj);
+    getUnDealListOfFinance () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getUnDealListOfFinance',
+                platform: 'web',
+                type: this.$route.params.type,
+                pageNum: this.pageNum
+              }
+              return JSON.stringify(obj);
+            })()
           }
-        } else if (rep.data.statusCode === '10012') {
-          window.location.href = 'signIn.html';
-        }
-      }, (rep) => { });
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.businesses = rep.data.data.businessArray
+            this.totalNum = parseInt(rep.data.data.totalNum)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
     },
+    // getInfo() {
+    //   let start = ''
+    //   let end = ''
+    //   if (this.sea.time.start === null) {
+    //     start = ''
+    //   } else {
+    //     start = this.sea.time.start
+    //   }
+    //   if (this.sea.time.end === null) {
+    //     end = ''
+    //   } else {
+    //     end = this.sea.time.end
+    //   }
+    //   axios({
+    //     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+    //     method: 'get',
+    //     url: '/service',
+    //     params: {
+    //       data: (() => {
+    //         var obj = {
+    //           command: 'getBusinessReviewing',
+    //           platform: 'web',
+    //           searchContent: this.searchCont,
+    //           beginTime: start,
+    //           endTime: end,
+    //           businessAmount: this.sea.amount,
+    //           businessType: this.sea.type,
+    //           requester: this.sea.requester,
+    //           requesterName: this.sea.requesterName,
+    //           applicantName: this.sea.applicantName,
+    //           pageNum: this.pageNum
+    //         }
+    //         return JSON.stringify(obj);
+    //       })()
+    //     }
+    //   }).then((rep) => {
+    //     if (rep.data.statusCode === '10001') {
+    //       this.totalPage = parseInt(rep.data.data.pageNum);
+    //       this.totalNum = parseInt(rep.data.data.totalNum);
+    //       this.businesses.length = 0;
+    //       for (let i = 0; i < rep.data.data.businessArray.length; i++) {
+    //         let obj = {
+    //           id: rep.data.data.businessArray[i].id,
+    //           businessName: rep.data.data.businessArray[i].businessName,
+    //           projectManager: rep.data.data.businessArray[i].projectManager,
+    //           finishTime: rep.data.data.businessArray[i].finishTime,
+    //           projectStatus: parseInt(rep.data.data.businessArray[i].projectStatus),
+    //           billState: parseInt(rep.data.data.businessArray[i].financeCreateBillingState)
+    //         };
+    //         this.businesses.push(obj);
+    //       }
+    //     } else if (rep.data.statusCode === '10012') {
+    //       window.location.href = 'signIn.html';
+    //     }
+    //   }, (rep) => { });
+    // },
     businessRoute(BUSINESS) {
       // if (this.thiDepartment === 'office') {
       //   return '/business-handle-detail-office-' +BUSINESS.id;
@@ -368,24 +445,24 @@ export default {
         this.searchUp = false;
         this.searchDown = true;
       }
-    },
-    higherSearchEvent (sea) {
-      this.sea = sea
-      this.searchCont = ''
-      this.pageNum = 1
-      this.getInfo()
-    },
-    tog(searchCont) {
-      this.searchCont = searchCont
-      this.sea = this.seaEmpty
-      this.pageNum = 1
-      this.getInfo()
-    },
-    reset () {
-      this.pageNum = 1
-      this.sea = this.seaEmpty
-      this.getInfo()
     }
+    // higherSearchEvent (sea) {
+    //   this.sea = sea
+    //   this.searchCont = ''
+    //   this.pageNum = 1
+    //   this.getInfo()
+    // },
+    // tog(searchCont) {
+    //   this.searchCont = searchCont
+    //   this.sea = this.seaEmpty
+    //   this.pageNum = 1
+    //   this.getInfo()
+    // },
+    // reset () {
+    //   this.pageNum = 1
+    //   this.sea = this.seaEmpty
+    //   this.getInfo()
+    // }
   },
   components: {
     crumbs,

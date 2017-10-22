@@ -449,7 +449,7 @@ const router = new VueRouter({
             ]
         },
         {
-            path: '/business-handle-list-financial',
+            path: '/business-handle-list-financial/:type',
             component: businessHandleListFinancial
         },
         {
