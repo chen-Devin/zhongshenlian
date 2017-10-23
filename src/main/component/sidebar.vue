@@ -38,11 +38,11 @@
       <el-submenu index="project-manage" v-if="projectManage">
         <template slot="title">项目管理</template>
         <!-- <el-menu-item-group> -->
-          <el-menu-item index="/business-complete-list">已完成业务</el-menu-item>
-          <el-menu-item index="/business-review-list-sales" v-if="establish">立项业务</el-menu-item>
-          <el-menu-item index="/business-handle-list-leader" v-if="leader">进行中业务</el-menu-item>
-          <el-menu-item index="/business-handle-list-sales" v-if="sales">进行中业务</el-menu-item>
-          <el-menu-item index="/business-handle-list-archives" v-if="archives">进行中业务</el-menu-item>
+          <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
+          <el-menu-item index="/business-review-list-sales" v-if="establish">立项项目</el-menu-item>
+          <el-menu-item index="/business-handle-list-leader" v-if="leader">进行中项目</el-menu-item>
+          <el-menu-item index="/business-handle-list-sales" v-if="sales">进行中项目</el-menu-item>
+          <el-menu-item index="/business-handle-list-archives" v-if="archives">进行中项目</el-menu-item>
           <el-menu-item index="/business-handle-list-risk" v-if="riskHandle">报告审核</el-menu-item>
           <!-- <el-menu-item index="/business-complete-list">已完成业务</el-menu-item> -->
         <!-- </el-menu-item-group> -->
