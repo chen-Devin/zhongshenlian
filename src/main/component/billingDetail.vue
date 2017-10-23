@@ -4,6 +4,15 @@
       <p class="btns f-r">
         <button 
           class="btn my-btn submit-btn" 
+          @click="revokedBilling('back')">退回</button>
+        <button 
+          class="btn my-btn submit-btn" 
+          @click="revokedBilling('ruin')">作废</button>
+        <button 
+          class="btn my-btn submit-btn" 
+          @click="revokedBilling('rush')">冲回</button>
+        <button 
+          class="btn my-btn submit-btn" 
           v-if="Number(bill.state) === 0 || Number(bill.state) === 1" 
           @click="showBillUpload('bill')">开票</button>
         <button 
@@ -56,10 +65,23 @@
           </el-col>
         </el-row>
         <el-row>
+          <el-col :span="12">
+            发票图片：。。。
+          </el-col>
+          <el-col :span="12">
+            收款图片：。。。
+          </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="24">
             备注：{{ bill.remark }}
           </el-col>
         </el-row>
+        <hr>
+        <p class="d-f">
+          <span style="width:70px;">撤销原因：</span>
+          <span>。。。</span>
+        </p>
       </div>
     </card>
     <modal v-if="billUploadShow">
@@ -116,9 +138,9 @@ export default {
       fileList: [
         
       ],
-      formdata: new FormData(),
       billUploadShow: false,
-      uploadType: ''
+      uploadType: '',
+      billingType: ''
     }
   },
   computed: {
@@ -134,7 +156,7 @@ export default {
         command: 'handlerBusiness',
         platform: 'web',
         id: this.bill.id,
-        type: 'billingOthers',
+        type: this.billingType,
         annexId: '',
         remark: this.remark
       };
@@ -146,8 +168,10 @@ export default {
     showBillUpload (type) {
       if (type === 'bill') {
         this.uploadType = '发票'
+        this.billingType = 'billingOthers'
       } else if (type === 'receive') {
-        this.uploadType = '上传收款截图'
+        this.uploadType = '收款截图'
+        this.billingType = 'receivables'
       }
       this.billUploadShow = true
     },
@@ -166,6 +190,7 @@ export default {
       this.fileList.push(file)
     },
     submitUpload() {
+      this.formdata = new FormData()
       this.fileList.forEach((item, index, array) => {
         this.formdata.append('file', item.raw)
       })
@@ -177,11 +202,39 @@ export default {
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
           this.cancel()
-          this.$message.success('发票上传成功')
+          this.fileList = []
+          this.remark = ''
+          this.$message.success('上传成功')
         } else {
           this.$message.error(rep.data.msg)
         }
       }, (rep) => { })
+    },
+    revokedBilling () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'revokedBilling',
+                platform: 'web',
+                id: this.bill.id
+              }
+              return JSON.stringify(obj)
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success('操作成功')
+            resolve('done')
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { })
+      })
     }
   },
   components: {

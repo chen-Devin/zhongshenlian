@@ -19,7 +19,7 @@
           </el-col>
           <el-col :span="6" class="number" v-if="contractNumberShow">
             合同号：
-            <el-input v-model="input" placeholder="请填写合同号" :disabled="!editAble"></el-input>
+            <el-input v-model="projectNumber" placeholder="请填写合同号" :disabled="!editAble"></el-input>
           </el-col>
           <el-col :span="6">
             开票类型：
@@ -171,6 +171,47 @@ export default {
         { name: '报销列表', url: '/expenses-list', present: false },
         { name: '报销详情', url: '/expenses-detail', present: true }
       ],
+      reimbursementInfo: {
+        submitType: '报销方式',
+        projectNumber: '合同编号',
+        billingType: '纸质发票报销',
+        startTime: '2017-10-02',
+        endTime: '2017-10-03',
+        place: '出差地',
+        reason: '审计',
+        totalAmount: '总金额',
+        summary: '摘要',
+        budgetCompany: '会计所',
+        budgetDepartment: '。。。',
+        transportationTotalFee: '交通费总额',
+        transportationBillingNum: '交通费票据张数',
+        travelRArray: [
+          {
+
+          }
+        ],
+        stayTotalFee: '住宿费总额',
+        stayBillingNum: '住宿费票据张数',
+        stayRArray: [
+          {
+
+          }
+        ],
+        localMealsTotalFee: '本地餐费总额',
+        localMealsBillingNum: '本地餐费票据张数',
+        localRArray: [
+          {
+
+          }
+        ],
+        fieldMealsTotalFee: '外地餐费总额',
+        fieldMealsBillingNum: '外地餐费票据张数',
+        fieldRArray: [
+          {
+
+          }
+        ]
+      },
       electronicalBills: [
         {
           type: '交通费票据',

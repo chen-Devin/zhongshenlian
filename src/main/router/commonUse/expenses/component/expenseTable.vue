@@ -59,9 +59,9 @@
     <table border="1" v-if="type==='特殊报销'">
       <tbody>
         <tr>
-          <td class="table-label">报销数量：</td>
+          <td class="table-label">支出项目：</td>
           <td>
-            <el-input v-model="input" placeholder="请填写报销数量" :disabled="!editAble"></el-input>
+            <el-input v-model="input" placeholder="请填写支出项目" :disabled="!editAble"></el-input>
           </td>
           <td class="table-label">报销金额：</td>
           <td>
@@ -69,9 +69,9 @@
           </td>
         </tr>
         <tr>
-          <td class="table-label">备注：</td>
+          <td class="table-label">摘要：</td>
           <td colspan="3">
-            <el-input v-model="input" placeholder="请填写备注" :disabled="!editAble"></el-input>
+            <el-input v-model="input" placeholder="请填写摘要" :disabled="!editAble"></el-input>
           </td>
         </tr>
       </tbody>

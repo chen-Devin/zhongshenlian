@@ -72,11 +72,11 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col style="display: flex;" :span="12">
+          <!-- <el-col style="display: flex;" :span="12">
             <span style="width:80px;">摘要：</span>
             <el-input v-model="summary" placeholder="请填写摘要" :disabled="!editAble"></el-input>
-          </el-col>
-          <el-col :span="12">
+          </el-col> -->
+          <!-- <el-col :span="12">
             支出项目：
             <el-select v-model="departmentSelected" placeholder="请选择预算所属部门" :disabled="!editAble">
               <el-option
@@ -86,7 +86,7 @@
                 :value="item">
               </el-option>
             </el-select>
-          </el-col>
+          </el-col> -->
         </el-row>
         <template v-if="group || project">
           <el-row>
@@ -205,6 +205,23 @@ export default {
         { name: '报销列表', url: '/expenses-list', present: false },
         { name: '报销详情', url: '/expenses-detail', present: true }
       ],
+      reimbursementInfo: {
+        submitType: '报销类型',
+        projectNumber: '合同编号',
+        billingType: '纸质发票报销',
+        totalAmount: '总金额',
+        summary: '摘要',
+        budgetCompany: '会计所',
+        budgetDepartment: '。。。',
+        accountName: '账户名称',
+        accountBank: '开户银行',
+        accountBankNumber: '银行账户',
+        paperRArray: [
+          {
+
+          }
+        ]
+      },
       recordList: [{
         id: 1,
         name: '张三',
