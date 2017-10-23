@@ -10,6 +10,12 @@
       <!-- <el-menu-item index="/business-handle-list-office" v-if="officeBinding">待装订业务</el-menu-item> -->
       <el-menu-item index="/customer-infor-list" v-if="officeCustomer">客户信息管理</el-menu-item>
       <el-menu-item index="/business-review-list-risk" v-if="riskReview">立项审批</el-menu-item>
+      <el-submenu index="to-review">
+        <template slot="title">待处理业务</template>
+          <el-menu-item index="/business-handle-list-financial/0">待开发票</el-menu-item>
+          <el-menu-item index="/business-handle-list-financial/1">待上传截图</el-menu-item>
+          <el-menu-item index="/business-handle-list-financial/2">开票撤销复核</el-menu-item>
+      </el-submenu>
       <el-submenu index="to-do" v-if="leader">
         <template slot="title">待办事项</template>
         <!-- <el-menu-item-group> -->

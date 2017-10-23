@@ -9,7 +9,7 @@
       </router-link>
     </h4>
     <p>{{ business.bills }}</p>
-    <div class="com-list list-group list-adjust">
+    <!-- <div class="com-list list-group list-adjust">
       <li class="list-group-item list-head">
         <span class="title">开票列表</span>
       </li>
@@ -25,7 +25,7 @@
               v-else-if="BILL.state<3">已完成</span>
         {{BILL.amount+'元'}}
       </router-link>
-    </div>
+    </div> -->
     <table class="table table-bordered table-list">
       <thead>
         <tr>
@@ -47,7 +47,7 @@
           <td class="ta-c">{{ BILL.startServiceTime === '' ? empty : BILL.startServiceTime }}</td>
           <td class="ta-c">{{ BILL.endServiceTime === '' ? empty : BILL.endServiceTime }}</td>
           <td class="ta-c">
-            <button class="btn my-btn submit-btn">查看</button>
+            <button class="btn my-btn submit-btn" @click="check(BILL)">查看</button>
             <button class="btn my-btn cancel-btn">撤销</button>
           </td>
           <!-- <td class="ta-c">{{ FStatusMap[Number(BILL.FStatus)] }}</td>
@@ -138,8 +138,11 @@ export default {
       }
       return amoNum;
     },
-    billRoute(BILL) {
-      return 'billing-infor-detail-'+BILL.id;
+    // billRoute(BILL) {
+    //   return 'billing-infor-detail-'+BILL.id;
+    // },
+    check (BILL) {
+      this.$router.push('/bill-apply-detail/' + this.initBusiness.id)
     }
   }
 };

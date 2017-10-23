@@ -58,6 +58,7 @@ import billingInforEditor from './salesDepartment/component/billingInforEditor.v
 import contractChange from './salesDepartment/contractChange/contractChange.vue';
 import billApply from './salesDepartment/billApply/billApply.vue';
 import billApplyAdd from './salesDepartment/billApply/billApplyAdd.vue';
+import billApplyDetail from './salesDepartment/billApply/billApplyDetail.vue';
 // 风险评估部
 import businessHandleDetailRisk from './riskDepartment/businessHandleDetail.vue';
 import businessHandleListRisk from './riskDepartment/businessHandleList.vue';
@@ -366,6 +367,10 @@ const router = new VueRouter({
             component: billApplyAdd
         },
         {
+            path: '/bill-apply-detail/:id',
+            component: billApplyDetail
+        },
+        {
             path: '/business-review-list-risk',
             component: businessReviewListRisk
         },
@@ -444,7 +449,7 @@ const router = new VueRouter({
             ]
         },
         {
-            path: '/business-handle-list-financial',
+            path: '/business-handle-list-financial/:type',
             component: businessHandleListFinancial
         },
         {

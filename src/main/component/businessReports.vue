@@ -4,7 +4,7 @@
       业务报告
       {{ business.reports.length }}
       <!-- 确认上传 -->
-      <button class="btn my-btn cancel-btn f-r mr-10">上传完成</button>
+      <button class="btn my-btn cancel-btn f-r mr-10" v-if="salesShow">上传完成</button>
       <button class="btn my-btn submit-btn pull-right mr-10"
               @click="add()"
               v-if="salesShow">
@@ -27,29 +27,57 @@
         <tr 
           v-for="(REPORT, index) in business.reports" 
           :key="index">
-          <td class="ta-c">{{ REPORT.number === '' ? '暂无' : REPORT.number }}</td>
+          <td class="ta-c" v-if="user.department === '档案部'">
+            <button class="btn my-btn submit-btn small-btn" v-if="!REPORT.number" @click="showProjectReport(index, REPORT.id)">待输入编号</button>
+            <span v-else>{{ REPORT.number }}</span>
+          </td>
+          <td class="ta-c" v-else>{{ REPORT.number === '' ? '暂无' : REPORT.number }}</td>
           <td class="ta-c">{{ REPORT.name }}</td>
           <td class="ta-c">{{ FStatusMap[Number(REPORT.FStatus)] }}</td>
-          <td class="ta-c">
-            <a href="javascript:void(0);">
+          <td class="ta-c" v-if="user.department === '档案部'">
+            <a href="javascript:void(0);" class="btn my-btn submit-btn small-btn" v-if="!Number(REPORT.downloadStatus)" @click="showDownloadModal(index, REPORT.id)">待下载</a>
+            <a href="javascript:void(0);" @click="showDownloadModal" v-else>
               <span class="fa fa-file-text-o"></span>
             </a>
           </td>
-          <td class="ta-c">{{ REPORT.QRcodeUrl === '' ? '未生成' : '已生成' }}</td>
+          <td class="ta-c" v-else>
+            <a href="javascript:void(0);" @click="showDownloadModal">
+              <span class="fa fa-file-text-o"></span>
+            </a>
+          </td>
+          <td class="ta-c" v-if="user.department === '档案部'">
+            <button class="btn my-btn submit-btn small-btn" v-if="!(REPORT.QRcodeUrl === '')" @click="showCodeModal(index, REPORT.id)">待生成</button>
+            <span v-else>{{ REPORT.QRcodeUrl === '' ? '未生成' : '已生成' }}</span>
+          </td>
+          <td class="ta-c" v-else>{{ REPORT.QRcodeUrl === '' ? '未生成' : '已生成' }}</td>
           <td class="ta-c">{{ archivingStateMap[Number(REPORT.archivingState)] }}</td>
         </tr>
       </tbody>
     </table>
-    <report-add-modal v-if="showAddModal"
-                      :initBusiness="business"
-                      @added="added"
-                      @canceled="addCanceled"></report-add-modal>
-    <report-mod-modal v-if="showModModal"
+    <report-add-modal 
+      v-if="showAddModal"
+      :initBusiness="business"
+      @added="added"
+      @canceled="addCanceled"></report-add-modal>
+    <!-- <report-mod-modal v-if="showModModal"
                       :initReport="modReport"
                       :initBusiness="business"
                       @del="del"
                       @saved="saved"
-                      @canceled="modCanceled"></report-mod-modal>
+                      @canceled="modCanceled"></report-mod-modal> -->
+    <report-number-modal 
+      v-if="projectReportShow"
+      :id="reportId"
+      @canceled="numberCanceled"
+      @submit="numberSubmit"></report-number-modal>
+    <report-download-modal 
+      v-if="downloadModalShow"
+      :id="reportId"
+      @canceled="downloadCanceled"></report-download-modal>
+    <report-code-modal 
+      v-if="codeModalShow"
+      :id="reportId"
+      @canceled="codeCanceled"></report-code-modal>
     <report-del-modal v-if="showDelModal"
                       :initReport="delReport"
                       :initBusiness="business"
@@ -68,6 +96,9 @@ import axios from 'axios';
 import qs from 'qs';
 
 import reportAddModal from './reportAddModal.vue';
+import reportNumberModal from './reportNumberModal.vue';
+import reportDownloadModal from './reportDownloadModal.vue';
+import reportCodeModal from './reportCodeModal.vue';
 import reportModModal from './reportModModal.vue';
 import reportDelModal from './reportDelModal.vue';
 import reportSubModal from './reportSubModal.vue';
@@ -87,7 +118,14 @@ export default {
       showSubModal: false,
       subReport: {},
       FStatusMap: ['未复审', '未通过', '已通过'],
-      archivingStateMap: ['未归档', '已归档']
+      archivingStateMap: ['未归档', '已归档'],
+      projectReportShow: false,
+      downloadModalShow: false,
+      codeModalShow: false,
+      numberIndex: '',
+      downloadIndex: '',
+      codeIndex: '',
+      reportId: ''
     };
   },
   computed: {
@@ -131,6 +169,25 @@ export default {
     // this.$emit('pathsChan', this.paths);
   },
   methods: {
+    showDownloadModal (index, id) {
+      this.downloadIndex = index
+      this.reportId = id
+      this.downloadModalShow = true
+    },
+    showCodeModal (index, id) {
+      this.codeIndex = index
+      this.reportId = id
+      this.codeModalShow = true
+    },
+    numberSubmit (number) {
+      this.business.reports[this.numberIndex].number = number
+      this.numberCanceled()
+    },
+    showProjectReport (index, id) {
+      this.numberIndex = index
+      this.reportId = id
+      this.projectReportShow = true
+    },
     add() {
       if (this.business.reports.length > 3) {
         this.$message.error('最多上传4份业务报告')
@@ -178,6 +235,39 @@ export default {
       }
       this.delReport = {};
       this.showDelModal = false;
+    },
+    numberCanceled () {
+      this.projectReportShow = false
+    },
+    downloadCanceled () {
+      this.downloadModalShow = false
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'downloadProjectReport',
+                platform: 'web',
+                id: this.reportId
+              }
+              return JSON.stringify(obj)
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.business.reports[this.downloadIndex].downloadStatus = 1
+            resolve('done')
+          } else {
+            // this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { })
+      })
+    },
+    codeCanceled () {
+      this.codeModalShow = false
     },
     delCanceled() {
       this.delReport = {};
@@ -282,6 +372,9 @@ export default {
   components: {
     reportAddModal,
     reportModModal,
+    reportNumberModal,
+    reportDownloadModal,
+    reportCodeModal,
     reportDelModal,
     reportSubModal
   }
