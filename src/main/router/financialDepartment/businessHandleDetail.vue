@@ -3,12 +3,16 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3 class="main-title">
-        {{business.name}}
+        {{business.name}} {{ business.bills }}
         <button class="btn my-btn submit-btn pull-right" @click="sub()" v-if="!sended">完成开票</button>
         <small class="label label-success business-label pull-right" v-if="sended">开票已完成</small>
       </h3>
       <div class="normal-wrap">
-        <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
+        <business 
+          :initBusiness="business" 
+          :user="user" 
+          :progress="progress" 
+          @pathsChan="pathsChan"></business>
         <template v-if="approverAdviceShow">
           <hr>
           <div class="row">
@@ -18,6 +22,7 @@
         </template>
       </div>
     </card>
+    <billing-detail :bill="bill" v-if="billDetailShow"></billing-detail>
     <complete-bill-modal v-if="showModal"
                          :initBusiness="business"
                          @submited="submited"
@@ -27,12 +32,13 @@
 
 <script>
 import axios from 'axios';
-
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
 import completeBillModal from './component/completeBillModal.vue';
+import billingDetail from '@/main/component/billingDetail.vue'
+import bus from '@/main/bus.js'
 
 export default {
   name: 'businessHandleDetailFinancial',
@@ -313,7 +319,9 @@ export default {
       },
       riskAdvices: [],
       leaderAdivces: [],
-      showModal: false
+      showModal: false,
+      bill: {},
+      billDetailShow: false
     };
   },
   props: ['user'],
@@ -448,7 +456,13 @@ export default {
     }
   },
   created() {
-    this.getInfo();
+    bus.$on('bill-selected', (bill) => {
+      this.bill = bill
+      console.log(1)
+      this.billDetailShow = true
+      // console.log(bill)
+    })
+    this.getInfo()
   },
   watch: {
     $route: 'getInfo'
@@ -731,7 +745,8 @@ export default {
     card,
     business,
     approverAdvice,
-    completeBillModal
+    completeBillModal,
+    billingDetail
   }
 }
 </script>

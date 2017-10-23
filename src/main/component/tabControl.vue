@@ -39,7 +39,7 @@ export default {
       this.parts[index].state = true;
     }
   }
-};
+}
 </script>
 
 <style lang="sass" scoped>
