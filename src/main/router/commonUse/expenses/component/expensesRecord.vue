@@ -6,7 +6,7 @@
       <h5 class="main-title">报销金额总计：</h5>
     </card>
     <card>
-      <table class="table table-bordered table-hover com-list">
+      <table class="table table-bordered table-list">
         <thead>
           <tr>
             <th class="text-center">姓名</th>

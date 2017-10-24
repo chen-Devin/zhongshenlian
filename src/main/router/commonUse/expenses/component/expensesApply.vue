@@ -2,7 +2,7 @@
   <div class="type-wrapper">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h5>申请报销</h5>
+      <h5 class="main-title">申请报销</h5>
       <div class="type-box">
         <h4>选择报销类型</h4>
         <el-radio-group v-model="type">
@@ -67,6 +67,9 @@ export default {
       padding-bottom: 20px;
       background-color: #f9fbfe;
       text-align: center;
+      h4 {
+        margin-bottom: 20px;
+      }
       .el-radio-group {
         margin-top: 10px;
         .el-radio {
@@ -78,7 +81,8 @@ export default {
       }
     }
     .btn-contain {
-      margin-top: 10px;
+      margin-top: 20px;
+      margin-bottom: 20px;
       text-align: center;
     }
   }

@@ -6,9 +6,9 @@
       <h5 class="main-title" v-if="!editAble">可报销金额：1</h5>
       <div class="title-wrapper">
         <el-row>
-          <el-col :span="6">
-            报销方式：
-            <el-select v-model="typeSelected" placeholder="请选择报销方式" :disabled="!editAble">
+          <el-col :span="6" class="d-f">
+            <span style="width:90px">报销方式：</span>
+            <el-select v-model="reimbursementInfo.submitType" placeholder="请选择报销方式" :disabled="!editAble">
               <el-option
                 v-for="item in typeOptions"
                 :key="item"
@@ -17,13 +17,13 @@
               </el-option>
             </el-select>
           </el-col>
-          <el-col :span="6" class="number" v-if="contractNumberShow">
-            合同号：
-            <el-input v-model="projectNumber" placeholder="请填写合同号" :disabled="!editAble"></el-input>
+          <el-col :span="6" class="number d-f" v-if="contractNumberShow">
+            <span style="width:70px">合同号：</span>
+            <el-input v-model="reimbursementInfo.projectNumber" placeholder="请填写合同号" :disabled="!editAble"></el-input>
           </el-col>
-          <el-col :span="6">
-            开票类型：
-            <el-select v-model="classSelected" placeholder="请选择开票类型" :disabled="!editAble">
+          <el-col class="d-f" :span="6">
+            <span style="width:90px">开票类型：</span>
+            <el-select v-model="reimbursementInfo.billingType" placeholder="请选择开票类型" :disabled="!editAble">
               <el-option
                 v-for="item in classOptions"
                 :key="item"
@@ -32,8 +32,9 @@
               </el-option>
             </el-select>
           </el-col>
-          <el-col :span="6">
-            申请人：{{ user.name }}
+          <el-col class="d-f" :span="6">
+            <span style="width:70px">申请人：</span>
+            {{ user.name }}
           </el-col>
         </el-row>
       </div>
@@ -41,48 +42,59 @@
     <card class="card2">
       <expense-table
         type="差旅费报销"
+        :reimbursementInfo="reimbursementInfo"
         :editAble="editAble"></expense-table>
       <div class="message-box">
         <el-row>
-          <el-col :span="12">
-            报销单ID：1127930482679
+          <el-col class="d-f" :span="12">
+            <span style="width:70px">报销单ID：</span>
+            {{ reimbursementInfo.id }}
           </el-col>
-          <el-col :span="12">
-            预算所属公司：
-            <el-select v-model="companySelected" placeholder="请选择预算所属公司" :disabled="!editAble">
+          <el-col class="d-f" :span="12">
+            <span style="width:120px">预算所属公司：</span>
+            <el-select 
+              v-model="companySelected" 
+              placeholder="请选择预算所属公司" 
+              :disabled="!editAble" 
+              @change="companyChange()">
               <el-option
-                v-for="item in companyOptions"
-                :key="item"
-                :label="item"
-                :value="item">
+                v-for="item in companyList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
               </el-option>
             </el-select>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            所在公司：天津中审联事务所
+          <el-col class="d-f" :span="12">
+            <span style="width:70px">所在公司：</span>
+            {{ user.companyName }}
           </el-col>
-          <el-col :span="12">
-            预算所属部门：
-            <el-select v-model="departmentSelected" placeholder="请选择预算所属部门" :disabled="!editAble">
+          <el-col class="d-f" :span="12">
+            <span style="width:120px">预算所属部门：</span>
+            <el-select 
+              v-model="departmentSelected" 
+              placeholder="请选择预算所属部门" 
+              :disabled="!editAble"
+              @change="departmentChange()">
               <el-option
-                v-for="item in departmentOptions"
-                :key="item"
-                :label="item"
-                :value="item">
+                v-for="item in departmentList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
               </el-option>
             </el-select>
           </el-col>
         </el-row>
       </div>
       <div class="electronical-bill" v-if="electric || paper">
-        <div class="title" v-if="electric">
+        <h5 class="vice-title" v-if="electric">
           电子发票报销
-        </div>
-        <div class="title" v-if="paper">
+        </h5>
+        <h5 class="vice-title" v-if="paper">
           纸质发票报销
-        </div>
+        </h5>
         <el-row class="table-title">
           <el-col :span="4" :offset="4">
             附件张数
@@ -94,44 +106,274 @@
             单笔金额
           </el-col>
         </el-row>
-        <el-row class="table-content" v-for="(item, index) in electronicalBills" :key="index">
+        <el-row class="table-content">
           <el-col :span="4">
-            {{ item.type }}
+            交通费票据
+          </el-col>
+          <el-col :span="4">
+            <el-select 
+              v-model="reimbursementInfo.transportationBillingNum" 
+              placeholder="请选择张数" 
+              :disabled="!editAble" 
+              @change="changeNumbers('transportation')">
+              <el-option
+                v-for="item in numbers"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
           </el-col>
           <el-col :span="4">
             <el-input 
-              v-model="item.numbers" 
-              placeholder="请填写张数" 
-              :disabled="!editAble"
-              @change="changeNumbers(item)"></el-input> 张
+              v-model="reimbursementInfo.transportationTotalFee" 
+              placeholder="请填写金额" 
+              :disabled="!editAble">
+                <template slot="append">元</template>
+              </el-input>
           </el-col>
           <el-col :span="4">
-            <el-input v-model="item.amounts" placeholder="请填写金额" :disabled="!editAble"></el-input> 元
-          </el-col>
-          <el-col :span="4">
-            <div v-for="(each, jndex) in item.list" :key="jndex" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" :disabled="!editAble"></el-input> 元
+            <div v-for="(each, index) in reimbursementInfo.travelRArray" :key="index" class="each">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" :disabled="!editAble">
+                <template slot="append">元</template>
+              </el-input>
             </div>
           </el-col>
           <el-col :span="7" v-if="electric">
-            <div v-for="(each, jndex) in item.list" :key="jndex" class="each">
-              <!-- <a href="each.address">下载</a> -->
-              <el-upload
-                class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :file-list="fileList">
-                <el-button size="small" type="primary">上传文件</el-button>
-                <span>建议文件大小不超过300kb</span>
+            <div v-for="(item, index) in reimbursementInfo.travelRArray" :key="index" class="each">
+              <el-upload :show-file-list="false"
+                         :action="getUploadUrl(item.amount, 'travelR')"
+                         :on-progress="UploadProgress"
+                         :on-success="UploadSuccess">
+                <button class="btn my-btn submit-btn"
+                        type="button"
+                        slot="trigger"
+                        :disabled="!item.amount" @click="selIndex(index, 'transportation')">点击上传</button>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.notUpload">&emsp;文件大小建议不超过3Mb</span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploading">
+                      &emsp;
+                      <i class="el-icon-loading"></i>
+                      &emsp;
+                      {{ item.percentage }}%
+                      </span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>上传失败，请重试</span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploaded">&emsp;<i class="el-icon-check"></i>已上传</span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploaded">
+                      &emsp;
+                      <span class="fa fa-file-text-o"></span>
+                      <a :href="item.path" target="_blank">{{ item.name }}</a>
+                      </span>
+              </el-upload>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row class="table-content">
+          <el-col :span="4">
+            住宿费票据
+          </el-col>
+          <el-col :span="4">
+            <el-select 
+              v-model="reimbursementInfo.stayBillingNum" 
+              placeholder="请选择张数" 
+              :disabled="!editAble" 
+              @change="changeNumbers('stay')">
+              <el-option
+                v-for="item in numbers"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="4">
+            <el-input 
+              v-model="reimbursementInfo.stayTotalFee" 
+              placeholder="请填写金额" 
+              :disabled="!editAble">
+                <template slot="append">元</template>
+              </el-input> 
+          </el-col>
+          <el-col :span="4">
+            <div v-for="(each, index) in reimbursementInfo.stayRArray" :key="index" class="each">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" :disabled="!editAble">
+                <template slot="append">元</template>
+              </el-input>
+            </div>
+          </el-col>
+          <el-col :span="7" v-if="electric">
+            <div v-for="(item, index) in reimbursementInfo.stayRArray" :key="index" class="each">
+              <el-upload :show-file-list="false"
+                         :action="getUploadUrl(item.amount, 'stayR')"
+                         :on-progress="UploadProgress"
+                         :on-success="UploadSuccess">
+                <button class="btn my-btn submit-btn"
+                        type="button"
+                        slot="trigger"
+                        :disabled="!item.amount" @click="selIndex(index, 'stay')">点击上传</button>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.notUpload">&emsp;文件大小建议不超过3Mb</span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploading">
+                      &emsp;
+                      <i class="el-icon-loading"></i>
+                      &emsp;
+                      {{ item.percentage }}%
+                      </span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>上传失败，请重试</span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploaded">&emsp;<i class="el-icon-check"></i>已上传</span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploaded">
+                      &emsp;
+                      <span class="fa fa-file-text-o"></span>
+                      <a :href="item.path" target="_blank">{{ item.name }}</a>
+                      </span>
+              </el-upload>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row class="table-content">
+          <el-col :span="4">
+            本地餐费票据
+          </el-col>
+          <el-col :span="4">
+            <el-select 
+              v-model="reimbursementInfo.localMealsBillingNum" 
+              placeholder="请选择张数" 
+              :disabled="!editAble" 
+              @change="changeNumbers('local')">
+              <el-option
+                v-for="item in numbers"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="4">
+            <el-input 
+              v-model="reimbursementInfo.localMealsTotalFee" 
+              placeholder="请填写金额" 
+              :disabled="!editAble">
+                <template slot="append">元</template>
+              </el-input>
+          </el-col>
+          <el-col :span="4">
+            <div v-for="(each, index) in reimbursementInfo.localRArray" :key="index" class="each">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" :disabled="!editAble">
+                <template slot="append">元</template>
+              </el-input>
+            </div>
+          </el-col>
+          <el-col :span="7" v-if="electric">
+            <div v-for="(item, index) in reimbursementInfo.localRArray" :key="index" class="each">
+              <el-upload :show-file-list="false"
+                         :action="getUploadUrl(item.amount, 'localR')"
+                         :on-progress="UploadProgress"
+                         :on-success="UploadSuccess">
+                <button class="btn my-btn submit-btn"
+                        type="button"
+                        slot="trigger"
+                        :disabled="!item.amount" @click="selIndex(index, 'local')">点击上传</button>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.notUpload">&emsp;文件大小建议不超过3Mb</span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploading">
+                      &emsp;
+                      <i class="el-icon-loading"></i>
+                      &emsp;
+                      {{ item.percentage }}%
+                      </span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>上传失败，请重试</span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploaded">&emsp;<i class="el-icon-check"></i>已上传</span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploaded">
+                      &emsp;
+                      <span class="fa fa-file-text-o"></span>
+                      <a :href="item.path" target="_blank">{{ item.name }}</a>
+                      </span>
+              </el-upload>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row class="table-content">
+          <el-col :span="4">
+            外地餐费票据
+          </el-col>
+          <el-col :span="4">
+            <el-select 
+              v-model="reimbursementInfo.fieldMealsBillingNum" 
+              placeholder="请选择张数" 
+              :disabled="!editAble" 
+              @change="changeNumbers('field')">
+              <el-option
+                v-for="item in numbers"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="4">
+            <el-input 
+              v-model="reimbursementInfo.fieldMealsTotalFee" 
+              placeholder="请填写金额" 
+              :disabled="!editAble">
+                <template slot="append">元</template>
+              </el-input>
+          </el-col>
+          <el-col :span="4">
+            <div v-for="(each, index) in reimbursementInfo.fieldRArray" :key="index" class="each">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" :disabled="!editAble">
+                <template slot="append">元</template>
+              </el-input>
+            </div>
+          </el-col>
+          <el-col :span="7" v-if="electric">
+            <div v-for="(item, index) in reimbursementInfo.fieldRArray" :key="index" class="each">
+              <el-upload :show-file-list="false"
+                         :action="getUploadUrl(item.amount, 'fieldR')"
+                         :on-progress="UploadProgress"
+                         :on-success="UploadSuccess">
+                <button class="btn my-btn submit-btn"
+                        type="button"
+                        slot="trigger"
+                        :disabled="!item.amount" @click="selIndex(index, 'field')">点击上传</button>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.notUpload">&emsp;文件大小建议不超过3Mb</span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploading">
+                      &emsp;
+                      <i class="el-icon-loading"></i>
+                      &emsp;
+                      {{ item.percentage }}%
+                      </span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>上传失败，请重试</span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploaded">&emsp;<i class="el-icon-check"></i>已上传</span>
+                <span slot="tip"
+                      class="text-info" v-if="item.state.uploaded">
+                      &emsp;
+                      <span class="fa fa-file-text-o"></span>
+                      <a :href="item.path" target="_blank">{{ item.name }}</a>
+                      </span>
               </el-upload>
             </div>
           </el-col>
         </el-row>
       </div>
       <p class="btns ta-c" v-if="editAble">
-        <button class="btn my-btn submit-btn">提交审批</button>
-        <button class="btn my-btn cancel-btn">取消</button>
+        <button class="btn my-btn submit-btn" @click="addOrEditReimbursement">提交审批</button>
+        <button class="btn my-btn cancel-btn" @click="back">取消</button>
       </p>
     </card>
     <card class="card3" v-if="!editAble">
@@ -171,90 +413,100 @@ export default {
         { name: '报销列表', url: '/expenses-list', present: false },
         { name: '报销详情', url: '/expenses-detail', present: true }
       ],
+      numbers: [],
+      uploadIndex: '',
+      uploadType: '',
       reimbursementInfo: {
-        submitType: '报销方式',
-        projectNumber: '合同编号',
-        billingType: '纸质发票报销',
-        startTime: '2017-10-02',
-        endTime: '2017-10-03',
-        place: '出差地',
-        reason: '审计',
-        totalAmount: '总金额',
-        summary: '摘要',
-        budgetCompany: '会计所',
-        budgetDepartment: '。。。',
-        transportationTotalFee: '交通费总额',
-        transportationBillingNum: '交通费票据张数',
+        id: '',
+        submitType: '',
+        projectNumber: '',
+        billingType: '',
+        startTime: '',
+        endTime: '',
+        place: '',
+        reason: '',
+        totalAmount: '',
+        summary: '',
+        budgetCompany: '',
+        budgetDepartment: '',
+        transportationTotalFee: '',
+        transportationBillingNum: 1,
         travelRArray: [
           {
-
+            id: '',
+            amount: '',
+            annexUrl: '',
+            uploadURL: '',
+            state: {
+              notUpload: true,
+              uploading: false,
+              uploadFail: false,
+              uploaded: false
+            },
+            percentage: 0,
+            name: ''
           }
         ],
-        stayTotalFee: '住宿费总额',
-        stayBillingNum: '住宿费票据张数',
+        stayTotalFee: '',
+        stayBillingNum: 1,
         stayRArray: [
           {
-
+            id: '',
+            amount: '',
+            annexUrl: '',
+            uploadURL: '',
+            state: {
+              notUpload: true,
+              uploading: false,
+              uploadFail: false,
+              uploaded: false
+            },
+            percentage: 0,
+            name: ''
           }
         ],
-        localMealsTotalFee: '本地餐费总额',
-        localMealsBillingNum: '本地餐费票据张数',
+        localMealsTotalFee: '',
+        localMealsBillingNum: 1,
         localRArray: [
           {
-
+            id: '',
+            amount: '',
+            annexUrl: '',
+            uploadURL: '',
+            state: {
+              notUpload: true,
+              uploading: false,
+              uploadFail: false,
+              uploaded: false
+            },
+            percentage: 0,
+            name: ''
           }
         ],
-        fieldMealsTotalFee: '外地餐费总额',
-        fieldMealsBillingNum: '外地餐费票据张数',
+        fieldMealsTotalFee: '',
+        fieldMealsBillingNum: 1,
         fieldRArray: [
           {
-
+            id: '',
+            amount: '',
+            annexUrl: '',
+            uploadURL: '',
+            state: {
+              notUpload: true,
+              uploading: false,
+              uploadFail: false,
+              uploaded: false
+            },
+            percentage: 0,
+            name: ''
           }
         ]
       },
-      electronicalBills: [
-        {
-          type: '交通费票据',
-          numbers: 1,
-          amounts: '',
-          list: [{
-            amount: '',
-            address: ''
-          }]
-        }, 
-        {
-          type: '住宿费票据',
-          numbers: 1,
-          amounts: '',
-          list: [{
-            amount: '',
-            address: ''
-          }]
-        },
-        {
-          type: '本地餐费票据',
-          numbers: 1,
-          amounts: '',
-          list: [{
-            amount: '',
-            address: ''
-          }]
-        },
-        {
-          type: '外部餐费票据',
-          numbers: 1,
-          amounts: '',
-          list: [{
-            amount: '',
-            address: ''
-          }]
-        }
-      ],
       textarea: '',
       typeOptions: ['合同报销', '非合同报销'],
       classOptions: ['纸质发票报销', '电子发票报销'],
-      companyOptions: ['会计所', '造价所', '评估所', '税务所'],
-      departmentOptions: [],
+      companyList: [],
+      departmentList: [],
       typeSelected: '',
       classSelected: '',
       companySelected: '',
@@ -265,21 +517,21 @@ export default {
   },
   computed: {
     contractNumberShow () {
-      if (this.typeSelected === '合同报销') {
+      if (this.reimbursementInfo.submitType === '合同报销') {
         return true
       } else {
         return false
       }
     },
     electric () {
-      if (this.classSelected === '电子发票报销') {
+      if (this.reimbursementInfo.billingType === '电子发票报销') {
         return true
       } else {
         return false
       }
     },
     paper () {
-      if (this.classSelected === '纸质发票报销') {
+      if (this.reimbursementInfo.billingType === '纸质发票报销') {
         return true
       } else {
         return false
@@ -287,26 +539,326 @@ export default {
     }
   },
   methods: {
+    getCompanyList () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getCompanyList',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.companyList = rep.data.data.companyList
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    getCompanyDepartmentListByCom () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getCompanyDepartmentListByCom',
+                platform: 'web',
+                companyId: this.reimbursementInfo.budgetCompany.id
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.departmentList = rep.data.data.departmentList
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    companyChange () {
+      this.companyList.forEach((item) => {
+        if (item.id === this.companySelected) {
+          this.reimbursementInfo.budgetCompany = item.name
+        }
+      })
+      this.departmentSelected = ''
+      this.reimbursementInfo.budgetDepartment = ''
+      this.getCompanyDepartmentListByCom()
+    },
+    departmentChange () {
+      this.departmentList.forEach((item) => {
+        if (item.id === this.departmentSelected) {
+          this.reimbursementInfo.budgetDepartment = item.name
+        }
+      })
+    },
     changeNumbers (item) {
-      if (item.numbers === '') {
-        item.numbers = 0
-        item.list = []
-      } else {
-        item.list = []
-        item.list = new Array(parseInt(item.numbers)).fill({
-          amount: '',
-          address: ''
-        })
+      switch(item) {
+        case 'transportation':
+          this.reimbursementInfo.travelRArray = []
+          for (let i = 0; i < Number(this.reimbursementInfo.transportationBillingNum); i++) {
+            this.reimbursementInfo.travelRArray.push(
+              {
+                id: '',
+                amount: '',
+                annexUrl: '',
+                uploadURL: '',
+                state: {
+                  notUpload: true,
+                  uploading: false,
+                  uploadFail: false,
+                  uploaded: false
+                },
+                percentage: 0,
+                fileName: ''
+              }
+            )
+          }
+          break;
+        case 'stay':
+          this.reimbursementInfo.stayRArray = []
+          for (let i = 0; i < Number(this.reimbursementInfo.stayBillingNum); i++) {
+            this.reimbursementInfo.stayRArray.push(
+              {
+                id: '',
+                amount: '',
+                annexUrl: '',
+                uploadURL: '',
+                state: {
+                  notUpload: true,
+                  uploading: false,
+                  uploadFail: false,
+                  uploaded: false
+                },
+                percentage: 0,
+                fileName: ''
+              }
+            )
+          }
+          break;
+        case 'local':
+          this.reimbursementInfo.localRArray = []
+          for (let i = 0; i < Number(this.reimbursementInfo.localMealsBillingNum); i++) {
+            this.reimbursementInfo.localRArray.push(
+              {
+                id: '',
+                amount: '',
+                annexUrl: '',
+                uploadURL: '',
+                state: {
+                  notUpload: true,
+                  uploading: false,
+                  uploadFail: false,
+                  uploaded: false
+                },
+                percentage: 0,
+                fileName: ''
+              }
+            )
+          }
+          break;
+        case 'field':
+          this.reimbursementInfo.fieldRArray = []
+          for (let i = 0; i < Number(this.reimbursementInfo.fieldMealsBillingNum); i++) {
+            this.reimbursementInfo.fieldRArray.push(
+              {
+                id: '',
+                amount: '',
+                annexUrl: '',
+                uploadURL: '',
+                state: {
+                  notUpload: true,
+                  uploading: false,
+                  uploadFail: false,
+                  uploaded: false
+                },
+                percentage: 0,
+                fileName: ''
+              }
+            )
+          }
+          break;
+        default: 
+        console.log('有错')
       }
     },
     checkDetail (item) {
       
+    },
+    selIndex (i, type) {
+      this.uploadIndex = i
+      this.uploadType = type
+    },
+    getUploadUrl (amount, type) {
+      let obj = {
+        command: 'handlerBusiness',
+        platform: 'web',
+        id: this.reimbursementInfo.id,
+        type: type,
+        amount: amount
+      }
+      return '/fileUpload?data=' + JSON.stringify(obj)
+    },
+    UploadProgress (event, file, fileList) {
+      switch(this.uploadType) {
+        case 'transportation':
+          this.reimbursementInfo.travelRArray[this.uploadIndex].state = {
+            notUpload: false,
+            uploading: true,
+            uploaded: false
+          }
+          this.reimbursementInfo.travelRArray[this.uploadIndex].percentage = parseInt(event.percent)
+          break;
+        case 'stay':
+          this.reimbursementInfo.stayRArray[this.uploadIndex].state = {
+            notUpload: false,
+            uploading: true,
+            uploaded: false
+          }
+          this.reimbursementInfo.stayRArray[this.uploadIndex].percentage = parseInt(event.percent)
+          break;
+        case 'local':
+          this.reimbursementInfo.localRArray[this.uploadIndex].state = {
+            notUpload: false,
+            uploading: true,
+            uploaded: false
+          }
+          this.reimbursementInfo.localRArray[this.uploadIndex].percentage = parseInt(event.percent)
+          break;
+        case 'field':
+          this.reimbursementInfo.fieldRArray[this.uploadIndex].state = {
+            notUpload: false,
+            uploading: true,
+            uploaded: false
+          }
+          this.reimbursementInfo.fieldRArray[this.uploadIndex].percentage = parseInt(event.percent)
+          break;
+        default: 
+        console.log('有错')
+      }
+    },
+    UploadSuccess (response, file, fileList) {
+      switch(this.uploadType) {
+        case 'transportation':
+          this.reimbursementInfo.travelRArray[this.uploadIndex].state = {
+            notUpload: false,
+            uploading: false,
+            uploaded: false,
+            uploadFail: false
+          }
+          if (response.statusCode === '10001') {
+            this.reimbursementInfo.travelRArray[this.uploadIndex].state.uploaded = true
+            this.reimbursementInfo.travelRArray[this.uploadIndex].path = response.data.path
+            this.reimbursementInfo.travelRArray[this.uploadIndex].name = response.data.name
+            this.reimbursementInfo.id = response.data.id
+          } else {
+            this.reimbursementInfo.travelRArray[this.uploadIndex].state.uploadFail = true
+          }
+          break;
+        case 'stay':
+          this.reimbursementInfo.stayRArray[this.uploadIndex].state = {
+            notUpload: false,
+            uploading: false,
+            uploaded: false,
+            uploadFail: false
+          }
+          if (response.statusCode === '10001') {
+            this.reimbursementInfo.stayRArray[this.uploadIndex].state.uploaded = true
+            this.reimbursementInfo.stayRArray[this.uploadIndex].path = response.data.path
+            this.reimbursementInfo.stayRArray[this.uploadIndex].name = response.data.name
+            this.reimbursementInfo.id = response.data.id
+          } else {
+            this.reimbursementInfo.stayRArray[this.uploadIndex].state.uploadFail = true
+          }
+          break;
+        case 'local':
+          this.reimbursementInfo.localRArray[this.uploadIndex].state = {
+            notUpload: false,
+            uploading: false,
+            uploaded: false,
+            uploadFail: false
+          }
+          if (response.statusCode === '10001') {
+            this.reimbursementInfo.localRArray[this.uploadIndex].state.uploaded = true
+            this.reimbursementInfo.localRArray[this.uploadIndex].path = response.data.path
+            this.reimbursementInfo.localRArray[this.uploadIndex].name = response.data.name
+            this.reimbursementInfo.id = response.data.id
+          } else {
+            this.reimbursementInfo.localRArray[this.uploadIndex].state.uploadFail = true
+          }
+          break;
+        case 'field':
+          this.reimbursementInfo.fieldRArray[this.uploadIndex].state = {
+            notUpload: false,
+            uploading: false,
+            uploaded: false,
+            uploadFail: false
+          }
+          if (response.statusCode === '10001') {
+            this.reimbursementInfo.fieldRArray[this.uploadIndex].state.uploaded = true
+            this.reimbursementInfo.fieldRArray[this.uploadIndex].path = response.data.path
+            this.reimbursementInfo.fieldRArray[this.uploadIndex].name = response.data.name
+            this.reimbursementInfo.id = response.data.id
+          } else {
+            this.reimbursementInfo.fieldRArray[this.uploadIndex].state.uploadFail = true
+          }
+          break;
+        default: 
+        console.log('有错')
+      }
+    },
+    addOrEditReimbursement () {
+      this.reimbursementInfo.companyName = this.user.companyName
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'addOrEditReimbursement',
+                platform: 'web',
+                data: this.reimbursementInfo
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success('提交成功，返回报销列表')
+            this.$router.push('/expenses-list')
+            resolve('done')
+          } else {
+            this.$message.success(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
+    back () {
+      this.$router.push('/expenses-list')
     }
   },
   created () {
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser
     }, () => { })
+    this.getCompanyList()
+    this.numbers = new Array(100).fill(0).map((item, index) => {
+      item = index
+      return item
+    })
   },
   components: {
     crumbs,
@@ -319,25 +871,23 @@ export default {
 
 <style lang="sass" scoped>
   .expenses-detail {
+    padding-bottom: 40px;
     h5 {
       overflow: hidden;
+    }
+    .el-row {
+      padding-left: 30px;
+      padding-right: 30px;
+      .el-col {
+        padding-right: 20px;
+      }
     }
     .title-wrapper {
       width: 100%;
       line-height: 36px;
-      margin-top: 20px;
       padding-top: 10px;
       padding-bottom: 10px;
-      border-top: 1px solid #f9fbfe;
       overflow: hidden;
-      .el-select {
-        width: 50%;
-      }
-      .number {
-        .el-input {
-          width: 50%;
-        }
-      }
     }
     .card2 {
       .message-box {
@@ -354,11 +904,6 @@ export default {
       }
       .electronical-bill {
         padding-top: 10px;
-        .title {
-          margin-bottom: 10px;
-          font-size: 15px;
-          font-weight: 800;
-        }
         .table-content {
           line-height: 36px;
           .each {
@@ -366,9 +911,6 @@ export default {
             &:first-child {
               margin-top: 0;
             }
-          }
-          .el-input {
-            width: 50%;
           }
         }
         .el-row {
@@ -381,11 +923,10 @@ export default {
         }
       }
     }
-    .card3 {
-      .btns {
-        margin-top: 20px;
-        text-align: center;
-      }
+    .btns {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      text-align: center;
     }
   } 
   .com-list thead {

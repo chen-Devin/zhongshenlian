@@ -2,7 +2,7 @@
   <div class="main">
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
-    <card>
+    <card class="card-tabs">
       <button class="btn my-btn submit-btn f-r addi" @click="applyExpense">申请报销</button>
       <h5 class="main-title">报销列表</h5>
     </card>
