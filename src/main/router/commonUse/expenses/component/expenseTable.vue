@@ -62,7 +62,7 @@
           <tr>
             <td class="table-label">支出项目：</td>
             <td>
-              <el-input v-model="input" placeholder="请填写支出项目" :disabled="!editAble"></el-input>
+              <el-input v-model="input" placeholder="请填写支出项目。。。" :disabled="!editAble"></el-input>
             </td>
             <td class="table-label">报销金额：</td>
             <td>
