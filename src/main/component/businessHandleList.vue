@@ -132,15 +132,19 @@ export default {
         },
         {
           label: '待盖章',
-          name: 'signet'
+          name: 'sign'
         },
         {
           label: '待发放编号',
           name: 'number'
         },
         {
-          label: '待装订归档',
-          name: 'binding'
+          label: '待打印装订盖章',
+          name: 'signet'
+        },
+        {
+          label: '待返回报告',
+          name: 'back'
         },
         {
           label: '合同变更执行',
@@ -243,12 +247,14 @@ export default {
       }, 500)
       if (tab.name === 'review') {
         this.officeType = 0
-      } else if (tab.name === 'signet') {
+      } else if (tab.name === 'sign') {
         this.officeType = 1
+      } else if (tab.name === 'signet') {
+        this.officeType = 3
       } else if (tab.name === 'number') {
         this.officeType = 2
-      } else if (tab.name === 'binding') {
-        this.officeType = 3
+      } else if (tab.name === 'back') {
+        this.officeType = 5
       }  else if (tab.name === 'change') {
         this.officeType = 4
       }
@@ -456,11 +462,19 @@ export default {
       // }
     },
     currentChange(val) {
-      this.pageNum = val;
+      this.pageNum = val
       if (this.department === 'sales') {
         this.getUnDealListOfBusinessUnit()
+      } else if (this.department === 'leader') {
+        //  office leader archives
       } else if (this.department === 'office') {
         this.getUnDealListOfOffice()
+      } else if (this.department === 'archives') {
+        this.getUnDealListOfArchives()
+      } else if (this.department === 'financial') {
+        this.getUnDealListOfFinance()
+      } else if (this.department === 'risk') {
+        this.getUnDealListOfRiskAssessment()
       }
     },
     showHigherSearch() {

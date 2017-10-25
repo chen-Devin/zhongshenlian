@@ -52,13 +52,8 @@
 import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
-import { Select } from 'element-ui';
-import { Option } from 'element-ui';
 import myPagination from '../../component/pagination.vue';
 import searchBar from '../../component/searchBar.vue';
-
-Vue.use(Select);
-Vue.use(Option);
 
 export default {
   name: 'bidInfoListBody',

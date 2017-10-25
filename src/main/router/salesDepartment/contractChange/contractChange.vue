@@ -10,10 +10,10 @@
               <span>项目名称</span>
               <el-select v-model="projectId" placeholder="请选择项目" style="width:100%;">
                 <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.projectId">
+                  v-for="item in resultArray"
+                  :key="item.id"
+                  :label="item.projectName"
+                  :value="item.id">
                 </el-option>
               </el-select>
             </p>
@@ -40,13 +40,7 @@ export default {
         { name: '合同金额变更申请', url: '/customer-infor-list', present: true }
       ],
       projectId: '',
-      options: [{
-        label: '同部门之间可见',
-        projectId: '1096'
-      }, {
-        label: '同部门之间不可见',
-        projectId: '1096'
-      }]
+      resultArray: []
     }
   },
   computed: {
@@ -61,7 +55,36 @@ export default {
   methods: {
     jump () {
       this.$router.push('/business-handle-detail-sales-' + this.projectId + '/business-profile')
+    },
+    getProjectByPerson () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getProjectByPerson',
+                platform: 'web',
+                type: '1'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.resultArray = rep.data.data.resultArray
+            resolve('done')
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
     }
+  },
+  created () {
+    this.getProjectByPerson()
   },
   components: {
     card,
@@ -76,6 +99,7 @@ export default {
       font-size: 18px;
       text-align: center;
       margin-top: 40px;
+      margin-bottom: 20px;
       + p {
         font-size: 13px;
         text-align: center;

@@ -2,8 +2,13 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
+      <p class="btns f-r mt-10" v-if="business.projectStatus === 20">
+        <button class="btn my-btn submit-btn" @click="approve">通过</button>
+        <button class="btn my-btn cancel-btn" @click="refuse">不通过</button>
+      </p>
       <h3 class="main-title">
-        {{business.name}}
+        {{business.name}} 
+        <!-- {{ business.projectApproverArray }} -->
       </h3>
       <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
@@ -16,15 +21,24 @@
         </template>
       </div>
     </card>
+    <business-approve-modal v-if="showApproveModal"
+                            :initalBusiness="business"
+                            @approved="approved"
+                            @canceled="appCanceled"></business-approve-modal>
+    <business-refuse-modal v-if="showRefuseModal"
+                           :initalBusiness="business"
+                           @refused="refused"
+                           @canceled="refCanceled"></business-refuse-modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
+import businessApproveModal from '../../component/businessApproveModal.vue';
+import businessRefuseModal from '../../component/businessRefuseModal.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
 
 export default {
@@ -35,6 +49,8 @@ export default {
         { name: '报告审核', url: '/business-handle-list-risk', present: false },
         { name: '业务详情', url: `/business-handle-detail-risk-${this.$route.params.id}`, present: false }
       ],
+      showApproveModal: false,
+      showRefuseModal: false,
       business: {
         id: this.$route.params.id,
         name: '',
@@ -443,6 +459,28 @@ export default {
     $route: 'getInfo'
   },
   methods: {
+    approve() {
+      this.showApproveModal = true;
+    },
+    approved() {
+      this.$message.success('已同意')
+      this.showApproveModal = false;
+      this.getInfo()
+    },
+    refuse() {
+      this.showRefuseModal = true;
+    },
+    refused(id, reason) {
+      this.$message.success('已提交')
+      this.showRefuseModal = false;
+      this.getInfo()
+    },
+    appCanceled() {
+      this.showApproveModal = false;
+    },
+    refCanceled() {
+      this.showRefuseModal = false;
+    },
     getInfo() {
       let promise = new Promise((resolve, reject) => {
         axios({
@@ -664,15 +702,15 @@ export default {
             }
 
             this.business.reports = [];
-            for (let i = 0; i < rep.data.data.reportAnnexArray.length; i++) {
+            for (let i = 0; i < rep.data.data.reportArray.length; i++) {
               let obj = {
-                id: rep.data.data.reportAnnexArray[i].id,
-                name: rep.data.data.reportAnnexArray[i].annexName,
-                url: rep.data.data.reportAnnexArray[i].annexUrl,
-                state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true,
-                archivingState: rep.data.data.reportAnnexArray[i].archivingState === '0' ? false : true,
-                reportName: rep.data.data.reportAnnexArray[i].reportName,
-                adviceState: parseInt(rep.data.data.reportAnnexArray[i].fStatus)
+                id: rep.data.data.reportArray[i].id,
+                name: rep.data.data.reportArray[i].reportName,
+                number: rep.data.data.reportArray[i].number,
+                downloadStatus: rep.data.data.reportArray[i].downloadStatus,
+                QRcodeUrl: rep.data.data.reportArray[i].QRcodeUrl,
+                archivingState: rep.data.data.reportArray[i].archivingState,
+                FStatus: parseInt(rep.data.data.reportArray[i].FStatus)
               }
               this.business.reports.push(obj);
             }
@@ -709,6 +747,8 @@ export default {
     crumbs,
     card,
     business,
+    businessApproveModal,
+    businessRefuseModal,
     approverAdvice
   }
 }

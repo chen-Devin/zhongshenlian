@@ -18,7 +18,9 @@
         </template>
       </div>
     </card>
+    <billing-detail :bill="bill" v-if="billDetailShow"></billing-detail>
     <change-modal
+      :amount="business.contractAmount"
       v-if="changeModalShow"
       :projectId="business.id"
       @cancel="cancel"></change-modal>
@@ -32,13 +34,14 @@
 <script>
 import axios from 'axios';
 import qs from 'qs';
-
+import billingDetail from '@/main/component/billingDetail.vue'
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
 import changeModal from '@/main/router/salesDepartment/contractChange/changeModal.vue';
 import checkContract from '@/main/router/salesDepartment/component/checkContract.vue';
+import bus from '@/main/bus.js'
 
 export default {
   name: 'businessHandleDetailSales',
@@ -320,7 +323,9 @@ export default {
       riskAdvices: [],
       leaderAdivces: [],
       changeModalShow: false,
-      checkContractShow: false
+      checkContractShow: false,
+      bill: {},
+      billDetailShow: false
     };
   },
   props: ['user'],
@@ -494,6 +499,10 @@ export default {
     }
   },
   created() {
+    bus.$on('bill-selected', (bill) => {
+      this.bill = bill
+      this.billDetailShow = true
+    })
     this.getInfo();
   },
   watch: {
@@ -727,6 +736,7 @@ export default {
                   return arr;
                 })(),
                 state: parseInt(rep.data.data.projectBillingArray[i].state),
+                revokeState: rep.data.data.projectBillingArray[i].revokeState,
                 remark: rep.data.data.projectBillingArray[i].remark
               };
               this.business.bills.push(obj);
@@ -780,7 +790,8 @@ export default {
     business,
     approverAdvice,
     changeModal,
-    checkContract
+    checkContract,
+    billingDetail
   }
 }
 </script>

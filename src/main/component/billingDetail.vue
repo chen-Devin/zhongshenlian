@@ -1,25 +1,19 @@
 <template>
   <div class="billing-detail">
     <card>
-      <p class="btns f-r">
+      <p class="btns f-r" v-if="user.department === '财务部'">
         <button 
           class="btn my-btn submit-btn" 
-          @click="revokedBilling('back')">退回</button>
-        <button 
-          class="btn my-btn submit-btn" 
-          @click="revokedBilling('ruin')">作废</button>
-        <button 
-          class="btn my-btn submit-btn" 
-          @click="revokedBilling('rush')">冲回</button>
-        <button 
-          class="btn my-btn submit-btn" 
-          v-if="Number(bill.state) === 0 || Number(bill.state) === 1" 
+          v-if="(Number(bill.state) === 0 || Number(bill.state) === 1) && billBtn" 
           @click="showBillUpload('bill')">开票</button>
         <button 
           class="btn my-btn submit-btn" 
-          v-if="Number(bill.state) === 0 || Number(bill.state) === 2" 
+          v-if="Number(bill.state) === 0 || Number(bill.state) === 2 && receiveBtn" 
           @click="showBillUpload('receive')">上传收款截图</button>
-        <button class="btn my-btn cancel-btn">驳回</button>
+        <button 
+          class="btn my-btn cancel-btn" 
+          v-if="Number(bill.revokeState) === 10"
+          @click="reject(bill)">驳回</button>
       </p>
       <h4 class="main-title">开票内容</h4>
       <p>{{ bill.state }}</p>
@@ -66,10 +60,20 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            发票图片：。。。
+            发票图片：
+            <a 
+              target="_blank" 
+              :href="item.url" 
+              v-for="(item, index) in bill.billFiles"
+              :key="index">{{ item.name }}</a>
           </el-col>
           <el-col :span="12">
-            收款图片：。。。
+            收款图片：
+            <a 
+              target="_blank" 
+              :href="item.url" 
+              v-for="(item, index) in bill.receiptFiles"
+              :key="index">{{ item.name }}</a>
           </el-col>
         </el-row>
         <el-row>
@@ -119,11 +123,21 @@
         </p>
       </div>
     </modal>
+    <modal v-if="cancelModalShow">
+      <div slot="body">
+        撤销后不能更改，确定驳回吗？
+      </div>
+      <p slot="footer">
+        <button class="btn my-btn cancel-btn" @click="revokedBilling">确定</button>
+        <button class="btn my-btn submit-btn" @click="back">取消</button>
+      </p>
+    </modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import bus from '@/main/bus.js'
 import card from '@/main/component/card.vue'
 import modal from '@/main/component/modal.vue'
 
@@ -139,8 +153,12 @@ export default {
         
       ],
       billUploadShow: false,
+      cancelModalShow: false,
+      billBtn: true,
+      receiveBtn: true,
       uploadType: '',
-      billingType: ''
+      billingType: '',
+      user: {}
     }
   },
   computed: {
@@ -165,6 +183,13 @@ export default {
   },
   props: ['bill'],
   methods: {
+    reject (bill) {
+      this.cancelModalShow = true
+      console.log(bill)
+    },
+    back () {
+      this.cancelModalShow = false
+    },
     showBillUpload (type) {
       if (type === 'bill') {
         this.uploadType = '发票'
@@ -205,6 +230,24 @@ export default {
           this.fileList = []
           this.remark = ''
           this.$message.success('上传成功')
+          if (this.billingType === 'billingOthers') {
+            this.billBtn = false
+            this.bill.billFiles.push(
+              {
+                name: rep.data.data.name,
+                url: rep.data.data.path
+              }
+            )
+          } else if (this.billingType === 'receivables') {
+            this.receiveBtn = false
+            this.bill.receiptFiles.push(
+              {
+                name: rep.data.data.name,
+                url: rep.data.data.path
+              }
+            )
+          }
+          bus.$emit('reloadFinancialDetail')
         } else {
           this.$message.error(rep.data.msg)
         }
@@ -221,14 +264,20 @@ export default {
               let obj = {
                 command: 'revokedBilling',
                 platform: 'web',
-                id: this.bill.id
+                id: this.bill.id,
+                type: 'del'
               }
               return JSON.stringify(obj)
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            bus.$emit('reloadFinancialDetail')
             this.$message.success('操作成功')
+            this.cancelModalShow = false
+            // if (this.) {
+            //   billBtn
+            // }
             resolve('done')
           } else {
             this.$message.error(rep.data.msg)
@@ -240,6 +289,11 @@ export default {
   components: {
     card,
     modal
+  },
+  created () {
+    this.$store.dispatch('fetchUserInfo').then(() => {
+      this.user = this.$store.getters.getUser
+    }, () => { })
   }
 }
 </script>
@@ -251,7 +305,7 @@ export default {
       button {
         margin-top: 10px;
         &:first-child {
-          margin-right: 10px;
+          // margin-right: 10px;
         }
       }
     }

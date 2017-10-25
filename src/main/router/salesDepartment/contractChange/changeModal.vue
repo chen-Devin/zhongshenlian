@@ -3,12 +3,17 @@
     <div class="modal-body" slot="body">
       <h5>合同金额变更</h5>
       <hr>
-      <p>合同预估金额：{{  }}</p>
+      <p>
+        <span style="width:100px;">合同预估金额：</span>
+        {{ amount }} 元
+      </p>
       <p class="d-f">
-        <span style="width:120px;">
+        <span style="width:100px;">
           合同变更金额：
         </span>
-        <el-input v-model="applyAccount" placeholder="请输入变更后的金额"></el-input>
+        <el-input v-model="applyAccount" placeholder="请输入变更后的金额">
+          <template slot="append">元</template>
+        </el-input>
       </p>
     </div>
     <div class="ta-c" slot="footer">
@@ -29,7 +34,7 @@ export default {
       applyAccount: ''
     }  
   },
-  props: ['projectId'],
+  props: ['projectId', 'amount'],
   methods: {
     cancel () {
       this.$emit('cancel')
@@ -76,6 +81,9 @@ export default {
         height: 36px;
         line-height: 36px;
       }
+    }
+    .el-input-group {
+      width: 75%;
     }
   }
 </style>

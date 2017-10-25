@@ -4,15 +4,18 @@
       业务报告
       {{ business.reports.length }}
       <!-- 确认上传 -->
-      <button class="btn my-btn cancel-btn f-r mr-10" v-if="salesShow">上传完成</button>
+      <button 
+        class="btn my-btn cancel-btn f-r mr-10" 
+        v-if="salesShow && business.projectStatus === 110"
+        @click="finishUploadReport">上传完成</button>
       <button class="btn my-btn submit-btn pull-right mr-10"
               @click="add()"
-              v-if="salesShow">
+              v-if="salesShow && (business.projectStatus === 90 || business.projectStatus === 110)">
         上传报告
       </button>
     </h4>
-    <!-- <p>{{ business.reports[0] }}</p> -->
-    <table class="table table-bordered table-list">
+    <p>{{ business.reports[0] }}</p>
+    <table class="table table-bordered table-list" v-if="reload">
       <thead>
         <tr>
           <th class="ta-c">报告编号</th>
@@ -33,20 +36,24 @@
           </td>
           <td class="ta-c" v-else>{{ REPORT.number === '' ? '暂无' : REPORT.number }}</td>
           <td class="ta-c">{{ REPORT.name }}</td>
-          <td class="ta-c">{{ FStatusMap[Number(REPORT.FStatus)] }}</td>
+          <td class="ta-c" v-if="user.department === '质控部' && !REPORT.FStatus">
+            <button class="btn my-btn submit-btn small-btn" @click="handleBusiness(REPORT.id, '通过')">通过</button>
+            <button class="btn my-btn cancel-btn small-btn" @click="handleBusiness(REPORT.id, '不通过')">不通过</button>
+          </td>
+          <td class="ta-c" v-else>{{ FStatusMap[Number(REPORT.FStatus)] }}</td>
           <td class="ta-c" v-if="user.department === '档案部'">
             <a href="javascript:void(0);" class="btn my-btn submit-btn small-btn" v-if="!Number(REPORT.downloadStatus)" @click="showDownloadModal(index, REPORT.id)">待下载</a>
-            <a href="javascript:void(0);" @click="showDownloadModal" v-else>
+            <a href="javascript:void(0);" @click="showDownloadModal(index, REPORT.id)" v-else>
               <span class="fa fa-file-text-o"></span>
             </a>
           </td>
           <td class="ta-c" v-else>
-            <a href="javascript:void(0);" @click="showDownloadModal">
+            <a href="javascript:void(0);" @click="showDownloadModal(index, REPORT.id)">
               <span class="fa fa-file-text-o"></span>
             </a>
           </td>
           <td class="ta-c" v-if="user.department === '档案部'">
-            <button class="btn my-btn submit-btn small-btn" v-if="!(REPORT.QRcodeUrl === '')" @click="showCodeModal(index, REPORT.id)">待生成</button>
+            <button class="btn my-btn submit-btn small-btn" v-if="(REPORT.QRcodeUrl === '')" @click="showCodeModal(index, REPORT.id)">待上传</button>
             <span v-else>{{ REPORT.QRcodeUrl === '' ? '未生成' : '已生成' }}</span>
           </td>
           <td class="ta-c" v-else>{{ REPORT.QRcodeUrl === '' ? '未生成' : '已生成' }}</td>
@@ -59,12 +66,6 @@
       :initBusiness="business"
       @added="added"
       @canceled="addCanceled"></report-add-modal>
-    <!-- <report-mod-modal v-if="showModModal"
-                      :initReport="modReport"
-                      :initBusiness="business"
-                      @del="del"
-                      @saved="saved"
-                      @canceled="modCanceled"></report-mod-modal> -->
     <report-number-modal 
       v-if="projectReportShow"
       :id="reportId"
@@ -77,8 +78,9 @@
     <report-code-modal 
       v-if="codeModalShow"
       :id="reportId"
+      :projectId="business.id"
       @canceled="codeCanceled"></report-code-modal>
-    <report-del-modal v-if="showDelModal"
+    <!-- <report-del-modal v-if="showDelModal"
                       :initReport="delReport"
                       :initBusiness="business"
                       @deleted="deleted"
@@ -87,7 +89,7 @@
                       :initReport="subReport"
                       :initBusiness="business"
                       @submited="submited"
-                      @canceled="subCanceled"></report-sub-modal>
+                      @canceled="subCanceled"></report-sub-modal> -->
   </div>
 </template>
 
@@ -122,6 +124,7 @@ export default {
       projectReportShow: false,
       downloadModalShow: false,
       codeModalShow: false,
+      reload: true,
       numberIndex: '',
       downloadIndex: '',
       codeIndex: '',
@@ -140,35 +143,101 @@ export default {
     }
   },
   props: ['initBusiness', 'user'],
-  mounted() {
-    // if (this.user.department === '业务部') {
-    //   this.paths.push({ name: '待处理业务', url: '/business-handle-list-sales', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-sales-${this.$route.params.id}/business-reports`, present: false });
-    //   this.paths.push({ name: '业务报告', url: `/business-handle-detail-sales-${this.$route.params.id}/business-reports`, present: true });
-    // } else if (this.user.department === '风险评估部') {
-    //   this.paths.push({ name: '待复审业务', url: '/business-handle-list-risk', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-risk-${this.$route.params.id}/business-reports`, present: false });
-    //   this.paths.push({ name: '业务报告', url: `/business-handle-detail-risk-${this.$route.params.id}/business-reports`, present: true });
-    // } else if (this.user.department === '所长') {
-    //   this.paths.push({ name: '待处理业务', url: '/business-handle-list-leader', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-leader-${this.$route.params.id}/business-reports`, present: false });
-    //   this.paths.push({ name: '业务报告', url: `/business-handle-detail-leader-${this.$route.params.id}/business-reports`, present: true });
-    // } else if (this.user.department === '办公室') {
-    //   this.paths.push({ name: '待完结业务', url: '/business-handle-list-office', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-office-${this.$route.params.id}/business-reports`, present: false });
-    //   this.paths.push({ name: '业务报告', url: `/business-handle-detail-office-${this.$route.params.id}/business-reports`, present: true });
-    // } else if (this.user.department === '财务部') {
-    //   this.paths.push({ name: '待开发票', url: '/business-handle-list-financial', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-financial-${this.$route.params.id}/business-reports`, present: false });
-    //   this.paths.push({ name: '业务报告', url: `/business-handle-detail-financial-${this.$route.params.id}/business-reports`, present: true });
-    // } else if (this.user.department === '档案部') {
-    //   this.paths.push({ name: '待处理业务', url: '/business-handle-list-archives', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-archives-${this.$route.params.id}/business-reports`, present: false });
-    //   this.paths.push({ name: '业务报告', url: `/business-handle-detail-archives-${this.$route.params.id}/business-reports`, present: true });
-    // }
-    // this.$emit('pathsChan', this.paths);
-  },
   methods: {
+    handleBusiness (id, result) {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'handleBusiness',
+                platform: 'web',
+                id: this.business.id,
+                reportId: id,
+                result: result
+              }
+              return JSON.stringify(obj)
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.getBusinessInfo()
+            this.$message.success(rep.data.msg)
+            resolve('done')
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { })
+      })
+    },
+    finishUploadReport () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'finishUploadReport',
+                platform: 'web',
+                projectId: this.business.id
+              }
+              return JSON.stringify(obj)
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.business.projectStatus = 111
+            this.$message.success('项目报告已确认')
+            resolve('done')
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { })
+      })
+    },
+    getBusinessInfo () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getBusinessInfo',
+                platform: 'web',
+                id: this.business.id
+              }
+              return JSON.stringify(obj)
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.business.reports = []
+            for (let i = 0; i < rep.data.data.reportArray.length; i++) {
+              let obj = {
+                id: rep.data.data.reportArray[i].id,
+                name: rep.data.data.reportArray[i].reportName,
+                number: rep.data.data.reportArray[i].number,
+                downloadStatus: rep.data.data.reportArray[i].downloadStatus,
+                QRcodeUrl: rep.data.data.reportArray[i].QRcodeUrl,
+                archivingState: rep.data.data.reportArray[i].archivingState,
+                FStatus: parseInt(rep.data.data.reportArray[i].FStatus)
+              }
+              this.business.reports.push(obj)
+            }
+            resolve('done')
+          } else {
+            // this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { })
+      })
+    },
     showDownloadModal (index, id) {
       this.downloadIndex = index
       this.reportId = id
@@ -201,7 +270,14 @@ export default {
       this.showAddModal = false;
     },
     addCanceled() {
-      this.showAddModal = false;
+      console.log(1)
+      this.getBusinessInfo().then(() => {
+        this.reload = false
+        setTimeout(() => {
+          this.reload = true
+        }, 500)
+      }, () => {})
+      this.showAddModal = false
     },
     mod(REPORT) {
       this.modReport = REPORT;

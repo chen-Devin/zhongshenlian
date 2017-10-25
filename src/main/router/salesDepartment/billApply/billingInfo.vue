@@ -16,7 +16,7 @@
           项目名称：{{ business.projectName }}
         </el-col>
         <el-col :span="8">
-          合同金额：{{ business.contractAmount }}
+          合同金额：{{ business.contractAmount }} 元
         </el-col>
       </el-row>
       <el-row>
@@ -27,7 +27,7 @@
           申请时间：{{ requestTime }}
         </el-col>
         <el-col :span="8">
-          累计开票金额：{{ totalAmount }}
+          累计开票金额：{{ totalAmount }} 元
         </el-col>
       </el-row>
     </div>
@@ -42,7 +42,9 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="本次开票金额" label-width="100px" prop="billingAmount">
-              <el-input placeholder="请输入本次开票金额" type="number" v-model="bill.billingAmount"></el-input>
+              <el-input placeholder="请输入本次开票金额" type="number" v-model="bill.billingAmount">
+                <template slot="append">元</template>
+              </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">

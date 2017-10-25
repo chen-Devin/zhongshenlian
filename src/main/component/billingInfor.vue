@@ -3,30 +3,12 @@
     <div class="normal-wrap">
       <h4 class="main-title">
         开票列表 （合同预估金额：{{business.contractAmount}}元&emsp;当前申请发票总计：{{total}}元）
-        <router-link class="btn my-btn submit-btn pull-right"
+        <router-link class="btn my-btn submit-btn pull-right mr-10"
                      :to="billingInforEditorLink"
                      v-if="addBillShow">
           开票申请
         </router-link>
       </h4>
-      <!-- <p>{{ business.bills }}</p> -->
-      <!-- <div class="com-list list-group list-adjust">
-        <li class="list-group-item list-head">
-          <span class="title">开票列表</span>
-        </li>
-        <router-link class="list-group-item"
-                     :to="billRoute(BILL)"
-                     v-for="(BILL, index) in business.bills"
-                     :key="index">
-          <span class="label label-warning"
-                v-if="BILL.state<1">未开票</span>
-          <span class="label label-info"
-                v-else-if="BILL.state<2">未付款</span>
-          <span class="label label-success"
-                v-else-if="BILL.state<3">已完成</span>
-          {{BILL.amount+'元'}}
-        </router-link>
-      </div> -->
       <table class="table table-bordered table-list">
         <thead>
           <tr>
@@ -49,25 +31,32 @@
             <td class="ta-c">{{ BILL.endServiceTime === '' ? empty : BILL.endServiceTime }}</td>
             <td class="ta-c">
               <button class="btn my-btn submit-btn" @click="check(BILL)">查看</button>
-              <button class="btn my-btn cancel-btn">撤销</button>
+              <button 
+                class="btn my-btn cancel-btn" 
+                @click="cancel(BILL)" 
+                :disabled="BILL.revokeState !== '0010'"
+                v-if="user.department === '业务部'">撤销</button>
             </td>
-            <!-- <td class="ta-c">{{ FStatusMap[Number(BILL.FStatus)] }}</td>
-            <td class="ta-c">
-              <a href="javascript:void(0);">
-                <span class="fa fa-file-text-o"></span>
-              </a>
-            </td>
-            <td class="ta-c">{{ REPORT.QRcodeUrl === '' ? '未生成' : '已生成' }}</td>
-            <td class="ta-c">{{ archivingStateMap[Number(REPORT.archivingState)] }}</td> -->
           </tr>
         </tbody>
       </table>
     </div>
+    <modal v-if="cancelModalShow">
+      <div slot="body">
+        撤销后不能更改，确定撤销吗？
+      </div>
+      <p slot="footer">
+        <button class="btn my-btn cancel-btn" @click="revokedBilling">确定</button>
+        <button class="btn my-btn submit-btn" @click="back">取消</button>
+      </p>
+    </modal>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import bus from '@/main/bus.js'
+import modal from '@/main/component/modal.vue'
 
 export default {
   name: 'billingInfor',
@@ -75,7 +64,9 @@ export default {
     return {
       paths: [],
       business: this.initBusiness,
-      empty: ''
+      empty: '',
+      cancelModalShow: false,
+      bill: {}
     };
   },
   computed: {
@@ -97,42 +88,10 @@ export default {
       return this.user.department === '业务部' ? true : false;
     },
     billingInforEditorLink () {
-      // if (this.business.bills.length === 0) {
-        return '/bill-apply-add/' + this.business.id
-      // } else {
-      //   return 'billing-infor-editor/' + 0
-      // }
+      return '/bill-apply-add/' + this.business.id
     }
   },
   props: ['initBusiness', 'user'],
-  mounted() {
-    // if (this.user.department === '业务部') {
-    //   this.paths.push({ name: '待处理业务', url: '/business-handle-list-sales', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-sales-${this.$route.params.id}/billing-infor`, present: false });
-    //   this.paths.push({ name: '开票信息', url: `/business-handle-detail-sales-${this.$route.params.id}/billing-infor`, present: true });
-    // } else if (this.user.department === '风险评估部') {
-    //   this.paths.push({ name: '待复审业务', url: '/business-handle-list-risk', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-risk-${this.$route.params.id}/billing-infor`, present: false });
-    //   this.paths.push({ name: '开票信息', url: `/business-handle-detail-risk-${this.$route.params.id}/billing-infor`, present: true });
-    // } else if (this.user.department === '所长') {
-    //   this.paths.push({ name: '待处理业务', url: '/business-handle-list-leader', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-leader-${this.$route.params.id}/billing-infor`, present: false });
-    //   this.paths.push({ name: '开票信息', url: `/business-handle-detail-leader-${this.$route.params.id}/billing-infor`, present: true });
-    // } else if (this.user.department === '办公室') {
-    //   this.paths.push({ name: '待完结业务', url: '/business-handle-list-office', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-office-${this.$route.params.id}/billing-infor`, present: false });
-    //   this.paths.push({ name: '开票信息', url: `/business-handle-detail-office-${this.$route.params.id}/billing-infor`, present: true });
-    // } else if (this.user.department === '财务部') {
-    //   this.paths.push({ name: '待开发票', url: '/business-handle-list-financial', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-financial-${this.$route.params.id}/billing-infor`, present: false });
-    //   this.paths.push({ name: '开票信息', url: `/business-handle-detail-financial-${this.$route.params.id}/billing-infor`, present: true });
-    // } else if (this.user.department === '档案部') {
-    //   this.paths.push({ name: '待处理业务', url: '/business-handle-list-archives', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-archives-${this.$route.params.id}/billing-infor`, present: false });
-    //   this.paths.push({ name: '开票信息', url: `/business-handle-detail-archives-${this.$route.params.id}/billing-infor`, present: true });
-    // }
-    // this.$emit('pathsChan', this.paths);
-  },
   methods: {
     currencyToNum(amo) {
       let amoArr = amo.split(',').reverse();
@@ -142,14 +101,47 @@ export default {
       }
       return amoNum;
     },
-    // billRoute(BILL) {
-    //   return 'billing-infor-detail-'+BILL.id;
-    // },
-    check (BILL) {
-      // console.log(BILL)
-      bus.$emit('bill-selected', BILL)
-      // this.$router.push('/bill-apply-detail/' + this.initBusiness.id)
+    check (bill) {
+      bus.$emit('bill-selected', bill)
+    },
+    cancel (bill) {
+      this.bill = bill
+      this.cancelModalShow = true
+    },
+    revokedBilling () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'revokedBilling',
+                platform: 'web',
+                id: this.bill.id,
+                type: 'revoke'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success('撤销成功')
+            this.back()
+            resolve('done')
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
+    back () {
+      this.cancelModalShow = false
     }
+  },
+  components: {
+    modal
   }
 };
 </script>

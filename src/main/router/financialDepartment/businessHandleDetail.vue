@@ -3,7 +3,7 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3 class="main-title">
-        {{business.name}} {{ business.bills }}
+        {{business.name}}
         <button class="btn my-btn submit-btn pull-right" @click="sub()" v-if="!sended">完成开票</button>
         <small class="label label-success business-label pull-right" v-if="sended">开票已完成</small>
       </h3>
@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待开发票', url: '/business-handle-list-financial', present: false },
+        { name: '待开发票', url: '/business-handle-list-financial/0', present: false },
         { name: '业务详情', url: `/business-handle-detail-financial-${this.$route.params.id}`, present: true },
       ],
       business: {
@@ -458,9 +458,11 @@ export default {
   created() {
     bus.$on('bill-selected', (bill) => {
       this.bill = bill
-      console.log(1)
       this.billDetailShow = true
-      // console.log(bill)
+    })
+    bus.$on('reloadFinancialDetail', () => {
+      console.log(1)
+      this.getInfo()
     })
     this.getInfo()
   },
@@ -682,6 +684,7 @@ export default {
                   }
                   return arr;
                 })(),
+                revokeState: parseInt(rep.data.data.projectBillingArray[i].revokeState),
                 state: parseInt(rep.data.data.projectBillingArray[i].state),
                 remark: rep.data.data.projectBillingArray[i].remark
               };
@@ -689,15 +692,15 @@ export default {
             }
 
             this.business.reports = [];
-            for (let i = 0; i < rep.data.data.reportAnnexArray.length; i++) {
+            for (let i = 0; i < rep.data.data.reportArray.length; i++) {
               let obj = {
-                id: rep.data.data.reportAnnexArray[i].id,
-                name: rep.data.data.reportAnnexArray[i].annexName,
-                url: rep.data.data.reportAnnexArray[i].annexUrl,
-                state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true,
-                archivingState: rep.data.data.reportAnnexArray[i].archivingState === '0' ? false : true,
-                reportName: rep.data.data.reportAnnexArray[i].reportName,
-                adviceState: parseInt(rep.data.data.reportAnnexArray[i].fStatus)
+                id: rep.data.data.reportArray[i].id,
+                name: rep.data.data.reportArray[i].annexName,
+                url: rep.data.data.reportArray[i].annexUrl,
+                state: rep.data.data.reportArray[i].status === '1' ? false : true,
+                archivingState: rep.data.data.reportArray[i].archivingState === '0' ? false : true,
+                reportName: rep.data.data.reportArray[i].reportName,
+                adviceState: parseInt(rep.data.data.reportArray[i].fStatus)
               }
               this.business.reports.push(obj);
             }

@@ -64,7 +64,8 @@ export default {
             data: (() => {
               let obj = {
                 command: 'getProjectByPerson',
-                platform: 'web'
+                platform: 'web',
+                type: 0
               }
               return JSON.stringify(obj);
             })()
@@ -97,6 +98,7 @@ export default {
       font-size: 18px;
       text-align: center;
       margin-top: 40px;
+      margin-bottom: 20px;
       + p {
         font-size: 13px;
         text-align: center;

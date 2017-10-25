@@ -596,6 +596,18 @@ label.col-sm-2.control-label {
     cursor: not-allowed;
 }
 
+.el-textarea.is-disabled .el-textarea__inner {
+    background-color: #fafafa;
+    border-color: #d1dbe5;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.magic-radio[disabled] + label, .magic-checkbox[disabled] + label {
+    cursor: not-allowed;
+    color: #666;
+}
+
 // 
 .list-pagination {
   margin-top: 67px;

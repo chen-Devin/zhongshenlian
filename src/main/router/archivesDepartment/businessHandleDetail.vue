@@ -4,7 +4,6 @@
     <card>
       <h3 class="main-title">
         {{business.name}}
-        <button class="btn my-btn submit-btn pull-right" @click="sub()" v-if="!sended">完结业务</button>
         <small class="label label-success business-label pull-right" v-if="sended">业务已完结</small>
       </h3>
       <div class="normal-wrap">
@@ -732,23 +731,6 @@ export default {
     },
     pathsChan(paths) {
       this.paths = paths;
-    },
-    sub() {
-      let flag = ture;
-      for (let i = 0; i < this.business.reports.length; i++) {
-        if (this.business.reports[i].state) {
-          flag = false;
-          break;
-        }
-      }
-      if (flag) {
-        this.$message({
-          message: '请先确认二维码均已下载',
-          type: 'warning'
-        });
-      } else {
-        this.showModal = true;
-      }
     },
     submited() {
       this.business.projectStatus = 180;

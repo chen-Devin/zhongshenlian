@@ -2,11 +2,11 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <button class="btn my-btn submit-btn pull-right mr-10" @click="showPackModal" v-if="packAble">归档装订</button>
-      <button class="btn my-btn submit-btn pull-right mr-10" @click="sel()" v-if="sendAble">发放合同编号</button>
-      <button class="btn my-btn submit-btn pull-right mr-10" @click="checkContract" v-if="reviewAble">审核通过</button>
-      <button class="btn my-btn draft-btn pull-right mr-10" @click="showChangeModal" v-if="reviewAble">金额变更</button>
-      <button class="btn my-btn submit-btn pull-right mr-10" @click="showSealModal" v-if="signAble">确定盖章</button>
+      <!-- <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="showPackModal" v-if="packAble">归档装订</button> -->
+      <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="sel()" v-if="sendAble">发放合同编号</button>
+      <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="checkContract" v-if="reviewAble">审核通过</button>
+      <button class="btn my-btn draft-btn pull-right mr-10 mt-10" @click="showChangeModal" v-if="reviewAble">金额变更</button>
+      <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="showSealModal" v-if="signAble">确定盖章</button>
       <h3 class="main-title">
         {{ business.name }} {{ business.projectStatus }}
       </h3>

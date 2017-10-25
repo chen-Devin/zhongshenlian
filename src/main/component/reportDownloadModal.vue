@@ -4,7 +4,10 @@
       <h5>项目报告下载</h5>
       <hr>
       <div class="download-wrapper">
-        <a :href="item.annexUrl" v-for="(item, index) in annexArray" :key="index">{{ item.annexType }}</a>
+        <p class="d-f" v-for="(item, index) in orignArray" :key="index">
+          <span style="width:80px"><{{ item.type }}></span>
+          <a :href="item.annexUrl" target="_blank" download>{{ item.annexName }}</a>
+        </p>
       </div>
     </div>
     <div slot="footer">
@@ -22,7 +25,29 @@ import modal from './modal.vue'
 export default {
   data () {
     return {
-      annexArray: []
+      annexArray: [],
+      orignArray: [
+        {
+          type: '审计报告',
+          annexName: '',
+          annexUrl: ''
+        },
+        {
+          type: '报告附表',
+          annexName: '',
+          annexUrl: ''
+        },
+        {
+          type: '报表资料',
+          annexName: '',
+          annexUrl: ''
+        },
+        {
+          type: '备注',
+          annexName: '',
+          annexUrl: ''
+        }
+      ]
     }
   },
   name: 'reportNumberModal',
@@ -60,7 +85,24 @@ export default {
     }
   },
   created () {
-    this.getAnnexListOfOneReport()
+    this.getAnnexListOfOneReport().then(() => {
+      this.annexArray.forEach((item) => {
+        console.log(item)
+        if (item.annexType === 'auditReport') {
+          this.orignArray[0].annexName = item.annexName
+          this.orignArray[0].annexUrl = item.annexUrl
+        } else if (item.annexType === 'reportSchedule') {
+          this.orignArray[1].annexName = item.annexName
+          this.orignArray[1].annexUrl = item.annexUrl
+        } else if (item.annexType === 'reportNote') {
+          this.orignArray[2].annexName = item.annexName
+          this.orignArray[2].annexUrl = item.annexUrl
+        } else if (item.annexType === 'remarks') {
+          this.orignArray[3].annexName = item.annexName
+          this.orignArray[3].annexUrl = item.annexUrl
+        }
+      })
+    }, () => {})
   },
   components: {
     modal
@@ -71,6 +113,7 @@ export default {
 <style lang="sass" scoped>
   .download-wrapper {
     padding-top: 15px;
+    padding-left: 30px;
     padding-bottom: 15px;
     background-color: #f9fbfe;
   }
