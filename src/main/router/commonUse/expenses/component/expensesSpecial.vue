@@ -6,23 +6,6 @@
       <h5 class="main-title" v-if="!editAble">可报销金额：1</h5>
       <div class="title-wrapper">
         <el-row>
-          <!-- reimbursementInfo: {
-            submitType: '报销类型',
-            projectNumber: '合同编号',
-            billingType: '纸质发票报销',
-            totalAmount: '总金额',
-            summary: '摘要',
-            budgetCompany: '会计所',
-            budgetDepartment: '。。。',
-            accountName: '账户名称',
-            accountBank: '开户银行',
-            accountBankNumber: '银行账户',
-            paperRArray: [
-              {
-
-              }
-            ]
-          }, -->
           <el-col class="d-f" :span="9">
             <span style="width:90px">报销类型：</span>
             <el-select v-model="reimbursementInfo.submitType" placeholder="请选择报销方式" :disabled="!editAble">
@@ -122,10 +105,10 @@
         </template>
         <el-row class="numbered" v-if="project">
           <el-col :span="24">
-            合同编号：
-            <el-checkbox-group v-model="checkList">
+            合同编号：。。。
+            <!-- <el-checkbox-group v-model="checkList">
               <el-checkbox label="复选框 A"></el-checkbox>
-            </el-checkbox-group>
+            </el-checkbox-group> -->
           </el-col>
         </el-row>
       </div>
@@ -141,9 +124,9 @@
             单笔金额
           </el-col>
         </el-row>
-        <el-row class="table-content">
+        <el-row class="table-content" v-if="paper">
           <el-col :span="4">
-            {{ reimbursementInfo.billingType }}
+            纸质发票报销
           </el-col>
           <el-col :span="4">
             <el-select 
@@ -171,10 +154,40 @@
               </el-input>
             </div>
           </el-col>
-          <el-col :span="7" v-if="electric">
-            <!-- <div v-for="(each, index) in bills.list" :key="index" class="each"> -->
-              <!-- <a href="each.address">下载</a> -->
-              <!-- <el-upload
+        </el-row>
+        <el-row class="table-content"  v-if="electric">
+          <el-col :span="4">
+            电子发票报销
+          </el-col>
+          <el-col :span="4">
+            <el-select 
+              v-model="reimbursementInfo.electricInvoiceNum" 
+              placeholder="请选择张数" 
+              :disabled="!editAble" 
+              @change="changeNumbers('electric')">
+              <el-option
+                v-for="item in numbers"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="4">
+            <el-input v-model="reimbursementInfo.electricInvoiceAmount" placeholder="请填写金额" :disabled="!editAble">
+              <template slot="append">元</template>
+            </el-input>
+          </el-col>
+          <el-col :span="4">
+            <div v-for="(each, index) in reimbursementInfo.electricRArray" :key="index" class="each">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" :disabled="!editAble">
+                <template slot="append">元</template>
+              </el-input>
+            </div>
+          </el-col>
+          <el-col :span="7">
+            <!-- <div v-for="(each, index) in " :key="index" class="each">
+              <el-upload
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
                 :on-preview="handlePreview"
@@ -182,8 +195,8 @@
                 :file-list="fileList">
                 <el-button size="small" type="primary">上传文件</el-button>
                 <span>建议文件大小不超过300kb</span>
-              </el-upload> -->
-            <!-- </div> -->
+              </el-upload>
+            </div> -->
             <div v-for="(item, index) in reimbursementInfo.electricRArray" :key="index" class="each">
               <el-upload :show-file-list="false"
                          :action="getUploadUrl(item.amount, 'electricR')"
@@ -192,7 +205,7 @@
                 <button class="btn my-btn submit-btn"
                         type="button"
                         slot="trigger"
-                        :disabled="!item.amount" @click="selIndex(index, 'electric')">点击上传</button>
+                        :disabled="!item.amount" @click="selIndex(index)">点击上传</button>
                 <span slot="tip"
                       class="text-info" v-if="item.state.notUpload">&emsp;文件大小建议不超过3Mb</span>
                 <span slot="tip"
@@ -218,8 +231,8 @@
         </el-row>
       </div>
       <p class="btns ta-c" v-if="editAble">
-        <button class="btn my-btn submit-btn">提交审批</button>
-        <button class="btn my-btn cancel-btn">取消</button>
+        <button class="btn my-btn submit-btn" @click="addOrEditReimbursement">提交审批</button>
+        <button class="btn my-btn cancel-btn" @click="back">取消</button>
       </p>
     </card>
     <card class="card3" v-if="!editAble">
@@ -261,34 +274,43 @@ export default {
         { name: '报销详情', url: '/expenses-detail', present: true }
       ],
       reimbursementInfo: {
-        submitType: '报销类型',
+        submitType: '',
         projectNumber: '合同编号',
-        billingType: '纸质发票报销',
-        totalAmount: '总金额',
-        summary: '摘要',
-        budgetCompany: '会计所',
+        billingType: '',
+        totalAmount: '',
+        summary: '',
+        budgetCompany: '',
         budgetDepartment: '。。。',
-        accountName: '账户名称',
-        accountBank: '开户银行',
-        accountBankNumber: '银行账户',
-        paperInvoiceNum: '',
+        accountName: '',
+        accountBank: '',
+        accountBankNumber: '',
+        paperInvoiceNum: 1,
         paperInvoiceAmount: '',
         paperRArray: [
           {
             id: '',
             amount: ''
-            // annexUrl: '',
-            // uploadURL: '',
-            // state: {
-            //   notUpload: true,
-            //   uploading: false,
-            //   uploadFail: false,
-            //   uploaded: false
-            // },
-            // percentage: 0,
-            // fileName: ''
           }
-        ]
+        ],
+        electricInvoiceNum: 1,
+        electricInvoiceAmount: '',
+        electricRArray: [
+          {
+            id: '',
+            amount: '',
+            annexUrl: '',
+            uploadURL: '',
+            path: '',
+            state: {
+              notUpload: true,
+              uploading: false,
+              uploadFail: false,
+              uploaded: false
+            },
+            percentage: 0,
+            name: ''
+          }
+        ],
       },
       recordList: [{
         id: 1,
@@ -315,7 +337,8 @@ export default {
       companySelected: '',
       departmentSelected: '',
       editAble: this.$route.params.id === 'new' ? true : false,
-      numbers: []
+      numbers: [],
+      uploadIndex: ''
     };
   },
   computed: {
@@ -467,113 +490,63 @@ export default {
       }
       return '/fileUpload?data=' + JSON.stringify(obj)
     },
+    selIndex (i) {
+      this.uploadIndex = i
+    },
     UploadProgress (event, file, fileList) {
-      switch(this.uploadType) {
-        case 'transportation':
-          this.reimbursementInfo.travelRArray[this.uploadIndex].state = {
-            notUpload: false,
-            uploading: true,
-            uploaded: false
-          }
-          this.reimbursementInfo.travelRArray[this.uploadIndex].percentage = parseInt(event.percent)
-          break;
-        case 'stay':
-          this.reimbursementInfo.stayRArray[this.uploadIndex].state = {
-            notUpload: false,
-            uploading: true,
-            uploaded: false
-          }
-          this.reimbursementInfo.stayRArray[this.uploadIndex].percentage = parseInt(event.percent)
-          break;
-        case 'local':
-          this.reimbursementInfo.localRArray[this.uploadIndex].state = {
-            notUpload: false,
-            uploading: true,
-            uploaded: false
-          }
-          this.reimbursementInfo.localRArray[this.uploadIndex].percentage = parseInt(event.percent)
-          break;
-        case 'field':
-          this.reimbursementInfo.fieldRArray[this.uploadIndex].state = {
-            notUpload: false,
-            uploading: true,
-            uploaded: false
-          }
-          this.reimbursementInfo.fieldRArray[this.uploadIndex].percentage = parseInt(event.percent)
-          break;
-        default: 
-        console.log('有错')
-      }
+        this.reimbursementInfo.electricRArray[this.uploadIndex].state = {
+          notUpload: false,
+          uploading: true,
+          uploaded: false
+        }
+        this.reimbursementInfo.electricRArray[this.uploadIndex].percentage = parseInt(event.percent)
     },
     UploadSuccess (response, file, fileList) {
-      switch(this.uploadType) {
-        case 'transportation':
-          this.reimbursementInfo.travelRArray[this.uploadIndex].state = {
-            notUpload: false,
-            uploading: false,
-            uploaded: false,
-            uploadFail: false
-          }
-          if (response.statusCode === '10001') {
-            this.reimbursementInfo.travelRArray[this.uploadIndex].state.uploaded = true
-            this.reimbursementInfo.travelRArray[this.uploadIndex].path = response.data.path
-            this.reimbursementInfo.travelRArray[this.uploadIndex].name = response.data.name
-            this.reimbursementInfo.id = response.data.id
-          } else {
-            this.reimbursementInfo.travelRArray[this.uploadIndex].state.uploadFail = true
-          }
-          break;
-        case 'stay':
-          this.reimbursementInfo.stayRArray[this.uploadIndex].state = {
-            notUpload: false,
-            uploading: false,
-            uploaded: false,
-            uploadFail: false
-          }
-          if (response.statusCode === '10001') {
-            this.reimbursementInfo.stayRArray[this.uploadIndex].state.uploaded = true
-            this.reimbursementInfo.stayRArray[this.uploadIndex].path = response.data.path
-            this.reimbursementInfo.stayRArray[this.uploadIndex].name = response.data.name
-            this.reimbursementInfo.id = response.data.id
-          } else {
-            this.reimbursementInfo.stayRArray[this.uploadIndex].state.uploadFail = true
-          }
-          break;
-        case 'local':
-          this.reimbursementInfo.localRArray[this.uploadIndex].state = {
-            notUpload: false,
-            uploading: false,
-            uploaded: false,
-            uploadFail: false
-          }
-          if (response.statusCode === '10001') {
-            this.reimbursementInfo.localRArray[this.uploadIndex].state.uploaded = true
-            this.reimbursementInfo.localRArray[this.uploadIndex].path = response.data.path
-            this.reimbursementInfo.localRArray[this.uploadIndex].name = response.data.name
-            this.reimbursementInfo.id = response.data.id
-          } else {
-            this.reimbursementInfo.localRArray[this.uploadIndex].state.uploadFail = true
-          }
-          break;
-        case 'field':
-          this.reimbursementInfo.fieldRArray[this.uploadIndex].state = {
-            notUpload: false,
-            uploading: false,
-            uploaded: false,
-            uploadFail: false
-          }
-          if (response.statusCode === '10001') {
-            this.reimbursementInfo.fieldRArray[this.uploadIndex].state.uploaded = true
-            this.reimbursementInfo.fieldRArray[this.uploadIndex].path = response.data.path
-            this.reimbursementInfo.fieldRArray[this.uploadIndex].name = response.data.name
-            this.reimbursementInfo.id = response.data.id
-          } else {
-            this.reimbursementInfo.fieldRArray[this.uploadIndex].state.uploadFail = true
-          }
-          break;
-        default: 
-        console.log('有错')
+      this.reimbursementInfo.electricRArray[this.uploadIndex].state = {
+        notUpload: false,
+        uploading: false,
+        uploaded: false,
+        uploadFail: false
       }
+      if (response.statusCode === '10001') {
+        this.reimbursementInfo.electricRArray[this.uploadIndex].state.uploaded = true
+        this.reimbursementInfo.electricRArray[this.uploadIndex].path = response.data.path
+        this.reimbursementInfo.electricRArray[this.uploadIndex].name = response.data.name
+        this.reimbursementInfo.id = response.data.id
+      } else {
+        this.reimbursementInfo.electricRArray[this.uploadIndex].state.uploadFail = true
+      }
+    },
+    addOrEditReimbursement () {
+      this.reimbursementInfo.companyName = this.user.companyName
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'addOrEditReimbursement',
+                platform: 'web',
+                data: this.reimbursementInfo
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success('提交成功，返回报销列表')
+            this.$router.push('/expenses-list')
+            resolve('done')
+          } else {
+            this.$message.success(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
+    back () {
+      this.$router.push('/expenses-list')
     }
   },
   created () {

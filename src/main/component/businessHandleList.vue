@@ -44,6 +44,10 @@
         开票撤销复核
           <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
+      <h3 class="main-title" v-if="department === 'risk'">
+        报告审核
+          <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
+      </h3>
       <table class="table table-bordered table-hover table-list">
         <thead>
           <tr>
@@ -185,7 +189,6 @@ export default {
     };
   },
   created() {
-    console.log(this.department)
     if (this.iconType === "bill") {
       this.billShow = true
     } else {
@@ -201,6 +204,8 @@ export default {
       this.getUnDealListOfArchives()
     } else if (this.department === 'financial') {
       this.getUnDealListOfFinance()
+    } else if (this.department === 'risk') {
+      this.getUnDealListOfRiskAssessment()
     }
   },
   computed: {
@@ -348,6 +353,31 @@ export default {
                 command: 'getUnDealListOfFinance',
                 platform: 'web',
                 type: this.$route.params.type,
+                pageNum: this.pageNum
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.businesses = rep.data.data.businessArray
+            this.totalNum = parseInt(rep.data.data.totalNum)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
+    getUnDealListOfRiskAssessment () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getUnDealListOfRiskAssessment',
+                platform: 'web',
                 pageNum: this.pageNum
               }
               return JSON.stringify(obj);
