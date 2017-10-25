@@ -9,7 +9,6 @@
       <el-menu-item index="/business-handle-list-office" v-if="officeContract">进行中业务</el-menu-item>
       <!-- <el-menu-item index="/business-handle-list-office" v-if="officeBinding">待装订业务</el-menu-item> -->
       <el-menu-item index="/customer-infor-list" v-if="officeCustomer">客户信息管理</el-menu-item>
-      <el-menu-item index="/business-review-list-risk" v-if="riskReview">立项审批</el-menu-item>
       <el-submenu index="to-review">
         <template slot="title">待处理业务</template>
           <el-menu-item index="/business-handle-list-financial/0">待开发票</el-menu-item>
@@ -166,7 +165,7 @@ export default {
       }
     },
     riskReview() {
-      if (this.user.department === '风险评估部') {
+      if (this.user.department === '质控部') {
         if (this.user.authority['业务初审']) {
           return true;
         } else {
@@ -177,7 +176,7 @@ export default {
       }
     },
     riskHandle() {
-        if (this.user.department === '风险评估部') {
+        if (this.user.department === '质控部') {
           if (this.user.authority['业务复审']) {
             return true;
           } else {
