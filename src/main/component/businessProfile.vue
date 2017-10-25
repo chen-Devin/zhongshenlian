@@ -1,6 +1,5 @@
 <template>
   <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
-    <card>
       <div class="basic-message">        
         <el-row v-if="contractNumShow">
           <label class=" control-label">项目编号：</label>
@@ -11,7 +10,7 @@
           <span class="form-control-static">{{business.name}}</span>
         </el-row>
         <el-row>
-          <label class=" control-label">业务范围与审计目标：</label>
+          <label class=" control-label" style="width: 150px">业务范围与审计目标：</label>
           <span class="form-control-static">{{business.name}}</span>
         </el-row>
       </div>
@@ -33,9 +32,16 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="8">
-            <label class="control-label" label-width="100px">委托单位（客户）:</label>
-            <span class="form-control-static">{{business.institution.customerName}}</span>
+          <el-col :span="3">
+            <label class="control-label">委托单位（客户）:</label>
+          </el-col>
+          <el-col :span="4">
+            <div style="text-overflow: ellipsis">
+              <p class="form-control-static">{{business.institution.customerName}}</p>
+            </div>    
+          </el-col>
+          <el-col :span="1">
+            <p></p>
           </el-col>
           <el-col :span="8">
             <label class="control-label">业务类型:</label>
@@ -69,18 +75,18 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="2">
+          <el-col :span="3">
             <label class="control-label">报价依据：</label>
           </el-col>
-          </el-col :span="22">
+          </el-col :span="21">
             <p class="form-control-static">{{business.basisQuote}}</p>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="2">
+          <el-col :span="3">
             <label class="control-label">出具报告类型：</label>
           </el-col>
-          <el-col :span="22">
+          <el-col :span="21">
             <div>
               <p class="form-control-static"
                  v-html="reportFormat"></p>
@@ -115,15 +121,15 @@
             <span class="form-control-static">{{ reviewAssistantsName }}</span>
           </el-col>
           <el-col :span="8" v-if="business.auditTime.exist">
-            <label class="control-label">上次报告事务所：</label>
+            <label class="control-label" style="width: 110px">上次报告事务所：</label>
             <span class="form-control-static">{{business.lastOffice}}</span>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="2">
+          <el-col :span="3">
             <label class="control-label">合同体制:</label>
           </el-col>
-          <el-col :span="10">
+          <el-col :span="5">
             <p class="form-control-static">{{business.contractType.name}}</p>
             <div v-if="contractTypeChan">
               <p class="form-control-static">基本取费</p>
@@ -196,10 +202,10 @@
               <span class="form-control-static">{{business.feeRate}}%</span>
             </div>
           </el-col>
-          <el-col :span="2">
+          <el-col :span="3">
               <label class="control-label">部门合作:</label>
           </el-col>
-          <el-col :span="10">
+          <el-col :span="5">
               <p class="form-control-static">{{business.departmentCoop.name}}</p>
               <div v-if="departmentCoopChan">
                 <p class="form-control-static">合作部门</p>
@@ -234,249 +240,11 @@
               </div>
           </el-col>   
         </el-row>
-      </div>
-    </card>             
+      </div>           
     <div class="showMore">
       <p @click="closeMore" v-if="showMore">收起</p>
       <p @click="checkMore" v-else>查看更多</p>
     </div>
-      <!-- <div class="form-group">
-        <label class="col-sm-2 control-label">报价依据</label>
-        <div class="">
-          <p class="form-control-static">{{business.basisQuote}}</p>
-        </div>
-      </div> -->
-
-    <!-- <div class="form-group" v-if="false">
-      <label class="col-sm-2 control-label">项目申请人电话</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.proposer.tele}}</p>
-      </div>
-    </div> -->
-    <!-- <div class="form-group">
-      <label class="col-sm-2 control-label">委托单位（客户）</label>
-      <div class="col-sm-9">
-         <p class="form-control-static">{{business.institution.customerName}}</p>
-      </div>
-    </div> -->
-    <!-- <div class="form-group">
-      <label class="col-sm-2 control-label">被审计单位</label>
-      <div class="col-sm-9">
-        <p class="form-control-static" v-for="auditedUnit in business.beingAuditedUnit">{{ auditedUnit.unit }}</p>
-      </div>
-    </div> -->
-   
-    <!-- <div class="form-group">
-      <label class="col-sm-2 control-label">业务类型</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.type}}</p>
-      </div>
-    </div> -->
-    <!-- <div class="form-group">
-      <label class="col-sm-2 control-label">项目经理</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.manager.name}}</p>
-      </div>
-    </div> -->
-   <!--  <div class="form-group">
-      <label class="col-sm-2 control-label">计划工期</label>
-      <div class="col-sm-9">
-        <div class="row">
-          <div class="col-sm-6">
-            <p class="form-control-static">开始时间：{{business.time.start}}</p>
-          </div>
-          <div class="col-sm-6">
-            <p class="form-control-static">结束时间：{{business.time.end}}</p>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="form-group">
-      <label class="col-sm-2 control-label">项目取得方式</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.getWay}}</p>
-      </div>
-    </div> -->
-    <!-- <div class="form-group">
-      <label class="col-sm-2 control-label">合同预估金额</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</p>
-      </div>
-    </div> -->
-   
-    <!-- <div class="form-group">
-      <label class="col-sm-2 control-label">出具报告类型</label>
-      <div class="col-sm-9">
-        <p class="form-control-static"
-           v-html="reportFormat"></p>
-      </div>
-    </div> -->
-    <!-- <div class="form-group"
-         v-if="business.auditTime.exist">
-      <label class="col-sm-2 control-label">审计期间</label>
-      <div class="col-sm-9">
-        <div class="row">
-          <div class="col-sm-6">
-            <p class="form-control-static">开始时间：{{business.auditTime.start}}</p>
-          </div>
-          <div class="col-sm-6">
-            <p class="form-control-static">结束时间：{{business.auditTime.end}}</p>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="form-group">
-      <label class="col-sm-2 control-label">合同体制</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.contractType.name}}</p>
-      </div>
-    </div>
-    <div class="form-group"
-         v-if="contractTypeChan">
-      <label class="col-sm-2 control-label">基本取费</label>
-      <div class="col-sm-9">
-        <div class="row form-group">
-          <div class="col-sm-6">
-            <p class="form-control-static">
-              主办方：{{business.contractType.basicFee.main.name}}
-            </p>
-          </div>
-          <div class="col-sm-5">
-            <p class="form-control-static">
-              比例：{{business.contractType.basicFee.main.percentage}}%
-            </p>
-          </div>
-        </div>
-        <div class="row form-group"
-             v-for="(DEPEND, index) in business.contractType.basicFee.depend"
-             :key="index">
-          <div class="col-sm-6">
-            <p class="form-control-static">
-              协办方：{{DEPEND.name}}
-            </p>
-          </div>
-          <div class="col-sm-5">
-            <p class="form-control-static">
-              比例：{{DEPEND.percentage}}%
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-group"
-         v-if="contractTypeChan">
-      <label class="col-sm-2 control-label">效益取费</label>
-      <div class="col-sm-9">
-        <div class="row form-group">
-          <div class="col-sm-6">
-            <p class="form-control-static">
-              主办方：{{business.contractType.benefitFee.main.name}}
-            </p>
-          </div>
-          <div class="col-sm-5">
-            <p class="form-control-static">
-              比例：{{business.contractType.benefitFee.main.percentage}}%
-            </p>
-          </div>
-        </div>
-        <div class="row form-group"
-             v-for="(DEPEND, index) in business.contractType.benefitFee.depend"
-             :key="index">
-          <div class="col-sm-6">
-            <p class="form-control-static">
-              协办方：{{DEPEND.name}}
-            </p>
-          </div>
-          <div class="col-sm-5">
-            <p class="form-control-static">
-              比例：{{DEPEND.percentage}}%
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-group" v-if="business.feeBasisExist">
-      <label class="col-sm-2 control-label">取费依据</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.feeBasis}}</p>
-      </div>
-    </div>
-    <div class="form-group" v-if="business.feeBasisExist">
-      <label class="col-sm-2 control-label">费率</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.feeRate}}%</p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">部门合作</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.departmentCoop.name}}</p>
-      </div>
-    </div>
-    <div class="form-group"
-         v-if="departmentCoopChan">
-      <label class="col-sm-2 control-label">合作部门</label>
-      <div class="col-sm-9">
-        <div class="row form-group">
-          <div class="col-sm-6">
-            <p class="form-control-static">
-              主要部门：{{business.departmentCoop.departments.main.name}}
-            </p>
-          </div>
-          <div class="col-sm-5">
-            <p class="form-control-static">
-              比例：{{business.departmentCoop.departments.main.percentage}}%
-            </p>
-          </div>
-        </div>
-        <div class="row form-group"
-             v-for="(COOP, index) in business.departmentCoop.departments.coop"
-             :key="index">
-          <div class="col-sm-6">
-            <p class="form-control-static">
-              合作部门：{{COOP.name}}
-            </p>
-          </div>
-          <div class="col-sm-5">
-            <p class="form-control-static">
-              比例：{{COOP.percentage}}%
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">参审注师</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{ reviewCPAsName }}</p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">参审助理</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{ reviewAssistantsName }}</p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">报告数量</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.report.amount===''?'':`${business.report.amount}份（类）`}}</p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">报告用途</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.report.usage}}</p>
-      </div>
-    </div>
-    <div class="form-group"
-         v-if="business.auditTime.exist">
-      <label class="col-sm-2 control-label">上次报告事务所</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{business.lastOffice}}</p>
-      </div>
-    </div> -->
-
     <div class="basic-message">
       <el-row  v-if="contractUploadShow">
         <el-col :span="2">
@@ -744,13 +512,15 @@ export default {
   cursor: pointer;
 }
 .control-label {
-  width: 160px;
+  width: 120px;
 }
 .el-col-8{
   padding-bottom: 20px;
+  text-overflow: ellipsis;
 }
 .el-row{
   padding-bottom: 20px;
+  text-overflow: ellipsis;
 }
 .basic-message{
   margin-left: 30px;
