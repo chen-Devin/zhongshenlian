@@ -655,15 +655,15 @@ export default {
             }
 
             this.business.reports = [];
-            for (let i = 0; i < rep.data.data.reportAnnexArray.length; i++) {
+            for (let i = 0; i < rep.data.data.reportArray.length; i++) {
               let obj = {
-                id: rep.data.data.reportAnnexArray[i].id,
-                name: rep.data.data.reportAnnexArray[i].annexName,
-                url: rep.data.data.reportAnnexArray[i].annexUrl,
-                state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true,
-                archivingState: rep.data.data.reportAnnexArray[i].archivingState === '0' ? false : true,
-                reportName: rep.data.data.reportAnnexArray[i].reportName,
-                adviceState: parseInt(rep.data.data.reportAnnexArray[i].fStatus)
+                id: rep.data.data.reportArray[i].id,
+                name: rep.data.data.reportArray[i].reportName,
+                number: rep.data.data.reportArray[i].number,
+                downloadStatus: rep.data.data.reportArray[i].downloadStatus,
+                QRcodeUrl: rep.data.data.reportArray[i].QRcodeUrl,
+                archivingState: rep.data.data.reportArray[i].archivingState,
+                FStatus: parseInt(rep.data.data.reportArray[i].FStatus)
               }
               this.business.reports.push(obj);
             }

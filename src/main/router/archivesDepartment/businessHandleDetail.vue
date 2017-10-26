@@ -2,6 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
+      <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="showfileModal" v-if="fileAble">归档报告</button>
       <h3 class="main-title">
         {{business.name}}
         <small class="label label-success business-label pull-right" v-if="sended">业务已完结</small>
@@ -17,6 +18,11 @@
         </template>
       </div>
     </card>
+    <file-modal
+      v-if="fileModalShow"
+      :initBusiness="business"
+      @changeSuccess="changeSuccess"
+      @cancel="cancel"></file-modal>
     <complete-modal v-if="showModal"
                     :initBusiness="business"
                     @submited="submited"
@@ -34,6 +40,7 @@ import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
 import completeModal from './component/completeModal.vue';
+import fileModal from './component/fileModal.vue';
 
 Vue.prototype.$message = Message;
 
@@ -45,6 +52,7 @@ export default {
         { name: '待处理业务', url: '/business-handle-list-archives', present: false },
         { name: '业务详情', url: `/business-handle-detail-archives-${this.$route.params.id}`, present: true },
       ],
+      fileModalShow: false,
       business: {
         id: this.$route.params.id,
         name: '',
@@ -324,6 +332,9 @@ export default {
     sended() {
       return (this.business.projectStatus < 180) ? false : true;
     },
+    fileAble () {
+      return (this.business.projectStatus === 114) ? true : false;
+    },
     progress() {
       if (this.business.projectStatus < 20) {
           return [
@@ -457,6 +468,16 @@ export default {
     $route: 'getInfo'
   },
   methods: {
+    showfileModal () {
+      this.fileModalShow = true
+    },
+    changeSuccess () {
+      this.business.projectStatus = 120
+      this.cancel()
+    },
+    cancel () {
+      this.fileModalShow = false
+    },
     getInfo() {
       let promise = new Promise((resolve, reject) => {
         axios({
@@ -745,7 +766,8 @@ export default {
     card,
     business,
     approverAdvice,
-    completeModal
+    completeModal,
+    fileModal
   }
 }
 </script>

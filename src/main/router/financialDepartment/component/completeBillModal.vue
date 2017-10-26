@@ -2,7 +2,7 @@
   <modal>
     <div slot="body">
       <p>
-        <span class="fa fa-exclamation-circle fa-5x text-success"></span>
+        <!-- <span class="fa fa-exclamation-circle fa-5x text-success"></span> -->
         <span class="text-cont">确定完成开票吗？</span>
       </p>
     </div>

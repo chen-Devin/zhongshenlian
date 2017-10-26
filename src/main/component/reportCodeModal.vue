@@ -97,6 +97,7 @@ export default {
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
           this.cancel()
+          this.$emit('codeSubmitted')
           this.$message.success('上传成功')
         } else {
           this.$message.error(rep.data.msg)

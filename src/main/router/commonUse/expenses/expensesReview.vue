@@ -2,7 +2,7 @@
   <div class="main">
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
-    <expense-list-only :expensesList="expensesList" :applyAble="applyAble" listType="list" :totalNum="totalNum"></expense-list-only>
+    <expense-list-only :expensesList="expensesList" listType="review"></expense-list-only>
   </div>
 </template>
 
@@ -16,10 +16,9 @@ export default {
   data() {
     return {
       pageNum: 1,
-      totalNum: 1,
       paths: [
-        { name: '报销申请', url: '/expenses-list', present: false },
-        { name: '报销列表', url: '/expenses-list', present: true }
+        { name: '待处理业务', url: '/expenses-review', present: false },
+        { name: '单据审核', url: '/expenses-review', present: true }
       ],
       expensesList: [{
         id: '',
@@ -28,8 +27,7 @@ export default {
         applicantName: {},
         type: '',
         time: ''
-      }],
-      applyAble: true
+      }]
     }
   },
   methods: {
@@ -44,7 +42,7 @@ export default {
               let obj = {
                 command: 'getUnDealRListOfFinance',
                 platform: 'web',
-                type: '4',
+                type: 0,
                 pageNum: this.pageNum
               }
               return JSON.stringify(obj);
@@ -52,7 +50,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.totalNum = Number(rep.data.data.totalNum)
+            this.totalNum = rep.data.data.totalNum
             this.expensesList = rep.data.data.reimbursementArray
             resolve('done');
           } else {

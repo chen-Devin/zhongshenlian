@@ -14,7 +14,7 @@
         上传报告
       </button>
     </h4>
-    <p>{{ business.reports[0] }}</p>
+    <!-- <p>{{ business.reports[0] }}</p> -->
     <table class="table table-bordered table-list" v-if="reload">
       <thead>
         <tr>
@@ -53,10 +53,15 @@
             </a>
           </td>
           <td class="ta-c" v-if="user.department === '档案部'">
-            <button class="btn my-btn submit-btn small-btn" v-if="(REPORT.QRcodeUrl === '')" @click="showCodeModal(index, REPORT.id)">待上传</button>
-            <span v-else>{{ REPORT.QRcodeUrl === '' ? '未生成' : '已生成' }}</span>
+            <button 
+              class="btn my-btn submit-btn small-btn" 
+              v-if="(REPORT.QRcodeUrl === '')" 
+              @click="showCodeModal(index, REPORT.id)"
+              :disabled="REPORT.FStatus === 1">待上传</button>
+            <span v-else>{{ REPORT.QRcodeUrl === '' ? '未上传' : '已上传' }}</span>
           </td>
-          <td class="ta-c" v-else>{{ REPORT.QRcodeUrl === '' ? '未生成' : '已生成' }}</td>
+          <td class="ta-c" v-else>{{ REPORT.QRcodeUrl === '' ? '未上传' : '已上传' }}</td>
+          
           <td class="ta-c">{{ archivingStateMap[Number(REPORT.archivingState)] }}</td>
         </tr>
       </tbody>
@@ -79,7 +84,8 @@
       v-if="codeModalShow"
       :id="reportId"
       :projectId="business.id"
-      @canceled="codeCanceled"></report-code-modal>
+      @canceled="codeCanceled"
+      @codeSubmitted="codeSubmitted"></report-code-modal>
     <!-- <report-del-modal v-if="showDelModal"
                       :initReport="delReport"
                       :initBusiness="business"
@@ -258,19 +264,14 @@ export default {
       this.projectReportShow = true
     },
     add() {
-      if (this.business.reports.length > 3) {
-        this.$message.error('最多上传4份业务报告')
-      } else {
-        this.addReport = {};
-        this.showAddModal = true;
-      }
+      this.addReport = {};
+      this.showAddModal = true;
     },
     added(addedReport) {
       this.business.reports.push(addedReport);
       this.showAddModal = false;
     },
     addCanceled() {
-      console.log(1)
       this.getBusinessInfo().then(() => {
         this.reload = false
         setTimeout(() => {
@@ -278,6 +279,9 @@ export default {
         }, 500)
       }, () => {})
       this.showAddModal = false
+    },
+    codeSubmitted () {
+      this.business.reports[this.codeIndex].QRcodeUrl = 1
     },
     mod(REPORT) {
       this.modReport = REPORT;

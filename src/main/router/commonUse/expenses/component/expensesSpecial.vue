@@ -11,9 +11,9 @@
             <el-select v-model="reimbursementInfo.submitType" placeholder="请选择报销方式" :disabled="!editAble">
               <el-option
                 v-for="item in typeOptions"
-                :key="item"
-                :label="item"
-                :value="item">
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
               </el-option>
             </el-select>
           </el-col>
@@ -249,10 +249,14 @@
         :disabled="!editAble">
       </el-input>
       <p class="btns"  v-if="!editAble">
-        <button class="btn my-btn submit-btn">审批通过</button>
-        <button class="btn my-btn cancel-btn">驳回</button>
+        <button class="btn my-btn submit-btn" @click="agree">审批通过</button>
+        <button class="btn my-btn cancel-btn" @click="showReject">驳回</button>
       </p>
     </card>
+    <reject-expense-modal
+      v-if="rejectShow"
+      @rejected="rejected"
+      @cancel="cancel"></reject-expense-modal>
   </div>
 </template>
 
@@ -262,6 +266,7 @@ import crumbs from '@/main/component/crumbs.vue';
 import card from '@/main/component/card.vue';
 import stateSvg from './stateSvg.vue';
 import expenseTable from './expenseTable.vue';
+import rejectExpenseModal from './rejectExpenseModal.vue';
 
 export default {
   name: 'expensesList',
@@ -269,10 +274,11 @@ export default {
     return {
       user: {},
       paths: [
-        { name: '报销申请', url: '/expenses-list', present: false },
-        { name: '报销列表', url: '/expenses-list', present: false },
-        { name: '报销详情', url: '/expenses-detail', present: true }
+        // { name: '报销申请', url: '/expenses-list', present: false },
+        // { name: '报销列表', url: '/expenses-list', present: false },
+        // { name: '报销详情', url: '/expenses-detail', present: true }
       ],
+      rejectShow: false,
       reimbursementInfo: {
         submitType: '',
         projectNumber: '合同编号',
@@ -330,7 +336,20 @@ export default {
         ]
       },
       textarea: '',
-      typeOptions: ['个人报销', '对公报销', '项目报销'],
+      typeOptions: [
+        {
+          name: '个人报销',
+          id: 'personalR'
+        },
+        {
+          name: '对公报销',
+          id: 'publicR'
+        },
+        {
+          name: '项目报销',
+          id: 'projectR'
+        }
+      ],
       classOptions: ['纸质发票报销', '电子发票报销'],
       companyList: [],
       departmentList: [],
@@ -338,7 +357,8 @@ export default {
       departmentSelected: '',
       editAble: this.$route.params.id === 'new' ? true : false,
       numbers: [],
-      uploadIndex: ''
+      uploadIndex: '',
+      expenseId: ''
     };
   },
   computed: {
@@ -379,6 +399,74 @@ export default {
     }
   },
   methods: {
+    agree () {
+      this.handleReimbursement('通过', '').then(() => {
+        
+      }, () => {})
+    },
+    rejected (reason) {
+      this.handleReimbursement('不通过', reason).then(() => {
+        this.rejectShow = false
+      }, () => {})
+    },
+    showReject () {
+      this.rejectShow = true
+    },
+    cancel () {
+      this.rejectShow = false
+    },
+    handleReimbursement (type, reason) {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'handleReimbursement',
+                platform: 'web',
+                result: type,
+                idArray: [{id: this.expenseId}],
+                reason: reason
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success('审批成功')
+            resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
+    getReimbursementInfo () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getReimbursementInfo',
+                platform: 'web',
+                id: this.expenseId
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            // this.companyList = rep.data.data.companyList
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
     changeNumbers (type) {
       if (type === 'paper') {
         this.reimbursementInfo.paperRArray = []
@@ -413,9 +501,9 @@ export default {
         }
       }
     },
-    checkDetail (item) {
+    // checkDetail (item) {
       
-    },
+    // },
     getCompanyList () {
       return new Promise((resolve, reject) => {
         axios({
@@ -558,12 +646,33 @@ export default {
       item = index
       return item
     })
+    if (this.$route.params.id.split('&').length > 1) {
+      this.expenseId = this.$route.params.id.split('&')[0]
+      let type = this.$route.params.id.split('&')[1]
+      if (type === 'review') {
+        this.paths =  [
+          { name: '待处理业务', url: '/expenses-review', present: false },
+          { name: '单据审核', url: '/expenses-review', present: false },
+          { name: '报销详情', url: '/expenses-detail', present: true }
+        ]
+      } else {
+        this.paths = [
+          { name: '报销申请', url: '/expenses-list', present: false },
+          { name: '报销列表', url: '/expenses-list', present: false },
+          { name: '报销详情', url: '/expenses-detail', present: true }
+        ]
+      }
+    } else {
+      this.expenseId = this.$route.params.id
+    }
+    this.getReimbursementInfo()
   },
   components: {
     crumbs,
     card,
     stateSvg,
-    expenseTable
+    expenseTable,
+    rejectExpenseModal
   }
 }
 </script>
