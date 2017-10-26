@@ -2,7 +2,8 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <!-- <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="showPackModal" v-if="packAble">归档装订</button> -->
+      <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="showPackModal" v-if="packAble">报告打印装订盖章</button>
+      <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="showBackModal" v-if="back">返回报告</button>
       <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="sel()" v-if="sendAble">发放合同编号</button>
       <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="checkContract" v-if="reviewAble">审核通过</button>
       <button class="btn my-btn draft-btn pull-right mr-10 mt-10" @click="showChangeModal" v-if="reviewAble">金额变更</button>
@@ -45,6 +46,11 @@
       :initBusiness="business"
       @changeSuccess="changeSuccess"
       @cancel="cancel"></pack-contract-modal>
+    <back-report-modal
+      v-if="backModalShow"
+      :initBusiness="business"
+      @changeSuccess="changeSuccess"
+      @cancel="cancel"></back-report-modal>
   </div>
 </template>
 
@@ -60,6 +66,7 @@ import contractChangeModal from './component/contractChangeModal.vue';
 import sealContractModal from './component/sealContractModal.vue';
 import uploadContractModal from './component/uploadContractModal.vue';
 import packContractModal from './component/packContractModal.vue';
+import backReportModal from './component/backReportModal.vue';
 
 export default {
   name: 'businessHandleDetailOffice',
@@ -73,6 +80,7 @@ export default {
       sealModalShow: false,
       uploadContractShow: false,
       packModalShow: false,
+      backModalShow: false,
       business: {
         id: this.$route.params.id,
         name: '',
@@ -362,7 +370,10 @@ export default {
     //   return (this.business.projectStatus === 90) ? true : false
     // },
     packAble () {
-      return (this.business.projectStatus === 90) ? true : false
+      return (this.business.projectStatus === 112) ? true : false
+    },
+    back () {
+      return (this.business.projectStatus === 113) ? true : false
     },
     progress() {
       if (this.business.projectStatus === 20 || this.business.projectStatus === 30) {
@@ -546,11 +557,15 @@ export default {
     showPackModal () {
       this.packModalShow = true
     },
+    showBackModal () {
+      this.backModalShow = true
+    },
     cancel () {
       this.changeModalShow = false
       this.sealModalShow = false
       this.uploadContractShow = false
       this.packModalShow = false
+      this.backModalShow = false
     },
     changeSuccess (next) {
       if (next === 'upload') {
@@ -812,15 +827,15 @@ export default {
             }
 
             this.business.reports = [];
-            for (let i = 0; i < rep.data.data.reportAnnexArray.length; i++) {
+            for (let i = 0; i < rep.data.data.reportArray.length; i++) {
               let obj = {
-                id: rep.data.data.reportAnnexArray[i].id,
-                name: rep.data.data.reportAnnexArray[i].annexName,
-                url: rep.data.data.reportAnnexArray[i].annexUrl,
-                state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true,
-                archivingState: rep.data.data.reportAnnexArray[i].archivingState === '0' ? false : true,
-                reportName: rep.data.data.reportAnnexArray[i].reportName,
-                adviceState: parseInt(rep.data.data.reportAnnexArray[i].fStatus)
+                id: rep.data.data.reportArray[i].id,
+                name: rep.data.data.reportArray[i].reportName,
+                number: rep.data.data.reportArray[i].number,
+                downloadStatus: rep.data.data.reportArray[i].downloadStatus,
+                QRcodeUrl: rep.data.data.reportArray[i].QRcodeUrl,
+                archivingState: rep.data.data.reportArray[i].archivingState,
+                FStatus: parseInt(rep.data.data.reportArray[i].FStatus)
               }
               this.business.reports.push(obj);
             }
@@ -862,7 +877,8 @@ export default {
     contractChangeModal,
     sealContractModal,
     uploadContractModal,
-    packContractModal
+    packContractModal,
+    backReportModal
   }
 }
 </script>

@@ -24,6 +24,7 @@ import operatHistory from '../component/operatHistory.vue';
 
   // 报销
 import expensesList from './commonUse/expenses/expensesList.vue'
+import expensesReview from './commonUse/expenses/expensesReview.vue'
 import expensesRecord from './commonUse/expenses/component/expensesRecord.vue'
 import expensesTrip from './commonUse/expenses/component/expensesTrip.vue'
 import expensesSpecial from './commonUse/expenses/component/expensesSpecial.vue'
@@ -138,7 +139,11 @@ const router = new VueRouter({
             component: expensesList
         },
         {
-            path: '/expenses-record/:id/:type',
+            path: '/expenses-review',
+            component: expensesReview
+        },
+        {
+            path: '/expenses-record/:id/:type/:listType',
             component: expensesRecord
         },
         {

@@ -2,12 +2,12 @@
   <modal class="contract-change">
     <div slot="body">
       <p>
-        操作状态不可撤销，是否确定归档装订？
+        操作状态不可撤销，是否确定返回报告？
       </p>
     </div>
     <div slot="footer">
       <button class="btn my-btn cancel-btn"
-              @click="printingAndBindingAndSealReport">
+              @click="returnProjectReport">
         确定
       </button>
       <button class="btn my-btn submit-btn"
@@ -34,7 +34,7 @@ export default {
     cancel () {
       this.$emit('cancel')
     },
-    printingAndBindingAndSealReport () {
+    returnProjectReport () {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -43,7 +43,7 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'printingAndBindingAndSealReport',
+                command: 'returnProjectReport',
                 platform: 'web',
                 id: this.initBusiness.id
               }
@@ -52,7 +52,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.$message.success('已打印装订盖章')
+            this.$message.success('已返回报告')
             this.$emit('changeSuccess')
             resolve('done')
           } else {

@@ -13,6 +13,7 @@
           <el-menu-item index="/business-handle-list-financial/0">待开发票</el-menu-item>
           <el-menu-item index="/business-handle-list-financial/1">待上传截图</el-menu-item>
           <el-menu-item index="/business-handle-list-financial/2">开票撤销复核</el-menu-item>
+          <el-menu-item index="/expenses-review">单据审核</el-menu-item>
       </el-submenu>
       <el-submenu index="to-do" v-if="leader">
         <template slot="title">待办事项</template>

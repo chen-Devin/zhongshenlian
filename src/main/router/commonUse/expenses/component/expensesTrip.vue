@@ -11,15 +11,22 @@
             <el-select v-model="reimbursementInfo.submitType" placeholder="请选择报销方式" :disabled="!editAble">
               <el-option
                 v-for="item in typeOptions"
-                :key="item"
-                :label="item"
-                :value="item">
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
               </el-option>
             </el-select>
           </el-col>
           <el-col :span="6" class="number d-f" v-if="contractNumberShow">
             <span style="width:70px">合同号：</span>
-            <el-input v-model="reimbursementInfo.projectNumber" placeholder="请填写合同号" :disabled="!editAble"></el-input>
+            <el-select v-model="reimbursementInfo.projectNumber" placeholder="请选择合同" :disabled="!editAble">
+              <el-option
+                v-for="item in contracts"
+                :key="item.id"
+                :label="item.projectName"
+                :value="item.id">
+              </el-option>
+            </el-select>
           </el-col>
           <el-col class="d-f" :span="6">
             <span style="width:90px">开票类型：</span>
@@ -390,10 +397,14 @@
         :disabled="!editAble">
       </el-input>
       <p class="btns" v-if="!editAble">
-        <button class="btn my-btn submit-btn">审批通过</button>
-        <button class="btn my-btn cancel-btn">驳回</button>
+        <button class="btn my-btn submit-btn" @click="agree">审批通过</button>
+        <button class="btn my-btn cancel-btn" @click="showReject">驳回</button>
       </p>
     </card>
+    <reject-expense-modal
+      v-if="rejectShow"
+      @rejected="rejected"
+      @cancel="cancel"></reject-expense-modal>
   </div>
 </template>
 
@@ -403,19 +414,18 @@ import crumbs from '@/main/component/crumbs.vue';
 import card from '@/main/component/card.vue';
 import stateSvg from './stateSvg.vue';
 import expenseTable from './expenseTable.vue';
+import rejectExpenseModal from './rejectExpenseModal.vue';
 
 export default {
   name: 'expensesList',
   data() {
     return {
-      paths: [
-        { name: '报销申请', url: '/expenses-list', present: false },
-        { name: '报销列表', url: '/expenses-list', present: false },
-        { name: '报销详情', url: '/expenses-detail', present: true }
-      ],
+      paths: [],
       numbers: [],
+      contracts: [],
       uploadIndex: '',
       uploadType: '',
+      expenseId: '',
       reimbursementInfo: {
         id: '',
         submitType: '',
@@ -503,7 +513,16 @@ export default {
         ]
       },
       textarea: '',
-      typeOptions: ['合同报销', '非合同报销'],
+      typeOptions: [
+        {
+          name: '合同报销',
+          id: 'contractR'
+        },
+        {
+          name: '非合同报销',
+          id: 'nonContractR'
+        }
+      ],
       classOptions: ['纸质发票报销', '电子发票报销'],
       companyList: [],
       departmentList: [],
@@ -512,12 +531,13 @@ export default {
       companySelected: '',
       departmentSelected: '',
       editAble: this.$route.params.id === 'new' ? true : false,
-      user: {}
+      user: {},
+      rejectShow: false
     };
   },
   computed: {
     contractNumberShow () {
-      if (this.reimbursementInfo.submitType === '合同报销') {
+      if (this.reimbursementInfo.submitType === 'contractR') {
         return true
       } else {
         return false
@@ -539,6 +559,77 @@ export default {
     }
   },
   methods: {
+    agree () {
+      this.handleReimbursement('通过', '').then(() => {
+        
+      }, () => {})
+    },
+    rejected (reason) {
+      this.handleReimbursement('不通过', reason).then(() => {
+        this.rejectShow = false
+      }, () => {})
+    },
+    showReject () {
+      this.rejectShow = true
+    },
+    cancel () {
+      this.rejectShow = false
+    },
+    handleReimbursement (type, reason) {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'handleReimbursement',
+                platform: 'web',
+                result: type,
+                idArray: [{id: this.expenseId}],
+                reason: reason
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success('审批成功')
+            resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
+    getReimbursementInfo () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getReimbursementInfo',
+                platform: 'web',
+                id: this.expenseId
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.reimbursementInfo = rep.data.data
+            // this.companyList = rep.data.data.companyList
+            resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
     getCompanyList () {
       return new Promise((resolve, reject) => {
         axios({
@@ -589,7 +680,7 @@ export default {
     companyChange () {
       this.companyList.forEach((item) => {
         if (item.id === this.companySelected) {
-          this.reimbursementInfo.budgetCompany = item.name
+          this.reimbursementInfo.budgetCompany = item.id
         }
       })
       this.departmentSelected = ''
@@ -599,7 +690,7 @@ export default {
     departmentChange () {
       this.departmentList.forEach((item) => {
         if (item.id === this.departmentSelected) {
-          this.reimbursementInfo.budgetDepartment = item.name
+          this.reimbursementInfo.budgetDepartment = item.id
         }
       })
     },
@@ -820,6 +911,29 @@ export default {
     },
     addOrEditReimbursement () {
       this.reimbursementInfo.companyName = this.user.companyName
+      this.reimbursementInfo.travelRArray.forEach((item) => {
+        delete item.percentage
+        delete item.state
+        delete item.uploadURL
+      })
+      this.reimbursementInfo.stayRArray.forEach((item) => {
+        delete item.percentage
+        delete item.state
+        delete item.uploadURL
+      })
+      this.reimbursementInfo.localRArray.forEach((item) => {
+        delete item.percentage
+        delete item.state
+        delete item.uploadURL
+      })
+      this.reimbursementInfo.fieldRArray.forEach((item) => {
+        delete item.percentage
+        delete item.state
+        delete item.uploadURL
+      })
+      if (this.reimbursementInfo.id === '') {
+        delete this.reimbursementInfo.id
+      }
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -830,6 +944,7 @@ export default {
               let obj = {
                 command: 'addOrEditReimbursement',
                 platform: 'web',
+                type: this.reimbursementInfo.submitType,
                 data: this.reimbursementInfo
               }
               return JSON.stringify(obj);
@@ -841,16 +956,43 @@ export default {
             this.$router.push('/expenses-list')
             resolve('done')
           } else {
-            this.$message.success(rep.data.msg)
+            this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       })
     },
     back () {
       this.$router.push('/expenses-list')
+    },
+    getProjectByPerson () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getProjectByPerson',
+                platform: 'web',
+                type: 2
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.contracts = rep.data.data.resultArray
+            resolve('done')
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
     }
   },
   created () {
+    this.getProjectByPerson()
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser
     }, () => { })
@@ -859,12 +1001,33 @@ export default {
       item = index
       return item
     })
+    if (this.$route.params.id.split('&').length > 1) {
+      this.expenseId = this.$route.params.id.split('&')[0]
+      let type = this.$route.params.id.split('&')[1]
+      if (type === 'review') {
+        this.paths =  [
+          { name: '待处理业务', url: '/expenses-review', present: false },
+          { name: '单据审核', url: '/expenses-review', present: false },
+          { name: '报销详情', url: '/expenses-detail', present: true }
+        ]
+      } else {
+        this.paths = [
+          { name: '报销申请', url: '/expenses-list', present: false },
+          { name: '报销列表', url: '/expenses-list', present: false },
+          { name: '报销详情', url: '/expenses-detail', present: true }
+        ]
+      }
+    } else {
+      this.expenseId = this.$route.params.id
+    }
+    this.getReimbursementInfo()
   },
   components: {
     crumbs,
     card,
     stateSvg,
-    expenseTable
+    expenseTable,
+    rejectExpenseModal
   }
 }
 </script>
