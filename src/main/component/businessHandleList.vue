@@ -24,6 +24,7 @@
       </el-tabs>
       <search-bar 
         class="f-r" 
+        v-if="reloadSearch"
         :searchItems="searchItems"
         @search="search"></search-bar>
     </card>
@@ -34,15 +35,15 @@
       </h3>
       <h3 class="main-title" v-if="financialType === '0'">
         待开发票
-          <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
+          <search-bar  class="f-r" v-if="reloadSearch" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
       <h3 class="main-title" v-if="financialType === '1'">
         待上传截图
-          <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
+          <search-bar  class="f-r" v-if="reloadSearch" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
       <h3 class="main-title" v-if="financialType === '2'">
         开票撤销复核
-          <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
+          <search-bar  class="f-r" v-if="reloadSearch" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
       <h3 class="main-title" v-if="department === 'risk'">
         报告审核
@@ -184,12 +185,19 @@ export default {
         amount: '',
         type: '',
       },
-      searchItems: [],
+      searchItems: [
+        {
+          label: '项目名称',
+          value: 'projectName'
+        }
+      ],
       salesType: 0,
       officeType: 0,
       financeType: 0,
       pageNum: 1,
-      reloadPagination: true
+      reloadPagination: true,
+      reloadSearch: true,
+      searchObj: {}
     };
   },
   created() {
@@ -220,6 +228,16 @@ export default {
   watch: {
     financialType: function (val, oldVal) {
       if (val !== oldVal) {
+        this.pageNum = 1
+        this.reloadPagination = false
+        setTimeout(() => {
+          this.reloadPagination = true
+        }, 500)
+        this.reloadSearch = false
+        setTimeout(() => {
+          this.reloadSearch = true
+        }, 500)
+        this.searchObj = {}
         this.getUnDealListOfFinance()
       }
     }
@@ -237,6 +255,7 @@ export default {
       } else if (tab.name === 'bill') {
         this.salesType = 1
       }
+      this.searchObj = {}
       this.getUnDealListOfBusinessUnit()
     },
     tabClickOffice (tab, event) {  // 尚未给接口
@@ -244,6 +263,10 @@ export default {
       this.reloadPagination = false
       setTimeout(() => {
         this.reloadPagination = true
+      }, 500)
+      this.reloadSearch = false
+      setTimeout(() => {
+        this.reloadSearch = true
       }, 500)
       if (tab.name === 'review') {
         this.officeType = 0
@@ -258,10 +281,26 @@ export default {
       }  else if (tab.name === 'change') {
         this.officeType = 4
       }
+      this.searchObj = {}
       this.getUnDealListOfOffice()
     },
-    search () {
-
+    search (obj) {
+      this.searchObj = {}
+      this.searchObj = obj
+      this.pageNum = 1
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 500)
+      if (this.department === 'office') {
+        this.getUnDealListOfOffice()
+      } else if (this.department === 'archives') {
+        this.getUnDealListOfArchives()
+      } else if (this.department === 'financial') {
+        this.getUnDealListOfFinance()
+      } else if (this.department === 'risk') {
+        this.getUnDealListOfRiskAssessment()
+      }
     },
     mod(BUSINESS) {
       // if (this.thiDepartment === 'office') {
@@ -309,6 +348,7 @@ export default {
                 platform: 'web',
                 pageNum: this.pageNum
               }
+              Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
             })()
           }
@@ -335,6 +375,7 @@ export default {
                 type: this.officeType,
                 pageNum: this.pageNum
               }
+              Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
             })()
           }
@@ -361,6 +402,7 @@ export default {
                 type: this.$route.params.type,
                 pageNum: this.pageNum
               }
+              Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
             })()
           }
@@ -473,9 +515,7 @@ export default {
         this.getUnDealListOfArchives()
       } else if (this.department === 'financial') {
         this.getUnDealListOfFinance()
-      } else if (this.department === 'risk') {
-        this.getUnDealListOfRiskAssessment()
-      }
+      } else if (this.)
     },
     showHigherSearch() {
       if (this.higherSearch === false) {
