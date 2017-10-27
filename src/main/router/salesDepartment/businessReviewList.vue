@@ -12,7 +12,7 @@
       <router-link class="btn my-btn submit-btn pull-right add-btn" to="/business-review-add" tag="button" v-if="addBusiness">
         新建项目
       </router-link>
-      <search-bar class="f-r" :searchItems="searchItems"
+      <search-bar class="f-r" :searchItems="searchItems" v-if="reloadSearch"
       @search="search"></search-bar>
     </card>
     <card>
@@ -29,8 +29,8 @@
             v-for="(project, index) in businessArray"
             @click="businessRoute(project)" 
             :key="index">
-            <td>{{ project.businessName }}</td>
-            <td>{{ project.finishTime.substring(0,10) }}</td>
+            <td>{{ project.projectName }}</td>
+            <td>{{ project.startTime.substring(0,10) }}</td>
             <td>
               <span class="label label-danger"
                     v-if="project.projectStatus==='0010'">尚未完成</span>
@@ -46,14 +46,13 @@
           </tr>
         </tbody>
       </table>
-      <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
+      <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange" v-if="reloadPagination"></my-pagination>
     </card>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import myPagination from '../../component/pagination.vue';
@@ -69,6 +68,8 @@ export default {
       businessArray: [],
       addBusiness: false,
       totalPage: 1,
+      totalNum: 1,
+      searchObj: {},
       page: {
         total: 0,
         current: 0
@@ -84,8 +85,15 @@ export default {
         }
       ],
       activeName: 'business',
-      searchItems: [],
-      pageNum: 1
+      searchItems: [{
+        label: '项目名称',
+        value: 'projectName'
+      }],
+      reloadSearch: true,
+      reloadPagination: true,
+      pageNum: 1,
+      //立项申请为0， 草稿箱为1 （搜索判断）
+      contentType: 0
     };
   },
   props: ['user'],
@@ -100,16 +108,38 @@ export default {
   },
   methods: {
     tabClick(tab, event) {
+      this.pageNum = 1
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 500)
+      this.reloadSearch = false
+      setTimeout(() => {
+        this.reloadSearch = true
+      }, 500)
+      this.searchObj = {}
       if (tab.name === 'business') {
-        this.pageNum = 1
         this.getUnDealListOfBusinessUnit()
+        this.contentType = 0
       } else if (tab.name === 'draft') {
-        this.pageNum = 1
         this.getBusinessUnFinished()
+        this.contentType = 1
       }
     },
-    search () {
+    search (obj) {
+      this.searchObj = {}
+      this.searchObj = obj
+      this.pageNum = 1
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 500)
+      if (this.contentType === 0) {
 
+        this.getUnDealListOfBusinessUnit()
+      } else if (this.contentType === 1) {
+        this.getBusinessUnFinished()
+      }
     },
     addBusinessJud() {
       this.addBusiness = this.user.authority['业务立项'];
@@ -132,13 +162,13 @@ export default {
                 type: 2,
                 pageNum: this.pageNum
               }
+              Object.assign(obj, this.searchObj);
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.page.total = parseInt(rep.data.data.totalNum)
-            this.page.current = this.pageNum
+            this.totalNum = parseInt(rep.data.data.totalNum)
             this.businessArray = rep.data.data.businessArray
             resolve('done')
           } else {
@@ -185,13 +215,13 @@ export default {
                 platform: 'web',
                 pageNum: this.pageNum
               }
+              Object.assign(obj, this.searchObj);
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.page.total = parseInt(rep.data.data.totalNum)
-            this.page.current = this.pageNum
+            this.totalNum = parseInt(rep.data.data.totalNum)
             this.businessArray = rep.data.data.businessArray
             resolve('done')
           } else {
