@@ -12,6 +12,7 @@
       <search-bar 
         class="f-r" 
         :searchItems="searchItems"
+        v-if="reloadSearch"
         @search="search"></search-bar>
     </card>
     <card class="card-tabs" v-if="department === 'office'">
@@ -218,7 +219,7 @@ export default {
       this.getUnDealListOfFinance()
     } else if (this.department === 'risk') {
       this.getUnDealListOfRiskAssessment()
-    }
+    } 
   },
   computed: {
     financialType () {
@@ -249,6 +250,10 @@ export default {
       this.reloadPagination = false
       setTimeout(() => {
         this.reloadPagination = true
+      }, 500)
+      this.reloadSearch = false
+      setTimeout(() => {
+        this.reloadSearch = true
       }, 500)
       if (tab.name === 'report') {
         this.salesType = 0
@@ -300,6 +305,8 @@ export default {
         this.getUnDealListOfFinance()
       } else if (this.department === 'risk') {
         this.getUnDealListOfRiskAssessment()
+      } else if (this.department === 'sales') {
+        this.getUnDealListOfBusinessUnit()
       }
     },
     mod(BUSINESS) {
@@ -323,6 +330,7 @@ export default {
                 type: this.salesType,
                 pageNum: this.pageNum
               }
+              Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
             })()
           }
@@ -428,6 +436,7 @@ export default {
                 platform: 'web',
                 pageNum: this.pageNum
               }
+              Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
             })()
           }
@@ -515,7 +524,7 @@ export default {
         this.getUnDealListOfArchives()
       } else if (this.department === 'financial') {
         this.getUnDealListOfFinance()
-      } else if (this.)
+      } 
     },
     showHigherSearch() {
       if (this.higherSearch === false) {

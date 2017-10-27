@@ -20,15 +20,15 @@
           <tr v-for="(BUSINESS, index) in businesses"
               :key="index"
               @click.prevent="mod(BUSINESS)">
-            <td class="text-center">{{BUSINESS.contractNo}}合同号</td>
-            <td class="text-center link-wrap">{{BUSINESS.businessName}}</td>
-            <td class="text-center">{{BUSINESS.projectManager}}项目经理</td>
-            <td class="text-center">{{分管公司}}分管公司</td>
-            <td class="text-center">立项时间</td>
+            <td class="text-center">{{BUSINESS.contractNo}}</td>
+            <td class="text-center link-wrap">{{BUSINESS.projectName}}</td>
+            <td class="text-center">{{BUSINESS.projectManager}}</td>
+            <td class="text-center">{{BUSINESS.businessName}}</td>
+            <td class="text-center">{{BUSINESS.startTime}}</td>
           </tr>
         </tbody>
       </table>
-      <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
+      <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange" v-if="reloadPagination"></my-pagination>
     </card>
     <!-- <card>
       <form class="search-form" @submit.prevent @keyup.enter.prevent>
@@ -72,7 +72,7 @@
 <script>
 import axios from 'axios';
 import businessCompleteSearchBar from '@/main/component/businessCompleteSearchBar.vue';
-import searchBar from '../../component/searchBar.vue';
+import searchBar from '@/main/component/searchBar.vue';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import myPagination from '../../component/pagination.vue';
@@ -86,11 +86,18 @@ export default {
       ],
       businesses: [],
       seaType: '关键字搜索',
+      reloadPagination: true,
       searchTog: false,
       simpleSearch: true,
       searchDown: true,
       searchUp: false,
       higherSearch: false,
+      searchItems: [
+        {
+          label: '项目名称',
+          value: 'projectName'
+        }
+      ],
       sea: {
         searchContent: '',
         requester: '',
@@ -103,14 +110,14 @@ export default {
         amount: '所有',
         type: '所有',
       },
-      page: {
-        total: 0,
-        current: 0
-      }
+      totalPage: 1,
+      totalNum: 1,
+      pageNum: 1
     };
   },
   created() {
-    this.get(1);
+    this.pageNum = 1;
+    this.getBusinessFinished();
   },
   watch: {
     $route: 'getInfo'
@@ -119,60 +126,62 @@ export default {
     mod(BUSINESS) {
     this.$router.push('/business-complete-list/business-complete-detail-'+BUSINESS.id)
     },
-    seaTypeChan() {
-      this.get(1);
-      this.seaInit();
+    // seaTypeChan() {
+    //   this.get(1);
+    //   this.seaInit();
+    // },
+    // showHigherSearch() {
+    //   if (this.higherSearch === false) {
+    //     this.higherSearch = true;
+    //     this.simpleSearch = false;
+    //     this.searchUp = true;
+    //     this.searchDown = false;
+    //   } else {
+    //     this.higherSearch = false;
+    //     this.simpleSearch = true;
+    //     this.searchUp = false;
+    //     this.searchDown = true;
+    //   }
+    // },
+    // seaInit() {
+    //   this.sea = {
+    //     searchContent: '',
+    //     requester: '',
+    //     requesterName: '',
+    //     applicantName: '',
+    //     time: {
+    //       start: '',
+    //       end: ''
+    //     },
+    //     amount: '所有',
+    //     type: '所有',
+    //   };
+    // },
+    // tog(seaCont) {
+    //   this.searchTog = true;
+    //   if (this.seaType === '关键字搜索') {
+    //     this.sea.searchContent = seaCont;
+    //   } else if (this.seaType === '条件查询') {
+    //     this.sea.requester = seaCont.requester;
+    //     this.sea.requesterName = seaCont.requesterName;
+    //     this.sea.applicantName = seaCont.applicantName;
+    //     this.sea.time.start = seaCont.time.start;
+    //     this.sea.time.end = seaCont.time.end;
+    //     this.sea.amount = seaCont.amount;
+    //     this.sea.type = seaCont.type;
+    //   }
+    //   this.search(1);
+    // },
+    currentChange(val) {
+      // if (this.searchTog) {
+      //   this.search(newPage);
+      // } else {
+      //   this.get(newPage);
+      // }
+      this.pageNum = val;
+      this.getBusinessFinished()
     },
-    showHigherSearch() {
-      if (this.higherSearch === false) {
-        this.higherSearch = true;
-        this.simpleSearch = false;
-        this.searchUp = true;
-        this.searchDown = false;
-      } else {
-        this.higherSearch = false;
-        this.simpleSearch = true;
-        this.searchUp = false;
-        this.searchDown = true;
-      }
-    },
-    seaInit() {
-      this.sea = {
-        searchContent: '',
-        requester: '',
-        requesterName: '',
-        applicantName: '',
-        time: {
-          start: '',
-          end: ''
-        },
-        amount: '所有',
-        type: '所有',
-      };
-    },
-    tog(seaCont) {
-      this.searchTog = true;
-      if (this.seaType === '关键字搜索') {
-        this.sea.searchContent = seaCont;
-      } else if (this.seaType === '条件查询') {
-        this.sea.requester = seaCont.requester;
-        this.sea.requesterName = seaCont.requesterName;
-        this.sea.applicantName = seaCont.applicantName;
-        this.sea.time.start = seaCont.time.start;
-        this.sea.time.end = seaCont.time.end;
-        this.sea.amount = seaCont.amount;
-        this.sea.type = seaCont.type;
-      }
-      this.search(1);
-    },
-    currentChange(newPage) {
-      if (this.searchTog) {
-        this.search(newPage);
-      } else {
-        this.get(newPage);
-      }
-    },
-    get(newPage) {
+    getBusinessFinished() {
       let promise = new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -183,21 +192,26 @@ export default {
               var obj = {
                 command: 'getBusinessFinished',
                 platform: 'web',
-                pageNum: newPage
+                pageNum: this.pageNum
               }
+              Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.page.total = parseInt(rep.data.data.totalNum);
-            this.page.current = newPage;
+            this.totalNum = parseInt(rep.data.data.totalNum);
+            // this.page.current = newPage;
             this.businesses.length = 0;
             for (let i = 0; i < rep.data.data.businessArray.length; i++) {
               let obj = {
                 id: rep.data.data.businessArray[i].id,
                 businessName: rep.data.data.businessArray[i].businessName,
                 finishTime: rep.data.data.businessArray[i].finishTime,
+                startTime: rep.data.data.businessArray[i].startTime,
+                projectManager: rep.data.data.businessArray[i].projectManager,
+                projectName: rep.data.data.businessArray[i].projectName,
+                contractNo: rep.data.data.businessArray[i].contractNo,
                 projectStatus: parseInt(rep.data.data.businessArray[i].projectStatus)
               };
               this.businesses.push(obj);
@@ -209,50 +223,60 @@ export default {
       });
       return promise;
     },
-    search(newPage) {
-      let promise = new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              var obj = {
-                command: 'searchBusinessFinished',
-                platform: 'web',
-                searchContent: this.sea.searchContent === '' ? null : this.sea.searchContent,
-                requester: this.sea.requester === '' ? null : this.sea.requester,
-                requesterName: this.sea.requesterName === '' ? null : this.sea.requesterName,
-                applicantName: this.sea.applicantName === '' ? null : this.sea.applicantName,
-                beginTime: this.sea.time.start === '' ? null : this.sea.time.start,
-                endTime: this.sea.time.end === '' ? null : this.sea.time.end,
-                businessAmount: this.sea.amount === '所有' ? null : this.sea.amount,
-                businessType: this.sea.type === '所有' ? null : this.sea.type,
-                pageNum: newPage
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.page.total = parseInt(rep.data.data.pageNum);
-            this.page.current = newPage;
-            this.businesses.length = 0;
-            for (let i = 0; i < rep.data.data.businessArray.length; i++) {
-              let obj = {
-                id: rep.data.data.businessArray[i].id,
-                businessName: rep.data.data.businessArray[i].businessName,
-                finishTime: rep.data.data.businessArray[i].finishTime,
-                projectStatus: parseInt(rep.data.data.businessArray[i].projectStatus)
-              };
-              this.businesses.push(obj);
-            }
-          } else if (rep.data.statusCode === '10012') {
-            window.location.href = 'signIn.html';
-          }
-        }, (rep) => { });
-      });
-      return promise;
+    // search(newPage) {
+    //   let promise = new Promise((resolve, reject) => {
+    //     axios({
+    //       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+    //       method: 'get',
+    //       url: '/service',
+    //       params: {
+    //         data: (() => {
+    //           var obj = {
+    //             command: 'searchBusinessFinished',
+    //             platform: 'web',
+    //             searchContent: this.sea.searchContent === '' ? null : this.sea.searchContent,
+    //             requester: this.sea.requester === '' ? null : this.sea.requester,
+    //             requesterName: this.sea.requesterName === '' ? null : this.sea.requesterName,
+    //             applicantName: this.sea.applicantName === '' ? null : this.sea.applicantName,
+    //             beginTime: this.sea.time.start === '' ? null : this.sea.time.start,
+    //             endTime: this.sea.time.end === '' ? null : this.sea.time.end,
+    //             businessAmount: this.sea.amount === '所有' ? null : this.sea.amount,
+    //             businessType: this.sea.type === '所有' ? null : this.sea.type,
+    //             pageNum: newPage
+    //           }
+    //           return JSON.stringify(obj);
+    //         })()
+    //       }
+    //     }).then((rep) => {
+    //       if (rep.data.statusCode === '10001') {
+    //         this.page.total = parseInt(rep.data.data.pageNum);
+    //         this.page.current = newPage;
+    //         this.businesses.length = 0;
+    //         for (let i = 0; i < rep.data.data.businessArray.length; i++) {
+    //           let obj = {
+    //             id: rep.data.data.businessArray[i].id,
+    //             businessName: rep.data.data.businessArray[i].businessName,
+    //             finishTime: rep.data.data.businessArray[i].finishTime,
+    //             projectStatus: parseInt(rep.data.data.businessArray[i].projectStatus)
+    //           };
+    //           this.businesses.push(obj);
+    //         }
+    //       } else if (rep.data.statusCode === '10012') {
+    //         window.location.href = 'signIn.html';
+    //       }
+    //     }, (rep) => { });
+    //   });
+    //   return promise;
+    // }
+    search(obj) {
+      this.searchObj = {}
+      this.searchObj = obj
+      this.pageNum = 1
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 500)
+      this.getBusinessFinished()
     }
   },
   components: {
