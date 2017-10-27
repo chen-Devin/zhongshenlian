@@ -3,7 +3,7 @@
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h5 class="main-title" v-if="!editAble">可报销金额：1</h5>
+      <h5 class="main-title" v-if="!editAble">可报销金额：</h5>
       <div class="title-wrapper">
         <el-row>
           <el-col :span="6" class="d-f">
@@ -19,11 +19,11 @@
           </el-col>
           <el-col :span="6" class="number d-f" v-if="contractNumberShow">
             <span style="width:70px">合同号：</span>
-            <el-select v-model="reimbursementInfo.projectNumber" placeholder="请选择合同" :disabled="!editAble">
+            <el-select v-model="projectNumber" placeholder="请选择合同" :disabled="!editAble">
               <el-option
                 v-for="item in contracts"
                 :key="item.id"
-                :label="item.projectName"
+                :label="item.id"
                 :value="item.id">
               </el-option>
             </el-select>
@@ -41,7 +41,7 @@
           </el-col>
           <el-col class="d-f" :span="6">
             <span style="width:70px">申请人：</span>
-            {{ user.name }}
+            {{ applicantName }}
           </el-col>
         </el-row>
       </div>
@@ -59,11 +59,12 @@
           </el-col>
           <el-col class="d-f" :span="12">
             <span style="width:120px">预算所属公司：</span>
+            <span v-if="!editAble">{{ reimbursementInfo.budgetCompanyName }}</span>
             <el-select 
-              v-model="companySelected" 
+              v-model="reimbursementInfo.budgetCompanyId" 
               placeholder="请选择预算所属公司" 
-              :disabled="!editAble" 
-              @change="companyChange()">
+              @change="companyChange()"
+              v-else>
               <el-option
                 v-for="item in companyList"
                 :key="item.id"
@@ -76,15 +77,15 @@
         <el-row>
           <el-col class="d-f" :span="12">
             <span style="width:70px">所在公司：</span>
-            {{ user.companyName }}
+            {{ companyName }} 
           </el-col>
           <el-col class="d-f" :span="12">
             <span style="width:120px">预算所属部门：</span>
+            <span v-if="!editAble">{{ reimbursementInfo.budgetDepartmentName }}</span>
             <el-select 
-              v-model="departmentSelected" 
+              v-model="reimbursementInfo.budgetDepartmentId" 
               placeholder="请选择预算所属部门" 
-              :disabled="!editAble"
-              @change="departmentChange()">
+              v-else>
               <el-option
                 v-for="item in departmentList"
                 :key="item.id"
@@ -385,18 +386,20 @@
     </card>
     <card class="card3" v-if="!editAble">
       <div class="f-l">报销状态：</div>
-      <state-svg></state-svg>
+      <state-svg
+        :status="status"
+        v-if="status"></state-svg>
       <div class="f-l">
         状态描述：
       </div>
       <el-input
         type="textarea"
         :rows="3"
-        placeholder="请输入内容"
-        v-model="textarea"
-        :disabled="!editAble">
+        placeholder="暂无"
+        v-model="reimbursementInfo.reason"
+        disabled>
       </el-input>
-      <p class="btns" v-if="!editAble">
+      <p class="btns" v-if="!editAble && detailType === 'review'">
         <button class="btn my-btn submit-btn" @click="agree">审批通过</button>
         <button class="btn my-btn cancel-btn" @click="showReject">驳回</button>
       </p>
@@ -426,10 +429,11 @@ export default {
       uploadIndex: '',
       uploadType: '',
       expenseId: '',
+      projectNumber: '',
       reimbursementInfo: {
         id: '',
+        applicantName: '',
         submitType: '',
-        projectNumber: '',
         billingType: '',
         startTime: '',
         endTime: '',
@@ -437,8 +441,8 @@ export default {
         reason: '',
         totalAmount: '',
         summary: '',
-        budgetCompany: '',
-        budgetDepartment: '',
+        budgetCompanyId: '',
+        budgetDepartmentId: '',
         transportationTotalFee: '',
         transportationBillingNum: 1,
         travelRArray: [
@@ -532,7 +536,8 @@ export default {
       departmentSelected: '',
       editAble: this.$route.params.id === 'new' ? true : false,
       user: {},
-      rejectShow: false
+      rejectShow: false,
+      detailType: 'detail'
     };
   },
   computed: {
@@ -556,6 +561,46 @@ export default {
       } else {
         return false
       }
+    },
+    projectNumberArray () {
+      let arr = []
+      arr[0] = this.projectNumber
+      return arr
+    },
+    applicantName () {
+      return this.reimbursementInfo.applicantName === '' ? this.user.name : this.reimbursementInfo.applicantName
+    },
+    companyName () {
+      return this.reimbursementInfo.companyName === '' ? this.user.companyName : this.reimbursementInfo.companyName
+    },
+    status () {
+      let arr = new Array(6).fill(0)
+      switch(this.reimbursementInfo.status) {
+        case '0010':
+          arr[0] = 1
+          break;
+        case '0020':
+          arr[1] = 1
+          break;
+        case '0030' || '0050' || '0070' || '0090':
+          arr[0] = 1
+          break;
+        case '0040':
+          arr[2] = 1
+          break;
+        case '0060':
+          arr[3] = 1
+          break;
+        case '0080':
+          arr[4] = 1
+          break;
+        case '0100':
+          arr[5] = 1
+          break;
+        default: 
+          return false
+      }
+      return arr
     }
   },
   methods: {
@@ -587,15 +632,20 @@ export default {
                 command: 'handleReimbursement',
                 platform: 'web',
                 result: type,
-                idArray: [{id: this.expenseId}],
-                reason: reason
+                idArray: [
+                  {
+                    id: this.expenseId,
+                    reason: reason
+                  }
+                ]
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.$message.success('审批成功')
+            window.history.go(-1)
+            this.$message.success(rep.data.msg)
             resolve('done');
           } else {
             this.$message.error(rep.data.msg)
@@ -622,6 +672,7 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.reimbursementInfo = rep.data.data
+            this.projectNumber = this.reimbursementInfo.projectNumberArray[0]
             // this.companyList = rep.data.data.companyList
             resolve('done');
           } else {
@@ -664,7 +715,7 @@ export default {
               let obj = {
                 command: 'getCompanyDepartmentListByCom',
                 platform: 'web',
-                companyId: this.reimbursementInfo.budgetCompany.id
+                companyId: this.reimbursementInfo.budgetCompanyId
               }
               return JSON.stringify(obj);
             })()
@@ -678,21 +729,8 @@ export default {
       })
     },
     companyChange () {
-      this.companyList.forEach((item) => {
-        if (item.id === this.companySelected) {
-          this.reimbursementInfo.budgetCompany = item.id
-        }
-      })
-      this.departmentSelected = ''
-      this.reimbursementInfo.budgetDepartment = ''
+      this.reimbursementInfo.budgetDepartmentId = ''
       this.getCompanyDepartmentListByCom()
-    },
-    departmentChange () {
-      this.departmentList.forEach((item) => {
-        if (item.id === this.departmentSelected) {
-          this.reimbursementInfo.budgetDepartment = item.id
-        }
-      })
     },
     changeNumbers (item) {
       switch(item) {
@@ -909,58 +947,200 @@ export default {
         console.log('有错')
       }
     },
-    addOrEditReimbursement () {
-      this.reimbursementInfo.companyName = this.user.companyName
-      this.reimbursementInfo.travelRArray.forEach((item) => {
-        delete item.percentage
-        delete item.state
-        delete item.uploadURL
-      })
-      this.reimbursementInfo.stayRArray.forEach((item) => {
-        delete item.percentage
-        delete item.state
-        delete item.uploadURL
-      })
-      this.reimbursementInfo.localRArray.forEach((item) => {
-        delete item.percentage
-        delete item.state
-        delete item.uploadURL
-      })
-      this.reimbursementInfo.fieldRArray.forEach((item) => {
-        delete item.percentage
-        delete item.state
-        delete item.uploadURL
-      })
-      if (this.reimbursementInfo.id === '') {
-        delete this.reimbursementInfo.id
-      }
+    uploadAmount (amount, type) {
+      let nd = new FormData()
       return new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              let obj = {
-                command: 'addOrEditReimbursement',
-                platform: 'web',
-                type: this.reimbursementInfo.submitType,
-                data: this.reimbursementInfo
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.$message.success('提交成功，返回报销列表')
-            this.$router.push('/expenses-list')
-            resolve('done')
-          } else {
-            this.$message.error(rep.data.msg)
-          }
-        }, (rep) => { });
+       axios({
+         headers: { 'Content-Type': 'multipart/form-data' },
+         method: 'post',
+         url: this.getUploadUrl(amount, type),
+         data: nd
+       }).then((rep) => {
+         if (rep.data.statusCode === '10001') {
+          this.reimbursementInfo.id = rep.data.data.id
+           resolve('done')
+         } else {
+           this.$message.error(rep.data.msg)
+         }
+       }, (rep) => { });
       })
     },
+    addOrEditReimbursement () {
+      console.log(this.paper)
+      if (this.paper) {
+        this.uploadAmount(this.reimbursementInfo.travelRArray[0].amount, 'travelR').then(() => {
+          var promiseArr = []
+          if (this.reimbursementInfo.travelRArray.length > 1) {
+            this.reimbursementInfo.travelRArray.forEach((item) => {
+              promiseArr.push(this.uploadAmount(item.amount, 'travelR'))
+            })
+          }
+          this.reimbursementInfo.stayRArray.forEach((item) => {
+            promiseArr.push(this.uploadAmount(item.amount, 'stayR'))
+          })
+          this.reimbursementInfo.localRArray.forEach((item) => {
+            promiseArr.push(this.uploadAmount(item.amount, 'localR'))
+          })
+          this.reimbursementInfo.fieldRArray.forEach((item) => {
+            promiseArr.push(this.uploadAmount(item.amount, 'fieldR'))
+          })
+          Promise.all(promiseArr).then(() => {
+            let arr = []
+            this.reimbursementInfo.projectNumberArray = this.projectNumberArray
+            this.reimbursementInfo.companyName = this.user.companyName
+            this.reimbursementInfo.travelRArray.forEach((item) => {
+              delete item.percentage
+              delete item.state
+              delete item.uploadURL
+            })
+            this.reimbursementInfo.stayRArray.forEach((item) => {
+              delete item.percentage
+              delete item.state
+              delete item.uploadURL
+            })
+            this.reimbursementInfo.localRArray.forEach((item) => {
+              delete item.percentage
+              delete item.state
+              delete item.uploadURL
+            })
+            this.reimbursementInfo.fieldRArray.forEach((item) => {
+              delete item.percentage
+              delete item.state
+              delete item.uploadURL
+            })
+            if (this.reimbursementInfo.id === '') {
+              delete this.reimbursementInfo.id
+            }
+            return new Promise((resolve, reject) => {
+              axios({
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+                method: 'get',
+                url: '/service',
+                params: {
+                  data: (() => {
+                    let obj = {
+                      command: 'addOrEditReimbursement',
+                      platform: 'web',
+                      type: this.reimbursementInfo.submitType,
+                      data: this.reimbursementInfo
+                    }
+                    return JSON.stringify(obj);
+                  })()
+                }
+              }).then((rep) => {
+                if (rep.data.statusCode === '10001') {
+                  this.$message.success('提交成功，返回报销列表')
+                  this.$router.push('/expenses-list')
+                  resolve('done')
+                } else {
+                  this.$message.error(rep.data.msg)
+                }
+              }, (rep) => { });
+            })
+          }, () => {})
+        }, () => {})
+      } else {
+        return new Promise((resolve, reject) => {
+          axios({
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+            method: 'get',
+            url: '/service',
+            params: {
+              data: (() => {
+                let obj = {
+                  command: 'addOrEditReimbursement',
+                  platform: 'web',
+                  type: this.reimbursementInfo.submitType,
+                  data: this.reimbursementInfo
+                }
+                return JSON.stringify(obj);
+              })()
+            }
+          }).then((rep) => {
+            if (rep.data.statusCode === '10001') {
+              this.$message.success('提交成功，返回报销列表')
+              this.$router.push('/expenses-list')
+              resolve('done')
+            } else {
+              this.$message.error(rep.data.msg)
+            }
+          }, (rep) => { });
+        })
+      }
+    },
+      
+        // this.uploadAmount(this.reimbursementInfo.travelRArray[0].amount, 'travelR').then(() => {
+        //   var promiseArr = []
+        //   if (this.reimbursementInfo.travelRArray.length > 1) {
+        //     this.reimbursementInfo.travelRArray.forEach((item) => {
+        //       promiseArr.push(this.uploadAmount(item.amount, 'travelR'))
+        //     })
+        //   }
+        //   this.reimbursementInfo.stayRArray.forEach((item) => {
+        //     promiseArr.push(this.uploadAmount(item.amount, 'stayR'))
+        //   })
+        //   this.reimbursementInfo.localRArray.forEach((item) => {
+        //     promiseArr.push(this.uploadAmount(item.amount, 'localR'))
+        //   })
+        //   this.reimbursementInfo.fieldRArray.forEach((item) => {
+        //     promiseArr.push(this.uploadAmount(item.amount, 'fieldR'))
+        //   })
+        // }, () => {})
+        // console.log(promiseArr)
+        // Promise.all(promiseArr).then(() => {
+        //   let arr = []
+        //   this.reimbursementInfo.projectNumberArray = this.projectNumberArray
+        //   this.reimbursementInfo.companyName = this.user.companyName
+        //   this.reimbursementInfo.travelRArray.forEach((item) => {
+        //     delete item.percentage
+        //     delete item.state
+        //     delete item.uploadURL
+        //   })
+        //   this.reimbursementInfo.stayRArray.forEach((item) => {
+        //     delete item.percentage
+        //     delete item.state
+        //     delete item.uploadURL
+        //   })
+        //   this.reimbursementInfo.localRArray.forEach((item) => {
+        //     delete item.percentage
+        //     delete item.state
+        //     delete item.uploadURL
+        //   })
+        //   this.reimbursementInfo.fieldRArray.forEach((item) => {
+        //     delete item.percentage
+        //     delete item.state
+        //     delete item.uploadURL
+        //   })
+        //   if (this.reimbursementInfo.id === '') {
+        //     delete this.reimbursementInfo.id
+        //   }
+        //   return new Promise((resolve, reject) => {
+        //     axios({
+        //       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        //       method: 'get',
+        //       url: '/service',
+        //       params: {
+        //         data: (() => {
+        //           let obj = {
+        //             command: 'addOrEditReimbursement',
+        //             platform: 'web',
+        //             type: this.reimbursementInfo.submitType,
+        //             data: this.reimbursementInfo
+        //           }
+        //           return JSON.stringify(obj);
+        //         })()
+        //       }
+        //     }).then((rep) => {
+        //       if (rep.data.statusCode === '10001') {
+        //         this.$message.success('提交成功，返回报销列表')
+        //         this.$router.push('/expenses-list')
+        //         resolve('done')
+        //       } else {
+        //         this.$message.error(rep.data.msg)
+        //       }
+        //     }, (rep) => { });
+        //   })
+        // }, () => {})
     back () {
       this.$router.push('/expenses-list')
     },
@@ -985,7 +1165,7 @@ export default {
             this.contracts = rep.data.data.resultArray
             resolve('done')
           } else {
-            this.$message.error(rep.data.msg)
+            // this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       })
@@ -1003,8 +1183,8 @@ export default {
     })
     if (this.$route.params.id.split('&').length > 1) {
       this.expenseId = this.$route.params.id.split('&')[0]
-      let type = this.$route.params.id.split('&')[1]
-      if (type === 'review') {
+      this.detailType = this.$route.params.id.split('&')[1]
+      if (this.detailType === 'review') {
         this.paths =  [
           { name: '待处理业务', url: '/expenses-review', present: false },
           { name: '单据审核', url: '/expenses-review', present: false },
@@ -1020,7 +1200,9 @@ export default {
     } else {
       this.expenseId = this.$route.params.id
     }
-    this.getReimbursementInfo()
+    if (this.expenseId !== 'new') {
+      this.getReimbursementInfo()
+    }
   },
   components: {
     crumbs,

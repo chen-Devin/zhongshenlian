@@ -995,14 +995,17 @@ export default {
       if (level === 2) {
         this.editCompanyDepartment().then(() => {
           this.addShow2 = false
+          this.reloadTree()
         }, () => {})
       } else if (level === 3) {
         this.editProjectDepartment().then(() => {
           this.addShow3 = false
+          this.reloadTree()
         }, () => {})
       } else if (level === 4) {
         this.editDepartmentGroup().then(() => {
           this.addShow4 = false
+          this.reloadTree()
         })
       }
     },

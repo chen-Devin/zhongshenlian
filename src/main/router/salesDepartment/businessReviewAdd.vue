@@ -474,9 +474,7 @@ export default {
         message: '提交成功，将返回立项审批列表',
         type: 'success'
       });
-      setTimeout(() => {
-        this.$router.push({ path: '/business-review-list-sales' });
-      }, 1000);
+      this.$router.push({ path: '/business-review-list-sales' });
     },
     sav() {
       bus.$emit('savBusiness');
@@ -484,9 +482,7 @@ export default {
     saved(savedBusiness) {
       this.business = savedBusiness;
       this.$message('暂存成功，将返回立项审批列表');
-      setTimeout(() => {
-        this.$router.push({ path: '/business-review-list-sales' });
-      }, 1000);
+      this.$router.push({ path: '/business-review-list-sales' });
     },
     del() {
       this.showDelModal = true;

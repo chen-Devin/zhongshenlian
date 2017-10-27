@@ -246,7 +246,7 @@
       <p @click="checkMore" v-else>查看更多</p>
     </div>
     <div class="basic-message">
-      <el-row  v-if="contractUploadShow">
+      <!-- <el-row  v-if="contractUploadShow">
         <el-col :span="2">
           <label class="control-label">正式合同</label>
         </el-col>
@@ -288,7 +288,7 @@
             </ul>
           </div>
         </el-col>
-      </el-row>
+      </el-row> -->
       <el-row>
         <el-col :span="2" v-if="contractFileShow">
           <label class="control-label">正式合同</label>
@@ -378,9 +378,9 @@ export default {
       }
       return out;
     },
-    contractUploadShow() {
-      return (this.user.department === '业务部' && this.business.projectStatus >= 60 && this.business.projectStatus < 80) ? true : false;
-    },
+    // contractUploadShow() {
+    //   return (this.user.department === '业务部' && this.business.projectStatus >= 60 && this.business.projectStatus < 80) ? true : false;
+    // },
     contractFileShow() {
       if (this.user.department === '业务部') {
         if (this.business.projectStatus >= 80) {

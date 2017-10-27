@@ -62,7 +62,14 @@
           <tr>
             <td class="table-label">支出项目：</td>
             <td>
-              <el-input v-model="input" placeholder="请填写支出项目。。。" :disabled="!editAble"></el-input>
+              <el-select v-model="reimbursementInfo.expenditureProject" placeholder="请选择支出项目" :disabled="!editAble">
+                <el-option
+                  v-for="(item, index) in expenditureProjects"
+                  :key="index"
+                  :label="item"
+                  :value="item">
+                </el-option>
+              </el-select>
             </td>
             <td class="table-label">报销金额：</td>
             <td>
@@ -87,7 +94,23 @@ export default {
   data() {
     return {
       reason: '',
-      startDate: ''
+      startDate: '',
+      expenditureProjects: [
+        '业务通讯',
+        '业务修理',
+        '业务其他',
+        '业务资产',
+        '职工培训费',
+        '管理耗材',
+        '管理消耗',
+        '管理通讯',
+        '管理修理',
+        '管理房租',
+        '管理水电气',
+        '管理其他',
+        '管理资产',
+        '财务费'
+      ]
     };
   },
   props: ['type', 'editAble', 'reimbursementInfo'],

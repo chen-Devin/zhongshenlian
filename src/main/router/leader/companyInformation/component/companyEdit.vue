@@ -38,14 +38,7 @@
           </p>
           <p class="input-wrapper">
             开户银行：
-            <el-select v-model="openAccountBankName" placeholder="请选择开户银行">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
+            <input type="text" class="form-control" v-model="iniCompanyEdit2.openAccountBankName" placeholder="请输入开户银行">
           </p>
           <p class="input-wrapper">
             开户银行账号：
@@ -101,7 +94,6 @@ export default {
         value: '招商银行',
         label: '招商银行'
       }],
-      openAccountBankName: '',
       inputReportModalShow: false,
       company: this.iniCompany2,
       checked: []

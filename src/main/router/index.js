@@ -139,7 +139,7 @@ const router = new VueRouter({
             component: expensesList
         },
         {
-            path: '/expenses-review',
+            path: '/expenses-review/:id',
             component: expensesReview
         },
         {
