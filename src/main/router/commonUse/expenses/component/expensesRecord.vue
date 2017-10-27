@@ -69,7 +69,8 @@ export default {
       checkedProjects: [],
       checkAll: false,
       rejectShow: false,
-      allProjects: []
+      allProjects: [],
+      reason: ''
     };
   },
   computed: {
@@ -78,7 +79,8 @@ export default {
       this.checkedProjects.forEach((item) => {
         arr.push(
           {
-            id: item
+            id: item,
+            reason: this.reason
           }
         )
       })
@@ -157,12 +159,14 @@ export default {
       })
     },
     agree () {
-      this.handleReimbursement('通过', '').then(() => {
+      this.reason = ''
+      this.handleReimbursement('通过').then(() => {
         this.getExpensesRecords()
       }, () => {})
     },
     rejected (reason) {
-      this.handleReimbursement('不通过', reason).then(() => {
+      this.reason = reason
+      this.handleReimbursement('不通过').then(() => {
         this.getExpensesRecords()
       }, () => {})
     },
@@ -172,7 +176,7 @@ export default {
     cancel () {
       this.rejectShow = false
     },
-    handleReimbursement (type, reason) {
+    handleReimbursement (type) {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -184,8 +188,7 @@ export default {
                 command: 'handleReimbursement',
                 platform: 'web',
                 result: type,
-                idArray: this.checkedIdArray,
-                reason: reason
+                idArray: this.checkedIdArray
               }
               return JSON.stringify(obj);
             })()

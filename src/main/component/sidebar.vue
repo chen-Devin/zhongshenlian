@@ -4,7 +4,7 @@
       <side-message :user="user"></side-message>
     </div>
     <el-menu class="el-menu-vertical-demo" :router="routerVal" :default-active="activeUrl" :unique-opened="uniqueOpened" @open="handleOpen">
-      <el-menu-item index="/quick" v-if="leader">我的快捷</el-menu-item>
+      <el-menu-item index="/quick">我的快捷</el-menu-item>
       <el-menu-item index="/business-handle-list-office" v-if="officeContract">进行中业务</el-menu-item>
       <!-- <el-menu-item index="/business-handle-list-office" v-if="officeBinding">待装订业务</el-menu-item> -->
       <el-menu-item index="/customer-infor-list" v-if="officeCustomer">客户信息管理</el-menu-item>
@@ -13,13 +13,16 @@
           <el-menu-item index="/business-handle-list-financial/0">待开发票</el-menu-item>
           <el-menu-item index="/business-handle-list-financial/1">待上传截图</el-menu-item>
           <el-menu-item index="/business-handle-list-financial/2">开票撤销复核</el-menu-item>
-          <el-menu-item index="/expenses-review">单据审核</el-menu-item>
+          <el-menu-item index="/expenses-review/0">单据审核</el-menu-item>
+          <el-menu-item index="/expenses-review/1">付款申请</el-menu-item>
+          <el-menu-item index="/expenses-review/2">付款审批</el-menu-item>
       </el-submenu>
       <el-submenu index="to-do" v-if="leader">
         <template slot="title">待办事项</template>
         <!-- <el-menu-item-group> -->
           <el-menu-item index="/business-review-list-leader">立项审批</el-menu-item>
           <el-menu-item index="/bid-info-list">招投标审批</el-menu-item>
+          <el-menu-item index="/expenses-review">报销审批</el-menu-item>
           <!-- <el-menu-item index="{1}">报销审批</el-menu-item> -->
         <!-- </el-menu-item-group> -->
       </el-submenu>
@@ -39,7 +42,7 @@
         <!-- <el-menu-item-group> -->
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
           <el-menu-item index="/business-review-list-sales" v-if="establish">立项项目</el-menu-item>
-          <el-menu-item index="/business-handle-list-leader" v-if="leader">进行中项目</el-menu-item>
+          <!-- <el-menu-item index="/business-handle-list-leader" v-if="leader">进行中项目</el-menu-item> -->
           <el-menu-item index="/business-handle-list-sales" v-if="sales">进行中项目</el-menu-item>
           <el-menu-item index="/business-handle-list-archives" v-if="archives">进行中项目</el-menu-item>
           <el-menu-item index="/business-handle-list-risk" v-if="riskHandle">报告审核</el-menu-item>

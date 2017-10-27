@@ -17,7 +17,7 @@
           </template>
         </div>
       </h3>
-      <progress-bar :progress="progress"></progress-bar>
+      <!-- <progress-bar :progress="progress"></progress-bar> -->
       <business-editor :initBusiness="business"
                        :editable="editable"
                        @saved="saved"
@@ -692,15 +692,15 @@ export default {
             }
 
             this.business.reports = [];
-            for (let i = 0; i < rep.data.data.reportAnnexArray.length; i++) {
+            for (let i = 0; i < rep.data.data.reportArray.length; i++) {
               let obj = {
-                id: rep.data.data.reportAnnexArray[i].id,
-                name: rep.data.data.reportAnnexArray[i].annexName,
-                url: rep.data.data.reportAnnexArray[i].annexUrl,
-                state: rep.data.data.reportAnnexArray[i].status === '1' ? false : true,
-                archivingState: rep.data.data.reportAnnexArray[i].archivingState === '0' ? false : true,
-                reportName: rep.data.data.reportAnnexArray[i].reportName,
-                adviceState: parseInt(rep.data.data.reportAnnexArray[i].fStatus)
+                id: rep.data.data.reportArray[i].id,
+                name: rep.data.data.reportArray[i].reportName,
+                number: rep.data.data.reportArray[i].number,
+                downloadStatus: rep.data.data.reportArray[i].downloadStatus,
+                QRcodeUrl: rep.data.data.reportArray[i].QRcodeUrl,
+                archivingState: rep.data.data.reportArray[i].archivingState,
+                FStatus: parseInt(rep.data.data.reportArray[i].FStatus)
               }
               this.business.reports.push(obj);
             }
@@ -723,6 +723,7 @@ export default {
     adviceClassify() {
       this.riskAdvices = [];
       this.leaderAdivces = [];
+      console.log('test')
       for (let i = 0; i < this.business.projectApproverArray.length; i++) {
         if (this.business.projectApproverArray[i].department === '风险评估部') {
           this.riskAdvices.push(this.business.projectApproverArray[i]);
@@ -743,19 +744,15 @@ export default {
         message: '提交成功，将返回立项审批列表',
         type: 'success'
       });
-      setTimeout(() => {
-        this.$router.push({ path: '/business-review-list-sales' });
-      }, 1000);
+      this.$router.push({ path: '/business-review-list-sales' });
     },
     sav() {
       bus.$emit('savBusiness');
     },
     saved(savedBusiness) {
       this.business = savedBusiness;
-      this.$message('暂存成功，将返回立项审批列表');
-      setTimeout(() => {
-        this.$router.push({ path: '/business-review-list-sales' });
-      }, 1000);
+      this.$message.success('暂存成功，将返回立项审批列表');
+      this.$router.push({ path: '/business-review-list-sales' });
     },
     del() {
       this.showDelModal = true;

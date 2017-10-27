@@ -3,7 +3,7 @@
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h5 class="main-title" v-if="!editAble">可报销金额：1</h5>
+      <h5 class="main-title" v-if="!editAble">可报销金额：</h5>
       <div class="title-wrapper">
         <el-row>
           <el-col class="d-f" :span="9">
@@ -48,11 +48,12 @@
           </el-col>
           <el-col class="d-f" :span="12">
             <span style="width:120px">预算所属公司：</span>
+            <span v-if="!editAble">{{ reimbursementInfo.budgetCompanyName }}</span>
             <el-select 
-              v-model="companySelected" 
+              v-model="reimbursementInfo.budgetCompanyId" 
               placeholder="请选择预算所属公司" 
-              :disabled="!editAble"
-              @change="companyChange()">
+              @change="companyChange()"
+              v-else>
               <el-option
                 v-for="item in companyList"
                 :key="item.id"
@@ -69,11 +70,11 @@
           </el-col>
           <el-col class="d-f" :span="12">
             <span style="width:120px">预算所属部门：</span>
+            <span v-if="!editAble">{{ reimbursementInfo.budgetDepartmentName }}</span>
             <el-select 
-              v-model="departmentSelected" 
+              v-model="reimbursementInfo.budgetDepartmentId"
               placeholder="请选择预算所属部门" 
-              :disabled="!editAble"
-              @change="departmentChange()">
+              v-else>
               <el-option
                 v-for="item in departmentList"
                 :key="item.id"
@@ -99,18 +100,21 @@
           <el-row>
             <el-col style="display: flex;" :span="12">
               <span style="width:80px;">银行账户：</span>
-              <el-input v-model="reimbursementInfo.accountBankNumber" placeholder="请填写账户名称" :disabled="!editAble"></el-input>
+              <el-input v-model="reimbursementInfo.accountBankNumber" placeholder="请填写银行账户" :disabled="!editAble"></el-input>
+            </el-col>
+            <el-col class="d-f" :span="12" v-if="project">
+              <span style="width:80px;">合同编号：</span>
+              <el-select v-model="contractsArray" filterable multiple placeholder="请选择合同编号">
+                <el-option
+                  v-for="item in contracts"
+                  :key="item.id"
+                  :label="item.id"
+                  :value="item.id">
+                </el-option>
+              </el-select>
             </el-col>
           </el-row>
         </template>
-        <el-row class="numbered" v-if="project">
-          <el-col :span="24">
-            合同编号：。。。
-            <!-- <el-checkbox-group v-model="checkList">
-              <el-checkbox label="复选框 A"></el-checkbox>
-            </el-checkbox-group> -->
-          </el-col>
-        </el-row>
       </div>
       <div class="electronical-bill" v-if="paper || electric">
         <el-row class="table-title">
@@ -186,17 +190,6 @@
             </div>
           </el-col>
           <el-col :span="7">
-            <!-- <div v-for="(each, index) in " :key="index" class="each">
-              <el-upload
-                class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :file-list="fileList">
-                <el-button size="small" type="primary">上传文件</el-button>
-                <span>建议文件大小不超过300kb</span>
-              </el-upload>
-            </div> -->
             <div v-for="(item, index) in reimbursementInfo.electricRArray" :key="index" class="each">
               <el-upload :show-file-list="false"
                          :action="getUploadUrl(item.amount, 'electricR')"
@@ -281,12 +274,12 @@ export default {
       rejectShow: false,
       reimbursementInfo: {
         submitType: '',
-        projectNumber: '合同编号',
         billingType: '',
+        expenditureProject: '',
         totalAmount: '',
         summary: '',
-        budgetCompany: '',
-        budgetDepartment: '。。。',
+        budgetCompanyId: '',
+        budgetDepartmentId: '',
         accountName: '',
         accountBank: '',
         accountBankNumber: '',
@@ -358,26 +351,28 @@ export default {
       editAble: this.$route.params.id === 'new' ? true : false,
       numbers: [],
       uploadIndex: '',
-      expenseId: ''
+      expenseId: '',
+      contracts: [],
+      contractsArray: []
     };
   },
   computed: {
     personal () {
-      if (this.reimbursementInfo.submitType === '个人报销') {
+      if (this.reimbursementInfo.submitType === 'personalR') {
         return true
       } else {
         return false
       }
     },
     group () {
-      if (this.reimbursementInfo.submitType === '对公报销') {
+      if (this.reimbursementInfo.submitType === 'publicR') {
         return true
       } else {
         return false
       }
     },
     project () {
-      if (this.reimbursementInfo.submitType === '项目报销') {
+      if (this.reimbursementInfo.submitType === 'projectR') {
         return true
       } else {
         return false
@@ -399,10 +394,34 @@ export default {
     }
   },
   methods: {
+    getProjectByPerson () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getProjectByPerson',
+                platform: 'web',
+                type: 2
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.contracts = rep.data.data.resultArray
+            resolve('done')
+          } else {
+            // this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
     agree () {
-      this.handleReimbursement('通过', '').then(() => {
-        
-      }, () => {})
+      this.handleReimbursement('通过', '')
     },
     rejected (reason) {
       this.handleReimbursement('不通过', reason).then(() => {
@@ -538,7 +557,7 @@ export default {
               let obj = {
                 command: 'getCompanyDepartmentListByCom',
                 platform: 'web',
-                companyId: this.reimbursementInfo.budgetCompany.id
+                companyId: this.reimbursementInfo.budgetCompanyId
               }
               return JSON.stringify(obj);
             })()
@@ -552,21 +571,8 @@ export default {
       })
     },
     companyChange () {
-      this.companyList.forEach((item) => {
-        if (item.id === this.companySelected) {
-          this.reimbursementInfo.budgetCompany = item.name
-        }
-      })
-      this.departmentSelected = ''
-      this.reimbursementInfo.budgetDepartment = ''
+      this.reimbursementInfo.budgetDepartmentId = ''
       this.getCompanyDepartmentListByCom()
-    },
-    departmentChange () {
-      this.departmentList.forEach((item) => {
-        if (item.id === this.departmentSelected) {
-          this.reimbursementInfo.budgetDepartment = item.name
-        }
-      })
     },
     getUploadUrl (amount, type) {
       let obj = {
@@ -607,31 +613,32 @@ export default {
     },
     addOrEditReimbursement () {
       this.reimbursementInfo.companyName = this.user.companyName
-      return new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              let obj = {
-                command: 'addOrEditReimbursement',
-                platform: 'web',
-                data: this.reimbursementInfo
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.$message.success('提交成功，返回报销列表')
-            this.$router.push('/expenses-list')
-            resolve('done')
-          } else {
-            this.$message.success(rep.data.msg)
-          }
-        }, (rep) => { });
-      })
+      console.log(this.reimbursementInfo)
+      // return new Promise((resolve, reject) => {
+      //   axios({
+      //     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+      //     method: 'get',
+      //     url: '/service',
+      //     params: {
+      //       data: (() => {
+      //         let obj = {
+      //           command: 'addOrEditReimbursement',
+      //           platform: 'web',
+      //           data: this.reimbursementInfo
+      //         }
+      //         return JSON.stringify(obj);
+      //       })()
+      //     }
+      //   }).then((rep) => {
+      //     if (rep.data.statusCode === '10001') {
+      //       this.$message.success('提交成功，返回报销列表')
+      //       this.$router.push('/expenses-list')
+      //       resolve('done')
+      //     } else {
+      //       this.$message.success(rep.data.msg)
+      //     }
+      //   }, (rep) => { });
+      // })
     },
     back () {
       this.$router.push('/expenses-list')
@@ -641,6 +648,7 @@ export default {
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser
     }, () => { })
+    this.getProjectByPerson()
     this.getCompanyList()
     this.numbers = new Array(100).fill(0).map((item, index) => {
       item = index

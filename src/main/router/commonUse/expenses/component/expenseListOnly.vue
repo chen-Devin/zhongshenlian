@@ -32,7 +32,7 @@
           </tr>
         </tbody>
       </table>
-      <my-pagination :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
+      <my-pagination :totalNum="Number(totalNum)" @currentChange="currentChange"></my-pagination>
     </card>
   </div>
 </template>
