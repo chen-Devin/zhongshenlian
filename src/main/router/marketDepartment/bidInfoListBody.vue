@@ -82,19 +82,7 @@ export default {
       searchItems: [
         {
           label: '招投标名称',
-          value: 'name'
-        },
-        {
-          label: '分管公司',
-          value: 'company'
-        },
-        {
-          label: '发起时间',
-          value: 'time'
-        },
-        {
-          label: '状态',
-          value: 'state'
+          value: 'projectName'
         }
       ],
       searchObj: {}

@@ -63,9 +63,9 @@
           <tr v-for="(BUSINESS, index) in businesses"
               :key="index"
               @click.prevent="mod(BUSINESS)">
-            <td class="text-center link-wrap">{{BUSINESS.businessName}}</td>
+            <td class="text-center link-wrap">{{BUSINESS.projectName}}</td>
             <td class="text-center">{{BUSINESS.projectManager}}</td>
-            <td class="text-center">立项时间</td>
+            <td class="text-center">{{BUSINESS.startTime}}</td>
             <td class="text-center">
               <template v-if="checkShow">
                 <span class="label label-warning"

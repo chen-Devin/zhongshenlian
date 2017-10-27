@@ -42,15 +42,15 @@ export default {
     $route: 'getInfo'
   },
   methods: {
-    search(searchCont) {
+    search(obj) {
       this.newPage = 1;
       this.searchObj = {};
+      this.searchObj = obj
       this.listType = 'search';
-      this.searchCont = searchCont;
-      if(this.searchCont === '') {
-        this.getInfo(1);
+      if(!this.searchObj.customerName == '') {
+        this.seaInfo(1);  
       } else {
-        this.seaInfo(1);
+        this.getInfo(1);
       }
     },
     higherSearchEvent(searchObj) {
@@ -174,7 +174,7 @@ export default {
             var obj = {
               command: 'searchCustomer',
               platform: 'web',
-              searchContent: this.searchCont,
+              searchContent: this.searchObj.customerName,
               pageNum: this.newPage
             }
             return JSON.stringify(obj);

@@ -7,7 +7,7 @@
           <button class="btn my-btn submit-btn pull-right f-r" @click="add" v-if="btnShow">
             新建制度
           </button>
-          <search-bar  @search="tog" class="f-r"></search-bar>
+          <search-bar  @search="search" class="f-r" :searchItems="searchItems"></search-bar>
       </h3>
       <table class="table table-bordered table-hover table-list">
         <thead>
@@ -81,6 +81,13 @@ export default {
       pageNum: 1,
       totalPage: 1,
       totalNum: 1,
+      searchItems: [
+        {
+          label: '制度名称',
+          value: 'searchContent'
+        }
+      ],
+      searchObj: {}
     };
   },
   computed: {
@@ -102,21 +109,19 @@ export default {
     newRegulation(time) {
       return moment().subtract(7, 'days').isSameOrBefore(time, 'day');
     },
-    tog(searchCont) {
-      this.searchKeyRule = searchCont;
-      if (this.searchKeyRule === '') {
-        this.getRuleLists(1);
-      } else {
+    search(obj) {
+      this.searchObj = {}
+      this.searchObj = obj
+      console.log( this.searchObj)
+      if (!this.searchObj.searchContent == '') {
         this.searchRuleLists(1);
+      } else {
+        this.getRuleLists(1);
       }
     },
     currentChange(newPage) {
       this.pageNum = newPage;
-      if (this.searchKeyRule === '') {
         this.getRuleLists(newPage);
-      } else {
-        this.searchRuleLists(newPage);
-      }
     },
     getRuleLists(newPage) {
       axios({
@@ -160,7 +165,7 @@ export default {
             var obj = {
               command: 'searchRegulationsList',
               platform: 'web',
-              searchContent: this.searchKeyRule,
+              searchContent: this.searchObj.searchContent,
               pageNum: newPage
             }
             return JSON.stringify(obj);

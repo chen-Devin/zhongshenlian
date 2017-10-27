@@ -113,29 +113,17 @@ export default {
       telephone: '',
       searchItems: [
         {
-          label: '',
-          value: ''
-        },
-        {
-          label: '',
-          value: ''
-        },
-        {
-          label: '',
-          value: ''
-        },
-        {
-          label: '',
-          value: ''
+          label: '客户名称',
+          value: 'customerName'
         }
-      ],
+      ]
     };
   },
   props: ['customers', 'page'],
   methods: {
-    search(searchCont) {
+    search(obj) {
       this.listType = 'search';
-      this.$emit('search', searchCont);
+      this.$emit('search', obj);
     },
     higherSearchEvent() {
       this.listType = 'higherSearch';
