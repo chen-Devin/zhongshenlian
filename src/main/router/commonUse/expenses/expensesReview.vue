@@ -88,6 +88,7 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.totalNum = rep.data.data.totalNum
             this.expensesList = rep.data.data.expensesList
+            console.log(rep.data.data.expensesList)
             resolve('done');
           } else {
             this.$message.error(rep.data.msg)
@@ -97,14 +98,11 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('fetchUserInfo').then(() => {
-      let user = this.$store.getters.getUser
-      if (user.department === '所长') {
-        this.getExpensesList()
-      } else {
-        this.getUnDealRListOfFinance()
-      }
-    }, () => { })
+    if (parseInt(this.$route.params.id) === 10) {
+      this.getExpensesList()
+    } else {
+      this.getUnDealRListOfFinance()
+    }
   },
   components: {
     crumbs,

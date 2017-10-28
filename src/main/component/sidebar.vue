@@ -22,7 +22,7 @@
         <!-- <el-menu-item-group> -->
           <el-menu-item index="/business-review-list-leader">立项审批</el-menu-item>
           <el-menu-item index="/bid-info-list">招投标审批</el-menu-item>
-          <el-menu-item index="/expenses-review">报销审批</el-menu-item>
+          <el-menu-item index="/expenses-review/10">报销审批</el-menu-item>
           <!-- <el-menu-item index="{1}">报销审批</el-menu-item> -->
         <!-- </el-menu-item-group> -->
       </el-submenu>
