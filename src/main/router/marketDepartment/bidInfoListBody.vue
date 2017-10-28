@@ -25,8 +25,8 @@
           @click="checkMessage(project)" 
           :key="index">
           <td>{{ project.biddingName }}</td>
-          <td>分管公司?</td>
-          <td>{{ project.openBidDate }}</td>
+          <td>{{ project.companyName }}</td>
+          <td>{{ project.createAt }}</td>
           <td>
             <span class="label label-warning"
                   v-if="project.biddingState==='未摘牌'">未摘牌</span>
@@ -118,8 +118,8 @@ export default {
       }
       //用字符串map()方法处理创建时间，把T替换为空格
       this.bidArrayConnect = this.bidArrayConnect.map((item, index, array) => {
-        let openBidDateStr = item.openBidDate.replace("T"," ");
-        item.openBidDate = openBidDateStr;
+        // let openBidDateStr = item.openBidDate.replace('T','');
+        // item.openBidDate = openBidDateStr;
         return item;
       });
       return this.bidArrayConnect;

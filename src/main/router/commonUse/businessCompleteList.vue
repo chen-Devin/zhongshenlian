@@ -23,7 +23,7 @@
             <td class="text-center">{{BUSINESS.contractNo}}</td>
             <td class="text-center link-wrap">{{BUSINESS.projectName}}</td>
             <td class="text-center">{{BUSINESS.projectManager}}</td>
-            <td class="text-center">{{BUSINESS.businessName}}</td>
+            <td class="text-center">{{BUSINESS.companyName}}</td>
             <td class="text-center">{{BUSINESS.startTime}}</td>
           </tr>
         </tbody>
@@ -206,7 +206,7 @@ export default {
             for (let i = 0; i < rep.data.data.businessArray.length; i++) {
               let obj = {
                 id: rep.data.data.businessArray[i].id,
-                businessName: rep.data.data.businessArray[i].businessName,
+                companyName: rep.data.data.businessArray[i].companyName,
                 finishTime: rep.data.data.businessArray[i].finishTime,
                 startTime: rep.data.data.businessArray[i].startTime,
                 projectManager: rep.data.data.businessArray[i].projectManager,

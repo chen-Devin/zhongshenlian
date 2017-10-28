@@ -2,37 +2,38 @@
   <div>
     <card class="card-tabs">
       <button class="btn my-btn submit-btn f-r addi" @click="applyExpense" v-if="applyAble">申请报销</button>
-      <h5 class="main-title">报销列表</h5>
+      <h5 class="main-title">报销列表
+        <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar></h5>
     </card>
     <card>
       <table class="table table-bordered table-hover table-list">
         <thead>
           <tr>
-            <th class="text-center">公司</th>
-            <th class="text-center">部门</th>
-            <th class="text-center">申请人</th>
-            <th class="text-center">报销类型</th>
-            <th class="text-center">申请时间</th>
+            <th class="text-left">公司</th>
+            <th class="text-left">部门</th>
+            <th class="text-left">申请人</th>
+            <th class="text-left">报销类型</th>
+            <th class="text-left">申请时间</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in expensesList" @click="checkDetail(item)">
-            <td class="ta-c">{{ item.companyName }}</td>
-            <td class="ta-c">{{ item.departmentName }}</td>
-            <td class="ta-c">{{ item.applicantName }}</td>
-            <td class="ta-c">
-              <span v-if="item.type === 'contractR'">合同报销</span>
+            <td class="text-left">{{ item.companyName }}</td>
+            <td class="text-left">{{ item.departmentName }}</td>
+            <td class="text-left">{{ item.applicantName }}</td>
+            <td class="text-left">{{item.type}}
+              <!-- <span v-if="item.type === 'contractR'">合同报销</span>
               <span v-else-if="item.type === 'nonContractR'">非合同报销</span>
               <span v-else-if="item.type === 'personalR'">个人报销</span>
               <span v-else-if="item.type === 'publicR'">对公报销</span>
               <span v-else-if="item.type === 'projectR'">项目报销</span>
-              <span v-else></span>
+              <span v-else></span> -->
             </td>
-            <td class="ta-c">{{ item.time }}</td>
+            <td class="text-left">{{ item.time }}</td>
           </tr>
         </tbody>
       </table>
-      <my-pagination :totalNum="Number(totalNum)" @currentChange="currentChange"></my-pagination>
+      <my-pagination :totalNum="Number(totalNum)" @currentChange="currentChange" v-if="reloadPagination"></my-pagination>
     </card>
   </div>
 </template>
@@ -41,12 +42,20 @@
 import axios from 'axios'
 import card from '@/main/component/card.vue'
 import myPagination from '@/main/component/pagination.vue'
+import searchBar from '@/main/component/searchBar.vue';
 
 export default {
   name: 'expensesList',
   data() {
     return {
-      user: {}
+      user: {},
+      searchItems: [
+        {
+          label: '公司全称',
+          value: 'companyName'
+        }
+      ],
+      reloadPagination: true
     }
   },
   props: ['expensesList', 'totalNum', 'applyAble', 'listType'],
@@ -62,6 +71,17 @@ export default {
     },
     applyExpense () {
       this.$router.push('/expenses-apply')
+    },
+    search (obj) {
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 500)
+      this.$emit('search', obj)
+    },
+    currentChange (val) {
+      let pageNum = val
+      this.$emit('currentChange', pageNum)
     }
   },
   created () {
@@ -71,7 +91,8 @@ export default {
   },
   components: {
     card,
-    myPagination
+    myPagination,
+    searchBar
   }
 }
 </script>

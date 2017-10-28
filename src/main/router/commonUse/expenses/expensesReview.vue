@@ -2,7 +2,7 @@
   <div class="main">
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
-    <expense-list-only :expensesList="expensesList" listType="review" :totalNum="totalNum"></expense-list-only>
+    <expense-list-only :expensesList="expensesList" listType="review" :totalNum="totalNum" @currentChange="currentChange" @search="search"></expense-list-only>
   </div>
 </template>
 
@@ -28,7 +28,8 @@ export default {
         type: '',
         time: ''
       }],
-      totalNum: 1
+      totalNum: 1,
+      searchObj: {}
     }
   },
   watch: {
@@ -81,6 +82,7 @@ export default {
                 platform: 'web',
                 pageNum: this.pageNum
               }
+              Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
             })()
           }
@@ -95,6 +97,16 @@ export default {
           }
         }, (rep) => { });
       })
+    },
+    currentChange (pageNum) {
+      this.pageNum = pageNum
+      this.getExpensesList()
+    },
+    search (obj) {
+      this.searchObj = {}
+      this.searchObj = obj
+      this.pageNum = 1
+      this.getExpensesList()
     }
   },
   created () {
