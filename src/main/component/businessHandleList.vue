@@ -218,6 +218,7 @@ export default {
     } else if (this.department === 'financial') {
       this.getUnDealListOfFinance()
     } else if (this.department === 'risk') {
+      console.log('risk')
       this.getUnDealListOfRiskAssessment()
     } 
   },
@@ -524,7 +525,10 @@ export default {
         this.getUnDealListOfArchives()
       } else if (this.department === 'financial') {
         this.getUnDealListOfFinance()
-      } 
+      } else if (this.department === 'risk') {
+        this.getUnDealListOfRiskAssessment()
+      }
+
     },
     showHigherSearch() {
       if (this.higherSearch === false) {

@@ -8,27 +8,27 @@
       <table class="table table-bordered table-hover table-list">
         <thead>
           <tr>
-            <th class="text-center">公司</th>
-            <th class="text-center">部门</th>
-            <th class="text-center">申请人</th>
-            <th class="text-center">报销类型</th>
-            <th class="text-center">申请时间</th>
+            <th class="text-left">公司</th>
+            <th class="text-left">部门</th>
+            <th class="text-left">申请人</th>
+            <th class="text-left">报销类型</th>
+            <th class="text-left">申请时间</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in expensesList" @click="checkDetail(item)">
-            <td class="ta-c">{{ item.companyName }}</td>
-            <td class="ta-c">{{ item.departmentName }}</td>
-            <td class="ta-c">{{ item.applicantName }}</td>
-            <td class="ta-c">
-              <span v-if="item.type === 'contractR'">合同报销</span>
+            <td class="text-left">{{ item.companyName }}</td>
+            <td class="text-left">{{ item.departmentName }}</td>
+            <td class="text-left">{{ item.applicantName }}</td>
+            <td class="text-left">{{item.type}}
+              <!-- <span v-if="item.type === 'contractR'">合同报销</span>
               <span v-else-if="item.type === 'nonContractR'">非合同报销</span>
               <span v-else-if="item.type === 'personalR'">个人报销</span>
               <span v-else-if="item.type === 'publicR'">对公报销</span>
               <span v-else-if="item.type === 'projectR'">项目报销</span>
-              <span v-else></span>
+              <span v-else></span> -->
             </td>
-            <td class="ta-c">{{ item.time }}</td>
+            <td class="text-left">{{ item.time }}</td>
           </tr>
         </tbody>
       </table>
@@ -62,6 +62,10 @@ export default {
     },
     applyExpense () {
       this.$router.push('/expenses-apply')
+    },
+    currentChange (val) {
+      let pageNum = val
+      this.$emit('currentChange', pageNum)
     }
   },
   created () {

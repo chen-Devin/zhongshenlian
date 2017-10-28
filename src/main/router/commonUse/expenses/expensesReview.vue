@@ -2,7 +2,7 @@
   <div class="main">
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
-    <expense-list-only :expensesList="expensesList" listType="review" :totalNum="totalNum"></expense-list-only>
+    <expense-list-only :expensesList="expensesList" listType="review" :totalNum="totalNum" @currentChange="currentChange"></expense-list-only>
   </div>
 </template>
 
@@ -95,6 +95,10 @@ export default {
           }
         }, (rep) => { });
       })
+    },
+    currentChange (pageNum) {
+      this.pageNum = pageNum
+      this.getExpensesList()
     }
   },
   created () {
