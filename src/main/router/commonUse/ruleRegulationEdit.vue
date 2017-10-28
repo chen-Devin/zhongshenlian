@@ -171,7 +171,11 @@ export default {
 .pull-right {
   margin-top: -7px;
 }
+.control-label {
+  width: 50px;
+}
 .normal-wrap {
+  padding-left: 40px;
   textarea {
     resize: vertical;
   }

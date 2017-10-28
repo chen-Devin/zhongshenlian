@@ -12,7 +12,7 @@
       <search-bar 
         class="f-r" 
         :searchItems="searchItems"
-        @search="search"></search-bar>
+        @search="search" v-if="reloadSearch"></search-bar>
     </card>
     <card>
       <table class="table table-bordered table-hover table-list">
@@ -52,7 +52,7 @@
           </tr>
         </tbody>
       </table>
-      <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
+      <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange" v-if="reloadPagination"></my-pagination>
     </card>
   </div>
 </template>
@@ -90,8 +90,14 @@ export default {
           name: 'change'
         }
       ],
-      searchItems: [],
-      projectShow: true
+      searchItems: [{
+        label: '项目名称',
+        value: 'projectName'
+      }],
+      projectShow: true,
+      searchObj: {},
+      reloadPagination: true,
+      reloadSearch: true
     };
   },
   created() {
@@ -109,19 +115,32 @@ export default {
       }
     },
     tabClick (tab, event) {
+      this.pageNum = 1
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 500)
+      this.reloadSearch = false
+      setTimeout(() => {
+        this.reloadSearch = true
+      }, 500)
+      this.searchObj = {}
       if (tab.name === 'project') {
-        this.projectShow = true
-        this.pageNum = 1
+        this.projectShow = true       
         this.getBusinessChecking()
       } else if (tab.name === 'change') {
         this.projectShow = false
-        this.pageNum = 1
         this.getContractChangeList()
       }
     },
     currentChange(newPage) {
       this.pageNum = newPage
-      this.getBusinessChecking();
+      if (this.projectShow == true) {
+        this.getBusinessChecking()
+      } else {
+        this.getContractChangeList()
+      }
+      
     },
     getBusinessChecking() {
       axios({
@@ -135,6 +154,7 @@ export default {
               platform: 'web',
               pageNum: this.pageNum
             }
+            Object.assign(obj, this.searchObj);
             return JSON.stringify(obj);
           })()
         }
@@ -161,6 +181,7 @@ export default {
                 platform: 'web',
                 pageNum: this.pageNum
               }
+              Object.assign(obj, this.searchObj);
               return JSON.stringify(obj);
             })()
           }
@@ -176,8 +197,19 @@ export default {
         }, (rep) => { });
       })
     },
-    search () {
-
+    search (obj) {
+      this.searchObj = {}
+      this.searchObj = obj
+      this.pageNum = 1
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 500) 
+      if (this.projectShow) {
+        this.getBusinessChecking()  
+      } else {
+        this.getContractChangeList()
+      } 
     }
   },
   components: {

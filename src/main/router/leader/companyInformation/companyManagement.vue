@@ -9,6 +9,7 @@
           v-for="(tab, index) in tabList"
           :key="index"></el-tab-pane>
       </el-tabs>
+      <search-bar class="f-r addi" :searchItems="searchItems" @search="search" v-if="!functionShow"></search-bar>
     </card>
     <div class="function-wrapper" v-if="functionShow">
       <company-list 
@@ -234,6 +235,7 @@ import companyEdit from './component/companyEdit.vue';
 import companyDepartmentEdit from './component/companyDepartmentEdit.vue';
 import projectDepartmentEdit from './component/projectDepartmentEdit.vue';
 import groupEdit from './component/groupEdit.vue';
+import searchBar from '@/main/component/searchBar.vue';
 
 export default {
   name: 'companyManagement',
@@ -1093,13 +1095,18 @@ export default {
     companyDepartmentEdit,
     projectDepartmentEdit,
     groupEdit,
-    TreeDataHandle
+    TreeDataHandle,
+    searchBar
   }
 };
 </script>
 
 <style lang="sass" scoped>
 @import '../../../../scss/_variables.scss';
+  .addi {
+    margin-top: -48px;
+    margin-right: 40px;
+  }
   .company-management {
     > .card-tabs {
       padding-top: 7px;

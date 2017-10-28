@@ -406,7 +406,7 @@ export default {
 
 <style lang="sass" scoped>
   .addi {
-    margin-top: -38px;
+    margin-top: -45px;
     margin-right: 40px;
   }
   .content-contain {
