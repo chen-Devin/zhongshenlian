@@ -147,7 +147,12 @@
               </el-input>
             </div>
           </el-col>
-          <el-col :span="7" v-if="electric">
+          <el-col :span="7" v-if="electric && !editAble">
+            <p v-for="(item, index) in reimbursementInfo.travelRArray" :key="index">
+              <a :href="item.annexUrl" target="_blank">附件</a>
+            </p>
+          </el-col>
+          <el-col :span="7" v-if="electric && editAble">
             <div v-for="(item, index) in reimbursementInfo.travelRArray" :key="index" class="each">
               <el-upload :show-file-list="false"
                          :action="getUploadUrl(item.amount, 'travelR')"
@@ -213,7 +218,12 @@
               </el-input>
             </div>
           </el-col>
-          <el-col :span="7" v-if="electric">
+          <el-col :span="7" v-if="electric && !editAble">
+            <p v-for="(item, index) in reimbursementInfo.stayRArray" :key="index">
+              <a :href="item.annexUrl" target="_blank">附件</a>
+            </p>
+          </el-col>
+          <el-col :span="7" v-if="electric && editAble">
             <div v-for="(item, index) in reimbursementInfo.stayRArray" :key="index" class="each">
               <el-upload :show-file-list="false"
                          :action="getUploadUrl(item.amount, 'stayR')"
@@ -279,7 +289,12 @@
               </el-input>
             </div>
           </el-col>
-          <el-col :span="7" v-if="electric">
+          <el-col :span="7" v-if="electric && !editAble">
+            <p v-for="(item, index) in reimbursementInfo.localRArray" :key="index">
+              <a :href="item.annexUrl" target="_blank">附件</a>
+            </p>
+          </el-col>
+          <el-col :span="7" v-if="electric && editAble">
             <div v-for="(item, index) in reimbursementInfo.localRArray" :key="index" class="each">
               <el-upload :show-file-list="false"
                          :action="getUploadUrl(item.amount, 'localR')"
@@ -345,7 +360,12 @@
               </el-input>
             </div>
           </el-col>
-          <el-col :span="7" v-if="electric">
+          <el-col :span="7" v-if="electric && !editAble">
+            <p v-for="(item, index) in reimbursementInfo.fieldRArray" :key="index">
+              <a :href="item.annexUrl" target="_blank">附件</a>
+            </p>
+          </el-col>
+          <el-col :span="7" v-if="electric && editAble">
             <div v-for="(item, index) in reimbursementInfo.fieldRArray" :key="index" class="each">
               <el-upload :show-file-list="false"
                          :action="getUploadUrl(item.amount, 'fieldR')"
@@ -396,7 +416,7 @@
         type="textarea"
         :rows="3"
         placeholder="暂无"
-        v-model="reimbursementInfo.reason"
+        v-model="reimbursementInfo.statusDescription"
         disabled>
       </el-input>
       <p class="btns" v-if="!editAble && detailType === 'review'">
@@ -1068,79 +1088,6 @@ export default {
         })
       }
     },
-      
-        // this.uploadAmount(this.reimbursementInfo.travelRArray[0].amount, 'travelR').then(() => {
-        //   var promiseArr = []
-        //   if (this.reimbursementInfo.travelRArray.length > 1) {
-        //     this.reimbursementInfo.travelRArray.forEach((item) => {
-        //       promiseArr.push(this.uploadAmount(item.amount, 'travelR'))
-        //     })
-        //   }
-        //   this.reimbursementInfo.stayRArray.forEach((item) => {
-        //     promiseArr.push(this.uploadAmount(item.amount, 'stayR'))
-        //   })
-        //   this.reimbursementInfo.localRArray.forEach((item) => {
-        //     promiseArr.push(this.uploadAmount(item.amount, 'localR'))
-        //   })
-        //   this.reimbursementInfo.fieldRArray.forEach((item) => {
-        //     promiseArr.push(this.uploadAmount(item.amount, 'fieldR'))
-        //   })
-        // }, () => {})
-        // console.log(promiseArr)
-        // Promise.all(promiseArr).then(() => {
-        //   let arr = []
-        //   this.reimbursementInfo.projectNumberArray = this.projectNumberArray
-        //   this.reimbursementInfo.companyName = this.user.companyName
-        //   this.reimbursementInfo.travelRArray.forEach((item) => {
-        //     delete item.percentage
-        //     delete item.state
-        //     delete item.uploadURL
-        //   })
-        //   this.reimbursementInfo.stayRArray.forEach((item) => {
-        //     delete item.percentage
-        //     delete item.state
-        //     delete item.uploadURL
-        //   })
-        //   this.reimbursementInfo.localRArray.forEach((item) => {
-        //     delete item.percentage
-        //     delete item.state
-        //     delete item.uploadURL
-        //   })
-        //   this.reimbursementInfo.fieldRArray.forEach((item) => {
-        //     delete item.percentage
-        //     delete item.state
-        //     delete item.uploadURL
-        //   })
-        //   if (this.reimbursementInfo.id === '') {
-        //     delete this.reimbursementInfo.id
-        //   }
-        //   return new Promise((resolve, reject) => {
-        //     axios({
-        //       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-        //       method: 'get',
-        //       url: '/service',
-        //       params: {
-        //         data: (() => {
-        //           let obj = {
-        //             command: 'addOrEditReimbursement',
-        //             platform: 'web',
-        //             type: this.reimbursementInfo.submitType,
-        //             data: this.reimbursementInfo
-        //           }
-        //           return JSON.stringify(obj);
-        //         })()
-        //       }
-        //     }).then((rep) => {
-        //       if (rep.data.statusCode === '10001') {
-        //         this.$message.success('提交成功，返回报销列表')
-        //         this.$router.push('/expenses-list')
-        //         resolve('done')
-        //       } else {
-        //         this.$message.error(rep.data.msg)
-        //       }
-        //     }, (rep) => { });
-        //   })
-        // }, () => {})
     back () {
       this.$router.push('/expenses-list')
     },

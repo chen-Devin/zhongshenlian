@@ -244,6 +244,30 @@ export default {
         this.getFullCompanyList()
       }
     },
+    getStaffInfo () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getStaffInfo',
+                platform: 'web',
+                id: ''
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.treeData = TreeDataHandle(rep.data.data.companyArray)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
     getFullCompanyList () {
       return new Promise((resolve, reject) => {
         axios({
@@ -343,14 +367,15 @@ export default {
       this.staffFilter()
     },
     selectStaff (staff) {
-      this.staffAllList.forEach((item) => {
-        item.isActive = false
-      })
-      staff.isActive = true
-      this.reloadStaffList = false
-      this.reloadStaffList = true
+      console.log(staff)
+      // this.staffAllList.forEach((item) => {
+      //   item.isActive = false
+      // })
+      // staff.isActive = true
+      // this.reloadStaffList = false
+      // this.reloadStaffList = true
       // this.getStaffInfo().then(() => {
-        this.staffShow = true
+      //   this.staffShow = true
       // }, () => {})
     },
     // switchDepart () {

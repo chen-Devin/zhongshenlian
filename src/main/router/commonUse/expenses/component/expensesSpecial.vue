@@ -104,7 +104,7 @@
             </el-col>
             <el-col class="d-f" :span="12" v-if="project">
               <span style="width:80px;">合同编号：</span>
-              <el-select v-model="contractsArray" filterable multiple placeholder="请选择合同编号">
+              <el-select v-model="reimbursementInfo.projectNumberArray" filterable multiple placeholder="请选择合同编号" :disabled="!editAble">
                 <el-option
                   v-for="item in contracts"
                   :key="item.id"
@@ -228,20 +228,22 @@
         <button class="btn my-btn cancel-btn" @click="back">取消</button>
       </p>
     </card>
-    <card class="card3" v-if="!editAble">
+    <card class="card3" v-if="!editAble ">
       <div class="f-l">报销状态：</div>
-      <state-svg></state-svg>
+      <state-svg 
+        :status="status"
+        v-if="status"></state-svg>
       <div class="f-l">
         状态描述：
       </div>
       <el-input
         type="textarea"
         :rows="3"
-        placeholder="请输入内容"
-        v-model="textarea"
+        placeholder="暂无"
+        v-model="reimbursementInfo.statusDescription"
         :disabled="!editAble">
       </el-input>
-      <p class="btns"  v-if="!editAble">
+      <p class="btns" v-if="!editAble && detailType === 'review'">
         <button class="btn my-btn submit-btn" @click="agree">审批通过</button>
         <button class="btn my-btn cancel-btn" @click="showReject">驳回</button>
       </p>
@@ -285,6 +287,7 @@ export default {
         accountBankNumber: '',
         paperInvoiceNum: 1,
         paperInvoiceAmount: '',
+        projectNumberArray: [],
         paperRArray: [
           {
             id: '',
@@ -353,7 +356,8 @@ export default {
       uploadIndex: '',
       expenseId: '',
       contracts: [],
-      contractsArray: []
+      contractsArray: [],
+      detailType: 'detail'
     };
   },
   computed: {
@@ -391,6 +395,35 @@ export default {
       } else {
         return false
       }
+    },
+    status () {
+      let arr = new Array(6).fill(0)
+      switch(this.reimbursementInfo.status) {
+        case '0010':
+          arr[0] = 1
+          break;
+        case '0020':
+          arr[1] = 1
+          break;
+        case '0030' || '0050' || '0070' || '0090':
+          arr[0] = 1
+          break;
+        case '0040':
+          arr[2] = 1
+          break;
+        case '0060':
+          arr[3] = 1
+          break;
+        case '0080':
+          arr[4] = 1
+          break;
+        case '0100':
+          arr[5] = 1
+          break;
+        default: 
+          return false
+      }
+      return arr
     }
   },
   methods: {
@@ -480,6 +513,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            this.reimbursementInfo = rep.data.data
             // this.companyList = rep.data.data.companyList
             resolve('done');
           }
@@ -611,44 +645,131 @@ export default {
         this.reimbursementInfo.electricRArray[this.uploadIndex].state.uploadFail = true
       }
     },
+    // addOrEditReimbursement () {
+    //   console.log(this.reimbursementInfo)
+    //   // return new Promise((resolve, reject) => {
+    //   //   axios({
+    //   //     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+    //   //     method: 'get',
+    //   //     url: '/service',
+    //   //     params: {
+    //   //       data: (() => {
+    //   //         let obj = {
+    //   //           command: 'addOrEditReimbursement',
+    //   //           platform: 'web',
+    //   //           data: this.reimbursementInfo
+    //   //         }
+    //   //         return JSON.stringify(obj);
+    //   //       })()
+    //   //     }
+    //   //   }).then((rep) => {
+    //   //     if (rep.data.statusCode === '10001') {
+    //   //       this.$message.success('提交成功，返回报销列表')
+    //   //       this.$router.push('/expenses-list')
+    //   //       resolve('done')
+    //   //     } else {
+    //   //       this.$message.success(rep.data.msg)
+    //   //     }
+    //   //   }, (rep) => { });
+    //   // })
+    // },
+    uploadAmount (amount, type) {
+      let nd = new FormData()
+      return new Promise((resolve, reject) => {
+       axios({
+         headers: { 'Content-Type': 'multipart/form-data' },
+         method: 'post',
+         url: this.getUploadUrl(amount, type),
+         data: nd
+       }).then((rep) => {
+         if (rep.data.statusCode === '10001') {
+          this.reimbursementInfo.id = rep.data.data.id
+           resolve('done')
+         } else {
+           this.$message.error(rep.data.msg)
+         }
+       }, (rep) => { });
+      })
+    },
     addOrEditReimbursement () {
-      this.reimbursementInfo.companyName = this.user.companyName
-      console.log(this.reimbursementInfo)
-      // return new Promise((resolve, reject) => {
-      //   axios({
-      //     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-      //     method: 'get',
-      //     url: '/service',
-      //     params: {
-      //       data: (() => {
-      //         let obj = {
-      //           command: 'addOrEditReimbursement',
-      //           platform: 'web',
-      //           data: this.reimbursementInfo
-      //         }
-      //         return JSON.stringify(obj);
-      //       })()
-      //     }
-      //   }).then((rep) => {
-      //     if (rep.data.statusCode === '10001') {
-      //       this.$message.success('提交成功，返回报销列表')
-      //       this.$router.push('/expenses-list')
-      //       resolve('done')
-      //     } else {
-      //       this.$message.success(rep.data.msg)
-      //     }
-      //   }, (rep) => { });
-      // })
+      if (this.paper) {
+        this.uploadAmount(this.reimbursementInfo.paperRArray[0].amount, 'paperR').then(() => {
+          var promiseArr = []
+          if (this.reimbursementInfo.paperRArray.length > 1) {
+            this.reimbursementInfo.paperRArray.forEach((item) => {
+              promiseArr.push(this.uploadAmount(item.amount, 'paperR'))
+            })
+          }
+          Promise.all(promiseArr).then(() => {
+            if (this.reimbursementInfo.id === '') {
+              delete this.reimbursementInfo.id
+            }
+            return new Promise((resolve, reject) => {
+              axios({
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+                method: 'get',
+                url: '/service',
+                params: {
+                  data: (() => {
+                    let obj = {
+                      command: 'addOrEditReimbursement',
+                      platform: 'web',
+                      type: this.reimbursementInfo.submitType,
+                      data: this.reimbursementInfo
+                    }
+                    return JSON.stringify(obj)
+                  })()
+                }
+              }).then((rep) => {
+                if (rep.data.statusCode === '10001') {
+                  this.$message.success('提交成功，返回报销列表')
+                  this.$router.push('/expenses-list')
+                  resolve('done')
+                } else {
+                  this.$message.error(rep.data.msg)
+                }
+              }, (rep) => { });
+            })
+          }, () => {})
+        }, () => {})
+      } else {
+        return new Promise((resolve, reject) => {
+          axios({
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+            method: 'get',
+            url: '/service',
+            params: {
+              data: (() => {
+                let obj = {
+                  command: 'addOrEditReimbursement',
+                  platform: 'web',
+                  type: this.reimbursementInfo.submitType,
+                  data: this.reimbursementInfo
+                }
+                return JSON.stringify(obj);
+              })()
+            }
+          }).then((rep) => {
+            if (rep.data.statusCode === '10001') {
+              this.$message.success('提交成功，返回报销列表')
+              this.$router.push('/expenses-list')
+              resolve('done')
+            } else {
+              this.$message.error(rep.data.msg)
+            }
+          }, (rep) => { });
+        })
+      }
     },
     back () {
       this.$router.push('/expenses-list')
     }
   },
   created () {
+    this.getProjectByPerson()
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser
     }, () => { })
-    this.getProjectByPerson()
     this.getCompanyList()
     this.numbers = new Array(100).fill(0).map((item, index) => {
       item = index
@@ -656,8 +777,8 @@ export default {
     })
     if (this.$route.params.id.split('&').length > 1) {
       this.expenseId = this.$route.params.id.split('&')[0]
-      let type = this.$route.params.id.split('&')[1]
-      if (type === 'review') {
+      this.detailType = this.$route.params.id.split('&')[1]
+      if (this.detailType === 'review') {
         this.paths =  [
           { name: '待处理业务', url: '/expenses-review', present: false },
           { name: '单据审核', url: '/expenses-review', present: false },
@@ -673,7 +794,9 @@ export default {
     } else {
       this.expenseId = this.$route.params.id
     }
-    this.getReimbursementInfo()
+    if (this.expenseId !== 'new') {
+      this.getReimbursementInfo()
+    }
   },
   components: {
     crumbs,
