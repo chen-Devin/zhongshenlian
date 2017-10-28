@@ -82,7 +82,7 @@
         </tr>
       </tbody>
     </table>
-    <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination>
+    <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange" v-if="reloadPagination"></my-pagination>
   </card>
 </template>
 
@@ -109,6 +109,7 @@ export default {
       searchDown: true,
       searchUp: false,
       customerName: '',
+      reloadPagination: true,
       name: '',
       telephone: '',
       searchItems: [
@@ -123,6 +124,10 @@ export default {
   methods: {
     search(obj) {
       this.listType = 'search';
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 500)
       this.$emit('search', obj);
     },
     higherSearchEvent() {

@@ -22,12 +22,13 @@
         <div class="form-group">
           <label class="col-sm-2 self-label ml-40">正文</label>
           <div class="col-sm-10">
-            <textarea cols="50"
+            <vue-editor v-model="ruleAdd.content"></vue-editor>
+            <!-- <textarea cols="50"
                       rows="30"
                       class="form-control"
                       placeholder="请输入正文"
                       v-model="ruleAdd.content">
-            </textarea>
+            </textarea> -->
           </div>
         </div>
         <rule-can-modal v-if="showCanModal"
@@ -43,7 +44,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
 import { Message } from 'element-ui';
-
+import {VueEditor} from 'vue2-editor';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import ruleCanModal from './component/ruleCanModal.vue';
@@ -113,7 +114,8 @@ export default {
   components: {
     crumbs,
     card,
-    ruleCanModal
+    ruleCanModal,
+    VueEditor
   }
 }
 </script>

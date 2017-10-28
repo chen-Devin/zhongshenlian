@@ -2,7 +2,7 @@
   <div class="main">
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
-    <expense-list-only :expensesList="expensesList" :applyAble="applyAble" listType="list" :totalNum="totalNum" @currentChange="currentChange"></expense-list-only>
+    <expense-list-only :expensesList="expensesList" :applyAble="applyAble" listType="list" :totalNum="totalNum" @currentChange="currentChange" @search="search"></expense-list-only>
   </div>
 </template>
 
@@ -29,7 +29,8 @@ export default {
         type: '',
         time: ''
       }],
-      applyAble: true
+      applyAble: true,
+      searchObj: {}
     }
   },
   methods: {
@@ -47,6 +48,7 @@ export default {
                 type: '4',
                 pageNum: this.pageNum
               }
+              Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
             })()
           }
@@ -60,6 +62,16 @@ export default {
           }
         }, (rep) => { });
       })
+    },
+    currentChange (pageNum) {
+      this.pageNum = pageNum
+      this.getUnDealRListOfFinance()
+    },
+    search (obj) {
+      this.searchObj = {}
+      this.searchObj = obj
+      this.pageNum = 1
+      this.getUnDealRListOfFinance()
     }
   },
   created () {

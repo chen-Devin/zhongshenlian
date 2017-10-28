@@ -2,7 +2,8 @@
   <div>
     <card class="card-tabs">
       <button class="btn my-btn submit-btn f-r addi" @click="applyExpense" v-if="applyAble">申请报销</button>
-      <h5 class="main-title">报销列表</h5>
+      <h5 class="main-title">报销列表
+        <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar></h5>
     </card>
     <card>
       <table class="table table-bordered table-hover table-list">
@@ -32,7 +33,7 @@
           </tr>
         </tbody>
       </table>
-      <my-pagination :totalNum="Number(totalNum)" @currentChange="currentChange"></my-pagination>
+      <my-pagination :totalNum="Number(totalNum)" @currentChange="currentChange" v-if="reloadPagination"></my-pagination>
     </card>
   </div>
 </template>
@@ -41,12 +42,20 @@
 import axios from 'axios'
 import card from '@/main/component/card.vue'
 import myPagination from '@/main/component/pagination.vue'
+import searchBar from '@/main/component/searchBar.vue';
 
 export default {
   name: 'expensesList',
   data() {
     return {
-      user: {}
+      user: {},
+      searchItems: [
+        {
+          label: '公司全称',
+          value: 'companyName'
+        }
+      ],
+      reloadPagination: true
     }
   },
   props: ['expensesList', 'totalNum', 'applyAble', 'listType'],
@@ -63,6 +72,13 @@ export default {
     applyExpense () {
       this.$router.push('/expenses-apply')
     },
+    search (obj) {
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 500)
+      this.$emit('search', obj)
+    },
     currentChange (val) {
       let pageNum = val
       this.$emit('currentChange', pageNum)
@@ -75,7 +91,8 @@ export default {
   },
   components: {
     card,
-    myPagination
+    myPagination,
+    searchBar
   }
 }
 </script>
