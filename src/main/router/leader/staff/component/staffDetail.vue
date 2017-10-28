@@ -7,11 +7,11 @@
           <button class="btn my-btn cancel-btn" @click="deleteStaff">删除员工</button>
         </template>
         <template v-else>
-          <button class="btn my-btn submit-btn" @click="save">保存</button>
+          <button class="btn my-btn submit-btn" @click="save1">保存</button>
           <button class="btn my-btn draft-btn" @click="cancel">取消</button>
         </template>
       </div>
-      <h5 class="main-title">基础信息</h5>
+      <h5 class="main-title">基础信息{{ isNew }} {{ type }}</h5>
       <div class="basic-form">
         <el-row>
           <el-col :span="12">
@@ -37,7 +37,7 @@
               <el-form-item label="邮箱" prop="email">
                 <el-input v-model="staff.email" :disabled="!editAble"></el-input>
               </el-form-item>
-              <el-form-item label="是否为部门负责人" prop="isPrincipal">
+              <el-form-item label="是否为部门负责人" label-width="130px" prop="isPrincipal">
                 <el-input v-model="staff.isPrincipal" :disabled="!editAble"></el-input>
               </el-form-item>
               <el-form-item label="所属业务部" v-if="type==='department'">
@@ -71,30 +71,61 @@
               <el-form-item label="合同到期日">
                 <el-input v-model="staff.expireTime" :disabled="!editAble"></el-input>
               </el-form-item>
-              <el-form-item label="劳动合同">
-                <el-input v-model="staff.type" :disabled="!editAble"></el-input>
-              </el-form-item>
             </el-form>
           </el-col>
         </el-row>
         <el-row>
-        </el-row>
-        <el-row>
           <el-form :label-position="labelPosition" label-width="130px" :rules="staffRules">
             <el-form-item label="单科成绩" prop="singleSubjects">
-              <el-checkbox-group v-model="staff.singleSubjectsArray">
+              <el-checkbox-group v-model="singleSubjectsArray">
                 <el-checkbox :label="option" v-for="(option, index) in scoresOption" :key="index" :disabled="!editAble">{{ option }}</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </el-form>
         </el-row>
-        <!-- <p>{{ staff }}</p> -->
         <el-row>
           <el-form :label-position="labelPosition" label-width="130px" :model="staff" :rules="staffRules" ref="staff">
             <el-form-item label="执行证书" prop="professionalCertificate">
-              <el-checkbox-group v-model="staff.PCSelected">
-                <el-checkbox :label="option" :value="option" v-for="(option, index) in staff.PCOptions" :key="index" :disabled="!editAble"></el-checkbox>
+              <el-checkbox-group v-model="professionalCertificateArray">
+                <el-checkbox :label="option" :value="option" v-for="(option, index) in certificatesOption" :key="index" :disabled="!editAble"></el-checkbox>
               </el-checkbox-group>
+            </el-form-item>
+          </el-form>
+        </el-row>
+        <el-row>
+          <el-form :label-position="labelPosition" label-width="130px">
+            <el-form-item label="劳动合同">
+              <!-- <el-input v-model="staff.type" :disabled="!editAble"></el-input> -->
+              <div>
+                <el-upload ref="upload"
+                           :show-file-list="false"
+                           :action="workerUrl"
+                           :on-progress="UploadProgress"
+                           :on-success="UploadSuccess">
+                  <button class="btn my-btn submit-btn"
+                          type="button"
+                          slot="trigger">上传文件</button>
+                  <span slot="tip"
+                        class="text-info" v-if="uploadState.notUpload">&emsp;文件大小建议不超过3Mb</span>
+                  <span slot="tip"
+                        class="text-info" v-if="uploadState.uploading">
+                        &emsp;
+                        <i class="el-icon-loading"></i>
+                        &emsp;
+                        {{ uploadState.percentage }}%
+                        </span>
+                  <span slot="tip"
+                        class="text-info" v-if="uploadState.uploadFail">&emsp;<i class="el-icon-close"></i>上传失败，请重试</span>
+                  <span slot="tip"
+                        class="text-info" v-if="uploadState.uploaded">&emsp;<i class="el-icon-check"></i>已上传</span>
+                  <span slot="tip"
+                        class="text-info" v-if="uploadState.uploaded">
+                        &emsp;
+                        <span class="fa fa-file-text-o"></span>
+                        <a :href="uploadState.fileAddress" target="_blank">{{ uploadState.fileName }}</a>
+                        </span>
+                </el-upload>
+              </div>
             </el-form-item>
           </el-form>
         </el-row>
@@ -112,10 +143,16 @@ export default {
     return {
       editAble: false,
       labelPosition: 'left',
-      singleSubjects: [],
-      professionalCertificate: [],
-      staff: {
-
+      singleSubjectsArray: this.staff.singleSubjectsArray,
+      professionalCertificateArray: this.staff.professionalCertificateArray,
+      uploadState: {
+        notUpload: true,
+        uploading: false,
+        uploaded: false,
+        uploadFail: false,
+        fileAddress: '',
+        fileName: '',
+        percentage: '0'
       },
       staffRules: {
         telephone: [
@@ -171,8 +208,45 @@ export default {
       certificatesOption: ['注册会计师', '注册审计师', '注册造价工程师', '注册资产评估师', '注册土地评估师', '暂无']
     };
   },
+  computed: {
+    workerUrl () {
+      let obj = {
+        command: 'handlerBusiness',
+        platform: 'web',
+        workerId: this.staff.id
+      }
+      return '/fileUpload?data=' + JSON.stringify(obj)
+    }
+  },
   methods: {
-    getStaffInfo (id) {
+    UploadProgress (event, file, fileList) {
+      this.uploadState.notUpload = false
+      this.uploadState.uploading = true
+      this.uploadState.uploaded = false
+      this.uploadState.percentage = parseInt(event.percent)
+    },
+    UploadSuccess (response, file, fileList) {
+      this.uploadState.notUpload = false
+      this.uploadState.uploading = false
+      this.uploadState.uploaded = false
+      this.uploadState.uploadFail = false
+      if (response.statusCode === '10001') {
+        this.uploadState.uploaded = true
+        this.uploadState.fileAddress = response.data.path
+        this.uploadState.fileName = response.data.annexName
+        this.reportId = response.data.id
+      } else {
+        this.uploadState.uploadFail = true
+      }
+    },
+    save1 () {
+      if (this.isNew[0] !== false) {
+        this.addUser()
+      } else {
+        this.save()
+      }
+    },
+    addUser () {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -180,36 +254,47 @@ export default {
           url: '/service',
           params: {
             data: (() => {
-              let obj = {
-                command: 'getStaffInfo',
+              var obj = {
+                command: 'addUser',
                 platform: 'web',
-                id: 1  // ly没给id
+                type: this.isNew[0],
+                userName: this.staff.name,
+                gender: this.staff.gender,
+                phone: this.staff.telephone,
+                jobNumber: this.staff.jobNumber,
+                duity: this.staff.duties,
+                idCard: this.staff.idCard,
+                email: this.staff.email,
+                education: this.staff.education,
+                jonTitle: this.staff.jonTitle,
+                entryTime: this.staff.entryTime,
+                expireTime: this.staff.expireTime,
+                singleSubjects: this.singleSubjectsArray.join('，'),
+                professionalCertificate: this.professionalCertificateArray.join('，'),
+                isPrincipal: this.staff.isPrincipal,
+                isHaveCertificate: this.staff.isHaveCertificate,
+                nation: this.staff.nation 
+              }
+              if (this.isNew[0] === 0) {
+                Object.assign(obj, {
+                  departmentId: this.isNew[1]
+                })
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.staff = rep.data.data
-            this.staff = this.staffDataHandle(this.staff)
+            this.editAble = false
+            this.$message.success('保存成功,请继续编辑员工信息')
+            this.$emit('addSuccess', rep.data.data.id)
             resolve('done');
           } else {
             this.$message.error(rep.data.msg)
           }
+          this.editAble = false
         }, (rep) => { });
       })
-    },
-    staffDataHandle (staff) {
-      staff.singleSubjectsArray = staff.singleSubjects.split('，')
-      staff.PCOptions = staff.professionalCertificate.map((item) => {
-        return item.name
-      })
-      staff.PCSelected = staff.professionalCertificate.map((item) => {
-        if (item.value === '1') {
-          return item.name
-        }
-      })
-      return staff
     },
     save () {
       return new Promise((resolve, reject) => {
@@ -227,6 +312,7 @@ export default {
                 gender: this.staff.gender,
                 phone: this.staff.telephone,
                 jobNumber: this.staff.jobNumber,
+                nation: this.staff.nation,
                 duity: this.staff.duties,
                 idCard: this.staff.idCard,
                 email: this.staff.email,
@@ -234,8 +320,8 @@ export default {
                 jonTitle: this.staff.jonTitle,
                 entryTime: this.staff.entryTime,
                 expireTime: this.staff.expireTime,
-                singleSubjects: this.staff.singleSubjects,
-                professionalCertificate: this.staff.professionalCertificate,
+                singleSubjects: this.singleSubjectsArray.join('，'),
+                professionalCertificate: this.professionalCertificateArray.join('，'),
                 isPrincipal: this.staff.isPrincipal,
                 isHaveCertificate: this.staff.isHaveCertificate
               }
@@ -244,12 +330,12 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            this.editAble = false
             this.$message.success('保存成功')
             resolve('done');
           } else {
             this.$message.error(rep.data.msg)
           }
-          this.getStaffInfo()
           this.editAble = false
         }, (rep) => { });
       })
@@ -264,9 +350,11 @@ export default {
       this.$message.error('删除接口有问题')
     }
   },
-  props: ['type'],
+  props: ['type', 'staff', 'isNew'],
   created () {
-    this.getStaffInfo()
+    if (this.isNew[0] !== false) {
+      this.editAble = true
+    }
   }
 }
 </script>

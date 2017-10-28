@@ -52,10 +52,10 @@
       <template v-if="staffShow">
         <card>
           <staff-detail 
-            :type="type"></staff-detail>
-        </card>
-        <card>
-          <authority-set></authority-set>
+            :staff="staff"
+            :type="type"
+            :isNew="isNew"
+            @addSuccess="addSuccess"></staff-detail>
         </card>
         <card v-if="!isOpen" class="basic-contain">
           <p class="check-more">
@@ -63,9 +63,14 @@
           </p>
         </card>
       </template>
-      <template  v-if="isOpen">
+      <template v-if="isOpen">
         <card>
-          <salary-detail></salary-detail>
+          <authority-set
+            :id="staff.id" 
+            :type="type"></authority-set>
+        </card>
+        <card>
+          <salary-detail :staffId="staff.id"></salary-detail>
         </card>
         <card>
           <bonus-detail></bonus-detail>
@@ -80,7 +85,8 @@
         </card>
       </template>
     </div>
-    <staff-add-modal @cancel="cancel" v-if="addShow"></staff-add-modal>
+    <staff-add-modal @saveNewStaff="saveNewStaff" @cancel="cancel" v-if="addShow"></staff-add-modal>
+    <function-staff-add @saveNewStaff="saveNewStaff" @cancel="cancel" v-if="addFuncShow"></function-staff-add>
   </div>
 </template>
 
@@ -96,12 +102,14 @@ import salaryDetail from './component/salaryDetail.vue';
 import bonusDetail from './component/bonusDetail.vue';
 import educationBg from './component/educationBg.vue';
 import staffAddModal from './component/staffAddModal.vue';
+import functionStaffAdd from './component/functionStaffAdd.vue';
 import searchBar from '@/main/component/searchBar.vue'
 
 export default {
   name: 'staffManagementAuthor',
   data() {
     return {
+      isNew: [false],
       paths1: [
         { name: '职员管理', url: '/staff-management-author', present: false },
         { name: '职能部门', url: '/staff-management-author', present: true }
@@ -165,6 +173,7 @@ export default {
       defaultExpandAll: true,
       isOpen: false,
       addShow: false,
+      addFuncShow: false,
       staffShow: false,
       staffFilterId: '',
       staffFilterType: '',
@@ -176,7 +185,9 @@ export default {
           // isActive: false
         // }
       ],
-      staff: {
+      staffId: '',
+      staff: {},
+      staffEmpty: {
         id: '',
         telephone: '',
         name: '',
@@ -195,11 +206,10 @@ export default {
         jonTitle: '',
         entryTime: '',
         expireTime: '',
-        singleSubjects: ['会计'],
-        professionalCertificate: [{
-          name: '',
-          value: ''
-        }],
+        singleSubjects: [],
+        professionalCertificate: [],
+        singleSubjectsArray: [],
+        professionalCertificateArray: [],
         companyDepartment: '',
         projectDepartment: '',
         group: '',
@@ -210,7 +220,8 @@ export default {
         nation: '',
         shortcutArray: []
       },
-      reloadStaffList: true
+      reloadStaffList: true,
+      type: 'function'
     };
   },
   methods: {
@@ -222,6 +233,25 @@ export default {
       // this.pageNum = 1
       // this.searchObj = searchObj
       // this.getBiddingList()
+    },
+    saveNewStaff (type) {
+      if (type[0] === 0) {
+        this.type = 'function'
+      } else {
+        this.type = 'department'
+      }
+      this.staff = Object.assign({}, this.staffEmpty)
+      this.isNew = type
+      this.staffShow = false
+      this.isOpen = false
+      setTimeout(() => {
+        this.staffShow = true
+      }, 500)
+      this.addShow = false
+      this.addFuncShow = false
+    },
+    addSuccess (id) {
+      this.staff.id = id
     },
     handleClick(tab, event) {
       if (tab.name === 'function') {
@@ -255,15 +285,19 @@ export default {
               let obj = {
                 command: 'getStaffInfo',
                 platform: 'web',
-                id: ''
+                id: this.staffId
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.treeData = TreeDataHandle(rep.data.data.companyArray)
+            this.staff = rep.data.data
+            this.staff.singleSubjectsArray = rep.data.data.singleSubjects.split('，')
+            this.staff.professionalCertificateArray = rep.data.data.professionalCertificate.split('，')
             resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       })
@@ -367,16 +401,16 @@ export default {
       this.staffFilter()
     },
     selectStaff (staff) {
-      console.log(staff)
-      // this.staffAllList.forEach((item) => {
-      //   item.isActive = false
-      // })
-      // staff.isActive = true
-      // this.reloadStaffList = false
-      // this.reloadStaffList = true
-      // this.getStaffInfo().then(() => {
-      //   this.staffShow = true
-      // }, () => {})
+      this.staffAllList.forEach((item) => {
+        item.isActive = false
+      })
+      staff.isActive = true
+      this.reloadStaffList = false
+      this.reloadStaffList = true
+      this.staffId = staff.id
+      this.getStaffInfo().then(() => {
+        this.staffShow = true
+      }, () => {})
     },
     // switchDepart () {
     //   this.functionActive = true
@@ -399,10 +433,16 @@ export default {
     //   this.getFullCompanyList()
     // },
     showAdd () {
-      this.addShow = true
+      // console.log(this.functionActive, this.departActive)
+      if (this.functionActive) {
+        this.addFuncShow = true
+      } else if (this.departActive) {
+        this.addShow = true
+      }
     },
     cancel () {
       this.addShow = false
+      this.addFuncShow = false
     },
     checkMore () {
       this.isOpen = true
@@ -424,6 +464,7 @@ export default {
     bonusDetail,
     educationBg,
     staffAddModal,
+    functionStaffAdd,
     searchBar
   }
 }

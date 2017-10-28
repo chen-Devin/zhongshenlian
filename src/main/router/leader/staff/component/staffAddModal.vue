@@ -41,7 +41,7 @@
       </el-form>
     </div>
     <div slot="footer">
-      <button class="btn my-btn cancel-btn modal-default-button" @click="del()" :disabled="subBtn.dis">
+      <button class="btn my-btn cancel-btn modal-default-button" @click="save" :disabled="subBtn.dis">
         {{subBtn.cont}}
       </button>
       <button class="btn my-btn submit-btn modal-default-button" @click="cancel()">
@@ -188,6 +188,9 @@ export default {
     },
     changeProject (value) {
       this.getGroupListByProjectDepartment(value)
+    },
+    save () {
+      this.$emit('saveNewStaff')
     },
     cancel() {
       this.$emit('cancel');

@@ -311,7 +311,7 @@ export default {
               let obj = {
                 command: 'getUserSalaryInfo',
                 platform: 'web',
-                staffId: '1'
+                staffId: this.staffId
               }
               return JSON.stringify(obj);
             })()
@@ -338,7 +338,7 @@ export default {
               let obj = {
                 command: 'getSalaryReleaseRecordInfo',
                 platform: 'web',
-                staffId: '1'
+                staffId: this.staffId
               }
               return JSON.stringify(obj);
             })()

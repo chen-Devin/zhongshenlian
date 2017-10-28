@@ -1,7 +1,7 @@
 <template>
   <div>
     <h5 class="main-title">
-      权限设置
+      权限设置 {{ authorityData }}
       <div class="f-r o-h">
         <template v-if="!editAble">
           <button class="btn my-btn submit-btn" @click="edit">编辑</button>
@@ -50,9 +50,10 @@ export default {
       editAble: false,
       authorityArray: [],
       authorityData: [],
+      transData: ''
     };
   },
-  props: ['id'],
+  props: ['id', 'type'],
   methods: {
     edit () {
       this.editAble = true
@@ -60,7 +61,7 @@ export default {
     cancel () {
       this.editAble = false
     },
-    getStaffAuthority (id) {
+    getStaffAuthority () {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -71,7 +72,7 @@ export default {
               let obj = {
                 command: 'getStaffAuthority',
                 platform: 'web',
-                staffId: '1'
+                staffId: this.id
               }
               return JSON.stringify(obj);
             })()
@@ -103,6 +104,15 @@ export default {
       })
     },
     save () {
+      if (this.type === 'function') {
+        this.authorityData.forEach((item) => {
+          // delete item.companyName
+          item.authorityArray.forEach((jtem) => {
+            jtem.authority = Number(jtem.stat)
+            delete jtem.stat
+          })
+        })
+      }
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -113,13 +123,21 @@ export default {
               let obj = {
                 command: 'editStaffAuthority',
                 platform: 'web',
-                staffId: '1'
+                staffId: this.id
+              }
+              if (this.type === 'function') {
+                Object.assign(obj, {
+                  deAuthorityArray: this.authorityData
+                })
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            this.$emit('保存成功')
+            this.getStaffAuthority()
+            this.editAble = false
             resolve('done');
           }
         }, (rep) => { });
@@ -127,7 +145,7 @@ export default {
     }
   },
   created () {
-    this.getStaffAuthority(this.id)
+    this.getStaffAuthority()
   },
   components: {
     
