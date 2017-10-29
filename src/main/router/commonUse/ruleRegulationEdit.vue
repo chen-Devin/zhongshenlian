@@ -76,13 +76,13 @@ export default {
       customToolbar: [
         ['bold', 'italic', 'underline'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        ['blockquote', 'code-block'],
+        // ['blockquote', 'code-block'],
         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-        [{ 'size': ['small', false, 'large', 'huge'] }],
+        // [{ 'size': ['small', false, 'large', 'huge'] }],
         [{ 'color': [] }, { 'background': [] }],
         [{ 'font': [] }],
-        [{ 'align': [] }],
-        ['clean']
+        [{ 'align': [] }]
+        // ['clean']
       ],
           // [{ 'script': 'sub'}, { 'script': 'super' }]
          // [{ 'indent': '-1'}, { 'indent': '+1' }],

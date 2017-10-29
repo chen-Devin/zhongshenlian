@@ -3,27 +3,32 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3 class="main-title">
-        {{detail.title}}
+        规章制度
         <button class="btn my-btn submit-btn pull-right mr-20" type="button" :user="user" v-if="btnShow" @click="editRule()">编辑</button>
       </h3>
     </card>
     <card>
-      <p class="content-area" v-html="detail.content"></p>
-      <div class="row">
-        <div class="col-md-10"></div>
-        <div class="col-md-2">
-          <p>
-            {{detail.releaseDepartment}}
-          </p>
+      <div class="wrapper">
+        <h4 v-html="detail.title"></h4>
+        <div class="content">
+          <p class="content-area" v-html="detail.content"></p>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-10"></div>
-        <div class="col-md-2">
-          <p>
-            {{detail.releaseTime}}
-          </p>
+        <!-- <div class="row">
+          <div class="col-md-10"></div>
+          <div class="col-md-2">
+            <p>
+              {{detail.releaseDepartment}}
+            </p>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-md-10"></div>
+          <div class="col-md-2">
+            <p>
+              {{detail.releaseTime}}
+            </p>
+          </div>
+        </div> -->
       </div>
     </card>
   </div>
@@ -102,16 +107,40 @@ export default {
 .pull-right{
   margin-top: -7px;
 }
-p {
-  margin-left: 25px;
-  margin-right: 25px;
-  &.content-area {
-    margin-top: 50px;
-    white-space: -webkit-pre-wrap;
-    white-space: -moz-pre-wrap;
-    white-space: -o-pre-wrap;
-    white-space: pre-wrap;
-    word-wrap: break-word;
+// p {
+//   margin-left: 25px;
+//   margin-right: 25px;
+//   &.content-area {
+//     margin-top: 50px;
+//     white-space: -webkit-pre-wrap;
+//     white-space: -moz-pre-wrap;
+//     white-space: -o-pre-wrap;
+//     white-space: pre-wrap;
+//     word-wrap: break-word;
+//   }
+// }
+.wrapper{
+  padding-left: 50px;
+  padding-right: 50px;
+  h4 {
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    border-bottom: 1px solid #dedede;
+  }
+  .content{
+    resize: vertical;
+    margin-top: 20px;
+    overflow: auto;
+    height: 500px;
+    p{
+      // margin-top: 50px;
+      white-space: -webkit-pre-wrap;
+      white-space: -moz-pre-wrap;
+      white-space: -o-pre-wrap;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
   }
 }
 </style>
