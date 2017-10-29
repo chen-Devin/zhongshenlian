@@ -1,7 +1,7 @@
 <template>
   <div>
     <h5 class="main-title">
-      权限设置 {{ authorityData }}
+      权限设置
       <div class="f-r o-h">
         <template v-if="!editAble">
           <button class="btn my-btn submit-btn" @click="edit">编辑</button>
@@ -12,7 +12,7 @@
         </template>
       </div>
     </h5>
-    <table class="table table-hover table-inner">
+    <table class="table table-hover table-inner" v-if="type === 'function'">
       <thead>
         <tr>
           <td class="text-center staff-max">公司名称</td>
@@ -35,6 +35,17 @@
         </tr>
       </tbody>
     </table>
+    <div v-else>
+      <p>
+        <el-checkbox-group v-model="selectedAuthority">
+          <el-checkbox 
+            :label="option.name" 
+            v-for="(option, index) in authorityData" 
+            :key="index" 
+            :disabled="!editAble">{{ option.name }}</el-checkbox>
+        </el-checkbox-group>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -50,6 +61,7 @@ export default {
       editAble: false,
       authorityArray: [],
       authorityData: [],
+      selectedAuthority: [],
       transData: ''
     };
   },
@@ -81,23 +93,33 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.resultArray = rep.data.data.resultArray
             this.authorityData = this.resultArray
-            let arr = this.resultArray[0].authorityArray
-            this.authorityArray = []
-            arr.forEach((item, index) => {
-              let stat = item.authority === '0' ? false : true
-              this.authorityArray.push({
-                name: item.name,
-                stat: stat
+            if (this.type === 'function') {
+              let arr = this.resultArray[0].authorityArray
+              this.authorityArray = []
+              arr.forEach((item, index) => {
+                let stat = item.authority === '0' ? false : true
+                this.authorityArray.push({
+                  name: item.name,
+                  stat: stat
+                })
               })
-            })
-            this.authorityData = []
-            this.authorityData = this.resultArray
-            this.authorityData.forEach((item) => {
-              item.authorityArray.forEach((jtem) => {
-                jtem.stat = jtem.authority === '0' ? false : true
+              this.authorityData = []
+              this.authorityData = this.resultArray
+              this.authorityData.forEach((item) => {
+                item.authorityArray.forEach((jtem) => {
+                  jtem.stat = jtem.authority === '0' ? false : true
+                })
               })
-            })
-            this.loadTable = true
+              this.loadTable = true
+            } else if (this.type === 'department') {
+              let arr = []
+              this.authorityData.forEach((item) => {
+                if (item.authority === '1') {
+                  arr.push(item.name)
+                }
+              })
+              this.selectedAuthority = arr
+            }
             resolve('done');
           }
         }, (rep) => { });
@@ -106,10 +128,21 @@ export default {
     save () {
       if (this.type === 'function') {
         this.authorityData.forEach((item) => {
-          // delete item.companyName
           item.authorityArray.forEach((jtem) => {
             jtem.authority = Number(jtem.stat)
             delete jtem.stat
+          })
+        })
+      } else if (this.type === 'department') {
+        this.authorityData.forEach((item) => {
+          item.authority = '0'
+        })
+        this.selectedAuthority.forEach((item) => {
+          this.authorityData.forEach((jtem) => {
+            if (jtem.name === item) {
+              console.log(item)
+              jtem.authority = '1'
+            }
           })
         })
       }
@@ -128,6 +161,10 @@ export default {
               if (this.type === 'function') {
                 Object.assign(obj, {
                   deAuthorityArray: this.authorityData
+                })
+              } else if (this.type === 'department') {
+                Object.assign(obj, {
+                  comAuthority: this.authorityData
                 })
               }
               return JSON.stringify(obj);

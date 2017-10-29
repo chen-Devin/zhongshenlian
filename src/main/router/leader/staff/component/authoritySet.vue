@@ -2,7 +2,6 @@
   <div class="staff-wrapper">
     <div class="basic-contain">
       <div class="basic-form"> 
-        <p>{{ type }}</p>
         <auth-form :id="id" :type="type"></auth-form>
       </div>
     </div>    

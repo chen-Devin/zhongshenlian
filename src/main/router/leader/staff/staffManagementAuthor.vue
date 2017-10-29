@@ -70,13 +70,16 @@
             :type="type"></authority-set>
         </card>
         <card>
-          <salary-detail :staffId="staff.id"></salary-detail>
+          <salary-detail 
+            :staffId="staff.id"></salary-detail>
         </card>
         <card>
-          <bonus-detail></bonus-detail>
+          <bonus-detail
+            :id="staff.id"></bonus-detail>
         </card>
         <card>
-          <education-bg></education-bg>
+          <education-bg
+            :id="staff.id"></education-bg>
         </card>
         <card v-if="isOpen" class="basic-contain">
           <p class="check-more">
@@ -85,8 +88,14 @@
         </card>
       </template>
     </div>
-    <staff-add-modal @saveNewStaff="saveNewStaff" @cancel="cancel" v-if="addShow"></staff-add-modal>
-    <function-staff-add @saveNewStaff="saveNewStaff" @cancel="cancel" v-if="addFuncShow"></function-staff-add>
+    <staff-add-modal 
+      @saveNewStaff="saveNewStaff" 
+      @cancel="cancel" 
+      v-if="addShow"></staff-add-modal>
+    <function-staff-add 
+      @saveNewStaff="saveNewStaff" 
+      @cancel="cancel" 
+      v-if="addFuncShow"></function-staff-add>
   </div>
 </template>
 
@@ -213,8 +222,8 @@ export default {
         companyDepartment: '',
         projectDepartment: '',
         group: '',
-        isPrincipal: '',
-        isHaveCertificate: '',
+        isPrincipal: '0',
+        isHaveCertificate: '0',
         wechatName: '',
         wechatHeadImg: '',
         nation: '',
@@ -235,6 +244,7 @@ export default {
       // this.getBiddingList()
     },
     saveNewStaff (type) {
+      console.log(type)
       if (type[0] === 0) {
         this.type = 'function'
       } else {
@@ -251,7 +261,9 @@ export default {
       this.addFuncShow = false
     },
     addSuccess (id) {
-      this.staff.id = id
+      console.log(id)
+      this.staffId = id
+      this.getStaffInfo()
     },
     handleClick(tab, event) {
       if (tab.name === 'function') {
@@ -366,8 +378,8 @@ export default {
                 command: 'staffFilter',
                 platform: 'web',
                 id: this.staffFilterId,
-                // type: this.staffFilterType
-                type: 'department'
+                type: this.staffFilterType
+                // type: 'department'
               }
               return JSON.stringify(obj);
             })()
@@ -377,7 +389,7 @@ export default {
             this.staffAllList = []
             this.staffAllList[0] = rep.data.data.principal
             this.staffAllList = this.staffAllList.concat(rep.data.data.staffList)
-            resolve('done');
+            resolve('done')
           } else {
             this.staffAllList = []
             this.$message.error(rep.data.msg)
@@ -386,6 +398,7 @@ export default {
       })
     },
     selectNode (data) {
+      this.isNew = [false]
       this.staffFilterId = data.id
       if (data.level === 2) {
         this.staffFilterType = 'company'
@@ -395,6 +408,8 @@ export default {
         this.staffFilterType = 'projectDepartment'
       } else if (data.level === 5) {
         this.staffFilterType = 'group'
+      } else {
+        this.staffFilterType = 'department'
       }
       this.staffShow = false
       this.isOpen = false

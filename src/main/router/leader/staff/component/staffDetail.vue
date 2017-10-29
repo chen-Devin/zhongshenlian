@@ -23,7 +23,8 @@
                 <el-input v-model="staff.jobNumber" :disabled="!editAble"></el-input>
               </el-form-item>
               <el-form-item label="性别" prop="gender">
-                <el-input v-model="staff.gender" :disabled="!editAble"></el-input>
+                <el-radio v-model="staff.gender" label="男" :disabled="!editAble">男</el-radio>
+                <el-radio v-model="staff.gender" label="女" :disabled="!editAble">女</el-radio>
               </el-form-item>
               <el-form-item label="民族" prop="nation">
                 <el-input v-model="staff.nation" :disabled="!editAble"></el-input>
@@ -38,20 +39,21 @@
                 <el-input v-model="staff.email" :disabled="!editAble"></el-input>
               </el-form-item>
               <el-form-item label="是否为部门负责人" label-width="130px" prop="isPrincipal">
-                <el-input v-model="staff.isPrincipal" :disabled="!editAble"></el-input>
+                <el-radio v-model="staff.isPrincipal" label="1" :disabled="!editAble">是</el-radio>
+                <el-radio v-model="staff.isPrincipal" label="0" :disabled="!editAble">否</el-radio>
               </el-form-item>
-              <el-form-item label="所属业务部" v-if="type==='department'">
-                <el-input v-model="staff.companyDepartment" :disabled="!editAble"></el-input>
+              <el-form-item label="所属业务部" v-if="type==='department' && isNew[0] === false">
+                <el-input v-model="staff.companyDepartment" disabled></el-input>
               </el-form-item>
-              <el-form-item label="所属项目部" v-if="type==='department'">
-                <el-input v-model="staff.projectDepartment" :disabled="!editAble"></el-input>
+              <el-form-item label="所属项目部" v-if="type==='department' && isNew[0] === false">
+                <el-input v-model="staff.projectDepartment" disabled></el-input>
               </el-form-item>
             </el-form>
           </el-col>
           <el-col :span="12">
             <el-form :label-position="labelPosition" label-width="130px" :model="staff" :rules="staffRules" ref="staff">
-              <el-form-item label="所属小组" v-if="type==='department'">
-                <el-input v-model="staff.group" :disabled="!editAble"></el-input>
+              <el-form-item label="所属小组" v-if="type==='department' && isNew[0] === false">
+                <el-input v-model="staff.group" disabled></el-input>
               </el-form-item>
               <el-form-item label="职位" prop="duties">
                 <el-input v-model="staff.duties" :disabled="!editAble"></el-input>
@@ -63,13 +65,26 @@
                 <el-input v-model="staff.jonTitle" :disabled="!editAble"></el-input>
               </el-form-item>
               <el-form-item label="是否有注会证书" prop="isHaveCertificate">
-                <el-input v-model="staff.isHaveCertificate" :disabled="!editAble"></el-input>
+                <el-radio v-model="staff.isHaveCertificate" label="1" :disabled="!editAble">是</el-radio>
+                <el-radio v-model="staff.isHaveCertificate" label="0" :disabled="!editAble">否</el-radio>
               </el-form-item>
-              <el-form-item label="入职时间" prop="entryTime">
-                <el-input v-model="staff.entryTime" :disabled="!editAble"></el-input>
+              <el-form-item label="入职时间">
+                <el-date-picker
+                  style="width:100%"
+                  v-model="staff.entryTime"
+                  type="date"
+                  placeholder="选择日期"
+                  :disabled="!editAble">
+                </el-date-picker>
               </el-form-item>
               <el-form-item label="合同到期日">
-                <el-input v-model="staff.expireTime" :disabled="!editAble"></el-input>
+                <el-date-picker
+                  style="width:100%"
+                  v-model="staff.expireTime"
+                  type="date"
+                  placeholder="选择日期"
+                  :disabled="!editAble">
+                </el-date-picker>
               </el-form-item>
             </el-form>
           </el-col>
@@ -104,7 +119,8 @@
                            :on-success="UploadSuccess">
                   <button class="btn my-btn submit-btn"
                           type="button"
-                          slot="trigger">上传文件</button>
+                          slot="trigger"
+                          :disabled="!editAble">上传文件</button>
                   <span slot="tip"
                         class="text-info" v-if="uploadState.notUpload">&emsp;文件大小建议不超过3Mb</span>
                   <span slot="tip"
@@ -247,6 +263,7 @@ export default {
       }
     },
     addUser () {
+      console.log(this.isNew)
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -280,6 +297,14 @@ export default {
                   departmentId: this.isNew[1]
                 })
               }
+              if (this.type = 'department') {
+                Object.assign(obj, {
+                  companyId: this.isNew[1],
+                  companyDepartmentId: this.isNew[2],
+                  subdepartmentId: this.isNew[3],
+                  groupId: this.isNew[4]
+                })
+              }
               return JSON.stringify(obj);
             })()
           }
@@ -288,6 +313,7 @@ export default {
             this.editAble = false
             this.$message.success('保存成功,请继续编辑员工信息')
             this.$emit('addSuccess', rep.data.data.id)
+            this.isNew[0] = false
             resolve('done');
           } else {
             this.$message.error(rep.data.msg)
@@ -332,7 +358,9 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.editAble = false
             this.$message.success('保存成功')
-            resolve('done');
+            this.$emit('addSuccess', this.staff.id)
+            this.isNew[0] = false
+            resolve('done')
           } else {
             this.$message.error(rep.data.msg)
           }

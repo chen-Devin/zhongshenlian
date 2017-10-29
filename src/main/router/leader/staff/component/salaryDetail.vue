@@ -251,6 +251,7 @@ export default {
   data() {
     return {
       editAble: false,
+      salaryId: '',
       baseSalaryJson: {
         baseSalary: '',
         postSalary: '',
@@ -318,6 +319,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            this.salaryId = rep.data.data.id
             this.baseSalaryJson = rep.data.data.baseSalaryJson
             this.deductibleJson = rep.data.data.deductibleJson
             this.performanceSalaryJson = rep.data.data.performanceSalaryJson
@@ -401,9 +403,9 @@ export default {
               let obj = {
                 command: 'editSalary',
                 platform: 'web',
-                salary: {
-                  id: '', // ??? 奖金id是什么
-                  userId: '',  // ??? 项目用户id又是什么
+                salary: [{
+                  id: this.salaryId, 
+                  userId: this.staffId, 
                   postSalary: this.baseSalaryJson.postSalary,
                   wagePay: this.baseSalaryJson.wagePay,
                   communicationSubsidy: this.subsidyJson.communicationSubsidy,
@@ -425,7 +427,7 @@ export default {
                   unemploymentInsurance: this.deductibleJson.unemploymentInsurance,
                   basicPerformance: this.performanceSalaryJson.basicPerformance,
                   performanceSalary: this.performanceSalaryJson.performanceSalary
-                }
+                }]
               }
               return JSON.stringify(obj);
             })()
@@ -442,12 +444,12 @@ export default {
       })
     },
     save () {
-      this.editSalaryReleaseRecord().then(() => {
+      // this.editSalaryReleaseRecord().then(() => {
         this.editSalary().then(() => {
           this.getUserSalaryInfo()
-          this.getSalaryReleaseRecordInfo()
+          // this.getSalaryReleaseRecordInfo()
         }, () => {})
-      }, () => {})
+      // }, () => {})
       
     }
   },

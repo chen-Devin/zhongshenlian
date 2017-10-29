@@ -159,7 +159,7 @@
             </div>
           </el-col>
         </el-row>
-        <el-row class="table-content"  v-if="electric">
+        <el-row class="table-content" v-if="electric">
           <el-col :span="4">
             电子发票报销
           </el-col>

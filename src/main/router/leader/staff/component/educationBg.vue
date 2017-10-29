@@ -61,21 +61,23 @@ export default {
   data() {
     return {
       editAble: false,
-      educationArrayEmpty: [],
-      educationArray: [{
+      educationArray: [],
+      educationArrayEmpty: {
+       id: '',
+       userId: '',
        certificateNumber: '',
        createAt: '',
        education: '',
        endTime: '',
-       id: '',
        remark: '',
        removeStatus: '',
        schoolName: '',
        startTime: '',
        updateAt: ''
-      }]  
+      } 
     };
   },
+  props: ['id'],
   methods: {
     getUserEducationInfo () {
       return new Promise((resolve, reject) => {
@@ -88,7 +90,7 @@ export default {
               let obj = {
                 command: 'getUserEducationInfo',
                 platform: 'web',
-                staffId: '1'
+                staffId: this.id
               }
               return JSON.stringify(obj);
             })()
@@ -106,6 +108,7 @@ export default {
     },
     add () {
       this.editAble = true
+      this.educationArrayEmpty.userId = this.id
       this.educationArray.push(this.educationArrayEmpty)
     },
     cancel () {

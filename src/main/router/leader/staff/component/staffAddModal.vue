@@ -190,7 +190,17 @@ export default {
       this.getGroupListByProjectDepartment(value)
     },
     save () {
-      this.$emit('saveNewStaff')
+      let type = 1
+      if (this.departmentSelected === '') {
+        type = 1
+      } else if (this.projectSelected === '') {
+        type = 2
+      } else if (this.groupSelected === '') {
+        type = 3
+      } else {
+        type = 4
+      }
+      this.$emit('saveNewStaff', [type, this.companySelected, this.departmentSelected, this.projectSelected, this.groupSelected])
     },
     cancel() {
       this.$emit('cancel');

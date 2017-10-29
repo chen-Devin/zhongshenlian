@@ -88,24 +88,26 @@ export default {
     return {
       editAble: false,
       bonusArray: [],
-      bonusArrayEmpty: [{
+      bonusArrayEmpty: {
+        id: '',
+        userId: '',
         amount: '',
         applyDate: '',
         applyPersonTelephone: '',
         batchNumber: '',
         bonusNumber: '',
         createAt: '',
-        id: '',
         releaseDate: '',
         releaseModus: '',
         remark: '',
         removeStatus: '',
         salaryCardAccount: '',
         updateAt: '',
-      }],
+      },
       labelPosition: 'left'
     };
   },
+  props: ['id'],
   methods: {
     getUserBonusInfo () {
       return new Promise((resolve, reject) => {
@@ -118,7 +120,7 @@ export default {
               let obj = {
                 command: 'getUserBonusInfo',
                 platform: 'web',
-                staffId: '1'
+                staffId: this.id
               }
               return JSON.stringify(obj);
             })()
@@ -136,6 +138,8 @@ export default {
     },
     add () {
       this.editAble = true
+      console.log(12)
+      this.bonusArrayEmpty.userId = this.id
       this.bonusArray.push(this.bonusArrayEmpty)
     },
     cancel () {
@@ -195,13 +199,4 @@ export default {
   .table-inner {
     margin-top: 0;
   }
-  // .table-input {
-  //   tbody {
-  //     tr {
-  //       td {
-  //         padding: 0;
-  //       }
-  //     }
-  //   }
-  // }
 </style>
