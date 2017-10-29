@@ -8,7 +8,7 @@
       </h3>
     </card>
     <card>
-      <p class="content-area">{{detail.content}}</p>
+      <p class="content-area" v-html="detail.content"></p>
       <div class="row">
         <div class="col-md-10"></div>
         <div class="col-md-2">
