@@ -75,6 +75,16 @@
                 <i class="fa fa-x fa-user f-r" aria-hidden="true"></i>
               </div>
             </el-form-item>
+            <!-- <el-form-item label="项目经理" required>
+              <el-select v-model="business.projectManager" placeholder="请选择项目经理">
+                <el-option
+                  v-for="item in staffArray"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item> -->
           </el-col>
           <el-col :span="8">
             <el-form-item label="合同预估金额" label-width="120px" required>
@@ -441,9 +451,10 @@
       </div>
     </el-form>
     <select-staff-modal 
-      v-show="staffModalShow"
+      v-if="staffModalShow"
       :staffModalIdentity="staffModalIdentity"
       :staffModalSelect="staffModalSelect"
+      :staffSelected="staffSelected"
       @selected="selected"
       @cancel="cancel"></select-staff-modal>
   </div>
@@ -548,7 +559,8 @@ export default {
       },
       staffModalShow: false,
       staffModalIdentity: '',
-      staffModalSelect: ''
+      staffModalSelect: '',
+      staffSelected: ''
     };
   },
   computed: {
@@ -601,6 +613,7 @@ export default {
     bus.$on('savBusiness', () => { this.save() });
 
     this.getCustomerListWithoutPage()
+    // this.getBussinessUnitUserList()
 
     if (this.business.type === '') {
       this.business.type = this.businessType[0];
@@ -613,6 +626,36 @@ export default {
     bus.$off('savBusiness');
   },
   methods: {
+    // getBussinessUnitUserList () {
+    //   return new Promise((resolve, reject) => {
+    //     axios({
+    //       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+    //       method: 'get',
+    //       url: '/service',
+    //       params: {
+    //         data: (() => {
+    //           let obj = {
+    //             command: 'getBussinessUnitUserList',
+    //             platform: 'web',
+    //             pageNum: 1
+    //           }
+    //           return JSON.stringify(obj);
+    //         })()
+    //       }
+    //     }).then((rep) => {
+    //       if (rep.data.statusCode === '10001') {
+    //         // this.$message.success(rep.data.msg)
+    //         this.staffArray = rep.data.data.userArray
+    //         this.staffArray.forEach((item) => {
+    //           item.checked = false
+    //         })
+    //         resolve('done');
+    //       } else {
+    //         this.$message.error(rep.data.msg)
+    //       }
+    //     }, (rep) => { });
+    //   })
+    // },
     currencyMask,
     selected (type, val) {
       console.log(val)
@@ -626,16 +669,28 @@ export default {
       this.cancel()
     },
     showStaffModal (type) {
+      console.log(this.business)
       if (this.editable) {
         if (type === 'projectManager') {
           this.staffModalIdentity = '项目经理'
           this.staffModalSelect = 'radio'
+          this.staffSelected = this.business.manager.name
         } else if (type === 'reviewCPA') {
           this.staffModalIdentity = '参审注师'
           this.staffModalSelect = 'check'
+          let arr = []
+          this.business.reviewCPA.forEach((item) => {
+            arr.push(item.id)
+          })
+          this.staffSelected = arr
         } else if (type === 'reviewAssistant') {
           this.staffModalIdentity = '参审助理'
           this.staffModalSelect = 'check'
+          let arr = []
+          this.business.reviewAssistant.forEach((item) => {
+            arr.push(item.id)
+          })
+          this.staffSelected = arr
         }
         this.staffModalShow = true
       }

@@ -11,7 +11,7 @@
           @search="search"></search-bar>
       </div>
       <div class="table-wrapper">
-        <table class="table table-bordered">
+        <table class="table table-bordered" v-if="showTable">
           <thead>
             <tr>
               <th v-if="radio">单选</th>
@@ -27,10 +27,9 @@
               v-for="(staff, index) in staffArray"
               :key="index">
               <td v-if="radio">
-                <el-radio :label="staff" v-model="staffRadio">{{ emptyString }}</el-radio>
+                <el-radio :label="staff.name" v-model="staffRadio">{{ emptyString }}</el-radio>
               </td>
               <td v-else>
-                <!-- <el-checkbox v-model="staff.checked"></el-checkbox> -->
                 <input type="checkbox" v-model="staff.checked">
               </td>
               <td>{{ staff.name }}</td>
@@ -65,10 +64,11 @@ export default {
       emptyString: '',
       staffRadio: '',
       searchItems: [],
-      reload: true
+      reload: true,
+      showTable: false
     };
   },
-  props: ['staffModalIdentity', 'staffModalSelect'],
+  props: ['staffModalIdentity', 'staffModalSelect', 'staffSelected'],
   computed: {
     radio () {
       if (this.staffModalSelect === 'radio') {
@@ -80,13 +80,12 @@ export default {
   },
   methods: {
     reloadSelect () {
-      console.log(1)
       this.reload = false
       setTimeout(() => {
         this.reload = true
       }, 1000)
     },
-    getUserList () {
+    getBussinessUnitUserList () {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -95,16 +94,15 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'getUserList',
+                command: 'getBussinessUnitUserList',
                 platform: 'web',
-                pageNum: 1
+                pageNum: 'all'
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            // this.$message.success(rep.data.msg)
             this.staffArray = rep.data.data.userArray
             this.staffArray.forEach((item) => {
               item.checked = false
@@ -137,7 +135,21 @@ export default {
     }
   },
   created () {
-    this.getUserList()
+    this.getBussinessUnitUserList().then(() => {
+      if(this.radio) {
+        this.staffRadio = this.staffSelected
+      } else {
+        this.staffSelected.forEach((item) => {
+          this.staffArray.forEach((jtem) => {
+            if (jtem.id === item) {
+              console.log(jtem)
+              jtem.checked = true
+            }
+          })
+        })
+      }
+      this.showTable = true
+    }, () => {})
   },
   components: {
     modal,

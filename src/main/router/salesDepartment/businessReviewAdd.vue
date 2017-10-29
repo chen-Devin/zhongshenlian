@@ -50,6 +50,7 @@ export default {
       business: {
         id: '',
         name: '',
+        projectManager: '',
         proposer: {
           id: this.user.id,
           name: this.user.name,
