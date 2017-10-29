@@ -25,7 +25,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">正文</label>
           <div class="col-sm-9">
-            <vue-editor v-model="editRule.content"></vue-editor>
+            <vue-editor v-model="editRule.content" :editorToolbar="customToolbar"></vue-editor>
             <!-- <textarea cols="50"
                       rows="30"
                       class="form-control"
@@ -73,6 +73,23 @@ export default {
         title: '',
         content: ''
       },
+      customToolbar: [
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        // ['blockquote', 'code-block'],
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        // [{ 'size': ['small', false, 'large', 'huge'] }],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'font': [] }],
+        [{ 'align': [] }]
+        // ['clean']
+      ],
+          // [{ 'script': 'sub'}, { 'script': 'super' }]
+         // [{ 'indent': '-1'}, { 'indent': '+1' }],
+         // [{ 'direction': 'rtl' }]            
+         //[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+           // [{ 'header': 1 }, { 'header': 2 }],        
+         //           ['link', 'image', 'video']   
       showDelModal: false,
       showCanModal: false
     };
