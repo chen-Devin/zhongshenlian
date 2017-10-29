@@ -660,7 +660,7 @@ export default {
     selected (type, val) {
       console.log(val)
       if (type === '项目经理') {
-        this.business.manager = val
+        this.business.manager.name = val
       } else if (type === '参审注师') {
         this.business.reviewCPA = val
       } else if (type === '参审助理') {
@@ -669,7 +669,6 @@ export default {
       this.cancel()
     },
     showStaffModal (type) {
-      console.log(this.business)
       if (this.editable) {
         if (type === 'projectManager') {
           this.staffModalIdentity = '项目经理'
@@ -679,6 +678,7 @@ export default {
           this.staffModalIdentity = '参审注师'
           this.staffModalSelect = 'check'
           let arr = []
+          console.log(this.business.reviewCPA)
           this.business.reviewCPA.forEach((item) => {
             arr.push(item.id)
           })

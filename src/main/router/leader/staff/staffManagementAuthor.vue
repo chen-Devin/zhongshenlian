@@ -1,4 +1,4 @@
-<template>
+\<template>
   <div class="main staff-manage">
     <crumbs :paths="paths1" v-if="functionActive"></crumbs>
     <crumbs :paths="paths2" v-else></crumbs>
@@ -387,7 +387,9 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.staffAllList = []
-            this.staffAllList[0] = rep.data.data.principal
+            if (!this.isEmpty(rep.data.data.principal)) {
+              this.staffAllList[0] = rep.data.data.principal
+            }
             this.staffAllList = this.staffAllList.concat(rep.data.data.staffList)
             resolve('done')
           } else {
@@ -396,6 +398,15 @@ export default {
           }
         }, (rep) => { });
       })
+    },
+    isEmpty (object) {
+      if (object === null || object === undefined) {
+          return false
+      }
+      for (var i in object) {
+          return false
+      }
+      return true
     },
     selectNode (data) {
       this.isNew = [false]
@@ -416,6 +427,7 @@ export default {
       this.staffFilter()
     },
     selectStaff (staff) {
+      this.isOpen = false
       this.staffAllList.forEach((item) => {
         item.isActive = false
       })

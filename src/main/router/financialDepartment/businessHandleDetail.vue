@@ -461,7 +461,10 @@ export default {
       this.billDetailShow = true
     })
     bus.$on('reloadFinancialDetail', () => {
-      console.log(1)
+      this.getInfo()
+    })
+    bus.$on('hideBillingDetail', () => {
+      this.billDetailShow = false
       this.getInfo()
     })
     this.getInfo()

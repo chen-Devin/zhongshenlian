@@ -16,16 +16,18 @@
         </template>
       </div>
     </card>
+    <billing-detail :bill="bill" v-if="billDetailShow"></billing-detail>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-
+import bus from '@/main/bus.js'
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
+import billingDetail from '@/main/component/billingDetail.vue'
 
 export default {
   name: 'businessCompleteDetail',
@@ -35,6 +37,8 @@ export default {
         { name: '已完成业务', url: '/business-complete-list', present: false },
         { name: '业务详情', url: `/business-complete-list/business-complete-detail-${this.$route.params.id}`, present: true }
       ],
+      bill: {},
+      billDetailShow: false,
       business: {
         id: this.$route.params.id,
         name: '',
@@ -436,6 +440,17 @@ export default {
     }
   },
   created() {
+    bus.$on('bill-selected', (bill) => {
+      this.bill = bill
+      this.billDetailShow = true
+    })
+    bus.$on('reloadFinancialDetail', () => {
+      this.getInfo()
+    })
+    bus.$on('hideBillingDetail', () => {
+      this.billDetailShow = false
+      this.getInfo()
+    })
     this.getInfo();
   },
   watch: {
@@ -699,7 +714,8 @@ export default {
     crumbs,
     card,
     business,
-    approverAdvice
+    approverAdvice,
+    billingDetail
   }
 }
 </script>
