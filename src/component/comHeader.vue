@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="#">
-            <img alt="Brand" src="../img/brand.svg">
+            <img alt="Brand" src="../img/LOGO.png">
           </a>
         </div>
         <h4 class="navbar-text brand-name">
@@ -34,6 +34,9 @@ export default {
   h4.brand-name {
     margin-left: 0;
     color: rgba(240,240,240,0.9);
+    font-family: PingFangSC-Regular;
+    font-size: 20px;
+    color: #0B386D;
   }
 }
 </style>

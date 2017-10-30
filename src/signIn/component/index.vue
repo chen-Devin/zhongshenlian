@@ -2,14 +2,15 @@
   <main>
     <section class="section">
       <!-- <img class="switch" src="../../img/switch.png" @click="signSwitch()"> -->
-      <button class="switch" @click="signSwitch()">切换登录方式</button>
+      <div class="switch wechat" @click="signSwitch()" v-if="wechatShow"></div>
+      <div class="switch norwechat" @click="signSwitch()" v-else></div>
       <div id="wechatLogin" v-show="!wechatShow"></div>
       <form @submit.prevent @keyup.enter.prevent v-show="wechatShow">
-        <div class="form-group">
+        <!-- <div class="form-group">
           <img :src="userHead"
                alt="头像"
                class="img-responsive img-rounded center-block">
-        </div>
+        </div> -->
         <div class="form-group"
              :class="{focus: tel.foc, error: tel.err}">
           <div class="input-group">
@@ -24,7 +25,7 @@
                    @input="judgeTel()"
                    v-model="tel.val">
             <span class="input-group-btn">
-              <button class="btn text-primary verification"
+              <button class="draft-btn"
                       type="button"
                       :disabled="getBtn.dis"
                       @click="getBtnTog()">{{getBtn.cont}}</button>
@@ -276,8 +277,23 @@ export default {
 
 <style lang="sass" scoped>
 @import '../../scss/_variables.scss';
-
+.draft-btn {
+  color: #fff;
+  background-color: #8ad637;
+  border: none;
+  &:hover {
+    background-color: #6eb620;
+    color: #fff;
+  }
+  &:active {
+    background-color: #6eb620;
+    color: #fff;
+    border: none;
+  }
+}
 .section {
+  height: 276px;
+  width: 453px;
   order: 1;
   position: relative;
   display: flex;
@@ -294,6 +310,9 @@ export default {
     top: 0;
     right: 0;
     cursor: pointer;
+  }
+  .wechat {
+    // background: url(../../src/img/code.png) no-repeat
   }
   form {
     order: 1;
@@ -321,27 +340,27 @@ export default {
         box-shadow: none;
       }
     }
-    .input-group-addon,
-    .input-group-btn > button {
-      border: none;
-      box-shadow: none;
-      background-color: rgba(255,255,255,1);
-      &:hover,
-      &:focus {
-        border: none;
-        box-shadow: none;
-        outline: none;
-      }
-    }
-    .input-group-btn > button {
-      &:hover,
-      &:focus {
-        color: $link-hover-color;
-      }
-      &:disabled {
-        color: #777;
-      }
-    }
+  //   .input-group-addon,
+  //   .input-group-btn > button {
+  //     border: none;
+  //     box-shadow: none;
+  //     background-color: rgba(255,255,255,1);
+  //     &:hover,
+  //     &:focus {
+  //       border: none;
+  //       box-shadow: none;
+  //       outline: none;
+  //     }
+  //   }
+  //   // .input-group-btn > button {
+  //   //   &:hover,
+  //   //   &:focus {
+  //   //     color: $link-hover-color;
+  //   //   }
+  //   //   &:disabled {
+  //   //     color: #777;
+  //   //   }
+  //   // }
   }
 }
 
