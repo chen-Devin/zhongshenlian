@@ -5,71 +5,88 @@
     </div>
     <el-menu class="el-menu-vertical-demo" :router="routerVal" :default-active="activeUrl" :unique-opened="uniqueOpened" @open="handleOpen">
       <el-menu-item index="/quick">我的快捷</el-menu-item>
-      <el-menu-item index="/business-handle-list-office" v-if="officeContract">进行中业务</el-menu-item>
-      <!-- <el-menu-item index="/business-handle-list-office" v-if="officeBinding">待装订业务</el-menu-item> -->
-      <el-menu-item index="/customer-infor-list" v-if="officeCustomer">客户信息管理</el-menu-item>
-      <el-submenu index="to-review" v-if="financial">
-        <template slot="title">待处理业务</template>
-          <el-menu-item index="/business-handle-list-financial/0">待开发票</el-menu-item>
-          <el-menu-item index="/business-handle-list-financial/1">待上传截图</el-menu-item>
-          <el-menu-item index="/business-handle-list-financial/2">开票撤销复核</el-menu-item>
-          <el-menu-item index="/expenses-review/0">单据审核</el-menu-item>
-          <el-menu-item index="/expenses-review/1">付款申请</el-menu-item>
-          <el-menu-item index="/expenses-review/2">付款审批</el-menu-item>
-      </el-submenu>
-      <el-submenu index="to-do" v-if="leader">
-        <template slot="title">待办事项</template>
-        <!-- <el-menu-item-group> -->
+      <template v-if="leader">
+        <el-submenu index="to-do">
+          <template slot="title">待办事项</template>
           <el-menu-item index="/business-review-list-leader">立项审批</el-menu-item>
           <el-menu-item index="/bid-info-list">招投标审批</el-menu-item>
           <el-menu-item index="/expenses-review/10">报销审批</el-menu-item>
-          <!-- <el-menu-item index="{1}">报销审批</el-menu-item> -->
-        <!-- </el-menu-item-group> -->
-      </el-submenu>
-      <el-submenu index="information-manage" v-if="leader">
-        <template slot="title">信息管理</template>
-        <!-- <el-menu-item-group> -->
+        </el-submenu>
+        <el-submenu index="information-manage">
+          <template slot="title">信息管理</template>
           <el-menu-item index="/customer-infor-list">客户信息管理</el-menu-item>
-          <!-- <el-menu-item index="{2}">业务信息管理</el-menu-item> -->
-          <!-- <el-menu-item index="/functional-management">职能部门信息管理</el-menu-item> -->
           <el-menu-item index="/company-management">公司信息管理</el-menu-item>
           <!-- <el-menu-item index="{5}">外部协办方信息管理</el-menu-item> -->
-        <!-- </el-menu-item-group> -->
-      </el-submenu>
-      <el-menu-item index="/customer-infor-list" v-if="sales">客户信息管理</el-menu-item>
-      <el-submenu index="project-manage" v-if="projectManage">
-        <template slot="title">项目管理</template>
-        <!-- <el-menu-item-group> -->
+        </el-submenu>
+        <el-submenu index="project-manage">
+          <template slot="title">项目管理</template>
+          <el-menu-item index="/business-handle-list-leader">进行中项目</el-menu-item>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
-          <el-menu-item index="/business-review-list-sales" v-if="establish">立项项目</el-menu-item>
-          <!-- <el-menu-item index="/business-handle-list-leader" v-if="leader">进行中项目</el-menu-item> -->
-          <el-menu-item index="/business-handle-list-sales" v-if="sales">进行中项目</el-menu-item>
-          <el-menu-item index="/business-handle-list-archives" v-if="archives">进行中项目</el-menu-item>
-          <el-menu-item index="/business-handle-list-risk" v-if="riskHandle">报告审核</el-menu-item>
-          <!-- <el-menu-item index="/business-complete-list">已完成业务</el-menu-item> -->
-        <!-- </el-menu-item-group> -->
-      </el-submenu>
-      <!-- <el-submenu index="staff-manage" v-if="leader">
-        <template slot="title">职员管理</template>
-        <el-menu-item-group>
-          <el-menu-item index="/staff-management-author">职员管理</el-menu-item>
-          <el-menu-item index="/staff-management-infor">职员资料管理</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu> -->
-      <el-menu-item index="/staff-management-author" v-if="leader">职员管理</el-menu-item>
-      <el-menu-item index="/bid-info-list" v-if="!leader">招投标信息</el-menu-item>
-      <el-menu-item index="/bid-info-draft" v-if="market">草稿箱</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="/staff-management-author">职员管理</el-menu-item>
+        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+      </template>
+      <template v-if="sales">
+        <el-submenu index="project-manage">
+          <template slot="title">项目管理</template>
+          <el-menu-item index="/business-review-list-sales">立项项目</el-menu-item>
+          <el-menu-item index="/business-handle-list-sales">进行中项目</el-menu-item>
+          <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="/customer-infor-list">客户信息管理</el-menu-item>
+        <el-menu-item index="/bid-info-list">招投标信息</el-menu-item>
+        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+      </template>
+      <template v-if="market">
+        <el-menu-item index="/bid-info-list">招投标信息</el-menu-item>
+        <el-menu-item index="/bid-info-draft">草稿箱</el-menu-item>
+        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+      </template>
+      <template v-if="archives">
+        <el-menu-item index="/business-handle-list-archives">待处理业务</el-menu-item>
+        <el-submenu index="project-manage">
+          <template slot="title">项目管理</template>
+          <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="/bid-info-list">招投标信息</el-menu-item>
+        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+      </template>
+      <template v-if="riskHandle || riskReview">
+        <el-menu-item index="/business-handle-list-risk" v-if="riskHandle">待处理业务</el-menu-item>
+        <el-submenu index="project-manage">
+          <template slot="title">项目管理</template>
+          <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="/bid-info-list">招投标信息</el-menu-item>
+        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+      </template>
+      <template v-if="financial">
+        <el-submenu index="to-review" v-if="financial">
+          <template slot="title">待处理业务</template>
+            <el-menu-item index="/business-handle-list-financial/0">待开发票</el-menu-item>
+            <el-menu-item index="/business-handle-list-financial/1">待上传截图</el-menu-item>
+            <el-menu-item index="/business-handle-list-financial/2">开票撤销复核</el-menu-item>
+            <el-menu-item index="/expenses-review/0">单据审核</el-menu-item>
+            <el-menu-item index="/expenses-review/1">付款申请</el-menu-item>
+            <el-menu-item index="/expenses-review/2">付款审批</el-menu-item>
+        </el-submenu>
+        <el-submenu index="project-manage">
+          <template slot="title">项目管理</template>
+          <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+        <el-menu-item index="/bid-info-list">招投标信息</el-menu-item>
+      </template>
+      <template v-if="office">
+        <el-menu-item index="/business-handle-list-office">待处理业务</el-menu-item>
+        <el-submenu index="project-manage">
+          <template slot="title">项目管理</template>
+          <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="/bid-info-list">招投标信息</el-menu-item>
+        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+      </template>
       <el-menu-item index="/rule-regulation">规章制度</el-menu-item>
-      <el-menu-item index="/expenses-list">报销申请</el-menu-item>
-      <el-menu-item index="/bill-apply">开票申请</el-menu-item>
-      <el-menu-item index="/contract-change">合同变更</el-menu-item>
-      <!-- <el-submenu index="reimbursement-application">
-        <template slot="title">报销申请</template>
-        <el-menu-item-group>
-          <el-menu-item index="{6}">报销申请</el-menu-item>
-          <el-menu-item index="{7}">报销记录</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu> -->
     </el-menu>
   </div>
 </template>
@@ -98,6 +115,13 @@ export default {
     },
     sales() {
       if (this.user.department === '业务部') {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    office () {
+      if (this.user.department === '办公室') {
         return true;
       } else {
         return false;

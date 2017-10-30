@@ -14,6 +14,7 @@
             <th class="text-left">申请人</th>
             <th class="text-left">报销类型</th>
             <th class="text-left">申请时间</th>
+            <th class="text-left">状态</th>
           </tr>
         </thead>
         <tbody>
@@ -21,14 +22,15 @@
             <td class="text-left">{{ item.companyName }}</td>
             <td class="text-left">{{ item.departmentName }}</td>
             <td class="text-left">{{ item.applicantName }}</td>
-            <td class="text-left">{{item.type}}
-              <!-- <span v-if="item.type === 'contractR'">合同报销</span>
+            <td class="text-left">
+              <span v-if="item.type === 'contractR'">合同报销</span>
               <span v-else-if="item.type === 'nonContractR'">非合同报销</span>
               <span v-else-if="item.type === 'personalR'">个人报销</span>
               <span v-else-if="item.type === 'publicR'">对公报销</span>
               <span v-else-if="item.type === 'projectR'">项目报销</span>
-              <span v-else></span> -->
+              <span v-else></span>
             </td>
+            <td class="text-left">{{ item.time }}</td>
             <td class="text-left">{{ item.time }}</td>
           </tr>
         </tbody>

@@ -400,7 +400,7 @@
         </el-row>
       </div>
       <p class="btns ta-c" v-if="editAble">
-        <button class="btn my-btn submit-btn" @click="addOrEditReimbursement">提交审批</button>
+        <button class="btn my-btn submit-btn" @click="addOrEditReimbursement" :disabled="submitAble">提交审批</button>
         <button class="btn my-btn cancel-btn" @click="back">取消</button>
       </p>
     </card>
@@ -621,6 +621,13 @@ export default {
           return false
       }
       return arr
+    },
+    submitAble () {
+      if (this.reimbursementInfo.submitType === 'contractR' && this.projectNumber === '') {
+        return true
+      } else {
+        return false
+      }
     }
   },
   methods: {

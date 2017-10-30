@@ -82,6 +82,10 @@ Vue.use(VueRouter);
 const router = new VueRouter({
     routes: [
         {
+            path: '/',
+            redirect: '/quick'
+        },
+        {
             path: '/quick',
             name: 'quick',
             component: Quick
