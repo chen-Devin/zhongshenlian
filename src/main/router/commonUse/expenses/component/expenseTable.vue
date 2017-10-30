@@ -1,6 +1,6 @@
 <template>
   <div class="expense-table">
-    <h5 class="vice-title" v-if="type==='差旅费报销'">差旅费报销</h5>
+    <h5 class="vice-title" v-if="type==='差旅费报销'">差旅费报销{{reimbursementInfo.contractAmount}}</h5>
     <h5 class="main-title" v-if="type==='特殊报销'">特殊报销</h5>
     <!-- 差旅费table -->
     <div class="table-wrapper">
@@ -45,7 +45,12 @@
           <tr>
             <td class="table-label">总计金额：</td>
             <td colspan="3">
-              <el-input v-model="reimbursementInfo.totalAmount" placeholder="请填写总计金额" :disabled="!editAble"></el-input>
+              <el-input 
+                v-model="reimbursementInfo.totalAmount" 
+                placeholder="请填写总计金额" 
+                type="number" 
+                :disabled="!editAble"
+                @change="changeTotalAmount"></el-input>
             </td>
           </tr>
           <tr>
@@ -85,10 +90,20 @@
         </tbody>
       </table>
     </div>
+    <modal v-if="warnModalShow">
+      <div slot="body">
+        您申请的金额已超出可申请报销金额，请将报销方式修改为无合同报销
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn cancel-btn" @click="warnModalShow=false">确定</button>
+      </div>
+    </modal>
   </div>
 </template>
 
 <script>
+import modal from "@/main/component/modal.vue"
+
 export default {
   name: 'expenseTable',
   data() {
@@ -110,15 +125,21 @@ export default {
         '管理其他',
         '管理资产',
         '财务费'
-      ]
+      ],
+      warnModalShow: false
     };
   },
   props: ['type', 'editAble', 'reimbursementInfo'],
   methods: {
-  
+    changeTotalAmount (val) {
+      if (val > Number(this.reimbursementInfo.contractAmount) * 0.1) {
+        this.warnModalShow = true
+        this.reimbursementInfo.totalAmount = (Number(this.reimbursementInfo.contractAmount) * 0.1 ).toFixed(2)
+      }
+    }
   },
   components: {
-    
+    modal
   }
 }
 </script>

@@ -2,8 +2,7 @@
   <main>
     <section class="section">
       <!-- <img class="switch" src="../../img/switch.png" @click="signSwitch()"> -->
-      <div class="switch wechat" @click="signSwitch()" v-if="wechatShow"></div>
-      <div class="switch norwechat" @click="signSwitch()" v-else></div>
+      <button class="switch" @click="signSwitch()"></button>
       <div id="wechatLogin" v-show="!wechatShow"></div>
       <form @submit.prevent @keyup.enter.prevent v-show="wechatShow">
         <!-- <div class="form-group">

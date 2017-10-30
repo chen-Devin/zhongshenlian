@@ -793,6 +793,11 @@ export default {
       }
     } else {
       this.expenseId = this.$route.params.id
+      this.paths = [
+        { name: '报销申请', url: '/expenses-list', present: false },
+        { name: '报销列表', url: '/expenses-list', present: false },
+        { name: '报销详情', url: '/expenses-detail', present: true }
+      ]
     }
     if (this.expenseId !== 'new') {
       this.getReimbursementInfo()
