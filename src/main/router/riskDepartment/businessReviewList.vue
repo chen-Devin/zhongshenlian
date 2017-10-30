@@ -15,15 +15,15 @@
                      v-for="(BUSINESS, index) in businesses"
                      :key="index">
           <span class="label label-warning"
-                v-if="BUSINESS.projectStatus===10">尚未完成</span>
+                v-if="business.projectStatus===10">尚未完成</span>
           <span class="label label-info"
-                v-else-if="BUSINESS.projectStatus===20||BUSINESS.projectStatus===40">已提交待审核</span>
+                v-else-if="business.projectStatus===20||business.projectStatus===40">已提交待审核</span>
           <span class="label label-danger"
-                v-else-if="BUSINESS.projectStatus===30||BUSINESS.projectStatus===50">已审核未通过</span>
+                v-else-if="business.projectStatus===30||business.projectStatus===50">已审核未通过</span>
           <span class="label label-success"
-                v-else-if="BUSINESS.projectStatus===60">待上传合同</span>
+                v-else-if="business.projectStatus===60">待上传合同</span>
           <span class="label label-primary"
-                v-else-if="BUSINESS.projectStatus===70">待发合同编号</span>
+                v-else-if="business.projectStatus===70">待发合同编号</span>
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime.substring(0,10)}}</span>
         </router-link>

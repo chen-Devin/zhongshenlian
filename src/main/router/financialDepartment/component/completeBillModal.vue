@@ -62,10 +62,15 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.business.billState = 1;
             this.subBtn.cont = '已提交';
+            this.$message.success('已完成开票')
             this.$emit('submited');
             resolve(rep);
           } else if (rep.data.statusCode === '10012') {
             window.location.href = 'signIn.html';
+          } else {
+            this.$message.error(rep.data.msg)
+            this.subBtn.dis = false;
+            this.subBtn.cont = '提交';
           }
         }, (rep) => { });
       });

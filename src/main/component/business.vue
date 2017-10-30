@@ -26,7 +26,7 @@ export default {
       if (this.user.department === '所长') {
         this.parts.splice(0, 0,
           {name: '业务概况', path: 'business-profile', state: true},
-          {name: '业务开展', path: 'business-conduct', state: false},
+          // {name: '业务开展', path: 'business-conduct', state: false},
           {name: '开票信息', path: 'billing-infor', state: false},
           {name: '业务报告', path: 'business-reports', state: false},
           {name: '操作历史', path: 'operat-history', state: false}
@@ -39,7 +39,7 @@ export default {
       } else if (this.user.department === '业务部') {
         this.parts.splice(0, 0,
           {name: '业务概况', path: 'business-profile', state: true},
-          {name: '业务开展', path: 'business-conduct', state: false},
+          // {name: '业务开展', path: 'business-conduct', state: false},
           {name: '开票信息', path: 'billing-infor', state: false},
           {name: '业务报告', path: 'business-reports', state: false}
           // {name: '操作历史', path: 'operat-history', state: false}

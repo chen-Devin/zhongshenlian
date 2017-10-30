@@ -6,7 +6,7 @@
       <!-- 确认上传 -->
       <button 
         class="btn my-btn cancel-btn f-r mr-10" 
-        v-if="salesShow && business.projectStatus === 110"
+        v-if="salesShow && (business.projectStatus === 90 || business.projectStatus === 110)"
         @click="finishUploadReport">上传完成</button>
       <button class="btn my-btn submit-btn pull-right mr-10"
               @click="add()"

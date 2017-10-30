@@ -17,7 +17,6 @@
           </template>
         </div>
       </h3>
-      <!-- <progress-bar :progress="progress"></progress-bar> -->
       <business-editor :initBusiness="business"
                        :editable="editable"
                        @saved="saved"
@@ -52,7 +51,6 @@ import card from '../../component/card.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
 import businessEditor from './component/businessEditor.vue';
 import businessDelModal from './component/businessDelModal.vue';
-import progressBar from '../../component/progressBarSVG.vue';
 
 Vue.prototype.$message = Message;
 
@@ -344,128 +342,6 @@ export default {
   computed: {
     editStat() {
       return this.business.projectStatus === 10 || this.business.projectStatus === 30 || this.business.projectStatus === 50;
-    },
-    progress() {
-      if (this.business.projectStatus < 20) {
-          return [
-            { name: '立项申请', passed: false, active: false },
-            { name: '风控初审', passed: false, active: false },
-            { name: '所长终审', passed: false, active: false },
-            { name: '发放编号', passed: false, active: false },
-            { name: '处理业务', passed: false, active: false },
-            {
-              qrCode: {name: '报告完成', passed: false, active: false},
-              bill: {name: '开票完成', passed: false, active: false}
-            },
-            { name: '业务完结', passed: false, active: false }
-          ];
-      } else if (this.business.projectStatus < 40) {
-          return [
-            { name: '立项申请', passed: false, active: true },
-            { name: '风控初审', passed: false, active: false },
-            { name: '所长终审', passed: false, active: false },
-            { name: '发放编号', passed: false, active: false },
-            { name: '处理业务', passed: false, active: false },
-            {
-              qrCode: {name: '报告完成', passed: false, active: false},
-              bill: {name: '开票完成', passed: false, active: false}
-            },
-            { name: '业务完结', passed: false, active: false }
-          ];
-      } else if (this.business.projectStatus < 60) {
-          return [
-            { name: '立项申请', passed: true, active: false },
-            { name: '风控初审', passed: false, active: true },
-            { name: '所长终审', passed: false, active: false },
-            { name: '发放编号', passed: false, active: false },
-            { name: '处理业务', passed: false, active: false },
-            {
-              qrCode: {name: '报告完成', passed: false, active: false},
-              bill: {name: '开票完成', passed: false, active: false}
-            },
-            { name: '业务完结', passed: false, active: false }
-          ];
-      } else if (this.business.projectStatus < 80) {
-          return [
-            { name: '立项申请', passed: true, active: false },
-            { name: '风控初审', passed: true, active: false },
-            { name: '所长终审', passed: false, active: true },
-            { name: '发放编号', passed: false, active: false },
-            { name: '处理业务', passed: false, active: false },
-            {
-              qrCode: {name: '报告完成', passed: false, active: false},
-              bill: {name: '开票完成', passed: false, active: false}
-            },
-            { name: '业务完结', passed: false, active: false }
-          ];
-      } else if (this.business.projectStatus < 130) {
-          return [
-            { name: '立项申请', passed: true, active: false },
-            { name: '风控初审', passed: true, active: false },
-            { name: '所长终审', passed: true, active: false },
-            { name: '发放编号', passed: false, active: true },
-            { name: '处理业务', passed: false, active: false },
-            {
-              qrCode: {name: '报告完成', passed: false, active: false},
-              bill: {name: '开票完成', passed: false, active: false}
-            },
-            { name: '业务完结', passed: false, active: false }
-          ];
-      } else if (this.business.projectStatus < 150) {
-          return [
-            { name: '立项申请', passed: true, active: false },
-            { name: '风控初审', passed: true, active: false },
-            { name: '所长终审', passed: true, active: false },
-            { name: '发放编号', passed: true, active: false },
-            { name: '处理业务', passed: false, active: true },
-            {
-              qrCode: {name: '报告完成', passed: false, active: false},
-              bill: {name: '开票完成', passed: false, active: false}
-            },
-            { name: '业务完结', passed: false, active: false }
-          ];
-      } else if (this.business.projectStatus < 160) {
-        if (this.business.billState) {
-          return [
-            { name: '立项申请', passed: true, active: false },
-            { name: '风控初审', passed: true, active: false },
-            { name: '所长终审', passed: true, active: false },
-            { name: '发放编号', passed: true, active: false },
-            { name: '处理业务', passed: true, active: false },
-            {
-              qrCode: {name: '报告完成', passed: false, active: true},
-              bill: {name: '开票完成', passed: false, active: true}
-            },
-            { name: '业务完结', passed: false, active: false }
-          ];
-        } else {
-          return [
-            { name: '立项申请', passed: true, active: false },
-            { name: '风控初审', passed: true, active: false },
-            { name: '所长终审', passed: true, active: false },
-            { name: '发放编号', passed: true, active: false },
-            { name: '处理业务', passed: true, active: false },
-            {
-              qrCode: {name: '报告完成', passed: false, active: true},
-              bill: {name: '开票完成', passed: false, active: false}
-            },
-            { name: '业务完结', passed: false, active: false }
-          ];
-        }
-      } else {
-        return [
-          { name: '立项申请', passed: true, active: false },
-          { name: '风控初审', passed: true, active: false },
-          { name: '所长终审', passed: true, active: false },
-          { name: '发放编号', passed: true, active: false },
-          { name: '处理业务', passed: true, active: false },
-          {
-            qrCode: {name: '报告完成', passed: true, active: false},
-            bill: {name: '开票完成', passed: true, active: false}
-          },
-          { name: '业务完结', passed: false, active: true }
-        ];
-      }
     }
   },
   created() {
@@ -607,7 +483,11 @@ export default {
             this.business.lastOffice = rep.data.data.lastOffice;
             this.business.getWay = rep.data.data.getWay;
 
+            this.business.getWay = rep.data.data.getWay;
+
             this.business.projectStatus = parseInt(rep.data.data.projectStatus);
+            this.business.sumBillingAmount = parseInt(rep.data.data.sumBillingAmount);
+            this.business.financeCreateBillingState = parseInt(rep.data.data.financeCreateBillingState);
 
             this.business.contracts = [];
             for (let i = 0; i < rep.data.data.contractAnnexArray.length; i++) {
@@ -782,8 +662,7 @@ export default {
     card,
     businessEditor,
     approverAdvice,
-    businessDelModal,
-    progressBar
+    businessDelModal
   }
 }
 </script>

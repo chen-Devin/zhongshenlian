@@ -230,11 +230,11 @@ export default {
         }, (rep) => { });
       })
     },
-    businessRoute(BUSINESS) {
-      if (Number(BUSINESS.projectStatus) >= 60) {
-        this.$router.push('/business-review-detail-sales-' + BUSINESS.id)
+    businessRoute(business) {
+      if (Number(business.projectStatus) >= 60) {
+        this.$router.push('/business-review-detail-sales-' + business.id)
       } else {
-        this.$router.push('/business-review-edit-' + BUSINESS.id)
+        this.$router.push('/business-review-edit-' + business.id)
       }
     }
   },

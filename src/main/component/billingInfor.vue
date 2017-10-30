@@ -2,12 +2,14 @@
   <div class="billing-infor">
     <div class="normal-wrap">
       <h4 class="main-title">
-        开票列表 （合同预估金额：{{business.contractAmount}}元&emsp;当前申请发票总计：{{total}}元）
-        <router-link class="btn my-btn submit-btn pull-right mr-10"
-                     :to="billingInforEditorLink"
-                     v-if="addBillShow">
-          开票申请
-        </router-link>
+        开票列表 （合同预估金额：{{business.contractAmount}}元&emsp;当前申请发票总计：{{business.sumBillingAmount}}元）
+        <template v-if="addBillShow && !initBusiness.financeCreateBillingState">
+          <button class="btn my-btn cancel-btn pull-right mr-10" @click="sub()">完成开票</button>
+          <router-link class="btn my-btn submit-btn pull-right mr-10"
+                       :to="billingInforEditorLink">
+            开票申请
+          </router-link>
+        </template>
       </h4>
       <table class="table table-bordered table-list">
         <thead>
@@ -55,6 +57,10 @@
         <button class="btn my-btn submit-btn" @click="back">取消</button>
       </p>
     </modal>
+    <complete-bill-modal v-if="showModal"
+                         :initBusiness="business"
+                         @submited="submited"
+                         @canceled="canceled"></complete-bill-modal>
   </div>
 </template>
 
@@ -62,6 +68,7 @@
 import axios from 'axios'
 import bus from '@/main/bus.js'
 import modal from '@/main/component/modal.vue'
+import completeBillModal from '@/main/router/financialDepartment/component/completeBillModal.vue';
 
 export default {
   name: 'billingInfor',
@@ -71,7 +78,8 @@ export default {
       business: this.initBusiness,
       empty: '',
       cancelModalShow: false,
-      bill: {}
+      bill: {},
+      showModal: false
     };
   },
   computed: {
@@ -98,6 +106,16 @@ export default {
   },
   props: ['initBusiness', 'user'],
   methods: {
+    sub() {
+      this.showModal = true;
+    },
+    submited() {
+      this.business.financeCreateBillingState = 1;
+      this.showModal = false;
+    },
+    canceled() {
+      this.showModal = false;
+    },
     currencyToNum(amo) {
       let amoArr = amo.split(',').reverse();
       let amoNum = 0;
@@ -134,7 +152,7 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.$message.success('撤销成功')
-            this.bill.revokeState = '0020'
+            this.bill.revokeState = ''
             this.back()
             resolve('done')
           } else {
@@ -153,7 +171,8 @@ export default {
     })
   },
   components: {
-    modal
+    modal,
+    completeBillModal
   }
 };
 </script>

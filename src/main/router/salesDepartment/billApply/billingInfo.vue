@@ -27,7 +27,7 @@
           申请时间：{{ requestTime }}
         </el-col>
         <el-col :span="8">
-          累计开票金额：{{ totalAmount }} 元
+          累计开票金额：{{ business.sumBillingAmount }} 元
         </el-col>
       </el-row>
     </div>
@@ -198,15 +198,6 @@ export default {
       }
       return y + '-' + m + '-' + d
     },
-    totalAmount () {
-      let total = 0
-      if (this.business.projectBillingArray.length !== 0) {
-        this.business.projectBillingArray.forEach((item) => {
-          total += Number(item.billingAmount)
-        })
-      }
-      return total
-    },
     billingUnit() {
       if (this.business.contractType.name === "联合体") {
         return this.business.contractType.basicFee.main.name
@@ -256,7 +247,6 @@ export default {
       this.$emit('cancel')
     },
     submit () {
-      this.bill.totalAmount = this.totalAmount
       this.bill.applicationDate = this.requestTime
       this.bill.billingUnit = this.billingUnit
       return new Promise((resolve, reject) => {

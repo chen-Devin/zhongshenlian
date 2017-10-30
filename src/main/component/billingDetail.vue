@@ -1,31 +1,31 @@
 <template>
   <div class="billing-detail">
     <card>
-      <p>{{ bill }}</p>
-      <p 
-        class="btns f-r" 
-        v-if="user.department === '财务部' && Number(bill.revokeState) !== 60 && Number(bill.revokeState) !== 20">
-        <button 
-          class="btn my-btn submit-btn" 
-          v-if="(Number(bill.state) === 0 || Number(bill.state) === 1) && billBtn" 
-          @click="showBillUpload('bill')">开票</button>
-        <button 
-          class="btn my-btn submit-btn" 
-          v-if="Number(bill.state) === 0 || Number(bill.state) === 2 && receiveBtn" 
-          @click="showBillUpload('receive')">上传收款截图</button>
-        <button 
-          class="btn my-btn cancel-btn" 
-          v-if="Number(bill.revokeState) === 10"
-          @click="reject(bill)">驳回</button>
-      </p>
-      <p>
-        <button 
-          class="btn my-btn submit-btn" 
-          v-if="Number(bill.revokeState) === 20" 
-          @click="showBillUpload('receive')">撤销</button>
-      </p>
+      <template v-if="!sended">
+        <p 
+          class="btns f-r" 
+          v-if="user.department === '财务部'">
+          <template v-if="Number(bill.revokeState) === 10">
+            <button 
+              class="btn my-btn submit-btn" 
+              v-if="(Number(bill.state) === 0 || Number(bill.state) === 1)" 
+              @click="showBillUpload('bill')">开票</button>
+            <button 
+              class="btn my-btn submit-btn" 
+              v-if="Number(bill.state) === 0 || Number(bill.state) === 2" 
+              @click="showBillUpload('receive')">上传收款截图</button>
+            <button 
+              class="btn my-btn cancel-btn" 
+              v-if="Number(bill.revokeState) === 10"
+              @click="reject">驳回</button>
+          </template>
+          <button 
+            class="btn my-btn cancel-btn" 
+            v-if="Number(bill.revokeState) === 20" 
+            @click="cancelModalShow = true">撤销</button>
+        </p>
+      </template>
       <h4 class="main-title">开票内容</h4>
-      <p>{{ bill.state }} {{ bill.revokeState }}</p>
       <div class="detail-wrapper">
         <el-row>
           <el-col :span="12">
@@ -90,11 +90,11 @@
             备注：{{ bill.remark }}
           </el-col>
         </el-row>
-        <hr>
+        <!-- <hr>
         <p class="d-f">
           <span style="width:70px;">撤销原因：</span>
           <span>。。。</span>
-        </p>
+        </p> -->
       </div>
     </card>
     <modal v-if="billUploadShow">
@@ -132,13 +132,22 @@
         </p>
       </div>
     </modal>
-    <modal v-if="cancelModalShow">
+    <modal v-if="rejectModalShow">
       <div slot="body">
         驳回后不能更改，确定驳回吗？
       </div>
       <p slot="footer">
-        <button class="btn my-btn cancel-btn" @click="revokedBilling">确定</button>
+        <button class="btn my-btn cancel-btn" @click="revokedBilling('del')">确定</button>
         <button class="btn my-btn submit-btn" @click="back">取消</button>
+      </p>
+    </modal>
+    <modal v-if="cancelModalShow">
+      <div slot="body">
+        撤销后不能更改，确定撤销吗？
+      </div>
+      <p slot="footer">
+        <button class="btn my-btn cancel-btn" @click="revokedBilling('revoke')">确定</button>
+        <button class="btn my-btn submit-btn" @click="cancelModalShow = false">取消</button>
       </p>
     </modal>
   </div>
@@ -162,9 +171,8 @@ export default {
         
       ],
       billUploadShow: false,
+      rejectModalShow: false,
       cancelModalShow: false,
-      billBtn: true,
-      receiveBtn: true,
       uploadType: '',
       billingType: '',
       user: {}
@@ -190,13 +198,13 @@ export default {
       return '/fileUpload?data=' + JSON.stringify(data); 
     }
   },
-  props: ['bill'],
+  props: ['bill', 'sended'],
   methods: {
-    reject (bill) {
-      this.cancelModalShow = true
+    reject () {
+      this.rejectModalShow = true
     },
     back () {
-      this.cancelModalShow = false
+      this.rejectModalShow = false
     },
     showBillUpload (type) {
       if (type === 'bill') {
@@ -238,8 +246,8 @@ export default {
           this.fileList = []
           this.remark = ''
           this.$message.success('上传成功')
+          this.bill.state = rep.data.data.state
           if (this.billingType === 'billingOthers') {
-            this.billBtn = false
             this.bill.billFiles.push(
               {
                 name: rep.data.data.name,
@@ -247,7 +255,6 @@ export default {
               }
             )
           } else if (this.billingType === 'receivables') {
-            this.receiveBtn = false
             this.bill.receiptFiles.push(
               {
                 name: rep.data.data.name,
@@ -255,13 +262,13 @@ export default {
               }
             )
           }
-          bus.$emit('reloadFinancialDetail')
+          // bus.$emit('reloadFinancialDetail')
         } else {
           this.$message.error(rep.data.msg)
         }
       }, (rep) => { })
     },
-    revokedBilling () {
+    revokedBilling (type) {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -273,7 +280,7 @@ export default {
                 command: 'revokedBilling',
                 platform: 'web',
                 id: this.bill.id,
-                type: 'del'
+                type: type
               }
               return JSON.stringify(obj)
             })()
@@ -281,10 +288,14 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             // bus.$emit('reloadFinancialDetail')
+            this.bill.revokeState = rep.data.data.result
+            if (type === 'del') {
+              this.rejectModalShow = false
+            } else if (type === 'revoke') {
+              this.cancelModalShow = false
+            }
             bus.$emit('reloadState', this.bill)
-            this.bill.revokeState = '0060'
             this.$message.success('操作成功')
-            this.cancelModalShow = false
             resolve('done')
           } else {
             this.$message.error(rep.data.msg)

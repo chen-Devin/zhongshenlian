@@ -63,7 +63,7 @@
           </el-col>
           <el-col :span="8">
             <label class="control-label">项目申请人电话:</label>
-            <span class="form-control-static">business.proposer.tele</span>
+            <span class="form-control-static">{{business.proposer.tele}}</span>
           </el-col>
         </el-row>
         <el-row>

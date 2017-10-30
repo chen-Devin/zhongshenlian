@@ -55,6 +55,8 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.business = rep.data.data
             resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       })
