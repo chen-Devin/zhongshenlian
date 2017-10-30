@@ -134,7 +134,7 @@ export default {
         })
       }).then((rep) => {
         if (rep.data.statusCode === '10001') {
-          let contNum = rep.data.data.contactNo;
+          let contNum = rep.data.data.contractNo;
           this.subBtn.cont = '已提交';
           this.$emit('submited', contNum);
         } else if (rep.data.statusCode === '10012') {

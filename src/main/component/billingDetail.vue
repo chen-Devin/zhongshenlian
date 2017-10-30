@@ -134,7 +134,7 @@
     </modal>
     <modal v-if="cancelModalShow">
       <div slot="body">
-        撤销后不能更改，确定驳回吗？
+        驳回后不能更改，确定驳回吗？
       </div>
       <p slot="footer">
         <button class="btn my-btn cancel-btn" @click="revokedBilling">确定</button>

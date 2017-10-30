@@ -300,14 +300,14 @@ export default {
             coop: [{ name: '', percentage: 0 }]
           },
         },
-        reviewCPA: {
+        reviewCPA: [{
           id: '',
           name: ''
-        },
-        reviewAssistant: {
+        }],
+        reviewAssistant: [{
           id: '',
           name: ''
-        },
+        }],
         lastOffice: '',
         getWay: '直接委托',
         projectStatus: 0,

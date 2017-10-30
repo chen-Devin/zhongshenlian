@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import bus from '@/main/bus.js'
 export default {
   name: 'tabControl',
   data() {
@@ -33,6 +34,7 @@ export default {
       this.$emit('pathsChan', paths);
     },
     sel(index) {
+      bus.$emit('hideBillingDetail')
       for (let i = 0; i < this.parts.length; i++) {
         this.parts[i].state = false;
       }
