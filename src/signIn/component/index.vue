@@ -2,8 +2,9 @@
   <main>
     <section class="section">
       <!-- <img class="switch" src="../../img/switch.png" @click="signSwitch()"> -->
-      <div class="switch wechat" @click="signSwitch()" v-if="wechatShow"></div>
-      <div class="switch norwechat" @click="signSwitch()" v-else></div>
+      <div class="switch" @click="signSwitch()" v-if="!wechatShow"><img src="../../img/Shape.png"></div>
+      <div class="switch" @click="signSwitch()" v-else><img src="../../img/code.png"></div>
+      <!-- <button class="switch" @click="signSwitch()">切换登录方式</button> -->
       <div id="wechatLogin" v-show="!wechatShow"></div>
       <form @submit.prevent @keyup.enter.prevent v-show="wechatShow">
         <!-- <div class="form-group">
@@ -24,12 +25,6 @@
                    @blur="inputBlur('telephone')"
                    @input="judgeTel()"
                    v-model="tel.val">
-            <span class="input-group-btn">
-              <button class="draft-btn"
-                      type="button"
-                      :disabled="getBtn.dis"
-                      @click="getBtnTog()">{{getBtn.cont}}</button>
-            </span>
           </div>
         </div>
         <div class="form-group"
@@ -45,6 +40,10 @@
                    @blur="inputBlur('verCode')"
                    @input="judgeVer()"
                    v-model="ver.val">
+            <button class="draft-btn"
+                    type="button"
+                    :disabled="getBtn.dis"
+                    @click="getBtnTog()">{{getBtn.cont}}</button>
           </div>
         </div>
         <div class="alert alert-danger well-sm"
@@ -277,8 +276,17 @@ export default {
 
 <style lang="sass" scoped>
 @import '../../scss/_variables.scss';
+.draft-btn[disabled] {
+  background-color: #d7d7d7;
+}
 .draft-btn {
+  z-index: 5;
+  position: absolute;
+  right: 0;
+  width: 99px;
+  height: 44px;
   color: #fff;
+  border-radius: 2px;
   background-color: #8ad637;
   border: none;
   &:hover {
@@ -292,8 +300,6 @@ export default {
   }
 }
 .section {
-  height: 276px;
-  width: 453px;
   order: 1;
   position: relative;
   display: flex;
@@ -311,21 +317,18 @@ export default {
     right: 0;
     cursor: pointer;
   }
-  .wechat {
-    // background: url(../../src/img/code.png) no-repeat
-  }
   form {
     order: 1;
     padding: 0 59px;
     .form-group {
       border: 1px solid transparent;
       border-radius: $border-radius-large;
-      &.focus {
-        border: 1px solid $brand-primary;
-      }
-      &.error {
-        border: 1px solid $brand-danger;
-      }
+      // &.focus {
+      //   border: 1px solid $brand-primary;
+      // }
+      // &.error {
+      //   border: 1px solid $brand-danger;
+      // }
     }
     img {
       width: 160px;
@@ -340,32 +343,33 @@ export default {
         box-shadow: none;
       }
     }
-  //   .input-group-addon,
-  //   .input-group-btn > button {
-  //     border: none;
-  //     box-shadow: none;
-  //     background-color: rgba(255,255,255,1);
-  //     &:hover,
-  //     &:focus {
-  //       border: none;
-  //       box-shadow: none;
-  //       outline: none;
-  //     }
-  //   }
-  //   // .input-group-btn > button {
-  //   //   &:hover,
-  //   //   &:focus {
-  //   //     color: $link-hover-color;
-  //   //   }
-  //   //   &:disabled {
-  //   //     color: #777;
-  //   //   }
-  //   // }
+    .input-group-addon,
+    .input-group-btn > button {
+      border: none;
+      box-shadow: none;
+      outline: none;
+      background-color: rgba(255,255,255,1);
+      &:hover,
+      &:focus {
+        border: none;
+        box-shadow: none;
+        outline: none;
+      }
+    }
+    .input-group-btn > button {
+      &:hover,
+      &:focus {
+        color: $link-hover-color;
+      }
+      &:disabled {
+        color: #777;
+      }
+    }
   }
 }
 
 .verification {
-  height: 53px;
+  height: 44px;
   color: #1F6BA9;
 }
 
@@ -376,7 +380,7 @@ export default {
 .phone-icon {
   &:before {
     content: '';
-    background: url('../../img/signup/phone.svg');
+    background: url('../../img/signup/user@3x.png');
     background-repeat: no-repeat;
     display: block;
     width: 18px;
@@ -400,8 +404,9 @@ export default {
 }
 
 .login-btn {
+  border-radius: 4px;
   width: 400px;
-  height: 53px;
+  height: 44px;
 }
 
 .btn-primary {
@@ -427,10 +432,10 @@ export default {
 }
 
 .input-group-addon {
-  height: 53px;
+  height: 44px;
 }
 
 input.form-control {
-  height: 53px;
+  height: 44px;
 }
 </style>
