@@ -461,7 +461,6 @@ export default {
       this.billDetailShow = true
     })
     bus.$on('reloadFinancialDetail', () => {
-      console.log(1)
       this.getInfo()
     })
     this.getInfo()

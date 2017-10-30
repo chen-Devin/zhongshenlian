@@ -24,13 +24,18 @@
           <tr 
             v-for="(BILL, index) in business.bills" 
             :key="index">
-            <td class="ta-c">{{ empty }}</td>
+            <td class="ta-c">
+              <span class="state reject" v-if="Number(BILL.revokeState) === 60">驳回</span>
+              <span class="state back" v-else-if="Number(BILL.revokeState) === 30">退回</span>
+              <span class="state ruin" v-else-if="Number(BILL.revokeState) === 30">作废</span>
+              <span class="state rush" v-else-if="Number(BILL.revokeState) === 30">冲回</span>
+            </td>
             <td class="ta-c">{{ BILL.amount }}</td>
             <td class="ta-c">{{ BILL.filingDate }}</td>
             <td class="ta-c">{{ BILL.startServiceTime === '' ? empty : BILL.startServiceTime }}</td>
             <td class="ta-c">{{ BILL.endServiceTime === '' ? empty : BILL.endServiceTime }}</td>
             <td class="ta-c">
-              <button class="btn my-btn submit-btn" @click="check(BILL)">查看</button>
+              <button class="btn my-btn submit-btn" @click="check(BILL, index)">查看</button>
               <button 
                 class="btn my-btn cancel-btn" 
                 @click="cancel(BILL)" 
@@ -101,7 +106,8 @@ export default {
       }
       return amoNum;
     },
-    check (bill) {
+    check (bill, i) {
+      bill.DetailIndex = i
       bus.$emit('bill-selected', bill)
     },
     cancel (bill) {
@@ -128,6 +134,7 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.$message.success('撤销成功')
+            this.bill.revokeState = '0020'
             this.back()
             resolve('done')
           } else {
@@ -140,6 +147,11 @@ export default {
       this.cancelModalShow = false
     }
   },
+  created () {
+    bus.$on('reloadState', (bill) => {
+      this.business.bills[bill.DetailIndex].revokeState = bill.revokeState
+    })
+  },
   components: {
     modal
   }
@@ -150,6 +162,31 @@ export default {
   .billing-infor {
     .total-amount {
       margin-top: 30px;
+    }
+    .state {
+      display: inline-block;
+      width: 50px;
+      height: 20px;
+      line-height: 20px;
+      border: 1px solid #000;
+      border-radius: 5px;
+      font-size: 13px;
+      &.reject {
+        color: #f00;
+        border-color: #f00;
+      }
+      &.back {
+        color: #5cc1e0;
+        border-color: #5cc1e0;
+      }
+      &.ruin {
+        color: #666;
+        border-color: #666;
+      }
+      &.rush {
+        color: #E51C23;
+        border-color: #E51C23;
+      }
     }
   }
 </style>

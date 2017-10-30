@@ -1,7 +1,10 @@
 <template>
   <div class="billing-detail">
     <card>
-      <p class="btns f-r" v-if="user.department === '财务部'">
+      <p>{{ bill }}</p>
+      <p 
+        class="btns f-r" 
+        v-if="user.department === '财务部' && Number(bill.revokeState) !== 60 && Number(bill.revokeState) !== 20">
         <button 
           class="btn my-btn submit-btn" 
           v-if="(Number(bill.state) === 0 || Number(bill.state) === 1) && billBtn" 
@@ -15,8 +18,14 @@
           v-if="Number(bill.revokeState) === 10"
           @click="reject(bill)">驳回</button>
       </p>
+      <p>
+        <button 
+          class="btn my-btn submit-btn" 
+          v-if="Number(bill.revokeState) === 20" 
+          @click="showBillUpload('receive')">撤销</button>
+      </p>
       <h4 class="main-title">开票内容</h4>
-      <p>{{ bill.state }}</p>
+      <p>{{ bill.state }} {{ bill.revokeState }}</p>
       <div class="detail-wrapper">
         <el-row>
           <el-col :span="12">
@@ -185,7 +194,6 @@ export default {
   methods: {
     reject (bill) {
       this.cancelModalShow = true
-      console.log(bill)
     },
     back () {
       this.cancelModalShow = false
@@ -272,12 +280,11 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            bus.$emit('reloadFinancialDetail')
+            // bus.$emit('reloadFinancialDetail')
+            bus.$emit('reloadState', this.bill)
+            this.bill.revokeState = '0060'
             this.$message.success('操作成功')
             this.cancelModalShow = false
-            // if (this.) {
-            //   billBtn
-            // }
             resolve('done')
           } else {
             this.$message.error(rep.data.msg)
