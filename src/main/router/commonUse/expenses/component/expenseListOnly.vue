@@ -31,7 +31,7 @@
               <span v-else></span>
             </td>
             <td class="text-left">{{ item.time }}</td>
-            <td class="text-left">{{ item.time }}</td>
+            <td class="text-left">{{ changeStatus(item.status) }}</td>
           </tr>
         </tbody>
       </table>
@@ -84,6 +84,21 @@ export default {
     currentChange (val) {
       let pageNum = val
       this.$emit('currentChange', pageNum)
+    },
+    changeStatus (status) {
+      if (status === '0010') {
+        return '发出申请'
+      } else if (status === '0020') {
+        return '部门通过'
+      } else if (status === '0040') {
+        return '所长通过'
+      } else if (status === '0060') {
+        return '财务核单'
+      } else if (status === '0080') {
+        return '付款申请'
+      } else if (status === '0100') {
+        return '付款审核'
+      }
     }
   },
   created () {
@@ -101,7 +116,7 @@ export default {
 
 <style lang="sass" scoped>
   .addi {
-    margin-top: 14px;
+    margin-top: 21px;
     margin-right: 40px;
   }
 </style>

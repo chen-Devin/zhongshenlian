@@ -167,8 +167,10 @@ h3 {
 }
 
 .table-hover {
-  tr {
-    cursor: pointer;
+  tbody {
+    tr {
+      cursor: pointer;
+    }
   }
 }
 

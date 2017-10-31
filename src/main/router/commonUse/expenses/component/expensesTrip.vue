@@ -19,7 +19,11 @@
           </el-col>
           <el-col :span="6" class="number d-f" v-if="contractNumberShow">
             <span style="width:70px">合同号：</span>
-            <el-select v-model="projectNumber" placeholder="请选择合同" :disabled="!editAble">
+            <el-select 
+              v-model="projectNumber" 
+              placeholder="请选择合同" 
+              :disabled="!editAble"
+              @change="changeContract">
               <el-option
                 v-for="item in contracts"
                 :key="item.id"
@@ -136,13 +140,14 @@
             <el-input 
               v-model="reimbursementInfo.transportationTotalFee" 
               placeholder="请填写金额" 
+              type="number"
               :disabled="!editAble">
                 <template slot="append">元</template>
               </el-input>
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.travelRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" :disabled="!editAble">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" :disabled="!editAble">
                 <template slot="append">元</template>
               </el-input>
             </div>
@@ -206,14 +211,15 @@
           <el-col :span="4">
             <el-input 
               v-model="reimbursementInfo.stayTotalFee" 
-              placeholder="请填写金额" 
+              placeholder="请填写金额"
+              type="number" 
               :disabled="!editAble">
                 <template slot="append">元</template>
               </el-input> 
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.stayRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" :disabled="!editAble">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" :disabled="!editAble">
                 <template slot="append">元</template>
               </el-input>
             </div>
@@ -277,14 +283,15 @@
           <el-col :span="4">
             <el-input 
               v-model="reimbursementInfo.localMealsTotalFee" 
-              placeholder="请填写金额" 
+              placeholder="请填写金额"
+              type="number" 
               :disabled="!editAble">
                 <template slot="append">元</template>
               </el-input>
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.localRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" :disabled="!editAble">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" :disabled="!editAble">
                 <template slot="append">元</template>
               </el-input>
             </div>
@@ -348,14 +355,15 @@
           <el-col :span="4">
             <el-input 
               v-model="reimbursementInfo.fieldMealsTotalFee" 
-              placeholder="请填写金额" 
+              placeholder="请填写金额"
+              type="number" 
               :disabled="!editAble">
                 <template slot="append">元</template>
               </el-input>
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.fieldRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" :disabled="!editAble">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" :disabled="!editAble">
                 <template slot="append">元</template>
               </el-input>
             </div>
@@ -453,22 +461,23 @@ export default {
       reimbursementInfo: {
         id: '',
         applicantName: '',
+        contractAmount: 0,
         submitType: '',
         billingType: '',
         startTime: '',
         endTime: '',
         place: '',
         reason: '',
-        totalAmount: '',
+        totalAmount: 0,
         summary: '',
         budgetCompanyId: '',
         budgetDepartmentId: '',
-        transportationTotalFee: '',
+        transportationTotalFee: 0,
         transportationBillingNum: 1,
         travelRArray: [
           {
             id: '',
-            amount: '',
+            amount: 0,
             annexUrl: '',
             uploadURL: '',
             state: {
@@ -481,12 +490,12 @@ export default {
             name: ''
           }
         ],
-        stayTotalFee: '',
+        stayTotalFee: 0,
         stayBillingNum: 1,
         stayRArray: [
           {
             id: '',
-            amount: '',
+            amount: 0,
             annexUrl: '',
             uploadURL: '',
             state: {
@@ -499,12 +508,12 @@ export default {
             name: ''
           }
         ],
-        localMealsTotalFee: '',
+        localMealsTotalFee: 0,
         localMealsBillingNum: 1,
         localRArray: [
           {
             id: '',
-            amount: '',
+            amount: 0,
             annexUrl: '',
             uploadURL: '',
             state: {
@@ -517,12 +526,12 @@ export default {
             name: ''
           }
         ],
-        fieldMealsTotalFee: '',
+        fieldMealsTotalFee: 0,
         fieldMealsBillingNum: 1,
         fieldRArray: [
           {
             id: '',
-            amount: '',
+            amount: 0,
             annexUrl: '',
             uploadURL: '',
             state: {
@@ -623,7 +632,7 @@ export default {
       return arr
     },
     submitAble () {
-      if (this.reimbursementInfo.submitType === 'contractR' && this.projectNumber === '') {
+      if (this.reimbursementInfo.submitType === 'contractR' && this.projectNumber === '' && this.reimbursementInfo.totalAmount <= 0.1 * Number(this.reimbursementInfo.contractAmount)) {
         return true
       } else {
         return false
@@ -631,6 +640,14 @@ export default {
     }
   },
   methods: {
+    changeContract (val) {
+      this.contracts.forEach((item) => {
+        if (item.id === val) {
+          this.reimbursementInfo.contractAmount = item.contractAmount
+        }
+      })
+      console.log(val)
+    },
     agree () {
       this.handleReimbursement('通过', '').then(() => {
         
@@ -767,7 +784,7 @@ export default {
             this.reimbursementInfo.travelRArray.push(
               {
                 id: '',
-                amount: '',
+                amount: 0,
                 annexUrl: '',
                 uploadURL: '',
                 state: {
@@ -788,7 +805,7 @@ export default {
             this.reimbursementInfo.stayRArray.push(
               {
                 id: '',
-                amount: '',
+                amount: 0,
                 annexUrl: '',
                 uploadURL: '',
                 state: {
@@ -809,7 +826,7 @@ export default {
             this.reimbursementInfo.localRArray.push(
               {
                 id: '',
-                amount: '',
+                amount: 0,
                 annexUrl: '',
                 uploadURL: '',
                 state: {
@@ -830,7 +847,7 @@ export default {
             this.reimbursementInfo.fieldRArray.push(
               {
                 id: '',
-                amount: '',
+                amount: 0,
                 annexUrl: '',
                 uploadURL: '',
                 state: {
@@ -1153,6 +1170,11 @@ export default {
       }
     } else {
       this.expenseId = this.$route.params.id
+      this.paths = [
+        { name: '报销申请', url: '/expenses-list', present: false },
+        { name: '报销列表', url: '/expenses-list', present: false },
+        { name: '报销详情', url: '/expenses-detail', present: true }
+      ]
     }
     if (this.expenseId !== 'new') {
       this.getReimbursementInfo()

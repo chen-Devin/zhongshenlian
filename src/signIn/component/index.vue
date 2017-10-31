@@ -1,10 +1,8 @@
 <template>
   <main>
     <section class="section">
-      <!-- <img class="switch" src="../../img/switch.png" @click="signSwitch()"> -->
       <div class="switch" @click="signSwitch()" v-if="!wechatShow"><img src="../../img/Shape.png"></div>
       <div class="switch" @click="signSwitch()" v-else><img src="../../img/code.png"></div>
-      <!-- <button class="switch" @click="signSwitch()">切换登录方式</button> -->
       <div id="wechatLogin" v-show="!wechatShow"></div>
       <form @submit.prevent @keyup.enter.prevent v-show="wechatShow">
         <!-- <div class="form-group">
