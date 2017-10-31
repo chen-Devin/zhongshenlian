@@ -2,6 +2,7 @@
   <div class="company-management">
     <crumbs :paths="paths"></crumbs>
     <card class="card-tabs">
+      <search-bar class="f-r" :searchItems="searchItems" @search="search"></search-bar>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane 
           :label="tab.label" 
@@ -9,7 +10,6 @@
           v-for="(tab, index) in tabList"
           :key="index"></el-tab-pane>
       </el-tabs>
-      <search-bar class="f-r addi" :searchItems="searchItems" @search="search" v-if="!functionShow"></search-bar>
     </card>
     <div class="function-wrapper" v-if="functionShow">
       <company-list 
@@ -257,6 +257,7 @@ export default {
         { name: '信息管理', url: '/business-review-list-leader', present: true },
         { name: '公司信息管理', url: '/business-review-list-leader', present: true }
       ],
+      searchItems: [],
       operateId: '',
       reloadList: true,
       functionShow: true,
@@ -537,6 +538,9 @@ export default {
       } else if (tab.name === 'business') {
         this.functionShow = false
       }
+    },
+    search () {
+
     },
     getDepartmentInfo (id) {
       this.functionId = id
@@ -1103,14 +1107,13 @@ export default {
 
 <style lang="sass" scoped>
 @import '../../../../scss/_variables.scss';
-  .addi {
-    margin-top: -48px;
-    margin-right: 40px;
-  }
+  // .addi {
+  //   margin-top: -48px;
+  //   margin-right: 40px;
+  // }
   .company-management {
     > .card-tabs {
-      padding-top: 7px;
-      padding-bottom: 7px;
+      
     }
     > .function-wrapper {
       padding-left: 20px;

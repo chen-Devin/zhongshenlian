@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul class="nav nav-tabs nav-justified">
+    <!-- <ul class="nav nav-tabs nav-justified">
       <li :class="{active: PART.state}"
           @click="sel(index)"
           v-for="(PART, index) in parts"
@@ -9,7 +9,14 @@
           {{PART.name}}
         </router-link>
       </li>
-    </ul>
+    </ul> -->
+    <el-tabs v-model="activeNameSales" @tab-click="sel">
+      <el-tab-pane 
+        :label="PART.name" 
+        :name="PART.path"
+        v-for="(PART, index) in parts"
+        :key="index"></el-tab-pane>
+    </el-tabs>
     <div class="tab-content">
       <router-view :initBusiness="business"
                    :user="user"
@@ -25,7 +32,8 @@ export default {
   data() {
     return {
       business: this.initBusiness,
-      parts: this.initParts
+      parts: this.initParts,
+      activeNameSales: 'business-profile'
     }
   },
   props: ['initBusiness', 'initParts', 'user'],
@@ -33,12 +41,14 @@ export default {
     pathsChan(paths) {
       this.$emit('pathsChan', paths);
     },
-    sel(index) {
+    sel(obj) {
+      console.log(obj)
       bus.$emit('hideBillingDetail')
-      for (let i = 0; i < this.parts.length; i++) {
-        this.parts[i].state = false;
-      }
-      this.parts[index].state = true;
+      this.$router.push(obj.name)
+      // for (let i = 0; i < this.parts.length; i++) {
+      //   this.parts[i].state = false;
+      // }
+      // this.parts[index].state = true;
     }
   }
 }

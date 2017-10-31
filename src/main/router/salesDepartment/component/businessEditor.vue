@@ -88,15 +88,15 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="合同预估金额" label-width="120px" required>
-              <div class="input-group">
-                <masked-input type="text" placeholder="请输入合同预估金额"  v-model="business.contractAmount"
-                              :disabled="!editable"
-                              :mask="currencyMask"
-                              :guide="false"
-                              placeholderChar="#">
-                </masked-input>
-                <span>元</span>
-              </div>  
+              <!-- <masked-input type="text" placeholder="请输入合同预估金额"  v-model="business.contractAmount"
+                            :disabled="!editable"
+                            :mask="currencyMask"
+                            :guide="false"
+                            placeholderChar="#">
+              </masked-input> -->
+              <el-input v-model="business.contractAmount" :disabled="!editable">
+                <template slot="append">元</template>
+              </el-input>
             </el-form-item>
           </el-col>
         </el-row> 
@@ -199,45 +199,26 @@
             <p class="form-control-static">{{business.number}}</p>
           </div>
         </div>
-        <!-- <div class="form-group" v-if="business.auditTime.exist">
-          <label class="col-sm-12 control-label">审计期间</label>
-          <div class="my-col-sm-5">
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="input-group">
-                  <div class="input-group-addon">起始日期</div>
-                  <input type="date" class="form-control" placeholder="请输入项目开始时间" v-model="business.auditTime.start" :disabled="!editable">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="input-group">
-                  <div class="input-group-addon">截至日期</div>
-                  <input type="date" class="form-control" placeholder="请输入项目结束时间" v-model="business.auditTime.end" :disabled="!editable">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="报告数量" label-width="70px">
+            <el-form-item label="报告数量" label-width="100px">
               <el-input placeholder="请输入报告数量" type="number" v-model="business.report.amount" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="报告用途" label-width="70px">
+            <el-form-item label="报告用途" label-width="80px">
               <el-input placeholder="请输入报告用途" type="text" v-model="business.report.usage" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row v-if="business.feeBasisExist">
           <el-col :span="12">
-            <el-form-item label="取费依据" label-width="70px">
+            <el-form-item label="取费依据" label-width="100px">
               <el-input placeholder="请输入取费依据" v-model="business.feeBasis" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="费率" label-width="70px">
+            <el-form-item label="费率" label-width="80px">
               <el-input placeholder="请输入费率" type="number" v-model="business.feeRate" :disabled="!editable">
                 <template slot="append">%</template>
               </el-input>
@@ -265,101 +246,133 @@
           </div>
         </div>
         <div class="form-group bgc-fff" v-if="contractTypeChan">
-          <label class="col-sm-12 control-label">基本取费</label>
-          <div class="my-col-sm-5">
-            <div class="row form-group">
-              <div class="col-sm-5">
-                <div class="input-group">
-                  <div class="input-group-addon">主办方</div>
-                  <input type="text" class="form-control" placeholder="请输入主办方" v-model="business.contractType.basicFee.main.name" :disabled="!editable">
-                </div>
-              </div>
-              <div class="col-sm-5">
-                <div class="input-group">
-                  <div class="input-group-addon">比例</div>
-                  <input type="number" class="form-control" placeholder="请输入比例" v-model.number="business.contractType.basicFee.main.percentage" :disabled="!editable">
-                  <div class="input-group-addon">%</div>
-                </div>
-              </div>
-            </div>
-            <div class="row form-group">
-              <template v-for="(DEPEND, index) in business.contractType.basicFee.depend">
-                <div class="col-sm-5">
-                  <div class="input-group">
-                    <div class="input-group-addon">协办方</div>
-                    <input type="text" class="form-control" placeholder="请输入协办方" v-model="DEPEND.name" :disabled="!editable">
-                  </div>
-                </div>
-                <div class="col-sm-5">
-                  <div class="input-group">
-                    <div class="input-group-addon">比例</div>
-                    <input type="number" class="form-control" placeholder="请输入比例" v-model.number="DEPEND.percentage" :disabled="!editable">
-                    <div class="input-group-addon">%</div>
-                  </div>
-                </div>
-                <h4 class="col-sm-1" v-if="editable">
+          <label>基本取费</label>
+          <div>
+            <el-row>
+              <el-col :span="10">
+                <el-input 
+                  placeholder="请输入主办方" 
+                  type="text" 
+                  v-model="business.contractType.basicFee.main.name" 
+                  :disabled="!editable">
+                  <template slot="prepend">主办方</template>
+                </el-input>
+              </el-col>
+              <el-col :span="10">
+                <el-input 
+                  placeholder="请输入比例" 
+                  type="number" 
+                  v-model="business.contractType.basicFee.main.percentage" 
+                  :disabled="!editable">
+                  <template slot="prepend">比例</template>
+                  <template slot="append">%</template>
+                </el-input>
+              </el-col>
+            </el-row>
+          </div>
+          <div class="support-box">
+            <el-row v-for="(DEPEND, index) in business.contractType.basicFee.depend">
+              <el-col :span="10">
+                <el-input 
+                  placeholder="请输入协办方" 
+                  type="text" 
+                  v-model="DEPEND.name" 
+                  :disabled="!editable">
+                  <template slot="prepend">协办方</template>
+                </el-input>
+              </el-col>
+              <el-col :span="10">
+                <el-input 
+                  placeholder="请输入比例" 
+                  type="number" 
+                  v-model="DEPEND.percentage" 
+                  :disabled="!editable">
+                  <template slot="prepend">比例</template>
+                  <template slot="append">%</template>
+                </el-input>
+              </el-col>
+              <el-col :span="2">
+                <h4 v-if="editable">
                   <a class="text-danger" @click="delBasicFee(index)">
                     <img src="../../../../img/delete_icon.svg">
                   </a>
                 </h4>
-              </template>
-              <h4 class="col-sm-1" v-if="editable">
-                <a class="text-danger" @click="addBasicFee()">
-                  <img src="../../../../img/add_icon.svg">
-                </a>
-              </h4>
-            </div>
+              </el-col>
+              <el-col :span="2">
+                <h4 v-if="editable">
+                  <a class="text-danger" @click="addBasicFee()">
+                    <img src="../../../../img/add_icon.svg">
+                  </a>
+                </h4>
+              </el-col>
+            </el-row>
           </div>
         </div>
         <div class="form-group bgc-fff" v-if="contractTypeChan">
-          <label class="col-sm-12 control-label">效益取费</label>
-          <div class="my-col-sm-5">
-            <div class="row form-group">
-              <div class="col-sm-5">
-                <div class="input-group">
-                  <div class="input-group-addon">主办方</div>
-                  <input type="text" class="form-control" placeholder="请输入主办方" v-model="business.contractType.benefitFee.main.name" :disabled="!editable">
-                </div>
-              </div>
-              <div class="col-sm-5">
-                <div class="input-group">
-                  <div class="input-group-addon">比例</div>
-                  <input type="number" class="form-control" placeholder="请输入比例" v-model.number="business.contractType.benefitFee.main.percentage" :disabled="!editable">
-                  <div class="input-group-addon">%</div>
-                </div>
-              </div>
-            </div>
-            <div class="row form-group">
-              <template v-for="(DEPEND, index) in business.contractType.benefitFee.depend">
-                <div class="col-sm-5">
-                  <div class="input-group">
-                    <div class="input-group-addon">协办方</div>
-                    <input type="text" class="form-control" placeholder="请输入协办方" v-model="DEPEND.name" :disabled="!editable">
-                  </div>
-                </div>
-                <div class="col-sm-5">
-                  <div class="input-group">
-                    <div class="input-group-addon">比例</div>
-                    <input type="number" class="form-control" placeholder="请输入比例" v-model.number="DEPEND.percentage" :disabled="!editable">
-                    <div class="input-group-addon">%</div>
-                  </div>
-                </div>
-                <h4 class="col-sm-1" v-if="editable">
+          <label>效益取费</label>
+          <div>
+            <el-row>
+              <el-col :span="10">
+                <el-input 
+                  placeholder="请输入主办方" 
+                  type="text" 
+                  v-model="business.contractType.benefitFee.main.name" 
+                  :disabled="!editable">
+                  <template slot="prepend">主办方</template>
+                </el-input>
+              </el-col>
+              <el-col :span="10">
+                <el-input 
+                  placeholder="请输入比例" 
+                  type="number" 
+                  v-model="business.contractType.benefitFee.main.percentage" 
+                  :disabled="!editable">
+                  <template slot="prepend">比例</template>
+                  <template slot="append">%</template>
+                </el-input>
+              </el-col>
+            </el-row>
+          </div>
+          <div class="support-box">
+            <el-row v-for="(DEPEND, index) in business.contractType.benefitFee.depend">
+              <el-col :span="10">
+                <el-input 
+                  placeholder="请输入协办方" 
+                  type="text" 
+                  v-model="DEPEND.name" 
+                  :disabled="!editable">
+                  <template slot="prepend">协办方</template>
+                </el-input>
+              </el-col>
+              <el-col :span="10">
+                <el-input 
+                  placeholder="请输入比例" 
+                  type="number" 
+                  v-model="DEPEND.percentage" 
+                  :disabled="!editable">
+                  <template slot="prepend">比例</template>
+                  <template slot="append">%</template>
+                </el-input>
+              </el-col>
+              <el-col :span="2">
+                <h4 v-if="editable">
                   <a class="text-danger" @click="delBenefitFee(index)">
                     <img src="../../../../img/delete_icon.svg">
                   </a>
                 </h4>
-              </template>
-              <h4 class="col-sm-1" v-if="editable">
-                <a class="text-danger" @click="addBenefitFee()">
-                  <img src="../../../../img/add_icon.svg">
-                </a>
-              </h4>
-            </div>
+              </el-col>
+              <el-col :span="2">
+                <h4 v-if="editable">
+                  <a class="text-danger" @click="addBenefitFee()">
+                    <img src="../../../../img/add_icon.svg">
+                  </a>
+                </h4>
+              </el-col>
+            </el-row>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label">部门协作</label>
+          <label class="col-sm-2 control-label clear-padding-left">部门协作</label>
           <div class="my-col-sm-5 check-wrap">
             <input class="magic-radio" type="radio" name="departmentCooperation" value="有部门合作" v-model="business.departmentCoop.name" :disabled="!editable" id="has">
             <label class="radio-inline" for="has">
@@ -372,11 +385,70 @@
           </div>
         </div>
         <div class="form-group bgc-fff" v-if="departmentCoopChan">
-          <p>
-            <label class="control-label" style="padding-left:15px;">合作部门</label>
-          </p>
-          
-          <div class="my-col-sm-5">
+          <label>合作部门</label>
+
+          <div>
+            <el-row>
+              <el-col :span="10">
+                <el-input 
+                  placeholder="无" 
+                  type="text" 
+                  v-model="business.departmentCoop.departments.main.name" 
+                  disabled>
+                  <template slot="prepend">合作部门</template>
+                </el-input>
+              </el-col>
+              <el-col :span="10">
+                <el-input 
+                  placeholder="请输入比例" 
+                  type="number" 
+                  v-model="business.departmentCoop.departments.main.percentage" 
+                  :disabled="!editable">
+                  <template slot="prepend">比例</template>
+                  <template slot="append">%</template>
+                </el-input>
+              </el-col>
+            </el-row>
+          </div>
+          <div class="support-box">
+            <el-row v-for="(COOP, index) in business.departmentCoop.departments.coop">
+              <el-col :span="10">
+                <el-input 
+                  placeholder="请输入合作部门" 
+                  type="text" 
+                  v-model="COOP.name" 
+                  :disabled="!editable">
+                  <template slot="prepend">合作部门</template>
+                </el-input>
+              </el-col>
+              <el-col :span="10">
+                <el-input 
+                  placeholder="请输入比例" 
+                  type="number" 
+                  v-model="COOP.percentage" 
+                  :disabled="!editable">
+                  <template slot="prepend">比例</template>
+                  <template slot="append">%</template>
+                </el-input>
+              </el-col>
+              <el-col :span="2">
+                <h4 v-if="editable">
+                  <a class="text-danger" @click="delDepartments(index)">
+                    <img src="../../../../img/delete_icon.svg">
+                  </a>
+                </h4>
+              </el-col>
+              <el-col :span="2">
+                <h4 v-if="editable">
+                  <a class="text-danger" @click="addDepartments()">
+                    <img src="../../../../img/add_icon.svg">
+                  </a>
+                </h4>
+              </el-col>
+            </el-row>
+          </div>
+
+          <!-- <div>
             <div class="row form-group">
               <div class="col-sm-5">
                 <p class="form-control-static">主要部门：{{business.departmentCoop.departments.main.name}}</p>
@@ -416,7 +488,7 @@
                 </a>
               </h4>
             </div>
-          </div>
+          </div> -->
         </div>
       </div> 
       <div class="staff-message">
@@ -426,13 +498,6 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="参审注师" required>
-              <!-- <el-select  v-model="business.reviewCPA.name" placeholder="请选择参审注师" :disabled="!editable">
-                <el-option 
-                v-for="(manager, index) in reviewCPAs" 
-                :value="manager" 
-                :key="index">
-                </el-option>
-              </el-select> -->
               <span>{{ reviewCPAsName }}</span>
               <i class="fa fa-x fa-user-plus c-p" :class="{'c-na': !editable }" style="color:#50bef7;" aria-hidden="true" @click="showStaffModal('reviewCPA')"></i>
             </el-form-item>
@@ -441,8 +506,6 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="参审助理" required>
-              <!-- <el-input type="text" placeholder="请输入参审助理" v-model="business.reviewAssistant.name" :disabled="!editable">
-              </el-input> -->
               <span>{{ reviewAssistantsName }}</span>
               <i class="fa fa-x fa-user-plus c-p" :class="{'c-na': !editable }" style="color:#50bef7;" aria-hidden="true" @click="showStaffModal('reviewAssistant')"></i>
             </el-form-item>
@@ -1125,7 +1188,9 @@ export default {
       }
     },
     delBasicFee(index) {
-      this.business.contractType.basicFee.depend.splice(index, 1);
+      if (this.business.contractType.basicFee.depend.length > 1) {
+        this.business.contractType.basicFee.depend.splice(index, 1);
+      }
     },
     addBasicFee() {
       this.business.contractType.basicFee.depend.push({ name: '', percentage: 0 });
@@ -1147,7 +1212,9 @@ export default {
       }
     },
     delBenefitFee(index) {
-      this.business.contractType.benefitFee.depend.splice(index, 1);
+      if (this.business.contractType.benefitFee.depend.length > 1) {
+        this.business.contractType.benefitFee.depend.splice(index, 1);
+      }
     },
     addBenefitFee() {
       this.business.contractType.benefitFee.depend.push({ name: '', percentage: 0 });
@@ -1169,7 +1236,9 @@ export default {
       }
     },
     delDepartments(index) {
-      this.business.departmentCoop.departments.coop.splice(index, 1);
+      if (this.business.departmentCoop.departments.coop.length > 1) {
+        this.business.departmentCoop.departments.coop.splice(index, 1);
+      }
     },
     addDepartments() {
       this.business.departmentCoop.departments.coop.push({ name: '', percentage: 0 });
@@ -1295,13 +1364,21 @@ export default {
     padding-left: 35px;
     padding-right: 35px;
     .type-wrapper {
-      padding-left: 145px;
+      padding-left: 100px;
       margin-top: 10px;
       background-color: #f9fbfe;
       > p {
-        margin-top: 20px;
+        margin-top: 25px;
         margin-bottom: 0;
         font-size: 15px;
+        &:first-child {
+          padding-top: 20px;
+        }
+        &:last-of-type {
+          + div {
+            padding-bottom: 20px;
+          }
+        }
       }
     }
   }
@@ -1322,6 +1399,8 @@ export default {
   .bgc-fff {
     padding: 10px;
     background-color: #fff;
+    margin-left: 100px;
+    margin-right: 100px;
   }
   .el-col {
     min-height: 50px;
@@ -1343,10 +1422,23 @@ export default {
 .addition{
   position: relative;
 }
-.btn-bg{
-}
-.demo-business {
 
+.support-box {
+  margin-top: 10px;
+  > .el-row {
+    > .el-col {
+      &:last-child {
+        display: none;
+      }
+    }
+    &:last-child {
+      > .el-col {
+        &:last-child {
+          display: block;
+        }
+      }
+    }
+  }
 }
 
 </style>

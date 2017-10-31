@@ -29,35 +29,6 @@
       </table>
       <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
     </card>
-   <!--  <card>
-      <search-bar placeholder="输入关键字搜索规章制度" @search="tog" class="f-r"></search-bar>
-      <h3 class="main-title adjust-mt">
-        制度列表
-        <router-link class="btn my-btn submit-btn pull-right"
-                     to="/rule-regulation-add"
-                     tag="button"
-                     v-if="btnShow">
-          新建制度
-        </router-link>
-      </h3>
-      <div class="com-list list-grou list-adjust">
-        <li class="list-group-item list-head">
-          <span class="title">信息列表</span>
-          <span class="date pull-right">修改时间</span>
-          <span class="date pull-right title-mr">创建时间</span>
-        </li>
-        <router-link class="list-group-item"
-                     :to="'/rule-regulation-detail-'+RULE.id"
-                     v-for="(RULE,index) in rules"
-                     :key="index">
-          <span class="label label-info" v-if="newRegulation(RULE.releaseTime)">新</span>
-          <span class="title">{{RULE.title}}</span>
-          <span class="date pull-right">{{ RULE.updateAt }}</span>
-          <span class="date pull-right content-mr">{{RULE.releaseTime}}</span>
-        </router-link>
-      </div>
-      <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
-    </card> -->
   </div>
 </template>
 
@@ -202,14 +173,11 @@ export default {
 
 <style lang="sass" scoped>
   .pull-right {
-    margin-right: 30px;
+    margin-right: 10px;
   }
   .text-center {
     text-align: left;
     padding-left:55px;
-  }
-  .table-bordered {
-    margin-top: 30px;
   }
   .com-list > .list-group-item {
       padding-left: 30px;

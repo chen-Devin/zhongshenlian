@@ -260,9 +260,6 @@ export default {
   text-align: left;
   padding-left:55px;
 }
-.table-bordered {
-  margin-top: 30px;
-}
 .pull-right {
   margin-right: 30px;
 }

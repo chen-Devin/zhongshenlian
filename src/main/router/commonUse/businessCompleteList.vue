@@ -293,20 +293,14 @@ export default {
 .text-center {
   text-align: left; 
 }
-.table-bordered {
-  margin-top: 30px;
-}
 .pull-right {
   margin-right: 30px;
 }
-.higher-search {
-  margin-top: 30px;
-}
 .com-list > .list-group-item {
-    padding-left: 32px;
+  padding-left: 32px;
 }
 .com-list > .list-head {
-    padding-left: 32px;
+  padding-left: 32px;
 }
 .search-form {
   padding-left: 0;

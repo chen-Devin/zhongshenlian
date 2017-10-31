@@ -198,12 +198,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  .main-title {
-    margin-bottom: 30px;
-  }
-  .f-r {
-  	float: right;
-  }
   .ta-r {
   	text-align: right;
   }

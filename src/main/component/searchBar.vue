@@ -89,6 +89,8 @@ export default {
       width: 80px;
       height: 30px;
       line-height: 30px;
+      margin-right: 10px;
+      font-size: 14px;
     }
     .el-input__inner {
       height: 30px;

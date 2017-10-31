@@ -1,9 +1,9 @@
 <template>
   <div>
     <card class="card-tabs">
-      <button class="btn my-btn submit-btn f-r addi" @click="applyExpense" v-if="applyAble">申请报销</button>
-      <h5 class="main-title">报销列表
-        <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar></h5>
+      <button class="btn my-btn submit-btn f-r" @click="applyExpense" v-if="applyAble">申请报销</button>
+      <h3 class="main-title">报销列表
+        <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar></h3>
     </card>
     <card>
       <table class="table table-bordered table-hover table-list">
@@ -115,8 +115,5 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  .addi {
-    margin-top: 21px;
-    margin-right: 40px;
-  }
+  
 </style>

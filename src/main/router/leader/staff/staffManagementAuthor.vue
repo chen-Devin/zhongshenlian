@@ -3,6 +3,8 @@
     <crumbs :paths="paths1" v-if="functionActive"></crumbs>
     <crumbs :paths="paths2" v-else></crumbs>
     <card class="card-tabs">
+      <search-bar class="f-r" :searchItems="searchItems"
+        @search="search"></search-bar>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane 
           :label="tab.label" 
@@ -10,8 +12,6 @@
           v-for="(tab, index) in tabList"
           :key="index"></el-tab-pane>
       </el-tabs>
-      <search-bar class="f-r addi" :searchItems="searchItems"
-      @search="search"></search-bar>
     </card>
     <div class="left-contain">
       <card class="card">
@@ -498,10 +498,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  .addi {
-    margin-top: -45px;
-    margin-right: 40px;
-  }
   .content-contain {
     width: 100%;
     height: 400px;
@@ -516,8 +512,7 @@ export default {
   }
   .staff-manage {
     .card-tabs {
-      padding-top: 7px;
-      padding-bottom: 7px;
+      
     }
     .left-contain {
       float: left;

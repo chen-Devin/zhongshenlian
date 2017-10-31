@@ -19,7 +19,6 @@ loadScript('http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js', funct
         scope: 'snsapi_login',
         redirect_uri: 'http://www.tzucpa.cn/wechat',
         state: Math.random(),
-        style: 'black',
-        href: 'http://test.tzucpa.cn/wechatStyle.css'
+        style: 'black'
     });
 });

@@ -5,7 +5,7 @@
       <button class="btn my-btn cancel-btn f-r mr-10" @click="showChangeModal">合同变更申请</button>
       <button class="btn my-btn submit-btn f-r mr-10" @click="showContract">查看合同</button>
       <h3 class="main-title">
-        {{business.name}} {{ business.financeCreateBillingState }} {{ business.projectStatus }}
+        {{business.name}}
       </h3>
       <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>

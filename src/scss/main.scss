@@ -40,8 +40,10 @@ label {
 
 //标题
 .main-title {
-  margin-top: 22px;
-  margin-bottom: 17px;
+  height: 30px;
+  line-height: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   margin-left: 40px;
   // font-size: 16px;
 }
@@ -327,9 +329,6 @@ h3 {
     width: 600px;
   }
 }
-.form-group {
-    margin-bottom: 30px;
-}
 .form-control {
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -462,7 +461,7 @@ h3 {
 
 //列表项宽度
 label.col-sm-2.control-label {
-    width: 145px;
+    width: 100px;
 }
 
 //业务报告按钮
@@ -626,6 +625,7 @@ label.col-sm-2.control-label {
 
 .el-tabs  {
   > .el-tabs__header {
+    display: inline-block;
     margin-bottom: 0;
     border-bottom: none;
     > .el-tabs__nav-wrap {
@@ -638,6 +638,7 @@ label.col-sm-2.control-label {
             position: relative;
             height: 46px;
             line-height: 46px;
+            padding: 0 40px;
             font-size: 15px;
             border-right: 1px solid #f9f9f9;
             &.is-active {
@@ -661,6 +662,29 @@ label.col-sm-2.control-label {
       }
     }
   }
+}
+
+.nav-justified > li, .nav-tabs.nav-justified > li {
+    display: inline-block;
+    width: 140px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  background-color: #fff;
+  border: none;
+}
+
+.nav-tabs.nav-justified > .active > a, .nav-tabs.nav-justified > .active > a:hover {
+  border: none;
+  background-color: #fff;
+}
+
+.nav > li > a:hover {
+  background-color: #fff;
+}
+
+.nav-tabs > li > a:hover {
+    border-color: transparent;
 }
 
 .el-select {
