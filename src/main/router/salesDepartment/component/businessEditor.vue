@@ -271,7 +271,7 @@
             </el-row>
           </div>
           <div class="support-box">
-            <el-row v-for="(DEPEND, index) in business.contractType.basicFee.depend">
+            <el-row v-for="(DEPEND, index) in business.contractType.basicFee.depend" :key="index">
               <el-col :span="10">
                 <el-input 
                   placeholder="请输入协办方" 
@@ -334,7 +334,7 @@
             </el-row>
           </div>
           <div class="support-box">
-            <el-row v-for="(DEPEND, index) in business.contractType.benefitFee.depend">
+            <el-row v-for="(DEPEND, index) in business.contractType.benefitFee.depend" :key="index">
               <el-col :span="10">
                 <el-input 
                   placeholder="请输入协办方" 
@@ -386,7 +386,6 @@
         </div>
         <div class="form-group bgc-fff" v-if="departmentCoopChan">
           <label>合作部门</label>
-
           <div>
             <el-row>
               <el-col :span="10">
@@ -411,7 +410,7 @@
             </el-row>
           </div>
           <div class="support-box">
-            <el-row v-for="(COOP, index) in business.departmentCoop.departments.coop">
+            <el-row v-for="(COOP, index) in business.departmentCoop.departments.coop" :key="index">
               <el-col :span="10">
                 <el-input 
                   placeholder="请输入合作部门" 
@@ -447,48 +446,6 @@
               </el-col>
             </el-row>
           </div>
-
-          <!-- <div>
-            <div class="row form-group">
-              <div class="col-sm-5">
-                <p class="form-control-static">主要部门：{{business.departmentCoop.departments.main.name}}</p>
-              </div>
-              <div class="col-sm-5">
-                <div class="input-group">
-                  <div class="input-group-addon">比例</div>
-                  <input type="number" class="form-control" placeholder="请输入比例" v-model.number="business.departmentCoop.departments.main.percentage" :disabled="!editable">
-                  <div class="input-group-addon">%</div>
-                </div>
-              </div>
-            </div>
-            <div class="row form-group">
-              <template v-for="(COOP, index) in business.departmentCoop.departments.coop">
-                <div class="col-sm-5">
-                  <div class="input-group">
-                    <div class="input-group-addon">合作部门</div>
-                    <input type="text" class="form-control" placeholder="请输入合作部门" v-model="COOP.name" :disabled="!editable">
-                  </div>
-                </div>
-                <div class="col-sm-5">
-                  <div class="input-group">
-                    <div class="input-group-addon">比例</div>
-                    <input type="number" class="form-control" placeholder="请输入比例" v-model.number="COOP.percentage" :disabled="!editable">
-                    <div class="input-group-addon">%</div>
-                  </div>
-                </div>
-                <h4 class="col-sm-1" v-if="editable">
-                  <a class="text-danger" @click="delDepartments(index)">
-                    <img src="../../../../img/delete_icon.svg">
-                  </a>
-                </h4>
-              </template>
-              <h4 class="col-sm-1" v-if="editable">
-                <a class="text-danger" @click="addDepartments()">
-                  <img src="../../../../img/add_icon.svg">
-                </a>
-              </h4>
-            </div>
-          </div> -->
         </div>
       </div> 
       <div class="staff-message">
