@@ -15,7 +15,8 @@ function treeHanlde(arr) {
     }]
     let obj = {
        label: '天津中审联',
-       children: []
+       children: [],
+       level: 1
     }
     // 二级
     arr.forEach((item, index) => {
@@ -27,22 +28,26 @@ function treeHanlde(arr) {
       })
     })
     // 其他
-    obj.children.forEach((item, index) => {
-      item.children.forEach((jtem) => {
-        jtem.label = jtem.name
-        jtem.children = jtem.projectDepartmentArray
-        jtem.level = 3
-        jtem.children.forEach((ktem) => {
-          ktem.label = ktem.name
-          ktem.children = ktem.groupArray
-          ktem.level = 4
-          ktem.children.forEach((mtem) => {
-            mtem.label = mtem.name
-            mtem.level = 5
+    if (obj.children) {
+      obj.children.forEach((item, index) => {
+        if (item.children) {
+          item.children.forEach((jtem) => {
+            jtem.label = jtem.name
+            jtem.children = jtem.projectDepartmentArray
+            jtem.level = 3
+            jtem.children.forEach((ktem) => {
+              ktem.label = ktem.name
+              ktem.children = ktem.groupArray
+              ktem.level = 4
+              ktem.children.forEach((mtem) => {
+                mtem.label = mtem.name
+                mtem.level = 5
+              })
+            })
           })
-        })
+        }
       })
-    })
+    }
     return [obj]
 }
 

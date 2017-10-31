@@ -11,22 +11,37 @@
           :key="index"></el-tab-pane>
       </el-tabs>
     </card>
+    <div class="tree-wrapper">
+      <card class="tree">
+        <h5 class="vice-title">部门筛选</h5>
+        <div class="content-contain">
+          <el-tree 
+            :data="treeData" 
+            :props="defaultProps" 
+            :highlight-current="highlightCurrent" 
+            :expand-on-click-node="expandOnClickNode" 
+            :default-expand-all="defaultExpandAll" 
+            @node-click="selectNode" 
+            v-if="reloadList"></el-tree>
+        </div>
+      </card>
+    </div>
     <div class="function-wrapper" v-if="functionShow">
-      <company-list 
-        class="company-list" 
-        v-if="reloadList" 
-        @switchFunction="switchFunction"></company-list>
       <div class="company-wrapper">
         <card>
-          <functional-department 
-            :functionInfo="functionInfo"
-            @edit="edit"
-            @deleteDep="deleteDep" v-if="funcDetailShow"></functional-department>
-          <functional-edit
-            :functionInfoEdit="functionInfoEdit"
-            @cancel="cancel" 
-            @editSuccess="editSuccess"
-            @save="save" v-else></functional-edit>
+          <template v-if="functionContentShow">
+            <functional-department 
+              :functionInfo="functionInfo"
+              @edit="edit"
+              @deleteDep="deleteDep" 
+              v-if="funcDetailShow"></functional-department>
+            <functional-edit
+              :functionInfoEdit="functionInfoEdit"
+              @cancel="cancel" 
+              @editSuccess="editSuccess"
+              @save="save" 
+              v-else></functional-edit>
+          </template>
         </card>
       </div>
       <modal v-if="deleteFunction">
@@ -40,20 +55,6 @@
       </modal>
     </div>
     <div class="depart-wrapper" v-else>
-      <card class="tree">
-        <h5 class="vice-title">部门筛选</h5>
-        <el-tree 
-          :data="treeData" 
-          :props="defaultProps" 
-          :highlight-current="highlightCurrent" 
-          :expand-on-click-node="expandOnClickNode" 
-          :default-expand-all="defaultExpandAll" 
-          @node-click="selectNode" 
-          v-if="reloadList"></el-tree>
-        <div class="add">
-          <a href="javascript:void(0);" @click="addCompany">新建公司</a>
-        </div>
-      </card>
       <card class="detail">
         <!--第二级 公司-->
         <template v-if="show2">
@@ -258,6 +259,7 @@ export default {
         { name: '公司信息管理', url: '/business-review-list-leader', present: true }
       ],
       searchItems: [],
+      departmentList: [],
       operateId: '',
       reloadList: true,
       functionShow: true,
@@ -452,6 +454,7 @@ export default {
       highlightCurrent: true,
       expandOnClickNode: false,
       defaultExpandAll: true,
+      functionContentShow: false,
       show2: false,
       show3: false,
       show4: false,
@@ -535,12 +538,40 @@ export default {
     handleClick(tab, event) {
       if (tab.name === 'function') {
         this.functionShow = true
+        this.treeData = []
+        this.getInfoDepartmentList()
       } else if (tab.name === 'business') {
         this.functionShow = false
+        this.treeData = []
+        this.getFullCompanyList()
       }
     },
     search () {
 
+    },
+    getInfoDepartmentList () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getInfoDepartmentList',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.departmentList = rep.data.data.departmentList
+            this.treeData = TreeDataHandle(rep.data.data.departmentList)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
     },
     getDepartmentInfo (id) {
       this.functionId = id
@@ -572,9 +603,6 @@ export default {
           }
         }, (rep) => { });
       })
-    },
-    switchFunction (id) {
-      this.getDepartmentInfo(id)
     },
     getFullCompanyList () {
       return new Promise((resolve, reject) => {
@@ -930,21 +958,24 @@ export default {
       if (level === 0) {
         this.getDepartmentInfo(id)
         this.funcDetailShow = true
+        this.getInfoDepartmentList()
       } else if (level === 2) {
         this.getCompanyInfo(id)
         this.detailShow2 = true
+        this.getFullCompanyList()
       } else if (level === 3) {
         this.getCompanyDepartmentInfo(id)
         this.detailShow3 = true
+        this.getFullCompanyList()
       } else if (level === 4) {
         this.getProjectDepartmentInfo(id)
         this.detailShow4 = true
+        this.getFullCompanyList()
       } else if (level === 5) {
         this.getDepartmentGroupInfo(id)
         this.detailShow5 = true
+        this.getFullCompanyList()
       }
-      this.getFullCompanyList()
-      // this.reloadTree()
     },
     edit (level) {
       if (level === 0) {
@@ -1030,7 +1061,11 @@ export default {
       }
     },
     reloadTree () {
-      this.getFullCompanyList()
+      if (this.functionShow) {
+        this.getInfoDepartmentList()
+      } else {
+        this.getFullCompanyList()
+      }
       this.show2 = false
       this.show3 = false
       this.show4 = false
@@ -1051,12 +1086,18 @@ export default {
     selectNode (data) {
       this.operateId = data.id
       if (data.level === 2) {
-        this.getCompanyInfo(this.operateId)
-        this.show2 = true
-        this.detailShow2 = true
-        this.show3 = false
-        this.show4 = false
-        this.show5 = false
+        if (this.functionShow) {
+          this.getDepartmentInfo(this.operateId)
+          this.functionContentShow = true
+          this.funcDetailShow = true
+        } else {
+          this.getCompanyInfo(this.operateId)
+          this.show2 = true
+          this.detailShow2 = true
+          this.show3 = false
+          this.show4 = false
+          this.show5 = false
+        }
       } else if (data.level === 3) {
         this.getCompanyDepartmentInfo(this.operateId)
         this.show2 = false
@@ -1082,7 +1123,7 @@ export default {
     }
   },
   created() {
-    this.getFullCompanyList()
+    this.getInfoDepartmentList()
   },
   components: {
     crumbs,
@@ -1107,39 +1148,29 @@ export default {
 
 <style lang="sass" scoped>
 @import '../../../../scss/_variables.scss';
-  // .addi {
-  //   margin-top: -48px;
-  //   margin-right: 40px;
-  // }
   .company-management {
-    > .card-tabs {
-      
-    }
     > .function-wrapper {
       padding-left: 20px;
       > .company-list {
         
       }
     }
+    > .tree-wrapper {
+      float: left;
+      width: 400px;
+      .content-contain {
+        width: 100%;
+        height: 700px;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        overflow: auto;
+        background-color: #F9FBFE;
+      }
+    }
   }
   .depart-wrapper {
     display: flex;
-    > .tree {
-      width: 260px;
-      margin-right: 0;
-      padding-top: 18px;
-      padding-left: 17px;
-      padding-right: 17px;
-      padding-bottom: 18px;
-      font-size: 13px;
-      > .vice-title {
-        margin-left: 0;
-      }
-      > .add {
-        padding-top: 10px;
-        text-align: center;
-      }
-    }
     > .detail {
       flex: 1;
       margin-left: 10px;
@@ -1147,4 +1178,5 @@ export default {
       padding-bottom: 20px;
     }
   }
+
 </style>

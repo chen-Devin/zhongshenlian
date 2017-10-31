@@ -4,64 +4,126 @@
       <side-message :user="user"></side-message>
     </div>
     <el-menu class="el-menu-vertical-demo" :router="routerVal" :default-active="activeUrl" :unique-opened="uniqueOpened" @open="handleOpen">
-      <el-menu-item index="/quick">我的快捷</el-menu-item>
+      <el-submenu index="quick">
+        <template slot="title">
+          <span>我的快捷</span>
+        </template>
+      </el-submenu>
       <template v-if="leader">
-        <el-submenu index="to-do">
+        <el-submenu index="business-review-list-leader">
           <template slot="title">待办事项</template>
           <el-menu-item index="/business-review-list-leader">立项审批</el-menu-item>
           <el-menu-item index="/bid-info-list">招投标审批</el-menu-item>
           <el-menu-item index="/expenses-review/10">报销审批</el-menu-item>
         </el-submenu>
-        <el-submenu index="information-manage">
+        <el-submenu index="customer-infor-list">
           <template slot="title">信息管理</template>
           <el-menu-item index="/customer-infor-list">客户信息管理</el-menu-item>
           <el-menu-item index="/company-management">公司信息管理</el-menu-item>
           <!-- <el-menu-item index="{5}">外部协办方信息管理</el-menu-item> -->
         </el-submenu>
-        <el-submenu index="project-manage">
+        <el-submenu index="business-handle-list-leader">
           <template slot="title">项目管理</template>
           <el-menu-item index="/business-handle-list-leader">进行中项目</el-menu-item>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
-        <el-menu-item index="/staff-management-author">职员管理</el-menu-item>
-        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+        <el-submenu index="staff-management-author">
+          <template slot="title">
+            <span>职员管理</span>
+          </template>
+        </el-submenu>
+        <!-- <el-menu-item index="/staff-management-author">职员管理</el-menu-item> -->
+        <el-submenu index="expenses-list">
+          <template slot="title">
+            <span>报销申请</span>
+          </template>
+        </el-submenu>
+        <!-- <el-menu-item index="/expenses-list">报销申请</el-menu-item> -->
       </template>
       <template v-if="sales">
-        <el-submenu index="project-manage">
+        <el-submenu index="business-review-list-sales">
           <template slot="title">项目管理</template>
           <el-menu-item index="/business-review-list-sales">立项项目</el-menu-item>
           <el-menu-item index="/business-handle-list-sales">进行中项目</el-menu-item>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
-        <el-menu-item index="/customer-infor-list">客户信息管理</el-menu-item>
-        <el-menu-item index="/bid-info-list">招投标信息</el-menu-item>
-        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+        <el-submenu index="customer-infor-list">
+          <template slot="title">
+            <span>客户信息管理</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="bid-info-list">
+          <template slot="title">
+            <span>招投标信息</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="expenses-list">
+          <template slot="title">
+            <span>报销申请</span>
+          </template>
+        </el-submenu>
       </template>
       <template v-if="market">
-        <el-menu-item index="/bid-info-list">招投标信息</el-menu-item>
-        <el-menu-item index="/bid-info-draft">草稿箱</el-menu-item>
-        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+        <el-submenu index="bid-info-list">
+          <template slot="title">
+            <span>招投标信息</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="bid-info-draft">
+          <template slot="title">
+            <span>草稿箱</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="expenses-list">
+          <template slot="title">
+            <span>报销申请</span>
+          </template>
+        </el-submenu>
       </template>
       <template v-if="archives">
-        <el-menu-item index="/business-handle-list-archives">待处理业务</el-menu-item>
-        <el-submenu index="project-manage">
+        <el-submenu index="business-handle-list-archives">
+          <template slot="title">
+            <span>待处理业务</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="business-complete-list">
           <template slot="title">项目管理</template>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
-        <el-menu-item index="/bid-info-list">招投标信息</el-menu-item>
-        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+        <el-submenu index="bid-info-list">
+          <template slot="title">
+            <span>招投标信息</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="expenses-list">
+          <template slot="title">
+            <span>报销申请</span>
+          </template>
+        </el-submenu>
       </template>
       <template v-if="riskHandle || riskReview">
-        <el-menu-item index="/business-handle-list-risk" v-if="riskHandle">待处理业务</el-menu-item>
-        <el-submenu index="project-manage">
+        <el-submenu index="business-handle-list-risk">
+          <template slot="title">
+            <span>待处理业务</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="business-complete-list">
           <template slot="title">项目管理</template>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
-        <el-menu-item index="/bid-info-list">招投标信息</el-menu-item>
-        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+        <el-submenu index="bid-info-list">
+          <template slot="title">
+            <span>招投标信息</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="expenses-list">
+          <template slot="title">
+            <span>报销申请</span>
+          </template>
+        </el-submenu>
       </template>
       <template v-if="financial">
-        <el-submenu index="to-review" v-if="financial">
+        <el-submenu index="business-handle-list-financial/0" v-if="financial">
           <template slot="title">待处理业务</template>
             <el-menu-item index="/business-handle-list-financial/0">待开发票</el-menu-item>
             <el-menu-item index="/business-handle-list-financial/1">待上传截图</el-menu-item>
@@ -70,23 +132,47 @@
             <el-menu-item index="/expenses-review/1">付款申请</el-menu-item>
             <el-menu-item index="/expenses-review/2">付款审批</el-menu-item>
         </el-submenu>
-        <el-submenu index="project-manage">
+        <el-submenu index="business-complete-list">
           <template slot="title">项目管理</template>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
-        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
-        <el-menu-item index="/bid-info-list">招投标信息</el-menu-item>
+        <el-submenu index="bid-info-list">
+          <template slot="title">
+            <span>招投标信息</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="expenses-list">
+          <template slot="title">
+            <span>报销申请</span>
+          </template>
+        </el-submenu>
       </template>
       <template v-if="office">
-        <el-menu-item index="/business-handle-list-office">待处理业务</el-menu-item>
-        <el-submenu index="project-manage">
+        <el-submenu index="business-handle-list-office">
+          <template slot="title">
+            <span>待处理业务</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="business-complete-list">
           <template slot="title">项目管理</template>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
-        <el-menu-item index="/bid-info-list">招投标信息</el-menu-item>
-        <el-menu-item index="/expenses-list">报销申请</el-menu-item>
+        <el-submenu index="bid-info-list">
+          <template slot="title">
+            <span>招投标信息</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="expenses-list">
+          <template slot="title">
+            <span>报销申请</span>
+          </template>
+        </el-submenu>
       </template>
-      <el-menu-item index="/rule-regulation">规章制度</el-menu-item>
+      <el-submenu index="rule-regulation">
+        <template slot="title">
+          <span>规章制度</span>
+        </template>
+      </el-submenu>
     </el-menu>
   </div>
 </template>
@@ -217,22 +303,7 @@ export default {
   props: ['user'],
   methods: {
     handleOpen(key, keyPath) {
-      if (key === 'to-do') {
-        if (this.user.department === '所长') {
-          this.$router.push('/business-review-list-leader');
-        } else if (this.user.department === '业务部') {
-          this.$router.push('/business-review-list-sales');
-        }
-      }
-      if (key === 'information-manage') {
-        this.$router.push('/customer-infor-list');
-      }
-      if (key === 'project-manage') {
-        this.$router.push('/business-complete-list');
-      }
-      if (key === 'staff-manage') {
-        this.$router.push('/staff-management-author');
-      }
+      this.$router.push('/' + key)
     }
   },
   components: {
@@ -261,6 +332,11 @@ export default {
     position: relative;
     background-color: #364A62;
     .el-submenu {
+      &.is-opened {
+        > .el-submenu__title {
+          background-color: #50BAF0;
+        }
+      }
       &.is-active {
         background-color: #50BAF0;
       }
@@ -274,8 +350,8 @@ export default {
         }
       }
       > .el-submenu__title {
-        height: 56px;
-        line-height: 56px;
+        height: 40px;
+        line-height: 40px;
         font-size: 14px;
         color: #fff;
         cursor: pointer;
@@ -294,9 +370,9 @@ export default {
       }
     }
     > .el-menu-item {
-      height: 56px;
-      line-height: 56px;
-      font-size: 14px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 13px;
       color: #fff;
       cursor: pointer;
       text-align: center;

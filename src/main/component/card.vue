@@ -17,7 +17,7 @@ export default {
 
 section {
   position: relative;
-  margin-top: 23px;
+  margin-top: 10px;
   margin-left: 30px;
   margin-right: 30px;
   // padding: 10px 20px;

@@ -1,4 +1,4 @@
-\<template>
+<template>
   <div class="main staff-manage">
     <crumbs :paths="paths1" v-if="functionActive"></crumbs>
     <crumbs :paths="paths2" v-else></crumbs>
@@ -46,6 +46,7 @@
         <p class="ta-c">
           <a href="javascript:void(0);" @click="showAdd">添加职员</a>
         </p>
+        <p>{{ treeData }}</p>
       </card>
     </div>
     <div class="right-contain">
@@ -129,15 +130,15 @@ export default {
       ],
       departments: [],
       treeData: [{
-        label: '天津中审联',
+        label: '',
         children: [{
-          label: '二级 1-1',
+          label: '',
           children: [{
-            label: '三级 1-1-1',
+            label: '',
             children: [{
-              label: 1
+              label: ''
             }, {
-              label: 2
+              label: ''
             }]
           }]
         }]
@@ -244,7 +245,6 @@ export default {
       // this.getBiddingList()
     },
     saveNewStaff (type) {
-      console.log(type)
       if (type[0] === 0) {
         this.type = 'function'
       } else {
@@ -355,11 +355,12 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.treeData = []
-            this.treeData = rep.data.data.departmentList.map((item) => {
-              item.label = item.name
-              item.children = []
-              return item
-            })
+            // this.treeData = rep.data.data.departmentList.map((item) => {
+            //   item.label = item.name
+            //   item.children = []
+            //   return item
+            // })
+            this.treeData = TreeDataHandle(rep.data.data.departmentList)
             console.log(rep.data.data.departmentList, this.treeData)
             resolve('done');
           }
@@ -379,7 +380,6 @@ export default {
                 platform: 'web',
                 id: this.staffFilterId,
                 type: this.staffFilterType
-                // type: 'department'
               }
               return JSON.stringify(obj);
             })()
@@ -409,10 +409,18 @@ export default {
       return true
     },
     selectNode (data) {
+      if (data.level === 1) {
+        this.staffAllList = []
+        return false
+      }
       this.isNew = [false]
       this.staffFilterId = data.id
       if (data.level === 2) {
-        this.staffFilterType = 'company'
+        if (this.functionActive) {
+          this.staffFilterType = 'department'
+        } else if (this.departActive) {
+          this.staffFilterType = 'company'
+        }
       } else if (data.level === 3) {
         this.staffFilterType = 'companyDepartment'
       } else if (data.level === 4) {
