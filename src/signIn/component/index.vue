@@ -380,7 +380,7 @@ export default {
 .phone-icon {
   &:before {
     content: '';
-    background: url('../../img/signup/user@3x.png');
+    background: url('../../img/signup/phone.svg');
     background-repeat: no-repeat;
     display: block;
     width: 18px;
