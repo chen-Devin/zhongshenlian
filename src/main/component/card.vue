@@ -1,7 +1,7 @@
 <template>
   <section>
     <slot>
-      <h3 class="text-warning text-center">此处尚无内容</h3>
+      <p class="text-center">暂无</p>
     </slot>
   </section>
 </template>

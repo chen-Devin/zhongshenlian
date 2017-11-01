@@ -6,22 +6,36 @@
     <div class="company-detail">
       <el-row>
         <el-col :span="9" :offset="2">
-          <p>部门编号：{{ company.number }}</p>
-          <p>部门名称：{{ company.name }}</p>
-          <p>是否有部门负责人：{{ company.principalTelephone===''?'否':'是' }}</p>
-          <p>人员数量：{{ company.staffNum }}</p>
+          <p class="d-f">
+            <span style="width:90px;">部门编号：</span>
+            <el-input type="text" v-model="company.number" placeholder="请输入部门编号" disabled></el-input>
+          </p>
+          <p class="d-f">
+            <span style="width:90px;">部门名称：</span>
+            <el-input type="text" v-model="company.name" placeholder="请输入部门名称" disabled></el-input>
+          </p>
+          <p class="input-wrapper">
+            是否有部门负责人：
+            <span>{{ company.principalTelephone===''?'否':'是' }}</span>
+          </p>
+          <p class="input-wrapper">
+            人员数量：
+            <span>{{company.staffNum}}</span>
+          </p>
         </el-col>
       </el-row>
       <el-row>
           <el-col :span="24" :offset="2"> 
-            <el-checkbox-group v-model="company.checked">
-              分管业务权限：
-              <el-checkbox 
-                :label="item.name" 
-                v-for="(item, index) in company.companyList" 
-                :key="index"
-                disabled>{{ item.name }}</el-checkbox>
-            </el-checkbox-group>
+            <p>
+              <el-checkbox-group v-model="company.checked">
+                分管业务权限：
+                <el-checkbox 
+                  :label="item.name" 
+                  v-for="(item, index) in company.companyList" 
+                  :key="index"
+                  disabled>{{ item.name }}</el-checkbox>
+              </el-checkbox-group>
+            </p>
           </el-col>
       </el-row>
     </div>
@@ -77,6 +91,12 @@ export default {
     margin: 0;
     margin-top: 20px;
     text-align: center;
+  }
+  .el-row {
+    p {
+      height: 36px;
+      line-height: 36px;
+    }
   }
   .company-detail {
     width: 100%;

@@ -6,13 +6,13 @@
     <div class="company-detail">
       <el-row>
         <el-col :span="9" :offset="2">
-          <p class="input-wrapper">
-            部门编号：
-            <input type="text" class="form-control" v-model="functionInfoEdit.number" placeholder="请输入部门编号">
+          <p class="d-f">
+            <span style="width:90px;">部门编号：</span>
+            <el-input type="text" v-model="functionInfoEdit.number" placeholder="请输入部门编号"></el-input>
           </p>
-          <p class="input-wrapper">
-            部门名称：
-            <input type="text" class="form-control" v-model="functionInfoEdit.name" placeholder="请输入部门名称">
+          <p class="d-f">
+            <span style="width:90px;">部门名称：</span>
+            <el-input type="text" v-model="functionInfoEdit.name" placeholder="请输入部门名称"></el-input>
           </p>
           <p class="input-wrapper">
             是否有部门负责人：
@@ -140,10 +140,14 @@ export default {
     width: 100%;
     background-color: #f9fdfe;
     padding: 10px 30px;
+    p {
+      height: 36px;
+      line-height: 36px;
+    }
     .input-wrapper {
       display: flex;
-      height: 34px;
-      line-height: 34px;
+      height: 36px;
+      line-height: 36px;
       .form-control {
         display: inline-block;
         flex: 1;

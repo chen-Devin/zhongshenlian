@@ -30,7 +30,7 @@
         <div class="staff-filter">
           <h5>职员筛选</h5>
           <div class="content-contain">
-            <ul class="staff-list" v-if="reloadStaffList">
+            <ul class="staff-list" v-if="reloadStaffList && staffAllList.length > 0">
               <li 
                 :class="{ active: item.isActive }" 
                 v-for="(item, index) in staffAllList" 
@@ -41,12 +41,12 @@
                 <span>{{ item.duty }}</span>
               </li>
             </ul>
+            <p class="ta-c" v-else>暂无</p>
           </div>
         </div>
         <p class="ta-c">
           <a href="javascript:void(0);" @click="showAdd">添加职员</a>
         </p>
-        <p>{{ treeData }}</p>
       </card>
     </div>
     <div class="right-contain">
