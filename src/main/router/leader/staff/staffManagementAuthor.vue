@@ -149,20 +149,8 @@ export default {
       },
       searchItems: [
         {
-          label: '',
-          value: ''
-        },
-        {
-          label: '',
-          value: ''
-        },
-        {
-          label: '',
-          value: ''
-        },
-        {
-          label: '',
-          value: ''
+          label: '职员姓名',
+          value: 'staffName'
         }
       ],
       tabList: [
@@ -235,14 +223,14 @@ export default {
     };
   },
   methods: {
-    search(searchObj) {
-      // this.reloadPagination = false
-      // setTimeout(() => {
-      //   this.reloadPagination = true
-      // }, 200)
-      // this.pageNum = 1
-      // this.searchObj = searchObj
-      // this.getBiddingList()
+    search(obj) {
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 200)
+      this.pageNum = 1
+      this.searchObj = obj
+      this.staffFilter()
     },
     saveNewStaff (type) {
       if (type[0] === 0) {
@@ -381,6 +369,7 @@ export default {
                 id: this.staffFilterId,
                 type: this.staffFilterType
               }
+              Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
             })()
           }

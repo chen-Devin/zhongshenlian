@@ -22,7 +22,7 @@
         <div class="form-group">
           <label class="col-sm-2 self-label ml-40">正文</label>
           <div class="col-sm-10">
-            <vue-editor v-model="ruleAdd.content"></vue-editor>
+            <vue-editor v-model="ruleAdd.content" :editorToolbar="customToolbar"></vue-editor>
             <!-- <textarea cols="50"
                       rows="30"
                       class="form-control"
@@ -44,7 +44,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
 import { Message } from 'element-ui';
-// import {VueEditor} from 'vue2-editor';
+import {VueEditor} from 'vue2-editor';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import ruleCanModal from './component/ruleCanModal.vue';
@@ -64,6 +64,16 @@ export default {
         title: '',
         content: ''
       },
+      customToolbar: [
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        // ['blockquote', 'code-block'],
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        // [{ 'size': ['small', false, 'large', 'huge'] }],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'font': [] }],
+        [{ 'align': [] }]
+      ],
       showCanModal: false
     }
   },
@@ -114,8 +124,8 @@ export default {
   components: {
     crumbs,
     card,
-    ruleCanModal
-    // VueEditor
+    ruleCanModal,
+    VueEditor
   }
 }
 </script>
