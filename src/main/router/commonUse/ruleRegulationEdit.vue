@@ -51,7 +51,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import qs from 'qs';
 import { Message } from 'element-ui';
-// import {VueEditor} from 'vue2-editor';
+import {VueEditor} from 'vue2-editor';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import ruleDelModal from './component/ruleDelModal.vue';
@@ -180,8 +180,8 @@ export default {
     crumbs,
     card,
     ruleDelModal,
-    ruleCanModal
-    // VueEditor
+    ruleCanModal,
+    VueEditor
   }
 }
 </script>
