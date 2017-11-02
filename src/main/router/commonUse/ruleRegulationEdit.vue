@@ -12,8 +12,28 @@
       </h3>
     </card>
     <card>
-      <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
+      <div class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
         <div class="form-group">
+          <el-form :label-position="labelPosition">
+            <el-row class="el-form-item">
+              <el-col :span="20" :offset="1">
+                 <el-form-item label="标题" label-width = "50px">
+                    <el-input type="text"
+                           placeholder="请输入标题"
+                           v-model="editRule.title"></el-input>
+                 </el-form-item>
+              </el-col>
+            </el-row> 
+            <el-row class="el-form-item"> 
+              <el-col :span="20" :offset="1">
+                 <el-form-item label="正文" label-width = "50px">
+                    <vue-editor v-model="editRule.content" :editorToolbar="customToolbar"></vue-editor>
+                 </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+        <!-- <div class="form-group">
           <label class="col-sm-2 control-label">标题</label>
           <div class="col-sm-9">
             <input type="text"
@@ -26,15 +46,9 @@
           <label class="col-sm-2 control-label">正文</label>
           <div class="col-sm-9">
             <vue-editor v-model="editRule.content" :editorToolbar="customToolbar"></vue-editor>
-            <!-- <textarea cols="50"
-                      rows="30"
-                      class="form-control"
-                      placeholder="请输入正文"
-                      v-model="editRule.content">
-            </textarea> -->
           </div>
-        </div>
-      </form>
+        </div> -->
+      </div>
       <rule-del-modal v-if="showDelModal"
                       :initalRule="editRule"
                       @deleted="deleted"
@@ -73,6 +87,7 @@ export default {
         title: '',
         content: ''
       },
+      labelPosition: 'left',
       customToolbar: [
         ['bold', 'italic', 'underline'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],

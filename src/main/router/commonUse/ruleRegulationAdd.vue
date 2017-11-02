@@ -11,25 +11,24 @@
     <card>  
       <div class="form-horizontal present-wrap" @submit.prevent @keyup.enter.prevent>
         <div class="form-group">
-          <label class="col-sm-2 self-label ml-40">标题</label>
-          <div class="col-sm-10">
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入标题"
-                   v-model="ruleAdd.title">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 self-label ml-40">正文</label>
-          <div class="col-sm-10">
-            <vue-editor v-model="ruleAdd.content" :editorToolbar="customToolbar"></vue-editor>
-            <!-- <textarea cols="50"
-                      rows="30"
-                      class="form-control"
-                      placeholder="请输入正文"
-                      v-model="ruleAdd.content">
-            </textarea> -->
-          </div>
+          <el-form :label-position="labelPosition">
+            <el-row class="el-form-item">
+              <el-col :span="20" :offset="1">
+                 <el-form-item label="标题" label-width = "50px">
+                    <el-input type="text"
+                           placeholder="请输入标题"
+                           v-model="ruleAdd.title"></el-input>
+                 </el-form-item>
+              </el-col>
+            </el-row> 
+            <el-row class="el-form-item"> 
+              <el-col :span="20" :offset="1">
+                 <el-form-item label="正文" label-width = "50px">
+                    <vue-editor v-model="ruleAdd.content" :editorToolbar="customToolbar"></vue-editor>
+                 </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
         </div>
         <rule-can-modal v-if="showCanModal"
                         @deleted="canDeleted"
@@ -74,7 +73,8 @@ export default {
         [{ 'font': [] }],
         [{ 'align': [] }]
       ],
-      showCanModal: false
+      showCanModal: false,
+      labelPosition: 'left'
     }
   },
   methods: {
@@ -131,6 +131,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.form-group {
+  margin-bottom: 22px;
+}
  input{
  background-color: #F9FBFE;
  border: 1px solid #DADADA;
