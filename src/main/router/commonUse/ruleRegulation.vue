@@ -27,6 +27,7 @@
           </tr>
         </tbody>
       </table>
+      <p class="empty-list-p" v-if="rules.length === 0">暂无数据</p>
       <my-pagination :iniTotalPage="totalPage" :totalNum="totalNum" @currentChange="currentChange"></my-pagination>
     </card>
   </div>

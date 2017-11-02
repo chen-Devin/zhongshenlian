@@ -4,14 +4,24 @@
     <h1 class="title">{{ iniCompany4.name }}</h1>
     <h5 class="vice-title">公司信息</h5>
     <div class="company-department-detail">
-      <el-row>
-        <el-col :span="9" :offset="2">
-          <p>项目部名称：{{ iniCompany4.name }}</p>
-          <p>项目部人数：{{ iniCompany4.number }}</p>
-          <p>项目部经理：{{ iniCompany4.principalTelephone }}</p>
-          <p>公司简称：{{ iniCompany4.companyAbbreviation }}</p>
-        </el-col>
-       </el-row>
+      <el-form :label-position="labelPosition" label-width = "100px">
+        <el-row>
+          <el-col :span="9" :offset="2">
+            <el-form-item label="项目部名称" required>
+              <el-input type="text" v-model="iniCompany4.name" placeholder="暂无" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="项目部人数" required>
+              <el-input type="number" v-model="iniCompany4.number" placeholder="暂无" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="项目部经理" required>
+              <el-input type="text" v-model="iniCompany4.principalTelephone" placeholder="暂无" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="公司简称" required>
+              <el-input type="text" v-model="iniCompany4.companyAbbreviation" placeholder="暂无" disabled></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form> 
     </div>
     <p class="btns">
       <button type="button" class="btn my-btn submit-btn" @click="edit">编辑</button>
@@ -30,6 +40,7 @@ export default {
   name: 'companyDepartmentDetail',
   data() {
     return {
+      labelPosition: 'left'
     };
   },
   methods: {

@@ -47,6 +47,7 @@
           </tr>
         </tbody>
       </table>
+      <p class="empty-list-p" v-if="business.bills.length === 0">暂无数据</p>
     </div>
     <modal v-if="cancelModalShow">
       <div slot="body">
@@ -179,6 +180,9 @@ export default {
 
 <style lang="sass" scoped>
   .billing-infor {
+    .main-title {
+      margin-top: 0;
+    }
     .total-amount {
       margin-top: 30px;
     }

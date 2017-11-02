@@ -47,7 +47,8 @@
               </td>
             </tr>
           </tbody>
-        </table>     
+        </table>
+        <p class="empty-list-p" v-if="educationArray.length === 0">暂无数据</p>    
       </div>
     </div>    
   </div>

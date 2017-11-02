@@ -35,7 +35,8 @@
         </tr>
       </tbody>
     </table>
-    <div v-else>
+    <p class="empty-list-p" v-if="authorityData.length === 0">暂无数据</p>
+    <div v-if="type !== 'function'">
       <p>
         <el-checkbox-group v-model="selectedAuthority">
           <el-checkbox 

@@ -2,24 +2,24 @@
   <div class="customer-info-add">
     <crumbs :paths="paths"></crumbs>
     <card v-if="initInput">
-      <button class="btn my-btn submit-btn f-r" type="button" @click="toggleType">人工录入</button>
+      <button class="btn my-btn submit-btn f-r mr-10 mt-15" type="button" @click="toggleType">人工录入</button>
       <h1 class="title">客户信息录入</h1>
       <p>请输入企业全称或社会统一信用代码获取工商局返回信息</p>
       <div class="message-box">
-        <el-row>
-          <el-col :span="12">
-            <p>
-              <span>客户名称</span>
-              <input class="form-control" type="text" v-model="customer.customerName" placeholder="请输入客户名称">
-            </p>
-          </el-col>
-          <el-col :span="12">
-            <p>
-              <span>信用代码</span>
-              <input class="form-control" type="text" v-model="customer.code" placeholder="请输入信用代码">
-            </p>
-          </el-col>
-        </el-row>
+        <el-form>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="客户名称" label-width="88px">
+                <el-input type="text" placeholder="请输入客户名称" v-model="customer.customerName"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="信用代码" label-width="88px">
+                <el-input type="text" placeholder="请输入信用代码" v-model="customer.code"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
       </div>
       <p>
         <button class="btn my-btn submit-btn" type="button" :disabled="disSubmit" @click="submit">确定</button>
@@ -187,15 +187,18 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
   .customer-info-add {
     .title {
       font-size: 18px;
       text-align: center;
-      margin-top: 40px;
+      margin-top: 45px;
+      margin-bottom: 10px;
       + p {
         font-size: 13px;
         text-align: center;
+        color: #9c9c9c;
+        margin-bottom: 10px;
       }
     }
     .message-box {

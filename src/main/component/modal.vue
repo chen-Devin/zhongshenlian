@@ -62,6 +62,7 @@ export default {
 
 .modal-footer {
   border-top: none;
+  text-align: center;
 }
 
 .modal-default-button {

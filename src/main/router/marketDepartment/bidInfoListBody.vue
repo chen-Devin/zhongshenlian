@@ -40,6 +40,7 @@
         </tr>
       </tbody>
     </table>
+    <p class="empty-list-p" v-if="biddingArray.length === 0">暂无数据</p>
     <my-pagination 
       class="list-pagination" 
       :totalNum="totalNum"

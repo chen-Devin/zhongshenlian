@@ -30,6 +30,7 @@
                 </tr>
               </tbody>
             </table>
+            <p class="empty-list-p" v-if="tableData.length === 0">暂无数据</p>
           </div>
         </card>
       </el-col>

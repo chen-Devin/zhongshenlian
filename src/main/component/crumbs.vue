@@ -1,6 +1,6 @@
 <template>
   <div class="navigation">
-    <a class="fa fa-angle-double-left back-up" @click="backUp" v-if="paths.length!==1"></a>
+    <!-- <a class="fa fa-angle-double-left back-up" @click="backUp" v-if="paths.length!==1"></a> -->
     <span class="back-up" v-if="paths.length===1">&nbsp;</span>
     <ol class="breadcrumb">
       <li :class="{active: PATH.present}" v-for="PATH in paths">

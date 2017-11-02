@@ -15,64 +15,135 @@
     <h4 class="main-title" v-if="isEdit">
       {{ newCustomerInfo.customerName === ''? '未命名': newCustomerInfo.customerName }}</h4>
     <div class="edit-form">
-      <el-row>
-        <el-col :span="12">
-          <p>
-            <span class="title">公司联系人:</span>
-            <input class="form-control" type="text" placeholder="请输入公司联系人" v-model="newCustomerInfo.name"  v-if="!isEdit">
-            <span v-if="isEdit">{{ newCustomerInfo.name }}</span>
-          </p>
-        </el-col>
-        <el-col :span="12">
-          <p>
-            <span class="title">联系人电话：</span>
-            <input class="form-control" type="text" placeholder="请输入联系人电话" v-model="newCustomerInfo.telephone" v-if="!isEdit">
-            <span v-if="isEdit">{{ newCustomerInfo.telephone }}</span>
-          </p>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <p>
-            <span class="title">联系人部门：</span>
-            <input class="form-control" type="text" placeholder="请输入联系人部门" v-model="newCustomerInfo.department" v-if="!isEdit">
-            <span v-if="isEdit">{{ newCustomerInfo.department }}</span>
-          </p>
-        </el-col>
-        <el-col :span="12">
-          <p>
-            <span class="title">资产规模：</span>
-            <input class="form-control" type="text" placeholder="请输入联系人部门" v-model="newCustomerInfo.assetSize" v-if="!isEdit">
-            <span v-if="isEdit">{{ newCustomerInfo.assetSize }}（万元）</span>
-          </p>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <p>
-            <span class="title">联系人职务：</span>
-            <input class="form-control" type="text" placeholder="请输入联系人职务" v-model="newCustomerInfo.duty" v-if="!isEdit">
-            <span v-if="isEdit">{{ newCustomerInfo.duty }}</span>
-          </p>
-        </el-col>
-        <el-col :span="12">
-          <p>
-            <span class="title">可见状态：</span>
-            <el-select v-model="value" placeholder="请选择可见状态" v-if="!isEdit">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-            <!-- 可见状态 -->
-            <span v-if="isEdit"></span>
-          </p>
-        </el-col>
-      </el-row>
-      <div class="separator"></div>
-      <el-row>
+       <el-form :label-position="labelPosition" label-width = "80px">
+         <el-row class="el-form-item">
+           <el-col :span="10" :offset="1">
+             <el-form-item label="公司联系人" required  label-width = "90px">
+               <el-input type="text" v-model="newCustomerInfo.name" :disabled="isEdit" placeholder="请输入公司联系人"></el-input>
+             </el-form-item>
+           </el-col>
+           <el-col :span="10" :offset="1">
+             <el-form-item label="联系人电话" required label-width = "90px">
+               <el-input type="text" v-model="newCustomerInfo.telephone" :disabled="isEdit" placeholder="请输入联系人电话"></el-input>
+             </el-form-item>
+           </el-col>
+         </el-row>
+         <el-row class="el-form-item">
+           <el-col :span="10" :offset="1">
+             <el-form-item label="联系人部门">
+               <el-input type="text" v-model="newCustomerInfo.department" :disabled="isEdit" placeholder="请输入联系人部门"></el-input>
+             </el-form-item>
+           </el-col>
+           <el-col :span="10" :offset="1">
+             <el-form-item label="资产规模">
+               <el-input type="text" v-model="newCustomerInfo.assetSize" :disabled="isEdit" placeholder="请输入资产规模">
+                 <template slot="append">万元</template>
+               </el-input>
+             </el-form-item>
+           </el-col>
+         </el-row>
+         <el-row class="el-form-item">
+           <el-col :span="10" :offset="1">
+             <el-form-item label="联系人职务">
+               <el-input type="text" v-model="newCustomerInfo.duty" :disabled="isEdit" placeholder="请输入联系人职务"></el-input>
+             </el-form-item>
+           </el-col>
+           <el-col :span="10" :offset="1">
+             <el-form-item label="可见状态">
+               <el-select v-model="value" :disabled="isEdit" placeholder="请选择可见状态">
+                 <el-option
+                   v-for="item in options"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value">
+                 </el-option>
+               </el-select>
+             </el-form-item>
+           </el-col>
+         </el-row>
+         <div class="separator"></div>
+         <el-row class="el-form-item">
+           <el-col :span="10" :offset="1">
+             <el-form-item label="客户名称" required>
+               <span>{{ newCustomerInfo.customerName }}</span>
+             </el-form-item>
+           </el-col>
+           <el-col :span="10" :offset="1">
+             <el-form-item label="经营状态">
+               <span>{{ newCustomerInfo.runStatus }}</span>
+             </el-form-item>
+           </el-col>
+         </el-row>
+         <el-row class="el-form-item">
+           <el-col :span="10" :offset="1">
+             <el-form-item label="社会统一信用代码" label-width="130px" required>
+               <span>{{ newCustomerInfo.code }}</span>
+             </el-form-item>
+           </el-col>
+           <el-col :span="10" :offset="1">
+             <el-form-item label="公司类型">
+               <span>{{ newCustomerInfo.customerNature }}</span>
+             </el-form-item>
+           </el-col>
+         </el-row>
+         <el-row class="el-form-item">
+           <el-col :span="10" :offset="1">
+             <el-form-item label="公司法人">
+               <span>{{ newCustomerInfo.operName }}</span>
+             </el-form-item>
+           </el-col>
+           <el-col :span="10" :offset="1">
+             <el-form-item label="注册资金">
+               <span>{{ newCustomerInfo.registeredCapital }}（万元）</span>
+             </el-form-item>
+           </el-col>
+         </el-row>
+         <el-row class="el-form-item">
+           <el-col :span="10" :offset="1">
+             <el-form-item label="成立日期">
+               <span>{{ newCustomerInfo.setUpTime }}</span>
+             </el-form-item>
+           </el-col>
+           <el-col :span="10" :offset="1">
+             <el-form-item label="注册地址">
+               <span>{{ newCustomerInfo.registeredAddress }}</span>
+             </el-form-item>
+           </el-col>
+         </el-row>
+         <el-row class="el-form-item">
+           <el-col :span="10" :offset="1">
+             <el-form-item label="所属行业">
+               <span>{{ newCustomerInfo.industry }}</span>
+             </el-form-item>
+           </el-col>
+           <el-col :span="10" :offset="1">
+             <el-form-item label="电话">
+               <span>{{ newCustomerInfo.phoneNumber }}</span>
+             </el-form-item>
+           </el-col>
+         </el-row>
+         <el-row class="el-form-item">
+           <el-col :span="10" :offset="1">
+             <el-form-item label="经营范围">
+               <span>{{ newCustomerInfo.mainWork }}</span>
+             </el-form-item>
+           </el-col>
+         </el-row>
+         <div class="separator"></div>
+         <el-row class="el-form-item">
+           <el-col :span="10" :offset="1">
+             <el-form-item label="创建人">
+               <span>{{ newCustomerInfo.founderName }}</span>
+             </el-form-item>
+           </el-col>
+           <el-col :span="10" :offset="1">
+             <el-form-item label="创建时间">
+               <span>{{ newCustomerInfo.createAt }}</span>
+             </el-form-item>
+           </el-col>
+         </el-row>
+      </el-form>
+      <!-- <el-row>
         <el-col :span="12">
           <p>
             <span class="title">客户名称：</span>
@@ -162,7 +233,7 @@
             <span>{{ newCustomerInfo.createAt }}</span>
           </p>
         </el-col>
-      </el-row>
+      </el-row> -->
     </div>
   </card>
   <modal v-if="showDeleteCustomer">
@@ -202,7 +273,8 @@ export default {
       value: '',
       user: {},
       showDeleteCustomer: false,
-      canEdit: true
+      canEdit: true,
+      labelPosition: 'left'
     }
   },
   computed: {

@@ -37,6 +37,7 @@
         </tr>
       </tbody>
     </table>
+    <p class="empty-list-p" v-if="staffArray.length === 0">暂无数据</p>
     <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="pageChan"></my-pagination>
     <staff-mod-modal v-if="showModModal"
                      :initalStaff="modStaff"

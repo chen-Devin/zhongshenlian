@@ -41,6 +41,7 @@
 			    </tr>
 			  </tbody>
 			</table>
+			<p class="empty-list-p" v-if="unfinishedList.length === 0">暂无数据</p>
 			<modal v-if="delModal">
 				<p slot="body">您确定要删除选择的招投标信息吗</p>
 				<div slot="footer">

@@ -4,67 +4,59 @@
     <h1 class="title">{{ iniCompanyEdit2.name }}</h1>
     <h5 class="vice-title">公司信息</h5>
     <div class="company-detail">
-      <el-row>
-        <el-col :span="9" :offset="2">
-          <p class="input-wrapper">
-            公司简称：
-            <input type="text" class="form-control" v-model="iniCompanyEdit2.number" placeholder="请输入公司编号">
-          </p>
-          <p class="input-wrapper">
-            公司名称：
-            <input type="text" class="form-control" v-model="iniCompanyEdit2.name" placeholder="请输入公司名称">
-          </p>
-          <p class="input-wrapper">
-            社会统一信用代码：
-            <input type="text" class="form-control" v-model="iniCompanyEdit2.creditCode" placeholder="请输入信用代码">
-          </p>
-          <p class="input-wrapper">
-            公司法人：
-            <input type="text" class="form-control" v-model="iniCompanyEdit2.legalPersonName" placeholder="请输入公司法人">
-          </p>
-          <p class="input-wrapper">
-            公司负责人：
-            <input type="text" class="form-control" v-model="iniCompanyEdit2.principalName" placeholder="请输入公司负责人">
-          </p>
-        </el-col>
-        <el-col :span="9" :offset="4">
-          <p class="input-wrapper">
-            参审人员标签：
-            <input type="text" class="form-control" v-model="iniCompanyEdit2.counselorTag" placeholder="请输入参审人员标签">
-          </p>
-          <p class="input-wrapper">
-            经营范围：
-            <input type="text" class="form-control" v-model="iniCompanyEdit2.mainWork" placeholder="请输入经营范围">
-          </p>
-          <p class="input-wrapper">
-            开户银行：
-            <input type="text" class="form-control" v-model="iniCompanyEdit2.openAccountBankName" placeholder="请输入开户银行">
-          </p>
-          <p class="input-wrapper">
-            开户银行账号：
-            <input type="text" class="form-control" v-model="iniCompanyEdit2.openAccountBankNumber" placeholder="请输入开户账号">
-          </p>
-          <p class="input-wrapper">
-            人员数量：
-            <span>{{ iniCompanyEdit2.staffNum }}</span>
-          </p>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="20" :offset="2">
-          <div class="post-type">
-            <div class="title">
-              分管公司出具报告类型：
+      <el-form :label-position="labelPosition" label-width = "120px">
+        <el-row>
+          <el-col :span="11" :offset="1">
+            <el-form-item label="公司简称" label-width="80px" required>
+              <el-input type="text" v-model="iniCompanyEdit2.number" placeholder="请输入公司编号"></el-input>
+            </el-form-item>
+            <el-form-item label="公司名称" label-width="80px" required>
+              <el-input type="text" v-model="iniCompanyEdit2.name" placeholder="请输入公司名称"></el-input>
+            </el-form-item>
+            <el-form-item label="社会统一信用代码" label-width="130px" required>
+              <el-input type="text" v-model="iniCompanyEdit2.creditCode" placeholder="请输入信用代码"></el-input>
+            </el-form-item>
+            <el-form-item label="公司法人" label-width="80px" required>
+              <el-input type="text" v-model="iniCompanyEdit2.legalPersonName" placeholder="请输入公司法人"></el-input>
+            </el-form-item>
+            <el-form-item label="公司负责人" label-width="90px" required>
+              <el-input type="text" v-model="iniCompanyEdit2.principalName" placeholder="请输入公司负责人"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11" :offset="1">
+            <el-form-item label="参审人员标签" label-width="100px" required>
+              <el-input type="text" v-model="iniCompanyEdit2.counselorTag" placeholder="请输入参审人员标签"></el-input>
+            </el-form-item>
+            <el-form-item label="经营范围" label-width="80px" required>
+              <el-input type="text" v-model="iniCompanyEdit2.mainWork" placeholder="请输入经营范围"></el-input>
+            </el-form-item>
+            <el-form-item label="开户银行" label-width="80px" required>
+              <el-input type="text" v-model="iniCompanyEdit2.openAccountBankName" placeholder="请输入开户银行"></el-input>
+            </el-form-item>
+            <el-form-item label="开户银行账号" label-width="100px" required>
+              <el-input type="text" v-model="iniCompanyEdit2.openAccountBankNumber" placeholder="请输入开户账号"></el-input>
+            </el-form-item>
+            <el-form-item label="人员数量" label-width="80px" required>
+              <span>{{ iniCompanyEdit2.staffNum }}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="21" :offset="1">
+            <div class="d-f">
+              <div class="title" style="width:150px">
+                分管公司出具报告类型
+              </div>
+              <div class="selections">
+                <el-checkbox-group v-model="iniCompanyEdit2.reportTypeArray">
+                  <el-checkbox :label="item.name" v-for="(item, index) in iniCompanyEdit2.reportTypeOption" :key="index"></el-checkbox>
+                </el-checkbox-group>
+                <a class="f-r" href="javascript:void(0);" @click="showType">添加/删除报告类型</a>
+              </div>
             </div>
-            <div class="selections">
-              <el-checkbox-group v-model="iniCompanyEdit2.reportTypeArray">
-                <el-checkbox :label="item.name" v-for="(item, index) in iniCompanyEdit2.reportTypeOption" :key="index"></el-checkbox>
-              </el-checkbox-group>
-              <a href="javascript:void(0);" @click="showType">添加/删除报告类型</a>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
+          </el-col>
+        </el-row>
+      </el-form>
     </div>
   </div>
   <p class="btns">
@@ -96,7 +88,8 @@ export default {
       }],
       inputReportModalShow: false,
       company: this.iniCompany2,
-      checked: []
+      checked: [],
+      labelPosition: 'left'
     };
   },
   // watch: {

@@ -18,7 +18,7 @@
           <el-checkbox
             v-for="(item, index) in addTypeArray"
             :key="index">
-            <input type="text" v-model="item.name">
+            <input ref="inputTxt" type="text" v-model="item.name" autofocus>
           </el-checkbox>
         </el-checkbox-group>
       </section>
@@ -42,7 +42,9 @@ export default {
       reportType: this.iniReportType,
       operateArray: [],
       restType: [],
-      addTypeArray: [],
+      addTypeArray: [{
+        name: ''
+      }],
       selectedArray: []
     };
   },
@@ -53,9 +55,16 @@ export default {
   },
   methods: {
     addType () {
-      this.addTypeArray.push({
-        name: ''
-      })
+      if (this.addTypeArray[this.addTypeArray.length -1].name) {
+        this.addTypeArray.push({
+          name: ''
+        })
+        setTimeout(() => {
+          this.$refs.inputTxt[this.$refs.inputTxt.length -1].focus()
+        }, 500)
+      } else {
+        this.$message.error('请填写内容后再添加可出具报告类型')
+      }
     },
     saveReportOption () {
       let arr = []
@@ -118,6 +127,9 @@ export default {
       top: -30px;
       right: -15px;
       color: red;
+    }
+    .main-title {
+      margin-left: 0;
     }
   }
 </style>
