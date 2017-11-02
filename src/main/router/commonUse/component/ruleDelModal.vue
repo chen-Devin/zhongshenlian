@@ -2,7 +2,7 @@
   <modal>
     <div slot="body">
       <p>
-        <span class="fa fa-exclamation-circle fa-5x text-danger"></span>
+        <!-- <span class="fa fa-exclamation-circle fa-5x text-danger"></span> -->
         <span class="text-cont">确定删除该规章制度吗？</span>
       </p>
     </div>

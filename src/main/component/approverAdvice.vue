@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-12 approver-advice">
+  <div class="approver-advice">
     <table class="table table-bordered table-list">
       <thead>
         <tr>
@@ -8,6 +8,7 @@
               <slot></slot>
             </span>
           </th>
+          <th>状态</th>
           <th>创建时间</th>
         </tr>
       </thead>
@@ -19,13 +20,13 @@
             <span>{{index+1+'.'}}</span>
           </td>
           <td>
-            <span>
-              <a v-if="ADVICE.approveResult==='不通过'" @click="open(ADVICE.approveOpinion)">查看原因</a>
-              <span class="label label-success" v-if="ADVICE.approveResult==='通过'">已通过</span>
-              <span class="label label-danger" v-else-if="ADVICE.approveResult==='不通过'"  @click="open(ADVICE.approveOpinion)">未通过</span>
-              <span class="label label-info" v-else>未审核</span>
-              <span class="time">{{ADVICE.createAt.substring(0,10)}}</span>
-            </span>
+            <span class="label label-success" v-if="ADVICE.approveResult==='通过'">已通过</span>
+            <span class="label label-danger" v-else-if="ADVICE.approveResult==='不通过'"  @click="open(ADVICE.approveOpinion)">未通过</span>
+            <span class="label label-info" v-else>未审核</span>
+            <a v-if="ADVICE.approveResult==='不通过'" @click="open(ADVICE.approveOpinion)">查看原因</a>
+          </td>
+          <td>
+            <span class="time">{{ADVICE.createAt.substring(0,10)}}</span>
           </td>
         </tr>
       </tbody>

@@ -1,15 +1,5 @@
 <template>
   <div>
-    <!-- <ul class="nav nav-tabs nav-justified">
-      <li :class="{active: PART.state}"
-          @click="sel(index)"
-          v-for="(PART, index) in parts"
-          :key="index">
-        <router-link :to="PART.path">
-          {{PART.name}}
-        </router-link>
-      </li>
-    </ul> -->
     <el-tabs class="tab-control" v-model="activeNameSales" @tab-click="sel">
       <el-tab-pane 
         :label="PART.name" 
@@ -65,7 +55,7 @@ ul.nav {
   }
 }
 div.tab-content {
-  min-height: 300px;
+  min-height: 150px;
   padding-top: 20px;
   padding-left: 10px;
   padding-right: 10px;

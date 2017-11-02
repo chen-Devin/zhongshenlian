@@ -285,7 +285,7 @@
           </div>
         </el-col>
       </el-row> -->
-      <el-row>
+      <!-- <el-row>
         <el-col :span="2" v-if="contractFileShow">
           <label class="control-label">正式合同</label>
         </el-col>
@@ -301,7 +301,7 @@
             </li>
           </ul>
         </el-col>
-      </el-row>
+      </el-row> -->
     </div>
   </el-form>
 </template>

@@ -1,102 +1,107 @@
 <template>
   <div class="billing-detail">
-    <card>
-      <template v-if="!sended">
-        <p 
-          class="btns f-r" 
-          v-if="user.department === '财务部'">
-          <template v-if="Number(bill.revokeState) === 10">
-            <button 
-              class="btn my-btn submit-btn" 
-              v-if="(Number(bill.state) === 0 || Number(bill.state) === 1)" 
-              @click="showBillUpload('bill')">开票</button>
-            <button 
-              class="btn my-btn submit-btn" 
-              v-if="Number(bill.state) === 0 || Number(bill.state) === 2" 
-              @click="showBillUpload('receive')">上传收款截图</button>
+    <modal modalWidth="800px">
+      <div slot="body">
+        <template v-if="!sended">
+          <p 
+            class="btns f-r" 
+            v-if="user.department === '财务部'">
+            <template v-if="Number(bill.revokeState) === 10">
+              <button 
+                class="btn my-btn submit-btn" 
+                v-if="(Number(bill.state) === 0 || Number(bill.state) === 1)" 
+                @click="showBillUpload('bill')">开票</button>
+              <button 
+                class="btn my-btn submit-btn" 
+                v-if="Number(bill.state) === 0 || Number(bill.state) === 2" 
+                @click="showBillUpload('receive')">上传收款截图</button>
+              <button 
+                class="btn my-btn cancel-btn" 
+                v-if="Number(bill.revokeState) === 10"
+                @click="reject">驳回</button>
+            </template>
             <button 
               class="btn my-btn cancel-btn" 
-              v-if="Number(bill.revokeState) === 10"
-              @click="reject">驳回</button>
-          </template>
-          <button 
-            class="btn my-btn cancel-btn" 
-            v-if="Number(bill.revokeState) === 20" 
-            @click="cancelModalShow = true">撤销</button>
-        </p>
-      </template>
-      <h4 class="main-title">开票内容</h4>
-      <div class="detail-wrapper">
-        <el-row>
-          <el-col :span="12">
-            本次开票金额：{{ bill.amount }}
-          </el-col>
-          <el-col :span="12">
-            单位电话：{{ bill.unit.tele }}
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            销售方单位名称：{{ bill.unit.name }}
-          </el-col>
-          <el-col :span="12">
-            开户银行：{{ bill.unit.depositBank }}
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            申请开票种类：{{ bill.type }}
-          </el-col>
-          <el-col :span="12">
-            开户账号：{{ bill.unit.account }}
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            单位名称：{{ bill.billingUnit }}
-          </el-col>
-          <el-col :span="12">
-            送达方式：{{ bill.way }}
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            纳税人识别号：{{ bill.taxpayerID }}
-          </el-col>
-          <el-col :span="12">
-            服务内容：{{ bill.content }}
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            发票图片：
-            <a 
-              target="_blank" 
-              :href="item.url" 
-              v-for="(item, index) in bill.billFiles"
-              :key="index">{{ item.name }}</a>
-          </el-col>
-          <el-col :span="12">
-            收款图片：
-            <a 
-              target="_blank" 
-              :href="item.url" 
-              v-for="(item, index) in bill.receiptFiles"
-              :key="index">{{ item.name }}</a>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            备注：{{ bill.remark }}
-          </el-col>
-        </el-row>
-        <!-- <hr>
-        <p class="d-f">
-          <span style="width:70px;">撤销原因：</span>
-          <span>。。。</span>
-        </p> -->
+              v-if="Number(bill.revokeState) === 20" 
+              @click="cancelModalShow = true">撤销</button>
+          </p>
+        </template>
+        <h4 class="main-title">开票信息</h4>
+        <div class="detail-wrapper">
+          <el-row>
+            <el-col :span="12">
+              本次开票金额：{{ bill.amount }}
+            </el-col>
+            <el-col :span="12">
+              单位电话：{{ bill.unit.tele }}
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              销售方单位名称：{{ bill.unit.name }}
+            </el-col>
+            <el-col :span="12">
+              开户银行：{{ bill.unit.depositBank }}
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              申请开票种类：{{ bill.type }}
+            </el-col>
+            <el-col :span="12">
+              开户账号：{{ bill.unit.account }}
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              单位名称：{{ bill.billingUnit }}
+            </el-col>
+            <el-col :span="12">
+              送达方式：{{ bill.way }}
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              纳税人识别号：{{ bill.taxpayerID }}
+            </el-col>
+            <el-col :span="12">
+              服务内容：{{ bill.content }}
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              发票图片：
+              <a 
+                target="_blank" 
+                :href="item.url" 
+                v-for="(item, index) in bill.billFiles"
+                :key="index">{{ item.name }}</a>
+            </el-col>
+            <el-col :span="12">
+              收款图片：
+              <a 
+                target="_blank" 
+                :href="item.url" 
+                v-for="(item, index) in bill.receiptFiles"
+                :key="index">{{ item.name }}</a>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              备注：{{ bill.remark }}
+            </el-col>
+          </el-row>
+          <!-- <hr>
+          <p class="d-f">
+            <span style="width:70px;">撤销原因：</span>
+            <span>。。。</span>
+          </p> -->
+        </div>
       </div>
-    </card>
+      <div slot="footer">
+        
+      </div>
+    </modal>
     <modal v-if="billUploadShow">
       <div slot="body">
         <p class="d-f">
@@ -318,6 +323,10 @@ export default {
 
 <style lang="sass" scoped>
   .billing-detail {
+    .main-title {
+      margin-top: 0;
+      margin-left: 0;
+    }
     margin-bottom: 20px;
     .btns {
       button {
@@ -328,8 +337,7 @@ export default {
       }
     }
     .detail-wrapper {
-      padding-left: 100px;
-      padding-right: 100px;
+      padding-left: 30px;
       .el-row {
         height: 36px;
         line-height: 36px;

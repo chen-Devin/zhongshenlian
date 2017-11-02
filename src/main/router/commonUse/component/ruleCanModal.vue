@@ -2,7 +2,7 @@
   <modal>
     <div slot="body">
       <p>
-        <span class="fa fa-exclamation-circle fa-5x text-danger"></span>
+        <!-- <span class="fa fa-exclamation-circle fa-5x text-danger"></span> -->
         <span class="text-cont">取消后编辑内容将丢弃，确认取消编辑吗？</span>
       </p>
     </div>
