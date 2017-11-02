@@ -43,15 +43,15 @@
         </el-row>
         <el-row>
           <el-col :span="21" :offset="1">
-            <div class="post-type">
-              <div class="title">
+            <div class="d-f">
+              <div class="title" style="width:150px">
                 分管公司出具报告类型
               </div>
               <div class="selections">
                 <el-checkbox-group v-model="iniCompanyEdit2.reportTypeArray">
                   <el-checkbox :label="item.name" v-for="(item, index) in iniCompanyEdit2.reportTypeOption" :key="index"></el-checkbox>
                 </el-checkbox-group>
-                <a href="javascript:void(0);" @click="showType">添加/删除报告类型</a>
+                <a class="f-r" href="javascript:void(0);" @click="showType">添加/删除报告类型</a>
               </div>
             </div>
           </el-col>

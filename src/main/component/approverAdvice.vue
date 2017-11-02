@@ -1,24 +1,35 @@
 <template>
   <div class="col-sm-12 approver-advice">
-    <ul class="list-group com-list approver-list">
-      <li class="list-group-item list-head">
-        <span class="title">
-          <slot></slot>
-        </span>
-        <span class="date pull-right">创建时间</span>
-      </li>
-      <li class="list-group-item" v-for="(ADVICE, index) in advices" :key="index">
-        <span>{{index+1+'.'}}</span>
-        <!-- <span class="people">{{ADVICE.approverName}}</span> -->
-        <span class="pull-right">
-          <a v-if="ADVICE.approveResult==='不通过'" @click="open(ADVICE.approveOpinion)">查看原因</a>
-          <span class="label label-success" v-if="ADVICE.approveResult==='通过'">已通过</span>
-          <span class="label label-danger" v-else-if="ADVICE.approveResult==='不通过'"  @click="open(ADVICE.approveOpinion)">未通过</span>
-          <span class="label label-info" v-else>未审核</span>
-          <span class="time">{{ADVICE.createAt.substring(0,10)}}</span>
-        </span>
-      </li>
-    </ul>
+    <table class="table table-bordered table-list">
+      <thead>
+        <tr>
+          <th>
+            <span class="title">
+              <slot></slot>
+            </span>
+          </th>
+          <th>创建时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr 
+          v-for="(ADVICE, index) in advices"
+          :key="index">
+          <td>
+            <span>{{index+1+'.'}}</span>
+          </td>
+          <td>
+            <span>
+              <a v-if="ADVICE.approveResult==='不通过'" @click="open(ADVICE.approveOpinion)">查看原因</a>
+              <span class="label label-success" v-if="ADVICE.approveResult==='通过'">已通过</span>
+              <span class="label label-danger" v-else-if="ADVICE.approveResult==='不通过'"  @click="open(ADVICE.approveOpinion)">未通过</span>
+              <span class="label label-info" v-else>未审核</span>
+              <span class="time">{{ADVICE.createAt.substring(0,10)}}</span>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <modal v-if="showModal">
       <div slot="body">
         <p>{{reason}}</p>

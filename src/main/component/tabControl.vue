@@ -10,7 +10,7 @@
         </router-link>
       </li>
     </ul> -->
-    <el-tabs v-model="activeNameSales" @tab-click="sel">
+    <el-tabs class="tab-control" v-model="activeNameSales" @tab-click="sel">
       <el-tab-pane 
         :label="PART.name" 
         :name="PART.path"
@@ -65,7 +65,10 @@ ul.nav {
   }
 }
 div.tab-content {
-  min-height: 500px;
-  border: 1px solid #E8E8E8;
+  min-height: 300px;
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #f9fbfe;
 }
 </style>

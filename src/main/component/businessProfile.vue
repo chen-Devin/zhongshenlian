@@ -10,7 +10,7 @@
           <span class="form-control-static">{{business.name}}</span>
         </el-row>
         <el-row>
-          <label class=" control-label" style="width: 150px">业务范围与审计目标：</label>
+          <label class="control-label" style="width: 150px">业务范围与审计目标：</label>
           <span class="form-control-static">{{business.name}}</span>
         </el-row>
       </div>

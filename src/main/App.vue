@@ -65,6 +65,7 @@ export default {
       margin-left: 200px;
       > .main-contain {
         margin-top: 50px;
+        margin-bottom: 30px;
       }
     }
   }

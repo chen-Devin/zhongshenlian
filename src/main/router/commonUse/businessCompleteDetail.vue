@@ -9,10 +9,14 @@
         <business :initBusiness="business" :user="user" :progress="progress"></business>
         <template v-if="approverAdviceShow">
           <hr>
-          <div class="row">
-            <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
-            <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
-          </div>
+          <el-row>
+            <el-col :span="12">
+              <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
+            </el-col>
+            <el-col :span="12">
+              <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
+            </el-col>
+          </el-row>
         </template>
       </div>
     </card>
