@@ -11,7 +11,7 @@
           <span class="form-control-static">{{business.scope}}</span>
         </el-form-item>
       </div>
-      <div class="basic-message">
+      <div class="basic-message" style="border: none">
         <el-row class="el-form-item">
           <el-col :span="8">
             <el-form-item label="提交申请人" label-width = "90px">
@@ -82,7 +82,7 @@
           </el-form-item>
         </el-row>
       </div>
-      <div class="basic-message" v-if="showMore">
+      <div class="basic-message" v-if="showMore" style="border: none">
         <el-row class="el-form-item">
           <!-- <el-col :span="8" v-if="business.auditTime.exist"> -->
           <el-col :span="8">
@@ -241,7 +241,7 @@
       <button type="button" @click="checkMore" class="el-icon-arrow-down" v-else>查看更多</button>
       <!-- <i class="el-icon-arrow-down"></i> -->
     </div>
-    <div class="basic-message">
+    <div class="basic-message" style="border: none">
       <!-- <el-row  v-if="contractUploadShow">
         <el-col :span="2">
           <label class="control-label">正式合同</label>
