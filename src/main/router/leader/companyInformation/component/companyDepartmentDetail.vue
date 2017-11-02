@@ -4,15 +4,27 @@
     <h1 class="title">{{ iniCompany3.name }}</h1>
     <h5 class="vice-title">公司信息</h5>
     <div class="company-department-detail">
-      <el-row>
-        <el-col :span="9" :offset="2">
-          <p>部门名称：{{ iniCompany3.name }}</p>
-          <p>部门编号：{{ iniCompany3.number }}</p>
-          <p>部门负责人：{{ iniCompany3.principalTelephone }}</p>
-          <p>参审注师人数：{{ iniCompany3.counselorNum }}</p>
-          <p>参审助理人数：{{ iniCompany3.assistantNum }}</p>
-        </el-col>
-       </el-row>
+      <el-form :label-position="labelPosition" label-width = "100px">
+        <el-row>
+          <el-col :span="9" :offset="2">
+            <el-form-item label="部门名称" label-width="80px" required>
+              <el-input type="text" v-model="iniCompany3.name" placeholder="暂无" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="部门编号" label-width="80px" required>
+              <el-input type="number" v-model="iniCompany3.number" placeholder="暂无" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="部门负责人" label-width="110px" required>
+              <el-input type="text" v-model="iniCompany3.principalTelephone" placeholder="暂无" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="参审注师人数" label-width="110px" required>
+              <el-input type="number" v-model="iniCompany3.counselorNum" placeholder="暂无" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="参审助理人数" label-width="110px" required>
+              <el-input type="number" v-model="iniCompany3.assistantNum" placeholder="暂无" disabled></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
     </div>
     <p class="btns">
       <button type="button" class="btn my-btn submit-btn" @click="edit">编辑</button>
@@ -31,6 +43,7 @@ export default {
   name: 'companyDepartmentDetail',
   data() {
     return {
+      labelPosition: 'left'
     };
   },
   methods: {

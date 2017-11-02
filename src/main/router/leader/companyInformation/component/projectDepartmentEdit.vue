@@ -4,26 +4,24 @@
     <h1 class="title">{{ iniCompanyEdit4.name }}</h1>
     <h5 class="vice-title">公司信息</h5>
     <div class="company-detail">
-      <el-row>
-        <el-col :span="9" :offset="2">
-          <p class="input-wrapper">
-            项目部名称：
-            <input type="text" class="form-control" v-model="iniCompanyEdit4.name" placeholder="请输入项目部名称" required>
-          </p>
-          <p class="input-wrapper">
-            项目部人数：
-            <input type="text" class="form-control" v-model="iniCompanyEdit4.number" placeholder="请输入项目部人数">
-          </p>
-          <p class="input-wrapper">
-            项目部经理：
-            <input type="text" class="form-control" v-model="iniCompanyEdit4.principalTelephone" placeholder="请输入项目部经理">
-          </p>
-          <p class="input-wrapper">
-            公司简称：
-            <input type="text" class="form-control" v-model="iniCompanyEdit4.companyAbbreviation" placeholder="请输入公司简称">
-          </p>
-        </el-col>  
-      </el-row>  
+      <el-form :label-position="labelPosition" label-width = "100px">
+        <el-row>
+          <el-col :span="9" :offset="2">
+            <el-form-item label="项目部名称" required>
+              <el-input type="text" v-model="iniCompanyEdit4.name" placeholder="请输入项目部名称"></el-input>
+            </el-form-item>
+            <el-form-item label="项目部人数" required>
+              <el-input type="number" v-model="iniCompanyEdit4.number" placeholder="请输入项目部人数"></el-input>
+            </el-form-item>
+            <el-form-item label="项目部经理" required>
+              <el-input type="text" v-model="iniCompanyEdit4.principalTelephone" placeholder="请输入项目部经理"></el-input>
+            </el-form-item>
+            <el-form-item label="公司简称" required>
+              <el-input type="text" v-model="iniCompanyEdit4.companyAbbreviation" placeholder="请输入公司简称"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form> 
     </div>
   </div>
   <p class="btns">
@@ -42,7 +40,7 @@ export default {
   name: 'companyDepartmentEdit',
   data() {
     return {
-      
+      labelPosition: 'left'
     };
   },
   methods: {

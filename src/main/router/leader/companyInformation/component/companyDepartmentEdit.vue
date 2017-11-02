@@ -4,30 +4,27 @@
     <h1 class="title">{{ iniCompanyEdit3.name }}</h1>
     <h5 class="vice-title">公司信息</h5>
     <div class="company-detail">
-      <el-row>
-        <el-col :span="9" :offset="2">
-          <p class="input-wrapper">
-            部门名称：
-            <input type="text" class="form-control" v-model="iniCompanyEdit3.name" placeholder="请输入部门名称" required>
-          </p>
-          <p class="input-wrapper">
-            部门编号：
-            <input type="text" class="form-control" v-model="iniCompanyEdit3.number" placeholder="请输入部门编号">
-          </p>
-          <p class="input-wrapper">
-            部门负责人
-            <input type="text" class="form-control" v-model="iniCompanyEdit3.principalTelephone" placeholder="请输入部门负责人">
-          </p>
-          <p class="input-wrapper">
-            参审注师人数：
-            <input type="text" class="form-control" v-model="iniCompanyEdit3.counselorNum" placeholder="请输入参审注师人数">
-          </p>
-          <p class="input-wrapper">
-            参审助理人数：
-            <input type="text" class="form-control" v-model="iniCompanyEdit3.assistantNum" placeholder="请输入参审助理人数">
-          </p>
-        </el-col>  
-      </el-row>  
+      <el-form :label-position="labelPosition" label-width = "100px">
+        <el-row>
+          <el-col :span="9" :offset="2">
+            <el-form-item label="部门名称" label-width="80px" required>
+              <el-input type="text" v-model="iniCompanyEdit3.name" placeholder="请输入部门名称"></el-input>
+            </el-form-item>
+            <el-form-item label="部门编号" label-width="80px" required>
+              <el-input type="number" v-model="iniCompanyEdit3.number" placeholder="请输入部门编号"></el-input>
+            </el-form-item>
+            <el-form-item label="部门负责人" label-width="110px" required>
+              <el-input type="text" v-model="iniCompanyEdit3.principalTelephone" placeholder="请输入部门负责人"></el-input>
+            </el-form-item>
+            <el-form-item label="参审注师人数" label-width="110px" required>
+              <el-input type="number" v-model="iniCompanyEdit3.counselorNum" placeholder="请输入参审注师人数"></el-input>
+            </el-form-item>
+            <el-form-item label="参审助理人数" label-width="110px" required>
+              <el-input type="number" v-model="iniCompanyEdit3.assistantNum" placeholder="请输入参审助理人数"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
     </div>
   </div>
   <p class="btns">
@@ -46,7 +43,7 @@ export default {
   name: 'companyDepartmentEdit',
   data() {
     return {
-      
+      labelPosition: 'left'
     };
   },
   methods: {
