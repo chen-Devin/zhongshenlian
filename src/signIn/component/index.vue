@@ -378,7 +378,7 @@ export default {
 .phone-icon {
   &:before {
     content: '';
-    background: url('../../img/signup/phone.svg');
+    background: url('../../img/signup/phone.png');
     background-repeat: no-repeat;
     display: block;
     width: 18px;
@@ -389,8 +389,9 @@ export default {
 .verification-icon {
   &:before {
     content: '';
-    background: url('../../img/signup/verification.svg');
+    background: url('../../img/signup/verification.png');
     background-repeat: no-repeat;
+    background-size: 18px 23px;
     display: block;
     width: 18px;
     height: 23px;

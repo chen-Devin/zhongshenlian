@@ -4,7 +4,7 @@
     <card>
       <h3 class="main-title">
         规章制度录入
-        <button type="button" class="btn my-btn submit-btn mr-20 f-r" @click="saveEdit()">保存</button>
+        <button type="button" class="btn my-btn submit-btn mr-10 f-r" @click="saveEdit()">保存</button>
         <button type="button" class="btn my-btn draft-btn f-r mr-10" @click="cancel()">取消</button> 
       </h3>
     </card>
@@ -131,9 +131,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.f-r {
-  margin-top: -7px;
-}
  input{
  background-color: #F9FBFE;
  border: 1px solid #DADADA;

@@ -236,9 +236,15 @@
         </el-row>
       </div>           
     <div class="showMore">
-      <button type="button" @click="closeMore" v-if="showMore" class="el-icon-arrow-up">收起</button>
+      <div @click="closeMore" v-if="showMore">
+        收起
+        <img src="../../img/arrow-up.png">
+      </div>
       <!-- <i class="el-icon-arrow-up"></i> -->
-      <button type="button" @click="checkMore" class="el-icon-arrow-down" v-else>查看更多</button>
+      <div @click="checkMore" v-else>
+        查看更多
+        <img src="../../img/arrow-down.png">
+      </div>
       <!-- <i class="el-icon-arrow-down"></i> -->
     </div>
     <div class="basic-message">
@@ -499,17 +505,24 @@ export default {
 
 <style lang="sass" scoped>
 .showMore{
+  background-color: #fff;
   text-align: center;
   margin: auto;
-  button {
-    width: 100px;
-    height: 40px;
-    background-color: #fff;
-    font-size: 15px;
-    line-height: 40px;
-    color: #7FEBFA;
+  div {
+    display: inline-block;
+    width: 140px;
+    height: 34px;
+    background-color: #f9fbfe;
+    font-size: 13px;
+    color: #4A90E2;
+    line-height: 20px;
+    text-decoration: none;
     border: none;
     cursor: pointer;
+    img {
+      display: block;
+      margin: 0 auto;
+    }
   } 
 }
 .control-label {
@@ -524,9 +537,16 @@ export default {
 .basic-message{
   margin-left: 30px;
   margin-right: 30px;
-  border-bottom: 1px solid #dedede;
-  margin-top: 0;
+  border-top: 1px solid #dedede;
+  margin-top: 10px;
   margin-bottom: 10px;
+  &:last-child {
+    border: none;
+  }
+  &:first-child {
+    margin-top: 0;
+    border: none;
+  }
 }
 .check-code {
   margin-top: -6px;

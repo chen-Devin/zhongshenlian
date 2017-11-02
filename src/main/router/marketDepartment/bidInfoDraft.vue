@@ -17,7 +17,7 @@
 			    	</button>
 			    </template> 
 			</h3>
-			<table class="table table-inner table-hover table-list">
+			<table class="table table-hover table-list">
 			  <thead>
 			    <tr>
 			      <th class="text-center">招投标名称</th>
@@ -224,7 +224,7 @@ export default {
 		}
 	}   
   .pull-right {
-  	margin-right: 30px;
+  	margin-right: 10px;
   }
   .text-center {
   	text-align: left;
