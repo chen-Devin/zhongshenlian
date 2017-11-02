@@ -594,19 +594,29 @@
           <label for="remark" class="col-sm-3 control-label">{{ project.delipotentTime }}</label>
         </div> 
       </div>
-      <div>
-        <approver-advice class="advice" v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
-      </div>
-       <!-- 所长通过不通过 -->
-      <div v-if="directorAgreeShow">
-        <div class="form-group">
-          <label for="remark" class="col-sm-1 control-label"></label>
-          <div class="col-sm-11 form-group">
-            <button type="button" class="btn my-btn submit-btn" @click="approve()">通过</button>
-            <button type="button" class="btn my-btn draft-btn" @click="showAdvice()">不通过</button>
+      <el-row>
+        <el-col :span="12">
+          <div>
+            <approver-advice class="advice" v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
           </div>
-        </div>
-      </div>
+           <!-- 所长通过不通过 -->
+          <div v-if="directorAgreeShow">
+            <div class="form-group">
+              <label for="remark" class="col-sm-1 control-label"></label>
+              <div class="col-sm-11 form-group">
+                <button type="button" class="btn my-btn submit-btn" @click="approve()">通过</button>
+                <button type="button" class="btn my-btn draft-btn" @click="showAdvice()">不通过</button>
+              </div>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <!--调用组件的审核意见-->
+          <div class="form-group">
+            <approver-advice class="advice" v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
+          </div>
+        </el-col>
+      </el-row>
       <modal v-if="adviceShow">
         <div slot="body">
           <h4 class="adviceTitle">
@@ -619,10 +629,6 @@
           <button type="button" class="btn my-btn draft-btn" @click="adviceCancel">取消</button>
         </div>
       </modal>
-      <!--调用组件的审核意见-->
-      <div class="form-group">
-        <approver-advice class="advice" v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
-      </div>
       <!-- 入围或中标通知书-->
       <div v-if="noticePanel" class="contract-pad" >
         <table class="table table-bordered table-hover">
@@ -685,7 +691,6 @@
 
 <style lang="sass" scoped>
   .contract-pad{
-    padding-left:15px;
     padding-right:15px;
     padding-bottom: 15px;
   }

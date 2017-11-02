@@ -1,6 +1,6 @@
 <template>
   <div class="expense-table">
-    <h5 class="vice-title" v-if="type==='差旅费报销'">差旅费报销{{reimbursementInfo.contractAmount}}</h5>
+    <h5 class="vice-title" v-if="type==='差旅费报销'">差旅费报销</h5>
     <h5 class="main-title" v-if="type==='特殊报销'">特殊报销</h5>
     <!-- 差旅费table -->
     <div class="table-wrapper">
@@ -144,7 +144,7 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
   .expense-table {
     .table-wrapper {
       padding-left: 30px;
@@ -153,12 +153,15 @@ export default {
     table {
       width: 100%;
       border: 1px solid #b4b4b4;
+      .el-input__inner {
+        border: 1px solid #fff;
+      }
       tr {
         td {
-          padding-top: 8px;
           padding-right: 10px;
-          padding-bottom: 8px;
           padding-left: 10px;
+          padding-top: 2px;
+          padding-bottom: 2px;
           &.table-label {
             width: 120px;
             background-color: #f9f9f9;
