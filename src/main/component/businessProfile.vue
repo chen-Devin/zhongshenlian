@@ -1,38 +1,41 @@
 <template>
-  <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
+  <el-form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent :label-position="labelPosition">
       <div class="basic-message">        
-        <el-row v-if="contractNumShow">
-          <label class=" control-label">项目编号：</label>
-          <span class="form-control-static">{{business.number}}</span>  
-        </el-row>
-        <el-row>
-          <label class=" control-label">项目名称：</label>
-          <span class="form-control-static">{{business.name}}</span>
-        </el-row>
-        <el-row>
-          <label class=" control-label" style="width: 150px">业务范围与审计目标：</label>
-          <span class="form-control-static">{{business.name}}</span>
-        </el-row>
+          <el-form-item label="项目编号" label-width = "80px" v-if="contractNumShow">
+            <span>{{business.number}}</span>
+          </el-form-item>              
+          <el-form-item label="项目名称" label-width = "80px">
+            <span class="form-control-static">{{business.name}}</span>
+          </el-form-item>
+          <el-form-item label="业务范围与审计目标" label-width = "160px">
+            <span class="form-control-static">{{business.scope}}</span>
+          </el-form-item>
       </div>
       <div class="basic-message">
-        <el-row>
+        <el-row class="el-form-item">
           <el-col :span="8">
-            <label class="control-label">提交申请人:</label>
-            <span class="form-control-static">{{business.proposer.name}}</span>  
+            <el-form-item label="提交申请人" label-width = "90px">
+              <span class="form-control-static">{{business.proposer.name}}</span>
+            </el-form-item>
           </el-col>
           <el-col :span="8">
-            <label class="control-label">客户联系人:</label>
-            <span class="form-control-static">{{business.institution.name}}</span>
+            <el-form-item label="客户联系人" label-width = "90px">
+              <span class="form-control-static">{{business.institution.name}}</span>
+            </el-form-item>            
           </el-col>
           <el-col :span="8">
-            <label class="control-label">计划工期:</label>
+            <el-form-item label="计划工期" label-width = "80px">
               <span class="form-control-static">{{business.time.start}}</span>
               <span>至</span>
               <span class="form-control-static">{{business.time.end}}</span>
+            </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
+        <el-row class="el-form-item">
           <el-col :span="3">
+            <el-form-item label="委托单位（客户）" label-width = "90px">
+              <span class="form-control-static">{{business.institution.name}}</span>
+            </el-form-item>
             <label class="control-label">委托单位（客户）:</label>
           </el-col>
           <el-col :span="4">
@@ -307,7 +310,7 @@
         </el-col>
       </el-row>
     </div>
-  </form>
+  </el-form>
 </template>
 
 <script>
@@ -329,7 +332,8 @@ export default {
         progressShow: false,
         percentage: '0%'
       },
-      showMore: false
+      showMore: false,
+      labelPosition: 'left'
     };
   },
   computed: {
@@ -515,11 +519,9 @@ export default {
   width: 120px;
 }
 .el-col-8{
-  padding-bottom: 20px;
   text-overflow: ellipsis;
 }
 .el-row{
-  padding-bottom: 20px;
   text-overflow: ellipsis;
 }
 .basic-message{
