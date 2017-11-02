@@ -468,17 +468,8 @@ a {
     cursor: pointer;
   }
 }
-.com-list > .list-group-item {
-    padding-left: 0;
-    padding-right: 0;
-    line-height: 26px;
-    margin-left: -20px;
-    margin-right: -20px;
-}
-.com-list .list-head {
-    padding-left: 0;
-    padding-right: 0;
-    line-height: 26px;
+.main-title {
+  margin-top: 0;
 }
 .report-btn {
     padding: .2em 1em .3em;

@@ -8,7 +8,6 @@
       <div class="normal-wrap">
         <business :initBusiness="business" :user="user" :progress="progress"></business>
         <template v-if="approverAdviceShow">
-          <hr>
           <el-row>
             <el-col :span="12">
               <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>

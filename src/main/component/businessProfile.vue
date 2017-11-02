@@ -526,7 +526,8 @@ export default {
   margin-left: 30px;
   margin-right: 30px;
   border-bottom: 1px solid #dedede;
-  margin-top: 30px;
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 .check-code {
   margin-top: -6px;

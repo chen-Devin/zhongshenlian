@@ -180,6 +180,9 @@ export default {
 
 <style lang="sass" scoped>
   .billing-infor {
+    .main-title {
+      margin-top: 0;
+    }
     .total-amount {
       margin-top: 30px;
     }

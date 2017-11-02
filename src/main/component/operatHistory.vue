@@ -1,7 +1,7 @@
 <template>
   <div class="row normal-wrap">
     <div class="col-sm-12">
-      <table class="table table-bordered table-hover com-list">
+      <table class="table table-bordered table-hover table-list">
         <thead>
           <tr>
             <td class="ta-c">操作时间</td>
@@ -72,11 +72,7 @@ export default {
 <style lang="sass" scoped>
 @import '../../scss/variables.scss';
 
-.com-list {
-  thead {
-    tr {
-      background-color: #E6E6E6;
-    }
-  }
+table {
+  margin-top: -20px;
 }
 </style>
