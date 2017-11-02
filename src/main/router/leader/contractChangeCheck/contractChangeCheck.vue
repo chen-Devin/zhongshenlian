@@ -6,8 +6,8 @@
         <button class="btn my-btn submit-btn" @click="checkContractChange('通过')">审批通过</button>
         <button class="btn my-btn cancel-btn" @click="checkContractChange('不通过')">项目驳回</button>
       </p>
-      <h5>合同预估金额变更申请</h5>
-      <el-row>
+      <h5 class="ta-c">合同预估金额变更申请</h5>
+      <el-row style="padding-left:32px;">
         <el-col :span="8">
           <p>项目名称：{{ business.projectName }}</p>
         </el-col>
@@ -19,6 +19,7 @@
         </el-col>
       </el-row>
       <div class="project-message">
+        <p>项目信息</p>
         <el-row>
           <el-col :span="8">
             <p>项目编号：{{ business.projectNo }}</p>
@@ -70,7 +71,7 @@
         </el-row>
       </div>
     </card>
-    <el-row>
+    <el-row class="amount-wrapper">
       <el-col :span="12">
         <card class="amount-card">
           <h5>合同预估金额：</h5>
@@ -190,17 +191,21 @@ export default {
 <style lang="sass" scoped>
   .change-check {
     .card-top {
-      padding: 30px 20px;
+      padding: 15px 10px;
       h5 {
-        margin-bottom: 20px;
+        height: 23px;
+        line-height: 23px;
+        font-size: 16px;
+        margin-bottom: 13px;
       }
       .project-message {
         padding: 10px 5px;
+        padding-top: 14px;
+        padding-left: 32px;
         background-color: #f9fbfe;
       }
       .el-row {
         .el-col {
-          // height: 36px;
           line-height: 25px;
           padding-right: 20px;
           &:last-child {
@@ -209,19 +214,32 @@ export default {
         }
       }
     }
-    .amount-card {
-      display: flex;
-      justify-content: center;
-      padding: 50px 0;
-      font-size: 16px;
-      h5 {
-        height: 20px;
-        line-height: 20px;
+    .amount-wrapper {
+      padding-left: 20px;
+      padding-right: 10px;
+      .amount-card {
+        display: flex;
+        justify-content: center;
+        padding: 50px 0;
+        font-size: 16px;
+        margin: 10px 0;
+        h5 {
+          height: 20px;
+          line-height: 20px;
+        }
+        p {
+          height: 20px;
+          line-height: 20px;
+          color: #FF9800;
+        }
       }
-      p {
-        height: 20px;
-        line-height: 20px;
-        color: #FF9800;
+      .el-col {
+        &:first-child {
+          padding-right: 5px;
+        }
+        &:last-child {
+          padding-left: 5px;
+        }
       }
     }
   }

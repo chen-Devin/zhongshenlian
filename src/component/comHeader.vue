@@ -33,7 +33,6 @@ export default {
   }
   h4.brand-name {
     margin-left: 0;
-    color: rgba(240,240,240,0.9);
     font-family: PingFangSC-Regular;
     font-size: 20px;
     color: #0B386D;

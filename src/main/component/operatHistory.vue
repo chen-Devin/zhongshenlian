@@ -23,6 +23,7 @@
           </tr>
         </tbody>
       </table>
+      <p class="empty-list-p" v-if="business.projectOperatingArray.length === 0">暂无数据</p>
     </div>
   </div>
 </template>

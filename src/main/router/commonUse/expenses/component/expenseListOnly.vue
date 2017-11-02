@@ -35,6 +35,7 @@
           </tr>
         </tbody>
       </table>
+      <p class="empty-list-p" v-if="expensesList.length === 0">暂无数据</p>
       <my-pagination :totalNum="Number(totalNum)" @currentChange="currentChange" v-if="reloadPagination"></my-pagination>
     </card>
   </div>

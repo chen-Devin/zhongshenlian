@@ -47,6 +47,7 @@
           </tr>
         </tbody>
       </table>
+      <p class="empty-list-p" v-if="business.bills.length === 0">暂无数据</p>
     </div>
     <modal v-if="cancelModalShow">
       <div slot="body">

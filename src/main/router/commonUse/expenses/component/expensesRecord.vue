@@ -37,6 +37,7 @@
           </tr>
         </tbody>
       </table>
+      <p class="empty-list-p" v-if="expensesRecords.length === 0">暂无数据</p>
       <!-- <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange"></my-pagination> -->
       <!-- <p>{{ checkedProjects }} {{ checkedIdArray }}</p> -->
     </card>

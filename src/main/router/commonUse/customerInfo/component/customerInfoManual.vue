@@ -1,7 +1,7 @@
 <template>
 <div>
   <card class="customer-info-edit">
-    <p class="btns f-r">
+    <p class="btns f-r mt-15">
       <template>
         <button class="btn my-btn submit-btn" @click="save">保存</button>
         <button class="btn my-btn cancel-btn" @click="cancel">取消</button>

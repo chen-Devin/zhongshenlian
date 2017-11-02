@@ -8,11 +8,11 @@
         <el-col :span="9" :offset="2">
           <p class="d-f">
             <span style="width:90px;">部门编号：</span>
-            <el-input type="text" v-model="company.number" placeholder="请输入部门编号" disabled></el-input>
+            <el-input type="text" v-model="company.number" placeholder="暂无" disabled></el-input>
           </p>
           <p class="d-f">
             <span style="width:90px;">部门名称：</span>
-            <el-input type="text" v-model="company.name" placeholder="请输入部门名称" disabled></el-input>
+            <el-input type="text" v-model="company.name" placeholder="暂无" disabled></el-input>
           </p>
           <p class="input-wrapper">
             是否有部门负责人：

@@ -11,64 +11,64 @@
           <button class="btn my-btn draft-btn" @click="cancel">取消</button>
         </template>
       </div>
-      <h5 class="main-title">基础信息{{ isNew }} {{ type }}</h5>
+      <h5 class="main-title">基础信息</h5>
       <div class="basic-form">
         <el-row>
           <el-col :span="12">
             <el-form :label-position="labelPosition" label-width="100px" :model="staff" :rules="staffRules" ref="staff">
-              <el-form-item label="姓名" prop="name">
+              <el-form-item label="姓名" label-width="50px" prop="name">
                 <el-input v-model="staff.name" :disabled="!editAble"></el-input>
               </el-form-item>
-              <el-form-item label="工号" prop="jobNumber">
+              <el-form-item label="工号" label-width="50px" prop="jobNumber">
                 <el-input v-model="staff.jobNumber" :disabled="!editAble"></el-input>
               </el-form-item>
-              <el-form-item label="性别" prop="gender">
+              <el-form-item label="性别" label-width="50px" prop="gender">
                 <el-radio v-model="staff.gender" label="男" :disabled="!editAble">男</el-radio>
                 <el-radio v-model="staff.gender" label="女" :disabled="!editAble">女</el-radio>
               </el-form-item>
-              <el-form-item label="民族" prop="nation">
+              <el-form-item label="民族" label-width="50px" prop="nation">
                 <el-input v-model="staff.nation" :disabled="!editAble"></el-input>
               </el-form-item>
-              <el-form-item label="身份证号" prop="idCard">
+              <el-form-item label="身份证号" label-width="80px" prop="idCard">
                 <el-input v-model="staff.idCard" :disabled="!editAble"></el-input>
               </el-form-item>
-              <el-form-item label="手机号" prop="telephone">
+              <el-form-item label="手机号" label-width="70px" prop="telephone">
                 <el-input v-model="staff.telephone" :disabled="!editAble"></el-input>
               </el-form-item>
-              <el-form-item label="邮箱" prop="email">
+              <el-form-item label="邮箱" label-width="50px" prop="email">
                 <el-input v-model="staff.email" :disabled="!editAble"></el-input>
               </el-form-item>
               <el-form-item label="是否为部门负责人" label-width="130px" prop="isPrincipal">
                 <el-radio v-model="staff.isPrincipal" label="1" :disabled="!editAble">是</el-radio>
                 <el-radio v-model="staff.isPrincipal" label="0" :disabled="!editAble">否</el-radio>
               </el-form-item>
-              <el-form-item label="所属业务部" v-if="type==='department' && isNew[0] === false">
+              <el-form-item label="所属业务部" label-width="80px" v-if="type==='department' && isNew[0] === false">
                 <el-input v-model="staff.companyDepartment" disabled></el-input>
               </el-form-item>
-              <el-form-item label="所属项目部" v-if="type==='department' && isNew[0] === false">
+              <el-form-item label="所属项目部" label-width="80px" v-if="type==='department' && isNew[0] === false">
                 <el-input v-model="staff.projectDepartment" disabled></el-input>
               </el-form-item>
             </el-form>
           </el-col>
           <el-col :span="12">
             <el-form :label-position="labelPosition" label-width="130px" :model="staff" :rules="staffRules" ref="staff">
-              <el-form-item label="所属小组" v-if="type==='department' && isNew[0] === false">
+              <el-form-item label="所属小组" label-width="70px" v-if="type==='department' && isNew[0] === false">
                 <el-input v-model="staff.group" disabled></el-input>
               </el-form-item>
-              <el-form-item label="职位" prop="duties">
+              <el-form-item label="职位" label-width="50px" prop="duties">
                 <el-input v-model="staff.duties" :disabled="!editAble"></el-input>
               </el-form-item>
-              <el-form-item label="学历" prop="education">
+              <el-form-item label="学历" label-width="50px" prop="education">
                 <el-input v-model="staff.education" :disabled="!editAble"></el-input>
               </el-form-item>
-              <el-form-item label="职称" prop="jonTitle">
+              <el-form-item label="职称" label-width="50px" prop="jonTitle">
                 <el-input v-model="staff.jonTitle" :disabled="!editAble"></el-input>
               </el-form-item>
               <el-form-item label="是否有注会证书" prop="isHaveCertificate">
                 <el-radio v-model="staff.isHaveCertificate" label="1" :disabled="!editAble">是</el-radio>
                 <el-radio v-model="staff.isHaveCertificate" label="0" :disabled="!editAble">否</el-radio>
               </el-form-item>
-              <el-form-item label="入职时间">
+              <el-form-item label="入职时间" label-width="70px">
                 <el-date-picker
                   style="width:100%"
                   v-model="staff.entryTime"
@@ -77,7 +77,7 @@
                   :disabled="!editAble">
                 </el-date-picker>
               </el-form-item>
-              <el-form-item label="合同到期日">
+              <el-form-item label="合同到期日" label-width="80px">
                 <el-date-picker
                   style="width:100%"
                   v-model="staff.expireTime"
@@ -91,7 +91,7 @@
         </el-row>
         <el-row>
           <el-form :label-position="labelPosition" label-width="130px" :rules="staffRules">
-            <el-form-item label="单科成绩" prop="singleSubjects">
+            <el-form-item label="单科成绩" label-width="80px" prop="singleSubjects">
               <el-checkbox-group v-model="singleSubjectsArray">
                 <el-checkbox :label="option" v-for="(option, index) in scoresOption" :key="index" :disabled="!editAble">{{ option }}</el-checkbox>
               </el-checkbox-group>
@@ -100,7 +100,7 @@
         </el-row>
         <el-row>
           <el-form :label-position="labelPosition" label-width="130px" :model="staff" :rules="staffRules" ref="staff">
-            <el-form-item label="执行证书" prop="professionalCertificate">
+            <el-form-item label="执行证书" label-width="80px" prop="professionalCertificate">
               <el-checkbox-group v-model="professionalCertificateArray">
                 <el-checkbox :label="option" :value="option" v-for="(option, index) in certificatesOption" :key="index" :disabled="!editAble"></el-checkbox>
               </el-checkbox-group>
@@ -109,7 +109,7 @@
         </el-row>
         <el-row>
           <el-form :label-position="labelPosition" label-width="130px">
-            <el-form-item label="劳动合同">
+            <el-form-item label="劳动合同" label-width="80px">
               <!-- <el-input v-model="staff.type" :disabled="!editAble"></el-input> -->
               <div>
                 <el-upload ref="upload"

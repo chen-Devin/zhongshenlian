@@ -248,8 +248,20 @@ h3 {
 // el-form
 .el-form {
   .el-form-item {
+    margin-bottom: 13px;
     .el-form-item__label {
       font-size: 13px;
+    }
+  }
+}
+
+// 必填项
+.required {
+  .el-form-item__label {
+    &:before {
+      content: '*';
+      color: #ff4949;
+      margin-right: 4px;
     }
   }
 }
@@ -380,17 +392,34 @@ h3 {
   margin-top: 10px;
 } 
 
+.mt-15 {
+  margin-top: 15px;
+} 
+
 .mr-20 {
   margin-right: 20px;
+}
+
+.pr-20 {
+  padding-right: 20px;
 }
 
 .ml-20 {
   margin-left: 20px;
 }
 
+.pl-20 {
+  padding-left: 20px;
+}
+
 .ml-10 {
   margin-left: 10px;
 }
+
+.pl-10 {
+  padding-left: 10px;
+}
+
 
 .ml-40 {
   margin-left: 40px;
@@ -480,6 +509,16 @@ label.col-sm-2.control-label {
   &:focus {
       outline: none;
       color: #fff;
+  }
+}
+
+// 失效状态
+.btn[disabled] {
+  background-color: #d7d7d7;
+  opacity: 1;
+  &:hover {
+    background-color: #d7d7d7;
+    color: #fff;
   }
 }
 
@@ -691,8 +730,28 @@ label.col-sm-2.control-label {
   width: 100%;
 }
 
+.el-input__inner {
+  font-size: 13px;
+}
+
 .clear-padding-left {
   padding-left: 0;
 }
 
+.empty-list-p {
+  text-align: center;
+  margin-top: 10px;
+}
 
+.el-checkbox__input.is-disabled+.el-checkbox__label {
+  color: #666;
+}
+
+.el-radio__input.is-disabled+.el-radio__label {
+  color: #666;
+}
+
+.text-info {
+  color: #9c9c9c;
+  font-size: 13px;
+}

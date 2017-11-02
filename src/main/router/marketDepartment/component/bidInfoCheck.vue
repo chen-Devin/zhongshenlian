@@ -40,7 +40,7 @@
       <div class="basic-message">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招投标公告来源" label-width = "120px" required>
+            <el-form-item label="招投标公告来源" label-width="120px" required>
               <el-input v-model="project.biddingSource" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>

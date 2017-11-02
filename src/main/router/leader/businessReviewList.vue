@@ -52,6 +52,7 @@
           </tr>
         </tbody>
       </table>
+      <p class="empty-list-p" v-if="businessArray.length === 0">暂无数据</p>
       <my-pagination :iniTotalPage="totalPage" :totalNum="page.total" @currentChange="currentChange" v-if="reloadPagination"></my-pagination>
     </card>
   </div>

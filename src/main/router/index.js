@@ -38,7 +38,6 @@ import businessReviewDetailLeader from './leader/businessReviewDetail.vue';
 import businessReviewListLeader from './leader/businessReviewList.vue';
 import contractChangeCheck from './leader/contractChangeCheck/contractChangeCheck.vue';
 import staffManagementAuthor from './leader/staff/staffManagementAuthor.vue';
-import staffManagementInfor from './leader/staffManagementInfor.vue';
 import companyManagement from './leader/companyInformation/companyManagement.vue';
 import functionalManagement from './leader/functionalInformation/functionalManagement.vue';
 import functionalInformation from './leader/functionalInformation/component/functionalInformation.vue';
@@ -243,10 +242,6 @@ const router = new VueRouter({
         {
             path: '/staff-management-author',
             component: staffManagementAuthor
-        },
-        {
-            path: '/staff-management-infor',
-            component: staffManagementInfor
         },
         {
             path: '/company-management',

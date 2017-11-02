@@ -66,6 +66,7 @@
         </tr>
       </tbody>
     </table>
+    <p class="empty-list-p" v-if="business.reports.length === 0">暂无数据</p>
     <report-add-modal 
       v-if="showAddModal"
       :initBusiness="business"
