@@ -321,201 +321,163 @@
               <hr>
             </div>
             <!--评估所单独内容-->
-            <div v-if="pgsContentShow">
-              <div class="form-group">
-                <h5>评估所</h5>
-              </div>
-              <div class="form-group d-f">
-                <h5>招标内容</h5>
-                <div class="col-sm-10 check-wrap">
-                  <input class="magic-checkbox" type="checkbox" value="股改" v-model="project.pgsBiddingContent" id="股改">
-                  <label for="股改">
-                    股改
-                  </label>
-                  <input class="magic-checkbox" type="checkbox" value="专项" v-model="project.pgsBiddingContent" id="专项2">
-                  <label for="专项2">
-                    专项
-                  </label>
-                  <input class="magic-checkbox" type="checkbox" value="咨询" v-model="project.pgsBiddingContent" id="咨询2">
-                  <label for="咨询2">
-                    咨询
-                  </label>
-                  <input class="magic-checkbox" type="checkbox" value="清产核资" v-model="project.pgsBiddingContent" id="清产核资">
-                  <label for="清产核资">
-                    清产核资
-                  </label>
-                </div>
-              </div>
-              <div class="form-group d-f">
-                <h5>股权结构</h5>
-                <div class="col-sm-10 check-wrap">
-                  <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="国有" id="pgs国有">
-                  <label for="pgs国有">
-                     国有
-                  </label>
-                  <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="民营" id="pgs民营">
-                  <label for="pgs民营">
-                     民营
-                  </label>
-                  <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="外资" id="pgs外资">
-                  <label for="pgs外资">
-                     外资
-                  </label>
-                  <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="混合" id="pgs混合">
-                  <label for="pgs混合">
-                     混合
-                  </label>
-                </div>
-              </div>
+            <div v-if="pgsContentShow">  
+              <h5 class="el-form-item">评估所</h5>
+              <el-form-item label="招标内容" label-width="70px">
+                <input class="magic-checkbox" type="checkbox" value="股改" v-model="project.pgsBiddingContent" id="股改">
+                <label for="股改">
+                  股改
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="专项" v-model="project.pgsBiddingContent" id="专项2">
+                <label for="专项2">
+                  专项
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="咨询" v-model="project.pgsBiddingContent" id="咨询2">
+                <label for="咨询2">
+                  咨询
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="清产核资" v-model="project.pgsBiddingContent" id="清产核资">
+                <label for="清产核资">
+                  清产核资
+                </label>
+              </el-form-item>
+              <el-form-item label="股权结构" label-width="70px">
+                <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="国有" id="pgs国有">
+                <label for="pgs国有">
+                   国有
+                </label>
+                <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="民营" id="pgs民营">
+                <label for="pgs民营">
+                   民营
+                </label>
+                <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="外资" id="pgs外资">
+                <label for="pgs外资">
+                   外资
+                </label>
+                <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="混合" id="pgs混合">
+                <label for="pgs混合">
+                   混合
+                </label>
+              </el-form-item>
               <hr>
             </div>
             <!--税务所单独内容-->
             <div v-if="swsContentShow">
-              <div class="form-group d-f">
-                <h5>税务所</h5>
-              </div>
-              <div class="form-group d-f">
-                <h5>招标内容</h5>
-                <div class="col-sm-10 check-wrap">
-                  <input class="magic-checkbox" type="checkbox" value="税鉴" v-model="project.swsBiddingContent" id="税鉴">
-                  <label for="税鉴">
-                    税鉴
-                  </label>
-                </div>
-              </div>
-              <div class="form-group d-f">
-                <h5>股权结构</h5>
-                <div class="col-sm-10 check-wrap">
-                  <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="国有" id="sws国有">
-                  <label for="sws国有">
-                     国有
-                  </label>
-                  <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="民营" id="sws民营">
-                  <label for="sws民营">
-                     民营
-                  </label>
-                  <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="外资" id="sws外资">
-                  <label for="sws外资">
-                     外资
-                  </label>
-                  <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="混合" id="sws混合">
-                  <label for="sws混合">
-                     混合
-                  </label>
-                </div>
-              </div>
+              <h5 class="el-form-item">评估所</h5>
+              <el-form-item label="招标内容" label-width="70px">
+                <input class="magic-checkbox" type="checkbox" value="税鉴" v-model="project.swsBiddingContent" id="税鉴">
+                <label for="税鉴">
+                  税鉴
+                </label>
+              </el-form-item>
+              <el-form-item label="股权结构" label-width="70px">
+                <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="国有" id="sws国有">
+                <label for="sws国有">
+                   国有
+                </label>
+                <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="民营" id="sws民营">
+                <label for="sws民营">
+                   民营
+                </label>
+                <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="外资" id="sws外资">
+                <label for="sws外资">
+                   外资
+                </label>
+                <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="混合" id="sws混合">
+                <label for="sws混合">
+                   混合
+                </label>
+              </el-form-item>
               <hr>
             </div>
             <!--造价所单独内容-->
             <div v-if="zjsContentShow">
-              <div class="form-group d-f">
-                <h5>造价所</h5>
-              </div>
-              <div class="form-group d-f">
-                <h5>招标内容</h5>
-                <div class="col-sm-10 check-wrap">
-                  <input class="magic-checkbox" type="checkbox" value="概算" v-model="project.zjsBiddingContent" id="概算">
-                  <label for="概算">
-                    概算
-                  </label>
-                  <input class="magic-checkbox" type="checkbox" value="预算" v-model="project.zjsBiddingContent" id="预算">
-                  <label for="预算">
-                    预算
-                  </label>
-                  <input class="magic-checkbox" type="checkbox" value="结算" v-model="project.zjsBiddingContent" id="结算">
-                  <label for="结算">
-                    结算
-                  </label>
-                  <input class="magic-checkbox" type="checkbox" value="全过程造价控制" v-model="project.zjsBiddingContent" id="全过程造价控制">
-                  <label for="全过程造价控制">
-                    全过程造价控制
-                  </label>
-                  <input class="magic-checkbox" type="checkbox" value="入围" v-model="project.zjsBiddingContent" id="入围4">
-                  <label for="入围4">
-                    入围
-                  </label>
-                  <input class="magic-checkbox" type="checkbox" value="一审" v-model="project.zjsBiddingContent" id="一审">
-                  <label for="一审">
-                    一审
-                  </label>
-                  <input class="magic-checkbox" type="checkbox" value="二审" v-model="project.zjsBiddingContent" id="二审">
-                  <label for="二审">
-                    二审
-                  </label>
-                </div>
-              </div>
-              <div class="form-group d-f">
-                <h5>资金来源及比例</h5>
-                <div class="col-sm-10 check-wrap">
-                  <input class="magic-checkbox" type="checkbox" value="财政" v-model="project.zjsFundSource" id="财政">
-                  <label for="财政">
-                    财政
-                  </label>
-                  <input class="magic-checkbox" type="checkbox" value="自筹" v-model="project.zjsFundSource" id="自筹">
-                  <label for="自筹">
-                    自筹
-                  </label>
-                  <input class="magic-checkbox" type="checkbox" value="贷款" v-model="project.zjsFundSource" id="贷款">
-                  <label for="贷款">
-                    贷款
-                  </label>
-                  <input class="magic-checkbox" type="checkbox" value="BT等" v-model="project.zjsFundSource" id="BT等">
-                  <label for="BT等">
-                    BT等
-                  </label>
-                </div>
-              </div>
-              <div class="form-group d-f" style="width:90%">
-                <h5>建设规模</h5>
-                  <div class="mr-20">
-                      <input type="text" class="form-control" id="scale" v-model="project.zjsArea" name="zjsArea" placeholder="请输入建设面积">
-                  </div>
-                  <div class="mr-20">
-                    <input type="text" class="form-control" id="scale" v-model="project.zjsLength" name="zjsLength" placeholder="请输入长度">
-                  </div>
-                  <div class="mr-20">
-                    <input type="text" class="form-control" id="scale" v-model="project.zjsTotalInvestment" name="zjsTotalInvestment" placeholder="请输入总投资额">
-                  </div>
-              </div>
-              <div class="form-group d-f">
-                <h5>建设地点</h5>
-                <div>
-                  <input type="text" class="form-control half-width" id="zjsLocation" v-model="project.zjsLocation" name="zjsLocation" placeholder="请输入建设地点">
-                </div>
-              </div>
-              <div class="form-group d-f">
-                <h5>服务期限</h5>
-                <div>
+              <h5 class="el-form-item">造价所</h5>        
+              <el-form-item label="招标内容" label-width="70px">
+                <input class="magic-checkbox" type="checkbox" value="概算" v-model="project.zjsBiddingContent" id="概算">
+                <label for="概算">
+                  概算
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="预算" v-model="project.zjsBiddingContent" id="预算">
+                <label for="预算">
+                  预算
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="结算" v-model="project.zjsBiddingContent" id="结算">
+                <label for="结算">
+                  结算
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="全过程造价控制" v-model="project.zjsBiddingContent" id="全过程造价控制">
+                <label for="全过程造价控制">
+                  全过程造价控制
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="入围" v-model="project.zjsBiddingContent" id="入围4">
+                <label for="入围4">
+                  入围
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="一审" v-model="project.zjsBiddingContent" id="一审">
+                <label for="一审">
+                  一审
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="二审" v-model="project.zjsBiddingContent" id="二审">
+                <label for="二审">
+                  二审
+                </label>
+              </el-form-item> 
+              <el-form-item label="资金来源及比例" label-width="110px">      
+                <input class="magic-checkbox" type="checkbox" value="财政" v-model="project.zjsFundSource" id="财政">
+                <label for="财政">
+                  财政
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="自筹" v-model="project.zjsFundSource" id="自筹">
+                <label for="自筹">
+                  自筹
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="贷款" v-model="project.zjsFundSource" id="贷款">
+                <label for="贷款">
+                  贷款
+                </label>
+                <input class="magic-checkbox" type="checkbox" value="BT等" v-model="project.zjsFundSource" id="BT等">
+                <label for="BT等">
+                  BT等
+                </label>
+              </el-form-item>
+              <el-form-item label="建设规模" label-width="70px">
+                <el-input style="width:155px" type="number" id="scale" v-model="project.zjsArea" name="zjsArea" placeholder="请输入建设面积"></el-input>             
+                <el-input style="width:155px" type="number" id="scale" v-model="project.zjsLength" name="zjsLength" placeholder="请输入长度"></el-input>             
+                <el-input style="width:155px" type="number" id="scale" v-model="project.zjsTotalInvestment" name="zjsTotalInvestment" placeholder="请输入总投资额"></el-input>
+              </el-form-item> 
+              <el-form-item label="建设地点" label-width="70px">
+                <el-input type="text" id="zjsLocation" v-model="project.zjsLocation" name="zjsLocation" placeholder="请输入建设地点"></el-input>
+              </el-form-item>
+              <el-form-item label="服务期限" label-width="70px">   
                   <input type="text" class="form-control" id="serviceTerm" v-model="project.serviceTerm" name="serviceTerm" placeholder="请输入服务期限">
-                </div>
-              </div>
+              </el-form-item>
               <hr>
             </div>
           </el-col>
           <el-col :span="12">
-            <div class="system-message">
-              <div class="business-type el-form-item">
-                <h5>合同体制信息</h5>
-                <div>
-                  <input class="magic-radio" type="radio" name="contractSystem" value="联合体" v-model="project.contractType.type" :disabled="!editable" id="common">
+            <div class="business-type">
+              <h5 style="width:95px;">合同体制信息</h5>
+              <div class="el-form-item">
+                  <input class="magic-radio plus" type="radio" name="contractSystem" value="联合体" v-model="project.contractType.type" :disabled="!editable" id="common">
                   <label class="radio-inline"  for="common">
                     联合体
                   </label>
-                  <input class="magic-radio" type="radio" name="contractSystem" value="非联合体" v-model="project.contractType.type" :disabled="!editable" id="nocommon">
+                  <input class="magic-radio plus" type="radio" name="contractSystem" value="非联合体" v-model="project.contractType.type" :disabled="!editable" id="nocommon">
                   <label class="radio-inline" for="nocommon">
                     非联合体
                   </label>
-                </div>
               </div>
+            </div>
               <div class="bgc-fff business-type" v-show="contractTypeChan">
-                <p>基本取费</p>
+                <p class="el-form-item" style="margin-bottom：23px">基本取费</p>
                 <el-row class="el-form-item">
-                  <el-col :span="10">
+                  <el-col :span="9">
                     <el-input type="text" placeholder="请输入主办方" v-model="project.contractType.mainBasicName" :disabled="!editable">
                       <template slot="prepend">主办方</template>
                     </el-input>
                   </el-col>
-                  <el-col :span="10">
+                  <el-col :span="9">
                     <el-input type="number" placeholder="请输入比例" v-model="project.contractType.mainBasicRate" :disabled="!editable">
                       <template slot="prepend">比例</template>
                       <template slot="append">%</template>
@@ -523,25 +485,25 @@
                   </el-col>
                 </el-row>
                 <el-row class="el-form-item" v-for="(item, index) in project.contractType.subBasicArray" :key="index">
-                  <el-col :span="10">
+                  <el-col :span="9">
                     <el-input type="text" placeholder="请输入协办方" v-model="item.name" :disabled="!editable">
                       <template slot="prepend">协办方</template>
                     </el-input>
                   </el-col>
-                  <el-col :span="10">
+                  <el-col :span="9">
                     <el-input type="text" placeholder="请输入比例" v-model="item.rate" :disabled="!editable">
                       <template slot="prepend">比例</template>
                       <template slot="append">%</template>
                     </el-input>
                   </el-col>
-                  <el-col :span="1">
+                  <el-col :span="2">
                     <h4 v-if="editable">
                       <a class="text-danger" @click="delBasicFee(index)">
                         <img src="../../../../img/delete_icon.svg">
                       </a>
                     </h4>
                   </el-col>
-                  <el-col :span="1">
+                  <el-col :span="2">
                     <h4 v-if="editable">
                       <a class="text-danger" @click="addBasicFee()">
                         <img src="../../../../img/add_icon.svg">
@@ -553,12 +515,12 @@
               <div class="bgc-fff business-type" v-show="contractTypeChan">
                 <p>效益取费</p>
                 <el-row class="el-form-item">
-                  <el-col :span="10">
+                  <el-col :span="9">
                     <el-input type="text" placeholder="请输入主办方" v-model="project.contractType.mainEfficiencyName" :disabled="!editable">
                       <template slot="prepend">主办方</template>
                     </el-input>
                   </el-col>
-                  <el-col :span="10">
+                  <el-col :span="9">
                     <el-input type="number" placeholder="请输入比例" v-model="project.contractType.mainEfficiencyRate" :disabled="!editable">
                       <template slot="prepend">比例</template>
                       <template slot="append">%</template>
@@ -566,25 +528,25 @@
                   </el-col>
                 </el-row>
                 <el-row class="el-form-item" v-for="(item, index) in project.contractType.subEfficiencyArray" :key="index">
-                  <el-col :span="10">
+                  <el-col :span="9">
                     <el-input type="text" placeholder="请输入协办方" v-model="item.name" :disabled="!editable">
                       <template slot="prepend">协办方</template>
                     </el-input>
                   </el-col>
-                  <el-col :span="10">
+                  <el-col :span="9">
                     <el-input type="text" placeholder="请输入比例" v-model="item.rate" :disabled="!editable">
                       <template slot="prepend">比例</template>
                       <template slot="append">%</template>
                     </el-input>
                   </el-col>
-                  <el-col :span="1">
+                  <el-col :span="2">
                     <h4 v-if="editable">
                       <a class="text-danger" @click="delEfficiencyFee(index)">
                         <img src="../../../../img/delete_icon.svg">
                       </a>
                     </h4>
                   </el-col>
-                  <el-col :span="1">
+                  <el-col :span="2">
                     <h4 v-if="editable">
                       <a class="text-danger" @click="addEfficiencyFee()">
                         <img src="../../../../img/add_icon.svg">
@@ -593,11 +555,11 @@
                   </el-col>
                 </el-row>
               </div>
-            </div> 
+             
           </el-col>
         </el-row> 
       </div>
-      <!-- 摘牌信息 一会加上-->
+      <!-- 摘牌信息 一会加上 -->
       <div v-if="delipotentShow" class="contract-pad">
         <table class="table table-bordered table-hover table-list">
           <thead>
@@ -628,14 +590,14 @@
             </tr>
           </tbody>
         </table>
-        <!-- <div class="form-group">
+         <div class="form-group">
           <label for="remark" class="col-sm-3 control-label">{{ project.delipotentTime }}</label>
-        </div> -->
+        </div> 
       </div>
       <div>
         <approver-advice class="advice" v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
       </div>
-      <!-- 所长通过不通过-->
+       <!-- 所长通过不通过 -->
       <div v-if="directorAgreeShow">
         <div class="form-group">
           <label for="remark" class="col-sm-1 control-label"></label>
@@ -658,9 +620,9 @@
         </div>
       </modal>
       <!--调用组件的审核意见-->
-      <!-- <div class="form-group">
+      <div class="form-group">
         <approver-advice class="advice" v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
-      </div> -->
+      </div>
       <!-- 入围或中标通知书-->
       <div v-if="noticePanel" class="contract-pad" >
         <table class="table table-bordered table-hover">
@@ -738,9 +700,6 @@
      border: 1px solid #ccc;
      border-radius: 4px;
   }
-  // h5{
-  //   width: 110px;
-  // }
   .basic-message {
     margin-top: 30px;
   }
@@ -828,6 +787,35 @@
   }
   .magic-radio + label:before, .magic-checkbox + label:before {
     top: 10px;
+  }
+  .magic-radio + label, .magic-checkbox + label {
+      position: relative;
+      display: inline-block;
+      padding-left: 30px;
+      margin-right: 12px;
+      cursor: pointer;
+      vertical-align: middle;
+      font-size: 13px;
+      font-weight: normal;
+  }
+  .plus + label:before {
+      position: absolute;
+      top: 1px;
+      left: 2px;
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      content: '';
+      border: 1px solid #c0c0c0;
+  }
+
+  .plus + label:after {
+      top: 5px;
+      left: 6px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #3e97eb;
   }
 </style>
 
