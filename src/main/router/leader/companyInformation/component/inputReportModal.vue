@@ -1,7 +1,7 @@
 <template>
   <modal modalWidth="550px">
     <div class="type-modal" slot="body">
-      <i class="fa fa-times close" aria-hidden="true" @click="close"></i>
+      <img class="close" src="../../../../../img/close.png" @click="close">
       <h5 class="main-title">添加/删除可出具报告类型</h5>
       <section>
         <el-checkbox-group v-model="operateArray">

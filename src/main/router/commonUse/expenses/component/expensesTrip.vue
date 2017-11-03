@@ -63,7 +63,10 @@
           </el-col>
           <el-col class="d-f" :span="12">
             <span style="width:120px">预算所属公司：</span>
-            <span v-if="!editAble">{{ reimbursementInfo.budgetCompanyName }}</span>
+            <el-select 
+              v-model="reimbursementInfo.budgetCompanyName" 
+              v-if="!editAble"
+              disabled></el-select>
             <el-select 
               v-model="reimbursementInfo.budgetCompanyId" 
               placeholder="请选择预算所属公司" 
@@ -85,7 +88,11 @@
           </el-col>
           <el-col class="d-f" :span="12">
             <span style="width:120px">预算所属部门：</span>
-            <span v-if="!editAble">{{ reimbursementInfo.budgetDepartmentName }}</span>
+            <!-- <span v-if="!editAble">{{ reimbursementInfo.budgetDepartmentName }}</span> -->
+            <el-select 
+              v-model="reimbursementInfo.budgetDepartmentName" 
+              v-if="!editAble"
+              disabled></el-select>
             <el-select 
               v-model="reimbursementInfo.budgetDepartmentId" 
               placeholder="请选择预算所属部门" 

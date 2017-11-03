@@ -55,8 +55,8 @@
         </div>
       </div>
       <div slot="footer">
-        <el-button type="primary" @click="submit">确定</el-button>
-        <el-button @click="cancel">取消</el-button>
+        <button class="btn my-btn submit-btn" @click="submit">确定</button>
+        <button class="btn my-btn draft-btn" @click="cancel">取消</button>
       </div>
     </modal>
   </div>
