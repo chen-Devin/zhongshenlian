@@ -104,21 +104,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.pull-right{
-  margin-top: -7px;
-}
-// p {
-//   margin-left: 25px;
-//   margin-right: 25px;
-//   &.content-area {
-//     margin-top: 50px;
-//     white-space: -webkit-pre-wrap;
-//     white-space: -moz-pre-wrap;
-//     white-space: -o-pre-wrap;
-//     white-space: pre-wrap;
-//     word-wrap: break-word;
-//   }
-// }
 .wrapper{
   padding-left: 50px;
   padding-right: 50px;

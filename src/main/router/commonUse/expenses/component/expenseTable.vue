@@ -169,6 +169,10 @@ export default {
           .el-date-editor.el-input {
               width: 100%;
           }
+          .el-input.is-disabled .el-input__inner {
+            background-color: #fafafa;
+            border-color: #fff;
+          }
         }
       }
     }

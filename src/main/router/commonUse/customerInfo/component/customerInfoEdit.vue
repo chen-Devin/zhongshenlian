@@ -311,11 +311,13 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.$message('保存客户信息成功')
+            this.$message.success('保存客户信息成功')
             this.$router.push('/customer-infor-list')
             resolve('done');
           } else if (rep.data.statusCode === '10013') {
-            this.$message('您添加的客户已存在，请检查')
+            this.$message.error('您添加的客户已存在，请检查')
+          } else {
+            this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       })
@@ -353,6 +355,8 @@ export default {
             this.$message('删除客户信息成功')
             this.$router.push('/customer-infor-list')
             resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       })

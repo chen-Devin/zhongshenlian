@@ -1190,8 +1190,15 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
   .expenses-detail {
+    .main-title {
+      height: 30px;
+      line-height: 30px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      margin-left: 30px;
+    }
     padding-bottom: 40px;
     h5 {
       overflow: hidden;

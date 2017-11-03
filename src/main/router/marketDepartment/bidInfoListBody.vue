@@ -2,7 +2,7 @@
   <div>
     <h3 class="main-title">
       招投标审批
-      <button class="btn my-btn submit-btn type-btn f-r mr-20" @click="input()" v-if="inputBtn">
+      <button class="btn my-btn submit-btn type-btn f-r mr-10" @click="input()" v-if="inputBtn">
         录入
       </button>
       <search-bar 

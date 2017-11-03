@@ -1,7 +1,6 @@
 <template>
   <div class="quick">
     <crumbs :paths="paths"></crumbs>
-    <!-- <p>{{ linksArray }}</p> -->
     <div class="quick-wrapper">
       <quick-link v-for="(link, index) in linksArray" :iniLink="link" :iniItemIndex="index" :key="index"></quick-link>
       <div class="operate" @click="showAddItem">
@@ -84,78 +83,8 @@ export default {
       shortcutArray: [],
       itemCounts: 3,
       addItem: false,
-      quickArray: [{
-        title: '待办事项',
-        detailArray: ['立项审批', '招投标审批']
-      }, {
-        title: '信息管理',
-        detailArray: ['客户信息管理']
-      }, {
-        title: '职员管理',
-        detailArray: ['职员录入', '权限分配']
-      }, {
-        title: '项目管理',
-        detailArray: ['立项业务', '进行中业务', '已完成业务']
-      }],
-      allQuickArray: [{
-          icon: 'el-icon-star-on',
-          linkTo: '/business-review-list-leader',
-          department: '所长',
-          title: '立项审批'
-        }, {
-          icon: 'el-icon-star-on',
-          linkTo: '/business-handle-list-leader',
-          department: '所长',
-          title: '进行中业务'
-        }, {
-          icon: 'el-icon-star-on',
-          linkTo: '/bid-info-list',
-          title: '招投标审批'
-        }, {
-          icon: 'el-icon-star-on',
-          linkTo: '',
-          title: '报销审批'
-        }, {
-          icon: 'el-icon-star-on',
-          linkTo: '',
-          title: '业务信息管理'
-        }, {
-          icon: 'el-icon-star-on',
-          linkTo: '/customer-infor-list',
-          title: '客户信息'
-        }, {
-          icon: 'el-icon-star-on',
-          linkTo: '/company-management',
-          title: '公司信息'
-        }, {
-          icon: 'el-icon-star-on',
-          linkTo: '',
-          title: '外部协办方信息管理'
-        }, {
-          icon: 'el-icon-star-on',
-          linkTo: '/business-review-add',
-          title: '立项业务'
-        }, {
-          icon: 'el-icon-star-on',
-          linkTo: '/business-complete-list',
-          title: '已完成业务'
-        }, {
-          icon: 'el-icon-star-on',
-          linkTo: '/staff-management-author',
-          title: '权限分配'
-        }, {
-          icon: 'el-icon-star-on',
-          linkTo: '/staff-management-infor',
-          title: '职员录入'
-        }, {
-          icon: 'el-icon-star-on',
-          linkTo: '',
-          title: '报销申请'
-        }, {
-          icon: 'el-icon-star-on',
-          linkTo: '',
-          title: '报销记录'
-        }]
+      quickArray: [],
+      allQuickArray: []
     };
   },
   computed: {
@@ -164,13 +93,7 @@ export default {
       this.shortcutArray.forEach((item, index) => {
         for (let i = 0; i <= this.allQuickArray.length - 1; i++) {
           if(this.allQuickArray[i].title === item) {
-            if (this.allQuickArray[i].title === '立项审批' || this.allQuickArray[i].title === '进行中业务') {
-              if (this.allQuickArray[i].department === this.user.department) {
-                middle.push(this.allQuickArray[i]);
-              }
-            } else {
-              middle.push(this.allQuickArray[i]);
-            }
+            middle.push(this.allQuickArray[i]);
           }
         }
       });
@@ -217,6 +140,7 @@ export default {
               command: 'editShortcut',
               platform: 'web',
               shortcutArray: this.shortcutArray
+              // shortcutArray: []
             }
             return JSON.stringify(obj);
           })()
@@ -232,6 +156,137 @@ export default {
     },
     checkMessage (project) {
       console.log(project)
+    },
+    getAllQuickArray (department) {
+      let arr = [
+        {
+          icon: 'el-icon-star-on',
+          linkTo: '/business-complete-list',
+          title: '已完成业务'
+        }, 
+        {
+          icon: require('../../../img/quick/expense-apply.png'),
+          linkTo: '/expenses-list',
+          title: '报销申请'
+        },
+        {
+          icon: require('../../../img/quick/customer-infor.png'),
+          linkTo: '/customer-infor-list',
+          title: '客户信息'
+        }, 
+        {
+          icon: require('../../../img/quick/expense-review.png'),
+          linkTo: '',
+          title: '报销审批'
+        }, 
+        {
+          icon: require('../../../img/quick/staff.png'),
+          linkTo: '/staff-management-author',
+          title: '职员管理'
+        }, 
+        {
+          // icon: require('../../../img/quick/customer-infor.png'),
+          linkTo: '/business-review-list-sales',
+          title: '立项项目'
+        }, 
+        {
+          icon: require('../../../img/quick/company.png'),
+          linkTo: '/company-management',
+          title: '公司信息'
+        }
+      ]
+      switch(department) {
+        case '所长':
+          let arr_leader = [
+            {
+              icon: require('../../../img/quick/bid.png'),
+              linkTo: '/bid-info-list',
+              title: '招投标审批'
+            },  
+            {
+              icon: require('../../../img/quick/review-leader.png'),
+              linkTo: '/business-review-list-leader',
+              title: '立项审批'
+            },
+            {
+              icon: 'el-icon-star-on',
+              linkTo: '/business-handle-list-leader',
+              title: '进行中业务'
+            } 
+          ]
+          arr_leader = arr.concat(arr_leader)
+          return arr_leader
+          break;
+        case '质控部':
+          let arr_risk = [
+            {
+              icon: '',
+              linkTo: '/business-handle-list-risk',
+              title: '待处理业务'
+            },
+            {
+              icon: require('../../../img/quick/bid.png'),
+              linkTo: '/bid-info-list',
+              title: '招投标信息'
+            }
+          ]
+          arr_risk = arr.concat(arr_risk)
+          return arr_risk
+          break;
+        case '业务部':
+          let arr_sales = [
+            {
+              icon: require('../../../img/quick/bid.png'),
+              linkTo: '/bid-info-list',
+              title: '招投标信息'
+            },
+            {
+              icon: 'el-icon-star-on',
+              linkTo: '/business-handle-list-sales',
+              title: '进行中业务'
+            } 
+          ]
+          arr_sales = arr.concat(arr_sales)
+          return arr_sales
+          break;
+        case '市场部':
+          let arr_market = [
+            {
+              icon: require('../../../img/quick/bid.png'),
+              linkTo: '/bid-info-list',
+              title: '招投标信息'
+            },
+            {
+              icon: '',
+              linkTo: '/bid-info-draft',
+              title: '草稿箱'
+            }
+          ]
+          arr_market = arr.concat(arr_market)
+          return arr_market
+          break;
+        case '财务部':
+          let arr_finance = [
+            {
+              icon: require('../../../img/quick/bid.png'),
+              linkTo: '/bid-info-list',
+              title: '招投标信息'
+            },
+            {
+              icon: '',  // 待处理
+              linkTo: '/business-handle-list-financial/0',
+              title: '待开发票'
+            },
+            {
+              icon: require('../../../img/quick/expense-review.png'),
+              linkTo: '/expenses-review/0',
+              title: '单据审核'
+            }
+          ]
+          arr_finance = arr.concat(arr_finance)
+          return arr_finance
+          break;
+      }
     }
   },
   props: [''],
@@ -239,6 +294,107 @@ export default {
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser;
       this.shortcutArray = this.user.shortcutArray;
+      this.allQuickArray = this.getAllQuickArray(this.user.department)
+      switch(this.user.department) {
+        case '所长':
+          this.quickArray = [
+              {
+                title: '待办事项',
+                detailArray: ['立项审批', '招投标审批', '报销审批']
+              }, 
+              {
+                title: '信息管理',
+                detailArray: ['客户信息', '公司信息']
+              }, 
+              {
+                title: '职员管理',
+                detailArray: ['职员管理']
+              }, 
+              {
+                title: '项目管理',
+                detailArray: ['立项项目', '进行中业务', '已完成业务']
+              }
+            ]
+          break;
+        case '质控部':
+          this.quickArray = [
+              {
+                title: '待处理业务',
+                detailArray: ['待处理业务']
+              }, 
+              {
+                title: '招投标信息',
+                detailArray: ['招投标信息']
+              }, 
+              {
+                title: '报销申请',
+                detailArray: ['报销申请']
+              }, 
+              {
+                title: '项目管理',
+                detailArray: ['已完成业务']
+              }
+            ]
+          break;
+        case '业务部':
+          this.quickArray = [
+              {
+                title: '客户信息',
+                detailArray: ['客户信息']
+              }, 
+              {
+                title: '招投标信息',
+                detailArray: ['招投标信息']
+              }, 
+              {
+                title: '报销申请',
+                detailArray: ['报销申请']
+              }, 
+              {
+                title: '项目管理',
+                detailArray: ['立项项目', '进行中业务', '已完成业务']
+              }
+            ]
+          break;
+        case '市场部':
+          this.quickArray = [
+              {
+                title: '招投标信息',
+                detailArray: ['招投标信息']
+              }, 
+              {
+                title: '草稿箱',
+                detailArray: ['草稿箱']
+              }, 
+              {
+                title: '报销申请',
+                detailArray: ['报销申请']
+              }
+            ]
+          break;
+        case '财务部':
+          this.quickArray = [
+              {
+                title: '招投标信息',
+                detailArray: ['招投标信息']
+              }, 
+              {
+                title: '报销申请',
+                detailArray: ['报销申请']
+              }, 
+              {
+                title: '项目管理',
+                detailArray: ['已完成业务']
+              },
+              {
+                title: '待处理业务',
+                detailArray: ['待开发票', '单据审核']
+              }
+            ]
+          break;
+        default: 
+          alert('职员信息错误')
+      }
     }, () => { });
     this.getToBeDoneList();
   },

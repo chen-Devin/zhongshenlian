@@ -12,7 +12,8 @@
         </h4>
         <p class="navbar-text navbar-right">
           <!-- <span>{{user.name}} 欢迎您</span> -->
-          <a class="navbar-link" @click="signOut()">退出</a>
+          <img width="18px" height="18px" src="../../img/quit.png" @click="signOut()">
+          <!-- <a class="navbar-link" @click="signOut()">退出</a> -->
         </p>
         <!-- <img :src="userHead" alt="头像" class="img-circle img-head navbar-right"> -->
       </div><!-- /.container-fluid -->
@@ -84,11 +85,8 @@ export default {
       line-height: 1em;
       padding: 0 10px;
     }
-    a {
+    img {
       display: inline-block;
-      color: rgba(240,240,240,1);
-      line-height: 1em;
-      padding: 0 10px;
       cursor: pointer;
     }
   }

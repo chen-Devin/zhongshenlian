@@ -5,9 +5,9 @@
       <h3 class="main-title">
         编辑制度
         <div class="pull-right">
-          <button type="button" class="btn my-btn submit-btn mr-10" @click="saveEdit()">保存</button>
-          <button type="button" class="btn my-btn draft-btn mr-10" @click="cancel()">取消</button>
-          <button type="button" class="btn my-btn cancel-btn mr-20" @click="del()">删除</button>
+          <button type="button" class="btn my-btn submit-btn" @click="saveEdit()">保存</button>
+          <button type="button" class="btn my-btn draft-btn" @click="cancel()">取消</button>
+          <button type="button" class="btn my-btn cancel-btn mr-10" @click="del()">删除</button>
         </div>
       </h3>
     </card>
@@ -202,9 +202,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.pull-right {
-  margin-top: -7px;
-}
 .control-label {
   width: 50px;
 }
