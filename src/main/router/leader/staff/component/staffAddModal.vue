@@ -2,7 +2,7 @@
   <modal>
     <div slot="body">
       <el-form ref="staff" :model="staff" :rules="rules" label-width="100px">
-        <el-form-item label="所属部门" prop="company">
+        <el-form-item label="所属部门：" prop="company">
           <el-select v-model="companySelected" placeholder="请选择所属部门" @change="changeCompany">
             <el-option 
               :label="company.name" 
@@ -11,7 +11,7 @@
               :key="index"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="所属业务部">
+        <el-form-item label="所属业务部：">
           <el-select v-model="departmentSelected" placeholder="请选择所属业务部" @change="changeDepartment">
             <el-option
               :label="department.name" 
@@ -20,7 +20,7 @@
               :key="index"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="所属项目部">
+        <el-form-item label="所属项目部：">
           <el-select v-model="projectSelected" placeholder="请选择所属项目部" @change="changeProject">
             <el-option 
               :label="project.name" 
@@ -29,7 +29,7 @@
               :key="index"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="所属小组">
+        <el-form-item label="所属小组：">
           <el-select v-model="groupSelected" placeholder="请选择所属小组">
             <el-option 
               :label="group.name" 

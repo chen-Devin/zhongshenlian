@@ -17,7 +17,7 @@
           <el-form :label-position="labelPosition">
             <el-row class="el-form-item">
               <el-col :span="20" :offset="1">
-                 <el-form-item label="标题" label-width = "50px">
+                 <el-form-item label="标题：" label-width = "50px">
                     <el-input type="text"
                            placeholder="请输入标题"
                            v-model="editRule.title"></el-input>
@@ -26,7 +26,7 @@
             </el-row> 
             <el-row class="el-form-item"> 
               <el-col :span="20" :offset="1">
-                 <el-form-item label="正文" label-width = "50px">
+                 <el-form-item label="正文：" label-width = "50px">
                     <vue-editor v-model="editRule.content" :editorToolbar="customToolbar"></vue-editor>
                  </el-form-item>
               </el-col>

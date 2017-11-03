@@ -56,7 +56,7 @@
             :staff="staff"
             :type="type"
             :isNew="isNew"
-            @addSuccess="addSuccess"></staff-detail>
+            @reloadDetail="reloadDetail"></staff-detail>
         </card>
         <card v-if="!isOpen" class="basic-contain">
           <p class="check-more">
@@ -249,8 +249,7 @@ export default {
       this.addShow = false
       this.addFuncShow = false
     },
-    addSuccess (id) {
-      console.log(id)
+    reloadDetail (id) {
       this.staffId = id
       this.getStaffInfo()
     },

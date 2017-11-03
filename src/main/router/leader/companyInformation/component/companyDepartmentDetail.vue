@@ -7,19 +7,19 @@
       <el-form :label-position="labelPosition" label-width = "100px">
         <el-row>
           <el-col :span="9" :offset="2">
-            <el-form-item label="部门名称" label-width="80px" required>
+            <el-form-item label="部门名称：" label-width="80px" required>
               <el-input type="text" v-model="iniCompany3.name" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="部门编号" label-width="80px" required>
+            <el-form-item label="部门编号：" label-width="80px" required>
               <el-input type="number" v-model="iniCompany3.number" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="部门负责人" label-width="110px" required>
+            <el-form-item label="部门负责人：" label-width="110px" required>
               <el-input type="text" v-model="iniCompany3.principalTelephone" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="参审注师人数" label-width="110px" required>
+            <el-form-item label="参审注师人数：" label-width="110px" required>
               <el-input type="number" v-model="iniCompany3.counselorNum" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="参审助理人数" label-width="110px" required>
+            <el-form-item label="参审助理人数：" label-width="110px" required>
               <el-input type="number" v-model="iniCompany3.assistantNum" placeholder="暂无" disabled></el-input>
             </el-form-item>
           </el-col>

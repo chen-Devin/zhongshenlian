@@ -2,7 +2,7 @@
   <modal>
     <div slot="body">
       <el-form ref="staff" :model="staff" :rules="rules" label-width="100px">
-        <el-form-item label="所属部门" prop="company">
+        <el-form-item label="所属部门：" prop="company">
           <el-select v-model="companySelected" placeholder="请选择所属部门">
             <el-option 
               :label="company.name" 

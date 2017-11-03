@@ -1,30 +1,30 @@
 <template>
   <el-form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent :label-position="labelPosition" label-width = "80px" >
       <div class="basic-message">        
-        <el-form-item label="项目编号" label-width = "80px" v-if="contractNumShow">
+        <el-form-item label="项目编号：" label-width = "80px" v-if="contractNumShow">
           <span>{{business.number}}</span>
         </el-form-item>              
-        <el-form-item label="项目名称" label-width = "80px">
+        <el-form-item label="项目名称：" label-width = "80px">
           <span class="form-control-static">{{business.name}}</span>
         </el-form-item>
-        <el-form-item label="业务范围与审计目标" label-width = "160px">
+        <el-form-item label="业务范围与审计目标：" label-width = "160px">
           <span class="form-control-static">{{business.scope}}</span>
         </el-form-item>
       </div>
       <div class="basic-message" style="border: none">
         <el-row class="el-form-item">
           <el-col :span="8">
-            <el-form-item label="提交申请人" label-width = "90px">
+            <el-form-item label="提交申请人：" label-width = "90px">
               <span class="form-control-static">{{business.proposer.name}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="客户联系人" label-width = "90px">
+            <el-form-item label="客户联系人：" label-width = "90px">
               <span class="form-control-static">{{business.institution.name}}</span>
             </el-form-item>            
           </el-col>
           <el-col :span="8">
-            <el-form-item label="计划工期" label-width = "80px">
+            <el-form-item label="计划工期：" label-width = "80px">
               <span class="form-control-static">{{business.time.start}}</span>
               <span>至</span>
               <span class="form-control-static">{{business.time.end}}</span>
@@ -33,50 +33,50 @@
         </el-row>
         <el-row class="el-form-item">
           <el-col :span="8">
-            <el-form-item label="委托单位（客户）" label-width = "120px">
+            <el-form-item label="委托单位（客户）：" label-width = "120px">
               <span class="form-control-static">{{business.institution.customerName}}</span>
             </el-form-item>   
           </el-col>
           <el-col :span="8">
-            <el-form-item label="业务类型" label-width = "80px">
+            <el-form-item label="业务类型：" label-width = "80px">
               <span class="form-control-static">{{business.type}}</span>
             </el-form-item> 
           </el-col>
           <el-col :span="8">
-            <el-form-item label="项目取得方式" label-width = "100px">
+            <el-form-item label="项目取得方式：" label-width = "100px">
               <span class="form-control-static">{{business.getWay}}</span>
             </el-form-item> 
           </el-col>
         </el-row>
         <el-row class="el-form-item">
           <el-col :span="8">
-            <el-form-item label="项目经理">
+            <el-form-item label="项目经理：">
               <span class="form-control-static">{{business.manager.name}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="合同预估金额" label-width = "100px">
+            <el-form-item label="合同预估金额：" label-width = "100px">
               <span class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</span>
             </el-form-item>          
           </el-col>
           <el-col :span="8">
-            <el-form-item label="项目申请人电话" label-width = "110px">
+            <el-form-item label="项目申请人电话：" label-width = "110px">
               <span class="form-control-static">{{business.proposer.tele}}</span>
             </el-form-item>           
           </el-col>
         </el-row>
         <el-row class="el-form-item">
-          <el-form-item label="被审计单位" label-width = "90px">
+          <el-form-item label="被审计单位：" label-width = "90px">
             <p class="form-control-static" v-for="auditedUnit in business.beingAuditedUnit">{{ auditedUnit.unit }}</p>
           </el-form-item>
         </el-row>
         <el-row class="el-form-item">
-          <el-form-item label="报价依据">
+          <el-form-item label="报价依据：">
             <span class="form-control-static">{{business.basisQuote}}</span>
           </el-form-item> 
         </el-row>
         <el-row class="el-form-item">
-          <el-form-item label="出具报告类型" label-width = "100px">
+          <el-form-item label="出具报告类型：" label-width = "100px">
             <div> <p
                  v-html="reportFormat"></p></div>
           </el-form-item>
@@ -86,44 +86,44 @@
         <el-row class="el-form-item">
           <!-- <el-col :span="8" v-if="business.auditTime.exist"> -->
           <el-col :span="8">
-            <el-form-item label="审计期间">
+            <el-form-item label="审计期间：">
               <span class="form-control-static">{{business.auditTime.start}}</span>
               <span>至</span>
               <span class="form-control-static">{{business.auditTime.end}}</span>
             </el-form-item> 
           </el-col>
           <el-col :span="8">
-            <el-form-item label="参审注师">
+            <el-form-item label="参审注师：">
                <span class="form-control-static">{{ reviewCPAsName }}</span>
             </el-form-item>  
           </el-col>
           <el-col :span="8">
-            <el-form-item label="报告用途">
+            <el-form-item label="报告用途：">
               <span class="form-control-static">{{business.report.usage}}</span>
             </el-form-item>            
           </el-col>
         </el-row>
         <el-row class="el-form-item">
           <el-col :span="8">
-            <el-form-item label="报告数量">
+            <el-form-item label="报告数量：">
               <span class="form-control-static">{{business.report.amount===''?'':`${business.report.amount}份（类）`}}</span>
             </el-form-item> 
           </el-col>
           <el-col :span="8">
-            <el-form-item label="参审助理">
+            <el-form-item label="参审助理：">
               <span class="form-control-static">{{ reviewAssistantsName }}</span>
             </el-form-item>             
           </el-col>
           <!-- <el-col :span="8" v-if="business.auditTime.exist"> -->
           <el-col :span="8">
-            <el-form-item label="上次报告事务所" label-width = "110px">
+            <el-form-item label="上次报告事务所：" label-width = "110px">
               <span class="form-control-static">{{business.lastOffice}}</span>
             </el-form-item> 
           </el-col>
         </el-row>
         <el-row class="el-form-item">
           <el-col :span="8">
-            <el-form-item label="合同体制">
+            <el-form-item label="合同体制：">
               <p>{{business.contractType.name}}</p>
               <div v-if="contractTypeChan">
                 <p class="form-control-static">基本取费</p>
@@ -198,7 +198,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="部门合作">
+            <el-form-item label="部门合作：">
               <p>{{business.departmentCoop.name}}</p>
             </el-form-item>
             <div v-if="departmentCoopChan">

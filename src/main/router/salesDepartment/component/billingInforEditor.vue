@@ -42,7 +42,7 @@
         class="bill-form">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="本次开票金额" prop="name">
+            <el-form-item label="本次开票金额：" prop="name">
               <el-input v-model="bill.projectName"></el-input>
             </el-form-item>
           </el-col>

@@ -41,33 +41,33 @@
         class="bill-form">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="本次开票金额" label-width="100px" prop="billingAmount">
+            <el-form-item label="本次开票金额：" label-width="100px" prop="billingAmount">
               <el-input placeholder="请输入本次开票金额" type="number" v-model="bill.billingAmount">
                 <template slot="append">元</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="单位电话" prop="companyPhone">
+            <el-form-item label="单位电话：" prop="companyPhone">
               <el-input placeholder="请输入单位电话" v-model="bill.companyPhone"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="销售方单位名称" label-width="110px" prop="billingUnit">
+            <el-form-item label="销售方单位名称：" label-width="110px" prop="billingUnit">
               <el-input placeholder="请输入销售方单位名称" v-model="billingUnit" :disabled="1"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="开户银行" prop="openCountBank">
+            <el-form-item label="开户银行：" prop="openCountBank">
               <el-input placeholder="请输入开户银行" v-model="bill.openCountBank"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="申请开票种类" label-width="100px" prop="billingType">
+            <el-form-item label="申请开票种类：" label-width="100px" prop="billingType">
               <el-select  v-model="bill.billingType" placeholder="选择开票种类">
                 <el-option 
                 v-for="(TYPE, index) in billingTypes" 
@@ -78,19 +78,19 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="开户账号" prop="openBankNumber">
+            <el-form-item label="开户账号：" prop="openBankNumber">
               <el-input placeholder="请输入开户账号" v-model="bill.openBankNumber"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="单位名称" prop="companyName">
+            <el-form-item label="单位名称：" prop="companyName">
               <el-input placeholder="请输入单位名称" v-model="bill.companyName"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="服务内容" prop="serviceContent">
+            <el-form-item label="服务内容：" prop="serviceContent">
               <el-select  v-model="bill.serviceContent" placeholder="选择服务内容">
                 <el-option 
                 v-for="(TYPE, index) in serviceContents" 
@@ -103,12 +103,12 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="纳税人识别号" label-width="110px" prop="taxpayerNumber">
+            <el-form-item label="纳税人识别号：" label-width="110px" prop="taxpayerNumber">
               <el-input placeholder="请输入纳税人识别号" v-model="bill.taxpayerNumber"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="送达方式" prop="deliveryMethod">
+            <el-form-item label="送达方式：" prop="deliveryMethod">
               <el-select  v-model="bill.deliveryMethod" placeholder="选择送达方式">
                 <el-option 
                 v-for="(TYPE, index) in deliveryMethods" 
@@ -121,15 +121,15 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="备注" label-width="50px" prop="remark">
+            <el-form-item label="备注：" label-width="50px" prop="remark">
               <el-input placeholder="请输入备注信息" type="textarea" :rows="4" v-model="bill.remark"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="bill.deliveryMethod==='快递'">
-            <el-form-item label="快递收件人" label-width="90px" prop="recipientName">
+            <el-form-item label="快递收件人：" label-width="90px" prop="recipientName">
               <el-input placeholder="请输入快递收件人" v-model="bill.recipientName"></el-input>
             </el-form-item>
-            <el-form-item label="收件地址" label-width="80px" prop="recipientAddress">
+            <el-form-item label="收件地址：" label-width="80px" prop="recipientAddress">
               <el-input placeholder="请输入收件地址" v-model="bill.recipientAddress"></el-input>
             </el-form-item>
           </el-col>

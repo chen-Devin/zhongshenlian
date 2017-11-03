@@ -7,36 +7,36 @@
       <el-form :label-position="labelPosition" label-width = "120px">
         <el-row>
           <el-col :span="11" :offset="1">
-            <el-form-item label="公司简称" label-width="80px" required>
+            <el-form-item label="公司简称：" label-width="80px" required>
               <el-input type="text" v-model="iniCompany2.number" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="公司名称" label-width="80px" required>
+            <el-form-item label="公司名称：" label-width="80px" required>
               <el-input type="text" v-model="iniCompany2.name" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="社会统一信用代码" label-width="130px" required>
+            <el-form-item label="社会统一信用代码：" label-width="130px" required>
               <el-input type="text" v-model="iniCompany2.creditCode" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="公司法人" label-width="80px" required>
+            <el-form-item label="公司法人：" label-width="80px" required>
               <el-input type="text" v-model="iniCompany2.legalPersonName" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="公司负责人" label-width="90px" required>
+            <el-form-item label="公司负责人：" label-width="90px" required>
               <el-input type="text" v-model="iniCompany2.principalName" placeholder="暂无" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="11" :offset="1">
-            <el-form-item label="参审人员标签" label-width="100px" required>
+            <el-form-item label="参审人员标签：" label-width="100px" required>
               <el-input type="text" v-model="iniCompany2.counselorTag" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="经营范围" label-width="80px" required>
+            <el-form-item label="经营范围：" label-width="80px" required>
               <el-input type="text" v-model="iniCompany2.mainWork" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="开户银行" label-width="80px" required>
+            <el-form-item label="开户银行：" label-width="80px" required>
               <el-input type="text" v-model="iniCompany2.openAccountBankName" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="开户银行账号" label-width="100px" required>
+            <el-form-item label="开户银行账号：" label-width="100px" required>
               <el-input type="text" v-model="iniCompany2.openAccountBankNumber" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="人员数量" label-width="80px" required>
+            <el-form-item label="人员数量：" label-width="80px" required>
               <span>{{ iniCompany2.staffNum }}</span>
             </el-form-item>
           </el-col>
