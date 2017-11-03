@@ -4,7 +4,7 @@
     <crumbs :paths="paths2" v-else></crumbs>
     <card class="card-tabs">
       <search-bar class="f-r" :searchItems="searchItems"
-        @search="search"></search-bar>
+        @search="search" v-if="reloadSearch"></search-bar>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane 
           :label="tab.label" 
@@ -128,6 +128,7 @@ export default {
         { name: '职员管理', url: '/staff-management-author', present: false },
         { name: '业务部门', url: '/staff-management-author', present: true }
       ],
+      reloadSearch: true,
       departments: [],
       treeData: [{
         label: '',
@@ -254,6 +255,16 @@ export default {
       this.getStaffInfo()
     },
     handleClick(tab, event) {
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 200)
+      this.reloadSearch = false
+      setTimeout(() => {
+        this.reloadSearch = true
+      }, 200)
+      this.pageNum = 1
+      this.searchObj = {}
       if (tab.name === 'function') {
         this.functionActive = true
         this.departActive = false
@@ -421,6 +432,16 @@ export default {
       }
       this.staffShow = false
       this.isOpen = false
+      this.reloadPagination = false
+      setTimeout(() => {
+        this.reloadPagination = true
+      }, 200)
+      this.reloadSearch = false
+      setTimeout(() => {
+        this.reloadSearch = true
+      }, 200)
+      this.pageNum = 1
+      this.searchObj = {}
       this.staffFilter()
     },
     selectStaff (staff) {
