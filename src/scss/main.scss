@@ -766,6 +766,19 @@ label.col-sm-2.control-label {
   width: 100%;
 }
 
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover, .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+  background-color: #dbeafe;
+}
+
+.el-select-dropdown__item.selected {
+  color: #fff;
+  background-color: #50baf0;
+}
+
+.el-select-dropdown__item.selected.hover {
+  background-color: #50baf0;
+}
+
 .el-input__inner {
   font-size: 13px;
 }

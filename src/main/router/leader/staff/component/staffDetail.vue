@@ -7,7 +7,7 @@
           <button class="btn my-btn cancel-btn" @click="deleteStaff">删除员工</button>
         </template>
         <template v-else>
-          <button class="btn my-btn submit-btn" @click="save1">保存</button>
+          <button class="btn my-btn submit-btn" @click="save1" :disabled="saveAble">保存</button>
           <button class="btn my-btn draft-btn" @click="cancel">取消</button>
         </template>
       </div>
@@ -232,6 +232,13 @@ export default {
         workerId: this.staff.id
       }
       return '/fileUpload?data=' + JSON.stringify(obj)
+    },
+    saveAble () {
+      if (this.staff.name && this.staff.jobNumber && this.staff.gender && this.staff.nation && this.staff.idCard && this.staff.telephone && this.staff.email && this.staff.isPrincipal && this.staff.duties && this.staff.education && this.staff.jonTitle && this.staff.isHaveCertificate) {
+        return false
+      } else {
+        return true
+      }
     }
   },
   methods: {
@@ -358,13 +365,13 @@ export default {
           if (rep.data.statusCode === '10001') {
             this.editAble = false
             this.$message.success('保存成功')
-            this.$emit('addSuccess', this.staff.id)
             this.isNew[0] = false
+            this.editAble = false
+            // this.$emit('reloadDetail', this.staff.id)
             resolve('done')
           } else {
             this.$message.error(rep.data.msg)
           }
-          this.editAble = false
         }, (rep) => { });
       })
     },

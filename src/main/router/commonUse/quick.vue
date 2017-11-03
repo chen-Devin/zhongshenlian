@@ -37,9 +37,9 @@
         <p class="todo-title">规章制度</p>
         <card class="card rule-card">
           <div class="to-wrapper">
-            <p class="title">规章制度</p>
-            <div class="content">
-              123
+            <p class="title">{{ rule.title }}</p>
+            <div class="content" v-html="rule.content">
+              
             </div>
           </div>
         </card>
@@ -84,7 +84,11 @@ export default {
       itemCounts: 3,
       addItem: false,
       quickArray: [],
-      allQuickArray: []
+      allQuickArray: [],
+      rule: {
+        title: '',
+        content: ''
+      }
     };
   },
   computed: {
@@ -286,7 +290,60 @@ export default {
           arr_finance = arr.concat(arr_finance)
           return arr_finance
           break;
+        case '档案部':
+          let arr_archives = [
+            {
+              icon: require('../../../img/quick/bid.png'),
+              linkTo: '/bid-info-list',
+              title: '招投标信息'
+            },
+            {
+              icon: '',  // 待处理
+              linkTo: '/business-handle-list-archives',
+              title: '待处理业务'
+            }
+          ]
+          arr_archives = arr.concat(arr_archives)
+          return arr_archives
+          break;
+        case '办公室':
+          let arr_office = [
+            {
+              icon: require('../../../img/quick/bid.png'),
+              linkTo: '/bid-info-list',
+              title: '招投标信息'
+            },
+            {
+              icon: '',  // 待处理
+              linkTo: '/business-handle-list-office',
+              title: '待处理业务'
+            }
+          ]
+          arr_office = arr.concat(arr_office)
+          return arr_office
+          break;
       }
+    },
+    getNewRegulation () {
+      axios({
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            var obj = {
+              command: 'getNewRegulation',
+              platform: 'web'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.rule = rep.data.data
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
     }
   },
   props: [''],
@@ -392,11 +449,52 @@ export default {
               }
             ]
           break;
+        case '档案部':
+          this.quickArray = [
+              {
+                title: '待处理业务',
+                detailArray: ['待处理业务']
+              },
+              {
+                title: '招投标信息',
+                detailArray: ['招投标信息']
+              }, 
+              {
+                title: '报销申请',
+                detailArray: ['报销申请']
+              }, 
+              {
+                title: '项目管理',
+                detailArray: ['已完成业务']
+              }         
+            ]
+          break;
+        case '办公室':
+          this.quickArray = [
+              {
+                title: '待处理业务',
+                detailArray: ['待处理业务']
+              },
+              {
+                title: '招投标信息',
+                detailArray: ['招投标信息']
+              }, 
+              {
+                title: '报销申请',
+                detailArray: ['报销申请']
+              }, 
+              {
+                title: '项目管理',
+                detailArray: ['已完成业务']
+              }         
+            ]
+          break;
         default: 
           alert('职员信息错误')
       }
-    }, () => { });
-    this.getToBeDoneList();
+    }, () => { })
+    this.getToBeDoneList()
+    this.getNewRegulation()
   },
   components: {
     crumbs,
@@ -425,7 +523,7 @@ export default {
         > .card {
           margin-right: 0;
           &.rule-card {
-            height: 260px;
+            height: 340px;
             padding-top: 14px;
             padding-bottom: 28px;
             padding-left: 20px;
@@ -438,7 +536,7 @@ export default {
                 font-size: 14px;
               }
               > .content {
-                height: 188px;
+                height: 270px;
                 background-color: #f9fdfe;
                 overflow: auto;
               }
