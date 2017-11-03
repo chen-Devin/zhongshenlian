@@ -9,12 +9,12 @@
         <el-form>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="客户名称" label-width="88px">
+              <el-form-item label="客户名称：" label-width="88px">
                 <el-input type="text" placeholder="请输入客户名称" v-model="customer.customerName"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="信用代码" label-width="88px">
+              <el-form-item label="信用代码：" label-width="88px">
                 <el-input type="text" placeholder="请输入信用代码" v-model="customer.code"></el-input>
               </el-form-item>
             </el-col>

@@ -40,24 +40,24 @@
       <div class="basic-message">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招投标公告来源" label-width="120px" required>
+            <el-form-item label="招投标公告来源：" label-width="120px" required>
               <el-input v-model="project.biddingSource" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="报名截止日期" label-width = "110px" required>
+            <el-form-item label="报名截止日期：" label-width = "110px" required>
               <el-input v-model="project.endTime" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招投标公告发布人"  label-width = "130px" required>
+            <el-form-item label="招投标公告发布人："  label-width = "130px" required>
               <span>{{project.publishName}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="报名相关费用" label-width="110px" required>
+            <el-form-item label="报名相关费用：" label-width="110px" required>
               <el-input v-model="project.relateFee" :disabled="!editable">
                 <template slot="append">万元</template>
               </el-input>
@@ -66,72 +66,72 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招投标公告发布日期" label-width = "150px" required>
+            <el-form-item label="招投标公告发布日期：" label-width = "150px" required>
               <span>{{project.publishTime}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="报名开标日期" label-width="100px">
+            <el-form-item label="报名开标日期：" label-width="100px">
               <el-input v-model="project.bidStartTime" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="中审联招投标公告编号"  label-width = "160px" required>
+            <el-form-item label="中审联招投标公告编号："  label-width = "160px" required>
               <span>{{project.biddingSerial}}</span>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="公告开标日期">
+            <el-form-item label="公告开标日期：">
               <el-input v-model="project.openBidDate" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招投项目名称" label-width = "110px" required>
+            <el-form-item label="招投项目名称：" label-width = "110px" required>
               <el-input v-model="project.projectName" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="公告开标地点">
+            <el-form-item label="公告开标地点：">
               <el-input v-model="project.openBidPlace" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="标段划分" label-width = "80px" required>
+            <el-form-item label="标段划分：" label-width = "80px" required>
               <el-input v-model="project.biddingDivision" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="审计限制" label-width="80px">
+            <el-form-item label="审计限制：" label-width="80px">
               <el-input v-model="project.serviceTerm" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招标人" label-width="70px" required>
+            <el-form-item label="招标人：" label-width="70px" required>
               <el-input v-model="project.tenderPerson" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="投资人资质条件/能力" label-width="140px">
+            <el-form-item label="投资人资质条件/能力：" label-width="140px">
               <el-input type="textarea" v-model="project.investmentConditions" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招标代理机构" >
+            <el-form-item label="招标代理机构：" >
               <el-input v-model="project.agency" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="招标控制价格" label-width="110px" required>
+            <el-form-item label="招标控制价格：" label-width="110px" required>
               <el-input v-model="project.controlPrice" :disabled="!editable">
                 <template slot="append">万元</template>
               </el-input>
@@ -140,19 +140,19 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="中标/入围" required>
+            <el-form-item label="中标/入围：" required>
               <el-input v-model="project.wtf" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="中标单位数量" label-width="100px">
+            <el-form-item label="中标单位数量：" label-width="100px">
               <el-input v-model="project.biddingNumber" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="备注" label-width="50px">
+            <el-form-item label="备注：" label-width="50px">
               <el-input type="textarea" v-model="project.remark" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
@@ -281,7 +281,7 @@
             <!--会计所单独内容-->
             <div v-if="kjsContentShow">
               <h5 class="el-form-item">会计所</h5>
-              <el-form-item label="招标内容" label-width="70px">
+              <el-form-item label="招标内容：" label-width="70px">
                 <el-checkbox-group v-model="project.kjsBiddingContent">
                   <el-checkbox label="年审"></el-checkbox>
                   <el-checkbox label="专项"></el-checkbox>
@@ -292,7 +292,7 @@
                   <el-checkbox label="外资审计"></el-checkbox>
                 </el-checkbox-group>
               </el-form-item>
-              <el-form-item label="股权结构" label-width="70px">
+              <el-form-item label="股权结构：" label-width="70px">
                 <input class="magic-radio" type="radio" name="kjsOwnerStructure" v-model="project.kjsOwnershipStructure" value="国有" id="kjs国有">
                 <label for="kjs国有">
                    国有
@@ -310,12 +310,12 @@
                    混合
                 </label>
               </el-form-item>
-              <el-form-item label="资产总额" label-width="70px">
+              <el-form-item label="资产总额：" label-width="70px">
                 <el-input type="number" placeholder="请输入资产总额" v-model="project.totalAssets">
                   <template slot="append">元</template>
                 </el-input>
               </el-form-item>
-              <el-form-item label="坐落地点" label-width="70px">
+              <el-form-item label="坐落地点：" label-width="70px">
                 <el-input type="text" placeholder="请输入坐落地点" v-model="project.location"></el-input>
               </el-form-item>
               <hr>
@@ -323,7 +323,7 @@
             <!--评估所单独内容-->
             <div v-if="pgsContentShow">  
               <h5 class="el-form-item">评估所</h5>
-              <el-form-item label="招标内容" label-width="70px">
+              <el-form-item label="招标内容：" label-width="70px">
                 <input class="magic-checkbox" type="checkbox" value="股改" v-model="project.pgsBiddingContent" id="股改">
                 <label for="股改">
                   股改
@@ -341,7 +341,7 @@
                   清产核资
                 </label>
               </el-form-item>
-              <el-form-item label="股权结构" label-width="70px">
+              <el-form-item label="股权结构：" label-width="70px">
                 <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="国有" id="pgs国有">
                 <label for="pgs国有">
                    国有
@@ -364,13 +364,13 @@
             <!--税务所单独内容-->
             <div v-if="swsContentShow">
               <h5 class="el-form-item">评估所</h5>
-              <el-form-item label="招标内容" label-width="70px">
+              <el-form-item label="招标内容：" label-width="70px">
                 <input class="magic-checkbox" type="checkbox" value="税鉴" v-model="project.swsBiddingContent" id="税鉴">
                 <label for="税鉴">
                   税鉴
                 </label>
               </el-form-item>
-              <el-form-item label="股权结构" label-width="70px">
+              <el-form-item label="股权结构：" label-width="70px">
                 <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="国有" id="sws国有">
                 <label for="sws国有">
                    国有
@@ -393,7 +393,7 @@
             <!--造价所单独内容-->
             <div v-if="zjsContentShow">
               <h5 class="el-form-item">造价所</h5>        
-              <el-form-item label="招标内容" label-width="70px">
+              <el-form-item label="招标内容：" label-width="70px">
                 <input class="magic-checkbox" type="checkbox" value="概算" v-model="project.zjsBiddingContent" id="概算">
                 <label for="概算">
                   概算
@@ -423,7 +423,7 @@
                   二审
                 </label>
               </el-form-item> 
-              <el-form-item label="资金来源及比例" label-width="110px">      
+              <el-form-item label="资金来源及比例：" label-width="110px">      
                 <input class="magic-checkbox" type="checkbox" value="财政" v-model="project.zjsFundSource" id="财政">
                 <label for="财政">
                   财政
@@ -441,15 +441,15 @@
                   BT等
                 </label>
               </el-form-item>
-              <el-form-item label="建设规模" label-width="70px">
+              <el-form-item label="建设规模：" label-width="70px">
                 <el-input style="width:155px" type="number" id="scale" v-model="project.zjsArea" name="zjsArea" placeholder="请输入建设面积"></el-input>             
                 <el-input style="width:155px" type="number" id="scale" v-model="project.zjsLength" name="zjsLength" placeholder="请输入长度"></el-input>             
                 <el-input style="width:155px" type="number" id="scale" v-model="project.zjsTotalInvestment" name="zjsTotalInvestment" placeholder="请输入总投资额"></el-input>
               </el-form-item> 
-              <el-form-item label="建设地点" label-width="70px">
+              <el-form-item label="建设地点：" label-width="70px">
                 <el-input type="text" id="zjsLocation" v-model="project.zjsLocation" name="zjsLocation" placeholder="请输入建设地点"></el-input>
               </el-form-item>
-              <el-form-item label="服务期限" label-width="70px">   
+              <el-form-item label="服务期限：" label-width="70px">   
                   <input type="text" class="form-control" id="serviceTerm" v-model="project.serviceTerm" name="serviceTerm" placeholder="请输入服务期限">
               </el-form-item>
               <hr>

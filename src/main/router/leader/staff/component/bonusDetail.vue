@@ -21,7 +21,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="工资卡账户">
+              <el-form-item label="工资卡账户：">
                 <el-input :disabled="!editAble" v-model="bonusArray[0].salaryCardAccount"></el-input>
               </el-form-item>
             </el-col>

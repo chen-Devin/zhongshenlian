@@ -10,30 +10,30 @@
       :disabled="!editable">
       <div class="basic-message">
         <el-row>
-          <el-form-item label="基础信息"></el-form-item>
+          <el-form-item label="基础信息："></el-form-item>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="项目名称" prop="name">
+            <el-form-item label="项目名称：" prop="name">
               <el-input v-model="business.name" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="业务范围与审计目标" label-width="150px" prop="scope" required>
+            <el-form-item label="业务范围与审计目标：" label-width="150px" prop="scope" required>
               <el-input v-model="business.scope" :disabled="!editable" type="textarea"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="提交申请人">
+            <el-form-item label="提交申请人：">
               <el-input v-model="user.name" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="业务类型" required>
+            <el-form-item label="业务类型：" required>
               <el-select  v-model="business.type" placeholder="选择业务类型" :disabled="!editable">
                 <el-option 
                 v-for="(TYPE, index) in businessType" 
@@ -44,7 +44,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="项目取得方式" label-width="120px" required>
+            <el-form-item label="项目取得方式：" label-width="120px" required>
               <el-select  v-model="business.getWay" placeholder="选择项目取得方式" :disabled="!editable">
                 <el-option 
                   v-for="item in getWay"
@@ -57,7 +57,7 @@
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="委托单位(客户）" label-width="130px" required>
+            <el-form-item label="委托单位(客户）：" label-width="130px" required>
               <el-select v-model="business.institution.customerName" filterable @change="changeCustomer" placeholder="选择客户" :disabled="!editable">
                 <el-option 
                   v-for="item in customerList"
@@ -69,13 +69,13 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="项目经理" required>
+            <el-form-item label="项目经理：" required>
               <div class="manager-input" :class="{ disabled : !editable }" @click="showStaffModal('projectManager')">
                 {{ projectManager }}
                 <i class="fa fa-x fa-user f-r" aria-hidden="true"></i>
               </div>
             </el-form-item>
-            <!-- <el-form-item label="项目经理" required>
+            <!-- <el-form-item label="项目经理：" required>
               <el-select v-model="business.projectManager" placeholder="请选择项目经理">
                 <el-option
                   v-for="item in staffArray"
@@ -87,7 +87,7 @@
             </el-form-item> -->
           </el-col>
           <el-col :span="8">
-            <el-form-item label="合同预估金额" label-width="120px" required>
+            <el-form-item label="合同预估金额：" label-width="120px" required>
               <!-- <masked-input type="text" placeholder="请输入合同预估金额"  v-model="business.contractAmount"
                             :disabled="!editable"
                             :mask="currencyMask"
@@ -102,12 +102,12 @@
         </el-row> 
         <el-row>
           <el-col :span="8">
-            <el-form-item label="客户联系人">
+            <el-form-item label="客户联系人：">
               <el-input v-model="user.telephone" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="16">
-            <el-form-item label="计划工期" required>
+            <el-form-item label="计划工期：" required>
               <el-col :span="11">
                 <el-form-item >
                   <el-date-picker type="date" placeholder="选择日期" v-model="business.time.start" style="width: 100%;" :disabled="!editable"></el-date-picker>
@@ -124,14 +124,14 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="报价依据"  placeholder="请输入报价依据" required>
+            <el-form-item label="报价依据："  placeholder="请输入报价依据" required>
               <el-input v-model="business.basisQuote" :disabled="!editable" ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="15">
-            <el-form-item label="被审计单位" required>
+            <el-form-item label="被审计单位：" required>
               <template class="addition" v-for="(Unit, index) in business.beingAuditedUnit">
                 <el-row>
                   <el-col :span="22">
@@ -169,7 +169,7 @@
       </div>
       <div class="report-message">
         <el-row>
-          <el-form-item label="报告信息"></el-form-item>
+          <el-form-item label="报告信息："></el-form-item>
         </el-row>
         <div class="form-group">
           <label class="col-sm-2 control-label clear-padding-left">出具报告类型</label>
@@ -201,24 +201,24 @@
         </div>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="报告数量" label-width="100px">
+            <el-form-item label="报告数量：" label-width="100px">
               <el-input placeholder="请输入报告数量" type="number" v-model="business.report.amount" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="报告用途" label-width="80px">
+            <el-form-item label="报告用途：" label-width="80px">
               <el-input placeholder="请输入报告用途" type="text" v-model="business.report.usage" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row v-if="business.feeBasisExist">
           <el-col :span="12">
-            <el-form-item label="取费依据" label-width="100px">
+            <el-form-item label="取费依据：" label-width="100px">
               <el-input placeholder="请输入取费依据" v-model="business.feeBasis" :disabled="!editable"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="费率" label-width="80px">
+            <el-form-item label="费率：" label-width="80px">
               <el-input placeholder="请输入费率" type="number" v-model="business.feeRate" :disabled="!editable">
                 <template slot="append">%</template>
               </el-input>
@@ -229,7 +229,7 @@
       <div class="system-message">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="合同体制信息"></el-form-item>
+            <el-form-item label="合同体制信息："></el-form-item>
           </el-col>
         </el-row>
         <div class="form-group">
@@ -450,11 +450,11 @@
       </div> 
       <div class="staff-message">
         <el-row>
-          <el-form-item label="人员信息"></el-form-item>
+          <el-form-item label="人员信息："></el-form-item>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="参审注师" required>
+            <el-form-item label="参审注师：" required>
               <span>{{ reviewCPAsName }}</span>
               <i class="fa fa-x fa-user-plus c-p" :class="{'c-na': !editable }" style="color:#50bef7;" aria-hidden="true" @click="showStaffModal('reviewCPA')"></i>
             </el-form-item>
@@ -462,7 +462,7 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="参审助理" required>
+            <el-form-item label="参审助理：" required>
               <span>{{ reviewAssistantsName }}</span>
               <i class="fa fa-x fa-user-plus c-p" :class="{'c-na': !editable }" style="color:#50bef7;" aria-hidden="true" @click="showStaffModal('reviewAssistant')"></i>
             </el-form-item>

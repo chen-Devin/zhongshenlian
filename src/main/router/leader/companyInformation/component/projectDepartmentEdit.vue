@@ -7,16 +7,16 @@
       <el-form :label-position="labelPosition" label-width = "100px">
         <el-row>
           <el-col :span="9" :offset="2">
-            <el-form-item label="项目部名称" required>
+            <el-form-item label="项目部名称：" required>
               <el-input type="text" v-model="iniCompanyEdit4.name" placeholder="请输入项目部名称"></el-input>
             </el-form-item>
-            <el-form-item label="项目部人数" required>
+            <el-form-item label="项目部人数：" required>
               <el-input type="number" v-model="iniCompanyEdit4.number" placeholder="请输入项目部人数"></el-input>
             </el-form-item>
-            <el-form-item label="项目部经理" required>
+            <el-form-item label="项目部经理：" required>
               <el-input type="text" v-model="iniCompanyEdit4.principalTelephone" placeholder="请输入项目部经理"></el-input>
             </el-form-item>
-            <el-form-item label="公司简称" required>
+            <el-form-item label="公司简称：" required>
               <el-input type="text" v-model="iniCompanyEdit4.companyAbbreviation" placeholder="请输入公司简称"></el-input>
             </el-form-item>
           </el-col>

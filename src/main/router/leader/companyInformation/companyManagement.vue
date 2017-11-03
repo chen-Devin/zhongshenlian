@@ -77,19 +77,19 @@
                 ref="form2"
                 :label-position="labelPosition"
                 label-width="120px">
-                <el-form-item label="部门编号" prop="number">
+                <el-form-item label="部门编号：" prop="number">
                   <el-input v-model="form2.number"></el-input>
                 </el-form-item>
-                <el-form-item label="部门名称" prop="name">
+                <el-form-item label="部门名称：" prop="name">
                   <el-input v-model="form2.name"></el-input>
                 </el-form-item>
-                <el-form-item label="部门负责人" prop="principalTelephone">
+                <el-form-item label="部门负责人：" prop="principalTelephone">
                   <el-input v-model="form2.principalTelephone"></el-input>
                 </el-form-item>
-                <el-form-item label="参审注师人数" prop="counselorNum">
+                <el-form-item label="参审注师人数：" prop="counselorNum">
                   <el-input v-model="form2.counselorNum"></el-input>
                 </el-form-item>
-                <el-form-item label="参审助理人数" prop="assistantNum">
+                <el-form-item label="参审助理人数：" prop="assistantNum">
                   <el-input v-model="form2.assistantNum"></el-input>
                 </el-form-item>
               </el-form>
@@ -130,16 +130,16 @@
                 ref="form3"
                 :label-position="labelPosition"
                 label-width="100px">
-                <el-form-item label="项目部名称" prop="name">
+                <el-form-item label="项目部名称：" prop="name">
                   <el-input v-model="form3.name"></el-input>
                 </el-form-item>
-                <el-form-item label="项目部人数" prop="number">
+                <el-form-item label="项目部人数：" prop="number">
                   <el-input v-model="form3.number"></el-input>
                 </el-form-item>
-                <el-form-item label="项目部经理" prop="principalTelephone">
+                <el-form-item label="项目部经理：" prop="principalTelephone">
                   <el-input v-model="form3.principalTelephone"></el-input>
                 </el-form-item>
-                <el-form-item label="分公司简称" prop="companyAbbreviation">
+                <el-form-item label="分公司简称：" prop="companyAbbreviation">
                   <el-input v-model="form3.companyAbbreviation"></el-input>
                 </el-form-item>
               </el-form>
@@ -180,7 +180,7 @@
                 ref="form4"
                 :label-position="labelPosition" 
                 label-width="100px">
-                <el-form-item label="小组名称" prop="groupName">
+                <el-form-item label="小组名称：" prop="groupName">
                   <el-input v-model="form4.groupName"></el-input>
                 </el-form-item>
               </el-form>
