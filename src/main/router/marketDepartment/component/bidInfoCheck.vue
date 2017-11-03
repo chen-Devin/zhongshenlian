@@ -3,28 +3,28 @@
     <h4 class="main-title">
       招投标信息
       <button 
-        class="btn my-btn submit-btn pull-right f-r" 
+        class="btn my-btn submit-btn pull-right f-r mr-10" 
         v-if="editBtn&&!editable" 
         @click="edit">编辑</button>
       <button 
-        class="btn my-btn submit-btn pull-right f-r" 
+        class="btn my-btn submit-btn pull-right f-r mr-10 mr-10" 
         @click="delisting" 
         v-if="brandBtn">摘牌</button>
       <template v-else>
         <button 
           v-if="editable"
           type="button" 
-          class="btn f-r my-btn cancel-btn btn-mr" 
+          class="btn f-r my-btn cancel-btn mr-10" 
           @click="cancel()">撤销</button>
         <button 
           v-if="editable"
           type="button" 
-          class="btn f-r my-btn draft-btn btn-mr" 
+          class="btn f-r my-btn draft-btn mr-10" 
           @click="saveDraft(project)">存为草稿</button>
         <button 
           v-if="editable"
           type="button" 
-          class="btn f-r my-btn submit-btn btn-mr" 
+          class="btn f-r my-btn submit-btn mr-10" 
           @click="submit(project)">提交</button> 
       </template>
     </h4>
@@ -33,237 +33,202 @@
       :label-position="labelPosition" 
       :rules="rules" 
       ref="project" 
-      label-width="100px" 
+      label-width="110px" 
       class="project-editor" 
       :disabled="!editable"
       required>
       <div class="basic-message">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招投标公告来源：" label-width="120px" required>
-              <el-input v-model="project.biddingSource" :disabled="!editable"></el-input>
+            <el-form-item v-if="editable" label="招投标公告来源：" label-width="130px" prop="source" required>
+              <el-input v-model="project.biddingSource"></el-input>
             </el-form-item>
+            <p v-else>招投标公告来源：{{ project.biddingSource }}</p>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="报名截止日期：" label-width = "110px" required>
-              <el-input v-model="project.endTime" :disabled="!editable"></el-input>
+            <el-form-item v-if="editable" label="报名截止日期：" label-width = "130px" required>
+              <el-date-picker
+                v-model="project.endTime"
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
             </el-form-item>
+            <p v-else>招投标公告来源：{{ project.biddingSource }}</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招投标公告发布人："  label-width = "130px" required>
+            <el-form-item v-if="editable" label="招投标公告发布人："  label-width = "140px" required>
               <span>{{project.publishName}}</span>
             </el-form-item>
+            <p v-else>招投标公告发布人：{{ project.publishName }}</p>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="报名相关费用：" label-width="110px" required>
-              <el-input v-model="project.relateFee" :disabled="!editable">
-                <template slot="append">万元</template>
+            <el-form-item v-if="editable" label="报名相关费用：" label-width="120px" required>
+              <el-input v-model="project.relateFee">
+                <template slot="append">元</template>
               </el-input>
             </el-form-item>
+            <p v-else>报名相关费用：{{ project.relateFee }}元</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招投标公告发布日期：" label-width = "150px" required>
+            <el-form-item v-if="editable" label="招投标公告发布日期：" label-width = "160px" required>
               <span>{{project.publishTime}}</span>
             </el-form-item>
+            <p v-else>招投标公告发布日期：{{project.publishTime}}</p>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="报名开标日期：" label-width="100px">
-              <el-input v-model="project.bidStartTime" :disabled="!editable"></el-input>
+            <el-form-item v-if="editable" label="报名开标日期：" label-width="110px">
+              <el-date-picker
+                v-model="project.bidStartTime"
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
             </el-form-item>
+            <p v-else>报名开标日期：{{ project.bidStartTime }}</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="中审联招投标公告编号："  label-width = "160px" required>
+            <el-form-item v-if="editable" label="中审联招投标公告编号："  label-width = "170px" required>
               <span>{{project.biddingSerial}}</span>
             </el-form-item>
+            <p v-else>中审联招投标公告编号：{{ project.biddingSerial }}</p>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="公告开标日期：">
-              <el-input v-model="project.openBidDate" :disabled="!editable"></el-input>
+            <el-form-item v-if="editable" label="公告开标日期：">
+              <el-date-picker
+                v-model="project.openBidDate"
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
             </el-form-item>
+            <p v-else>公告开标日期：{{ project.openBidDate }}</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招投项目名称：" label-width = "110px" required>
+            <el-form-item v-if="editable" label="招投项目名称：" label-width = "120px" required>
               <el-input v-model="project.projectName" :disabled="!editable"></el-input>
             </el-form-item>
+            <p v-else>招投项目名称：{{ project.projectName }}</p>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="公告开标地点：">
+            <el-form-item v-if="editable" label="公告开标地点：">
               <el-input v-model="project.openBidPlace" :disabled="!editable"></el-input>
             </el-form-item>
+            <p v-else>公告开标地点：{{ project.openBidPlace }}</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="标段划分：" label-width = "80px" required>
+            <el-form-item v-if="editable" label="标段划分：" label-width = "90px" required>
               <el-input v-model="project.biddingDivision" :disabled="!editable"></el-input>
             </el-form-item>
+            <p v-else>标段划分：{{ project.biddingDivision }}</p>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="审计限制：" label-width="80px">
+            <el-form-item v-if="editable" label="审计限制：" label-width="90px">
               <el-input v-model="project.serviceTerm" :disabled="!editable"></el-input>
             </el-form-item>
+            <p v-else>审计限制：{{ project.serviceTerm }}</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招标人：" label-width="70px" required>
+            <el-form-item v-if="editable" label="招标人：" label-width="80px" required>
               <el-input v-model="project.tenderPerson" :disabled="!editable"></el-input>
             </el-form-item>
+            <p v-else>招标人：{{ project.tenderPerson }}</p>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="投资人资质条件/能力：" label-width="140px">
-              <el-input type="textarea" v-model="project.investmentConditions" :disabled="!editable"></el-input>
+            <el-form-item v-if="editable" label="投资人资质条件/能力：" label-width="150px">
+              <el-input v-model="project.investmentConditions" :disabled="!editable"></el-input>
             </el-form-item>
+            <p v-else>投资人资质条件/能力：{{ project.investmentConditions }}</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="招标代理机构：" >
+            <el-form-item v-if="editable" label="招标代理机构：" >
               <el-input v-model="project.agency" :disabled="!editable"></el-input>
             </el-form-item>
+            <p v-else>招标代理机构：{{ project.agency }}</p>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="招标控制价格：" label-width="110px" required>
-              <el-input v-model="project.controlPrice" :disabled="!editable">
+            <el-form-item v-if="editable" label="招标控制价格：" label-width="120px" required>
+              <el-input v-model="project.controlPrice">
                 <template slot="append">万元</template>
               </el-input>
             </el-form-item>
+            <p v-else>招标控制价格：{{ project.controlPrice }}</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="中标/入围：" required>
+            <el-form-item v-if="editable" label="中标/入围：" required>
               <el-input v-model="project.wtf" :disabled="!editable"></el-input>
             </el-form-item>
+            <p v-else>中标/入围：{{ project.wtf }}</p>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="中标单位数量：" label-width="100px">
+            <el-form-item v-if="editable" label="中标单位数量：" label-width="110px">
               <el-input v-model="project.biddingNumber" :disabled="!editable"></el-input>
             </el-form-item>
+            <p v-else>中标单位数量：{{ project.biddingNumber }}</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="备注：" label-width="50px">
-              <el-input type="textarea" v-model="project.remark" :disabled="!editable"></el-input>
+            <el-form-item v-if="editable" label="备注：" label-width="60px">
+              <el-input v-model="project.remark" :disabled="!editable"></el-input>
             </el-form-item>
+            <p v-else>备注：{{ project.remark }}</p>
           </el-col>
         </el-row>
+        <hr>
         <el-row class="type-system">
           <el-col :span="12" v-if="!editable">
             <div class="business-type">
-              <h5 style="width:70px;">业务类型</h5>
+              <h5 style="width:70px;">业务类型：</h5>
               <div>
-                <p>{{ departmentTypeMap.join('、') }}</p>
+                <p>业务类型：{{ departmentTypeMap.join('、') }}</p>
               </div>
             </div>
             <!--会计所单独内容-->
-            <div v-if="kjsContentShow">
-              <div class="form-group">
-                <h5>会计所</h5>
-              </div>
-              <div class="form-group">
-                <h5>招标内容
-                  <span class="ml-10 mr-10" v-for="item in project.kjsBiddingContent">{{ item + " " }}</span>
-                </h5>
-              </div>
-              <div class="form-group">
-                <h5>
-                  股权结构
-                  <span class="ml-10">
-                    {{ project.kjsOwnershipStructure }}
-                  </span>
-                </h5>
-              </div>
-              <div class="form-group">
-                <h5>
-                  资产总额
-                  <span class="ml-10">{{ project.totalAssets + "元" }}</span>
-                </h5>
-              </div>
-              <div class="form-group">
-                <h5>
-                  坐落地点
-                  <span class="ml-10">{{ project.location }}</span>
-                </h5>
-              </div>   
+            <div class="indent" v-if="kjsContentShow">
+              <p class="bold-title">会计所</p>
+              <p>招标内容：{{ project.kjsBiddingContent.join('、') }}</p>
+              <p>股权结构：{{ project.kjsOwnershipStructure }}</p>
+              <p>资产总额：{{ project.totalAssets + "元" }}</p>
+              <p>坐落地点：{{ project.location }}</p>
             </div>
             <!--评估所单独内容-->
             <div v-if="pgsContentShow">
-              <div class="form-group">
-                <h5>评估所</h5>
-              </div>
-              <div class="form-group">
-                <h5>
-                  招标内容
-                  <span class="ml-10" v-for="item in project.pgsBiddingContent">{{item + " " }}</span>
-                </h5>
-              </div>
-              <div class="form-group">
-                <h5>
-                股权结构
-                <span class="ml-10">{{ project.pgsOwnershipStructure }}</span>
-                </h5>
-              </div>             
+              <p class="bold-title">评估所</p>
+              <p>招标内容：{{ project.pgsBiddingContent.join('、') }}</p>
+              <p>股权结构：{{ project.pgsOwnershipStructure }}</p>      
             </div>
             <!--税务所单独内容-->
             <div v-if="swsContentShow">
-              <div class="form-group">
-                <h5>税务所</h5>
-              </div>
-              <div class="form-group">
-                <h5>
-                  招标内容
-                  <span class="ml-10" v-for="item in project.swsBiddingContent">{{ item + " " }}</span>
-                </h5>
-              </div>
-              <div class="form-group">
-                <h5>股权结构
-                  <span class="ml-10">
-                    {{ project.swsOwnershipStructure }}
-                  </span>
-                </h5>
-              </div>       
+              <p class="bold-title">税务所</p>
+              <p>招标内容：{{ project.swsBiddingContent.join('、') }}</p>
+              <p>股权结构：{{ project.swsOwnershipStructure }}</p>      
             </div>
             <!--造价所单独内容-->
             <div v-if="zjsContentShow">
-              <div class="form-group">
-                <h5>造价所</h5>
-              </div>
-              <div class="form-group">
-                <h5>
-                  招标内容
-                    <span v-for="item in project.zjsBiddingContent">{{ item + " " }}</span>
-                </h5>
-              </div>
-              <div class="form-group">
-                <h5>
-                  资金来源及比例:
-                  <span class="ml-10" v-for="item in project.zjsFundSource">{{ item + " " }}</span>
-                </h5>
-              </div>
-              <div class="form-group">
-                <h5>建设规模
-                  <span class="ml-10">{{ project.zjsArea }}</span>
-                  <span class="ml-10">{{ project.zjsLength }}</span>
-                  <span class="ml-10">{{ project.totalAssets }}</span>
-                </h5>
-              </div>
-              <div class="form-group">
-                <h5>建设地点 
-                    <span class="ml-10">
-                      {{ project.zjsLocation }}
-                    </span>
-                </h5>
-              </div>
+              <p class="bold-title">造价所</p>
+              <p>招标内容：{{ project.zjsBiddingContent.join('、') }}</p>
+              <p>资金来源及比例：{{ project.zjsFundSource.join('、') }}</p>
+              <p>
+                建设规模：
+                <span class="ml-10">{{ project.zjsArea }}</span>
+                <span class="ml-10">{{ project.zjsLength }}</span>
+                <span class="ml-10">{{ project.totalAssets }}</span>
+              </p>
+              <p>建设地点：{{ project.zjsLocation }}</p>
             </div>
           </el-col>
           <el-col :span="12" v-else>
@@ -281,7 +246,7 @@
             <!--会计所单独内容-->
             <div v-if="kjsContentShow">
               <h5 class="el-form-item">会计所</h5>
-              <el-form-item label="招标内容：" label-width="70px">
+              <el-form-item v-if="editable" label="招标内容：" label-width="80px">
                 <el-checkbox-group v-model="project.kjsBiddingContent">
                   <el-checkbox label="年审"></el-checkbox>
                   <el-checkbox label="专项"></el-checkbox>
@@ -292,7 +257,7 @@
                   <el-checkbox label="外资审计"></el-checkbox>
                 </el-checkbox-group>
               </el-form-item>
-              <el-form-item label="股权结构：" label-width="70px">
+              <el-form-item v-if="editable" label="股权结构：" label-width="80px">
                 <input class="magic-radio" type="radio" name="kjsOwnerStructure" v-model="project.kjsOwnershipStructure" value="国有" id="kjs国有">
                 <label for="kjs国有">
                    国有
@@ -310,12 +275,12 @@
                    混合
                 </label>
               </el-form-item>
-              <el-form-item label="资产总额：" label-width="70px">
+              <el-form-item v-if="editable" label="资产总额：" label-width="80px">
                 <el-input type="number" placeholder="请输入资产总额" v-model="project.totalAssets">
                   <template slot="append">元</template>
                 </el-input>
               </el-form-item>
-              <el-form-item label="坐落地点：" label-width="70px">
+              <el-form-item v-if="editable" label="坐落地点：" label-width="80px">
                 <el-input type="text" placeholder="请输入坐落地点" v-model="project.location"></el-input>
               </el-form-item>
               <hr>
@@ -323,7 +288,7 @@
             <!--评估所单独内容-->
             <div v-if="pgsContentShow">  
               <h5 class="el-form-item">评估所</h5>
-              <el-form-item label="招标内容：" label-width="70px">
+              <el-form-item v-if="editable" label="招标内容：" label-width="80px">
                 <input class="magic-checkbox" type="checkbox" value="股改" v-model="project.pgsBiddingContent" id="股改">
                 <label for="股改">
                   股改
@@ -341,7 +306,7 @@
                   清产核资
                 </label>
               </el-form-item>
-              <el-form-item label="股权结构：" label-width="70px">
+              <el-form-item v-if="editable" label="股权结构：" label-width="80px">
                 <input class="magic-radio" type="radio" name="pgsOwnerStructure" v-model="project.pgsOwnershipStructure" value="国有" id="pgs国有">
                 <label for="pgs国有">
                    国有
@@ -364,13 +329,13 @@
             <!--税务所单独内容-->
             <div v-if="swsContentShow">
               <h5 class="el-form-item">评估所</h5>
-              <el-form-item label="招标内容：" label-width="70px">
+              <el-form-item v-if="editable" label="招标内容：" label-width="80px">
                 <input class="magic-checkbox" type="checkbox" value="税鉴" v-model="project.swsBiddingContent" id="税鉴">
                 <label for="税鉴">
                   税鉴
                 </label>
               </el-form-item>
-              <el-form-item label="股权结构：" label-width="70px">
+              <el-form-item v-if="editable" label="股权结构：" label-width="80px">
                 <input class="magic-radio" type="radio" name="swsOwnershipStructure" v-model="project.swsOwnershipStructure" value="国有" id="sws国有">
                 <label for="sws国有">
                    国有
@@ -393,7 +358,7 @@
             <!--造价所单独内容-->
             <div v-if="zjsContentShow">
               <h5 class="el-form-item">造价所</h5>        
-              <el-form-item label="招标内容：" label-width="70px">
+              <el-form-item v-if="editable" label="招标内容：" label-width="80px">
                 <input class="magic-checkbox" type="checkbox" value="概算" v-model="project.zjsBiddingContent" id="概算">
                 <label for="概算">
                   概算
@@ -423,7 +388,7 @@
                   二审
                 </label>
               </el-form-item> 
-              <el-form-item label="资金来源及比例：" label-width="110px">      
+              <el-form-item v-if="editable" label="资金来源及比例：" label-width="120px">      
                 <input class="magic-checkbox" type="checkbox" value="财政" v-model="project.zjsFundSource" id="财政">
                 <label for="财政">
                   财政
@@ -441,123 +406,134 @@
                   BT等
                 </label>
               </el-form-item>
-              <el-form-item label="建设规模：" label-width="70px">
+              <el-form-item v-if="editable" label="建设规模：" label-width="80px">
                 <el-input style="width:155px" type="number" id="scale" v-model="project.zjsArea" name="zjsArea" placeholder="请输入建设面积"></el-input>             
                 <el-input style="width:155px" type="number" id="scale" v-model="project.zjsLength" name="zjsLength" placeholder="请输入长度"></el-input>             
                 <el-input style="width:155px" type="number" id="scale" v-model="project.zjsTotalInvestment" name="zjsTotalInvestment" placeholder="请输入总投资额"></el-input>
               </el-form-item> 
-              <el-form-item label="建设地点：" label-width="70px">
+              <el-form-item v-if="editable" label="建设地点：" label-width="80px">
                 <el-input type="text" id="zjsLocation" v-model="project.zjsLocation" name="zjsLocation" placeholder="请输入建设地点"></el-input>
               </el-form-item>
-              <el-form-item label="服务期限：" label-width="70px">   
-                  <input type="text" class="form-control" id="serviceTerm" v-model="project.serviceTerm" name="serviceTerm" placeholder="请输入服务期限">
+              <el-form-item v-if="editable" label="服务期限：" label-width="80px">   
+                <el-input type="text" id="zjsLocation" v-model="project.serviceTerm" placeholder="请输入服务期限"></el-input>
               </el-form-item>
               <hr>
             </div>
           </el-col>
           <el-col :span="12">
             <div class="business-type">
-              <h5 style="width:95px;">合同体制信息</h5>
-              <div class="el-form-item">
-                  <input class="magic-radio plus" type="radio" name="contractSystem" value="联合体" v-model="project.contractType.type" :disabled="!editable" id="common">
+              <h5 style="width:100px;">合同体制信息：</h5>
+              <div class="el-form-item" v-if="editable">
+                  <input class="magic-radio plus" type="radio" name="contractSystem" value="联合体" v-model="project.contractType.type" id="common">
                   <label class="radio-inline"  for="common">
                     联合体
                   </label>
-                  <input class="magic-radio plus" type="radio" name="contractSystem" value="非联合体" v-model="project.contractType.type" :disabled="!editable" id="nocommon">
+                  <input class="magic-radio plus" type="radio" name="contractSystem" value="非联合体" v-model="project.contractType.type" id="nocommon">
                   <label class="radio-inline" for="nocommon">
                     非联合体
                   </label>
               </div>
+              <p class="d-ib" v-else>{{ project.contractType.type }}</p>
             </div>
-              <div class="bgc-fff business-type" v-show="contractTypeChan">
-                <p class="el-form-item" style="margin-bottom：23px">基本取费</p>
-                <el-row class="el-form-item">
-                  <el-col :span="9">
-                    <el-input type="text" placeholder="请输入主办方" v-model="project.contractType.mainBasicName" :disabled="!editable">
-                      <template slot="prepend">主办方</template>
-                    </el-input>
-                  </el-col>
-                  <el-col :span="9">
-                    <el-input type="number" placeholder="请输入比例" v-model="project.contractType.mainBasicRate" :disabled="!editable">
-                      <template slot="prepend">比例</template>
-                      <template slot="append">%</template>
-                    </el-input>
-                  </el-col>
-                </el-row>
-                <el-row class="el-form-item" v-for="(item, index) in project.contractType.subBasicArray" :key="index">
-                  <el-col :span="9">
-                    <el-input type="text" placeholder="请输入协办方" v-model="item.name" :disabled="!editable">
-                      <template slot="prepend">协办方</template>
-                    </el-input>
-                  </el-col>
-                  <el-col :span="9">
-                    <el-input type="text" placeholder="请输入比例" v-model="item.rate" :disabled="!editable">
-                      <template slot="prepend">比例</template>
-                      <template slot="append">%</template>
-                    </el-input>
-                  </el-col>
-                  <el-col :span="2">
-                    <h4 v-if="editable">
-                      <a class="text-danger" @click="delBasicFee(index)">
-                        <img src="../../../../img/delete_icon.svg">
-                      </a>
-                    </h4>
-                  </el-col>
-                  <el-col :span="2">
-                    <h4 v-if="editable">
-                      <a class="text-danger" @click="addBasicFee()">
-                        <img src="../../../../img/add_icon.svg">
-                      </a>
-                    </h4>
-                  </el-col>
-                </el-row>
-              </div>
-              <div class="bgc-fff business-type" v-show="contractTypeChan">
-                <p>效益取费</p>
-                <el-row class="el-form-item">
-                  <el-col :span="9">
-                    <el-input type="text" placeholder="请输入主办方" v-model="project.contractType.mainEfficiencyName" :disabled="!editable">
-                      <template slot="prepend">主办方</template>
-                    </el-input>
-                  </el-col>
-                  <el-col :span="9">
-                    <el-input type="number" placeholder="请输入比例" v-model="project.contractType.mainEfficiencyRate" :disabled="!editable">
-                      <template slot="prepend">比例</template>
-                      <template slot="append">%</template>
-                    </el-input>
-                  </el-col>
-                </el-row>
-                <el-row class="el-form-item" v-for="(item, index) in project.contractType.subEfficiencyArray" :key="index">
-                  <el-col :span="9">
-                    <el-input type="text" placeholder="请输入协办方" v-model="item.name" :disabled="!editable">
-                      <template slot="prepend">协办方</template>
-                    </el-input>
-                  </el-col>
-                  <el-col :span="9">
-                    <el-input type="text" placeholder="请输入比例" v-model="item.rate" :disabled="!editable">
-                      <template slot="prepend">比例</template>
-                      <template slot="append">%</template>
-                    </el-input>
-                  </el-col>
-                  <el-col :span="2">
-                    <h4 v-if="editable">
-                      <a class="text-danger" @click="delEfficiencyFee(index)">
-                        <img src="../../../../img/delete_icon.svg">
-                      </a>
-                    </h4>
-                  </el-col>
-                  <el-col :span="2">
-                    <h4 v-if="editable">
-                      <a class="text-danger" @click="addEfficiencyFee()">
-                        <img src="../../../../img/add_icon.svg">
-                      </a>
-                    </h4>
-                  </el-col>
-                </el-row>
-              </div>
-             
+            <div class="bgc-fff business-type" v-show="contractTypeChan">
+              <p v-if="editable">基本取费</p>
+              <p class="bold-title" v-else>基本取费</p>
+              <el-row :class="{ 'el-form-item': editable  }">
+                <el-col :span="9">
+                  <el-input type="text" placeholder="请输入主办方" v-model="project.contractType.mainBasicName" v-if="editable">
+                    <template slot="prepend">主办方</template>
+                  </el-input>
+                  <p v-else>主办方：{{ project.contractType.mainBasicName }}</p>
+                </el-col>
+                <el-col :span="9">
+                  <el-input type="number" placeholder="请输入比例" v-model="project.contractType.mainBasicRate" v-if="editable">
+                    <template slot="prepend">比例</template>
+                    <template slot="append">%</template>
+                  </el-input>
+                  <p v-else>比例：{{ project.contractType.mainBasicRate }}%</p>
+                </el-col>
+              </el-row>
+              <el-row :class="{ 'el-form-item': editable  }" v-for="(item, index) in project.contractType.subBasicArray" :key="index">
+                <el-col :span="9">
+                  <el-input type="text" placeholder="请输入协办方" v-model="item.name" v-if="editable">
+                    <template slot="prepend">协办方</template>
+                  </el-input>
+                  <p v-else>协办方：{{ item.name }}</p>
+                </el-col>
+                <el-col :span="9">
+                  <el-input type="text" placeholder="请输入比例" v-model="item.rate" v-if="editable">
+                    <template slot="prepend">比例</template>
+                    <template slot="append">%</template>
+                  </el-input>
+                  <p v-else>比例：{{ item.rate }}%</p>
+                </el-col>
+                <el-col :span="2">
+                  <h4 v-if="editable">
+                    <a class="text-danger" @click="delBasicFee(index)">
+                      <img src="../../../../img/delete_icon.svg">
+                    </a>
+                  </h4>
+                </el-col>
+                <el-col :span="2">
+                  <h4 v-if="editable">
+                    <a class="text-danger" @click="addBasicFee()">
+                      <img src="../../../../img/add_icon.svg">
+                    </a>
+                  </h4>
+                </el-col>
+              </el-row>
+            </div>
+            <div class="bgc-fff business-type" v-show="contractTypeChan">
+              <p v-if="editable">效益取费</p>
+              <p class="bold-title" v-else>效益取费</p>
+              <el-row :class="{ 'el-form-item': editable }">
+                <el-col :span="9">
+                  <el-input type="text" placeholder="请输入主办方" v-model="project.contractType.mainEfficiencyName" v-if="editable">
+                    <template slot="prepend">主办方</template>
+                  </el-input>
+                  <p v-else>主办方：{{ project.contractType.mainEfficiencyName }}</p>
+                </el-col>
+                <el-col :span="9">
+                  <el-input type="number" placeholder="请输入比例" v-model="project.contractType.mainEfficiencyRate" v-if="editable">
+                    <template slot="prepend">比例</template>
+                    <template slot="append">%</template>
+                  </el-input>
+                  <p v-else>比例：{{ project.contractType.mainEfficiencyRate }}%</p>
+                </el-col>
+              </el-row>
+              <el-row :class="{ 'el-form-item': editable }" v-for="(item, index) in project.contractType.subEfficiencyArray" :key="index">
+                <el-col :span="9">
+                  <el-input type="text" placeholder="请输入协办方" v-model="item.name" v-if="editable">
+                    <template slot="prepend">协办方</template>
+                  </el-input>
+                  <p v-else>协办方：{{ item.name }}</p>
+                </el-col>
+                <el-col :span="9">
+                  <el-input type="text" placeholder="请输入比例" v-model="item.rate" v-if="editable">
+                    <template slot="prepend">比例</template>
+                    <template slot="append">%</template>
+                  </el-input>
+                  <p v-else>比例：{{ item.rate }}%</p>
+                </el-col>
+                <el-col :span="2">
+                  <h4 v-if="editable">
+                    <a class="text-danger" @click="delEfficiencyFee(index)">
+                      <img src="../../../../img/delete_icon.svg">
+                    </a>
+                  </h4>
+                </el-col>
+                <el-col :span="2">
+                  <h4 v-if="editable">
+                    <a class="text-danger" @click="addEfficiencyFee()">
+                      <img src="../../../../img/add_icon.svg">
+                    </a>
+                  </h4>
+                </el-col>
+              </el-row>
+            </div>
           </el-col>
         </el-row> 
+        <hr>
       </div>
       <!-- 摘牌信息 一会加上 -->
       <div v-if="delipotentShow" class="contract-pad">
@@ -572,14 +548,14 @@
           <tbody>
             <tr>
               <td>
-                <div class="form-group">
+                <div>
                   <h5>摘牌部门
                     <span>
                     {{ project.subDepartment }}
                     </span>
                   </h5>  
                 </div>
-                <div class="form-group">
+                <div>
                   <h5>摘牌人员
                     <span>
                     {{ project.delipotentName }}
@@ -590,7 +566,7 @@
             </tr>
           </tbody>
         </table>
-         <div class="form-group">
+         <div>
           <label for="remark" class="col-sm-3 control-label">{{ project.delipotentTime }}</label>
         </div> 
       </div>
@@ -601,7 +577,7 @@
           </div>
            <!-- 所长通过不通过 -->
           <div v-if="directorAgreeShow">
-            <div class="form-group">
+            <div>
               <label for="remark" class="col-sm-1 control-label"></label>
               <div class="col-sm-11 form-group">
                 <button type="button" class="btn my-btn submit-btn" @click="approve()">通过</button>
@@ -612,7 +588,7 @@
         </el-col>
         <el-col :span="12">
           <!--调用组件的审核意见-->
-          <div class="form-group">
+          <div>
             <approver-advice class="advice" v-if="checkAdviceShow" :advices="biddingApproverArray">审核意见</approver-advice>
           </div>
         </el-col>
@@ -641,7 +617,7 @@
             <tr>
               <td>
                 <div class="row">
-                  <div class="form-group">
+                  <div>
                     <label class="col-sm-2 control-label">入围通知书</label>
                     <div class="col-sm-8">
                       <a :href="ruweiDoc.url" target="_blank">{{ ruweiDoc.name }}</a>
@@ -652,7 +628,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="form-group">
+                  <div>
                     <label class="col-sm-2 control-label">中标通知书</label>
                     <div class="col-sm-8">
                       <a :href="zhongbiaoDoc.url" target="_blank">{{ zhongbiaoDoc.name }}</a>
@@ -663,7 +639,7 @@
                   </div>
                 </div>
                 <div class="row" v-if="finishBtn">
-                  <div class="form-group">
+                  <div>
                     <label class="col-sm-1 control-label"></label>
                     <div class="col-sm-11">
                       <button type="button" class="btn my-btn submit-btn" @click="uploadFinish()">上传完成</button>
@@ -690,6 +666,15 @@
 </template>
 
 <style lang="sass" scoped>
+  .el-form {
+    p {
+      height: 40px;
+      line-height: 40px;
+    }
+  }
+  .bold-title {
+    font-weight: bold;
+  }
   .contract-pad{
     padding-right:15px;
     padding-bottom: 15px;
@@ -706,13 +691,14 @@
      border-radius: 4px;
   }
   .basic-message {
-    margin-top: 30px;
+    margin-top: 10px;
   }
   .pull-right {
-    margin-right: 30px;
+    margin-right: 10px;
   }
   .bid-info-check {
     padding-left: 10px;
+    padding-right: 10px;
     > .main-title {
       margin-left: 20px;
     }
@@ -849,9 +835,7 @@ export default {
       cancelModal: false,
       labelPosition: 'left',
       rules: {
-        source: [
-          //
-        ]
+        
       },
       adviceText: '',  //审核不通过信息
       editBtn: false,  //编辑按钮
