@@ -146,12 +146,10 @@ export default {
 }
 .present-wrap {
   overflow: hidden;
-
   padding-top: 30px;
   padding-left: 20px;
   padding-right: 20px;
   margin-bottom: 20px;
-
 }
   textarea {
     resize: vertical;

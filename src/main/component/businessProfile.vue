@@ -240,12 +240,10 @@
         收起
         <img src="../../img/arrow-up.png">
       </div>
-      <!-- <i class="el-icon-arrow-up"></i> -->
       <div @click="checkMore" v-else>
         查看更多
         <img src="../../img/arrow-down.png">
       </div>
-      <!-- <i class="el-icon-arrow-down"></i> -->
     </div>
     <div class="basic-message" style="border: none">
       <!-- <el-row  v-if="contractUploadShow">
@@ -525,15 +523,6 @@ export default {
     }
   } 
 }
-.control-label {
-  width: 120px;
-}
-.el-col-8{
-  text-overflow: ellipsis;
-}
-.el-row{
-  text-overflow: ellipsis;
-}
 .basic-message{
   margin-left: 30px;
   margin-right: 30px;
@@ -547,9 +536,5 @@ export default {
     margin-top: 0;
     border: none;
   }
-}
-.check-code {
-  margin-top: -6px;
-  margin-left: 10px;
 }
 </style>
