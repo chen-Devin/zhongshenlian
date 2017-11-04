@@ -49,7 +49,7 @@
                 <el-radio v-model="staff.isPrincipal" label="1">是</el-radio>
                 <el-radio v-model="staff.isPrincipal" label="0">否</el-radio>
               </el-form-item>
-              <p v-else>是否为部门负责人：{{staff.isPrincipal}} </p>
+              <p v-else>是否为部门负责人：{{staff.isPrincipal==='1'? '是':'否'}} </p>
               <el-form-item label="所属业务部：" label-width="100px" v-if="type==='department' && isNew[0] === false">
                 <p v-model="staff.companyDepartment" disabled></p>
               </el-form-item>
@@ -79,7 +79,7 @@
                 <el-radio v-model="staff.isHaveCertificate" label="1">是</el-radio>
                 <el-radio v-model="staff.isHaveCertificate" label="0">否</el-radio>
               </el-form-item>
-              <p v-else>是否有注会证书：{{staff.isHaveCertificate}}</p>
+              <p v-else>是否有注会证书：{{staff.isHaveCertificate==='1'? '是':'否'}}</p>
               <el-form-item label="入职时间：" label-width="90px" v-if="editAble">
                 <el-date-picker
                   style="width:100%"

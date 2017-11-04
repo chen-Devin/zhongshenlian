@@ -22,16 +22,10 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-<<<<<<< HEAD
-            <el-form-item label="业务范围与审计目标：" label-width="160px" prop="scope" required v-if="editable">
+            <el-form-item label="项目范围与审计目标：" label-width="160px" prop="scope" required v-if="editable">
               <el-input v-model="business.scope" type="textarea"></el-input>
-=======
-            <el-form-item label="项目范围与审计目标：" label-width="160px" prop="scope" required>
-              <el-input v-model="business.scope" v-if="editable" type="textarea"></el-input>
-              <p v-else>{{business.scope}}</p>
->>>>>>> 93c10f98d561e7a74a8f5fcabc72e42f37b56431
             </el-form-item>
-            <p v-else>业务范围与审计目标：{{business.scope}}</p>
+            <p v-else>项目范围与审计目标：{{business.scope}}</p>
           </el-col>
         </el-row>
         <el-row>
@@ -39,13 +33,8 @@
             <p>提交申请人：{{user.name}}</p>
           </el-col>
           <el-col :span="8">
-<<<<<<< HEAD
-            <el-form-item label="业务类型：" required v-if="editable">
+            <el-form-item label="项目类型：" required v-if="editable">
               <el-select  v-model="business.type" placeholder="选择业务类型">
-=======
-            <el-form-item label="项目类型：" required>
-              <el-select  v-model="business.type" placeholder="选择业务类型" v-if="editable">
->>>>>>> 93c10f98d561e7a74a8f5fcabc72e42f37b56431
                 <el-option 
                 v-for="(TYPE, index) in businessType" 
                 :value="TYPE" 
@@ -162,7 +151,7 @@
                       </el-select>
                     </div>
                     <div class="input-group" v-if="!editable">
-                      <div>{{ Unit.unit }}</div>
+                      <p>被审计单位：{{ Unit.unit }}</p>
                     </div>
                   </el-col>
                   <el-col :span="2">
@@ -216,7 +205,7 @@
           </div>
         </div>
         <el-row>
-          <el-col :span="12">
+          <el-col :span="24">
             <el-form-item label="报告数量：" label-width="100px"  v-if="editable">
               <el-input placeholder="请输入报告数量" type="number" v-model="business.report.amount"></el-input>
             </el-form-item>

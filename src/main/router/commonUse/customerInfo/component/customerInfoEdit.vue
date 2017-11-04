@@ -70,14 +70,10 @@
          <div class="separator"></div>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="客户名称：" required>
-               <span>{{ newCustomerInfo.customerName }}</span>
-             </el-form-item>
+             <p>客户名称：{{ newCustomerInfo.customerName }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="经营状态：">
-               <span>{{ newCustomerInfo.runStatus }}</span>
-             </el-form-item>
+             <p>经营状态：{{ newCustomerInfo.runStatus }}</p>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
@@ -85,69 +81,45 @@
              <p>社会统一信用代码：{{ newCustomerInfo.code }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-<<<<<<< HEAD
-             <p>公司类型：{{ customerNature }}</p>
-=======
-             <el-form-item label="公司类型：">
-               <span>{{ newCustomerInfo.customerNature }}</span>
-             </el-form-item>
->>>>>>> 93c10f98d561e7a74a8f5fcabc72e42f37b56431
+             <p>公司类型：{{ newCustomerInfo.customerNature }}</p>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="公司法人：">
-               <span>{{ newCustomerInfo.operName }}</span>
-             </el-form-item>
+             <p>公司法人：{{ newCustomerInfo.operName }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="注册资金：">
-               <span>{{ newCustomerInfo.registeredCapital }}（万元）</span>
-             </el-form-item>
+             <p>注册资金：{{ newCustomerInfo.registeredCapital }}（万元）</p>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="成立日期：">
-               <span>{{ newCustomerInfo.setUpTime }}</span>
-             </el-form-item>
+             <p>成立日期：{{ newCustomerInfo.setUpTime }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="注册地址：">
-               <span>{{ newCustomerInfo.registeredAddress }}</span>
-             </el-form-item>
+             <p>注册地址：{{ newCustomerInfo.registeredAddress }}</p>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="所属行业：">
-               <span>{{ newCustomerInfo.industry }}</span>
-             </el-form-item>
+             <p>所属行业：{{ newCustomerInfo.industry }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="电话：">
-               <span>{{ newCustomerInfo.phoneNumber }}</span>
-             </el-form-item>
+             <p>电话：{{ newCustomerInfo.phoneNumber }}</p>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="经营范围：">
-               <span>{{ newCustomerInfo.mainWork }}</span>
-             </el-form-item>
+              <p>经营范围：{{ newCustomerInfo.mainWork }}</p>
            </el-col>
          </el-row>
          <div class="separator"></div>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="创建人：">
-               <span>{{ newCustomerInfo.founderName }}</span>
-             </el-form-item>
+              <p>创建人：{{ newCustomerInfo.founderName }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="创建时间：">
-               <span>{{ newCustomerInfo.createAt }}</span>
-             </el-form-item>
+              <p>创建时间：{{ newCustomerInfo.createAt }}</p>
            </el-col>
          </el-row>
       </el-form>

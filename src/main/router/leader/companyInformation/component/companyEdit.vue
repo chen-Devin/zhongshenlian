@@ -4,39 +4,39 @@
     <h1 class="title">{{ iniCompanyEdit2.name }}</h1>
     <h5 class="vice-title">公司信息</h5>
     <div class="company-detail">
-      <el-form :label-position="labelPosition" label-width = "120px">
+      <el-form :label-position="labelPosition" label-width = "130px">
         <el-row>
           <el-col :span="11" :offset="1">
-            <el-form-item label="公司简称：" label-width="80px" required>
+            <el-form-item label="公司简称：" label-width="90px" required>
               <el-input type="text" v-model="iniCompanyEdit2.number" placeholder="请输入公司编号"></el-input>
             </el-form-item>
-            <el-form-item label="公司名称：" label-width="80px" required>
+            <el-form-item label="公司名称：" label-width="90px" required>
               <el-input type="text" v-model="iniCompanyEdit2.name" placeholder="请输入公司名称"></el-input>
             </el-form-item>
-            <el-form-item label="社会统一信用代码：" label-width="130px" required>
+            <el-form-item label="社会统一信用代码：" label-width="140px" required>
               <el-input type="text" v-model="iniCompanyEdit2.creditCode" placeholder="请输入信用代码"></el-input>
             </el-form-item>
-            <el-form-item label="公司法人：" label-width="80px" required>
+            <el-form-item label="公司法人：" label-width="90px" required>
               <el-input type="text" v-model="iniCompanyEdit2.legalPersonName" placeholder="请输入公司法人"></el-input>
             </el-form-item>
-            <el-form-item label="公司负责人：" label-width="90px" required>
+            <el-form-item label="公司负责人：" label-width="100px" required>
               <el-input type="text" v-model="iniCompanyEdit2.principalName" placeholder="请输入公司负责人"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="11" :offset="1">
-            <el-form-item label="参审人员标签：" label-width="100px" required>
+            <el-form-item label="参审人员标签：" label-width="120px" required>
               <el-input type="text" v-model="iniCompanyEdit2.counselorTag" placeholder="请输入参审人员标签"></el-input>
             </el-form-item>
-            <el-form-item label="经营范围：" label-width="80px" required>
+            <el-form-item label="经营范围：" label-width="90px" required>
               <el-input type="text" v-model="iniCompanyEdit2.mainWork" placeholder="请输入经营范围"></el-input>
             </el-form-item>
-            <el-form-item label="开户银行：" label-width="80px" required>
+            <el-form-item label="开户银行：" label-width="90px" required>
               <el-input type="text" v-model="iniCompanyEdit2.openAccountBankName" placeholder="请输入开户银行"></el-input>
             </el-form-item>
-            <el-form-item label="开户银行账号：" label-width="100px" required>
+            <el-form-item label="开户银行账号：" label-width="120px" required>
               <el-input type="text" v-model="iniCompanyEdit2.openAccountBankNumber" placeholder="请输入开户账号"></el-input>
             </el-form-item>
-            <el-form-item label="人员数量：" label-width="80px" required>
+            <el-form-item label="人员数量：" label-width="90px" required>
               <span>{{ iniCompanyEdit2.staffNum }}</span>
             </el-form-item>
           </el-col>

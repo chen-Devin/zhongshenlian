@@ -1,81 +1,51 @@
 <template>
   <el-form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent :label-position="labelPosition" label-width = "80px" >
       <div class="basic-message">        
-        <el-form-item label="项目编号：" label-width = "80px" v-if="contractNumShow">
-          <span>{{business.number}}</span>
-        </el-form-item>              
-        <el-form-item label="项目名称：" label-width = "80px">
-          <span class="form-control-static">{{business.name}}</span>
-        </el-form-item>
-        <el-form-item label="项目范围与审计目标：" label-width = "160px">
-          <span class="form-control-static">{{business.scope}}</span>
-        </el-form-item>
+        <p v-if="contractNumShow">项目编号：{{business.number}}</p>           
+        <p class="form-control-static">项目名称：{{business.name}}</p>
+       <p class="form-control-static">项目范围与审计目标：{{business.scope}}</p>
       </div>
       <div class="basic-message" style="border: none">
-        <el-row class="el-form-item">
+        <el-row>
           <el-col :span="8">
-            <el-form-item label="提交申请人：" label-width = "90px">
-              <span class="form-control-static">{{business.proposer.name}}</span>
-            </el-form-item>
+            <p class="form-control-static">提交申请人：{{business.proposer.name}}</p>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="客户联系人：" label-width = "90px">
-              <span class="form-control-static">{{business.institution.name}}</span>
-            </el-form-item>            
+            <p class="form-control-static">客户联系人：{{business.institution.name}}</p>        
           </el-col>
           <el-col :span="8">
-            <el-form-item label="计划工期：" label-width = "80px">
-              <span class="form-control-static">{{business.time.start}}</span>
-              <span>至</span>
-              <span class="form-control-static">{{business.time.end}}</span>
-            </el-form-item>
+            <p class="form-control-static">计划工期：{{business.time.start}} 至 {{business.time.end}}</p>
           </el-col>
         </el-row>
-        <el-row class="el-form-item">
+        <el-row>
           <el-col :span="8">
-            <el-form-item label="委托单位（客户）：" label-width = "130px">
-              <span class="form-control-static">{{business.institution.customerName}}</span>
-            </el-form-item>   
+            <p class="form-control-static">委托单位（客户）：{{business.institution.customerName}}</p> 
           </el-col>
           <el-col :span="8">
-            <el-form-item label="项目类型：" label-width = "80px">
-              <span class="form-control-static">{{business.type}}</span>
-            </el-form-item> 
+            <p class="form-control-static">项目类型：{{business.type}}</p>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="项目取得方式：" label-width = "110px">
-              <span class="form-control-static">{{business.getWay}}</span>
-            </el-form-item> 
+            <p class="form-control-static">项目取得方式：{{business.getWay}}</p>
           </el-col>
         </el-row>
-        <el-row class="el-form-item">
+        <el-row>
           <el-col :span="8">
-            <el-form-item label="项目经理：">
-              <span class="form-control-static">{{business.manager.name}}</span>
-            </el-form-item>
+            <p class="form-control-static">项目经理：{{business.manager.name}}</p>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="合同预估金额：" label-width = "110px">
-              <span class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</span>
-            </el-form-item>          
+            <p class="form-control-static">合同预估金额：{{business.contractAmount===''?'':`${business.contractAmount}元`}}</p>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="项目申请人电话：" label-width = "120px">
-              <span class="form-control-static">{{business.proposer.tele}}</span>
-            </el-form-item>           
+            <p class="form-control-static">项目申请人电话：{{business.proposer.tele}}</p>       
           </el-col>
         </el-row>
-        <el-row class="el-form-item">
-          <el-form-item label="被审计单位：" label-width = "90px">
-            <p class="form-control-static" v-for="auditedUnit in business.beingAuditedUnit">{{ auditedUnit.unit }}</p>
-          </el-form-item>
+        <el-row>
+          <p class="form-control-static" v-for="auditedUnit in business.beingAuditedUnit">被审计单位：{{ auditedUnit.unit }}</p>
         </el-row>
-        <el-row class="el-form-item">
-          <el-form-item label="报价依据：">
-            <span class="form-control-static">{{business.basisQuote}}</span>
-          </el-form-item> 
+        <el-row>
+          <p class="form-control-static">报价依据：{{business.basisQuote}}</p>
         </el-row>
-        <el-row class="el-form-item">
+        <el-row>
           <el-form-item label="出具报告类型：" label-width = "110px">
             <div> <p
                  v-html="reportFormat"></p></div>
@@ -83,119 +53,101 @@
         </el-row>
       </div>
       <div class="basic-message" v-if="showMore" style="border: none">
-        <el-row class="el-form-item">
+        <el-row>
           <!-- <el-col :span="8" v-if="business.auditTime.exist"> -->
           <el-col :span="8">
-            <el-form-item label="审计期间：">
-              <span class="form-control-static">{{business.auditTime.start}}</span>
-              <span>至</span>
-              <span class="form-control-static">{{business.auditTime.end}}</span>
-            </el-form-item> 
+            <p class="form-control-static">审计期间：{{business.auditTime.start}} 至 {{business.auditTime.end}}</p>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="参审注师：">
-               <span class="form-control-static">{{ reviewCPAsName }}</span>
-            </el-form-item>  
+            <p class="form-control-static">参审注师：{{ reviewCPAsName }}</p> 
           </el-col>
           <el-col :span="8">
-            <el-form-item label="报告用途：">
-              <span class="form-control-static">{{business.report.usage}}</span>
-            </el-form-item>            
+            <p class="form-control-static">报告用途：{{business.report.usage}}</p>    
           </el-col>
         </el-row>
-        <el-row class="el-form-item">
+        <el-row>
           <el-col :span="8">
-            <el-form-item label="报告数量：">
-              <span class="form-control-static">{{business.report.amount===''?'':`${business.report.amount}份（类）`}}</span>
-            </el-form-item> 
+            <span class="form-control-static">报告数量：{{business.report.amount===''?'':`${business.report.amount}份（类）`}}</span>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="参审助理：">
-              <span class="form-control-static">{{ reviewAssistantsName }}</span>
-            </el-form-item>             
+            <p class="form-control-static">参审助理：{{ reviewAssistantsName }}</p>           
           </el-col>
           <!-- <el-col :span="8" v-if="business.auditTime.exist"> -->
           <el-col :span="8">
-            <el-form-item label="上次报告事务所：" label-width = "110px">
-              <span class="form-control-static">{{business.lastOffice}}</span>
-            </el-form-item> 
+            <p class="form-control-static">上次报告事务所：{{business.lastOffice}}</p>
           </el-col>
         </el-row>
-        <el-row class="el-form-item">
+        <el-row>
           <el-col :span="8">
-            <el-form-item label="合同体制：">
-              <p>{{business.contractType.name}}</p>
-              <div v-if="contractTypeChan">
-                <p class="form-control-static">基本取费</p>
-                <div>
-                  <div class="row form-group">
-                    <div class="col-sm-6">
-                      <p class="form-control-static">
-                        主办方：{{business.contractType.basicFee.main.name}}
-                      </p>
-                    </div>
-                    <div class="col-sm-5">
-                      <p class="form-control-static">
-                        比例：{{business.contractType.basicFee.main.percentage}}%
-                      </p>
-                    </div>
+            <p>合同体制：{{business.contractType.name}}</p>
+            <div v-if="contractTypeChan">
+              <p class="form-control-static">基本取费</p>
+              <div>
+                <div class="row form-group">
+                  <div class="col-sm-6">
+                    <p class="form-control-static">
+                      主办方：{{business.contractType.basicFee.main.name}}
+                    </p>
                   </div>
-                  <div class="row form-group"
-                       v-for="(DEPEND, index) in business.contractType.basicFee.depend"
-                       :key="index">
-                    <div class="col-sm-6">
-                      <p class="form-control-static">
-                        协办方：{{DEPEND.name}}
-                      </p>
-                    </div>
-                    <div class="col-sm-5">
-                      <p class="form-control-static">
-                        比例：{{DEPEND.percentage}}%
-                      </p>
-                    </div>
+                  <div class="col-sm-5">
+                    <p class="form-control-static">
+                      比例：{{business.contractType.basicFee.main.percentage}}%
+                    </p>
+                  </div>
+                </div>
+                <div class="row form-group"
+                     v-for="(DEPEND, index) in business.contractType.basicFee.depend"
+                     :key="index">
+                  <div class="col-sm-6">
+                    <p class="form-control-static">
+                      协办方：{{DEPEND.name}}
+                    </p>
+                  </div>
+                  <div class="col-sm-5">
+                    <p class="form-control-static">
+                      比例：{{DEPEND.percentage}}%
+                    </p>
                   </div>
                 </div>
               </div>
-              <div v-if="contractTypeChan">
-                <label class="form-control-static">效益取费</label>
-                <div>
-                  <div class="row form-group">
-                    <div class="col-sm-6">
-                      <p class="form-control-static">
-                        主办方：{{business.contractType.benefitFee.main.name}}
-                      </p>
-                    </div>
-                    <div class="col-sm-5">
-                      <p class="form-control-static">
-                        比例：{{business.contractType.benefitFee.main.percentage}}%
-                      </p>
-                    </div>
+            </div>
+            <div v-if="contractTypeChan">
+              <label class="form-control-static">效益取费</label>
+              <div>
+                <div class="row form-group">
+                  <div class="col-sm-6">
+                    <p class="form-control-static">
+                      主办方：{{business.contractType.benefitFee.main.name}}
+                    </p>
                   </div>
-                  <div class="row form-group"
-                       v-for="(DEPEND, index) in business.contractType.benefitFee.depend"
-                       :key="index">
-                    <div class="col-sm-6">
-                      <p class="form-control-static">
-                        协办方：{{DEPEND.name}}
-                      </p>
-                    </div>
-                    <div class="col-sm-5">
-                      <p class="form-control-static">
-                        比例：{{DEPEND.percentage}}%
-                      </p>
-                    </div>
+                  <div class="col-sm-5">
+                    <p class="form-control-static">
+                      比例：{{business.contractType.benefitFee.main.percentage}}%
+                    </p>
+                  </div>
+                </div>
+                <div class="row form-group"
+                     v-for="(DEPEND, index) in business.contractType.benefitFee.depend"
+                     :key="index">
+                  <div class="col-sm-6">
+                    <p class="form-control-static">
+                      协办方：{{DEPEND.name}}
+                    </p>
+                  </div>
+                  <div class="col-sm-5">
+                    <p class="form-control-static">
+                      比例：{{DEPEND.percentage}}%
+                    </p>
                   </div>
                 </div>
               </div>
-              <div v-if="business.feeBasisExist">
-                <label class="form-control-static">取费依据:</label>
-                <span class="form-control-static">{{business.feeBasis}}</span>
-              </div>
-              <div v-if="business.feeBasisExist">
-                <label class="form-control-static">费率:</label>
-                <span class="form-control-static">{{business.feeRate}}%</span>
-              </div>
-            </el-form-item>
+            </div>
+            <div v-if="business.feeBasisExist">
+              <p class="form-control-static">取费依据：{{business.feeBasis}}</p>
+            </div>
+            <div v-if="business.feeBasisExist">
+              <p class="form-control-static">费率：{{business.feeRate}}%</p>
+            </div>
           </el-col>
           <el-col :span="8">
             <el-form-item label="部门合作：">
