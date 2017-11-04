@@ -33,7 +33,7 @@
         </el-row>
         <el-row class="el-form-item">
           <el-col :span="8">
-            <el-form-item label="委托单位（客户）：" label-width = "120px">
+            <el-form-item label="委托单位（客户）：" label-width = "130px">
               <span class="form-control-static">{{business.institution.customerName}}</span>
             </el-form-item>   
           </el-col>
@@ -43,7 +43,7 @@
             </el-form-item> 
           </el-col>
           <el-col :span="8">
-            <el-form-item label="项目取得方式：" label-width = "100px">
+            <el-form-item label="项目取得方式：" label-width = "110px">
               <span class="form-control-static">{{business.getWay}}</span>
             </el-form-item> 
           </el-col>
@@ -55,12 +55,12 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="合同预估金额：" label-width = "100px">
+            <el-form-item label="合同预估金额：" label-width = "110px">
               <span class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</span>
             </el-form-item>          
           </el-col>
           <el-col :span="8">
-            <el-form-item label="项目申请人电话：" label-width = "110px">
+            <el-form-item label="项目申请人电话：" label-width = "120px">
               <span class="form-control-static">{{business.proposer.tele}}</span>
             </el-form-item>           
           </el-col>
@@ -76,7 +76,7 @@
           </el-form-item> 
         </el-row>
         <el-row class="el-form-item">
-          <el-form-item label="出具报告类型：" label-width = "100px">
+          <el-form-item label="出具报告类型：" label-width = "110px">
             <div> <p
                  v-html="reportFormat"></p></div>
           </el-form-item>

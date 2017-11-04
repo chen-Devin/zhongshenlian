@@ -9,15 +9,15 @@
     </p>
     <h4 class="main-title">客户信息录入</h4>
     <div class="edit-form">
-      <el-form :label-position="labelPosition" label-width = "80px">
+      <el-form :label-position="labelPosition" label-width = "90px">
         <el-row class="el-form-item">
           <el-col :span="10" :offset="1">
-            <el-form-item label="公司联系人：" required  label-width = "90px">
+            <el-form-item label="公司联系人：" required  label-width = "100px">
               <el-input type="text" v-model="customerInfo.name" placeholder="请输入公司联系人"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="10" :offset="1">
-            <el-form-item label="联系人电话：" required label-width = "90px">
+            <el-form-item label="联系人电话：" required label-width = "100px">
               <el-input type="text" v-model="customerInfo.telephone" placeholder="请输入联系人电话"></el-input>
             </el-form-item>
           </el-col>
@@ -70,7 +70,7 @@
         </el-row>
         <el-row class="el-form-item">
           <el-col :span="10" :offset="1">
-            <el-form-item label="社会统一信用代码：" label-width="130px" required>
+            <el-form-item label="社会统一信用代码：" label-width="140px" required>
               <el-input type="text" v-model="customerInfo.code" placeholder="请输入社会统一信用代码"></el-input>
             </el-form-item>
           </el-col>
