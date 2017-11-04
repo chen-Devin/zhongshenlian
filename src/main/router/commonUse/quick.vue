@@ -169,7 +169,7 @@ export default {
     getAllQuickArray (department) {
       let arr = [
         {
-          icon: 'el-icon-star-on',
+          icon: require('../../../img/quick/finish.png'),
           linkTo: '/business-complete-list',
           title: '已完成项目'
         }, 
@@ -194,7 +194,7 @@ export default {
           title: '职员管理'
         }, 
         {
-          // icon: require('../../../img/quick/customer-infor.png'),
+          icon: require('../../../img/quick/set.png'),
           linkTo: '/business-review-list-sales',
           title: '立项项目'
         }, 
@@ -218,7 +218,7 @@ export default {
               title: '立项审批'
             },
             {
-              icon: 'el-icon-star-on',
+              icon: require('../../../img/quick/ing.png'),
               linkTo: '/business-handle-list-leader',
               title: '进行中项目'
             } 
@@ -229,7 +229,7 @@ export default {
         case '质控部':
           let arr_risk = [
             {
-              icon: '',
+              icon: require('../../../img/quick/review.png'),
               linkTo: '/business-handle-list-risk',
               title: '待处理项目'
             },
@@ -266,7 +266,7 @@ export default {
               title: '招投标信息'
             },
             {
-              icon: '',
+              icon: require('../../../img/quick/draft.png'),
               linkTo: '/bid-info-draft',
               title: '草稿箱'
             }
@@ -282,7 +282,7 @@ export default {
               title: '招投标信息'
             },
             {
-              icon: '',  // 待处理
+              icon: require('../../../img/quick/review.png'),
               linkTo: '/business-handle-list-financial/0',
               title: '待开发票'
             },
@@ -303,7 +303,7 @@ export default {
               title: '招投标信息'
             },
             {
-              icon: '',  // 待处理
+              icon: require('../../../img/quick/review.png'),
               linkTo: '/business-handle-list-archives',
               title: '待处理项目'
             }
@@ -319,7 +319,7 @@ export default {
               title: '招投标信息'
             },
             {
-              icon: '',  // 待处理
+              icon: require('../../../img/quick/review.png'),
               linkTo: '/business-handle-list-office',
               title: '待处理项目'
             }

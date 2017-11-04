@@ -3,8 +3,8 @@
     <div class="basic-contain">
       <div class="f-r o-h">
         <template v-if="!editAble">
-          <button class="btn my-btn submit-btn" @click="edit">编辑</button>
-          <button class="btn my-btn submit-btn" @click="add">新增</button>
+          <button class="btn my-btn submit-btn" @click="edit" :disabled="!canEdit.canEditSalary">编辑</button>
+          <button class="btn my-btn submit-btn" @click="add" :disabled="!canEdit.canEditSalary">新增</button>
         </template>
         <template v-else>
           <button class="btn my-btn submit-btn" @click="save">保存</button>
@@ -229,7 +229,7 @@
           </el-row>
         </el-form>     
       </div>
-      <table class="table table-inner table-hover table-input">
+      <!-- <table class="table table-inner table-hover table-input">
         <thead>
           <tr>
             <td class="text-center">日期</td>
@@ -264,7 +264,7 @@
           </tr>
         </tbody>
       </table> 
-      <p class="empty-list-p" v-if="recordArray.length === 0">暂无数据</p>
+      <p class="empty-list-p" v-if="recordArray.length === 0">暂无数据</p> -->
     </div>    
   </div>
 </template>
@@ -325,6 +325,25 @@ export default {
         }
       ]
     };
+  },
+  watch: {
+    editAble: function (val, oldVal) {
+      if (val !== oldVal) {
+        if (val) {
+          this.canEdit.canEditDetail = false
+          this.canEdit.canEditAuthority = false
+          this.canEdit.canEditSalary = true
+          this.canEdit.canEditBonus = false
+          this.canEdit.canEditEducation = false
+        } else {
+          this.canEdit.canEditDetail = true
+          this.canEdit.canEditAuthority = true
+          this.canEdit.canEditSalary = true
+          this.canEdit.canEditBonus = true
+          this.canEdit.canEditEducation = true
+        }
+      }
+    }
   },
   methods: {
     getUserSalaryInfo () {
@@ -479,7 +498,7 @@ export default {
       
     }
   },
-  props: ['staffId'],
+  props: ['staffId', 'canEdit'],
   created () {
     this.getUserSalaryInfo()
     this.getSalaryReleaseRecordInfo()

@@ -181,12 +181,18 @@ export default {
       })
     },
     changeCompany (value) {
+      this.departmentSelected = ''
+      this.projectSelected = ''
+      this.groupSelected = ''      
       this.getCompanyDepartmentListByCom(value)
     },
     changeDepartment (value) {
+      this.projectSelected = ''
+      this.groupSelected = '' 
       this.getProjectDepartmentByComDepartment(value)
     },
     changeProject (value) {
+      this.groupSelected = '' 
       this.getGroupListByProjectDepartment(value)
     },
     save () {

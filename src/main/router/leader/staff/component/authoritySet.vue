@@ -2,7 +2,7 @@
   <div class="staff-wrapper">
     <div class="basic-contain">
       <div class="basic-form"> 
-        <auth-form :id="id" :type="type"></auth-form>
+        <auth-form :id="id" :type="type" :canEdit="canEdit"></auth-form>
       </div>
     </div>    
   </div>
@@ -36,7 +36,7 @@ export default {
   methods: {
     
   },
-  props: ['id', 'type'],
+  props: ['id', 'type', 'canEdit'],
   components: {
     authForm
   }

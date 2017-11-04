@@ -56,6 +56,7 @@
             :staff="staff"
             :type="type"
             :isNew="isNew"
+            :canEdit="canEdit"
             @reloadDetail="reloadDetail"
             @deleteSuccess="deleteSuccess"></staff-detail>
         </card>
@@ -69,19 +70,23 @@
         <card>
           <authority-set
             :id="staff.id" 
-            :type="type"></authority-set>
+            :type="type"
+            :canEdit="canEdit"></authority-set>
         </card>
         <card>
           <salary-detail 
-            :staffId="staff.id"></salary-detail>
+            :staffId="staff.id"
+            :canEdit="canEdit"></salary-detail>
         </card>
         <card>
           <bonus-detail
-            :id="staff.id"></bonus-detail>
+            :id="staff.id"
+            :canEdit="canEdit"></bonus-detail>
         </card>
         <card>
           <education-bg
-            :id="staff.id"></education-bg>
+            :id="staff.id"
+            :canEdit="canEdit"></education-bg>
         </card>
         <card v-if="isOpen" class="basic-contain">
           <p class="check-more">
@@ -131,6 +136,13 @@ export default {
       ],
       reloadSearch: true,
       departments: [],
+      canEdit: {
+        canEditDetail: true,
+        canEditAuthority: true,
+        canEditSalary: true,
+        canEditBonus: true,
+        canEditEducation: true
+      },
       treeData: [{
         label: '',
         children: [{
@@ -254,6 +266,10 @@ export default {
       this.staffId = id
       this.getStaffInfo()
     },
+    deleteSuccess () {
+      this.staffFilter()
+      this.staffShow = false
+    },
     handleClick(tab, event) {
       this.reloadPagination = false
       setTimeout(() => {
@@ -283,6 +299,13 @@ export default {
         this.treeData = []
         this.staffAllList = []
         this.getFullCompanyList()
+      }
+      this.canEdit = {
+        canEditDetail: true,
+        canEditAuthority: true,
+        canEditSalary: true,
+        canEditBonus: true,
+        canEditEducation: true
       }
     },
     getStaffInfo () {
