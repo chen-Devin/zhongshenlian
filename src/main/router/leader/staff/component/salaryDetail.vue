@@ -13,105 +13,117 @@
       </div>
       <h5 class="main-title">薪资信息</h5>
       <div class="basic-form">
-        <el-form :label-position="labelPosition" label-width="70px" :model="baseSalaryJson" :rules="basicRules" ref="baseSalaryJson">
+        <el-form :label-position="labelPosition" label-width="90px" :model="baseSalaryJson" :rules="basicRules" ref="baseSalaryJson">
           <el-row>
             <el-col class="title" :span="12">
-              <el-form-item label="基本工资：" label-width="70px" prop="baseSalary">
-                <el-input :disabled="!editAble" v-model="baseSalaryJson.baseSalary">
+              <el-form-item label="基本工资：" label-width="80px" prop="baseSalary">
+                <el-input v-if="editAble" v-model="baseSalaryJson.baseSalary">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{baseSalaryJson.baseSalary}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="岗位工资：" label-width="70px" prop="postSalary">
-                <el-input :disabled="!editAble" v-model="baseSalaryJson.postSalary">
+              <el-form-item label="岗位工资：" label-width="80px" prop="postSalary">
+                <el-input v-if="editAble" v-model="baseSalaryJson.postSalary">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{baseSalaryJson.postSalary}}元/月</p>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="薪级工资：" label-width="70px" prop="wagePay">
-                <el-input :disabled="!editAble" v-model="baseSalaryJson.wagePay">
+              <el-form-item label="薪级工资：" label-width="80px" prop="wagePay">
+                <el-input v-if="editAble" v-model="baseSalaryJson.wagePay">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{baseSalaryJson.wagePay}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>
         </el-form> 
         <hr>
-        <el-form :label-position="labelPosition" label-width="70px" :model="subsidyJson" :rules="basicRules" ref="subsidyJson">
+        <el-form :label-position="labelPosition" label-width="90px" :model="subsidyJson" :rules="basicRules" ref="subsidyJson">
           <el-row>
             <el-col class="title" :span="12">
-              <el-form-item label-width="70px" label="津贴补贴" prop="subsidy">
-                <el-input :disabled="!editAble" v-model="subsidyJson.subsidy">
+              <el-form-item label-width="80px" label="津贴补贴：" prop="subsidy">
+                <el-input v-if="editAble" v-model="subsidyJson.subsidy">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{subsidyJson.subsidy}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
               <el-form-item label="未纳补贴：" prop="nonSubsidy">
-                <el-input :disabled="!editAble" v-model="subsidyJson.nonSubsidy">
+                <el-input v-if="editAble" v-model="subsidyJson.nonSubsidy">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{subsidyJson.nonSubsidy}}元/月</p>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="卫生津贴：" prop="healthSubsidy">
-                <el-input :disabled="!editAble" v-model="subsidyJson.healthSubsidy">
+                <el-input v-if="editAble" v-model="subsidyJson.healthSubsidy">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{subsidyJson.healthSubsidy}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="值班费" prop=："dutyPaid">
-                <el-input :disabled="!editAble" v-model="subsidyJson.dutyPaid">
+              <el-form-item label="值班费：" prop="dutyPaid">
+                <el-input v-if="editAble" v-model="subsidyJson.dutyPaid">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{subsidyJson.dutyPaid}}元/月</p>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="采暖补贴：" prop="heatingSubsidy">
-                <el-input :disabled="!editAble" v-model="subsidyJson.heatingSubsidy">
+                <el-input v-if="editAble" v-model="subsidyJson.heatingSubsidy">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{subsidyJson.heatingSubsidy}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="住房物业补贴：" label-width="100px" prop="housingSubsidy">
-                <el-input :disabled="!editAble" v-model="subsidyJson.housingSubsidy">
+              <el-form-item label="住房物业补贴：" label-width="110px" prop="housingSubsidy">
+                <el-input v-if="editAble" v-model="subsidyJson.housingSubsidy">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{subsidyJson.housingSubsidy}}元/月</p>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="通讯补贴：" prop="communicationSubsidy">
-                <el-input :disabled="!editAble" v-model="subsidyJson.communicationSubsidy">
+                <el-input v-if="editAble" v-model="subsidyJson.communicationSubsidy">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{subsidyJson.communicationSubsidy}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="上下班交通补贴：" label-width="110px" prop="trafficSubsidy">
-                <el-input :disabled="!editAble" v-model="subsidyJson.trafficSubsidy">
+              <el-form-item label="上下班交通补贴：" label-width="130px" prop="trafficSubsidy">
+                <el-input v-if="editAble" v-model="subsidyJson.trafficSubsidy">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{subsidyJson.trafficSubsidy}}元/月</p>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="加班费" prop=："overtimePay">
-                <el-input :disabled="!editAble" v-model="subsidyJson.overtimePay">
+              <el-form-item label="加班费：" prop="overtimePay">
+                <el-input v-if="editAble" v-model="subsidyJson.overtimePay">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{subsidyJson.overtimePay}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>
@@ -121,87 +133,97 @@
           <el-row>
             <el-col class="title" :span="12">
               <el-form-item label-width="100px" label="基础绩效工资" prop="performanceSalary">
-                <el-input :disabled="!editAble" v-model="performanceSalaryJson.performanceSalary">
+                <el-input v-if="editAble" v-model="performanceSalaryJson.performanceSalary">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{performanceSalaryJson.performanceSalary}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="16基础绩效：" label-width="90px" prop="basicPerformance">
-                <el-input :disabled="!editAble" v-model="performanceSalaryJson.basicPerformance">
+              <el-form-item label="16基础绩效：" label-width="100px" prop="basicPerformance">
+                <el-input v-if="editAble" v-model="performanceSalaryJson.basicPerformance">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{performanceSalaryJson.basicPerformance}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>
         </el-form>
         <hr>
-        <el-form :label-position="labelPosition" label-width="80px" :model="subsidyJson" :rules="basicRules" ref="subsidyJson">
+        <el-form :label-position="labelPosition" label-width="100px" :model="subsidyJson" :rules="basicRules" ref="subsidyJson">
           <el-row>
             <el-col class="title" :span="12">
               <el-form-item label-width="60px" label="应扣：" prop="deductible">
-                <el-input :disabled="!editAble" v-model="deductibleJson.deductible">
+                <el-input v-if="editAble" v-model="deductibleJson.deductible">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{deductibleJson.deductible}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="扣会费：" label-width="60px" prop="membershipFees">
-                <el-input :disabled="!editAble" v-model="deductibleJson.membershipFees">
+              <el-form-item label="扣会费：" label-width="80px" prop="membershipFees">
+                <el-input v-if="editAble" v-model="deductibleJson.membershipFees">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{deductibleJson.membershipFees}}元/月</p>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="扣养老保险：" prop="pension">
-                <el-input :disabled="!editAble" v-model="deductibleJson.pension">
+                <el-input v-if="editAble" v-model="deductibleJson.pension">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{deductibleJson.pension}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
               <el-form-item label="扣个人年金：" prop="personalAnnuity">
-                <el-input :disabled="!editAble" v-model="deductibleJson.personalAnnuity">
+                <el-input v-if="editAble" v-model="deductibleJson.personalAnnuity">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{deductibleJson.personalAnnuity}}元/月</p>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="扣医疗保险：" prop="medicalInsurance">
-                <el-input :disabled="!editAble" v-model="deductibleJson.medicalInsurance">
+                <el-input v-if="editAble" v-model="deductibleJson.medicalInsurance">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{deductibleJson.medicalInsurance}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
               <el-form-item label="扣失业保险：" prop="unemploymentInsurance">
-                <el-input :disabled="!editAble" v-model="deductibleJson.unemploymentInsurance">
+                <el-input v-if="editAble" v-model="deductibleJson.unemploymentInsurance">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{deductibleJson.unemploymentInsurance}}元/月</p>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="扣公积金：" label-width="70px" prop="housingFund">
-                <el-input :disabled="!editAble" v-model="deductibleJson.housingFund">
+              <el-form-item label="扣公积金：" label-width="90px" prop="housingFund">
+                <el-input v-if="editAble" v-model="deductibleJson.housingFund">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{deductibleJson.housingFund}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="个所税：" label-width="60px" prop="tax">
-                <el-input :disabled="!editAble" v-model="deductibleJson.tax">
+              <el-form-item label="个所税：" label-width="70px" prop="tax">
+                <el-input v-if="editAble" v-model="deductibleJson.tax">
                   <template slot="append">元/月</template>
                 </el-input>
+                <p v-else>{{deductibleJson.tax}}元/月</p>
               </el-form-item>
             </el-col>
           </el-row>

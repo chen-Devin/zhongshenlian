@@ -15,42 +15,47 @@
     <h4 class="main-title" v-if="isEdit">
       {{ newCustomerInfo.customerName === ''? '未命名': newCustomerInfo.customerName }}</h4>
     <div class="edit-form">
-       <el-form :label-position="labelPosition" label-width = "80px">
+       <el-form :label-position="labelPosition" label-width = "90px">
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="公司联系人：" required  label-width = "90px">
-               <el-input type="text" v-model="newCustomerInfo.name" :disabled="isEdit" placeholder="请输入公司联系人"></el-input>
+             <el-form-item label="公司联系人：" required  label-width = "100px">
+               <el-input type="text" v-model="newCustomerInfo.name" v-if="!isEdit" placeholder="请输入公司联系人"></el-input>
+               <p v-else>{{newCustomerInfo.name}}</p>
              </el-form-item>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="联系人电话：" required label-width = "90px">
-               <el-input type="text" v-model="newCustomerInfo.telephone" :disabled="isEdit" placeholder="请输入联系人电话"></el-input>
+             <el-form-item label="联系人电话：" required label-width = "100px">
+               <el-input type="text" v-model="newCustomerInfo.telephone" v-if="!isEdit" placeholder="请输入联系人电话"></el-input>
+               <p v-else>{{newCustomerInfo.telephone}}</p>
              </el-form-item>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
              <el-form-item label="联系人部门：">
-               <el-input type="text" v-model="newCustomerInfo.department" :disabled="isEdit" placeholder="请输入联系人部门"></el-input>
+               <el-input type="text" v-model="newCustomerInfo.department" v-if="!isEdit" placeholder="请输入联系人部门"></el-input>
+               <p v-else>{{newCustomerInfo.department}}</p>
              </el-form-item>
            </el-col>
            <el-col :span="10" :offset="1">
              <el-form-item label="资产规模：">
-               <el-input type="text" v-model="newCustomerInfo.assetSize" :disabled="isEdit" placeholder="请输入资产规模">
+               <el-input type="text" v-model="newCustomerInfo.assetSize" v-if="!isEdit" placeholder="请输入资产规模">
                  <template slot="append">万元</template>
                </el-input>
+               <p v-else>{{newCustomerInfo.assetSize}}(万元)</p>
              </el-form-item>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
              <el-form-item label="联系人职务：">
-               <el-input type="text" v-model="newCustomerInfo.duty" :disabled="isEdit" placeholder="请输入联系人职务"></el-input>
+               <el-input type="text" v-model="newCustomerInfo.duty" v-if="!isEdit" placeholder="请输入联系人职务"></el-input>
+               <p v-else>{{newCustomerInfo.duty}}</p>
              </el-form-item>
            </el-col>
            <el-col :span="10" :offset="1">
              <el-form-item label="可见状态：">
-               <el-select v-model="value" :disabled="isEdit" placeholder="请选择可见状态">
+               <el-select v-model="value" v-if="!isEdit" placeholder="请选择可见状态">
                  <el-option
                    v-for="item in options"
                    :key="item.value"
@@ -58,6 +63,7 @@
                    :value="item.value">
                  </el-option>
                </el-select>
+               <p v-else>{{value}}</p>
              </el-form-item>
            </el-col>
          </el-row>
@@ -76,7 +82,7 @@
          </el-row>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="社会统一信用代码：" label-width="130px" required>
+             <el-form-item label="社会统一信用代码：" label-width="140px" required>
                <span>{{ newCustomerInfo.code }}</span>
              </el-form-item>
            </el-col>
@@ -399,7 +405,6 @@ export default {
       p {
         display: flex;
         line-height: 34px;
-        padding: 6px 50px;
         > .title {
           width: 100px;
         }
