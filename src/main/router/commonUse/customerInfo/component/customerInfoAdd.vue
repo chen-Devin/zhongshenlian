@@ -2,7 +2,7 @@
   <div class="customer-info-add">
     <crumbs :paths="paths"></crumbs>
     <card v-if="initInput">
-      <button class="btn my-btn submit-btn f-r mr-10 mt-15" type="button" @click="toggleType">人工录入</button>
+    <button class="btn my-btn submit-btn f-r mr-10 mt-15" type="button" @click="toggleType">人工录入</button>
       <h1 class="title">客户信息录入</h1>
       <p>请输入企业全称或社会统一信用代码获取工商局返回信息</p>
       <div class="message-box">
@@ -126,7 +126,7 @@ export default {
     }
   },
   methods: {
-    toggleType () {
+  toggleType () {
       this.initInput = false
       this.manual = true
     },

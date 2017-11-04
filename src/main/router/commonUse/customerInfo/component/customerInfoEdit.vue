@@ -18,44 +18,44 @@
        <el-form :label-position="labelPosition" label-width = "90px">
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="公司联系人：" required  label-width = "100px">
-               <el-input type="text" v-model="newCustomerInfo.name" v-if="!isEdit" placeholder="请输入公司联系人"></el-input>
-               <p v-else>{{newCustomerInfo.name}}</p>
+             <el-form-item label="公司联系人：" required  label-width = "100px" v-if="!isEdit">
+               <el-input type="text" v-model="newCustomerInfo.name" placeholder="请输入公司联系人"></el-input>
              </el-form-item>
+             <p v-else>公司联系人：{{newCustomerInfo.name}}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="联系人电话：" required label-width = "100px">
-               <el-input type="text" v-model="newCustomerInfo.telephone" v-if="!isEdit" placeholder="请输入联系人电话"></el-input>
-               <p v-else>{{newCustomerInfo.telephone}}</p>
+             <el-form-item label="联系人电话：" required label-width = "100px" v-if="!isEdit">
+               <el-input type="text" v-model="newCustomerInfo.telephone" placeholder="请输入联系人电话"></el-input>
              </el-form-item>
+             <p v-else>联系人电话：{{newCustomerInfo.telephone}}</p>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="联系人部门：">
-               <el-input type="text" v-model="newCustomerInfo.department" v-if="!isEdit" placeholder="请输入联系人部门"></el-input>
-               <p v-else>{{newCustomerInfo.department}}</p>
+             <el-form-item label="联系人部门：" v-if="!isEdit">
+               <el-input type="text" v-model="newCustomerInfo.department" placeholder="请输入联系人部门"></el-input>
              </el-form-item>
+             <p v-else>联系人部门：{{newCustomerInfo.department}}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="资产规模：">
-               <el-input type="text" v-model="newCustomerInfo.assetSize" v-if="!isEdit" placeholder="请输入资产规模">
+             <el-form-item label="资产规模：" v-if="!isEdit">
+               <el-input type="text" v-model="newCustomerInfo.assetSize" placeholder="请输入资产规模">
                  <template slot="append">万元</template>
                </el-input>
-               <p v-else>{{newCustomerInfo.assetSize}}(万元)</p>
              </el-form-item>
+             <p v-else>资产规模：{{newCustomerInfo.assetSize}}(万元)</p>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="联系人职务：">
-               <el-input type="text" v-model="newCustomerInfo.duty" v-if="!isEdit" placeholder="请输入联系人职务"></el-input>
-               <p v-else>{{newCustomerInfo.duty}}</p>
+             <el-form-item label="联系人职务：" v-if="!isEdit">
+               <el-input type="text" v-model="newCustomerInfo.duty" placeholder="请输入联系人职务"></el-input>
              </el-form-item>
+             <p v-else>联系人职务：{{newCustomerInfo.duty}}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="可见状态：">
-               <el-select v-model="value" v-if="!isEdit" placeholder="请选择可见状态">
+             <el-form-item label="可见状态：" v-if="!isEdit">
+               <el-select v-model="value" placeholder="请选择可见状态">
                  <el-option
                    v-for="item in options"
                    :key="item.value"
@@ -63,89 +63,63 @@
                    :value="item.value">
                  </el-option>
                </el-select>
-               <p v-else>{{value}}</p>
              </el-form-item>
+             <p v-else>可见状态：{{value}}</p>
            </el-col>
          </el-row>
          <div class="separator"></div>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="客户名称：" required>
-               <span>{{ newCustomerInfo.customerName }}</span>
-             </el-form-item>
+             <p>客户名称：{{ newCustomerInfo.customerName }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="经营状态：">
-               <span>{{ newCustomerInfo.runStatus }}</span>
-             </el-form-item>
+             <p>经营状态：{{ newCustomerInfo.runStatus }}</p>
+           </el-col>
+         </el-row>
+         <el-row class="el-form-item">
+           <el-col :span="10" :offset="1">            
+             <p>社会统一信用代码：{{ newCustomerInfo.code }}</p>
+           </el-col>
+           <el-col :span="10" :offset="1">
+             <p>公司类型：{{ newCustomerInfo.customerNature }}</p>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="社会统一信用代码：" label-width="140px" required>
-               <span>{{ newCustomerInfo.code }}</span>
-             </el-form-item>
+             <p>公司法人：{{ newCustomerInfo.operName }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="公司类型：">
-               <span>{{ newCustomerInfo.customerNature }}</span>
-             </el-form-item>
+             <p>注册资金：{{ newCustomerInfo.registeredCapital }}（万元）</p>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="公司法人：">
-               <span>{{ newCustomerInfo.operName }}</span>
-             </el-form-item>
+             <p>成立日期：{{ newCustomerInfo.setUpTime }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="注册资金：">
-               <span>{{ newCustomerInfo.registeredCapital }}（万元）</span>
-             </el-form-item>
+             <p>注册地址：{{ newCustomerInfo.registeredAddress }}</p>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="成立日期：">
-               <span>{{ newCustomerInfo.setUpTime }}</span>
-             </el-form-item>
+             <p>所属行业：{{ newCustomerInfo.industry }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="注册地址：">
-               <span>{{ newCustomerInfo.registeredAddress }}</span>
-             </el-form-item>
+             <p>电话：{{ newCustomerInfo.phoneNumber }}</p>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="所属行业：">
-               <span>{{ newCustomerInfo.industry }}</span>
-             </el-form-item>
-           </el-col>
-           <el-col :span="10" :offset="1">
-             <el-form-item label="电话：">
-               <span>{{ newCustomerInfo.phoneNumber }}</span>
-             </el-form-item>
-           </el-col>
-         </el-row>
-         <el-row class="el-form-item">
-           <el-col :span="10" :offset="1">
-             <el-form-item label="经营范围：">
-               <span>{{ newCustomerInfo.mainWork }}</span>
-             </el-form-item>
+              <p>经营范围：{{ newCustomerInfo.mainWork }}</p>
            </el-col>
          </el-row>
          <div class="separator"></div>
          <el-row class="el-form-item">
            <el-col :span="10" :offset="1">
-             <el-form-item label="创建人：">
-               <span>{{ newCustomerInfo.founderName }}</span>
-             </el-form-item>
+              <p>创建人：{{ newCustomerInfo.founderName }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <el-form-item label="创建时间：">
-               <span>{{ newCustomerInfo.createAt }}</span>
-             </el-form-item>
+              <p>创建时间：{{ newCustomerInfo.createAt }}</p>
            </el-col>
          </el-row>
       </el-form>

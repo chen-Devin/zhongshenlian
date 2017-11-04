@@ -192,7 +192,6 @@
         <el-row class="type-system">
           <el-col :span="12" v-if="!editable">
             <div class="business-type">
-              <h5 style="width:70px;">项目类型：</h5>
               <div>
                 <p>项目类型：{{ departmentTypeMap.join('、') }}</p>
               </div>

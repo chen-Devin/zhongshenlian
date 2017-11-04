@@ -6,21 +6,14 @@
     <div class="company-detail">
       <el-row>
         <el-col :span="9" :offset="2">
-          <p class="d-f">
-            <span style="width:90px;">部门编号：</span>
-            <el-input type="text" v-model="company.number" placeholder="暂无" disabled></el-input>
-          </p>
-          <p class="d-f">
-            <span style="width:90px;">部门名称：</span>
-            <el-input type="text" v-model="company.name" placeholder="暂无" disabled></el-input>
-          </p>
+          <p>部门编号：{{company.number}}</p>
+          <p>部门名称：{{company.name}}</p>
           <p class="input-wrapper">
             是否有部门负责人：
             <span>{{ company.principalTelephone===''?'否':'是' }}</span>
           </p>
           <p class="input-wrapper">
-            人员数量：
-            <span>{{company.staffNum}}</span>
+            人员数量：{{company.staffNum}}
           </p>
         </el-col>
       </el-row>

@@ -14,55 +14,53 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="项目名称：" prop="name">
-              <el-input v-model="business.name" v-if="editable"></el-input>
-              <p v-else>{{business.name}}</p>
+            <el-form-item label="项目名称：" prop="name" v-if="editable">
+              <el-input v-model="business.name"></el-input>
             </el-form-item>
+            <p v-else>项目名称：{{business.name}}</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="项目范围与审计目标：" label-width="160px" prop="scope" required>
-              <el-input v-model="business.scope" v-if="editable" type="textarea"></el-input>
-              <p v-else>{{business.scope}}</p>
+            <el-form-item label="项目范围与审计目标：" label-width="160px" prop="scope" required v-if="editable">
+              <el-input v-model="business.scope" type="textarea"></el-input>
             </el-form-item>
+            <p v-else>项目范围与审计目标：{{business.scope}}</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="提交申请人：">
-              <p>{{user.name}}</p>
-            </el-form-item>
+            <p>提交申请人：{{user.name}}</p>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="项目类型：" required>
-              <el-select  v-model="business.type" placeholder="选择业务类型" v-if="editable">
+            <el-form-item label="项目类型：" required v-if="editable">
+              <el-select  v-model="business.type" placeholder="选择业务类型">
                 <el-option 
                 v-for="(TYPE, index) in businessType" 
                 :value="TYPE" 
                 :key="index">
                 </el-option>
               </el-select>
-              <p v-else>{{business.type}}</p>
             </el-form-item>
+            <p v-else>业务类型：{{business.type}}</p>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="项目取得方式：" label-width="120px" required>
-              <el-select  v-model="business.getWay" placeholder="选择项目取得方式" v-if="editable">
+            <el-form-item label="项目取得方式：" label-width="120px" required v-if="editable">
+              <el-select  v-model="business.getWay" placeholder="选择项目取得方式">
                 <el-option 
                   v-for="item in getWay"
                   :value="item"
                   :key="item">
                 </el-option>
-              </el-select>
-              <p v-else>{{business.getWay}}</p>
+              </el-select>    
             </el-form-item>
+            <p v-else>项目取得方式：{{business.getWay}}</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="委托单位(客户）：" label-width="140px" required>
-              <el-select v-model="business.institution.customerName" filterable @change="changeCustomer" placeholder="选择客户" v-if="editable">
+            <el-form-item label="委托单位(客户）：" label-width="140px" required v-if="editable">
+              <el-select v-model="business.institution.customerName" filterable @change="changeCustomer" placeholder="选择客户">
                 <el-option 
                   v-for="item in customerList"
                   :key="item.id"
@@ -70,17 +68,17 @@
                   :value="item.id">
                 </el-option>
               </el-select>
-              <p v-else>{{business.institution.customerName}}</p>
             </el-form-item>
+            <p v-else>委托单位(客户）：{{business.institution.customerName}}</p>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="项目经理：" required>
-              <div class="manager-input" v-if="editable" @click="showStaffModal('projectManager')">
+            <el-form-item label="项目经理：" required  v-if="editable">
+              <div class="manager-input" @click="showStaffModal('projectManager')">
                 {{ projectManager }}
                 <i class="fa fa-x fa-user f-r" aria-hidden="true"></i>
-              </div>
-              <p v-else>{{ projectManager }}</p>
+              </div>              
             </el-form-item>
+            <p v-else>项目经理：{{ projectManager }}</p>
             <!-- <el-form-item label="项目经理：" required>
               <el-select v-model="business.projectManager" placeholder="请选择项目经理">
                 <el-option
@@ -93,50 +91,47 @@
             </el-form-item> -->
           </el-col>
           <el-col :span="8">
-            <el-form-item label="合同预估金额：" label-width="120px" required>
+            <el-form-item label="合同预估金额：" label-width="120px" required v-if="editable">
               <!-- <masked-input type="text" placeholder="请输入合同预估金额"  v-model="business.contractAmount"
                             v-if="editable"
                             :mask="currencyMask"
                             :guide="false"
                             placeholderChar="#">
               </masked-input> -->
-              <el-input v-model="business.contractAmount" v-if="editable">
+              <el-input v-model="business.contractAmount">
                 <template slot="append">元</template>
               </el-input>
-              <p v-else>{{business.contractAmount}}(元)</p>
             </el-form-item>
+            <p v-else>合同预估金额：{{business.contractAmount}}(元)</p>
           </el-col>
         </el-row> 
         <el-row>
           <el-col :span="8">
-            <el-form-item label="客户联系人：">
-              <p>{{user.telephone}}</p>
-            </el-form-item>
+            <p>客户联系人：{{user.telephone}}</p>
           </el-col>
           <el-col :span="16">
-            <el-form-item label="计划工期：" required>
+            <el-form-item label="计划工期：" required v-if="editable">
               <el-col :span="11">
                 <el-form-item >
-                  <el-date-picker type="date" placeholder="选择日期" v-model="business.time.start" style="width: 100%;" v-if="editable"></el-date-picker>
-                  <p v-else>{{business.time.start}}</p>
+                  <el-date-picker type="date" placeholder="选择日期" v-model="business.time.start" style="width: 100%;"></el-date-picker>                 
                 </el-form-item>           
               </el-col>
               <el-col class="line" :span="2">至</el-col>
               <el-col :span="11">
                <el-form-item>
                  <el-date-picker type="date" placeholder="选择日期" v-model="business.time.end" style="width: 100%;" v-if="editable"></el-date-picker>
-                 <p v-else>{{business.time.end}}</p>
                </el-form-item>
               </el-col>
             </el-form-item>
+             <p v-else>计划工期：{{business.time.start}}至{{business.time.end}}</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="报价依据："  placeholder="请输入报价依据" required>
-              <el-input v-model="business.basisQuote" v-if="editable" ></el-input>
-              <p v-else>{{business.basisQuote}}</p>
+            <el-form-item label="报价依据："  placeholder="请输入报价依据" required v-if="editable">
+              <el-input v-model="business.basisQuote" ></el-input>
             </el-form-item>
+            <p v-else>报价依据：{{business.basisQuote}}</p>
           </el-col>
         </el-row>
         <el-row>
@@ -156,7 +151,7 @@
                       </el-select>
                     </div>
                     <div class="input-group" v-if="!editable">
-                      <div>{{ Unit.unit }}</div>
+                      <p>被审计单位：{{ Unit.unit }}</p>
                     </div>
                   </el-col>
                   <el-col :span="2">
@@ -182,7 +177,7 @@
           <el-form-item label="报告信息："></el-form-item>
         </el-row>
         <div class="form-group">
-          <label class="col-sm-2 control-label clear-padding-left">出具报告类型</label>
+          <label class="col-sm-2 control-label clear-padding-left">出具报告类型：</label>
           <div class="my-col-sm-5 check-wrap">
             <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index">
               <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable" :id="TYPE.name+index">
@@ -210,33 +205,33 @@
           </div>
         </div>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="报告数量：" label-width="100px">
-              <el-input placeholder="请输入报告数量" type="number" v-model="business.report.amount" v-if="editable"></el-input>
-              <p v-else>{{business.report.amount}}</p>
+          <el-col :span="24">
+            <el-form-item label="报告数量：" label-width="100px"  v-if="editable">
+              <el-input placeholder="请输入报告数量" type="number" v-model="business.report.amount"></el-input>
             </el-form-item>
+            <p v-else>报告数量：{{business.report.amount}}</p>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="报告用途：" label-width="80px">
-              <el-input placeholder="请输入报告用途" type="text" v-model="business.report.usage" v-if="editable"></el-input>
-              <p v-else>{{business.report.usage}}</p>
+            <el-form-item label="报告用途：" label-width="80px"  v-if="editable">
+              <el-input placeholder="请输入报告用途" type="text" v-model="business.report.usage"></el-input>
             </el-form-item>
+            <p v-else>报告用途：{{business.report.usage}}</p>
           </el-col>
         </el-row>
         <el-row v-if="business.feeBasisExist">
           <el-col :span="12">
-            <el-form-item label="取费依据：" label-width="100px">
-              <el-input placeholder="请输入取费依据" v-model="business.feeBasis" v-if="editable"></el-input>
-              <p v-else>{{business.feeBasis}}</p>
+            <el-form-item label="取费依据：" label-width="100px" v-if="editable">
+              <el-input placeholder="请输入取费依据" v-model="business.feeBasis"></el-input>
             </el-form-item>
+            <p v-else>取费依据：{{business.feeBasis}}</p>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="费率：" label-width="80px">
-              <el-input placeholder="请输入费率" type="number" v-model="business.feeRate" v-if="editable">
+            <el-form-item label="费率：" label-width="80px"  v-if="editable">
+              <el-input placeholder="请输入费率" type="number" v-model="business.feeRate">
                 <template slot="append">%</template>
               </el-input>
-              <p v-else>{{business.feeRate}}%</p>
             </el-form-item>
+            <p v-else>费率：{{business.feeRate}}%</p>
           </el-col>
         </el-row>
       </div>
