@@ -3,7 +3,7 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3 class="main-title">
-        业务详情
+        项目详情
         <div class="pull-right">
           <template v-if="editStat">
             <template v-if="!editable">
@@ -60,7 +60,7 @@ export default {
     return {
       paths: [
         { name: '立项审批', url: '/business-review-list-sales', present: false },
-        { name: '业务详情', url: `/business-review-edit-${this.$route.params.id}`, present: true },
+        { name: '项目详情', url: `/business-review-edit-${this.$route.params.id}`, present: true },
       ],
       business: {
         id: this.$route.params.id,

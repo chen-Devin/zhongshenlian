@@ -37,7 +37,7 @@
         </div>
         <div class="col-md-4 ta-c">
           <div class="form-group">
-            <label for="agency">业务类型</label>
+            <label for="agency">项目类型</label>
             <select class="form-control type" v-model="sea.type">
               <option :value="TYPE" v-for="(TYPE, index) in types" :key="index">{{TYPE}}</option>
             </select>

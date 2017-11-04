@@ -82,7 +82,7 @@
            </el-col>
            <el-col :span="10" :offset="1">
              <el-form-item label="公司类型：">
-               <span>{{ customerNature }}</span>
+               <span>{{ newCustomerInfo.customerNature }}</span>
              </el-form-item>
            </el-col>
          </el-row>
@@ -278,15 +278,15 @@ export default {
     }
   },
   computed: {
-    customerNature () {
-      let arr = []
-      this.newCustomerInfo.customerNature.forEach((item) => {
-        if (item.state) {
-          arr.push(item.val)
-        }
-      })
-      return arr.join('、')
-    }
+    // customerNature () {
+    //   let arr = []
+    //   this.newCustomerInfo.customerNature.forEach((item) => {
+    //     if (item.state) {
+    //       arr.push(item.val)
+    //     }
+    //   })
+    //   return arr.join('、')
+    // }
   },
   watch: {
     iniNewCustomerInfo: function(val, oldVal) {

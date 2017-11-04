@@ -28,7 +28,7 @@
         <el-col :span="24" :offset="2">
           <p class="input-wrapper">
             <el-checkbox-group v-model="functionInfoEdit.checked">
-              分管业务权限：
+              分管项目权限：
               <el-checkbox 
                 :label="item.name" 
                 v-for="(item, index) in functionInfoEdit.companyList"

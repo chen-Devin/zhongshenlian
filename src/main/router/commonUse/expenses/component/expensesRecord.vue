@@ -215,7 +215,7 @@ export default {
       ]
     } else if (this.$route.params.listType === 'review') {
       this.paths = [
-        { name: '待处理业务', url: '/expenses-review', present: false },
+        { name: '待处理项目', url: '/expenses-review', present: false },
         { name: '单据审核', url: '/expenses-review', present: false },
         { name: '报销单据记录表', url: '/expenses-record', present: true }
       ]

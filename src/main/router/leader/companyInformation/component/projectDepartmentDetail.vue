@@ -7,13 +7,13 @@
       <el-form :label-position="labelPosition" label-width = "100px">
         <el-row>
           <el-col :span="9" :offset="2">
-            <el-form-item label="项目部名称：" required>
+            <el-form-item label="业务部名称：" required>
               <el-input type="text" v-model="iniCompany4.name" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="项目部人数：" required>
+            <el-form-item label="业务部人数：" required>
               <el-input type="number" v-model="iniCompany4.number" placeholder="暂无" disabled></el-input>
             </el-form-item>
-            <el-form-item label="项目部经理：" required>
+            <el-form-item label="业务部经理：" required>
               <el-input type="text" v-model="iniCompany4.principalTelephone" placeholder="暂无" disabled></el-input>
             </el-form-item>
             <el-form-item label="公司简称：" required>
@@ -26,7 +26,7 @@
     <p class="btns">
       <button type="button" class="btn my-btn submit-btn" @click="edit">编辑</button>
       <button type="button" class="btn my-btn draft-btn" @click="add">新增小组</button>
-      <button type="button" class="btn my-btn cancel-btn" @click="deleteDep">删除项目部</button>
+      <button type="button" class="btn my-btn cancel-btn" @click="deleteDep">删除业务部</button>
     </p>
   </div>
 </div>

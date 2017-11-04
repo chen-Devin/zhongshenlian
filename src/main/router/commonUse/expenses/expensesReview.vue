@@ -17,7 +17,7 @@ export default {
     return {
       pageNum: 1,
       paths: [
-        { name: '待处理业务', url: '/expenses-review', present: false },
+        { name: '待处理项目', url: '/expenses-review', present: false },
         { name: '单据审核', url: '/expenses-review', present: true }
       ],
       expensesList: [{

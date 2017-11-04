@@ -21,7 +21,7 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="业务范围与审计目标：" label-width="150px" prop="scope" required>
+            <el-form-item label="项目范围与审计目标：" label-width="150px" prop="scope" required>
               <el-input v-model="business.scope" :disabled="!editable" type="textarea"></el-input>
             </el-form-item>
           </el-col>
@@ -33,8 +33,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="业务类型：" required>
-              <el-select  v-model="business.type" placeholder="选择业务类型" :disabled="!editable">
+            <el-form-item label="项目类型：" required>
+              <el-select  v-model="business.type" placeholder="选择项目类型" :disabled="!editable">
                 <el-option 
                 v-for="(TYPE, index) in businessType" 
                 :value="TYPE" 
@@ -574,7 +574,7 @@ export default {
           { required: true, message: '请输入项目名称', trigger: 'blur' }
         ],
         scope:[
-          { required: true, message: '请输入业务范围与审计目标', trigger: 'blur' }
+          { required: true, message: '请输入项目范围与审计目标', trigger: 'blur' }
         ]
       },
       staffModalShow: false,

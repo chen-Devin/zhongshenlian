@@ -3,7 +3,7 @@
     <div slot="body">
       <p>
         <span class="fa fa-exclamation-circle fa-5x text-success"></span>
-        <span class="text-cont">确定通过该业务吗？</span>
+        <span class="text-cont">确定通过该项目吗？</span>
       </p>
     </div>
     <div slot="footer">

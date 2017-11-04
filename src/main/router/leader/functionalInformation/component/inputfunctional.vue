@@ -24,7 +24,7 @@
         <el-col :span="20" :offset="2">
           <div class="post-type">
             <div class="title">
-              分管业务权限：
+              分管项目权限：
             </div>
             <div class="selections">
               <el-checkbox-group v-model="checked">

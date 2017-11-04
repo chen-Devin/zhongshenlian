@@ -10,7 +10,7 @@
         <input class="form-control" type="text" v-model="companyDepartment.name">
       </p>
       <p>
-        <span>业务权限：</span>
+        <span>项目权限：</span>
         <el-select v-model="companyDepartment.authorityType" placeholder="请选择">
           <el-option
             v-for="item in options"
@@ -36,11 +36,11 @@ export default {
   data() {
     return {
       options: [{
-        value: '同部门之间业务可见',
-        label: '同部门之间业务可见'
+        value: '同部门之间项目可见',
+        label: '同部门之间项目可见'
       }, {
-        value: '同部门之间业务不可见',
-        label: '同部门之间业务不可见'
+        value: '同部门之间项目不可见',
+        label: '同部门之间项目不可见'
       }],
       companyDepartment: {
         id: '',

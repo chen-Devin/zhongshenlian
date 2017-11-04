@@ -88,7 +88,8 @@ export default {
       rule: {
         title: '',
         content: ''
-      }
+      },
+      identity: ''
     };
   },
   computed: {
@@ -159,14 +160,18 @@ export default {
       }, (rep) => { });
     },
     checkMessage (project) {
-      console.log(project)
+      if (project.type === '招投标') {
+        this.$router.push('/bid-info-detail/' + project.id + '&notDraft')
+      } else if (project.type === '项目') {
+        this.$router.push('/business-handle-detail-' + this.identity + '-' + project.id + '/business-profile')
+      }
     },
     getAllQuickArray (department) {
       let arr = [
         {
           icon: 'el-icon-star-on',
           linkTo: '/business-complete-list',
-          title: '已完成业务'
+          title: '已完成项目'
         }, 
         {
           icon: require('../../../img/quick/expense-apply.png'),
@@ -215,7 +220,7 @@ export default {
             {
               icon: 'el-icon-star-on',
               linkTo: '/business-handle-list-leader',
-              title: '进行中业务'
+              title: '进行中项目'
             } 
           ]
           arr_leader = arr.concat(arr_leader)
@@ -226,7 +231,7 @@ export default {
             {
               icon: '',
               linkTo: '/business-handle-list-risk',
-              title: '待处理业务'
+              title: '待处理项目'
             },
             {
               icon: require('../../../img/quick/bid.png'),
@@ -247,7 +252,7 @@ export default {
             {
               icon: 'el-icon-star-on',
               linkTo: '/business-handle-list-sales',
-              title: '进行中业务'
+              title: '进行中项目'
             } 
           ]
           arr_sales = arr.concat(arr_sales)
@@ -300,7 +305,7 @@ export default {
             {
               icon: '',  // 待处理
               linkTo: '/business-handle-list-archives',
-              title: '待处理业务'
+              title: '待处理项目'
             }
           ]
           arr_archives = arr.concat(arr_archives)
@@ -316,7 +321,7 @@ export default {
             {
               icon: '',  // 待处理
               linkTo: '/business-handle-list-office',
-              title: '待处理业务'
+              title: '待处理项目'
             }
           ]
           arr_office = arr.concat(arr_office)
@@ -354,6 +359,7 @@ export default {
       this.allQuickArray = this.getAllQuickArray(this.user.department)
       switch(this.user.department) {
         case '所长':
+          this.identity = 'leader'
           this.quickArray = [
               {
                 title: '待办事项',
@@ -369,15 +375,16 @@ export default {
               }, 
               {
                 title: '项目管理',
-                detailArray: ['立项项目', '进行中业务', '已完成业务']
+                detailArray: ['立项项目', '进行中项目', '已完成项目']
               }
             ]
           break;
         case '质控部':
+          this.identity = 'risk'
           this.quickArray = [
               {
-                title: '待处理业务',
-                detailArray: ['待处理业务']
+                title: '待处理项目',
+                detailArray: ['待处理项目']
               }, 
               {
                 title: '招投标信息',
@@ -389,11 +396,12 @@ export default {
               }, 
               {
                 title: '项目管理',
-                detailArray: ['已完成业务']
+                detailArray: ['已完成项目']
               }
             ]
           break;
         case '业务部':
+          this.identity = 'sales'
           this.quickArray = [
               {
                 title: '客户信息',
@@ -409,11 +417,12 @@ export default {
               }, 
               {
                 title: '项目管理',
-                detailArray: ['立项项目', '进行中业务', '已完成业务']
+                detailArray: ['立项项目', '进行中项目', '已完成项目']
               }
             ]
           break;
         case '市场部':
+          this.identity = 'market'
           this.quickArray = [
               {
                 title: '招投标信息',
@@ -430,6 +439,7 @@ export default {
             ]
           break;
         case '财务部':
+          this.identity = 'financial'
           this.quickArray = [
               {
                 title: '招投标信息',
@@ -441,19 +451,20 @@ export default {
               }, 
               {
                 title: '项目管理',
-                detailArray: ['已完成业务']
+                detailArray: ['已完成项目']
               },
               {
-                title: '待处理业务',
+                title: '待处理项目',
                 detailArray: ['待开发票', '单据审核']
               }
             ]
           break;
         case '档案部':
+          this.identity = 'archives'
           this.quickArray = [
               {
-                title: '待处理业务',
-                detailArray: ['待处理业务']
+                title: '待处理项目',
+                detailArray: ['待处理项目']
               },
               {
                 title: '招投标信息',
@@ -465,15 +476,16 @@ export default {
               }, 
               {
                 title: '项目管理',
-                detailArray: ['已完成业务']
+                detailArray: ['已完成项目']
               }         
             ]
           break;
         case '办公室':
+          this.identity = 'office'
           this.quickArray = [
               {
-                title: '待处理业务',
-                detailArray: ['待处理业务']
+                title: '待处理项目',
+                detailArray: ['待处理项目']
               },
               {
                 title: '招投标信息',
@@ -485,7 +497,7 @@ export default {
               }, 
               {
                 title: '项目管理',
-                detailArray: ['已完成业务']
+                detailArray: ['已完成项目']
               }         
             ]
           break;
@@ -523,7 +535,7 @@ export default {
         > .card {
           margin-right: 0;
           &.rule-card {
-            height: 340px;
+            height: 344px;
             padding-top: 14px;
             padding-bottom: 28px;
             padding-left: 20px;

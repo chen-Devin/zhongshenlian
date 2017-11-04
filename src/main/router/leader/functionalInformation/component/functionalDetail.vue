@@ -15,7 +15,7 @@
         <el-col :span="20" :offset="2">
           <div class="post-type">
             <div class="title">
-              分管公司业务权限：
+              分管公司项目权限：
             </div>
             <div class="selections">
               <template v-for="item in department.authority">

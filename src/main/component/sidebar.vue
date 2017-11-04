@@ -83,7 +83,7 @@
       <template v-if="archives">
         <el-submenu index="business-handle-list-archives">
           <template slot="title">
-            <span>待处理业务</span>
+            <span>待处理项目</span>
           </template>
         </el-submenu>
         <el-submenu index="business-complete-list">
@@ -104,7 +104,7 @@
       <template v-if="riskHandle || riskReview">
         <el-submenu index="business-handle-list-risk">
           <template slot="title">
-            <span>待处理业务</span>
+            <span>待处理项目</span>
           </template>
         </el-submenu>
         <el-submenu index="business-complete-list">
@@ -124,7 +124,7 @@
       </template>
       <template v-if="financial">
         <el-submenu index="business-handle-list-financial/0" v-if="financial">
-          <template slot="title">待处理业务</template>
+          <template slot="title">待处理项目</template>
             <el-menu-item index="/business-handle-list-financial/0">待开发票</el-menu-item>
             <el-menu-item index="/business-handle-list-financial/1">待上传截图</el-menu-item>
             <el-menu-item index="/business-handle-list-financial/2">开票撤销复核</el-menu-item>
@@ -150,7 +150,7 @@
       <template v-if="office">
         <el-submenu index="business-handle-list-office">
           <template slot="title">
-            <span>待处理业务</span>
+            <span>待处理项目</span>
           </template>
         </el-submenu>
         <el-submenu index="business-complete-list">
@@ -236,7 +236,7 @@ export default {
     },
     establish () {
       if (this.user.department === '业务部') {
-        if (this.user.authority['业务立项']) {
+        if (this.user.authority['项目立项']) {
           return true;
         } else {
           return false;
@@ -261,7 +261,7 @@ export default {
     },
     officeBinding() {
       if (this.user.department === '办公室') {
-        if (this.user.authority['装订业务报告']) {
+        if (this.user.authority['装订项目报告']) {
           return true;
         } else {
           return false;
@@ -279,7 +279,7 @@ export default {
     },
     riskReview() {
       if (this.user.department === '质控部') {
-        if (this.user.authority['业务初审']) {
+        if (this.user.authority['项目初审']) {
           return true;
         } else {
           return false;
@@ -290,7 +290,7 @@ export default {
     },
     riskHandle() {
         if (this.user.department === '质控部') {
-          if (this.user.authority['业务复审']) {
+          if (this.user.authority['项目复审']) {
             return true;
           } else {
             return false;

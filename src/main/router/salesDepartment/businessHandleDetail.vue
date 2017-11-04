@@ -48,8 +48,8 @@ export default {
   data() {
     return {
       paths: [
-        { name: '进行中业务', url: '/business-handle-list-sales', present: false },
-        { name: '业务详情', url: `/business-handle-detail-sales-${this.$route.params.id}`, present: true }
+        { name: '进行中项目', url: '/business-handle-list-sales', present: false },
+        { name: '项目详情', url: `/business-handle-detail-sales-${this.$route.params.id}`, present: true }
       ],
       business: {
         id: this.$route.params.id,
@@ -343,7 +343,7 @@ export default {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
-            { name: '业务完结', passed: false, active: false }
+            { name: '项目完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus === 40 || this.business.projectStatus === 50) {
           return [
@@ -357,7 +357,7 @@ export default {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
-            { name: '业务完结', passed: false, active: false }
+            { name: '项目完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus === 60) {
           return [
@@ -371,7 +371,7 @@ export default {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
-            { name: '业务完结', passed: false, active: false }
+            { name: '项目完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus === 70) {
           return [
@@ -385,7 +385,7 @@ export default {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
-            { name: '业务完结', passed: false, active: false }
+            { name: '项目完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus === 80) {
           return [
@@ -399,7 +399,7 @@ export default {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
-            { name: '业务完结', passed: false, active: false }
+            { name: '项目完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus === 90 || this.business.projectStatus === 110) {
           return [
@@ -413,7 +413,7 @@ export default {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: false, active: false}
             },
-            { name: '业务完结', passed: false, active: false }
+            { name: '项目完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus >= 111 && this.business.financeCreateBillingState === 0) {
           return [
@@ -427,7 +427,7 @@ export default {
               qrCode: {name: '报告完成', passed: true, active: true},
               bill: {name: '开票完成', passed: false, active: false}
             },
-            { name: '业务完结', passed: false, active: false }
+            { name: '项目完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus >= 90 && this.business.projectStatus <= 110 && this.business.financeCreateBillingState === 1) {
           return [
@@ -441,7 +441,7 @@ export default {
               qrCode: {name: '报告完成', passed: false, active: false},
               bill: {name: '开票完成', passed: true, active: true}
             },
-            { name: '业务完结', passed: false, active: false }
+            { name: '项目完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus >= 111 && this.business.projectStatus < 130 && this.business.financeCreateBillingState === 1) {
           return [
@@ -455,7 +455,7 @@ export default {
               qrCode: {name: '报告完成', passed: true, active: true},
               bill: {name: '开票完成', passed: true, active: true}
             },
-            { name: '业务完结', passed: false, active: false }
+            { name: '项目完结', passed: false, active: false }
           ];
       } else if (this.business.projectStatus === 130) {
         return [
@@ -469,7 +469,7 @@ export default {
             qrCode: {name: '报告完成', passed: true, active: false},
             bill: {name: '开票完成', passed: true, active: false}
           },
-          { name: '业务完结', passed: true, active: true }
+          { name: '项目完结', passed: true, active: true }
         ];
       }
     },
