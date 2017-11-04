@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-2 control-label">业务报告</label>
+        <label class="col-xs-2 control-label">项目报告</label>
         <el-upload class="col-xs-10"
                    ref="upload"
                    :auto-upload="false"

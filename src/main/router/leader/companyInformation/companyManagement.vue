@@ -28,7 +28,7 @@
     </div>
     <div class="function-wrapper" v-if="functionShow">
       <div class="company-wrapper">
-        <card>
+        <card class="detail">
           <template v-if="functionContentShow">
             <functional-department 
               :functionInfo="functionInfo"
@@ -130,13 +130,13 @@
                 ref="form3"
                 :label-position="labelPosition"
                 label-width="100px">
-                <el-form-item label="项目部名称：" prop="name">
+                <el-form-item label="业务部名称：" prop="name">
                   <el-input v-model="form3.name"></el-input>
                 </el-form-item>
-                <el-form-item label="项目部人数：" prop="number">
+                <el-form-item label="业务部人数：" prop="number">
                   <el-input v-model="form3.number"></el-input>
                 </el-form-item>
-                <el-form-item label="项目部经理：" prop="principalTelephone">
+                <el-form-item label="业务部经理：" prop="principalTelephone">
                   <el-input v-model="form3.principalTelephone"></el-input>
                 </el-form-item>
                 <el-form-item label="分公司简称：" prop="companyAbbreviation">
@@ -159,7 +159,7 @@
             </div>
           </modal>
         </template>
-        <!--第四级 项目部-->
+        <!--第四级 业务部-->
         <template v-if="show4">
           <project-department-detail 
             :iniCompany4="projectDepartment" 
@@ -515,13 +515,13 @@ export default {
       },
       form3Rules: {
         number: [
-          { required: true, message: '请输入项目部人数', trigger: 'blur' }
+          { required: true, message: '请输入业务部人数', trigger: 'blur' }
         ],
         name: [
-          { required: true, message: '请输入项目部名称', trigger: 'blur' }
+          { required: true, message: '请输入业务部名称', trigger: 'blur' }
         ],
         principalTelephone: [
-          { required: true, message: '请输入项目部经理', trigger: 'blur' }
+          { required: true, message: '请输入业务部经理', trigger: 'blur' }
         ],
         companyAbbreviation: [
           { required: true, message: '请输入分公司简称', trigger: 'blur' }
@@ -1149,6 +1149,10 @@ export default {
 <style lang="sass" scoped>
 @import '../../../../scss/_variables.scss';
   .company-management {
+    .detail {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
     > .function-wrapper {
       padding-left: 20px;
       > .company-list {

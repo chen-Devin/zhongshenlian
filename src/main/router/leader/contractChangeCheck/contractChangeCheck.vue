@@ -47,7 +47,7 @@
             <p>提交申请人：{{ business.applicantName }}</p>
           </el-col>
           <el-col :span="8">
-            <p>业务类型：{{ business.businessType }}</p>
+            <p>项目类型：{{ business.businessType }}</p>
           </el-col>
           <el-col :span="8">
             <p>报价依据：{{ business.totalAssets }}</p>
@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '进行中业务', url: '/business-review-list-leader', present: false },
+        { name: '进行中项目', url: '/business-review-list-leader', present: false },
         { name: '合同变更审批', url: '', present: true }
       ],
       business: {}

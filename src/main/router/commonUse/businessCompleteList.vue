@@ -3,7 +3,7 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3 class="main-title">
-        已完成业务
+        已完成项目
           <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
       <table class="table table-bordered table-hover table-list">
@@ -50,7 +50,7 @@
       </form>
       <business-complete-search-bar @search="tog" v-if="higherSearch"></business-complete-search-bar>
       <h3 class="main-title">
-        业务列表
+        项目列表
       </h3>
       <div class="com-list list-group list-adjust">
         <li class="list-group-item list-head" href="javascript:void(0);">
@@ -83,7 +83,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '已完成业务', url: '/business-complete-list', present: true }
+        { name: '已完成项目', url: '/business-complete-list', present: true }
       ],
       businesses: [],
       seaType: '关键字搜索',

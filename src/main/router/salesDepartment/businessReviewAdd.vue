@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '立项业务', url: '/business-review-list-sales', present: false },
+        { name: '立项项目', url: '/business-review-list-sales', present: false },
         { name: '立项申请', url: '/business-review-add', present: true },
       ],
       business: {

@@ -780,7 +780,7 @@ export default {
       this.detailType = this.$route.params.id.split('&')[1]
       if (this.detailType === 'review') {
         this.paths =  [
-          { name: '待处理业务', url: '/expenses-review', present: false },
+          { name: '待处理项目', url: '/expenses-review', present: false },
           { name: '单据审核', url: '/expenses-review', present: false },
           { name: '报销详情', url: '/expenses-detail', present: true }
         ]

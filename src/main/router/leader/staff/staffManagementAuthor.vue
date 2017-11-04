@@ -56,7 +56,8 @@
             :staff="staff"
             :type="type"
             :isNew="isNew"
-            @reloadDetail="reloadDetail"></staff-detail>
+            @reloadDetail="reloadDetail"
+            @deleteSuccess="deleteSuccess"></staff-detail>
         </card>
         <card v-if="!isOpen" class="basic-contain">
           <p class="check-more">

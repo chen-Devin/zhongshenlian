@@ -3,11 +3,11 @@
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3 class="main-title">
-        业务列表
+        项目列表
       </h3>
       <div class="com-list list-group list-adjust">
         <li class="list-group-item list-head">
-          <span class="title">业务列表</span>
+          <span class="title">项目列表</span>
           <span class="date pull-right">创建时间</span>
         </li>
         <router-link class="list-group-item"
@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '待完结业务', url: '/business-handle-list-office', present: true }
+        { name: '待完结项目', url: '/business-handle-list-office', present: true }
       ],
       businesses: [],
       page: {

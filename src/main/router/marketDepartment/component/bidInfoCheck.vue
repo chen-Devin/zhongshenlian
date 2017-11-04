@@ -192,9 +192,9 @@
         <el-row class="type-system">
           <el-col :span="12" v-if="!editable">
             <div class="business-type">
-              <h5 style="width:70px;">业务类型：</h5>
+              <h5 style="width:70px;">项目类型：</h5>
               <div>
-                <p>业务类型：{{ departmentTypeMap.join('、') }}</p>
+                <p>项目类型：{{ departmentTypeMap.join('、') }}</p>
               </div>
             </div>
             <!--会计所单独内容-->
@@ -233,7 +233,7 @@
           </el-col>
           <el-col :span="12" v-else>
             <div class="business-type">
-              <h5 style="width:80px;">业务类型</h5>
+              <h5 style="width:80px;">项目类型</h5>
               <div class="el-form-item">
                 <el-checkbox-group v-model="project.departmentType">
                   <el-checkbox label="kjs">会计所</el-checkbox>

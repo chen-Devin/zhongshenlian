@@ -31,7 +31,7 @@
     </card>
     <card>
       <h3 class="main-title" v-if="department === 'leader' || department === 'archives'">
-        进行中业务
+        进行中项目
           <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
       <h3 class="main-title" v-if="financialType === '0'">
@@ -114,7 +114,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '进行中业务', url: '/business-handle-list-sales', present: true }
+        { name: '进行中项目', url: '/business-handle-list-sales', present: true }
       ],
       activeNameSales: 'report',
       activeNameOffice: 'review',
@@ -124,7 +124,7 @@ export default {
           name: 'report'
         },
         {
-          label: '待开票业务',
+          label: '待开票项目',
           name: 'bill'
         }
       ],

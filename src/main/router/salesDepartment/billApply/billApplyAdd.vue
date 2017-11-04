@@ -27,7 +27,7 @@ export default {
           { required: true, message: '请输入项目名称', trigger: 'blur' }
         ],
         scope:[
-          { required: true, message: '请输入业务范围与审计目标', trigger: 'blur' }
+          { required: true, message: '请输入项目范围与审计目标', trigger: 'blur' }
         ]
       },
       business: {},

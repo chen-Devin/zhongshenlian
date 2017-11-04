@@ -7,7 +7,7 @@
         <el-form-item label="项目名称：" label-width = "80px">
           <span class="form-control-static">{{business.name}}</span>
         </el-form-item>
-        <el-form-item label="业务范围与审计目标：" label-width = "160px">
+        <el-form-item label="项目范围与审计目标：" label-width = "160px">
           <span class="form-control-static">{{business.scope}}</span>
         </el-form-item>
       </div>
@@ -38,7 +38,7 @@
             </el-form-item>   
           </el-col>
           <el-col :span="8">
-            <el-form-item label="业务类型：" label-width = "80px">
+            <el-form-item label="项目类型：" label-width = "80px">
               <span class="form-control-static">{{business.type}}</span>
             </el-form-item> 
           </el-col>
@@ -412,29 +412,29 @@ export default {
     this.contractUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
 
     // if (this.user.department === '业务部') {
-    //   this.paths.push({ name: '待处理业务', url: '/business-handle-list-sales', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-sales-${this.$route.params.id}/business-profile`, present: false });
-    //   this.paths.push({ name: '业务概况', url: `/business-handle-detail-sales-${this.$route.params.id}/business-profile`, present: true });
+    //   this.paths.push({ name: '待处理项目', url: '/business-handle-list-sales', present: false });
+    //   this.paths.push({ name: '项目详情', url: `/business-handle-detail-sales-${this.$route.params.id}/business-profile`, present: false });
+    //   this.paths.push({ name: '项目概况', url: `/business-handle-detail-sales-${this.$route.params.id}/business-profile`, present: true });
     // } else if (this.user.department === '风险评估部') {
-    //   this.paths.push({ name: '待复审业务', url: '/business-handle-list-risk', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-risk-${this.$route.params.id}/business-profile`, present: false });
-    //   this.paths.push({ name: '业务概况', url: `/business-handle-detail-risk-${this.$route.params.id}/business-profile`, present: true });
+    //   this.paths.push({ name: '待复审项目', url: '/business-handle-list-risk', present: false });
+    //   this.paths.push({ name: '项目详情', url: `/business-handle-detail-risk-${this.$route.params.id}/business-profile`, present: false });
+    //   this.paths.push({ name: '项目概况', url: `/business-handle-detail-risk-${this.$route.params.id}/business-profile`, present: true });
     // } else if (this.user.department === '所长') {
-    //   this.paths.push({ name: '待处理业务', url: '/business-handle-list-leader', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-leader-${this.$route.params.id}/business-profile`, present: false });
-    //   this.paths.push({ name: '业务概况', url: `/business-handle-detail-leader-${this.$route.params.id}/business-profile`, present: true });
+    //   this.paths.push({ name: '待处理项目', url: '/business-handle-list-leader', present: false });
+    //   this.paths.push({ name: '项目详情', url: `/business-handle-detail-leader-${this.$route.params.id}/business-profile`, present: false });
+    //   this.paths.push({ name: '项目概况', url: `/business-handle-detail-leader-${this.$route.params.id}/business-profile`, present: true });
     // } else if (this.user.department === '办公室') {
-    //   this.paths.push({ name: '待完结业务', url: '/business-handle-list-office', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-office-${this.$route.params.id}/business-profile`, present: false });
-    //   this.paths.push({ name: '业务概况', url: `/business-handle-detail-office-${this.$route.params.id}/business-profile`, present: true });
+    //   this.paths.push({ name: '待完结项目', url: '/business-handle-list-office', present: false });
+    //   this.paths.push({ name: '项目详情', url: `/business-handle-detail-office-${this.$route.params.id}/business-profile`, present: false });
+    //   this.paths.push({ name: '项目概况', url: `/business-handle-detail-office-${this.$route.params.id}/business-profile`, present: true });
     // } else if (this.user.department === '财务部') {
     //   this.paths.push({ name: '待开发票', url: '/business-handle-list-financial', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-financial-${this.$route.params.id}/business-profile`, present: false });
-    //   this.paths.push({ name: '业务概况', url: `/business-handle-detail-financial-${this.$route.params.id}/business-profile`, present: true });
+    //   this.paths.push({ name: '项目详情', url: `/business-handle-detail-financial-${this.$route.params.id}/business-profile`, present: false });
+    //   this.paths.push({ name: '项目概况', url: `/business-handle-detail-financial-${this.$route.params.id}/business-profile`, present: true });
     // } else if (this.user.department === '档案部') {
-    //   this.paths.push({ name: '待处理业务', url: '/business-handle-list-archives', present: false });
-    //   this.paths.push({ name: '业务详情', url: `/business-handle-detail-archives-${this.$route.params.id}/business-profile`, present: false });
-    //   this.paths.push({ name: '业务概况', url: `/business-handle-detail-archives-${this.$route.params.id}/business-profile`, present: true });
+    //   this.paths.push({ name: '待处理项目', url: '/business-handle-list-archives', present: false });
+    //   this.paths.push({ name: '项目详情', url: `/business-handle-detail-archives-${this.$route.params.id}/business-profile`, present: false });
+    //   this.paths.push({ name: '项目概况', url: `/business-handle-detail-archives-${this.$route.params.id}/business-profile`, present: true });
     // }
     // this.$emit('pathsChan', this.paths);
   },

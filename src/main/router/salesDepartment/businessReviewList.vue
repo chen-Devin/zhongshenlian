@@ -143,7 +143,7 @@ export default {
       }
     },
     addBusinessJud() {
-      this.addBusiness = this.user.authority['业务立项'];
+      this.addBusiness = this.user.authority['项目立项'];
     },
     currentChange(newPage) {
       this.pageNum = newPage

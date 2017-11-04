@@ -20,8 +20,8 @@
               :key="index"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="所属项目部：">
-          <el-select v-model="projectSelected" placeholder="请选择所属项目部" @change="changeProject">
+        <el-form-item label="所属业务部：">
+          <el-select v-model="projectSelected" placeholder="请选择所属业务部" @change="changeProject">
             <el-option 
               :label="project.name" 
               :value="project.id" 

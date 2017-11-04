@@ -4,7 +4,7 @@
       <div class="f-r o-h">
         <template v-if="!editAble">
           <button class="btn my-btn submit-btn" @click="edit">编辑</button>
-          <button class="btn my-btn cancel-btn" @click="deleteStaff">删除员工</button>
+          <button class="btn my-btn cancel-btn" @click="delUser">删除员工</button>
         </template>
         <template v-else>
           <button class="btn my-btn submit-btn" @click="save1" :disabled="saveAble">保存</button>
@@ -394,8 +394,32 @@ export default {
     cancel () {
       this.editAble = false
     },
-    deleteStaff () {
-      this.$message.error('删除接口有问题')
+    delUser () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'delUser',
+                platform: 'web',
+                delUserId: staff.id
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success('成功删除员工')
+            this.$emit('deleteSuccess')
+            resolve('done')
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
     }
   },
   props: ['type', 'staff', 'isNew'],

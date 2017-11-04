@@ -1,7 +1,7 @@
 <template>
   <div class="normal-wrap">
     <h4 class="main-title">
-      业务报告
+      项目报告
       {{ business.reports.length }}
       <!-- 确认上传 -->
       <button 

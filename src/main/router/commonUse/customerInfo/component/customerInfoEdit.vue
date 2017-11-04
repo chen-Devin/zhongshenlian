@@ -85,7 +85,13 @@
              <p>社会统一信用代码：{{ newCustomerInfo.code }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
+<<<<<<< HEAD
              <p>公司类型：{{ customerNature }}</p>
+=======
+             <el-form-item label="公司类型：">
+               <span>{{ newCustomerInfo.customerNature }}</span>
+             </el-form-item>
+>>>>>>> 93c10f98d561e7a74a8f5fcabc72e42f37b56431
            </el-col>
          </el-row>
          <el-row class="el-form-item">
@@ -280,15 +286,15 @@ export default {
     }
   },
   computed: {
-    customerNature () {
-      let arr = []
-      this.newCustomerInfo.customerNature.forEach((item) => {
-        if (item.state) {
-          arr.push(item.val)
-        }
-      })
-      return arr.join('、')
-    }
+    // customerNature () {
+    //   let arr = []
+    //   this.newCustomerInfo.customerNature.forEach((item) => {
+    //     if (item.state) {
+    //       arr.push(item.val)
+    //     }
+    //   })
+    //   return arr.join('、')
+    // }
   },
   watch: {
     iniNewCustomerInfo: function(val, oldVal) {

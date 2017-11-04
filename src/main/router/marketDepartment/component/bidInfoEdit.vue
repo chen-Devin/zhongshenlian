@@ -28,7 +28,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">业务类型：</label>
+				<label class="col-sm-2 control-label">项目类型：</label>
 				<div class="col-sm-10 check-wrap">
           <input class="magic-checkbox" type="checkbox" value="kjs" v-model="project.departmentType" id="5">
           <label for="5">

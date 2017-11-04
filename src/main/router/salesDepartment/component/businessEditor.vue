@@ -22,8 +22,14 @@
         </el-row>
         <el-row>
           <el-col :span="24">
+<<<<<<< HEAD
             <el-form-item label="业务范围与审计目标：" label-width="160px" prop="scope" required v-if="editable">
               <el-input v-model="business.scope" type="textarea"></el-input>
+=======
+            <el-form-item label="项目范围与审计目标：" label-width="160px" prop="scope" required>
+              <el-input v-model="business.scope" v-if="editable" type="textarea"></el-input>
+              <p v-else>{{business.scope}}</p>
+>>>>>>> 93c10f98d561e7a74a8f5fcabc72e42f37b56431
             </el-form-item>
             <p v-else>业务范围与审计目标：{{business.scope}}</p>
           </el-col>
@@ -33,8 +39,13 @@
             <p>提交申请人：{{user.name}}</p>
           </el-col>
           <el-col :span="8">
+<<<<<<< HEAD
             <el-form-item label="业务类型：" required v-if="editable">
               <el-select  v-model="business.type" placeholder="选择业务类型">
+=======
+            <el-form-item label="项目类型：" required>
+              <el-select  v-model="business.type" placeholder="选择业务类型" v-if="editable">
+>>>>>>> 93c10f98d561e7a74a8f5fcabc72e42f37b56431
                 <el-option 
                 v-for="(TYPE, index) in businessType" 
                 :value="TYPE" 
@@ -583,7 +594,7 @@ export default {
           { required: true, message: '请输入项目名称', trigger: 'blur' }
         ],
         scope:[
-          { required: true, message: '请输入业务范围与审计目标', trigger: 'blur' }
+          { required: true, message: '请输入项目范围与审计目标', trigger: 'blur' }
         ]
       },
       staffModalShow: false,

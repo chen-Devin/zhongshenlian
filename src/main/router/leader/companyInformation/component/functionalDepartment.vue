@@ -28,7 +28,7 @@
           <el-col :span="24" :offset="2"> 
             <p>
               <el-checkbox-group v-model="company.checked">
-                分管业务权限：
+                分管项目权限：
                 <el-checkbox 
                   :label="item.name" 
                   v-for="(item, index) in company.companyList" 
@@ -41,7 +41,7 @@
     </div>
     <p class="btns">
       <button type="button" class="btn my-btn submit-btn" @click="edit">编辑</button>
-      <button type="button" class="btn my-btn cancel-btn" @click="deleteDep">删除部门</button>
+      <!-- <button type="button" class="btn my-btn cancel-btn" @click="deleteDep">删除部门</button> -->
     </p>
   </div>
 </div>
@@ -89,7 +89,6 @@ export default {
   > .title {
     font-size: 15px;
     margin: 0;
-    margin-top: 20px;
     text-align: center;
   }
   .el-row {
@@ -114,7 +113,6 @@ export default {
   }
   .btns {
     margin-top: 10px;
-    margin-bottom: 10px;
     margin-right: 15px;
     text-align: right;
   }
