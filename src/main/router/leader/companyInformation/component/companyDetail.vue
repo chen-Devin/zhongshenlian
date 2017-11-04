@@ -104,7 +104,7 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 @import '../../../../../scss/_variables.scss';
 
 .company-detail-box {
