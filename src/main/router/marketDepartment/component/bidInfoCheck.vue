@@ -421,18 +421,18 @@
           </el-col>
           <el-col :span="12">
             <div class="business-type">
-              <h5 style="width:100px;">合同体制信息：</h5>
-              <div class="el-form-item" v-if="editable">
-                  <input class="magic-radio plus" type="radio" name="contractSystem" value="联合体" v-model="project.contractType.type" id="common">
-                  <label class="radio-inline"  for="common">
-                    联合体
-                  </label>
-                  <input class="magic-radio plus" type="radio" name="contractSystem" value="非联合体" v-model="project.contractType.type" id="nocommon">
-                  <label class="radio-inline" for="nocommon">
-                    非联合体
-                  </label>
+              <p style="width:100px;">合同体制信息：</p>
+              <p class="d-ib" v-if="!editable">{{ project.contractType.type }}</p>
+              <div class="el-form-item" v-else>
+                <input class="magic-radio plus" type="radio" name="contractSystem" value="联合体" v-model="project.contractType.type" id="common">
+                <label class="radio-inline"  for="common">
+                  联合体
+                </label>
+                <input class="magic-radio plus" type="radio" name="contractSystem" value="非联合体" v-model="project.contractType.type" id="nocommon">
+                <label class="radio-inline" for="nocommon">
+                  非联合体
+                </label>
               </div>
-              <p class="d-ib" v-else>{{ project.contractType.type }}</p>
             </div>
             <div class="bgc-fff business-type" v-show="contractTypeChan">
               <p v-if="editable">基本取费</p>
