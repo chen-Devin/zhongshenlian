@@ -81,7 +81,7 @@
              <p>社会统一信用代码：{{ newCustomerInfo.code }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-             <p>公司类型：{{ newCustomerInfo.customerNature }}</p>
+             <p>公司类型：{{ customerNatureMap(newCustomerInfo.customerNature) }}</p>
            </el-col>
          </el-row>
          <el-row class="el-form-item">
@@ -276,6 +276,15 @@ export default {
     }
   },
   methods: {
+    customerNatureMap (customerNature) {
+      let arr = []
+      customerNature.forEach((item) => {
+        if (item.state) {
+          arr.push(item.val)
+        }
+      })
+      return arr.join('、')
+    },
     save () {
       if (!this.isEdit) {
         this.saveCommand = 'editCustomerInfo'
@@ -378,7 +387,6 @@ export default {
       padding-top: 20px;
       p {
         display: flex;
-        line-height: 34px;
         > .title {
           width: 100px;
         }
