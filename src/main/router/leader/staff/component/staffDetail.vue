@@ -185,7 +185,12 @@ export default {
       },
       staffRules: {
         telephone: [
-          {required: true, message: '请输入手机号', trigger: 'blur'}
+          {
+            required: true, 
+            pattern: /^1\d{10}$/, 
+            message: '请输入以1开头的11位手机号', 
+            trigger: 'blur'
+          }
         ],
         name: [
           { required: true, message: '请输入姓名', trigger: 'blur' }
@@ -203,7 +208,7 @@ export default {
           { required: true, message: '请输入身份证号', trigger: 'blur' }
         ],
         email: [
-          { required: true, message: '请输入邮箱', trigger: 'blur' }
+          { type: 'email', required: true, message: '请输入正确的邮箱格式', trigger: 'blur' }
         ],
         education: [
           { required: true, message: '请输入学历', trigger: 'blur' }
