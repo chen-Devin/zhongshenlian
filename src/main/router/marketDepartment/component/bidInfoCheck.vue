@@ -665,12 +665,6 @@
 </template>
 
 <style lang="sass" scoped>
-  .el-form {
-    p {
-      height: 40px;
-      line-height: 40px;
-    }
-  }
   .bold-title {
     font-weight: bold;
   }

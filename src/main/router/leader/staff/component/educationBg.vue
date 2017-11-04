@@ -41,6 +41,7 @@
                   v-model="item.startTime"
                   type="date"
                   placeholder="选择日期"
+                  :value-format="valueFormat"
                   v-if="editAble">
                 </el-date-picker>
               </td>
@@ -50,6 +51,7 @@
                   v-model="item.endTime"
                   type="date"
                   placeholder="选择日期"
+                  :value-format="valueFormat"
                   v-if="editAble">
                 </el-date-picker>
               </td>
@@ -83,7 +85,8 @@ export default {
        schoolName: '',
        startTime: '',
        updateAt: ''
-      } 
+      },
+      valueFormat: 'yyyy-mm-dd'
     };
   },
   watch: {
@@ -107,6 +110,9 @@ export default {
   },
   props: ['id', 'canEdit'],
   methods: {
+    change (val) {
+      console.log(val)
+    },
     getUserEducationInfo () {
       return new Promise((resolve, reject) => {
         axios({
