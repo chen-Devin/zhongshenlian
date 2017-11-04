@@ -3,8 +3,8 @@
     <div class="basic-contain">
       <div class="f-r o-h">
         <template v-if="!editAble">
-          <button class="btn my-btn submit-btn" @click="edit">编辑</button>
-          <button class="btn my-btn submit-btn" @click="add">新增</button>
+          <button class="btn my-btn submit-btn" @click="edit" :disabled="!canEdit.canEditBonus">编辑</button>
+          <button class="btn my-btn submit-btn" @click="add" :disabled="!canEdit.canEditBonus">新增</button>
         </template>
         <template v-else>
           <button class="btn my-btn submit-btn" @click="save">保存</button>
@@ -108,7 +108,26 @@ export default {
       labelPosition: 'left'
     };
   },
-  props: ['id'],
+  watch: {
+    editAble: function (val, oldVal) {
+      if (val !== oldVal) {
+        if (val) {
+          this.canEdit.canEditDetail = false
+          this.canEdit.canEditAuthority = false
+          this.canEdit.canEditSalary = false
+          this.canEdit.canEditBonus = true
+          this.canEdit.canEditEducation = false
+        } else {
+          this.canEdit.canEditDetail = true
+          this.canEdit.canEditAuthority = true
+          this.canEdit.canEditSalary = true
+          this.canEdit.canEditBonus = true
+          this.canEdit.canEditEducation = true
+        }
+      }
+    }
+  },
+  props: ['id', 'canEdit'],
   methods: {
     getUserBonusInfo () {
       return new Promise((resolve, reject) => {

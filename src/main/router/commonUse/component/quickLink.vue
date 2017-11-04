@@ -1,7 +1,7 @@
 <template>
   <router-link :to="link.linkTo">
     <div class="link-wrapper" :class="{ quick0: quicks[0], quick1: quicks[1], quick2: quicks[2], quick3: quicks[3], quick4: quicks[4], quick5: quicks[5] }">
-      <img :src="link.icon">
+      <img height="30" :src="link.icon">
       <p>{{ link.title }}</p>
     </div>
   </router-link>

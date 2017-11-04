@@ -3,8 +3,8 @@
     <div class="basic-contain">
       <div class="f-r o-h">
         <template v-if="!editAble">
-          <button class="btn my-btn submit-btn" @click="edit">编辑</button>
-          <button class="btn my-btn submit-btn" @click="add">新增</button>
+          <button class="btn my-btn submit-btn" @click="edit" :disabled="!canEdit.canEditEducation">编辑</button>
+          <button class="btn my-btn submit-btn" @click="add" :disabled="!canEdit.canEditEducation">新增</button>
         </template>
         <template v-else>
           <button class="btn my-btn submit-btn" @click="save">保存</button>
@@ -36,14 +36,22 @@
                        :disabled="!editAble"></el-input>
               </td>
               <td class="text-center">
-                <el-input type="text"
-                       v-model="item.startTime"
-                       :disabled="!editAble"></el-input>
+                <el-date-picker
+                  style="width:100%"
+                  v-model="item.startTime"
+                  type="date"
+                  placeholder="选择日期"
+                  v-if="editAble">
+                </el-date-picker>
               </td>
               <td class="text-center">
-                <el-input type="text"
-                       v-model="item.endTime"
-                       :disabled="!editAble"></el-input>
+                <el-date-picker
+                  style="width:100%"
+                  v-model="item.endTime"
+                  type="date"
+                  placeholder="选择日期"
+                  v-if="editAble">
+                </el-date-picker>
               </td>
             </tr>
           </tbody>
@@ -78,7 +86,26 @@ export default {
       } 
     };
   },
-  props: ['id'],
+  watch: {
+    editAble: function (val, oldVal) {
+      if (val !== oldVal) {
+        if (val) {
+          this.canEdit.canEditDetail = false
+          this.canEdit.canEditAuthority = false
+          this.canEdit.canEditSalary = false
+          this.canEdit.canEditBonus = false
+          this.canEdit.canEditEducation = true
+        } else {
+          this.canEdit.canEditDetail = true
+          this.canEdit.canEditAuthority = true
+          this.canEdit.canEditSalary = true
+          this.canEdit.canEditBonus = true
+          this.canEdit.canEditEducation = true
+        }
+      }
+    }
+  },
+  props: ['id', 'canEdit'],
   methods: {
     getUserEducationInfo () {
       return new Promise((resolve, reject) => {

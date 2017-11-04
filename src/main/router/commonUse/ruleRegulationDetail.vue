@@ -107,6 +107,7 @@ export default {
 .wrapper{
   padding-left: 50px;
   padding-right: 50px;
+  padding-bottom: 30px;
   h4 {
     height: 60px;
     line-height: 60px;

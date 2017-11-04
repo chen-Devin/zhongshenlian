@@ -3,8 +3,8 @@
     <div class="basic-contain">
       <div class="f-r o-h">
         <template v-if="!editAble">
-          <button class="btn my-btn submit-btn" @click="edit">编辑</button>
-          <button class="btn my-btn cancel-btn" @click="delUser">删除员工</button>
+          <button class="btn my-btn submit-btn" @click="edit" :disabled="!canEdit.canEditDetail">编辑</button>
+          <button class="btn my-btn cancel-btn" @click="delUser" :disabled="!canEdit.canEditDetail">删除员工</button>
         </template>
         <template v-else>
           <button class="btn my-btn submit-btn" @click="save1" :disabled="saveAble">保存</button>
@@ -128,6 +128,7 @@
                 <el-upload ref="upload"
                            :show-file-list="false"
                            :action="workerUrl"
+                           :auto-upload="autoUpload"
                            :on-progress="UploadProgress"
                            :on-success="UploadSuccess">
                   <button class="btn my-btn submit-btn"
@@ -172,6 +173,7 @@ export default {
     return {
       editAble: false,
       labelPosition: 'left',
+      autoUpload: false,
       singleSubjectsArray: this.staff.singleSubjectsArray,
       professionalCertificateArray: this.staff.professionalCertificateArray,
       uploadState: {
@@ -247,6 +249,7 @@ export default {
       let obj = {
         command: 'handlerBusiness',
         platform: 'web',
+        type: 'workContract',
         workerId: this.staff.id
       }
       return '/fileUpload?data=' + JSON.stringify(obj)
@@ -256,6 +259,25 @@ export default {
         return false
       } else {
         return true
+      }
+    }
+  },
+  watch: {
+    editAble: function (val, oldVal) {
+      if (val !== oldVal) {
+        if (val) {
+          this.canEdit.canEditDetail = true
+          this.canEdit.canEditAuthority = false
+          this.canEdit.canEditSalary = false
+          this.canEdit.canEditBonus = false
+          this.canEdit.canEditEducation = false
+        } else {
+          this.canEdit.canEditDetail = true
+          this.canEdit.canEditAuthority = true
+          this.canEdit.canEditSalary = true
+          this.canEdit.canEditBonus = true
+          this.canEdit.canEditEducation = true
+        }
       }
     }
   },
@@ -288,7 +310,6 @@ export default {
       }
     },
     addUser () {
-      console.log(this.isNew)
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -410,7 +431,7 @@ export default {
               let obj = {
                 command: 'delUser',
                 platform: 'web',
-                delUserId: staff.id
+                delUserId: this.staff.id
               }
               return JSON.stringify(obj);
             })()
@@ -427,7 +448,7 @@ export default {
       })
     }
   },
-  props: ['type', 'staff', 'isNew'],
+  props: ['type', 'staff', 'isNew', 'canEdit'],
   created () {
     if (this.isNew[0] !== false) {
       this.editAble = true
