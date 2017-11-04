@@ -24,14 +24,10 @@
         <el-row>
           <el-col :span="21" :offset="1">
             <div class="post-type">
-              <div class="title">
-                分管公司出具报告类型：
-              </div>
-              <div class="selections">
-                <el-checkbox-group v-model="iniCompany2.reportTypeArray">
+                <!-- <el-checkbox-group v-model="iniCompany2.reportTypeArray">
                   <el-checkbox :label="item.name" v-for="(item, index) in iniCompany2.reportTypeOption" :key="index" disabled></el-checkbox>
-                </el-checkbox-group>
-              </div>
+                </el-checkbox-group> -->
+                <p>分管公司出具报告类型：{{ iniCompany2.reportTypeArray.join('、') }}</p>
             </div>
           </el-col>
         </el-row>

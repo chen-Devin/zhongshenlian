@@ -28,12 +28,14 @@
               <td class="text-center">
                 <el-input type="text"
                        v-model="item.schoolName"
-                       :disabled="!editAble"></el-input>
+                       v-if="editAble"></el-input>
+                <p v-else>{{item.schoolName}}</p>
               </td>
               <td class="text-center">
                 <el-input type="text"
                        v-model="item.education"
-                       :disabled="!editAble"></el-input>
+                       v-if="editAble"></el-input>
+                <p v-else>{{item.education}}</p>
               </td>
               <td class="text-center">
                 <el-date-picker
@@ -44,6 +46,7 @@
                   :value-format="valueFormat"
                   v-if="editAble">
                 </el-date-picker>
+                <p v-else>{{item.startTime}}</p>
               </td>
               <td class="text-center">
                 <el-date-picker
@@ -54,6 +57,7 @@
                   :value-format="valueFormat"
                   v-if="editAble">
                 </el-date-picker>
+                <p v-else>{{item.endTime}}</p>
               </td>
             </tr>
           </tbody>
@@ -196,6 +200,11 @@ export default {
       .basic-form {
         margin-top: 30px;
       }
+    }
+  }
+  .table {
+    p {
+      padding-top: 10px;
     }
   }
 </style>

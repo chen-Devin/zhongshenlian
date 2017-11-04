@@ -757,11 +757,6 @@
       }
     }
   }
-  p {
-    height: 36px;
-    line-height: 36px;
-    margin-bottom: 0;
-  }
   h5 {
     height: 36px;
     line-height: 36px;

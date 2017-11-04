@@ -3,7 +3,7 @@
   <div class="company-detail-box">
     <h1 class="title">{{ company.name }}</h1>
     <h5 class="vice-title">部门信息</h5>
-    <div class="company-detail">
+    <div class="company-detail el-form">
       <el-row>
         <el-col :span="9" :offset="2">
           <p>部门编号：{{company.number}}</p>
@@ -19,16 +19,15 @@
       </el-row>
       <el-row>
           <el-col :span="24" :offset="2"> 
-            <p>
-              <el-checkbox-group v-model="company.checked">
-                分管项目权限：
+              <!-- <el-checkbox-group v-model="company.checked">
+                
                 <el-checkbox 
                   :label="item.name" 
                   v-for="(item, index) in company.companyList" 
                   :key="index"
                   disabled>{{ item.name }}</el-checkbox>
-              </el-checkbox-group>
-            </p>
+              </el-checkbox-group> -->
+            <p>分管项目权限：{{ company.checked.join('、') }}</p>
           </el-col>
       </el-row>
     </div>
@@ -83,12 +82,6 @@ export default {
     font-size: 15px;
     margin: 0;
     text-align: center;
-  }
-  .el-row {
-    p {
-      height: 36px;
-      line-height: 36px;
-    }
   }
   .company-detail {
     width: 100%;

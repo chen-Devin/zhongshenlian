@@ -7,29 +7,35 @@
       <div class="title-wrapper">
         <el-row>
           <el-col class="d-f" :span="9">
-            <span style="width:90px">报销类型：</span>
-            <el-select v-model="reimbursementInfo.submitType" placeholder="请选择报销方式" :disabled="!editAble">
-              <el-option
-                v-for="item in typeOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-              </el-option>
-            </el-select>
+            <template v-if="editAble">
+              <span style="width:90px">报销类型：</span>
+              <el-select v-model="reimbursementInfo.submitType" placeholder="请选择报销方式" v-if="editAble">
+                <el-option
+                  v-for="item in typeOptions"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </template>
+            <p v-else>报销方式：{{ reimbursementInfo.submitType === 'nonContractR' ? '非合同报销' : '合同报销' }}</p>
           </el-col>
           <el-col class="d-f" :span="9">
-            <span style="width:90px">开票类型：</span>
-            <el-select v-model="reimbursementInfo.billingType" placeholder="请选择开票类型" :disabled="!editAble">
-              <el-option
-                v-for="item in classOptions"
-                :key="item"
-                :label="item"
-                :value="item">
-              </el-option>
-            </el-select>
+            <template v-if="editAble">
+              <span style="width:90px">开票类型：</span>
+              <el-select v-model="reimbursementInfo.billingType" placeholder="请选择开票类型" v-if="editAble">
+                <el-option
+                  v-for="item in classOptions"
+                  :key="item"
+                  :label="item"
+                  :value="item">
+                </el-option>
+              </el-select>
+            </template>
+            <p v-else>开票类型：{{ reimbursementInfo.billingType }}</p>
           </el-col>
           <el-col class="d-f" :span="6">
-            <span style="width:90px">申请人：</span>
+            <span style="width:70px">申请人：</span>
             {{ user.name }}
           </el-col>
         </el-row>
@@ -90,21 +96,21 @@
           <el-row>
             <el-col style="display: flex;" :span="12">
               <span style="width:80px;">账户名称：</span>
-              <el-input v-model="reimbursementInfo.accountName" placeholder="请填写账户名称" :disabled="!editAble"></el-input>
+              <el-input v-model="reimbursementInfo.accountName" placeholder="请填写账户名称" v-if="editAble"></el-input>
             </el-col>
             <el-col style="display: flex;" :span="12">
               <span style="width:80px;">开户银行：</span>
-              <el-input v-model="reimbursementInfo.accountBank" placeholder="请填写开户银行" :disabled="!editAble"></el-input>
+              <el-input v-model="reimbursementInfo.accountBank" placeholder="请填写开户银行" v-if="editAble"></el-input>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="display: flex;" :span="12">
               <span style="width:80px;">银行账户：</span>
-              <el-input v-model="reimbursementInfo.accountBankNumber" placeholder="请填写银行账户" :disabled="!editAble"></el-input>
+              <el-input v-model="reimbursementInfo.accountBankNumber" placeholder="请填写银行账户" v-if="editAble"></el-input>
             </el-col>
             <el-col class="d-f" :span="12" v-if="project">
               <span style="width:80px;">合同编号：</span>
-              <el-select v-model="reimbursementInfo.projectNumberArray" filterable multiple placeholder="请选择合同编号" :disabled="!editAble">
+              <el-select v-model="reimbursementInfo.projectNumberArray" filterable multiple placeholder="请选择合同编号" v-if="editAble">
                 <el-option
                   v-for="item in contracts"
                   :key="item.id"
@@ -136,7 +142,7 @@
             <el-select 
               v-model="reimbursementInfo.paperInvoiceNum" 
               placeholder="请选择张数" 
-              :disabled="!editAble" 
+              v-if="editAble" 
               @change="changeNumbers('paper')">
               <el-option
                 v-for="item in numbers"
@@ -145,17 +151,20 @@
                 :value="item">
               </el-option>
             </el-select>
+            <p v-else>{{ reimbursementInfo.paperInvoiceNum }}张</p>
           </el-col>
           <el-col :span="4">
-            <el-input v-model="reimbursementInfo.paperInvoiceAmount" placeholder="请填写金额" :disabled="!editAble">
+            <el-input v-model="reimbursementInfo.paperInvoiceAmount" placeholder="请填写金额" v-if="editAble">
               <template slot="append">元</template>
             </el-input>
+            <p v-else>{{ reimbursementInfo.paperInvoiceAmount }}元</p>
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.paperRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" :disabled="!editAble">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" v-if="editAble">
                 <template slot="append">元</template>
               </el-input>
+              <p v-else>{{ each.amount }}元</p>
             </div>
           </el-col>
         </el-row>
@@ -167,7 +176,7 @@
             <el-select 
               v-model="reimbursementInfo.electricInvoiceNum" 
               placeholder="请选择张数" 
-              :disabled="!editAble" 
+              v-if="editAble" 
               @change="changeNumbers('electric')">
               <el-option
                 v-for="item in numbers"
@@ -176,17 +185,20 @@
                 :value="item">
               </el-option>
             </el-select>
+            <p v-else>{{ reimbursementInfo.electricInvoiceNum }}张</p>
           </el-col>
           <el-col :span="4">
-            <el-input v-model="reimbursementInfo.electricInvoiceAmount" placeholder="请填写金额" :disabled="!editAble">
+            <el-input v-model="reimbursementInfo.electricInvoiceAmount" placeholder="请填写金额" v-if="editAble">
               <template slot="append">元</template>
             </el-input>
+            <p v-else>{{ reimbursementInfo.electricInvoiceAmount }}元</p>
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.electricRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" :disabled="!editAble">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" v-if="editAble">
                 <template slot="append">元</template>
               </el-input>
+              <p v-else>{{ each.amount }}元</p>
             </div>
           </el-col>
           <el-col :span="7">
@@ -241,7 +253,7 @@
         :rows="3"
         placeholder="暂无"
         v-model="reimbursementInfo.statusDescription"
-        :disabled="!editAble">
+        disabled>
       </el-input>
       <p class="btns" v-if="!editAble && detailType === 'review'">
         <button class="btn my-btn submit-btn" @click="agree">审批通过</button>
