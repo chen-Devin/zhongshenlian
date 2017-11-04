@@ -55,6 +55,10 @@ label {
   font-size: 13px;
 }
 
+.bold-title {
+  font-weight: 600;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   margin-top: 0;
@@ -624,7 +628,7 @@ label.col-sm-2.control-label {
 }
 
 .magic-radio + label:after {
-    top: 14px;
+    top: 5px;
     left: 6px;
     width: 8px;
     height: 8px;

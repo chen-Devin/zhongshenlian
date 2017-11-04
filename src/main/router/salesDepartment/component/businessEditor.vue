@@ -176,19 +176,29 @@
         <el-row>
           <el-form-item label="报告信息："></el-form-item>
         </el-row>
+<<<<<<< HEAD
         <div class="form-group">
           <label class="col-sm-2 control-label clear-padding-left">出具报告类型</label>
           <div class="my-col-sm-5 check-wrap">
             <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index">
               <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable" :id="TYPE.name+index">
+=======
+        <div class="d-f">
+          <p style="width:100px;">出具报告类型：</p>
+          <div class="check-wrap">
+            <p class="d-ib" v-if="!editable">{{ reportType }}</p>
+            <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index" v-else>
+              <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :id="TYPE.name+index">
+>>>>>>> 5f285c657ede2cb2b41a8c94009eb40e1fb020ca
               <label class="checkbox-inline" :key="index" :for="TYPE.name+index">
                 {{TYPE.name}}
               </label>
             </div>
             <div class="type-wrapper">
               <template v-for="(TYPE, indexOuter) in business.report.type" v-if="TYPE.state">
-                <p>{{TYPE.name}}</p>
-                <div class="d-ib" v-for="(WORD, index) in TYPE.words" :key="index">
+                <p class="bold-title">{{TYPE.name}}</p>
+                <p class="d-ib" v-if="!editable">{{ wordsMap(TYPE.words) }}</p>
+                <div class="d-ib" v-for="(WORD, index) in TYPE.words" :key="index" v-else>
                   <input class="magic-checkbox" type="checkbox" v-model="WORD.state" @change="reportTypeChan(TYPE, WORD)" :disabled="!editable" :id="index+TYPE.name">
                   <label class="checkbox-inline" :key="index" :for="index+TYPE.name">
                     {{WORD.name}}
@@ -240,21 +250,22 @@
             <el-form-item label="合同体制信息：" label-width="110px"></el-form-item>
           </el-col>
         </el-row>
-        <div class="form-group">
-          <label class="col-sm-2 control-label clear-padding-left">合同体制</label>
-          <div class="my-col-sm-5 check-wrap">
-            <input class="magic-radio" type="radio" name="contractSystem" value="联合体" v-model="business.contractType.name" v-if="editable" id="common">
+        <div class="d-f ">
+          <p style="width:80px;">合同体制：</p>
+          <div class="check-wrap" v-if="editable">
+            <input class="magic-radio" type="radio" name="contractSystem" value="联合体" v-model="business.contractType.name" id="common">
             <label class="radio-inline" for="common">
               联合体
             </label>
-            <input class="magic-radio" type="radio" name="contractSystem" value="非联合体" v-model="business.contractType.name" :disabled="!editable" id="nocommon">
+            <input class="magic-radio" type="radio" name="contractSystem" value="非联合体" v-model="business.contractType.name" id="nocommon">
             <label class="radio-inline" for="nocommon">
               非联合体
             </label>
           </div>
+          <p>{{ business.contractType.name }}</p>
         </div>
         <div class="form-group bgc-fff" v-if="contractTypeChan">
-          <label>基本取费</label>
+          <p>基本取费</p>
           <div>
             <el-row>
               <el-col :span="10">
@@ -262,9 +273,10 @@
                   placeholder="请输入主办方" 
                   type="text" 
                   v-model="business.contractType.basicFee.main.name" 
-                  :disabled="!editable">
+                  v-if="editable">
                   <template slot="prepend">主办方</template>
                 </el-input>
+                <p v-else>主办方：{{ business.contractType.basicFee.main.name }}</p>
               </el-col>
               <el-col :span="10">
                 <el-input 
@@ -592,6 +604,15 @@ export default {
     };
   },
   computed: {
+    reportType () {
+      let arr = []
+      this.business.report.type.forEach((item) => {
+        if (item.state) {
+          arr.push(item.name)
+        }
+      })
+      return arr.join('、')
+    },
     contractTypeChan() {
       return (this.business.contractType.name === '联合体') ? true : false;
     },
@@ -654,6 +675,15 @@ export default {
     bus.$off('savBusiness');
   },
   methods: {
+    wordsMap(words) {
+      let arr = []
+      words.forEach((item) => {
+        if (item.state) {
+          arr.push(item.name)
+        }
+      })
+      return arr.join('、')
+    },
     // getBussinessUnitUserList () {
     //   return new Promise((resolve, reject) => {
     //     axios({
@@ -1293,6 +1323,9 @@ export default {
 
 <style lang="sass" scoped>
 .business-editor {
+  .check-wrap {
+    flex: 1;
+  }
   > .basic-message {
     padding-left: 35px;
     padding-right: 35px;
@@ -1329,13 +1362,10 @@ export default {
     padding-left: 35px;
     padding-right: 35px;
     .type-wrapper {
-      padding-left: 100px;
+      padding-left: 30px;
       margin-top: 10px;
       background-color: #f9fbfe;
       > p {
-        margin-top: 25px;
-        margin-bottom: 0;
-        font-size: 15px;
         &:first-child {
           padding-top: 20px;
         }
@@ -1364,8 +1394,8 @@ export default {
   .bgc-fff {
     padding: 10px;
     background-color: #fff;
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-left: 80px;
+    margin-right: 80px;
   }
   .el-col {
     min-height: 50px;
