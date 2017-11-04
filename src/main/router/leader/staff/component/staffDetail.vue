@@ -16,75 +16,89 @@
         <el-row>
           <el-col :span="12">
             <el-form :label-position="labelPosition" label-width="100px" :model="staff" :rules="staffRules" ref="staff">
-              <el-form-item label="姓名：" label-width="50px" prop="name">
-                <el-input v-model="staff.name" :disabled="!editAble"></el-input>
+              <el-form-item label="姓名：" label-width="70px" prop="name">
+                <el-input v-model="staff.name" v-if="editAble"></el-input>
+                <p v-else>{{staff.name}}</p>
               </el-form-item>
-              <el-form-item label="工号：" label-width="50px" prop="jobNumber">
-                <el-input v-model="staff.jobNumber" :disabled="!editAble"></el-input>
+              <el-form-item label="工号：" label-width="70px" prop="jobNumber">
+                <el-input v-model="staff.jobNumber" v-if="editAble"></el-input>
+                <p v-else>{{staff.jobNumber}}</p>
               </el-form-item>
-              <el-form-item label="性别：" label-width="50px" prop="gender">
-                <el-radio v-model="staff.gender" label="男" :disabled="!editAble">男</el-radio>
-                <el-radio v-model="staff.gender" label="女" :disabled="!editAble">女</el-radio>
+              <el-form-item label="性别：" label-width="70px" prop="gender">
+                <el-radio v-model="staff.gender" label="男" v-if="editAble">男</el-radio>
+                <el-radio v-model="staff.gender" label="女" v-if="editAble">女</el-radio>
+                <p v-else>{{staff.gender}}</p>
               </el-form-item>
-              <el-form-item label="民族：" label-width="50px" prop="nation">
-                <el-input v-model="staff.nation" :disabled="!editAble"></el-input>
+              <el-form-item label="民族：" label-width="70px" prop="nation">
+                <el-input v-model="staff.nation" v-if="editAble"></el-input>
+                <p v-else>{{staff.nation}}</p>
               </el-form-item>
-              <el-form-item label="身份证号：" label-width="80px" prop="idCard">
-                <el-input v-model="staff.idCard" :disabled="!editAble"></el-input>
+              <el-form-item label="身份证号：" label-width="100px" prop="idCard">
+                <el-input v-model="staff.idCard" v-if="editAble"></el-input>
+                <p v-else>{{staff.idCard}}</p>
               </el-form-item>
-              <el-form-item label="手机号：" label-width="70px" prop="telephone">
-                <el-input v-model="staff.telephone" :disabled="!editAble"></el-input>
+              <el-form-item label="手机号：" label-width="80px" prop="telephone">
+                <el-input v-model="staff.telephone" v-if="editAble"></el-input>
+                <p v-else>{{staff.telephone}}</p>
               </el-form-item>
-              <el-form-item label="邮箱：" label-width="50px" prop="email">
-                <el-input v-model="staff.email" :disabled="!editAble"></el-input>
+              <el-form-item label="邮箱：" label-width="70px" prop="email">
+                <el-input v-model="staff.email" v-if="editAble"></el-input>
+                <p v-else>{{staff.email}}</p>
               </el-form-item>
-              <el-form-item label="是否为部门负责人：" label-width="130px" prop="isPrincipal">
-                <el-radio v-model="staff.isPrincipal" label="1" :disabled="!editAble">是</el-radio>
-                <el-radio v-model="staff.isPrincipal" label="0" :disabled="!editAble">否</el-radio>
+              <el-form-item label="是否为部门负责人：" label-width="150px" prop="isPrincipal">
+                <el-radio v-model="staff.isPrincipal" label="1" v-if="editAble">是</el-radio>
+                <el-radio v-model="staff.isPrincipal" label="0" v-if="editAble">否</el-radio>
+                <p v-else>{{staff.isPrincipal}}</p>
               </el-form-item>
               <el-form-item label="所属业务部：" label-width="80px" v-if="type==='department' && isNew[0] === false">
-                <el-input v-model="staff.companyDepartment" disabled></el-input>
+                <p v-model="staff.companyDepartment" disabled></p>
               </el-form-item>
               <el-form-item label="所属项目部：" label-width="80px" v-if="type==='department' && isNew[0] === false">
-                <el-input v-model="staff.projectDepartment" disabled></el-input>
+                <p v-model="staff.projectDepartment" disabled></p>
               </el-form-item>
             </el-form>
           </el-col>
           <el-col :span="12">
             <el-form :label-position="labelPosition" label-width="130px" :model="staff" :rules="staffRules" ref="staff">
-              <el-form-item label="所属小组：" label-width="70px" v-if="type==='department' && isNew[0] === false">
-                <el-input v-model="staff.group" disabled></el-input>
+              <el-form-item label="所属小组：" label-width="80px" v-if="type==='department' && isNew[0] === false">
+                <p v-model="staff.group" disabled></p>
               </el-form-item>
-              <el-form-item label="职位：" label-width="50px" prop="duties">
-                <el-input v-model="staff.duties" :disabled="!editAble"></el-input>
+              <el-form-item label="职位：" label-width="70px" prop="duties">
+                <el-input v-model="staff.duties" v-if="editAble"></el-input>
+                <p v-else>{{staff.duties}}</p>
               </el-form-item>
-              <el-form-item label="学历：" label-width="50px" prop="education">
-                <el-input v-model="staff.education" :disabled="!editAble"></el-input>
+              <el-form-item label="学历：" label-width="70px" prop="education">
+                <el-input v-model="staff.education" v-if="editAble"></el-input>
+                <p v-else>{{staff.education}}</p>
               </el-form-item>
-              <el-form-item label="职称：" label-width="50px" prop="jonTitle">
-                <el-input v-model="staff.jonTitle" :disabled="!editAble"></el-input>
+              <el-form-item label="职称：" label-width="70px" prop="jonTitle">
+                <el-input v-model="staff.jonTitle" v-if="editAble"></el-input>
+                <p v-else>{{staff.jonTitle}}</p>
               </el-form-item>
               <el-form-item label="是否有注会证书：" prop="isHaveCertificate">
-                <el-radio v-model="staff.isHaveCertificate" label="1" :disabled="!editAble">是</el-radio>
-                <el-radio v-model="staff.isHaveCertificate" label="0" :disabled="!editAble">否</el-radio>
+                <el-radio v-model="staff.isHaveCertificate" label="1" v-if="editAble">是</el-radio>
+                <el-radio v-model="staff.isHaveCertificate" label="0" v-if="editAble">否</el-radio>
+                <p v-else>{{staff.isHaveCertificate}}</p>
               </el-form-item>
-              <el-form-item label="入职时间：" label-width="70px">
+              <el-form-item label="入职时间：" label-width="90px">
                 <el-date-picker
                   style="width:100%"
                   v-model="staff.entryTime"
                   type="date"
                   placeholder="选择日期"
-                  :disabled="!editAble">
+                  v-if="editAble">
                 </el-date-picker>
+                <p v-else>{{staff.entryTime}}</p>
               </el-form-item>
-              <el-form-item label="合同到期日：" label-width="80px">
+              <el-form-item label="合同到期日：" label-width="100px">
                 <el-date-picker
                   style="width:100%"
                   v-model="staff.expireTime"
                   type="date"
                   placeholder="选择日期"
-                  :disabled="!editAble">
+                  v-if="editAble">
                 </el-date-picker>
+                <p v-else>{{staff.expireTime}}</p>
               </el-form-item>
             </el-form>
           </el-col>
