@@ -19,16 +19,15 @@
       </el-row>
       <el-row>
           <el-col :span="24" :offset="2"> 
-            <p>
-              <el-checkbox-group v-model="company.checked">
-                分管项目权限：
+              <!-- <el-checkbox-group v-model="company.checked">
+                
                 <el-checkbox 
                   :label="item.name" 
                   v-for="(item, index) in company.companyList" 
                   :key="index"
                   disabled>{{ item.name }}</el-checkbox>
-              </el-checkbox-group>
-            </p>
+              </el-checkbox-group> -->
+            <p>分管项目权限：{{ company.checked.join('、') }}</p>
           </el-col>
       </el-row>
     </div>

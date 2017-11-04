@@ -22,10 +22,10 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="项目范围与审计目标：" label-width="160px" prop="scope" required v-if="editable">
+            <el-form-item label="业务范围与审计目标：" label-width="160px" prop="scope" required v-if="editable">
               <el-input v-model="business.scope" type="textarea"></el-input>
             </el-form-item>
-            <p v-else>项目范围与审计目标：{{business.scope}}</p>
+            <p v-else>业务范围与审计目标：{{business.scope}}</p>
           </el-col>
         </el-row>
         <el-row>
@@ -33,7 +33,7 @@
             <p>提交申请人：{{user.name}}</p>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="项目类型：" required v-if="editable">
+            <el-form-item label="业务类型：" required v-if="editable">
               <el-select  v-model="business.type" placeholder="选择业务类型">
                 <el-option 
                 v-for="(TYPE, index) in businessType" 
@@ -151,7 +151,7 @@
                       </el-select>
                     </div>
                     <div class="input-group" v-if="!editable">
-                      <p>被审计单位：{{ Unit.unit }}</p>
+                      <div>{{ Unit.unit }}</div>
                     </div>
                   </el-col>
                   <el-col :span="2">
@@ -177,7 +177,7 @@
           <el-form-item label="报告信息："></el-form-item>
         </el-row>
         <div class="form-group">
-          <label class="col-sm-2 control-label clear-padding-left">出具报告类型：</label>
+          <label class="col-sm-2 control-label clear-padding-left">出具报告类型</label>
           <div class="my-col-sm-5 check-wrap">
             <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index">
               <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable" :id="TYPE.name+index">
@@ -205,7 +205,7 @@
           </div>
         </div>
         <el-row>
-          <el-col :span="24">
+          <el-col :span="12">
             <el-form-item label="报告数量：" label-width="100px"  v-if="editable">
               <el-input placeholder="请输入报告数量" type="number" v-model="business.report.amount"></el-input>
             </el-form-item>
@@ -215,7 +215,7 @@
             <el-form-item label="报告用途：" label-width="80px"  v-if="editable">
               <el-input placeholder="请输入报告用途" type="text" v-model="business.report.usage"></el-input>
             </el-form-item>
-            <p v-else>报告用途：{{business.report.usage}}</p>
+            <p v-else>{{business.report.usage}}</p>
           </el-col>
         </el-row>
         <el-row v-if="business.feeBasisExist">
@@ -230,8 +230,7 @@
               <el-input placeholder="请输入费率" type="number" v-model="business.feeRate">
                 <template slot="append">%</template>
               </el-input>
-            </el-form-item>
-            <p v-else>费率：{{business.feeRate}}%</p>
+            </el-form-item>        
           </el-col>
         </el-row>
       </div>
@@ -583,7 +582,7 @@ export default {
           { required: true, message: '请输入项目名称', trigger: 'blur' }
         ],
         scope:[
-          { required: true, message: '请输入项目范围与审计目标', trigger: 'blur' }
+          { required: true, message: '请输入业务范围与审计目标', trigger: 'blur' }
         ]
       },
       staffModalShow: false,

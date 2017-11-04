@@ -104,20 +104,22 @@
         </el-row>
         <el-row>
           <el-form :label-position="labelPosition" label-width="130px" :rules="staffRules">
-            <el-form-item label="单科成绩：" label-width="90px" prop="singleSubjects">
+            <el-form-item label="单科成绩：" label-width="90px" prop="singleSubjects" v-if="editAble">
               <el-checkbox-group v-model="singleSubjectsArray">
-                <el-checkbox :label="option" v-for="(option, index) in scoresOption" :key="index" :disabled="!editAble">{{ option }}</el-checkbox>
+                <el-checkbox :label="option" v-for="(option, index) in scoresOption" :key="index">{{ option }}</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
+            <p v-else>单科成绩：{{ singleSubjectsArray.join('、') }}</p>
           </el-form>
         </el-row>
         <el-row>
           <el-form :label-position="labelPosition" label-width="130px" :model="staff" :rules="staffRules" ref="staff">
-            <el-form-item label="执行证书：" label-width="90px" prop="professionalCertificate">
+            <el-form-item label="执行证书：" label-width="90px" prop="professionalCertificate" v-if="editAble">
               <el-checkbox-group v-model="professionalCertificateArray">
-                <el-checkbox :label="option" :value="option" v-for="(option, index) in certificatesOption" :key="index" :disabled="!editAble"></el-checkbox>
+                <el-checkbox :label="option" :value="option" v-for="(option, index) in certificatesOption" :key="index"></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
+            <p v-else>单科成绩：{{professionalCertificateArray.join('、')}}</p>
           </el-form>
         </el-row>
         <el-row>

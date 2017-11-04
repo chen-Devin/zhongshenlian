@@ -16,14 +16,16 @@
         <el-form :label-position="labelPosition" label-width="90px">
           <el-row>
             <el-col :span="12">
-              <el-form-item label-width="80px" label="发放形式">
-                <el-input :disabled="!editAble" v-model="bonusArray[0].releaseModus"></el-input>
+              <el-form-item label-width="80px" label="发放形式：" v-if="editAble">
+                <el-input v-model="bonusArray[0].releaseModus"></el-input>
               </el-form-item>
+              <p v-else>发放形式：{{ bonusArray[0].releaseModus }}</p>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="工资卡账户：">
-                <el-input :disabled="!editAble" v-model="bonusArray[0].salaryCardAccount"></el-input>
+              <el-form-item label="工资卡账户：" v-if="editAble">
+                <el-input v-if="editAble" v-model="bonusArray[0].salaryCardAccount"></el-input>
               </el-form-item>
+              <p v-else>工资卡账户：{{ bonusArray[0].salaryCardAccount }}</p>
             </el-col>
           </el-row>
         </el-form>
@@ -44,32 +46,38 @@
               <td class="text-center">
                 <el-input type="text"
                        v-model="item.batchNumber"
-                       :disabled="!editAble"></el-input>
+                       v-if="editAble"></el-input>
+                <p v-else>{{ item.batchNumber }}</p>
               </td>
               <td class="text-center">
                 <el-input type="text"
                        v-model="item.applyPersonTelephone"
-                       :disabled="!editAble"></el-input>
+                       v-if="editAble"></el-input>
+                <p v-else>{{ item.applyPersonTelephone }}</p>
               </td>
               <td class="text-center">
                 <el-input type="text"
                        v-model="item.applyDate"
-                       :disabled="!editAble"></el-input>
+                       v-if="editAble"></el-input>
+                <p v-else>{{ item.applyDate }}</p>
               </td>
               <td class="text-center">
                 <el-input type="text"
                        v-model="item.releaseDate"
-                       :disabled="!editAble"></el-input>
+                       v-if="editAble"></el-input>
+                <p v-else>{{ item.releaseDate }}</p>
               </td>
               <td class="text-center">
                 <el-input type="text"
                        v-model="item.amount"
-                       :disabled="!editAble"></el-input>
+                       v-if="editAble"></el-input>
+                <p v-else>{{ item.amount }}</p>
               </td>
               <td class="text-center">
                 <el-input type="text"
                        v-model="item.remark"
-                       :disabled="!editAble"></el-input>
+                       v-if="editAble"></el-input>
+                <p v-else>{{ item.remark }}</p>
               </td>
             </tr>
           </tbody>
