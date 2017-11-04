@@ -39,9 +39,46 @@
             <p>项目申请人电话：{{business.proposer.tele}}</p>       
           </el-col>
         </el-row>
-        <el-row>
+       <!--  <el-row>
           <p v-for="auditedUnit in business.beingAuditedUnit">被审计单位：{{ auditedUnit.unit }}</p>
-        </el-row>
+        </el-row> -->
+        <el-row>
+          <el-col :span="15">
+            <el-form-item label="被审计单位：" required label-width="110px">
+              <template class="addition" v-for="(Unit, index) in business.beingAuditedUnit">
+                <el-row>
+                  <el-col :span="22">
+                    <div v-if="editable">
+                      <el-select v-model="Unit.unit" filterable placeholder="请选择">
+                        <el-option
+                          v-for="item in customerList"
+                          :key="item.id"
+                          :label="item.customerName"
+                          :value="item.customerName">
+                        </el-option>
+                      </el-select>
+                    </div>
+                    <div class="input-group" v-if="!editable">
+                      <div>{{ Unit.unit }}</div>
+                    </div>
+                  </el-col>
+                  <el-col :span="2">
+                    <a class="text-danger" @click="delUnits(index)" v-if="editable">
+                      <img src="../../../../img/delete_icon.svg">
+                    </a>
+                  </el-col>
+                </el-row>
+              </template>
+            </el-form-item>
+          </el-col>
+          <el-col :span="2">
+            <h4 class="d-ib f-l" v-if="editable">
+              <a class="text-danger" @click="addUnits()">
+                <img src="../../../../img/add_icon.svg">
+              </a>
+            </h4>
+          </el-col>
+        </el-row> 
         <el-row>
           <p>报价依据：{{business.basisQuote}}</p>
         </el-row>

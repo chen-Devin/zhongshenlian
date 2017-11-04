@@ -176,20 +176,12 @@
         <el-row>
           <el-form-item label="报告信息："></el-form-item>
         </el-row>
-<<<<<<< HEAD
-        <div class="form-group">
-          <label class="col-sm-2 control-label clear-padding-left">出具报告类型</label>
-          <div class="my-col-sm-5 check-wrap">
-            <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index">
-              <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :disabled="!editable" :id="TYPE.name+index">
-=======
         <div class="d-f">
           <p style="width:100px;">出具报告类型：</p>
           <div class="check-wrap">
             <p class="d-ib" v-if="!editable">{{ reportType }}</p>
             <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index" v-else>
               <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :id="TYPE.name+index">
->>>>>>> 5f285c657ede2cb2b41a8c94009eb40e1fb020ca
               <label class="checkbox-inline" :key="index" :for="TYPE.name+index">
                 {{TYPE.name}}
               </label>
@@ -262,7 +254,7 @@
               非联合体
             </label>
           </div>
-          <p>{{ business.contractType.name }}</p>
+          <p v-else>{{ business.contractType.name }}</p>
         </div>
         <div class="form-group bgc-fff" v-if="contractTypeChan">
           <p>基本取费</p>
@@ -283,10 +275,11 @@
                   placeholder="请输入比例" 
                   type="number" 
                   v-model="business.contractType.basicFee.main.percentage" 
-                  :disabled="!editable">
+                  v-if="editable">
                   <template slot="prepend">比例</template>
                   <template slot="append">%</template>
                 </el-input>
+                <p v-else>比例：{{business.contractType.basicFee.main.percentage}}%</p>
               </el-col>
             </el-row>
           </div>
@@ -297,19 +290,21 @@
                   placeholder="请输入协办方" 
                   type="text" 
                   v-model="DEPEND.name" 
-                  :disabled="!editable">
+                  v-if="editable">
                   <template slot="prepend">协办方</template>
                 </el-input>
+                <p v-else>协办方：{{DEPEND.name}}</p>
               </el-col>
               <el-col :span="10">
                 <el-input 
                   placeholder="请输入比例" 
                   type="number" 
                   v-model="DEPEND.percentage" 
-                  :disabled="!editable">
+                  v-if="editable">
                   <template slot="prepend">比例</template>
                   <template slot="append">%</template>
                 </el-input>
+                <p v-else>比例：{{DEPEND.percentage}}%</p>
               </el-col>
               <el-col :span="2">
                 <h4 v-if="editable">
@@ -329,7 +324,7 @@
           </div>
         </div>
         <div class="form-group bgc-fff" v-if="contractTypeChan">
-          <label>效益取费</label>
+          <p>效益取费</p>
           <div>
             <el-row>
               <el-col :span="10">
@@ -337,19 +332,21 @@
                   placeholder="请输入主办方" 
                   type="text" 
                   v-model="business.contractType.benefitFee.main.name" 
-                  :disabled="!editable">
+                  v-if="editable">
                   <template slot="prepend">主办方</template>
                 </el-input>
+                <p v-else>主办方：{{business.contractType.benefitFee.main.name}}</p>
               </el-col>
               <el-col :span="10">
                 <el-input 
                   placeholder="请输入比例" 
                   type="number" 
                   v-model="business.contractType.benefitFee.main.percentage" 
-                  :disabled="!editable">
+                  v-if="editable">
                   <template slot="prepend">比例</template>
                   <template slot="append">%</template>
                 </el-input>
+                <p v-else>比例：{{business.contractType.benefitFee.main.percentage}}%</p>
               </el-col>
             </el-row>
           </div>
@@ -360,19 +357,21 @@
                   placeholder="请输入协办方" 
                   type="text" 
                   v-model="DEPEND.name" 
-                  :disabled="!editable">
+                  v-if="editable">
                   <template slot="prepend">协办方</template>
                 </el-input>
+                <p v-else>协办方：{{DEPEND.name}}</p>
               </el-col>
               <el-col :span="10">
                 <el-input 
                   placeholder="请输入比例" 
                   type="number" 
                   v-model="DEPEND.percentage" 
-                  :disabled="!editable">
+                  v-if="editable">
                   <template slot="prepend">比例</template>
                   <template slot="append">%</template>
                 </el-input>
+                <p v-else>比例：{{DEPEND.percentage}}%</p>
               </el-col>
               <el-col :span="2">
                 <h4 v-if="editable">
@@ -391,21 +390,22 @@
             </el-row>
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label clear-padding-left">部门协作</label>
-          <div class="my-col-sm-5 check-wrap">
-            <input class="magic-radio" type="radio" name="departmentCooperation" value="有部门合作" v-model="business.departmentCoop.name" :disabled="!editable" id="has">
+        <div class="d-f">
+          <p>部门协作：</p>
+          <div class="my-col-sm-5 check-wrap"  v-if="editable">
+            <input class="magic-radio" type="radio" name="departmentCooperation" value="有部门合作" v-model="business.departmentCoop.name" id="has">
             <label class="radio-inline" for="has">
               有部门合作
             </label>
-            <input class="magic-radio" type="radio" name="departmentCooperation" value="无部门合作" v-model="business.departmentCoop.name" :disabled="!editable" id="hasNot">
+            <input class="magic-radio" type="radio" name="departmentCooperation" value="无部门合作" v-model="business.departmentCoop.name" id="hasNot">
             <label class="radio-inline" for="hasNot">
               无部门合作
             </label>
           </div>
+          <p v-else>{{ business.departmentCoop.name }}</p>
         </div>
         <div class="form-group bgc-fff" v-if="departmentCoopChan">
-          <label>合作部门</label>
+          <p>合作部门</p>
           <div>
             <el-row>
               <el-col :span="10">
@@ -413,19 +413,21 @@
                   placeholder="无" 
                   type="text" 
                   v-model="business.departmentCoop.departments.main.name" 
-                  disabled>
+                  v-if="editable">
                   <template slot="prepend">合作部门</template>
                 </el-input>
+                <p v-else>合作部门：{{business.departmentCoop.departments.main.name}}</p>
               </el-col>
               <el-col :span="10">
                 <el-input 
                   placeholder="请输入比例" 
                   type="number" 
                   v-model="business.departmentCoop.departments.main.percentage" 
-                  :disabled="!editable">
+                  v-if="editable">
                   <template slot="prepend">比例</template>
                   <template slot="append">%</template>
                 </el-input>
+                <p v-else>比例：{{business.departmentCoop.departments.main.percentage}}%</p>
               </el-col>
             </el-row>
           </div>
@@ -436,19 +438,21 @@
                   placeholder="请输入合作部门" 
                   type="text" 
                   v-model="COOP.name" 
-                  :disabled="!editable">
+                  v-if="editable">
                   <template slot="prepend">合作部门</template>
                 </el-input>
+                <p v-else>合作部门：{{COOP.name}}</p>
               </el-col>
               <el-col :span="10">
                 <el-input 
                   placeholder="请输入比例" 
                   type="number" 
                   v-model="COOP.percentage" 
-                  :disabled="!editable">
+                  v-if="editable">
                   <template slot="prepend">比例</template>
                   <template slot="append">%</template>
                 </el-input>
+                <p v-else>比例：{{COOP.percentage}}%</p>
               </el-col>
               <el-col :span="2">
                 <h4 v-if="editable">
