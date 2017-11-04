@@ -13,8 +13,9 @@
                 v-model="reimbursementInfo.startTime"
                 type="date"
                 placeholder="选择出差起始日期"
-                :disabled="!editAble">
+                v-if="editAble">
               </el-date-picker>
+              <p v-else>{{reimbursementInfo.startTime}}</p>
             </td>
             <td class="table-label">出差结束日期：</td>
             <td>
@@ -22,24 +23,27 @@
                 v-model="reimbursementInfo.endTime"
                 type="date"
                 placeholder="选择出差结束日期"
-                :disabled="!editAble">
+                v-if="editAble">
               </el-date-picker>
+              <p v-else>{{reimbursementInfo.endTime}}</p>
             </td>
           </tr>
           <tr>
             <td class="table-label">出差地：</td>
             <td>
-              <el-input v-model="reimbursementInfo.place" placeholder="请填写出差地" :disabled="!editAble"></el-input>
+              <el-input v-model="reimbursementInfo.place" placeholder="请填写出差地" v-if="editAble"></el-input>
+              <p v-else>{{reimbursementInfo.place}}</p>
             </td>
-            <td class="table-label">出差事由</td>
+            <td class="table-label">出差事由：</td>
             <td>
-              <el-radio-group v-model="reimbursementInfo.reason" :disabled="!editAble">
+              <el-radio-group v-model="reimbursementInfo.reason" v-if="editAble">
                 <el-radio label="审计"></el-radio>
                 <el-radio label="培训"></el-radio>
                 <el-radio label="会议"></el-radio>
                 <el-radio label="投标"></el-radio>
                 <el-radio label="其他"></el-radio>
               </el-radio-group>
+              <p v-else>{{reimbursementInfo.reason}}</p>
             </td>
           </tr>
           <tr>
@@ -49,14 +53,16 @@
                 v-model="reimbursementInfo.totalAmount" 
                 placeholder="请填写总计金额" 
                 type="number" 
-                :disabled="!editAble"
+                v-if="editAble"
                 @change="changeTotalAmount"></el-input>
+              <p v-else>{{reimbursementInfo.totalAmount}}</p> 
             </td>
           </tr>
           <tr>
             <td class="table-label">摘要：</td>
             <td colspan="3">
-              <el-input v-model="reimbursementInfo.summary" placeholder="请填写摘要" :disabled="!editAble"></el-input>
+              <el-input v-model="reimbursementInfo.summary" placeholder="请填写摘要" v-if="editAble"></el-input>
+              <p v-else>{{reimbursementInfo.summary}}</p> 
             </td>
           </tr>
         </tbody>
@@ -67,7 +73,7 @@
           <tr>
             <td class="table-label">支出项目：</td>
             <td>
-              <el-select v-model="reimbursementInfo.expenditureProject" placeholder="请选择支出项目" :disabled="!editAble">
+              <el-select v-model="reimbursementInfo.expenditureProject" placeholder="请选择支出项目" v-if="editAble">
                 <el-option
                   v-for="(item, index) in expenditureProjects"
                   :key="index"
@@ -75,16 +81,18 @@
                   :value="item">
                 </el-option>
               </el-select>
+              <p v-else>{{reimbursementInfo.expenditureProject.join('、')}}</p>
             </td>
             <td class="table-label">报销金额：</td>
             <td>
-              <el-input v-model="reimbursementInfo.totalAmount" placeholder="请填写报销金额" :disabled="!editAble"></el-input>
+              <el-input v-model="reimbursementInfo.totalAmount" placeholder="请填写报销金额" v-if="editAble"></el-input>
             </td>
           </tr>
           <tr>
             <td class="table-label">摘要：</td>
             <td colspan="3">
-              <el-input v-model="reimbursementInfo.summary" placeholder="请填写摘要" :disabled="!editAble"></el-input>
+              <el-input v-model="reimbursementInfo.summary" placeholder="请填写摘要" v-if="editAble"></el-input>
+              <p v-else>{{reimbursementInfo.summary}}</p>
             </td>
           </tr>
         </tbody>
@@ -172,6 +180,9 @@ export default {
           .el-input.is-disabled .el-input__inner {
             background-color: #fafafa;
             border-color: #fff;
+          }
+          p{
+           margin-top: 10px; 
           }
         }
       }
