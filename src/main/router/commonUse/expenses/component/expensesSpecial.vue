@@ -280,11 +280,7 @@ export default {
   data() {
     return {
       user: {},
-      paths: [
-        // { name: '报销申请', url: '/expenses-list', present: false },
-        // { name: '报销列表', url: '/expenses-list', present: false },
-        // { name: '报销详情', url: '/expenses-detail', present: true }
-      ],
+      paths: [],
       rejectShow: false,
       reimbursementInfo: {
         submitType: '',
@@ -566,9 +562,6 @@ export default {
         }
       }
     },
-    // checkDetail (item) {
-      
-    // },
     getCompanyList () {
       return new Promise((resolve, reject) => {
         axios({
@@ -657,34 +650,6 @@ export default {
         this.reimbursementInfo.electricRArray[this.uploadIndex].state.uploadFail = true
       }
     },
-    // addOrEditReimbursement () {
-    //   console.log(this.reimbursementInfo)
-    //   // return new Promise((resolve, reject) => {
-    //   //   axios({
-    //   //     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-    //   //     method: 'get',
-    //   //     url: '/service',
-    //   //     params: {
-    //   //       data: (() => {
-    //   //         let obj = {
-    //   //           command: 'addOrEditReimbursement',
-    //   //           platform: 'web',
-    //   //           data: this.reimbursementInfo
-    //   //         }
-    //   //         return JSON.stringify(obj);
-    //   //       })()
-    //   //     }
-    //   //   }).then((rep) => {
-    //   //     if (rep.data.statusCode === '10001') {
-    //   //       this.$message.success('提交成功，返回报销列表')
-    //   //       this.$router.push('/expenses-list')
-    //   //       resolve('done')
-    //   //     } else {
-    //   //       this.$message.success(rep.data.msg)
-    //   //     }
-    //   //   }, (rep) => { });
-    //   // })
-    // },
     uploadAmount (amount, type) {
       let nd = new FormData()
       return new Promise((resolve, reject) => {

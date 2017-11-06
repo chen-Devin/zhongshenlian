@@ -85,8 +85,7 @@
                   style="width:100%"
                   v-model="staff.entryTime"
                   type="date"
-                  placeholder="选择日期"
-                 >
+                  placeholder="选择日期">
                 </el-date-picker>
               </el-form-item>
               <p v-else>入职时间：{{staff.entryTime}}</p>
@@ -99,6 +98,27 @@
                 </el-date-picker>
               </el-form-item>
               <p v-else>合同到期日：{{staff.expireTime}}</p>
+              <el-form-item label="劳动合同：" label-width="80px">
+                <div v-if="editAble">
+                  <el-upload ref="upload"
+                             :show-file-list="false"
+                             :action="workerUrl"
+                             :auto-upload="autoUpload"
+                             :on-change="handleChange"
+                             :on-success="UploadSuccess">
+                    <button class="btn my-btn submit-btn"
+                            type="button"
+                            slot="trigger">选取文件</button>
+                    <span slot="tip"
+                          class="text-info" v-if="workContract.name">&emsp;{{workContract.name}}</span>
+                    <span slot="tip"
+                          class="text-info" v-else>&emsp;文件大小建议不超过3Mb</span>
+                  </el-upload>
+                </div>
+                <div v-else>
+                  <a :href="staff" download>123</a>
+                </div>
+              </el-form-item>
             </el-form>
           </el-col>
         </el-row>
@@ -119,47 +139,11 @@
                 <el-checkbox :label="option" :value="option" v-for="(option, index) in certificatesOption" :key="index"></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
-            <p v-else>单科成绩：{{professionalCertificateArray.join('、')}}</p>
+            <p v-else>执行证书：{{professionalCertificateArray.join('、')}}</p>
           </el-form>
         </el-row>
         <el-row>
-          <el-form :label-position="labelPosition" label-width="130px">
-            <el-form-item label="劳动合同：" label-width="80px">
-              <!-- <el-input v-model="staff.type" :disabled="!editAble"></el-input> -->
-              <div>
-                <el-upload ref="upload"
-                           :show-file-list="false"
-                           :action="workerUrl"
-                           :auto-upload="autoUpload"
-                           :on-progress="UploadProgress"
-                           :on-success="UploadSuccess">
-                  <button class="btn my-btn submit-btn"
-                          type="button"
-                          slot="trigger"
-                          :disabled="!editAble">上传文件</button>
-                  <span slot="tip"
-                        class="text-info" v-if="uploadState.notUpload">&emsp;文件大小建议不超过3Mb</span>
-                  <span slot="tip"
-                        class="text-info" v-if="uploadState.uploading">
-                        &emsp;
-                        <i class="el-icon-loading"></i>
-                        &emsp;
-                        {{ uploadState.percentage }}%
-                        </span>
-                  <span slot="tip"
-                        class="text-info" v-if="uploadState.uploadFail">&emsp;<i class="el-icon-close"></i>上传失败，请重试</span>
-                  <span slot="tip"
-                        class="text-info" v-if="uploadState.uploaded">&emsp;<i class="el-icon-check"></i>已上传</span>
-                  <span slot="tip"
-                        class="text-info" v-if="uploadState.uploaded">
-                        &emsp;
-                        <span class="fa fa-file-text-o"></span>
-                        <a :href="uploadState.fileAddress" target="_blank">{{ uploadState.fileName }}</a>
-                        </span>
-                </el-upload>
-              </div>
-            </el-form-item>
-          </el-form>
+          
         </el-row>
       </div>
     </div>
@@ -178,6 +162,9 @@ export default {
       autoUpload: false,
       singleSubjectsArray: this.staff.singleSubjectsArray,
       professionalCertificateArray: this.staff.professionalCertificateArray,
+      workContract: {
+        name: ''
+      },
       uploadState: {
         notUpload: true,
         uploading: false,
@@ -284,31 +271,31 @@ export default {
     }
   },
   methods: {
-    UploadProgress (event, file, fileList) {
-      this.uploadState.notUpload = false
-      this.uploadState.uploading = true
-      this.uploadState.uploaded = false
-      this.uploadState.percentage = parseInt(event.percent)
-    },
     UploadSuccess (response, file, fileList) {
-      this.uploadState.notUpload = false
-      this.uploadState.uploading = false
-      this.uploadState.uploaded = false
-      this.uploadState.uploadFail = false
       if (response.statusCode === '10001') {
-        this.uploadState.uploaded = true
-        this.uploadState.fileAddress = response.data.path
-        this.uploadState.fileName = response.data.annexName
-        this.reportId = response.data.id
+       this.editAble = false
+       this.$message.success('保存成功')
+       this.isNew[0] = false
       } else {
-        this.uploadState.uploadFail = true
+        this.$message.error('上传劳动失败')
       }
     },
+    uploadFile () {
+      this.$refs.upload.submit()
+    },
+    handleChange (file, fileList) {
+      this.workContract = file
+      console.log(file, fileList)
+    }, 
     save1 () {
       if (this.isNew[0] !== false) {
-        this.addUser()
+        this.addUser().then(() => {
+          this.uploadFile()
+        }, () => {})
       } else {
-        this.save()
+        this.save().then(() => {
+          this.uploadFile()
+        }, () => {})
       }
     },
     addUser () {
@@ -358,15 +345,11 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.editAble = false
-            this.$message.success('保存成功,请继续编辑员工信息')
-            this.$emit('addSuccess', rep.data.data.id)
-            this.isNew[0] = false
+            this.staff.id = rep.data.data.id
             resolve('done');
           } else {
             this.$message.error(rep.data.msg)
           }
-          this.editAble = false
         }, (rep) => { });
       })
     },
@@ -404,10 +387,6 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.editAble = false
-            this.$message.success('保存成功')
-            this.isNew[0] = false
-            this.editAble = false
             // this.$emit('reloadDetail', this.staff.id)
             resolve('done')
           } else {
