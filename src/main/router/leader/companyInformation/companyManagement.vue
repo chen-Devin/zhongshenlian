@@ -83,9 +83,9 @@
                 <el-form-item label="部门名称：" prop="name">
                   <el-input v-model="form2.name"></el-input>
                 </el-form-item>
-                <el-form-item label="部门负责人：" prop="principalTelephone">
+               <!--  <el-form-item label="部门负责人：" prop="principalTelephone">
                   <el-input v-model="form2.principalTelephone"></el-input>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="参审注师人数：" prop="counselorNum">
                   <el-input v-model="form2.counselorNum"></el-input>
                 </el-form-item>
@@ -133,9 +133,9 @@
                 <el-form-item label="业务部名称：" prop="name">
                   <el-input v-model="form3.name"></el-input>
                 </el-form-item>
-                <el-form-item label="业务部人数：" prop="number">
+                <!-- <el-form-item label="业务部人数：" prop="number">
                   <el-input v-model="form3.number"></el-input>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="业务部经理：" prop="principalTelephone">
                   <el-input v-model="form3.principalTelephone"></el-input>
                 </el-form-item>
@@ -514,9 +514,9 @@ export default {
         ]
       },
       form3Rules: {
-        number: [
-          { required: true, message: '请输入业务部人数', trigger: 'blur' }
-        ],
+        // number: [
+        //   { required: true, message: '请输入业务部人数', trigger: 'blur' }
+        // ],
         name: [
           { required: true, message: '请输入业务部名称', trigger: 'blur' }
         ],
@@ -830,10 +830,12 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.$message(rep.data.msg)
+            this.$message.success(rep.data.msg)
             this.deleteShow2 = false
             this.reloadTree()
             resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       })
@@ -856,10 +858,12 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.$message(rep.data.msg)
+            this.$message.success(rep.data.msg)
             this.deleteShow3 = false
             this.reloadTree()
             resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       })
@@ -886,10 +890,12 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.$message(rep.data.msg)
+            this.$message.success(rep.data.msg)
             this.deleteShow4 = false
             this.reloadTree()
             resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       })
@@ -916,10 +922,12 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.$message(rep.data.msg)
+            this.$message.success(rep.data.msg)
             this.deleteShow5 = false
             this.reloadTree()
             resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       })
@@ -946,10 +954,12 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.$message(rep.data.msg)
+            this.$message.success(rep.data.msg)
             this.deleteFunction = false
             this.reloadTree()
             resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       })

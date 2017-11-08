@@ -4,7 +4,7 @@
       <div class="f-r o-h">
         <template v-if="!editAble">
           <button class="btn my-btn submit-btn" @click="edit" :disabled="!canEdit.canEditDetail">编辑</button>
-          <button class="btn my-btn cancel-btn" @click="delUser" :disabled="!canEdit.canEditDetail">删除员工</button>
+          <button class="btn my-btn cancel-btn" @click="deleteStaffShow=true" :disabled="!canEdit.canEditDetail">删除员工</button>
         </template>
         <template v-else>
           <button class="btn my-btn submit-btn" @click="save1" :disabled="saveAble">保存</button>
@@ -80,7 +80,7 @@
                 <el-radio v-model="staff.isHaveCertificate" label="0">否</el-radio>
               </el-form-item>
               <p v-else>是否有注会证书：{{staff.isHaveCertificate==='1'? '是':'否'}}</p>
-              <el-form-item label="入职时间：" label-width="90px" v-if="editAble">
+              <el-form-item label="入职时间：" prop="entryTime" label-width="90px" v-if="editAble">
                 <el-date-picker
                   style="width:100%"
                   v-model="staff.entryTime"
@@ -89,7 +89,7 @@
                 </el-date-picker>
               </el-form-item>
               <p v-else>入职时间：{{staff.entryTime}}</p>
-              <el-form-item label="合同到期日：" label-width="100px" v-if="editAble">
+              <el-form-item label="合同到期日：" prop="expireTime" label-width="100px" v-if="editAble">
                 <el-date-picker
                   style="width:100%"
                   v-model="staff.expireTime"
@@ -98,7 +98,7 @@
                 </el-date-picker>
               </el-form-item>
               <p v-else>合同到期日：{{staff.expireTime}}</p>
-              <el-form-item label="劳动合同：" label-width="80px">
+              <el-form-item label="劳动合同：" prop="workContract" label-width="90px">
                 <div v-if="editAble">
                   <el-upload ref="upload"
                              :show-file-list="false"
@@ -116,7 +116,8 @@
                   </el-upload>
                 </div>
                 <div v-else>
-                  <a :href="staff" download>123</a>
+                  <a :href="staff.contractUrl" download v-if="staff.contractUrl">下载</a>
+                  <span v-else>暂无</span>
                 </div>
               </el-form-item>
             </el-form>
@@ -142,22 +143,30 @@
             <p v-else>执行证书：{{professionalCertificateArray.join('、')}}</p>
           </el-form>
         </el-row>
-        <el-row>
-          
-        </el-row>
       </div>
     </div>
+    <modal v-if="deleteStaffShow">
+      <div slot="body">
+        员工删除后将不能恢复，确认删除吗？
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn cancel-btn" @click="delUser">确定</button>
+        <button class="btn my-btn submit-btn" @click="deleteStaffShow=false">取消</button>
+      </div>
+    </modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import modal from '@/main/component/modal.vue'
 
 export default {
   name: 'staffDetail',
   data() {
     return {
       editAble: false,
+      deleteStaffShow: false,
       labelPosition: 'left',
       autoUpload: false,
       singleSubjectsArray: this.staff.singleSubjectsArray,
@@ -227,6 +236,15 @@ export default {
         ],
         professionalCertificate: [
           { required: true, message: '请选择职业证书', trigger: 'blur' }
+        ],
+        entryTime: [
+          { required: true, message: '请选择入职时间' }
+        ],
+        expireTime: [
+          { required: true, message: '请选择合同到期时间' }
+        ],
+        workContract: [
+          { required: true, message: '提交劳动合同' }
         ]
       },
       scoresOption: ['会计', '财务成本管理', '税务', '经济法', '公司战略管理', '审计'],
@@ -244,7 +262,7 @@ export default {
       return '/fileUpload?data=' + JSON.stringify(obj)
     },
     saveAble () {
-      if (this.staff.name && this.staff.jobNumber && this.staff.gender && this.staff.nation && this.staff.idCard && this.staff.telephone && this.staff.email && this.staff.isPrincipal && this.staff.duties && this.staff.education && this.staff.jonTitle && this.staff.isHaveCertificate) {
+      if (this.staff.name && this.staff.jobNumber && this.staff.gender && this.staff.nation && this.staff.idCard && this.staff.telephone && this.staff.email && this.staff.isPrincipal && this.staff.duties && this.staff.education && this.staff.jonTitle && this.staff.isHaveCertificate && this.staff.entryTime && this.staff.expireTime) {
         return false
       } else {
         return true
@@ -277,7 +295,7 @@ export default {
        this.$message.success('保存成功')
        this.isNew[0] = false
       } else {
-        this.$message.error('上传劳动失败')
+        this.$message.error('上传劳动合同失败，请重新上传')
       }
     },
     uploadFile () {
@@ -289,13 +307,29 @@ export default {
     }, 
     save1 () {
       if (this.isNew[0] !== false) {
-        this.addUser().then(() => {
-          this.uploadFile()
-        }, () => {})
+        if (this.workContract.name) {
+          this.addUser().then(() => {
+            this.uploadFile()
+          }, () => {})
+        } else {
+          this.addUser().then(() => {
+            this.editAble = false
+            this.$message.success('保存成功')
+            this.isNew[0] = false
+          }, () => {})
+        }
       } else {
-        this.save().then(() => {
-          this.uploadFile()
-        }, () => {})
+        if (this.workContract.name) {
+          this.save().then(() => {
+            this.uploadFile()
+          }, () => {})
+        } else {
+          this.save().then(() => {
+            this.editAble = false
+            this.$message.success('保存成功')
+            this.isNew[0] = false
+          }, () => {})
+        }
       }
     },
     addUser () {
@@ -332,7 +366,7 @@ export default {
                   departmentId: this.isNew[1]
                 })
               }
-              if (this.type = 'department') {
+              if (this.type === 'department') {
                 Object.assign(obj, {
                   companyId: this.isNew[1],
                   companyDepartmentId: this.isNew[2],
@@ -434,6 +468,9 @@ export default {
     if (this.isNew[0] !== false) {
       this.editAble = true
     }
+  },
+  components: {
+    modal
   }
 }
 </script>

@@ -6,7 +6,7 @@
     <div class="company-detail el-form">
       <el-row>
         <el-col :span="9" :offset="2">
-          <p>部门编号：{{company.number}}</p>
+          <p class="require">部门编号：{{company.number}}</p>
           <p>部门名称：{{company.name}}</p>
           <p class="input-wrapper">
             是否有部门负责人：

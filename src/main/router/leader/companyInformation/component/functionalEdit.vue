@@ -78,11 +78,13 @@ export default {
         }
         if (flag === 1) {
           arr.push({
+            companyId: item.id,
             name: item.name,
             removeStatus: '0'
           })
         } else {
           arr.push({
+            companyId: item.id,
             name: item.name,
             removeStatus: '1'
           })

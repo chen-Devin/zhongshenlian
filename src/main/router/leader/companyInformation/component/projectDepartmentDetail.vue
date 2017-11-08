@@ -9,7 +9,7 @@
           <el-col :span="9" :offset="2">
             <p>业务部名称：{{iniCompany4.name}}</p>
             <p>业务部人数：{{iniCompany4.number}}</p>
-            <p>业务部经理：{{iniCompany4.principalTelephone}}</p>
+            <p>业务部经理：{{iniCompany4.principalName}}</p>
             <p>公司简称：{{iniCompany4.companyAbbreviation}}</p>
           </el-col>         
         </el-row>
