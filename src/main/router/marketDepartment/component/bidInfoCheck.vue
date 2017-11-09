@@ -144,10 +144,10 @@
             <p v-else>招标人：{{ project.tenderPerson }}</p>
           </el-col>
           <el-col :span="12">
-            <el-form-item v-if="editable" label="投资人资质条件/能力：" label-width="150px">
-              <el-input v-model="project.investmentConditions" :disabled="!editable"></el-input>
+            <el-form-item v-if="editable" label="中标单位数量：" label-width="110px">
+              <el-input v-model="project.biddingNumber" :disabled="!editable"></el-input>
             </el-form-item>
-            <p v-else>投资人资质条件/能力：{{ project.investmentConditions }}</p>
+            <p v-else>中标单位数量：{{ project.biddingNumber }}</p>
           </el-col>
         </el-row>
         <el-row>
@@ -174,10 +174,10 @@
             <p v-else>中标/入围：{{ project.wtf }}</p>
           </el-col>
           <el-col :span="12">
-            <el-form-item v-if="editable" label="中标单位数量：" label-width="110px">
-              <el-input v-model="project.biddingNumber" :disabled="!editable"></el-input>
+            <el-form-item v-if="editable" label="投资人资质条件/能力：" label-width="150px">
+              <el-input v-model="project.investmentConditions" :disabled="!editable"></el-input>
             </el-form-item>
-            <p v-else>中标单位数量：{{ project.biddingNumber }}</p>
+            <p v-else>投资人资质条件/能力：{{ project.investmentConditions }}</p>
           </el-col>
         </el-row>
         <el-row>

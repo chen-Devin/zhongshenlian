@@ -11,16 +11,16 @@
               <el-input type="text" v-model="iniCompanyEdit3.name" placeholder="请输入部门名称"></el-input>
             </el-form-item>
             <el-form-item label="部门编号：" label-width="90px" required prop="number">
-              <el-input type="number" v-model="iniCompanyEdit3.number" placeholder="请输入部门编号"></el-input>
+              <el-input v-model="iniCompanyEdit3.number" placeholder="请输入部门编号"></el-input>
             </el-form-item>
-            <el-form-item label="部门负责人：" label-width="110px" required prop="principalTelephone">
-              <el-input type="text" v-model="iniCompanyEdit3.principalTelephone" placeholder="请输入部门负责人"></el-input>
+            <el-form-item label="部门负责人：" label-width="110px" required prop="principalName">
+              <p>{{ iniCompanyEdit3.principalName }}</p>
             </el-form-item>
             <el-form-item label="参审注师人数：" label-width="120px" required prop="counselorNum">
-              <el-input type="number" v-model="iniCompanyEdit3.counselorNum" placeholder="请输入参审注师人数"></el-input>
+              <el-input v-model="iniCompanyEdit3.counselorNum" placeholder="请输入参审注师人数"></el-input>
             </el-form-item>
             <el-form-item label="参审助理人数：" label-width="120px" required prop="assistantNum">
-              <el-input type="number" v-model="iniCompanyEdit3.assistantNum" placeholder="请输入参审助理人数"></el-input>
+              <el-input v-model="iniCompanyEdit3.assistantNum" placeholder="请输入参审助理人数"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -51,7 +51,7 @@ export default {
         number: [
           { required: true, message: '请输入部门编号', trigger: 'blur' }
         ],
-        principalTelephone: [
+        principalName: [
           { required: true, message: '请输入部门负责人', trigger: 'blur' }
         ],
         counselorNum: [
@@ -65,7 +65,7 @@ export default {
   },
   computed: {
     saveAble () {
-      if (this.iniCompanyEdit3.name && this.iniCompanyEdit3.number && this.iniCompanyEdit3.principalTelephone && this.iniCompanyEdit3.counselorNum && this.iniCompanyEdit3.assistantNum) {
+      if (this.iniCompanyEdit3.name && this.iniCompanyEdit3.number && this.iniCompanyEdit3.principalName && this.iniCompanyEdit3.counselorNum && this.iniCompanyEdit3.assistantNum) {
         return false
       } else {
         return true
