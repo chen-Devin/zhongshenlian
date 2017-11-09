@@ -4,36 +4,36 @@
     <h1 class="title">{{ iniCompanyEdit2.name }}</h1>
     <h5 class="vice-title">公司信息</h5>
     <div class="company-detail">
-      <el-form :label-position="labelPosition" label-width = "130px">
+      <el-form :label-position="labelPosition" label-width = "130px" :model="iniCompanyEdit2" :rules="Rules" ref="iniCompanyEdit2" >
         <el-row>
           <el-col :span="11" :offset="1">
-            <el-form-item label="公司简称：" label-width="90px" required>
+            <el-form-item label="公司简称：" label-width="90px" required prop="number">
               <el-input type="text" v-model="iniCompanyEdit2.number" placeholder="请输入公司编号"></el-input>
             </el-form-item>
-            <el-form-item label="公司名称：" label-width="90px" required>
+            <el-form-item label="公司名称：" label-width="90px" required prop="name">
               <el-input type="text" v-model="iniCompanyEdit2.name" placeholder="请输入公司名称"></el-input>
             </el-form-item>
-            <el-form-item label="社会统一信用代码：" label-width="140px" required>
+            <el-form-item label="社会统一信用代码：" label-width="140px" required prop="creditCode">
               <el-input type="text" v-model="iniCompanyEdit2.creditCode" placeholder="请输入信用代码"></el-input>
             </el-form-item>
-            <el-form-item label="公司法人：" label-width="90px" required>
+            <el-form-item label="公司法人：" label-width="90px" required prop="legalPersonName">
               <el-input type="text" v-model="iniCompanyEdit2.legalPersonName" placeholder="请输入公司法人"></el-input>
             </el-form-item>
-            <el-form-item label="公司负责人：" label-width="100px" required>
+            <el-form-item label="公司负责人：" label-width="100px" required prop="principalName">
               <el-input type="text" v-model="iniCompanyEdit2.principalName" placeholder="请输入公司负责人"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="11" :offset="1">
-            <el-form-item label="参审人员标签：" label-width="120px" required>
+            <el-form-item label="参审人员标签：" label-width="120px" required prop="counselorTag">
               <el-input type="text" v-model="iniCompanyEdit2.counselorTag" placeholder="请输入参审人员标签"></el-input>
             </el-form-item>
-            <el-form-item label="经营范围：" label-width="90px" required>
+            <el-form-item label="经营范围：" label-width="90px" required prop="mainWork">
               <el-input type="text" v-model="iniCompanyEdit2.mainWork" placeholder="请输入经营范围"></el-input>
             </el-form-item>
-            <el-form-item label="开户银行：" label-width="90px" required>
+            <el-form-item label="开户银行：" label-width="90px" required prop="openAccountBankName">
               <el-input type="text" v-model="iniCompanyEdit2.openAccountBankName" placeholder="请输入开户银行"></el-input>
             </el-form-item>
-            <el-form-item label="开户银行账号：" label-width="120px" required>
+            <el-form-item label="开户银行账号：" label-width="120px" required prop="openAccountBankNumber">
               <el-input type="text" v-model="iniCompanyEdit2.openAccountBankNumber" placeholder="请输入开户账号"></el-input>
             </el-form-item>
             <el-form-item label="人员数量：" label-width="90px" required>
@@ -61,7 +61,7 @@
   </div>
   <p class="btns">
     <button type="button" class="btn my-btn draft-btn" @click="cancel">取消</button>
-    <button type="button" class="btn my-btn submit-btn" @click="submit">保存</button>
+    <button type="button" class="btn my-btn submit-btn" @click="submit" :disabled="saveAble">保存</button>
   </p>
   <input-report-modal
     :iniReportType="iniCompanyEdit2.reportTypeOption"
@@ -89,12 +89,47 @@ export default {
       inputReportModalShow: false,
       company: this.iniCompany2,
       checked: [],
-      labelPosition: 'left'
-    };
+      labelPosition: 'left',
+      Rules: {
+        name: [
+          { required: true, message: '请输入公司名称', trigger: 'blur' }
+        ],
+        number: [
+          { required: true, message: '请输入公司编号', trigger: 'blur' }
+        ],
+        creditCode: [
+          { required: true, message: '请输入信用代码', trigger: 'blur' }
+        ],
+        legalPersonName: [
+          { required: true, message: '请输入公司法人', trigger: 'blur' }
+        ],
+        principalName: [
+          { required: true, message: '请输入公司负责人', trigger: 'blur' }
+        ],
+        counselorTag: [
+          { required: true, message: '请输入参审人员标签', trigger: 'blur' }
+        ],
+        mainWork: [
+          { required: true, message: '请输入经营范围', trigger: 'blur' }
+        ],
+        openAccountBankName: [
+          { required: true, message: '请输入开户银行', trigger: 'blur' }
+        ],
+        openAccountBankNumber: [
+          { required: true, message: '请输入开户账号', trigger: 'blur' }
+        ]
+      }
+    }
   },
-  // watch: {
-
-  // },
+  computed: {
+    saveAble () {
+      if (this.iniCompanyEdit2.name && this.iniCompanyEdit2.number.length && this.iniCompanyEdit2.creditCode && this.iniCompanyEdit2.legalPersonName && this.iniCompanyEdit2.principalName && this.iniCompanyEdit2.counselorTag && this.iniCompanyEdit2.mainWork && this.iniCompanyEdit2.openAccountBankName && this.iniCompanyEdit2.openAccountBankNumber) {
+        return false
+      } else {
+        return true
+      }
+    }
+  },
   methods: {
     saveReportOption (iniReportType) {
       this.$message('保存成功')

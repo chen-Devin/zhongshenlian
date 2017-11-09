@@ -27,7 +27,9 @@
                   :key="index"
                   disabled>{{ item.name }}</el-checkbox>
               </el-checkbox-group> -->
-            <p>分管项目权限：{{ company.checked.join('、') }}</p>
+            <p>
+              <span>分管项目权限：{{ company.checked.join('、') }}</span>
+            </p>
           </el-col>
       </el-row>
     </div>

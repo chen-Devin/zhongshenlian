@@ -4,43 +4,42 @@
     <h1 class="title">{{ functionInfoEdit.name }}</h1>
     <h5 class="vice-title">部门信息</h5>
     <div class="company-detail">
-      <el-row>
-        <el-col :span="9" :offset="2">
-          <p class="d-f">
-            <span style="width:90px;">部门编号：</span>
-            <el-input type="text" v-model="functionInfoEdit.number" placeholder="请输入部门编号"></el-input>
-          </p>
-          <p class="d-f">
-            <span style="width:90px;">部门名称：</span>
-            <el-input type="text" v-model="functionInfoEdit.name" placeholder="请输入部门名称"></el-input>
-          </p>
-          <p class="input-wrapper">
-            是否有部门负责人：
-            <span>{{ company.principalTelephone===''?'否':'是' }}</span>
-          </p>
-          <p class="input-wrapper">
-            人员数量：
-            <span>{{functionInfoEdit.staffNum}}</span>
-          </p>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="24" :offset="2">
-          <p class="input-wrapper">
-            <el-checkbox-group v-model="functionInfoEdit.checked">
-              分管项目权限：
-              <el-checkbox 
-                :label="item.name" 
-                v-for="(item, index) in functionInfoEdit.companyList"
-                :key="index">{{ item.name }}</el-checkbox>
-            </el-checkbox-group>
-          </p>
-        </el-col>
-      </el-row>
+      <el-form :label-position="labelPosition" label-width = "90px" :rules="Rules" ref="functionInfoEdit" :model="functionInfoEdit">
+        <el-row>
+          <el-col :span="9" :offset="2">
+            <el-form-item label="部门编号：" required prop="number">
+              <el-input type="number" v-model="functionInfoEdit.number" placeholder="请输入部门编号"></el-input>
+            </el-form-item>
+            <el-form-item label="部门名称：" required prop="name">
+              <el-input type="text" v-model="functionInfoEdit.name" placeholder="请输入部门名称"></el-input>
+            </el-form-item>
+            <el-form-item label="是否有部门负责人：" required label-width = "140px">
+              <p>{{ company.principalTelephone===''?'否':'是' }}</p>
+            </el-form-item>
+            <el-form-item label="人员数量：" required>
+              <p>{{functionInfoEdit.staffNum}}</p>
+            </el-form-item> 
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24" :offset="2">
+            <el-form-item label="分管项目权限：" required label-width = "120px">
+              <el-checkbox-group v-model="functionInfoEdit.checked">     
+                <el-checkbox 
+                  :label="item.name" 
+                  v-for="(item, index) in functionInfoEdit.companyList"
+                  :key="index">{{ item.name }}</el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      
+      
     </div>
     <p class="btns">
       <button type="button" class="btn my-btn draft-btn" @click="cancel">取消</button>
-      <button type="button" class="btn my-btn submit-btn" @click="submit">保存</button>
+      <button type="button" class="btn my-btn submit-btn" @click="submit" :disabled="saveAble">保存</button>
     </p>
   </div>
 </div>
@@ -56,8 +55,26 @@ export default {
   data() {
     return {
       company: {},
-      authority: []
-    };
+      authority: [],
+      labelPosition: 'left',
+      Rules: {
+        name: [
+          { required: true, message: '请输入部门名称', trigger: 'blur' }
+        ],
+        number: [
+          { required: true, message: '请输入部门编号', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  computed: {
+    saveAble () {
+      if (this.functionInfoEdit.name && this.functionInfoEdit.number) {
+        return false
+      } else {
+        return true
+      }
+    }
   },
   methods: {
     cancel () {

@@ -4,22 +4,22 @@
     <h1 class="title">{{ iniCompanyEdit3.name }}</h1>
     <h5 class="vice-title">公司信息</h5>
     <div class="company-detail">
-      <el-form :label-position="labelPosition" label-width = "110px">
+      <el-form :label-position="labelPosition" label-width = "110px" :model="iniCompanyEdit3" :rules="Rules" ref="iniCompanyEdit3">
         <el-row>
           <el-col :span="9" :offset="2">
-            <el-form-item label="部门名称：" label-width="90px" required>
+            <el-form-item label="部门名称：" label-width="90px" required prop="name">
               <el-input type="text" v-model="iniCompanyEdit3.name" placeholder="请输入部门名称"></el-input>
             </el-form-item>
-            <el-form-item label="部门编号：" label-width="90px" required>
+            <el-form-item label="部门编号：" label-width="90px" required prop="number">
               <el-input type="number" v-model="iniCompanyEdit3.number" placeholder="请输入部门编号"></el-input>
             </el-form-item>
-            <el-form-item label="部门负责人：" label-width="110px" required>
+            <el-form-item label="部门负责人：" label-width="110px" required prop="principalTelephone">
               <el-input type="text" v-model="iniCompanyEdit3.principalTelephone" placeholder="请输入部门负责人"></el-input>
             </el-form-item>
-            <el-form-item label="参审注师人数：" label-width="120px" required>
+            <el-form-item label="参审注师人数：" label-width="120px" required prop="counselorNum">
               <el-input type="number" v-model="iniCompanyEdit3.counselorNum" placeholder="请输入参审注师人数"></el-input>
             </el-form-item>
-            <el-form-item label="参审助理人数：" label-width="120px" required>
+            <el-form-item label="参审助理人数：" label-width="120px" required prop="assistantNum">
               <el-input type="number" v-model="iniCompanyEdit3.assistantNum" placeholder="请输入参审助理人数"></el-input>
             </el-form-item>
           </el-col>
@@ -29,7 +29,7 @@
   </div>
   <p class="btns">
     <button type="button" class="btn my-btn draft-btn" @click="cancel">取消</button>
-    <button type="button" class="btn my-btn submit-btn" @click="submit">保存</button>
+    <button type="button" class="btn my-btn submit-btn" @click="submit" :disabled="saveAble">保存</button>
   </p>
 </div>
 </template>
@@ -43,8 +43,34 @@ export default {
   name: 'companyDepartmentEdit',
   data() {
     return {
-      labelPosition: 'left'
+      labelPosition: 'left',
+      Rules: {
+        name: [
+          { required: true, message: '请输入部门名称', trigger: 'blur' }
+        ],
+        number: [
+          { required: true, message: '请输入部门编号', trigger: 'blur' }
+        ],
+        principalTelephone: [
+          { required: true, message: '请输入部门负责人', trigger: 'blur' }
+        ],
+        counselorNum: [
+          { required: true, message: '请输入参审注师人数', trigger: 'blur' }
+        ],
+        assistantNum: [
+          { required: true, message: '请输入参审助理人数', trigger: 'blur' }
+        ]
+      }
     };
+  },
+  computed: {
+    saveAble () {
+      if (this.iniCompanyEdit3.name && this.iniCompanyEdit3.number && this.iniCompanyEdit3.principalTelephone && this.iniCompanyEdit3.counselorNum && this.iniCompanyEdit3.assistantNum) {
+        return false
+      } else {
+        return true
+      }
+    }
   },
   methods: {
     cancel () {

@@ -3,21 +3,21 @@
   <card class="customer-info-edit">
     <p class="btns f-r mt-15">
       <template>
-        <button class="btn my-btn submit-btn" @click="save">保存</button>
+        <button class="btn my-btn submit-btn" @click="save" :disabled="saveAble">保存</button>
         <button class="btn my-btn cancel-btn" @click="cancel">取消</button>
       </template>
     </p>
     <h4 class="main-title">客户信息录入</h4>
     <div class="edit-form">
-      <el-form :label-position="labelPosition" label-width = "90px">
+      <el-form :label-position="labelPosition" label-width = "90px" :rules="Rules" ref="customerInfo" :model="customerInfo">
         <el-row class="el-form-item">
           <el-col :span="10" :offset="1">
-            <el-form-item label="公司联系人：" required  label-width = "100px">
+            <el-form-item label="公司联系人：" required  label-width = "100px" prop="name">
               <el-input type="text" v-model="customerInfo.name" placeholder="请输入公司联系人"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="10" :offset="1">
-            <el-form-item label="联系人电话：" required label-width = "100px">
+            <el-form-item label="联系人电话：" required label-width = "100px" prop="telephone">
               <el-input type="text" v-model="customerInfo.telephone" placeholder="请输入联系人电话"></el-input>
             </el-form-item>
           </el-col>
@@ -58,7 +58,7 @@
         <div class="separator"></div>
         <el-row class="el-form-item">
           <el-col :span="10" :offset="1">
-            <el-form-item label="客户名称：" required>
+            <el-form-item label="客户名称：" required prop="customerName">
               <el-input type="text" v-model="customerInfo.customerName" placeholder="请输入客户名称"></el-input>
             </el-form-item>
           </el-col>
@@ -70,7 +70,7 @@
         </el-row>
         <el-row class="el-form-item">
           <el-col :span="10" :offset="1">
-            <el-form-item label="社会统一信用代码：" label-width="140px" required>
+            <el-form-item label="社会统一信用代码：" label-width="140px" required prop="code">
               <el-input type="text" v-model="customerInfo.code" placeholder="请输入社会统一信用代码"></el-input>
             </el-form-item>
           </el-col>
@@ -178,16 +178,41 @@ export default {
       }],
       value: '',
       companyFounder: '',
-      showDeleteCustomer: false
+      showDeleteCustomer: false,
+      Rules: {
+        name: [
+          { required: true, message: '请输入公司联系人', trigger: 'blur' }
+        ],
+        telephone: [
+          {
+            required: true, 
+            pattern: /^1\d{10}$/, 
+            message: '请输入以1开头的11位手机号', 
+            trigger: 'blur'
+          }
+        ],
+        customerName: [
+          { required: true, message: '请输入客户名称', trigger: 'blur' }
+        ],
+        code: [
+          { required: true, message: '请输入社会统一信用代码', trigger: 'blur' }
+        ]
+      }
     }
-  },
-  computed: {
-    
   },
   watch: {
     iniNewCustomerInfo: function(val, oldVal) {
       if (val.id !== oldVal.id) {
         this.customerInfo = val
+      }
+    }
+  },
+  computed: {
+    saveAble () {
+      if (this.customerInfo.name && this.customerInfo.telephone && this.customerInfo.customerName && this.customerInfo.code ) {
+        return false
+      } else {
+        return true
       }
     }
   },
