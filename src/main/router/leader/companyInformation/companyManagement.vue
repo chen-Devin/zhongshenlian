@@ -95,7 +95,7 @@
               </el-form>
             </div>
             <div slot="footer">
-              <button class="btn my-btn submit-btn" @click="save(2)">保存</button>
+              <button class="btn my-btn submit-btn" @click="save(2)" :disabled="saveAble2">保存</button>
               <button class="btn my-btn cancel-btn" @click="addShow2=false">取消</button>
             </div>
           </modal>
@@ -145,7 +145,7 @@
               </el-form>
             </div>
             <div slot="footer">
-              <button class="btn my-btn submit-btn" @click="save(3)">保存</button>
+              <button class="btn my-btn submit-btn" @click="save(3)" :disabled="saveAble3">保存</button>
               <button class="btn my-btn cancel-btn" @click="addShow3=false">取消</button>
             </div>
           </modal>
@@ -186,7 +186,7 @@
               </el-form>
             </div>
             <div slot="footer">
-              <button class="btn my-btn submit-btn" @click="save(4)">保存</button>
+              <button class="btn my-btn submit-btn" @click="save(4)" :disabled="saveAble4">保存</button>
               <button class="btn my-btn cancel-btn" @click="addShow4=false">取消</button>
             </div>
           </modal>
@@ -533,6 +533,29 @@ export default {
         ]
       }
     };
+  },
+  computed: {
+    saveAble2 () {
+      if (this.form2.number && this.form2.name && this.form2.counselorNum && this.form2.assistantNum) {
+        return false
+      } else {
+        return true
+      }
+    },
+    saveAble3 () {
+      if (this.form3.name && this.form3.principalTelephone && this.form3.companyAbbreviation) {
+        return false
+      } else {
+        return true
+      }
+    },
+    saveAble4 () {
+      if (this.form4.groupName) {
+        return false
+      } else {
+        return true
+      }
+    }
   },
   methods: {
     handleClick(tab, event) {

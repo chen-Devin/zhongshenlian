@@ -4,19 +4,19 @@
     <h1 class="title">{{ iniCompanyEdit4.name }}</h1>
     <h5 class="vice-title">公司信息</h5>
     <div class="company-detail">
-      <el-form :label-position="labelPosition" label-width = "100px">
+      <el-form :label-position="labelPosition" label-width = "100px" :model="iniCompanyEdit4" :rules="Rules" ref="iniCompanyEdit4">
         <el-row>
           <el-col :span="9" :offset="2">
-            <el-form-item label="业务部名称：" required>
+            <el-form-item label="业务部名称：" required prop="name">
               <el-input type="text" v-model="iniCompanyEdit4.name" placeholder="请输入业务部名称"></el-input>
             </el-form-item>
-            <el-form-item label="业务部人数：" required>
+            <el-form-item label="业务部人数：" required prop="number">
               <el-input type="number" v-model="iniCompanyEdit4.number" placeholder="请输入业务部人数"></el-input>
             </el-form-item>
-            <el-form-item label="业务部经理：" required>
+            <el-form-item label="业务部经理：" required prop="principalTelephone">
               <el-input type="text" v-model="iniCompanyEdit4.principalTelephone" placeholder="请输入业务部经理"></el-input>
             </el-form-item>
-            <el-form-item label="公司简称：" required>
+            <el-form-item label="公司简称：" required prop="companyAbbreviation">
               <el-input type="text" v-model="iniCompanyEdit4.companyAbbreviation" placeholder="请输入公司简称"></el-input>
             </el-form-item>
           </el-col>
@@ -26,7 +26,7 @@
   </div>
   <p class="btns">
     <button type="button" class="btn my-btn draft-btn" @click="cancel">取消</button>
-    <button type="button" class="btn my-btn submit-btn" @click="submit">保存</button>
+    <button type="button" class="btn my-btn submit-btn" @click="submit" :disabled="saveAble">保存</button>
   </p>
 </div>
 </template>
@@ -40,8 +40,31 @@ export default {
   name: 'companyDepartmentEdit',
   data() {
     return {
-      labelPosition: 'left'
+      labelPosition: 'left',
+      Rules: {
+        name: [
+          { required: true, message: '请输入业务部名称', trigger: 'blur' }
+        ],
+        number: [
+          { required: true, message: '请输入业务部人数', trigger: 'blur' }
+        ],
+        principalTelephone: [
+          { required: true, message: '请输入业务部经理', trigger: 'blur' }
+        ],
+        companyAbbreviation: [
+          { required: true, message: '请输入公司简称', trigger: 'blur' }
+        ]
+      }
     };
+  },
+  computed: {
+    saveAble () {
+      if (this.iniCompanyEdit4.name && this.iniCompanyEdit4.number && this.iniCompanyEdit4.principalTelephone && this.iniCompanyEdit4.companyAbbreviation) {
+        return false
+      } else {
+        return true
+      }
+    }
   },
   methods: {
     cancel () {
