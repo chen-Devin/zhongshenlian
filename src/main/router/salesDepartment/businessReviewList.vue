@@ -144,6 +144,7 @@ export default {
     },
     addBusinessJud() {
       this.addBusiness = this.user.authority['项目立项'];
+      this.addBusiness = true
     },
     currentChange(newPage) {
       this.pageNum = newPage
