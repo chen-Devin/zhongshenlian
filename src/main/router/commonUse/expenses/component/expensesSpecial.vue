@@ -49,11 +49,11 @@
       <div class="message-box">
         <el-row>
           <el-col class="d-f" :span="12">
-            <span style="width:90px">报销单ID：</span>
+            <span style="width:110px" class="required">报销单ID：</span>
             {{ reimbursementInfo.id }}
           </el-col>
           <el-col class="d-f" :span="12">
-            <span style="width:120px">预算所属公司：</span>
+            <span style="width:140px" class="required">预算所属公司：</span>
             <span v-if="!editAble">{{ reimbursementInfo.budgetCompanyName }}</span>
             <el-select 
               v-model="reimbursementInfo.budgetCompanyId" 
@@ -71,11 +71,11 @@
         </el-row>
         <el-row>
           <el-col class="d-f" :span="12">
-            <span style="width:90px">所在公司：</span>
+            <span style="width:110px" class="required">所在公司：</span>
             {{ user.companyName }}
           </el-col>
           <el-col class="d-f" :span="12">
-            <span style="width:120px">预算所属部门：</span>
+            <span style="width:140px" class="required">预算所属部门：</span>
             <span v-if="!editAble">{{ reimbursementInfo.budgetDepartmentName }}</span>
             <el-select 
               v-model="reimbursementInfo.budgetDepartmentId"
@@ -95,21 +95,21 @@
         <template v-if="group || project">
           <el-row>
             <el-col style="display: flex;" :span="12">
-              <span style="width:80px;">账户名称：</span>
+              <span style="width:100px;" class="required">账户名称：</span>
               <el-input v-model="reimbursementInfo.accountName" placeholder="请填写账户名称" v-if="editAble"></el-input>
             </el-col>
             <el-col style="display: flex;" :span="12">
-              <span style="width:80px;">开户银行：</span>
+              <span style="width:100px;" class="required">开户银行：</span>
               <el-input v-model="reimbursementInfo.accountBank" placeholder="请填写开户银行" v-if="editAble"></el-input>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="display: flex;" :span="12">
-              <span style="width:80px;">银行账户：</span>
+              <span style="width:100px;" class="required">银行账户：</span>
               <el-input v-model="reimbursementInfo.accountBankNumber" placeholder="请填写银行账户" v-if="editAble"></el-input>
             </el-col>
             <el-col class="d-f" :span="12" v-if="project">
-              <span style="width:80px;">合同编号：</span>
+              <span style="width:100px;" class="required">合同编号：</span>
               <el-select v-model="reimbursementInfo.projectNumberArray" filterable multiple placeholder="请选择合同编号" v-if="editAble">
                 <el-option
                   v-for="item in contracts"
@@ -369,6 +369,13 @@ export default {
     };
   },
   computed: {
+    // saveAble () {
+    //   if (this.reimbursementInfo.accountName && this.reimbursementInfo.accountBank && this.reimbursementInfo.accountBankNumber) {
+    //     return false
+    //   } else {
+    //     return true
+    //   }
+    // },
     personal () {
       if (this.reimbursementInfo.submitType === 'personalR') {
         return true

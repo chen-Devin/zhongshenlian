@@ -10,18 +10,18 @@
             <el-form-item label="业务部名称：" required prop="name">
               <el-input type="text" v-model="iniCompanyEdit4.name" placeholder="请输入业务部名称"></el-input>
             </el-form-item>
-            <el-form-item label="业务部人数：" required prop="number">
-              <el-input type="number" v-model="iniCompanyEdit4.number" placeholder="请输入业务部人数"></el-input>
+            <el-form-item label="业务部人数：" required>
+              <p>{{iniCompanyEdit4.number}}</p>
             </el-form-item>
-            <el-form-item label="业务部经理：" required prop="principalName">
-              <el-input type="text" v-model="iniCompanyEdit4.principalName" placeholder="请输入业务部经理"></el-input>
+            <el-form-item label="业务部经理：" required>
+              <p>{{iniCompanyEdit4.principalName}}</p>
             </el-form-item>
             <el-form-item label="公司简称：" required prop="companyAbbreviation">
               <el-input type="text" v-model="iniCompanyEdit4.companyAbbreviation" placeholder="请输入公司简称"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-      </el-form> 
+      </el-form>
     </div>
   </div>
   <p class="btns">
@@ -45,12 +45,6 @@ export default {
         name: [
           { required: true, message: '请输入业务部名称', trigger: 'blur' }
         ],
-        number: [
-          { required: true, message: '请输入业务部人数', trigger: 'blur' }
-        ],
-        principalName: [
-          { required: true, message: '请输入业务部经理', trigger: 'blur' }
-        ],
         companyAbbreviation: [
           { required: true, message: '请输入公司简称', trigger: 'blur' }
         ]
@@ -59,7 +53,7 @@ export default {
   },
   computed: {
     saveAble () {
-      if (this.iniCompanyEdit4.name && this.iniCompanyEdit4.number && this.iniCompanyEdit4.principalName && this.iniCompanyEdit4.companyAbbreviation) {
+      if (this.iniCompanyEdit4.name && this.iniCompanyEdit4.companyAbbreviation) {
         return false
       } else {
         return true

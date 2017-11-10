@@ -91,7 +91,7 @@
             </el-form-item> -->
           </el-col>
           <el-col :span="8">
-            <el-form-item label="合同预估金额：" label-width="120px" required v-if="editable">
+            <el-form-item label="合同预估金额：" label-width="120px" required v-if="editable" prop="contractAmount">
               <!-- <masked-input type="text" placeholder="请输入合同预估金额"  v-model="business.contractAmount"
                             v-if="editable"
                             :mask="currencyMask"
@@ -128,7 +128,7 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="报价依据："  placeholder="请输入报价依据" required v-if="editable">
+            <el-form-item label="报价依据："  placeholder="请输入报价依据" required v-if="editable" prop="basisQuote">
               <el-input v-model="business.basisQuote" ></el-input>
             </el-form-item>
             <p v-else>报价依据：{{business.basisQuote}}</p>
@@ -177,7 +177,8 @@
           <el-form-item label="报告信息："></el-form-item>
         </el-row>
         <div class="d-f">
-          <p style="width:100px;">出具报告类型：</p>
+          <el-form-item label="出具报告类型：" required label-width="120px "></el-form-item>
+         <!--  <p style="width:100px;">出具报告类型：</p> -->
           <div class="check-wrap">
             <p class="d-ib" v-if="!editable">{{ reportType }}</p>
             <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index" v-else>
@@ -211,13 +212,19 @@
             <el-form-item label="报告数量：" label-width="100px"  v-if="editable">
               <el-input placeholder="请输入报告数量" type="number" v-model="business.report.amount"></el-input>
             </el-form-item>
-            <p v-else>报告数量：{{business.report.amount}}</p>
+            <p v-else>
+              <span v-if="business.report.amount">报告数量：{{business.report.amount}}</span>
+              <span v-else>报告数量：暂无</span>
+            </p>
           </el-col>
           <el-col :span="12">
             <el-form-item label="报告用途：" label-width="80px"  v-if="editable">
               <el-input placeholder="请输入报告用途" type="text" v-model="business.report.usage"></el-input>
             </el-form-item>
-            <p v-else>{{business.report.usage}}</p>
+            <p v-else>
+              <span v-if="business.report.usage">报告用途：{{business.report.usage}}</span>
+              <span v-esle>报告用途：暂无</span>
+            </p>
           </el-col>
         </el-row>
         <el-row v-if="business.feeBasisExist">
@@ -243,7 +250,7 @@
           </el-col>
         </el-row>
         <div class="d-f ">
-          <p style="width:80px;">合同体制：</p>
+          <p style="width:80px;" class="required">合同体制：</p>
           <div class="check-wrap" v-if="editable">
             <input class="magic-radio" type="radio" name="contractSystem" value="联合体" v-model="business.contractType.name" id="common">
             <label class="radio-inline" for="common">
@@ -391,7 +398,7 @@
           </div>
         </div>
         <div class="d-f">
-          <p>部门协作：</p>
+          <p class="required">部门协作：</p>
           <div class="my-col-sm-5 check-wrap"  v-if="editable">
             <input class="magic-radio" type="radio" name="departmentCooperation" value="有部门合作" v-model="business.departmentCoop.name" id="has">
             <label class="radio-inline" for="has">
@@ -599,6 +606,12 @@ export default {
         ],
         scope:[
           { required: true, message: '请输入业务范围与审计目标', trigger: 'blur' }
+        ],
+        contractAmount:[
+          { required: true, message: '请输入合同预估金额', trigger: 'blur' }
+        ],
+        basisQuote:[
+          { required: true, message: '请输入报价依据', trigger: 'blur' }
         ]
       },
       staffModalShow: false,
@@ -1326,6 +1339,13 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.required {
+  &:before{
+    content: "*";
+    color: #f00;
+    padding-right: 5px;
+  }
+}
 .business-editor {
   .check-wrap {
     flex: 1;

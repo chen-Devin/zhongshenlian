@@ -4,18 +4,19 @@
     <h1 class="title">{{ iniCompanyEdit5.groupName }}</h1>
     <h5 class="vice-title">公司信息</h5>
     <div class="company-department-detail">
-      <el-row>
-        <el-col :span="9" :offset="2">
-          <p>
-            小组名称：
-            <input type="text" class="form-control" v-model="iniCompanyEdit5.groupName" placeholder="请输入小组名称">
-          </p>
-        </el-col>
-       </el-row>
+      <el-form :label-position="labelPosition" label-width = "90px" :model="iniCompanyEdit5" :rules="Rules" ref="iniCompanyEdit5">
+        <el-row>
+          <el-col :span="9" :offset="2">
+            <el-form-item label="小组名称：" label-width="90px" required prop="groupName">
+              <el-input type="text" v-model="iniCompanyEdit5.groupName" placeholder="请输入小组名称"></el-input>
+            </el-form-item>
+          </el-col>
+         </el-row>
+     </el-form>
     </div>
     <p class="btns">
       <button type="button" class="btn my-btn draft-btn" @click="cancel">取消</button>
-      <button type="button" class="btn my-btn submit-btn" @click="submit">保存</button>
+      <button type="button" class="btn my-btn submit-btn" @click="submit" :disabled="saveAble">保存</button>
     </p>
   </div>
 </div>
@@ -30,7 +31,22 @@ export default {
   name: 'companyDepartmentDetail',
   data() {
     return {
+      labelPosition: 'left',
+      Rules: {
+        groupName: [
+          { required: true, message: '请输入小组名称', trigger: 'blur' }
+        ]
+      }
     };
+  },
+  computed: {
+    saveAble () {
+      if (this.iniCompanyEdit5.groupName) {
+        return false
+      } else {
+        return true
+      }
+    }
   },
   methods: {
     cancel () {

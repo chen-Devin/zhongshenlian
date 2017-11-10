@@ -8,7 +8,7 @@
         <el-row>
           <el-col :span="6" class="d-f">
             <template v-if="editAble">
-              <span style="width:90px">报销方式：</span>
+              <span style="width:110px" class="required">报销方式：</span>
               <el-select v-model="reimbursementInfo.submitType" placeholder="请选择报销方式">
                 <el-option
                   v-for="item in typeOptions"
@@ -22,7 +22,7 @@
           </el-col>
           <el-col :span="6" class="number d-f" v-if="contractNumberShow">
             <template v-if="editAble">
-              <span style="width:70px">合同号：</span>
+              <span style="width:90px" class="required">合同号：</span>
               <el-select 
                 v-model="projectNumber" 
                 placeholder="请选择合同" 
@@ -40,7 +40,7 @@
           </el-col>
           <el-col class="d-f" :span="6">
             <template v-if="editAble">
-              <span style="width:90px">开票类型：</span>
+              <span style="width:100px">开票类型：</span>
               <el-select v-model="reimbursementInfo.billingType" placeholder="请选择开票类型" v-if="editAble">
                 <el-option
                   v-for="item in classOptions"
@@ -67,11 +67,11 @@
       <div class="message-box">
         <el-row>
           <el-col class="d-f" :span="12">
-            <span style="width:70px">报销单ID：</span>
+            <span style="width:90px" class="required">报销单ID：</span>
             {{ reimbursementInfo.id }}
           </el-col>
           <el-col class="d-f" :span="12">
-            <span style="width:110px">预算所属公司：</span>
+            <span style="width:130px" class="required">预算所属公司：</span>
             <p v-if="!editAble">{{ reimbursementInfo.budgetCompanyName }}</p>
             <el-select 
               v-model="reimbursementInfo.budgetCompanyId" 
@@ -89,11 +89,11 @@
         </el-row>
         <el-row>
           <el-col class="d-f" :span="12">
-            <span style="width:70px">所在公司：</span>
+            <span style="width:90px" class="required">所在公司：</span>
             {{ companyName }} 
           </el-col>
           <el-col class="d-f" :span="12">
-            <span style="width:110px">预算所属部门：</span>
+            <span style="width:130px" class="required">预算所属部门：</span>
             <p v-if="!editAble">{{ reimbursementInfo.budgetDepartmentName }}</p>
             <el-select 
               v-model="reimbursementInfo.budgetDepartmentName" 

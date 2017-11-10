@@ -1,5 +1,12 @@
 @import './_variables.scss';
 
+.required {
+  &:before {
+    content: '*';
+    color: #f00;
+    margin-right: 3px;
+  }
+}
 // reset.css
 .search-form {
   z-index: 1;

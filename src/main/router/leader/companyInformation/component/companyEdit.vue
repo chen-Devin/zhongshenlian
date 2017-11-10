@@ -16,11 +16,11 @@
             <el-form-item label="社会统一信用代码：" label-width="140px" required prop="creditCode">
               <el-input type="text" v-model="iniCompanyEdit2.creditCode" placeholder="请输入信用代码"></el-input>
             </el-form-item>
-            <el-form-item label="公司法人：" label-width="90px" required prop="legalPersonName">
-              <el-input type="text" v-model="iniCompanyEdit2.legalPersonName" placeholder="请输入公司法人"></el-input>
+            <el-form-item label="公司法人：" label-width="90px" required prop="legalPersonTelephone">
+              <el-input type="text" v-model="iniCompanyEdit2.legalPersonTelephone" placeholder="请输入公司法人"></el-input>
             </el-form-item>
-            <el-form-item label="公司负责人：" label-width="100px" required prop="principalName">
-              <el-input type="text" v-model="iniCompanyEdit2.principalName" placeholder="请输入公司负责人"></el-input>
+            <el-form-item label="公司负责人：" label-width="100px" required>  
+              <p>{{iniCompanyEdit2.principalName}}</p>
             </el-form-item>
           </el-col>
           <el-col :span="11" :offset="1">
@@ -100,11 +100,8 @@ export default {
         creditCode: [
           { required: true, message: '请输入信用代码', trigger: 'blur' }
         ],
-        legalPersonName: [
+        legalPersonTelephone: [
           { required: true, message: '请输入公司法人', trigger: 'blur' }
-        ],
-        principalName: [
-          { required: true, message: '请输入公司负责人', trigger: 'blur' }
         ],
         counselorTag: [
           { required: true, message: '请输入参审人员标签', trigger: 'blur' }
@@ -123,7 +120,7 @@ export default {
   },
   computed: {
     saveAble () {
-      if (this.iniCompanyEdit2.name && this.iniCompanyEdit2.number.length && this.iniCompanyEdit2.creditCode && this.iniCompanyEdit2.legalPersonName && this.iniCompanyEdit2.principalName && this.iniCompanyEdit2.counselorTag && this.iniCompanyEdit2.mainWork && this.iniCompanyEdit2.openAccountBankName && this.iniCompanyEdit2.openAccountBankNumber) {
+      if (this.iniCompanyEdit2.name && this.iniCompanyEdit2.number && this.iniCompanyEdit2.creditCode && this.iniCompanyEdit2.legalPersonTelephone && this.iniCompanyEdit2.counselorTag && this.iniCompanyEdit2.mainWork && this.iniCompanyEdit2.openAccountBankName && this.iniCompanyEdit2.openAccountBankNumber) {
         return false
       } else {
         return true
