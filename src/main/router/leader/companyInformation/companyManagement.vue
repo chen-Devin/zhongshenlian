@@ -725,7 +725,7 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.projectDepartment = rep.data.data
-            this.projectDepartmentEdit = Object.assign({}, this.projectDepartment)
+            this.projectDepartmentEdit = Object.assign({}, rep.data.data)
             resolve('done');
           }
         }, (rep) => { });

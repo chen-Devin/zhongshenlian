@@ -250,7 +250,7 @@
           </el-col>
         </el-row>
         <div class="d-f ">
-          <p style="width:80px;" class="required">合同体制：</p>
+          <p style="width:90px;" class="required">合同体制：</p>
           <div class="check-wrap" v-if="editable">
             <input class="magic-radio" type="radio" name="contractSystem" value="联合体" v-model="business.contractType.name" id="common">
             <label class="radio-inline" for="common">
@@ -398,7 +398,7 @@
           </div>
         </div>
         <div class="d-f">
-          <p class="required">部门协作：</p>
+          <p style="width:90px;" class="required">部门协作：</p>
           <div class="my-col-sm-5 check-wrap"  v-if="editable">
             <input class="magic-radio" type="radio" name="departmentCooperation" value="有部门合作" v-model="business.departmentCoop.name" id="has">
             <label class="radio-inline" for="has">
@@ -1347,7 +1347,11 @@ export default {
   }
 }
 .business-editor {
+  .input-group {
+    line-height: 39px;
+  }
   .check-wrap {
+    padding-top: 10px;
     flex: 1;
   }
   > .basic-message {
@@ -1388,6 +1392,7 @@ export default {
     .type-wrapper {
       padding-left: 30px;
       margin-top: 10px;
+      margin-bottom: 10px;
       background-color: #f9fbfe;
       > p {
         &:first-child {

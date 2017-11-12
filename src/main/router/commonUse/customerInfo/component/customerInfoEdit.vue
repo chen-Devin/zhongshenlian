@@ -16,7 +16,7 @@
       {{ newCustomerInfo.customerName === ''? '未命名': newCustomerInfo.customerName }}</h4>
     <div class="edit-form">
        <el-form :label-position="labelPosition" label-width = "90px">
-         <el-row class="el-form-item">
+         <el-row>
            <el-col :span="10" :offset="1">
              <el-form-item label="公司联系人：" required  label-width = "100px" v-if="!isEdit">
                <el-input type="text" v-model="newCustomerInfo.name" placeholder="请输入公司联系人"></el-input>
@@ -30,7 +30,7 @@
              <p v-else>联系人电话：{{newCustomerInfo.telephone}}</p>
            </el-col>
          </el-row>
-         <el-row class="el-form-item">
+         <el-row>
            <el-col :span="10" :offset="1">
              <el-form-item label="联系人部门：" v-if="!isEdit">
                <el-input type="text" v-model="newCustomerInfo.department" placeholder="请输入联系人部门"></el-input>
@@ -50,7 +50,7 @@
              </p>
            </el-col>
          </el-row>
-         <el-row class="el-form-item">
+         <el-row>
            <el-col :span="10" :offset="1">
              <el-form-item label="联系人职务：" v-if="!isEdit">
                <el-input type="text" v-model="newCustomerInfo.duty" placeholder="请输入联系人职务"></el-input>
@@ -78,7 +78,7 @@
            </el-col>
          </el-row>
          <div class="separator"></div>
-         <el-row class="el-form-item">
+         <el-row>
            <el-col :span="10" :offset="1">
              <p>客户名称：{{ newCustomerInfo.customerName }}</p>
            </el-col>
@@ -89,7 +89,7 @@
              </p>
            </el-col>
          </el-row>
-         <el-row class="el-form-item">
+         <el-row>
            <el-col :span="10" :offset="1">            
              <p>社会统一信用代码：{{ newCustomerInfo.code }}</p>
            </el-col>
@@ -100,7 +100,7 @@
              </p>
            </el-col>
          </el-row>
-         <el-row class="el-form-item">
+         <el-row>
            <el-col :span="10" :offset="1">
              <p>
               <span v-if="newCustomerInfo.operName">公司法人：{{ newCustomerInfo.operName }}</span>
@@ -114,7 +114,7 @@
              </p>
            </el-col>
          </el-row>
-         <el-row class="el-form-item">
+         <el-row>
            <el-col :span="10" :offset="1">
              <p>
               <span v-if="newCustomerInfo.setUpTime">成立日期：{{ newCustomerInfo.setUpTime }}</span>
@@ -128,7 +128,7 @@
              </p>
            </el-col>
          </el-row>
-         <el-row class="el-form-item">
+         <el-row>
            <el-col :span="10" :offset="1">
              <p>
               <span v-if="newCustomerInfo.industry">所属行业：{{ newCustomerInfo.industry }}</span>
@@ -142,7 +142,7 @@
              </p>
            </el-col>
          </el-row>
-         <el-row class="el-form-item">
+         <el-row>
            <el-col :span="10" :offset="1">
             <p>
               <span v-if="newCustomerInfo.mainWork">经营范围：{{ newCustomerInfo.mainWork }}</span>
@@ -151,7 +151,7 @@
            </el-col>
          </el-row>
          <div class="separator"></div>
-         <el-row class="el-form-item">
+         <el-row>
            <el-col :span="10" :offset="1">
               <p>创建人：{{ newCustomerInfo.founderName }}</p>
            </el-col>

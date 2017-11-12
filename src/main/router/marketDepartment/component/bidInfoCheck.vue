@@ -288,7 +288,7 @@
                    外资
                 </label>
                 <input class="magic-radio" type="radio" name="kjsOwnerStructure" v-model="project.kjsOwnershipStructure" value="混合" id="kjs混合">
-                <label for="pgs混合">
+                <label for="kjs混合">
                    混合
                 </label>
               </el-form-item>
@@ -690,17 +690,6 @@
     padding-right:15px;
     padding-bottom: 15px;
   }
-  .addi {
-     padding: 6px 12px;
-     width: 70px;
-     font-size: 14px;
-     font-weight: normal;
-     color: #555555;
-     text-align: center;
-     background-color: #eeeeee;
-     border: 1px solid #ccc;
-     border-radius: 4px;
-  }
   .basic-message {
     margin-top: 10px;
   }
@@ -795,6 +784,9 @@
       font-size: 13px;
       font-weight: normal;
   }
+  .magic-radio + label:after {
+    top: 14px;
+  }
   .plus + label:before {
       position: absolute;
       top: 1px;
@@ -805,7 +797,6 @@
       content: '';
       border: 1px solid #c0c0c0;
   }
-
   .plus + label:after {
       top: 5px;
       left: 6px;
@@ -814,6 +805,7 @@
       border-radius: 50%;
       background: #3e97eb;
   }
+
 </style>
 
 <script>

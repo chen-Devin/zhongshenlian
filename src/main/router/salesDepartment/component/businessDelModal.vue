@@ -2,8 +2,8 @@
 <modal>
   <div slot="body">
     <p>
-      <span class="fa fa-exclamation-circle fa-5x text-danger"></span>
-      <span class="text-cont">确定撤销该项目吗？</span>
+      <!-- <span class="fa fa-exclamation-circle fa-5x text-danger"></span> -->
+      确定撤销该项目吗？
     </p>
   </div>
   <div slot="footer">
@@ -29,7 +29,7 @@ export default {
     return {
       subBtn: {
         dis: false,
-        cont: '删除'
+        cont: '确定'
       }
     };
   },
