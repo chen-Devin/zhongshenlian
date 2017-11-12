@@ -8,7 +8,7 @@
         <el-row>
           <el-col class="d-f" :span="9">
             <template v-if="editAble">
-              <span style="width:90px">报销类型：</span>
+              <span style="width:90px" class="required">报销类型：</span>
               <el-select v-model="reimbursementInfo.submitType" placeholder="请选择报销方式" v-if="editAble">
                 <el-option
                   v-for="item in typeOptions"
@@ -44,6 +44,7 @@
     <card class="card2">
       <expense-table
         type="特殊报销"
+        :totalAmount="totalAmount"
         :reimbursementInfo="reimbursementInfo"
         :editAble="editAble"></expense-table>
       <div class="message-box">
@@ -228,7 +229,7 @@
                       class="text-info" v-if="item.state.uploaded">
                       &emsp;
                       <span class="fa fa-file-text-o"></span>
-                      <a :href="item.path" target="_blank">{{ item.name }}</a>
+                      <a :href="item.path" target="_blank">下载</a>
                       </span>
               </el-upload>
             </div>
@@ -236,7 +237,7 @@
         </el-row>
       </div>
       <p class="btns ta-c" v-if="editAble">
-        <button class="btn my-btn submit-btn" @click="addOrEditReimbursement">提交审批</button>
+        <button class="btn my-btn submit-btn" @click="addOrEditReimbursement" :disabled="saveAble">提交审批</button>
         <button class="btn my-btn cancel-btn" @click="back">取消</button>
       </p>
     </card>
@@ -248,13 +249,15 @@
       <div class="f-l">
         状态描述：
       </div>
-      <el-input
+      <!-- <el-input
         type="textarea"
         :rows="3"
         placeholder="暂无"
         v-model="reimbursementInfo.statusDescription"
         disabled>
-      </el-input>
+      </el-input> -->
+      <p v-model="reimbursementInfo.statusDescription" v-if="reimbursementInfo.statusDescription"></p>
+      <p v-else>暂无</p>
       <p class="btns" v-if="!editAble && detailType === 'review'">
         <button class="btn my-btn submit-btn" @click="agree">审批通过</button>
         <button class="btn my-btn cancel-btn" @click="showReject">驳回</button>
@@ -369,13 +372,13 @@ export default {
     };
   },
   computed: {
-    // saveAble () {
-    //   if (this.reimbursementInfo.accountName && this.reimbursementInfo.accountBank && this.reimbursementInfo.accountBankNumber) {
-    //     return false
-    //   } else {
-    //     return true
-    //   }
-    // },
+    saveAble () {
+      if (this.reimbursementInfo.submitType && this.reimbursementInfo.budgetCompanyId && this.reimbursementInfo.budgetDepartmentId) {
+        return false
+      } else {
+        return true
+      }
+    },
     personal () {
       if (this.reimbursementInfo.submitType === 'personalR') {
         return true
@@ -439,6 +442,15 @@ export default {
           return false
       }
       return arr
+    },
+    totalAmount () {
+      let total = 0
+      if (this.reimbursementInfo.billingType === '纸质发票报销') {
+        total = Number(this.reimbursementInfo.paperInvoiceAmount)
+      } else {
+        total = Number(this.reimbursementInfo.electricInvoiceAmount)
+      }
+      return total.toFixed(2)
     }
   },
   methods: {
@@ -676,6 +688,7 @@ export default {
       })
     },
     addOrEditReimbursement () {
+      this.reimbursementInfo.totalAmount = this.totalAmount
       if (this.paper) {
         this.uploadAmount(this.reimbursementInfo.paperRArray[0].amount, 'paperR').then(() => {
           var promiseArr = []

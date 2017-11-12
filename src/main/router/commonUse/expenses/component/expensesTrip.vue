@@ -63,6 +63,7 @@
       <expense-table
         type="差旅费报销"
         :reimbursementInfo="reimbursementInfo"
+        :totalAmount="totalAmount"
         :editAble="editAble"></expense-table>
       <div class="message-box">
         <el-row>
@@ -95,9 +96,6 @@
           <el-col class="d-f" :span="12">
             <span style="width:130px" class="required">预算所属部门：</span>
             <p v-if="!editAble">{{ reimbursementInfo.budgetDepartmentName }}</p>
-            <el-select 
-              v-model="reimbursementInfo.budgetDepartmentName" 
-              v-else></el-select>
             <el-select 
               v-model="reimbursementInfo.budgetDepartmentId" 
               placeholder="请选择预算所属部门" 
@@ -196,10 +194,10 @@
                 <span slot="tip"
                       class="text-info" v-if="item.state.uploaded">&emsp;<i class="el-icon-check"></i>已上传</span>
                 <span slot="tip"
-                      class="text-info" v-if="item.state.uploaded">
+                      class="text-info width-limit" v-if="item.state.uploaded">
                       &emsp;
                       <span class="fa fa-file-text-o"></span>
-                      <a :href="item.path" target="_blank">{{ item.name }}</a>
+                      <a :href="item.path" target="_blank">下载</a>
                       </span>
               </el-upload>
             </div>
@@ -274,7 +272,7 @@
                       class="text-info" v-if="item.state.uploaded">
                       &emsp;
                       <span class="fa fa-file-text-o"></span>
-                      <a :href="item.path" target="_blank">{{ item.name }}</a>
+                      <a :href="item.path" target="_blank">下载</a>
                       </span>
               </el-upload>
             </div>
@@ -349,7 +347,7 @@
                       class="text-info" v-if="item.state.uploaded">
                       &emsp;
                       <span class="fa fa-file-text-o"></span>
-                      <a :href="item.path" target="_blank">{{ item.name }}</a>
+                      <a :href="item.path" target="_blank">下载</a>
                       </span>
               </el-upload>
             </div>
@@ -424,7 +422,7 @@
                       class="text-info" v-if="item.state.uploaded">
                       &emsp;
                       <span class="fa fa-file-text-o"></span>
-                      <a :href="item.path" target="_blank">{{ item.name }}</a>
+                      <a :href="item.path" target="_blank">下载</a>
                       </span>
               </el-upload>
             </div>
@@ -432,7 +430,7 @@
         </el-row>
       </div>
       <p class="btns ta-c" v-if="editAble">
-        <button class="btn my-btn submit-btn" @click="addOrEditReimbursement" :disabled="submitAble">提交审批</button>
+        <button class="btn my-btn submit-btn" @click="addOrEditReimbursement" :disabled="saveAble">提交审批</button>
         <button class="btn my-btn cancel-btn" @click="back">取消</button>
       </p>
     </card>
@@ -444,13 +442,15 @@
       <div class="f-l">
         状态描述：
       </div>
-      <el-input
+      <!-- <el-input
         type="textarea"
         :rows="3"
         placeholder="暂无"
         v-model="reimbursementInfo.statusDescription"
         disabled>
-      </el-input>
+      </el-input> -->
+      <p v-model="reimbursementInfo.statusDescription" v-if="reimbursementInfo.statusDescription"></p>
+      <p v-else>暂无</p>
       <p class="btns" v-if="!editAble && detailType === 'review'">
         <button class="btn my-btn submit-btn" @click="agree">审批通过</button>
         <button class="btn my-btn cancel-btn" @click="showReject">驳回</button>
@@ -460,6 +460,14 @@
       v-if="rejectShow"
       @rejected="rejected"
       @cancel="cancel"></reject-expense-modal>
+    <modal v-if="warnModalShow">
+      <div slot="body">
+        您申请的金额已超出可申请报销金额，请将报销方式修改为无合同报销
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn cancel-btn" @click="warnModalShow=false">确定</button>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -467,6 +475,7 @@
 import axios from 'axios';
 import crumbs from '@/main/component/crumbs.vue';
 import card from '@/main/component/card.vue';
+import modal from "@/main/component/modal.vue";
 import stateSvg from './stateSvg.vue';
 import expenseTable from './expenseTable.vue';
 import rejectExpenseModal from './rejectExpenseModal.vue';
@@ -590,6 +599,7 @@ export default {
       editAble: this.$route.params.id === 'new' ? true : false,
       user: {},
       rejectShow: false,
+      warnModalShow: false,
       detailType: 'detail'
     };
   },
@@ -655,12 +665,16 @@ export default {
       }
       return arr
     },
-    submitAble () {
-      if (this.reimbursementInfo.submitType === 'contractR' && this.projectNumber === '' && this.reimbursementInfo.totalAmount <= 0.1 * Number(this.reimbursementInfo.contractAmount)) {
-        return true
-      } else {
+    saveAble () {
+      if (this.reimbursementInfo.submitType && this.reimbursementInfo.budgetCompanyId && this.reimbursementInfo.budgetDepartmentId) {
         return false
+      } else {
+        return true
       }
+    },
+    totalAmount () {
+      let total = Number(this.reimbursementInfo.transportationTotalFee) + Number(this.reimbursementInfo.stayTotalFee) + Number(this.reimbursementInfo.localMealsTotalFee) + Number(this.reimbursementInfo.fieldMealsTotalFee)
+      return total.toFixed(2)
     }
   },
   methods: {
@@ -1034,107 +1048,118 @@ export default {
       })
     },
     addOrEditReimbursement () {
-      console.log(this.paper)
-      if (this.paper) {
-        this.uploadAmount(this.reimbursementInfo.travelRArray[0].amount, 'travelR').then(() => {
-          var promiseArr = []
-          if (this.reimbursementInfo.travelRArray.length > 1) {
-            this.reimbursementInfo.travelRArray.forEach((item) => {
-              promiseArr.push(this.uploadAmount(item.amount, 'travelR'))
-            })
-          }
-          this.reimbursementInfo.stayRArray.forEach((item) => {
-            promiseArr.push(this.uploadAmount(item.amount, 'stayR'))
-          })
-          this.reimbursementInfo.localRArray.forEach((item) => {
-            promiseArr.push(this.uploadAmount(item.amount, 'localR'))
-          })
-          this.reimbursementInfo.fieldRArray.forEach((item) => {
-            promiseArr.push(this.uploadAmount(item.amount, 'fieldR'))
-          })
-          Promise.all(promiseArr).then(() => {
-            let arr = []
-            this.reimbursementInfo.projectNumberArray = this.projectNumberArray
-            this.reimbursementInfo.companyName = this.user.companyName
-            this.reimbursementInfo.travelRArray.forEach((item) => {
-              delete item.percentage
-              delete item.state
-              delete item.uploadURL
-            })
+      let flag = 0
+      if (this.reimbursementInfo.submitType === 'contractR') {
+        if (this.totalAmount > Number(this.reimbursementInfo.contractAmount) * 0.1) {
+          this.warnModalShow = true
+        } else {
+          flag = 1
+        }
+      } else {
+        flag = 1
+      }
+      if (flag) {
+        if (this.paper) {
+          this.uploadAmount(this.reimbursementInfo.travelRArray[0].amount, 'travelR').then(() => {
+            var promiseArr = []
+            if (this.reimbursementInfo.travelRArray.length > 1) {
+              this.reimbursementInfo.travelRArray.forEach((item) => {
+                promiseArr.push(this.uploadAmount(item.amount, 'travelR'))
+              })
+            }
             this.reimbursementInfo.stayRArray.forEach((item) => {
-              delete item.percentage
-              delete item.state
-              delete item.uploadURL
+              promiseArr.push(this.uploadAmount(item.amount, 'stayR'))
             })
             this.reimbursementInfo.localRArray.forEach((item) => {
-              delete item.percentage
-              delete item.state
-              delete item.uploadURL
+              promiseArr.push(this.uploadAmount(item.amount, 'localR'))
             })
             this.reimbursementInfo.fieldRArray.forEach((item) => {
-              delete item.percentage
-              delete item.state
-              delete item.uploadURL
+              promiseArr.push(this.uploadAmount(item.amount, 'fieldR'))
             })
-            if (this.reimbursementInfo.id === '') {
-              delete this.reimbursementInfo.id
-            }
-            return new Promise((resolve, reject) => {
-              axios({
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-                method: 'get',
-                url: '/service',
-                params: {
-                  data: (() => {
-                    let obj = {
-                      command: 'addOrEditReimbursement',
-                      platform: 'web',
-                      type: this.reimbursementInfo.submitType,
-                      data: this.reimbursementInfo
-                    }
-                    return JSON.stringify(obj);
-                  })()
-                }
-              }).then((rep) => {
-                if (rep.data.statusCode === '10001') {
-                  this.$message.success('提交成功，返回报销列表')
-                  this.$router.push('/expenses-list')
-                  resolve('done')
-                } else {
-                  this.$message.error(rep.data.msg)
-                }
-              }, (rep) => { });
-            })
+            Promise.all(promiseArr).then(() => {
+              let arr = []
+              this.reimbursementInfo.projectNumberArray = this.projectNumberArray
+              this.reimbursementInfo.companyName = this.user.companyName
+              this.reimbursementInfo.travelRArray.forEach((item) => {
+                delete item.percentage
+                delete item.state
+                delete item.uploadURL
+              })
+              this.reimbursementInfo.stayRArray.forEach((item) => {
+                delete item.percentage
+                delete item.state
+                delete item.uploadURL
+              })
+              this.reimbursementInfo.localRArray.forEach((item) => {
+                delete item.percentage
+                delete item.state
+                delete item.uploadURL
+              })
+              this.reimbursementInfo.fieldRArray.forEach((item) => {
+                delete item.percentage
+                delete item.state
+                delete item.uploadURL
+              })
+              if (this.reimbursementInfo.id === '') {
+                delete this.reimbursementInfo.id
+              }
+              return new Promise((resolve, reject) => {
+                axios({
+                  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+                  method: 'get',
+                  url: '/service',
+                  params: {
+                    data: (() => {
+                      let obj = {
+                        command: 'addOrEditReimbursement',
+                        platform: 'web',
+                        type: this.reimbursementInfo.submitType,
+                        data: this.reimbursementInfo
+                      }
+                      return JSON.stringify(obj);
+                    })()
+                  }
+                }).then((rep) => {
+                  if (rep.data.statusCode === '10001') {
+                    this.$message.success('提交成功，返回报销列表')
+                    this.$router.push('/expenses-list')
+                    resolve('done')
+                  } else {
+                    this.$message.error(rep.data.msg)
+                  }
+                }, (rep) => { });
+              })
+            }, () => {})
           }, () => {})
-        }, () => {})
-      } else {
-        return new Promise((resolve, reject) => {
-          axios({
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-            method: 'get',
-            url: '/service',
-            params: {
-              data: (() => {
-                let obj = {
-                  command: 'addOrEditReimbursement',
-                  platform: 'web',
-                  type: this.reimbursementInfo.submitType,
-                  data: this.reimbursementInfo
-                }
-                return JSON.stringify(obj);
-              })()
-            }
-          }).then((rep) => {
-            if (rep.data.statusCode === '10001') {
-              this.$message.success('提交成功，返回报销列表')
-              this.$router.push('/expenses-list')
-              resolve('done')
-            } else {
-              this.$message.error(rep.data.msg)
-            }
-          }, (rep) => { });
-        })
-      }
+        } else {
+          return new Promise((resolve, reject) => {
+            axios({
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+              method: 'get',
+              url: '/service',
+              params: {
+                data: (() => {
+                  let obj = {
+                    command: 'addOrEditReimbursement',
+                    platform: 'web',
+                    type: this.reimbursementInfo.submitType,
+                    data: this.reimbursementInfo
+                  }
+                  return JSON.stringify(obj);
+                })()
+              }
+            }).then((rep) => {
+              if (rep.data.statusCode === '10001') {
+                this.$message.success('提交成功，返回报销列表')
+                this.$router.push('/expenses-list')
+                resolve('done')
+              } else {
+                this.$message.error(rep.data.msg)
+              }
+            }, (rep) => { });
+          })
+        }
+      } 
     },
     back () {
       this.$router.push('/expenses-list')
@@ -1207,6 +1232,7 @@ export default {
   components: {
     crumbs,
     card,
+    modal,
     stateSvg,
     expenseTable,
     rejectExpenseModal
@@ -1216,6 +1242,10 @@ export default {
 
 <style lang="sass">
   .expenses-detail {
+    .width-limit {
+      max-width: 20px;
+      overflow: hidden;
+    }
     .main-title {
       height: 30px;
       line-height: 30px;

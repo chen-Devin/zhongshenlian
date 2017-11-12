@@ -49,13 +49,13 @@
           <tr>
             <td class="table-label">总计金额：</td>
             <td colspan="3">
-              <el-input 
+              <!-- <el-input 
                 v-model="reimbursementInfo.totalAmount" 
                 placeholder="请填写总计金额" 
                 type="number" 
                 v-if="editAble"
-                @change="changeTotalAmount"></el-input>
-              <p v-else>{{reimbursementInfo.totalAmount}}</p> 
+                @change="changeTotalAmount"></el-input> -->
+              <p>{{ totalAmount }}</p> 
             </td>
           </tr>
           <tr>
@@ -85,7 +85,8 @@
             </td>
             <td class="table-label">报销金额：</td>
             <td>
-              <el-input v-model="reimbursementInfo.totalAmount" placeholder="请填写报销金额" v-if="editAble"></el-input>
+              <!-- <el-input v-model="reimbursementInfo.totalAmount" placeholder="请填写报销金额" v-if="editAble"></el-input> -->
+              <p>{{ totalAmount }}</p> 
             </td>
           </tr>
           <tr>
@@ -98,20 +99,10 @@
         </tbody>
       </table>
     </div>
-    <modal v-if="warnModalShow">
-      <div slot="body">
-        您申请的金额已超出可申请报销金额，请将报销方式修改为无合同报销
-      </div>
-      <div slot="footer">
-        <button class="btn my-btn cancel-btn" @click="warnModalShow=false">确定</button>
-      </div>
-    </modal>
   </div>
 </template>
 
 <script>
-import modal from "@/main/component/modal.vue"
-
 export default {
   name: 'expenseTable',
   data() {
@@ -133,27 +124,18 @@ export default {
         '管理其他',
         '管理资产',
         '财务费'
-      ],
-      warnModalShow: false
+      ]
     };
   },
-  props: ['type', 'editAble', 'reimbursementInfo'],
-  methods: {
-    changeTotalAmount (val) {
-      if (val > Number(this.reimbursementInfo.contractAmount) * 0.1) {
-        this.warnModalShow = true
-        this.reimbursementInfo.totalAmount = (Number(this.reimbursementInfo.contractAmount) * 0.1 ).toFixed(2)
-      }
-    }
-  },
-  components: {
-    modal
-  }
+  props: ['type', 'editAble', 'reimbursementInfo', 'totalAmount']
 }
 </script>
 
 <style lang="sass">
   .expense-table {
+    p {
+      min-height: 18px;
+    }
     .table-wrapper {
       padding-left: 30px;
       padding-right: 30px;
@@ -162,6 +144,7 @@ export default {
       width: 100%;
       border: 1px solid #b4b4b4;
       .el-input__inner {
+        padding-left: 0;
         border: 1px solid #fff;
       }
       tr {

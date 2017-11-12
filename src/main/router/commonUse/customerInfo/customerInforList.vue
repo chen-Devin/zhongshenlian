@@ -53,58 +53,6 @@ export default {
         this.getInfo(1);
       }
     },
-    higherSearchEvent(searchObj) {
-      this.searchObj = searchObj;
-      this.listType = 'higherSearch';
-      this.newPage = 1;
-      axios({
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-        method: 'get',
-        url: '/service',
-        params: {
-          data: (() => {
-            let obj = {
-              command: 'searchCustomer',
-              platform: 'web',
-              searchContent: '',
-              customerName: searchObj.customerName,
-              name: searchObj.name,
-              telephone: searchObj.telephone,
-              pageNum: this.newPage
-            }
-            return JSON.stringify(obj);
-          })()
-        }
-      }).then((rep) => {
-        if (rep.data.statusCode === '10001') {
-          this.page.total = parseInt(rep.data.data.totalNum);
-          // this.page.current = newPage;
-          this.customers.length = 0;
-          for (let i = 0; i < rep.data.data.customerArray.length; i++) {
-            let obj = {
-              id: rep.data.data.customerArray[i].id,
-              customerName: rep.data.data.customerArray[i].customerName,
-              name: rep.data.data.customerArray[i].name,
-              telephone: rep.data.data.customerArray[i].telephone,
-              duty: rep.data.data.customerArray[i].duty,
-              department: rep.data.data.customerArray[i].department,
-              registeredAddress: rep.data.data.customerArray[i].registeredAddress,
-              mailingAddress: rep.data.data.customerArray[i].mailingAddress,
-              businessLicenseNumber: rep.data.data.customerArray[i].businessLicenseNumber,
-              registeredCapital: rep.data.data.customerArray[i].registeredCapital,
-              customerNature: rep.data.data.customerArray[i].customerNature,
-              assetSize: rep.data.data.customerArray[i].assetSize,
-              industry: rep.data.data.customerArray[i].industry,
-              setUpTime: rep.data.data.customerArray[i].setUpTime,
-              founderId: rep.data.data.customerArray[i].founderId,
-              founderName: rep.data.data.customerArray[i].founderName,
-              founderDepartment: rep.data.data.customerArray[i].founderDepartment
-            };
-            this.customers.push(obj);
-          }
-        }
-      }, (rep) => { });
-    },
     pageChan(newPage) {
       this.newPage = newPage;
       if (this.listType === 'search') {
@@ -152,7 +100,7 @@ export default {
               customerNature: rep.data.data.customerArray[i].customerNature,
               assetSize: rep.data.data.customerArray[i].assetSize,
               industry: rep.data.data.customerArray[i].industry,
-              setUpTime: rep.data.data.customerArray[i].setUpTime,
+              setUpTime: rep.data.data.customerArray[i].createAt,
               founderId: rep.data.data.customerArray[i].founderId,
               founderName: rep.data.data.customerArray[i].founderName,
               founderDepartment: rep.data.data.customerArray[i].founderDepartment
@@ -200,7 +148,7 @@ export default {
               customerNature: rep.data.data.customerArray[i].customerNature,
               assetSize: rep.data.data.customerArray[i].assetSize,
               industry: rep.data.data.customerArray[i].industry,
-              setUpTime: rep.data.data.customerArray[i].setUpTime,
+              setUpTime: rep.data.data.customerArray[i].createAt,
               founderId: rep.data.data.customerArray[i].founderId,
               founderName: rep.data.data.customerArray[i].founderName,
               founderDepartment: rep.data.data.customerArray[i].founderDepartment

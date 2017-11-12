@@ -156,7 +156,7 @@
               <p>创建人：{{ newCustomerInfo.founderName }}</p>
            </el-col>
            <el-col :span="10" :offset="1">
-              <p>创建时间：{{ newCustomerInfo.createAt }}</p>
+              <p>创建时间：{{ newCustomerInfo.setUpTime }}</p>
            </el-col>
          </el-row>
       </el-form>
@@ -315,12 +315,15 @@ export default {
   methods: {
     customerNatureMap (customerNature) {
       let arr = []
-      customerNature.forEach((item) => {
-        if (item.state) {
-          arr.push(item.val)
-        }
-      })
-      return arr.join('、')
+      if (customerNature instanceof Array) {
+        customerNature.forEach((item) => {
+          if (item.state) {
+            arr.push(item.val)
+          }
+        })
+        return arr.join('、')
+      }
+      return customerNature
     },
     save () {
       if (!this.isEdit) {
