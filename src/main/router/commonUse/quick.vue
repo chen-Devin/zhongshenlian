@@ -45,6 +45,38 @@
         </card>
       </el-col>
     </el-row>
+    <el-row>
+      <el-col :span="24">
+        <p class="todo-title">项目概况</p>
+        <card class="card">
+          <table class="table table-bordered table-hover table-list">
+            <thead>
+              <tr>
+                <th>项目动态</th>
+                <th>状态</th>
+                <th>发起人</th>
+                <th>时间</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr 
+                v-for="(project, index) in projectData" 
+                :key="index">
+                <td width="60%">
+                  <p>
+                    <span class="project-dynamic">{{ project.projectName }}</span>
+                  </p>
+                </td>
+                <td>{{ statusMap(project.projectStatus) }}</td>
+                <td>{{ project.applicantName }}</td>
+                <td>{{ project.startTime }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="empty-list-p" v-if="projectData.length === 0">暂无数据</p>
+        </card>
+      </el-col>
+    </el-row>
     <modal modal-width="700px" v-if="addItem">
       <div class="items-wrap" slot="body">
         <div class="item-column" v-for="(item, index) in quickArray" :key="index">
@@ -80,6 +112,7 @@ export default {
       ],
       user: {},
       tableData: [],
+      projectData: [],
       shortcutArray: [],
       itemCounts: 3,
       addItem: false,
@@ -106,6 +139,60 @@ export default {
     }
   },
   methods: {
+    statusMap (status) {
+      switch(Number(status)) {
+        case 10:
+          return '草稿状态'
+          break;
+        case 20:
+          return '立项'
+          break;
+        case 30:
+          return '质控部初审驳回'
+          break;
+        case 40:
+          return '质控部初审通过'
+          break;
+        case 50:
+          return '所长审核驳回'
+          break;
+        case 60:
+          return '所长审核通过'
+          break;
+        case 70:
+          return '办公室合同审核'
+          break;
+        case 80:
+          return '办公室合同盖章'
+          break;
+        case 90:
+          return '办公室合同编号发放'
+          break;
+        case 110:
+          return '开始上传报告'
+          break;
+        case 111:
+          return '报告上传完成'
+          break;
+        case 112:
+          return '二维码上传完成'
+          break;
+        case 113:
+          return '打印装订盖章'
+          break;
+        case 114:
+          return '返回报告'
+          break;
+        case 120:
+          return '归档报告'
+          break;
+        case 130:
+          return '业务完结'
+          break;
+        default:
+          return '暂无'
+      }
+    },
     getToBeDoneList() {
       axios({
         method: 'get',
@@ -124,6 +211,28 @@ export default {
         if (rep.data.statusCode === '10001') {
           this.tableData = rep.data.data.dataArray;
           this.itemCounts = rep.data.data.totalNum;
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
+    },
+    getProjectDynamics() {
+      axios({
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            var obj = {
+              command: 'getProjectDynamics',
+              platform: 'web',
+              pageNum: 1
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.projectData = rep.data.data.businessArray;
         } else if (rep.data.statusCode === '10012') {
           window.location.href = 'signIn.html';
         }
@@ -351,7 +460,6 @@ export default {
       }, (rep) => { });
     }
   },
-  props: [''],
   created() {
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser;
@@ -506,6 +614,7 @@ export default {
       }
     }, () => { })
     this.getToBeDoneList()
+    this.getProjectDynamics()
     this.getNewRegulation()
   },
   components: {
@@ -520,6 +629,14 @@ export default {
 <style lang="sass" scoped>
   .quick {
     padding-right: 20px;
+    .project-dynamic {
+      display: inline-block;
+      width: 90%;
+      height: 19px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     > .quick-wrapper {
       display: flex;
       justify-content: flex-start;
