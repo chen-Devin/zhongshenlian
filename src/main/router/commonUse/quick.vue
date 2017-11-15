@@ -45,11 +45,11 @@
         </card>
       </el-col>
     </el-row>
-    <el-row>
+    <el-row class="project-abtract">
       <el-col :span="24">
         <p class="todo-title">项目概况</p>
         <card class="card">
-          <table class="table table-bordered table-hover table-list">
+          <table class="table table-bordered table-list">
             <thead>
               <tr>
                 <th>项目动态</th>
@@ -645,6 +645,9 @@ export default {
       margin-bottom: 33px;
     }
     > .el-row {
+      &.project-abtract {
+        margin-top: 30px;
+      }
       > .el-col {
         > .todo-title {
           margin-left: 30px;

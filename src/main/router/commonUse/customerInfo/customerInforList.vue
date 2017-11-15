@@ -5,8 +5,7 @@
                     :user="user"
                     :page="page"
                     @pageChan="pageChan"
-                    @search="search"
-                    @higherSearchEvent="higherSearchEvent"></customer-infor>
+                    @search="search"></customer-infor>
   </div>
 </template>
 

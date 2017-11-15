@@ -64,17 +64,31 @@
                 <p v-model="staff.group" disabled></p>
               </el-form-item>
               <el-form-item label="职位：" label-width="70px" prop="duties" v-if="editAble">
-                <el-input v-model="staff.duties"></el-input>
+                <el-select v-model="staff.duties" placeholder="选择职位">
+                  <el-option 
+                    v-for="item in dutiesList"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                  </el-option>
+                </el-select>
               </el-form-item>
               <p v-else>职位：{{staff.duties}}</p>
               <el-form-item label="学历：" label-width="70px" prop="education" v-if="editAble">
                 <el-input v-model="staff.education"></el-input>
               </el-form-item>
               <p v-else>学历：{{staff.education}}</p>
-              <el-form-item label="职称：" label-width="70px" prop="jonTitle" v-if="editAble">
-                <el-input v-model="staff.jonTitle"></el-input>
+              <el-form-item label="级别：" label-width="70px" prop="level" v-if="editAble">
+                <el-select v-model="staff.level" placeholder="选择级别">
+                  <el-option 
+                    v-for="item in levelList"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                  </el-option>
+                </el-select>
               </el-form-item>
-              <p v-else>职称：{{staff.jonTitle}}</p>
+              <p v-else>级别：{{staff.level}}</p>
               <el-form-item label="是否有注会证书：" prop="isHaveCertificate" v-if="editAble">
                 <el-radio v-model="staff.isHaveCertificate" label="1">是</el-radio>
                 <el-radio v-model="staff.isHaveCertificate" label="0">否</el-radio>
@@ -213,8 +227,8 @@ export default {
         education: [
           { required: true, message: '请输入学历', trigger: 'blur' }
         ],
-        jonTitle: [
-          { required: true, message: '请输入职称', trigger: 'blur' }
+        level: [
+          { required: true, message: '请输入级别', trigger: 'blur' }
         ],
         entryTime: [
           { required: true, message: '请输入入职时间', trigger: 'blur' }
@@ -248,7 +262,9 @@ export default {
         ]
       },
       scoresOption: ['会计', '财务成本管理', '税务', '经济法', '公司战略管理', '审计'],
-      certificatesOption: ['注册会计师', '注册审计师', '注册造价工程师', '注册资产评估师', '注册土地评估师', '暂无']
+      certificatesOption: ['注册会计师', '注册审计师', '注册造价工程师', '注册资产评估师', '注册土地评估师', '暂无'],
+      levelList: ['一级', '二级', '三级'],
+      dutiesList: ['部门经理', '项目经理', '主审', '职员']
     };
   },
   computed: {
@@ -262,7 +278,7 @@ export default {
       return '/fileUpload?data=' + JSON.stringify(obj)
     },
     saveAble () {
-      if (this.staff.name && this.staff.jobNumber && this.staff.gender && this.staff.nation && this.staff.idCard && this.staff.telephone && this.staff.email && this.staff.isPrincipal && this.staff.duties && this.staff.education && this.staff.jonTitle && this.staff.isHaveCertificate && this.staff.entryTime && this.staff.expireTime) {
+      if (this.staff.name && this.staff.jobNumber && this.staff.gender && this.staff.nation && this.staff.idCard && this.staff.telephone && this.staff.email && this.staff.isPrincipal && this.staff.duties && this.staff.education && this.staff.level && this.staff.isHaveCertificate && this.staff.entryTime && this.staff.expireTime) {
         return false
       } else {
         return true
@@ -352,7 +368,7 @@ export default {
                 idCard: this.staff.idCard,
                 email: this.staff.email,
                 education: this.staff.education,
-                jonTitle: this.staff.jonTitle,
+                level: this.staff.level,
                 entryTime: this.staff.entryTime,
                 expireTime: this.staff.expireTime,
                 singleSubjects: this.singleSubjectsArray.join('，'),
@@ -408,7 +424,7 @@ export default {
                 idCard: this.staff.idCard,
                 email: this.staff.email,
                 education: this.staff.education,
-                jonTitle: this.staff.jonTitle,
+                level: this.staff.level,
                 entryTime: this.staff.entryTime,
                 expireTime: this.staff.expireTime,
                 singleSubjects: this.singleSubjectsArray.join('，'),

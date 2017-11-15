@@ -86,12 +86,12 @@
                <!--  <el-form-item label="部门负责人：" prop="principalTelephone">
                   <el-input v-model="form2.principalTelephone"></el-input>
                 </el-form-item> -->
-                <el-form-item label="参审注师人数：" prop="counselorNum">
+                <!-- <el-form-item label="参审注师人数：" prop="counselorNum">
                   <el-input v-model="form2.counselorNum"></el-input>
                 </el-form-item>
                 <el-form-item label="参审助理人数：" prop="assistantNum">
                   <el-input v-model="form2.assistantNum"></el-input>
-                </el-form-item>
+                </el-form-item> -->
               </el-form>
             </div>
             <div slot="footer">
@@ -136,9 +136,9 @@
                 <!-- <el-form-item label="业务部人数：" prop="number">
                   <el-input v-model="form3.number"></el-input>
                 </el-form-item> -->
-                <el-form-item label="业务部经理：" prop="principalTelephone">
+                <!-- <el-form-item label="业务部经理：" prop="principalTelephone">
                   <el-input v-model="form3.principalTelephone"></el-input>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="分公司简称：" prop="companyAbbreviation">
                   <el-input v-model="form3.companyAbbreviation"></el-input>
                 </el-form-item>
@@ -536,14 +536,14 @@ export default {
   },
   computed: {
     saveAble2 () {
-      if (this.form2.number && this.form2.name && this.form2.counselorNum && this.form2.assistantNum) {
+      if (this.form2.number && this.form2.name) {
         return false
       } else {
         return true
       }
     },
     saveAble3 () {
-      if (this.form3.name && this.form3.principalTelephone && this.form3.companyAbbreviation) {
+      if (this.form3.name && this.form3.companyAbbreviation) {
         return false
       } else {
         return true

@@ -1313,14 +1313,14 @@ export default {
       margin-bottom: 20px;
       text-align: center;
     }
-  } 
-  .com-list thead {
-      background-color: #E6E6E6;
-  }
-  .table-bordered > tbody > tr {
-    cursor: pointer;
-  }
-  .table-bordered > tbody > tr > td {
-      border: none;
+    .com-list thead {
+        background-color: #E6E6E6;
+    }
+    .table-bordered > tbody > tr {
+      cursor: pointer;
+    }
+    .table-bordered > tbody > tr > td {
+        border: none;
+    }
   }
 </style>
