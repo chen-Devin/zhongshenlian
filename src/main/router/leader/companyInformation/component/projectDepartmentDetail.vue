@@ -2,15 +2,16 @@
 <div>
   <div class="company-department-detail-box">
     <h1 class="title">{{ iniCompany4.name }}</h1>
-    <h5 class="vice-title">公司信息</h5>
+    <h5 class="vice-title">部门信息</h5>
     <div class="company-department-detail">
       <el-form :label-position="labelPosition" label-width = "100px">
         <el-row>
           <el-col :span="9" :offset="2">
-            <p>业务部名称：{{iniCompany4.name}}</p>
-            <p>业务部人数：{{iniCompany4.number}}</p>
-            <p>业务部经理：{{iniCompany4.principalName}}</p>
-            <p>公司简称：{{iniCompany4.companyAbbreviation}}</p>
+            <p>部门名称：{{iniCompany4.name}}</p>
+            <p>部门编号：{{iniCompany4.number}}</p>
+            <p>业务部人数：{{iniCompany4.staffNum}}</p>
+            <p>部门经理：{{iniCompany4.principalName}}</p>
+            <!-- <p>公司简称：{{iniCompany4.companyAbbreviation}}</p> -->
           </el-col>         
         </el-row>
       </el-form> 

@@ -130,8 +130,8 @@
                 ref="form3"
                 :label-position="labelPosition"
                 label-width="100px">
-                <el-form-item label="业务部名称：" prop="name">
-                  <el-input v-model="form3.name"></el-input>
+                <el-form-item label="编号：" prop="number">
+                  <el-input v-model="form3.number"></el-input>
                 </el-form-item>
                 <!-- <el-form-item label="业务部人数：" prop="number">
                   <el-input v-model="form3.number"></el-input>
@@ -139,8 +139,8 @@
                 <!-- <el-form-item label="业务部经理：" prop="principalTelephone">
                   <el-input v-model="form3.principalTelephone"></el-input>
                 </el-form-item> -->
-                <el-form-item label="分公司简称：" prop="companyAbbreviation">
-                  <el-input v-model="form3.companyAbbreviation"></el-input>
+                <el-form-item label="部门简称：" prop="name">
+                  <el-input v-model="form3.name"></el-input>
                 </el-form-item>
               </el-form>
             </div>
@@ -398,7 +398,7 @@ export default {
         updateAt: ''
       },
       projectDepartment: {
-        companyAbbreviation: '',
+        name: '',
         createAt: '',
         id: '',
         name: '',
@@ -488,8 +488,7 @@ export default {
         companyDepartmentId: '',
         name: '',
         number: '',
-        principalTelephone: '',
-        companyAbbreviation: ''
+        principalTelephone: ''
       },
       form4: {
         id: '',
@@ -517,14 +516,14 @@ export default {
         // number: [
         //   { required: true, message: '请输入业务部人数', trigger: 'blur' }
         // ],
-        name: [
-          { required: true, message: '请输入业务部名称', trigger: 'blur' }
+        number: [
+          { required: true, message: '请输入部门编号', trigger: 'blur' }
         ],
         principalTelephone: [
           { required: true, message: '请输入业务部经理', trigger: 'blur' }
         ],
-        companyAbbreviation: [
-          { required: true, message: '请输入分公司简称', trigger: 'blur' }
+        name: [
+          { required: true, message: '请输入公司简称', trigger: 'blur' }
         ]
       },
       form4Rules: {
@@ -543,7 +542,7 @@ export default {
       }
     },
     saveAble3 () {
-      if (this.form3.name && this.form3.companyAbbreviation) {
+      if (this.form3.name && this.form3.number) {
         return false
       } else {
         return true

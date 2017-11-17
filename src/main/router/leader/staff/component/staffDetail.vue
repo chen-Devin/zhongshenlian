@@ -185,6 +185,8 @@ export default {
       autoUpload: false,
       singleSubjectsArray: this.staff.singleSubjectsArray,
       professionalCertificateArray: this.staff.professionalCertificateArray,
+      entryTime: '',
+      expireTime: '',
       workContract: {
         name: ''
       },
@@ -305,6 +307,18 @@ export default {
     }
   },
   methods: {
+    formatDate (nd) {
+      let y = nd.getFullYear()
+      let m = nd.getMonth() + 1
+      if (m < 10) {
+        m = '0' + m
+      }
+      let d = nd.getDate()
+      if (d < 10) {
+        d = '0' + d
+      }
+      return y + '-' + m + '-' + d
+    },
     UploadSuccess (response, file, fileList) {
       if (response.statusCode === '10001') {
        this.editAble = false
@@ -322,6 +336,7 @@ export default {
       console.log(file, fileList)
     }, 
     save1 () {
+      console.log(1)
       if (this.isNew[0] !== false) {
         if (this.workContract.name) {
           this.addUser().then(() => {
@@ -331,6 +346,7 @@ export default {
           this.addUser().then(() => {
             this.editAble = false
             this.$message.success('保存成功')
+            this.$emit('reloadDetail', this.staff.id)
             this.isNew[0] = false
           }, () => {})
         }
@@ -343,12 +359,23 @@ export default {
           this.save().then(() => {
             this.editAble = false
             this.$message.success('保存成功')
+            this.$emit('reloadDetail', this.staff.id)
             this.isNew[0] = false
           }, () => {})
         }
       }
     },
     addUser () {
+      if (this.staff.entryTime instanceof Date) {
+        this.entryTime = this.formatDate(this.staff.entryTime)
+      } else {
+        this.entryTime = this.staff.entryTime
+      }
+      if (this.staff.expireTime instanceof Date) {
+        this.expireTime = this.formatDate(this.staff.expireTime)
+      } else {
+        this.expireTime = this.staff.expireTime
+      }
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -369,8 +396,8 @@ export default {
                 email: this.staff.email,
                 education: this.staff.education,
                 level: this.staff.level,
-                entryTime: this.staff.entryTime,
-                expireTime: this.staff.expireTime,
+                entryTime: this.entryTime,
+                expireTime: this.expireTime,
                 singleSubjects: this.singleSubjectsArray.join('，'),
                 professionalCertificate: this.professionalCertificateArray.join('，'),
                 isPrincipal: this.staff.isPrincipal,
@@ -404,6 +431,16 @@ export default {
       })
     },
     save () {
+      if (this.staff.entryTime instanceof Date) {
+        this.entryTime = this.formatDate(this.staff.entryTime)
+      } else {
+        this.entryTime = this.staff.entryTime
+      }
+      if (this.staff.expireTime instanceof Date) {
+        this.expireTime = this.formatDate(this.staff.expireTime)
+      } else {
+        this.expireTime = this.staff.expireTime
+      }
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -425,8 +462,8 @@ export default {
                 email: this.staff.email,
                 education: this.staff.education,
                 level: this.staff.level,
-                entryTime: this.staff.entryTime,
-                expireTime: this.staff.expireTime,
+                entryTime: this.entryTime,
+                expireTime: this.expireTime,
                 singleSubjects: this.singleSubjectsArray.join('，'),
                 professionalCertificate: this.professionalCertificateArray.join('，'),
                 isPrincipal: this.staff.isPrincipal,
@@ -437,7 +474,6 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            // this.$emit('reloadDetail', this.staff.id)
             resolve('done')
           } else {
             this.$message.error(rep.data.msg)

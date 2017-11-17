@@ -2,23 +2,26 @@
 <div>
   <div class="company-detail-box">
     <h1 class="title">{{ iniCompanyEdit4.name }}</h1>
-    <h5 class="vice-title">公司信息</h5>
+    <h5 class="vice-title">部门信息</h5>
     <div class="company-detail">
       <el-form :label-position="labelPosition" label-width="100px" :model="iniCompanyEdit4" :rules="Rules">
         <el-row>
           <el-col :span="9" :offset="2">
-            <el-form-item label="业务部名称：" required prop="name">
-              <el-input type="text" v-model="iniCompanyEdit4.name" placeholder="请输入业务部名称"></el-input>
+            <el-form-item label="部门名称：" required prop="name">
+              <el-input type="text" v-model="iniCompanyEdit4.name" placeholder="请输入部门名称"></el-input>
+            </el-form-item>
+            <el-form-item label="部门编号：" required prop="number">
+              <el-input type="text" v-model="iniCompanyEdit4.number" placeholder="请输入部门编号"></el-input>
             </el-form-item>
             <el-form-item label="业务部人数：" required prop="name">
-              <p>{{iniCompanyEdit4.number}}</p>
+              <p>{{iniCompanyEdit4.staffNum}}</p>
             </el-form-item>
             <el-form-item label="业务部经理：" required prop="name">
               <p>{{iniCompanyEdit4.principalName}}</p>
             </el-form-item>
-            <el-form-item label="公司简称：" required prop="companyAbbreviation">
+            <!-- <el-form-item label="公司简称：" required prop="companyAbbreviation">
               <el-input type="text" v-model="iniCompanyEdit4.companyAbbreviation" placeholder="请输入公司简称"></el-input>
-            </el-form-item>
+            </el-form-item> -->
           </el-col>
         </el-row>
       </el-form>
@@ -53,11 +56,7 @@ export default {
   },
   computed: {
     saveAble () {
-      if (this.iniCompanyEdit4.name && this.iniCompanyEdit4.companyAbbreviation) {
-        return false
-      } else {
-        return true
-      }
+      return false
     }
   },
   methods: {
