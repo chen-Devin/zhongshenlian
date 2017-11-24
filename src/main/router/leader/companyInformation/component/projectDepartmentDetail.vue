@@ -9,9 +9,11 @@
           <el-col :span="9" :offset="2">
             <p>部门名称：{{iniCompany4.name}}</p>
             <p>部门编号：{{iniCompany4.number}}</p>
-            <p>业务部人数：{{iniCompany4.staffNum}}</p>
+            <!-- <p>业务部人数：{{iniCompany4.staffNum}}</p> -->
             <p>部门经理：{{iniCompany4.principalName}}</p>
             <!-- <p>公司简称：{{iniCompany4.companyAbbreviation}}</p> -->
+            <p>部门注会人数：{{iniCompany4.noteNum}}</p>
+            <p>部门助理人数：{{iniCompany4.assistantsNum}}</p>
           </el-col>         
         </el-row>
       </el-form> 

@@ -13,11 +13,17 @@
             <el-form-item label="部门编号：" required prop="number">
               <el-input type="text" v-model="iniCompanyEdit4.number" placeholder="请输入部门编号"></el-input>
             </el-form-item>
-            <el-form-item label="业务部人数：" required prop="name">
+            <!-- <el-form-item label="业务部人数：" required prop="name">
               <p>{{iniCompanyEdit4.staffNum}}</p>
-            </el-form-item>
-            <el-form-item label="业务部经理：" required prop="name">
+            </el-form-item> -->
+            <el-form-item label="部门经理：" required prop="name">
               <p>{{iniCompanyEdit4.principalName}}</p>
+            </el-form-item>
+            <el-form-item label="部门注会人数：" required prop="name">
+              <p>{{iniCompanyEdit4.noteNum}}</p>
+            </el-form-item>
+            <el-form-item label="部门助理人数：" required prop="name">
+              <p>{{iniCompanyEdit4.assistantsNum}}</p>
             </el-form-item>
             <!-- <el-form-item label="公司简称：" required prop="companyAbbreviation">
               <el-input type="text" v-model="iniCompanyEdit4.companyAbbreviation" placeholder="请输入公司简称"></el-input>

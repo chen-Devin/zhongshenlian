@@ -58,7 +58,8 @@
             :isNew="isNew"
             :canEdit="canEdit"
             @reloadDetail="reloadDetail"
-            @deleteSuccess="deleteSuccess"></staff-detail>
+            @deleteSuccess="deleteSuccess"
+            @modifySuccess="modifySuccess"></staff-detail>
         </card>
         <card v-if="!isOpen" class="basic-contain">
           <p class="check-more">
@@ -212,6 +213,7 @@ export default {
           name: '',
           authority: ''
         }],
+        level: '',
         idCard: '',
         email: '',
         education: '',
@@ -466,6 +468,12 @@ export default {
       this.pageNum = 1
       this.searchObj = {}
       this.staffFilter()
+    },
+    modifySuccess () {
+      this.staffFilter()
+      this.reloadStaffList = false
+      this.reloadStaffList = true
+      this.staffShow = false
     },
     selectStaff (staff) {
       this.isOpen = false

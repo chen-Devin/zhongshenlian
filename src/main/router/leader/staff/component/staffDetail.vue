@@ -3,6 +3,7 @@
     <div class="basic-contain">
       <div class="f-r o-h">
         <template v-if="!editAble">
+          <button class="btn my-btn draft-btn" @click="modifyStaffShow=true" :disabled="!canEdit.canEditDetail">移动</button>
           <button class="btn my-btn submit-btn" @click="edit" :disabled="!canEdit.canEditDetail">编辑</button>
           <button class="btn my-btn cancel-btn" @click="deleteStaffShow=true" :disabled="!canEdit.canEditDetail">删除员工</button>
         </template>
@@ -51,17 +52,26 @@
               </el-form-item>
               <p v-else>是否为部门负责人：{{staff.isPrincipal==='1'? '是':'否'}} </p>
               <el-form-item label="所属业务部：" label-width="100px" v-if="type==='department' && isNew[0] === false">
-                <p v-model="staff.companyDepartment" disabled></p>
+                <p>
+                  <span v-if="staff.companyDepartment">{{ staff.companyDepartment }}</span>
+                  <span v-else>暂无</span>
+                </p>
               </el-form-item>
               <el-form-item label="所属项目部：" label-width="100px" v-if="type==='department' && isNew[0] === false">
-                <p v-model="staff.projectDepartment" disabled></p>
+                <p>
+                  <span v-if="staff.projectDepartment">{{ staff.projectDepartment }}</span>
+                  <span v-else>暂无</span>
+                </p>
               </el-form-item>
             </el-form>
           </el-col>
           <el-col :span="12">
             <el-form :label-position="labelPosition" label-width="130px" :model="staff" :rules="staffRules" ref="staff">
               <el-form-item label="所属小组：" label-width="80px" v-if="type==='department' && isNew[0] === false">
-                <p v-model="staff.group" disabled></p>
+                <p>
+                  <span v-if="staff.group">{{ staff.group }}</span>
+                  <span v-else>暂无</span>
+                </p>
               </el-form-item>
               <el-form-item label="职位：" label-width="70px" prop="duties" v-if="editAble">
                 <el-select v-model="staff.duties" placeholder="选择职位">
@@ -159,6 +169,16 @@
         </el-row>
       </div>
     </div>
+    <modal v-if="modifyStaffShow">
+      <div class="ta-c" slot="body">
+        <el-radio v-model="modifyStaffType" label="function">职能部门</el-radio>
+        <el-radio v-model="modifyStaffType" label="department">业务部门</el-radio>
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn submit-btn" @click="showModify">确定</button>
+        <button class="btn my-btn cancel-btn" @click="modifyStaffShow=false">取消</button>
+      </div>
+    </modal>
     <modal v-if="deleteStaffShow">
       <div slot="body">
         员工删除后将不能恢复，确认删除吗？
@@ -168,12 +188,22 @@
         <button class="btn my-btn submit-btn" @click="deleteStaffShow=false">取消</button>
       </div>
     </modal>
+    <staff-add-modal 
+      @saveNewStaff="saveNewStaff" 
+      @cancel="addShow=false" 
+      v-if="addShow"></staff-add-modal>
+    <function-staff-add 
+      @saveNewStaff="saveNewStaff" 
+      @cancel="addFuncShow=false" 
+      v-if="addFuncShow"></function-staff-add>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import modal from '@/main/component/modal.vue'
+import staffAddModal from './staffAddModal.vue'
+import functionStaffAdd from './functionStaffAdd.vue'
 
 export default {
   name: 'staffDetail',
@@ -181,6 +211,10 @@ export default {
     return {
       editAble: false,
       deleteStaffShow: false,
+      modifyStaffShow: false,
+      modifyStaffType: 'function',
+      addShow: false,
+      addFuncShow: false,
       labelPosition: 'left',
       autoUpload: false,
       singleSubjectsArray: this.staff.singleSubjectsArray,
@@ -487,6 +521,60 @@ export default {
     cancel () {
       this.editAble = false
     },
+    showModify () {
+      if (this.modifyStaffType === 'function') {
+        this.modifyStaffShow = false
+        this.addShow = false
+        this.addFuncShow = true
+      } else {
+        this.modifyStaffShow = false
+        this.addShow = true
+        this.addFuncShow = false
+      }
+    },
+    saveNewStaff (typeArray) {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'modifyUserDepartment',
+                platform: 'web',
+                modifyUserId: this.staff.id,
+                isPrincipal: this.staff.isPrincipal,
+                newType: typeArray[0]
+              }
+              if (Number(typeArray[0]) === 0) {
+                Object.assign(obj, {
+                  departmentId: typeArray[1]
+                })
+              } else {
+                Object.assign(obj, {
+                  companyId: typeArray[1],
+                  companyDepartmentId: typeArray[2],
+                  subdepartmentId: typeArray[3],
+                  groupId: typeArray[4]
+                })
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success('修改成员成功')
+            this.addShow = false
+            this.addFuncShow = false
+            this.$emit('modifySuccess')
+            resolve('done')
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
     delUser () {
       return new Promise((resolve, reject) => {
         axios({
@@ -522,13 +610,25 @@ export default {
     }
   },
   components: {
-    modal
+    modal,
+    staffAddModal,
+    functionStaffAdd
   }
 }
 </script>
 
 <style lang="sass" scoped>
   .staff-wrapper {
+    .el-form {
+      p {
+        margin-bottom: 16px;
+      }
+    }
+    .el-form-item {
+      p {
+        margin-bottom: 0;
+      }
+    }
     .basic-contain {
       padding-left: 40px;
       padding-right: 40px;
