@@ -66,11 +66,15 @@ export default {
 
 <style lang="sass">
   #app {
-  //   .message-box {
-  //   padding-top: 80px;
-  //   padding-bottom: 25px;
-  //   border-bottom: 1px solid #5C7B9F;
-  // }
+    .message-box {
+    position: absolute;
+    top: 0;
+    width: 200px;
+    background-color: #364A62;
+    padding-top: 80px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #5C7B9F;
+  }
     .page-main {
       margin-left: 200px;
       > .main-contain {
