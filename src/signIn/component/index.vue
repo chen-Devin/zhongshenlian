@@ -44,7 +44,7 @@
                     @click="getBtnTog()">{{getBtn.cont}}</button>
           </div>
         </div>
-        <div class="alert alert-danger well-sm"
+        <div class="well-sm"
              v-show="alert.show">
           {{alert.cont}}
         </div>
@@ -274,6 +274,14 @@ export default {
 
 <style lang="sass" scoped>
 @import '../../scss/_variables.scss';
+.well-sm {
+  padding: 0;
+  margin-bottom: 10px;
+  background-color: none;
+  border-color: none;
+  color: #f00;
+  font-size: 13px;
+}
 .draft-btn[disabled] {
   background-color: #d7d7d7;
 }

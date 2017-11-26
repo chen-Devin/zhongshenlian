@@ -17,10 +17,12 @@
               <p>{{ iniCompanyEdit3.principalName }}</p>
             </el-form-item>
             <el-form-item label="参审注师人数：" label-width="120px" required prop="counselorNum">
-              <el-input v-model="iniCompanyEdit3.counselorNum" placeholder="请输入参审注师人数"></el-input>
+              <p>{{ iniCompanyEdit3.counselorNum }}</p>
+              <!-- <el-input v-model="iniCompanyEdit3.counselorNum" placeholder="请输入参审注师人数"></el-input> -->
             </el-form-item>
             <el-form-item label="参审助理人数：" label-width="120px" required prop="assistantNum">
-              <el-input v-model="iniCompanyEdit3.assistantNum" placeholder="请输入参审助理人数"></el-input>
+              <p>{{ iniCompanyEdit3.assistantNum }}</p>
+              <!-- <el-input v-model="iniCompanyEdit3.assistantNum" placeholder="请输入参审助理人数"></el-input> -->
             </el-form-item>
           </el-col>
         </el-row>
@@ -114,6 +116,11 @@ export default {
 @import '../../../../../scss/_variables.scss';
 
 .company-detail-box {
+  .el-form-item {
+    p {
+      margin-bottom: 0;
+    }
+  }
   > .title {
     font-size: 15px;
     margin: 0;

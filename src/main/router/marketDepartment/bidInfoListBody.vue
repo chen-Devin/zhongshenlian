@@ -42,7 +42,6 @@
     </table>
     <p class="empty-list-p" v-if="biddingArray.length === 0">暂无数据</p>
     <my-pagination 
-      class="list-pagination" 
       :totalNum="totalNum"
       @currentChange="currentChange"
       v-if="reloadPagination"></my-pagination>
@@ -74,7 +73,7 @@ export default {
       searchContent: '', //绑定简单搜索内容
       officeListTrans: '',  //传递：中间变量，传入后台的所属类型
       pageNum: 1,        //传递：查询的页数
-      totalNum: 1,       //分页：总条数
+      totalNum: 0,       //分页：总条数
       listType: 'get',   //区分get和search功能
       projectName: '',   //搜索栏：项目名称
       tenderPerson: '',  //搜索栏：招标人

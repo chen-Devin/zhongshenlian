@@ -1,6 +1,6 @@
 <template>
   <div class="staff-wrapper">
-    <div class="basic-contain">
+    <div class="title-contain">
       <div class="f-r o-h">
         <template v-if="!editAble">
           <button class="btn my-btn draft-btn" @click="modifyStaffShow=true" :disabled="!canEdit.canEditDetail">移动</button>
@@ -13,6 +13,8 @@
         </template>
       </div>
       <h5 class="main-title">基础信息</h5>
+    </div>
+    <div class="basic-contain">
       <div class="basic-form">
         <el-row>
           <el-col :span="12">
@@ -46,33 +48,30 @@
                 <el-input v-model="staff.email"></el-input>
               </el-form-item>
               <p v-else>邮箱：{{staff.email}}</p>
-              <el-form-item label="是否为部门负责人：" label-width="150px" prop="isPrincipal" v-if="editAble">
+              <!-- <el-form-item label="是否为部门负责人：" label-width="150px" prop="isPrincipal" v-if="editAble">
                 <el-radio v-model="staff.isPrincipal" label="1">是</el-radio>
                 <el-radio v-model="staff.isPrincipal" label="0">否</el-radio>
               </el-form-item>
-              <p v-else>是否为部门负责人：{{staff.isPrincipal==='1'? '是':'否'}} </p>
-              <el-form-item label="所属业务部：" label-width="100px" v-if="type==='department' && isNew[0] === false">
-                <p>
-                  <span v-if="staff.companyDepartment">{{ staff.companyDepartment }}</span>
-                  <span v-else>暂无</span>
-                </p>
-              </el-form-item>
-              <el-form-item label="所属项目部：" label-width="100px" v-if="type==='department' && isNew[0] === false">
-                <p>
-                  <span v-if="staff.projectDepartment">{{ staff.projectDepartment }}</span>
-                  <span v-else>暂无</span>
-                </p>
-              </el-form-item>
+              <p v-else>是否为部门负责人：{{staff.isPrincipal==='1'? '是':'否'}} </p> -->
+              <p v-if="type==='department' && isNew[0] === false && !editAble">
+                <span>所属业务部：</span>
+                <span v-if="staff.companyDepartment">{{ staff.companyDepartment }}</span>
+                <span v-else>暂无</span>
+              </p>
+              <p v-if="type==='department' && isNew[0] === false && !editAble">
+                <span>所属项目部：</span>
+                <span v-if="staff.projectDepartment">{{ staff.projectDepartment }}</span>
+                <span v-else>暂无</span>
+              </p>
             </el-form>
           </el-col>
           <el-col :span="12">
             <el-form :label-position="labelPosition" label-width="130px" :model="staff" :rules="staffRules" ref="staff">
-              <el-form-item label="所属小组：" label-width="80px" v-if="type==='department' && isNew[0] === false">
-                <p>
-                  <span v-if="staff.group">{{ staff.group }}</span>
-                  <span v-else>暂无</span>
-                </p>
-              </el-form-item>
+              <p v-if="type==='department' && isNew[0] === false && !editAble">
+                <span>所属小组：</span>
+                <span v-if="staff.group">{{ staff.group }}</span>
+                <span v-else>暂无</span>
+              </p>
               <el-form-item label="职位：" label-width="70px" prop="duties" v-if="editAble">
                 <el-select v-model="staff.duties" placeholder="选择职位">
                   <el-option 
@@ -88,6 +87,17 @@
                 <el-input v-model="staff.education"></el-input>
               </el-form-item>
               <p v-else>学历：{{staff.education}}</p>
+              <el-form-item label="职称：" label-width="70px" prop="level" v-if="editAble">
+                <el-select v-model="staff.jonTitle" placeholder="选择职称">
+                  <el-option 
+                    v-for="item in jonTitleList"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <p v-else>职称：{{staff.jonTitle}}</p>
               <el-form-item label="级别：" label-width="70px" prop="level" v-if="editAble">
                 <el-select v-model="staff.level" placeholder="选择级别">
                   <el-option 
@@ -99,11 +109,11 @@
                 </el-select>
               </el-form-item>
               <p v-else>级别：{{staff.level}}</p>
-              <el-form-item label="是否有注会证书：" prop="isHaveCertificate" v-if="editAble">
+              <!-- <el-form-item label="是否有注会证书：" prop="isHaveCertificate" v-if="editAble">
                 <el-radio v-model="staff.isHaveCertificate" label="1">是</el-radio>
                 <el-radio v-model="staff.isHaveCertificate" label="0">否</el-radio>
               </el-form-item>
-              <p v-else>是否有注会证书：{{staff.isHaveCertificate==='1'? '是':'否'}}</p>
+              <p v-else>是否有注会证书：{{staff.isHaveCertificate==='1'? '是':'否'}}</p> -->
               <el-form-item label="入职时间：" prop="entryTime" label-width="90px" v-if="editAble">
                 <el-date-picker
                   style="width:100%"
@@ -300,6 +310,7 @@ export default {
       scoresOption: ['会计', '财务成本管理', '税务', '经济法', '公司战略管理', '审计'],
       certificatesOption: ['注册会计师', '注册审计师', '注册造价工程师', '注册资产评估师', '注册土地评估师', '暂无'],
       levelList: ['一级', '二级', '三级'],
+      jonTitleList: ['初级', '中级', '副高级', '高级'],
       dutiesList: ['部门经理', '项目经理', '主审', '职员']
     };
   },
@@ -621,7 +632,7 @@ export default {
   .staff-wrapper {
     .el-form {
       p {
-        margin-bottom: 16px;
+        margin-bottom: 10px;
       }
     }
     .el-form-item {
@@ -629,14 +640,20 @@ export default {
         margin-bottom: 0;
       }
     }
-    .basic-contain {
+    .title-contain {
       padding-left: 40px;
       padding-right: 40px;
       .main-title {
         margin-left: 0;
       }
+    }
+    .basic-contain {
+      padding-top: 10px;
+      padding-left: 40px;
+      padding-right: 40px;
+      background-color: #F9FBFE;
       .basic-form {
-        margin-top: 30px;
+        margin-top: 5px;
       }
     }
     form {

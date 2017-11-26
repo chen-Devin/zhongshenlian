@@ -12,40 +12,42 @@
         </template>
       </div>
     </h5>
-    <table class="table table-hover table-inner" v-if="type === 'function'">
-      <thead>
-        <tr>
-          <td class="text-center staff-max">公司名称</td>
-          <td class="text-center"
-              v-for="(AUTH, index) in authorityArray"
-              :key="index">{{AUTH.name}}</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, index) in authorityData"
-            :key="index">
-          <td class="text-center staff-max">{{ item.companyName }}</td>
-          <td class="text-center"
-              v-for="(jtem, index) in item.authorityArray"
+    <div class="basic-content">
+      <table class="table table-hover table-inner" v-if="type === 'function'">
+        <thead>
+          <tr>
+            <td class="text-center staff-max">公司名称</td>
+            <td class="text-center"
+                v-for="(AUTH, index) in authorityArray"
+                :key="index">{{AUTH.name}}</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in authorityData"
               :key="index">
-            <input type="checkbox"
-                   v-model="jtem.stat"
-                   :disabled="!editAble">
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="empty-list-p" v-if="authorityData.length === 0">暂无数据</p>
-    <div v-if="type !== 'function'">
-      <p>
-        <el-checkbox-group v-model="selectedAuthority">
-          <el-checkbox 
-            :label="option.name" 
-            v-for="(option, index) in authorityData" 
-            :key="index" 
-            :disabled="!editAble">{{ option.name }}</el-checkbox>
-        </el-checkbox-group>
-      </p>
+            <td class="text-center staff-max">{{ item.companyName }}</td>
+            <td class="text-center"
+                v-for="(jtem, index) in item.authorityArray"
+                :key="index">
+              <input type="checkbox"
+                     v-model="jtem.stat"
+                     :disabled="!editAble">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="empty-list-p" v-if="authorityData.length === 0">暂无数据</p>
+      <div v-if="type !== 'function'">
+        <p>
+          <el-checkbox-group v-model="selectedAuthority">
+            <el-checkbox 
+              :label="option.name" 
+              v-for="(option, index) in authorityData" 
+              :key="index" 
+              :disabled="!editAble">{{ option.name }}</el-checkbox>
+          </el-checkbox-group>
+        </p>
+      </div>
     </div>
   </div>
 </template>

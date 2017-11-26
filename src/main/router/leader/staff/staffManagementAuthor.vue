@@ -549,7 +549,7 @@ export default {
 <style lang="sass" scoped>
   .content-contain {
     width: 100%;
-    height: 400px;
+    height: 300px;
     padding-top: 10px;
     padding-left:10px;
     padding-right: 10px;
@@ -566,6 +566,7 @@ export default {
     .left-contain {
       float: left;
       width: 400px;
+      margin-bottom: 25px;
       .staff-filter {
         .content-contain {
           .staff-list {

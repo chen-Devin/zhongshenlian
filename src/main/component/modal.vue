@@ -3,7 +3,7 @@
     <div class="modal-mask">
       <div class="modal-wrapper" :style="{alignSelf: alignSelf}">
         <div class="modal-container" :style="{width: modalWidth, padding: setPadding}">
-          <div class="modal-body" :style="{padding: setPadding}">
+          <div class="modal-body ta-c" :style="{padding: setPadding}">
             <slot name="body">
               default body
             </slot>
