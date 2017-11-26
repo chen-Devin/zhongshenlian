@@ -10,6 +10,7 @@
     <transition name="modal" v-if="quitShow">
       <div class="modal-mask">
         <div class="modal-container">
+          <div class="cancel" @click="quitShow = false">x</div>
           <div class="modal-body">
             <p class="ta-c">您确定要退出登录吗</p>
           </div>
@@ -119,13 +120,22 @@ export default {
     transition: opacity .3s ease;
   }
   .modal-container {
-    width: 500px;
+    position: relative;
+    width: 400px;
     margin: 0px auto;
     padding: 10px 20px;
     background-color: #fff;
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
     transition: all .3s ease;
+    .cancel{
+      cursor: pointer;
+      position: absolute;
+      right: 10px;
+      top: 0;
+      font-size: 20px;
+      font-weight: bold;
+    }
   }
   .modal-body {
     margin: 10px 0;
