@@ -18,30 +18,27 @@
         <!-- <img :src="userHead" alt="头像" class="img-circle img-head navbar-right"> -->
       </div><!-- /.container-fluid -->
     </nav>
-    <transition name="modal" v-if="quitShow">
-      <div class="modal-mask">
-        <div class="modal-container">
-          <div class="cancel" @click="quitShow = false">x</div>
-          <div class="modal-body">            
-            <p class="ta-c">您确定要退出登录吗</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn my-btn submit-btn" @click="quitShow = false">
-              取消
-            </button>
-            <button class="btn my-btn cancel-btn" @click="signOut">
-              确定
-            </button> 
-          </div>
-        </div>
+    <modal v-if="quitShow">
+      <div slot="body">
+        <p class="ta-c">您确定要退出登录吗?</p>
       </div>
-    </transition>
+      <div slot="footer">
+        <button class="btn my-btn submit-btn" @click="quitShow = false">
+          取消
+        </button>
+        <button class="btn my-btn cancel-btn" @click="signOut">
+          确定
+        </button> 
+      </div>
+    </modal>
   </header>
 </template>
 
 <script>
 import axios from 'axios';
 import qs from 'qs';
+import modal from './modal.vue'
+import bus from '../bus.js'
 
 export default {
   name: 'comHeader',
@@ -73,6 +70,13 @@ export default {
         }
       }, (rep) => {});
     }
+  },
+  components: {
+    modal,
+    bus
+  },
+  created () {
+    bus.$on('quit', () => { this.quitShow = true })
   }
 }
 </script>

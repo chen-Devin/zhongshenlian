@@ -1,8 +1,8 @@
 <template>
   <div class="menu-wrapper">
-    <!-- <div class="message-box">
+    <div class="message-box">
       <side-message :user="user"></side-message>
-    </div> -->
+    </div>
     <el-menu class="el-menu-vertical-demo" :router="routerVal" :default-active="activeUrl" :unique-opened="uniqueOpened" @open="handleOpen">
       <el-submenu index="quick">
         <template slot="title">
@@ -319,7 +319,7 @@ export default {
   position: fixed;
   width: 200px;
   bottom: 0;
-  top: 274px;
+  top: 0;
   left: 0;
   background-color: #364A62;
   overflow: auto;
