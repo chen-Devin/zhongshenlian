@@ -22,7 +22,7 @@
       </div>
       <div slot="footer">
         <button class="btn my-btn cancel-btn" type="button" @click="deleteDepartment">确认</button>
-        <button class="btn my-btn draft-btn" type="button" @click="cancelInner">取消</button>
+        <button class="btn my-btn submit-btn" type="button" @click="cancelInner">取消</button>
       </div>
     </modal>
   </div>

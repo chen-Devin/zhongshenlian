@@ -431,9 +431,24 @@
       </div>
       <p class="btns ta-c" v-if="editAble">
         <button class="btn my-btn submit-btn" @click="addOrEditReimbursement" :disabled="saveAble">提交审批</button>
-        <button class="btn my-btn cancel-btn" @click="back">取消</button>
+        <button class="btn my-btn cancel-btn" @click="cancelShow = true">取消</button>
       </p>
     </card>
+    <modal v-if="cancelShow">
+      <div slot="body">
+        <p class="ta-c">
+          <span>取消后编辑内容将丢弃，确认取消吗？</span>
+        </p>
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn submit-btn" @click="cancelShow = false">
+          取消
+        </button>
+        <button class="btn my-btn cancel-btn" @click="back">
+          确定
+        </button>     
+      </div>
+    </modal>
     <card class="card3" v-if="!editAble">
       <div class="f-l">报销状态：</div>
       <state-svg
@@ -484,6 +499,7 @@ export default {
   name: 'expensesList',
   data() {
     return {
+      cancelShow: false,
       paths: [],
       numbers: [],
       contracts: [],

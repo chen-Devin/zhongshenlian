@@ -46,7 +46,7 @@
 				<p slot="body">您确定要删除选择的招投标信息吗</p>
 				<div slot="footer">
 					<button class="btn my-btn cancel-btn" @click="delBiddingInfo">确定</button>
-					<button class="btn my-btn draft-btn" @click="cancelDel">取消</button>
+					<button class="btn my-btn submit-btn" @click="cancelDel">取消</button>
 				</div>
 			</modal>
       <!-- <div class="com-list list-group">

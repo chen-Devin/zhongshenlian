@@ -49,8 +49,8 @@
           删除后公司信息将不可恢复，是否确定删除？
         </div>
         <div slot="footer">
-          <button class="btn my-btn cancel-btn" @click="deleteFunction=false">取消</button>
-          <button class="btn my-btn submit-btn" @click="confirmDelete(0)">确定</button>
+          <button class="btn my-btn submit-btn" @click="deleteFunction=false">取消</button>
+          <button class="btn my-btn cancel-btn" @click="confirmDelete(0)">确定</button>
         </div>
       </modal>
     </div>
@@ -96,7 +96,20 @@
             </div>
             <div slot="footer">
               <button class="btn my-btn submit-btn" @click="save(2)" :disabled="saveAble2">保存</button>
-              <button class="btn my-btn cancel-btn" @click="addShow2=false">取消</button>
+              <button class="btn my-btn cancel-btn" @click="cancelShow2 = true">取消</button>
+            </div>
+          </modal>
+          <modal v-if="cancelShow2">
+            <div slot="body">
+              <p class="ta-c">取消后编辑内容将丢弃，确认取消吗？</p>
+            </div>
+            <div slot="footer">
+              <button class="btn my-btn submit-btn" @click="cancelShow2 = false">
+                取消
+              </button>
+              <button class="btn my-btn cancel-btn" @click="cancelShow2 = false, addShow2=false">
+                确定
+              </button>     
             </div>
           </modal>
           <modal v-if="deleteShow2">
@@ -104,8 +117,8 @@
               删除后公司信息将不可恢复，是否确定删除？
             </div>
             <div slot="footer">
-              <button class="btn my-btn cancel-btn" @click="deleteShow2=false">取消</button>
-              <button class="btn my-btn submit-btn" @click="confirmDelete(2)">确定</button>
+              <button class="btn my-btn submit-btn" @click="deleteShow2=false">取消</button>
+              <button class="btn my-btn cancel-btn" @click="confirmDelete(2)">确定</button>
             </div>
           </modal>
         </template>
@@ -146,7 +159,20 @@
             </div>
             <div slot="footer">
               <button class="btn my-btn submit-btn" @click="save(3)" :disabled="saveAble3">保存</button>
-              <button class="btn my-btn cancel-btn" @click="addShow3=false">取消</button>
+              <button class="btn my-btn cancel-btn" @click="cancelShow3 = true">取消</button>
+            </div>
+          </modal>
+          <modal v-if="cancelShow3">
+            <div slot="body">
+              <p class="ta-c">取消后编辑内容将丢弃，确认取消吗？</p>
+            </div>
+            <div slot="footer">
+              <button class="btn my-btn submit-btn" @click="cancelShow3 = false">
+                取消
+              </button>
+              <button class="btn my-btn cancel-btn" @click="cancelShow3 = false, addShow3 = false">
+                确定
+              </button>     
             </div>
           </modal>
           <modal v-if="deleteShow3">
@@ -154,8 +180,8 @@
               删除后部门信息将不可恢复，是否确定删除？
             </div>
             <div slot="footer">
-              <button class="btn my-btn cancel-btn" @click="deleteShow3=false">取消</button>
-              <button class="btn my-btn submit-btn" @click="confirmDelete(3)">确定</button>
+              <button class="btn my-btn submit-btn" @click="deleteShow3=false">取消</button>
+              <button class="btn my-btn cancel-btn" @click="confirmDelete(3)">确定</button>
             </div>
           </modal>
         </template>
@@ -187,7 +213,20 @@
             </div>
             <div slot="footer">
               <button class="btn my-btn submit-btn" @click="save(4)" :disabled="saveAble4">保存</button>
-              <button class="btn my-btn cancel-btn" @click="addShow4=false">取消</button>
+              <button class="btn my-btn cancel-btn" @click="cancelShow4=true">取消</button>
+            </div>
+          </modal>
+          <modal v-if="cancelShow4">
+            <div slot="body">
+              <p class="ta-c">取消后编辑内容将丢弃，确认取消吗？</p>
+            </div>
+            <div slot="footer">
+              <button class="btn my-btn submit-btn" @click="cancelShow4 = false">
+                取消
+              </button>
+              <button class="btn my-btn cancel-btn" @click="cancelShow4 = false, addShow4 = false">
+                确定
+              </button>     
             </div>
           </modal>
           <modal v-if="deleteShow4">
@@ -195,8 +234,8 @@
               删除后部门信息将不可恢复，是否确定删除？
             </div>
             <div slot="footer">
-              <button class="btn my-btn cancel-btn" @click="deleteShow4=false">取消</button>
-              <button class="btn my-btn submit-btn" @click="confirmDelete(4)">确定</button>
+              <button class="btn my-btn submit-btn" @click="deleteShow4=false">取消</button>
+              <button class="btn my-btn cancel-btn" @click="confirmDelete(4)">确定</button>
             </div>
           </modal>
         </template>
@@ -209,8 +248,8 @@
               删除后小组信息将不可恢复，是否确定删除？
             </div>
             <div slot="footer">
-              <button class="btn my-btn cancel-btn" @click="deleteShow5=false">取消</button>
-              <button class="btn my-btn submit-btn" @click="confirmDelete(5)">确定</button>
+              <button class="btn my-btn submit-btn" @click="deleteShow5=false">取消</button>
+              <button class="btn my-btn cancel-btn" @click="confirmDelete(5)">确定</button>
             </div>
           </modal>
         </template>
@@ -242,6 +281,9 @@ export default {
   name: 'companyManagement',
   data() {
     return {
+      cancelShow2: false,
+      cancelShow3: false,
+      cancelShow4: false,
       labelPosition: 'left',
       tabList: [
         {

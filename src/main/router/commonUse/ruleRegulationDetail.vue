@@ -4,7 +4,8 @@
     <card>
       <h3 class="main-title">
         规章制度
-        <button class="btn my-btn submit-btn pull-right mr-20" type="button" :user="user" v-if="btnShow" @click="editRule()">编辑</button>
+        <button type="button" class="btn my-btn cancel-btn pull-right mr-20" @click="del()" v-if="btnShow">删除</button>
+        <button class="btn my-btn submit-btn pull-right mr-10" type="button" :user="user" v-if="btnShow" @click="editRule()">编辑</button>       
       </h3>
     </card>
     <card>
@@ -31,19 +32,29 @@
         </div> -->
       </div>
     </card>
+    <rule-del-modal v-if="showDelModal"
+                      :initalRule="editRule1"
+                      @deleted="deleted"
+                      @canceled="delCanceled"></rule-del-modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import qs from 'qs';
-
+import ruleDelModal from './component/ruleDelModal.vue';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 export default {
   name: 'ruleRegulationDetail',
   data() {
     return {
+      showDelModal: false,
+      editRule1: {
+        id: this.$route.params.id,
+        title: '',
+        content: ''
+      },
       paths: [
         { name: '规章制度', url: '/rule-regulation', present: false },
         { name: '制度详情', url: `/rule-regulation-detail-${this.$route.params.id}`, present: true }
@@ -94,11 +105,22 @@ export default {
     },
     editRule() {
       this.$router.push("/rule-regulation-edit-" + this.detail.id);
+    },
+    del() {
+      this.showDelModal = true;
+    },
+    deleted() {
+      this.showDelModal = false;
+      this.$router.push({ path: '/rule-regulation' });
+    },
+    delCanceled() {
+      this.showDelModal = false;
     }
   },
   components: {
     crumbs,
-    card
+    card,
+    ruleDelModal
   }
 }
 </script>

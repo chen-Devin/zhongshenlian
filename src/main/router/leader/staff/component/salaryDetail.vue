@@ -8,7 +8,7 @@
         </template>
         <template v-else>
           <button class="btn my-btn submit-btn" @click="save">保存</button>
-          <button class="btn my-btn draft-btn" @click="cancel">取消</button>
+          <button class="btn my-btn draft-btn" @click="cancelShow = true">取消</button>
         </template>
       </div>
       <h5 class="main-title">薪资信息</h5>
@@ -110,7 +110,6 @@
                 <el-input v-model="subsidyJson.communicationSubsidy">
                   <template slot="append">元/月</template>
                 </el-input>
-
               </el-form-item>
               <p v-else>通讯补贴：{{subsidyJson.communicationSubsidy}}元/月</p>
             </el-col>
@@ -121,7 +120,6 @@
                 <el-input v-model="subsidyJson.trafficSubsidy">
                   <template slot="append">元/月</template>
                 </el-input>
-
               </el-form-item>
               <p v-else>上下班交通补贴：{{subsidyJson.trafficSubsidy}}元/月</p>
             </el-col>
@@ -130,7 +128,6 @@
                 <el-input v-model="subsidyJson.overtimePay">
                   <template slot="append">元/月</template>
                 </el-input>
-
               </el-form-item>
               <p v-else>加班费：{{subsidyJson.overtimePay}}元/月</p>
             </el-col>
@@ -140,7 +137,7 @@
         <el-form :label-position="labelPosition" label-width="100px" :model="performanceSalaryJson" :rules="basicRules" ref="performanceSalaryJson">
           <el-row>
             <el-col class="title" :span="12">
-              <el-form-item v-if="editAble" label-width="100px" label="基础绩效工资：" prop="performanceSalary">
+              <el-form-item v-if="editAble" label-width="110px" label="基础绩效工资：" prop="performanceSalary">
                 <el-input v-model="performanceSalaryJson.performanceSalary">
                   <template slot="append">元/月</template>
                 </el-input>
@@ -273,17 +270,31 @@
         </tbody>
       </table> 
       <p class="empty-list-p" v-if="recordArray.length === 0">暂无数据</p> -->
-    </div>    
+    </div> 
+    <modal v-if="cancelShow">
+      <div slot="body">
+        <p class="ta-c">取消后编辑内容将丢弃，确认取消吗？</p>
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn submit-btn" @click="cancelShow = false">
+          取消
+        </button>
+        <button class="btn my-btn cancel-btn" @click="cancel">
+          确定
+        </button>     
+      </div>
+    </modal>   
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-
+import modal from '@/main/component/modal.vue';
 export default {
   name: 'salaryDetail',
   data() {
     return {
+      cancelShow: false,
       editAble: false,
       salaryId: '',
       baseSalaryJson: {
@@ -414,6 +425,7 @@ export default {
       this.recordArray.push(this.recordArrayEmpty)
     },
     cancel () {
+      this.cancelShow = false
       this.editAble = false
       this.getUserSalaryInfo()
       this.getSalaryReleaseRecordInfo()
@@ -510,6 +522,9 @@ export default {
   created () {
     this.getUserSalaryInfo()
     this.getSalaryReleaseRecordInfo()
+  },
+  components: {
+    modal
   }
 }
 </script>

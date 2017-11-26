@@ -8,7 +8,7 @@
         </template>
         <template v-else>
           <button class="btn my-btn submit-btn" @click="save">保存</button>
-          <button class="btn my-btn draft-btn" @click="cancel">取消</button>
+          <button class="btn my-btn draft-btn" @click="cancelShow = true">取消</button>
         </template>
       </div>
     </h5>
@@ -47,17 +47,32 @@
         </el-checkbox-group>
       </p>
     </div>
+  <modal v-if="cancelShow">
+    <div slot="body">
+      <p class="ta-c">取消后编辑内容将丢弃，确认取消吗？</p>
+    </div>
+    <div slot="footer">
+      <button class="btn my-btn submit-btn" @click="cancelShow = false">
+        取消
+      </button>
+      <button class="btn my-btn cancel-btn" @click="cancel">
+        确定
+      </button>     
+    </div>
+  </modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import qs from 'qs';
+import modal from '@/main/component/modal.vue';
 
 export default {
   name: 'departmentAuthor',
   data() {
     return {
+      cancelShow: false,
       thisDepart: this.department,
       editAble: false,
       authorityArray: [],
@@ -91,6 +106,7 @@ export default {
       this.editAble = true
     },
     cancel () {
+      this.cancelShow = false
       this.editAble = false
     },
     getStaffAuthority () {
@@ -205,7 +221,7 @@ export default {
     this.getStaffAuthority()
   },
   components: {
-    
+    modal
   }
 };
 </script>

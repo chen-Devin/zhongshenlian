@@ -1,18 +1,18 @@
 <template>
   <modal>
     <div slot="body">
-      <p>
+      <p class="ta-c">
         <!-- <span class="fa fa-exclamation-circle fa-5x text-danger"></span> -->
-        <span class="text-cont">取消后编辑内容将丢弃，确认取消编辑吗？</span>
+        <span>取消后编辑内容将丢弃，确认取消吗？</span>
       </p>
     </div>
     <div slot="footer">
-      <button class="btn my-btn submit-btn modal-default-button" @click="del()">
-        确定
-      </button>
-      <button class="btn my-btn draft-btn modal-default-button" @click="cancel()">
+      <button class="btn my-btn submit-btn" @click="cancel()">
         取消
       </button>
+      <button class="btn my-btn cancel-btn" @click="del()">
+        确定
+      </button>     
     </div>
   </modal>
 </template>

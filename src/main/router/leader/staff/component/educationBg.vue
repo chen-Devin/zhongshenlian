@@ -8,7 +8,7 @@
         </template>
         <template v-else>
           <button class="btn my-btn submit-btn" @click="save">保存</button>
-          <button class="btn my-btn draft-btn" @click="cancel">取消</button>
+          <button class="btn my-btn draft-btn" @click="cancelShow = true">取消</button>
         </template>
       </div>
       <h5 class="main-title">教育背景</h5>
@@ -64,17 +64,31 @@
         </table>
         <p class="empty-list-p" v-if="educationArray.length === 0">暂无数据</p>    
       </div>
-    </div>    
+    </div>
+    <modal v-if="cancelShow">
+      <div slot="body">
+        <p class="ta-c">取消后编辑内容将丢弃，确认取消吗？</p>
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn submit-btn" @click="cancelShow = false">
+          取消
+        </button>
+        <button class="btn my-btn cancel-btn" @click="cancel">
+          确定
+        </button>     
+      </div>
+    </modal>    
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-
+import modal from '@/main/component/modal.vue';
 export default {
   name: 'staffDetail',
   data() {
     return {
+      cancelShow: false,
       editAble: false,
       educationArray: [],
       educationArrayEmpty: {
@@ -150,6 +164,7 @@ export default {
       this.educationArray.push(this.educationArrayEmpty)
     },
     cancel () {
+      this.cancelShow = false
       this.editAble = false
       this.getUserEducationInfo()
     },
@@ -184,6 +199,9 @@ export default {
   },
   created () {
     this.getUserEducationInfo()
+  },
+  components: {
+    modal
   }
 }
 </script>

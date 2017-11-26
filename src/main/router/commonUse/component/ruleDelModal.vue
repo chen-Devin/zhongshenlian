@@ -1,17 +1,17 @@
 <template>
   <modal>
     <div slot="body">
-      <p>
+      <p class="ta-c">
         <!-- <span class="fa fa-exclamation-circle fa-5x text-danger"></span> -->
         <span class="text-cont">确定删除该规章制度吗？</span>
       </p>
     </div>
     <div slot="footer">
-      <button class="btn my-btn cancel-btn modal-default-button" @click="del()" :disabled="subBtn.dis">
-        {{subBtn.cont}}
-      </button>
       <button class="btn my-btn submit-btn modal-default-button" @click="cancel()">
         取消
+      </button>
+      <button class="btn my-btn cancel-btn modal-default-button" @click="del()" :disabled="subBtn.dis">
+        {{subBtn.cont}}
       </button>
     </div>
   </modal>
