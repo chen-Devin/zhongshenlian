@@ -1,54 +1,69 @@
 <template>
-  <modal>
-    <div slot="body">
-      <el-form ref="staff" :model="staff" :rules="rules" label-width="100px">
-        <el-form-item label="所属部门：" prop="company">
-          <el-select v-model="companySelected" placeholder="请选择所属部门" @change="changeCompany">
-            <el-option 
-              :label="company.name" 
-              :value="company.id" 
-              v-for="(company, index) in companyList" 
-              :key="index"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="所属业务部：">
-          <el-select v-model="departmentSelected" placeholder="请选择所属业务部" @change="changeDepartment">
-            <el-option
-              :label="department.name" 
-              :value="department.id" 
-              v-for="(department, index) in departmentList" 
-              :key="index"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="所属项目部：">
-          <el-select v-model="projectSelected" placeholder="请选择所属项目部" @change="changeProject">
-            <el-option 
-              :label="project.name" 
-              :value="project.id" 
-              v-for="(project, index) in projectList" 
-              :key="index"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="所属小组：">
-          <el-select v-model="groupSelected" placeholder="请选择所属小组">
-            <el-option 
-              :label="group.name" 
-              :value="group.id" 
-              v-for="(group, index) in groupList" 
-              :key="index"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-    </div>
-    <div slot="footer">
-      <button class="btn my-btn cancel-btn modal-default-button" @click="save" :disabled="subBtn.dis">
-        {{subBtn.cont}}
-      </button>
-      <button class="btn my-btn submit-btn modal-default-button" @click="cancel()">
-        取消
-      </button>
-    </div>
-  </modal>
+  <div>
+    <modal>
+      <div slot="body">
+        <el-form ref="staff" :model="staff" :rules="rules" label-width="100px">
+          <el-form-item label="所属部门：" prop="company">
+            <el-select v-model="companySelected" placeholder="请选择所属部门" @change="changeCompany">
+              <el-option 
+                :label="company.name" 
+                :value="company.id" 
+                v-for="(company, index) in companyList" 
+                :key="index"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="所属业务部：">
+            <el-select v-model="departmentSelected" placeholder="请选择所属业务部" @change="changeDepartment">
+              <el-option
+                :label="department.name" 
+                :value="department.id" 
+                v-for="(department, index) in departmentList" 
+                :key="index"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="所属项目部：">
+            <el-select v-model="projectSelected" placeholder="请选择所属项目部" @change="changeProject">
+              <el-option 
+                :label="project.name" 
+                :value="project.id" 
+                v-for="(project, index) in projectList" 
+                :key="index"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="所属小组：">
+            <el-select v-model="groupSelected" placeholder="请选择所属小组">
+              <el-option 
+                :label="group.name" 
+                :value="group.id" 
+                v-for="(group, index) in groupList" 
+                :key="index"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn cancel-btn" @click="save" :disabled="subBtn.dis">
+          {{subBtn.cont}}
+        </button>
+        <button class="btn my-btn draft-btn" @click="cancelShow = true">
+          取消
+        </button>
+      </div>
+    </modal>
+    <modal v-if="cancelShow">
+      <div slot="body">
+        <p class="ta-c">取消后编辑内容将丢弃，确认取消吗？</p>
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn submit-btn" @click="cancelShow = false">
+          取消
+        </button>
+        <button class="btn my-btn cancel-btn" @click="cancel">
+          确定
+        </button>     
+      </div>
+    </modal>
+  </div>
 </template>
 
 <script>
@@ -59,6 +74,7 @@ export default {
   name: 'staffAddModal',
   data() {
     return {
+      cancelShow: false,
       companyList: [{
         name: '',
         id: ''
@@ -209,6 +225,7 @@ export default {
       this.$emit('saveNewStaff', [type, this.companySelected, this.departmentSelected, this.projectSelected, this.groupSelected])
     },
     cancel() {
+      this.cancelShow = false
       this.$emit('cancel');
     }
   },
