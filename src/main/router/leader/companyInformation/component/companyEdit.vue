@@ -60,7 +60,7 @@
     </div>
   </div>
   <p class="btns">
-    <button type="button" class="btn my-btn draft-btn" @click="cancel">取消</button>
+    <button type="button" class="btn my-btn draft-btn" @click="cancelShow = true">取消</button>
     <button type="button" class="btn my-btn submit-btn" @click="submit" :disabled="saveAble">保存</button>
   </p>
   <input-report-modal
@@ -69,7 +69,20 @@
     @saveReportOption="saveReportOption"
     @closeTypeModal="closeTypeModal"
     v-if="inputReportModalShow"></input-report-modal>
-</div>
+  <modal v-if="cancelShow">
+    <div slot="body">
+      <p class="ta-c">取消后编辑内容将丢弃，确认取消吗？</p>
+    </div>
+    <div slot="footer">
+      <button class="btn my-btn submit-btn" @click="cancelShow = false">
+        取消
+      </button>
+      <button class="btn my-btn cancel-btn" @click="cancel">
+        确定
+      </button>     
+    </div>
+  </modal>
+  </div>
 </template>
 
 <script>
@@ -82,6 +95,7 @@ export default {
   name: 'companyDetail',
   data() {
     return {
+      cancelShow: false,
       options: [{
         value: '招商银行',
         label: '招商银行'
@@ -140,6 +154,7 @@ export default {
       this.inputReportModalShow = true
     },
     cancel () {
+      this.cancelShow = false
       this.$emit('cancel', 2)
     },
     submit () {

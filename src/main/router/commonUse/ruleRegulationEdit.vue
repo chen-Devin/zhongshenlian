@@ -6,8 +6,8 @@
         编辑制度
         <div class="pull-right">
           <button type="button" class="btn my-btn submit-btn" @click="saveEdit()">保存</button>
-          <button type="button" class="btn my-btn draft-btn" @click="cancel()">取消</button>
-          <button type="button" class="btn my-btn cancel-btn mr-10" @click="del()">删除</button>
+          <button type="button" class="btn my-btn draft-btn mr-20" @click="cancel()">取消</button>
+          <!-- <button type="button" class="btn my-btn cancel-btn mr-10" @click="del()">删除</button> -->
         </div>
       </h3>
     </card>
@@ -49,10 +49,6 @@
           </div>
         </div> -->
       </div>
-      <rule-del-modal v-if="showDelModal"
-                      :initalRule="editRule"
-                      @deleted="deleted"
-                      @canceled="delCanceled"></rule-del-modal>
       <rule-can-modal v-if="showCanModal"
                       @deleted="canDeleted"
                       @canceled="canCanceled"></rule-can-modal>
@@ -68,7 +64,6 @@ import { Message } from 'element-ui';
 import {VueEditor} from 'vue2-editor';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
-import ruleDelModal from './component/ruleDelModal.vue';
 import ruleCanModal from './component/ruleCanModal.vue';
 
 Vue.prototype.$message = Message;
@@ -194,7 +189,6 @@ export default {
   components: {
     crumbs,
     card,
-    ruleDelModal,
     ruleCanModal,
     VueEditor
   }

@@ -318,8 +318,8 @@ export default {
 .menu-wrapper {
   position: fixed;
   width: 200px;
-  top: 0;
   bottom: 0;
+  top: 0;
   left: 0;
   background-color: #364A62;
   overflow: auto;

@@ -30,9 +30,22 @@
     </div>
   </div>
   <p class="btns">
-    <button type="button" class="btn my-btn draft-btn" @click="cancel">取消</button>
+    <button type="button" class="btn my-btn draft-btn" @click="cancelShow = true">取消</button>
     <button type="button" class="btn my-btn submit-btn" @click="submit" :disabled="saveAble">保存</button>
   </p>
+  <modal v-if="cancelShow">
+    <div slot="body">
+      <p class="ta-c">取消后编辑内容将丢弃，确认取消吗？</p>
+    </div>
+    <div slot="footer">
+      <button class="btn my-btn submit-btn" @click="cancelShow = false">
+        取消
+      </button>
+      <button class="btn my-btn cancel-btn" @click="cancel">
+        确定
+      </button>     
+    </div>
+  </modal>
 </div>
 </template>
 
@@ -45,6 +58,7 @@ export default {
   name: 'companyDepartmentEdit',
   data() {
     return {
+      cancelShow: false,
       labelPosition: 'left',
       Rules: {
         name: [
@@ -76,6 +90,7 @@ export default {
   },
   methods: {
     cancel () {
+      this.cancelShow = false
       this.$emit('cancel', 3)
     },
     submit () {

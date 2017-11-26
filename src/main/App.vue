@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <!-- <com-header :user="user"></com-header> -->
+    <!-- <div class="message-box">
+      <side-message :user="user"></side-message>
+    </div> -->    
     <side-bar :user="user"></side-bar>
     <div class="page-main">
       <com-header :user="user"></com-header>
@@ -16,6 +19,7 @@ import comFooter from './component/comFooter.vue';
 import comHeader from './component/comHeader.vue';
 import sideBar from './component/sideBar.vue';
 import index from './component/index.vue';
+import sideMessage from "./component/sideMessage.vue";
 
 export default {
   name: 'app',
@@ -29,7 +33,8 @@ export default {
     comFooter,
     comHeader,
     sideBar,
-    index
+    index,
+    sideMessage
   },
   methods: {
     jumpPage() {
@@ -61,6 +66,15 @@ export default {
 
 <style lang="sass">
   #app {
+  //   .message-box {
+  //   position: fixed;
+  //   top: 0;
+  //   width: 200px;
+  //   background-color: #364A62;
+  //   padding-top: 80px;
+  //   padding-bottom: 25px;
+  //   border-bottom: 1px solid #5C7B9F;
+  // }
     .page-main {
       margin-left: 200px;
       > .main-contain {

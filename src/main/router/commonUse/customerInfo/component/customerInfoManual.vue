@@ -4,7 +4,7 @@
     <p class="btns f-r mt-15">
       <template>
         <button class="btn my-btn submit-btn" @click="save" :disabled="saveAble">保存</button>
-        <button class="btn my-btn cancel-btn" @click="cancel">取消</button>
+        <button class="btn my-btn cancel-btn" @click="cancelShow = true">取消</button>
       </template>
     </p>
     <h4 class="main-title">客户信息录入</h4>
@@ -146,8 +146,21 @@
       <p>删除客户信息将不可见并无法恢复，确认删除吗？</p>
     </div>
     <div slot="footer">
-      <button class="btn my-btn cancel-btn" @click="cancelDelete">取消</button>
-      <button class="btn my-btn submit-btn" @click="deleteCustomer">确定</button>
+      <button class="btn my-btn submit-btn" @click="cancelDelete">取消</button>
+      <button class="btn my-btn cancel-btn" @click="deleteCustomer">确定</button>
+    </div>
+  </modal>
+  <modal v-if="cancelShow">
+    <div slot="body">
+      <p class="ta-c">取消后编辑内容将丢弃，确认取消吗？</p>
+    </div>
+    <div slot="footer">
+      <button class="btn my-btn submit-btn" @click="cancelShow = false">
+        取消
+      </button>
+      <button class="btn my-btn cancel-btn" @click="cancel">
+        确定
+      </button>     
     </div>
   </modal>
 </div>
@@ -162,6 +175,7 @@ export default {
   name: 'customerModModal',
   data() {
     return {
+      cancelShow: false,
       customerInfo: this.iniNewCustomerInfo,
       disSubmit: true,
       loading: true,

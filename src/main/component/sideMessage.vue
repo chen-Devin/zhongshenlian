@@ -6,44 +6,36 @@
     <p>
       {{ user.name }}，欢迎你
     </p>
-    <button class="quit-btn" @click="signOut">退出登录</button>
+    <button class="quit-btn" @click="quit">退出登录</button>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import qs from 'qs'
+import bus from '../bus.js'
 
-  export default {
-    computed: {
-      portrait () {
-        return this.user.wechatHeadImg || require('../../img/head.jpg')
-      }
-    },
-    methods: {
-      signOut() {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'post',
-          url: '/service',
-          data: qs.stringify({
-            data: (() => {
-              let obj = {
-                command: 'logOut',
-                platform: 'web'
-              }
-              return JSON.stringify(obj);
-            })()
-          })
-        }).then( (rep) => {
-          if (rep.data.statusCode === '10001') {
-            window.location.href = 'signIn.html';
-          }
-        }, (rep) => {});
-      }
-    },
-  	props: ['user']
-  }
+export default {
+  data() {
+    return {
+      quitShow: false
+    }
+  },
+  computed: {
+    portrait () {
+      return this.user.wechatHeadImg || require('../../img/head.jpg')
+    }
+  },
+  methods: {
+    quit () {
+      bus.$emit('quit')
+    }
+  },
+  components: {
+    bus
+  },
+	props: ['user']
+}
 </script>
 
 <style lang="sass" scoped>
