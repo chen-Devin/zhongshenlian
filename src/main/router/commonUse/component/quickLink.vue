@@ -19,7 +19,7 @@ export default {
   },
   props: ['iniLink', 'iniItemIndex'],
   created() {
-    this.quicks[this.iniItemIndex % 5] = true
+    this.quicks[this.iniItemIndex % 6] = true
   },
   methods: {
 
