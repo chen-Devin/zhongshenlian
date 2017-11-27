@@ -560,18 +560,18 @@ label.col-sm-2.control-label {
 
 //提交、保存、录入、搜索、编辑按钮
 .submit-btn {
-  background-color: #50bef7;
+  background-color: #74c8f3;
   border: none;
   &:hover {
-    background-color: #168fcd;
+    background-color: #379acd;
     color: #fff;
   }
   &:active {
-    background-color: #168fcd;
+    background-color: #379acd;
     color: #fff;
   }
   &:focus {
-    background-color: #168fcd;
+    background-color: #379acd;
     color: #fff;
   }
 }
@@ -579,14 +579,14 @@ label.col-sm-2.control-label {
 //暂存、取消、重置按钮
 .draft-btn {
   color: #fff;
-  background-color: #8ad637;
+  background-color: #9ad060;
   border: none;
   &:hover {
-    background-color: #6eb620;
+    background-color: #82b44a;
     color: #fff;
   }
   &:active {
-    background-color: #6eb620;
+    background-color: #82b44a;
     color: #fff;
     border: none;
   }
@@ -594,19 +594,19 @@ label.col-sm-2.control-label {
 
 //撤销、删除按钮
 .cancel-btn {
-  background-color: #fc7d71;
+  background-color: #f08e84;
   border: none;
   width: 60px;
   &:hover {
-    background-color: #e05043;
+    background-color: #da7369;
     color: #fff;
   }
   &:active {
-    background-color: #e05043;
+    background-color: #da7369;
     color: #fff;
   }
   &:focus {
-    background-color: #e05043;
+    background-color: #da7369;
     color: #fff;
   }
 }

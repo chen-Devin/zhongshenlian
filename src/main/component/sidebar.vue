@@ -334,11 +334,11 @@ export default {
     .el-submenu {
       &.is-opened {
         > .el-submenu__title {
-          background-color: #50BAF0;
+          background-color: #6ec3ee;
         }
       }
       &.is-active {
-        background-color: #50BAF0;
+        background-color: #6ec3ee;
       }
       > .el-menu {
         background-color: #1D334D;
@@ -360,11 +360,11 @@ export default {
           display: none;
         }
         &:hover {
-          color: #fff;
-          background-color: #789ebd;
+          color: #50baf0;
+          background-color: #dbeafe;
         }
         &.is-active {
-          background-color: #50BAF0;
+          background-color: #6ec3ee;
           color: #fff;
         }
       }
@@ -377,11 +377,11 @@ export default {
       cursor: pointer;
       text-align: center;
       &:hover {
-        color: #fff;
-        background-color: #789ebd;
+        color: #50baf0;
+        background-color: #dbeafe;
       }
       &.is-active {
-        background-color: #50BAF0;
+        background-color: #6ec3ee;
         color: #fff;
       }
     }

@@ -83,7 +83,7 @@ export default {
 
 <style lang="sass" scoped>
 .navbar {
-  background-color: #3B93DF;
+  background-color: #70b0e8;
   border-color: rgba(255,255,255,0);
   z-index: 3;
   &.adjust-left {
