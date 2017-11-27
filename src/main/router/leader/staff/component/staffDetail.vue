@@ -48,11 +48,6 @@
                 <el-input v-model="staff.email"></el-input>
               </el-form-item>
               <p v-else>邮箱：{{staff.email}}</p>
-              <!-- <el-form-item label="是否为部门负责人：" label-width="150px" prop="isPrincipal" v-if="editAble">
-                <el-radio v-model="staff.isPrincipal" label="1">是</el-radio>
-                <el-radio v-model="staff.isPrincipal" label="0">否</el-radio>
-              </el-form-item>
-              <p v-else>是否为部门负责人：{{staff.isPrincipal==='1'? '是':'否'}} </p> -->
               <p v-if="type==='department' && isNew[0] === false && !editAble">
                 <span>所属业务部：</span>
                 <span v-if="staff.companyDepartment">{{ staff.companyDepartment }}</span>
@@ -87,7 +82,7 @@
                 <el-input v-model="staff.education"></el-input>
               </el-form-item>
               <p v-else>学历：{{staff.education}}</p>
-              <el-form-item label="职称：" label-width="70px" prop="level" v-if="editAble">
+              <el-form-item label="职称：" label-width="70px" prop="jonTitle" v-if="editAble">
                 <el-select v-model="staff.jonTitle" placeholder="选择职称">
                   <el-option 
                     v-for="item in jonTitleList"
@@ -109,11 +104,6 @@
                 </el-select>
               </el-form-item>
               <p v-else>级别：{{staff.level}}</p>
-              <!-- <el-form-item label="是否有注会证书：" prop="isHaveCertificate" v-if="editAble">
-                <el-radio v-model="staff.isHaveCertificate" label="1">是</el-radio>
-                <el-radio v-model="staff.isHaveCertificate" label="0">否</el-radio>
-              </el-form-item>
-              <p v-else>是否有注会证书：{{staff.isHaveCertificate==='1'? '是':'否'}}</p> -->
               <el-form-item label="入职时间：" prop="entryTime" label-width="90px" v-if="editAble">
                 <el-date-picker
                   style="width:100%"
@@ -232,6 +222,7 @@ export default {
   name: 'staffDetail',
   data() {
     return {
+      staff: this.iniStaff,
       cancelShow: false,
       editAble: false,
       deleteStaffShow: false,
@@ -241,8 +232,8 @@ export default {
       addFuncShow: false,
       labelPosition: 'left',
       autoUpload: false,
-      singleSubjectsArray: this.staff.singleSubjectsArray,
-      professionalCertificateArray: this.staff.professionalCertificateArray,
+      singleSubjectsArray: this.iniStaff.singleSubjectsArray,
+      professionalCertificateArray: this.iniStaff.professionalCertificateArray,
       entryTime: '',
       expireTime: '',
       workContract: {
@@ -256,6 +247,9 @@ export default {
         fileAddress: '',
         fileName: '',
         percentage: '0'
+      },
+      staffMid: {
+
       },
       staffRules: {
         telephone: [
@@ -288,16 +282,16 @@ export default {
           { required: true, message: '请输入学历', trigger: 'blur' }
         ],
         level: [
-          { required: true, message: '请输入级别', trigger: 'blur' }
+          { required: true, message: '请选择级别', trigger: 'blur' }
+        ],
+        jonTitle: [
+          { required: true, message: '请选择职称', trigger: 'blur' }
         ],
         entryTime: [
           { required: true, message: '请输入入职时间', trigger: 'blur' }
         ],
         expireTime: [
           { required: true, message: '请输入合同到期日', trigger: 'blur' }
-        ],
-        isHaveCertificate:  [
-          { required: true, message: '请输入是否有注会证书', trigger: 'blur' }
         ],
         nation: [
           { required: true, message: '请输入民族', trigger: 'blur' }
@@ -339,7 +333,7 @@ export default {
       return '/fileUpload?data=' + JSON.stringify(obj)
     },
     saveAble () {
-      if (this.staff.name && this.staff.jobNumber && this.staff.gender && this.staff.nation && this.staff.idCard && this.staff.telephone && this.staff.email && this.staff.isPrincipal && this.staff.duties && this.staff.education && this.staff.level && this.staff.isHaveCertificate && this.staff.entryTime && this.staff.expireTime) {
+      if (this.staff.name && this.staff.jobNumber && this.staff.gender && this.staff.nation && this.staff.idCard && this.staff.telephone && this.staff.email && this.staff.duties && this.staff.education && this.staff.level && this.staff.entryTime && this.staff.expireTime) {
         return false
       } else {
         return true
@@ -450,18 +444,17 @@ export default {
                 gender: this.staff.gender,
                 phone: this.staff.telephone,
                 jobNumber: this.staff.jobNumber,
+                nation: this.staff.nation,
                 duity: this.staff.duties,
                 idCard: this.staff.idCard,
                 email: this.staff.email,
                 education: this.staff.education,
                 level: this.staff.level,
+                jonTitle: this.staff.jonTitle,
                 entryTime: this.entryTime,
                 expireTime: this.expireTime,
                 singleSubjects: this.singleSubjectsArray.join('，'),
-                professionalCertificate: this.professionalCertificateArray.join('，'),
-                isPrincipal: this.staff.isPrincipal,
-                isHaveCertificate: this.staff.isHaveCertificate,
-                nation: this.staff.nation 
+                professionalCertificate: this.professionalCertificateArray.join('，')
               }
               if (this.isNew[0] === 0) {
                 Object.assign(obj, {
@@ -521,12 +514,11 @@ export default {
                 email: this.staff.email,
                 education: this.staff.education,
                 level: this.staff.level,
+                jonTitle: this.staff.jonTitle,
                 entryTime: this.entryTime,
                 expireTime: this.expireTime,
                 singleSubjects: this.singleSubjectsArray.join('，'),
-                professionalCertificate: this.professionalCertificateArray.join('，'),
-                isPrincipal: this.staff.isPrincipal,
-                isHaveCertificate: this.staff.isHaveCertificate
+                professionalCertificate: this.professionalCertificateArray.join('，')
               }
               return JSON.stringify(obj);
             })()
@@ -541,11 +533,16 @@ export default {
       })
     },
     edit () {
+      this.staffMid = Object.assign({}, this.staff)
       this.editAble = true
     },
     cancel () {
+      this.staff = this.staffMid
       this.cancelShow = false
       this.editAble = false
+      if (this.isNew[0] === 0) {
+        this.$emit('cancelNew')
+      }
     },
     showModify () {
       if (this.modifyStaffType === 'function') {
@@ -629,8 +626,9 @@ export default {
       })
     }
   },
-  props: ['type', 'staff', 'isNew', 'canEdit'],
+  props: ['type', 'iniStaff', 'isNew', 'canEdit'],
   created () {
+    console.log(this.staff)
     if (this.isNew[0] !== false) {
       this.editAble = true
     }
@@ -657,7 +655,7 @@ export default {
     }
     .title-contain {
       padding-left: 40px;
-      padding-right: 40px;
+      padding-right: 10px;
       .main-title {
         margin-left: 0;
       }

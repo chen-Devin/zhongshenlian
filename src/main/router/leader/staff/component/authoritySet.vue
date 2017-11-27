@@ -45,10 +45,8 @@ export default {
 
 <style lang="sass" scoped>
   .staff-wrapper {
+    // background-color: #F9FBFE;
     .basic-contain {
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-bottom: 20px;
       .basic-form {
         margin-top: 30px;
       }

@@ -53,11 +53,12 @@
       <template v-if="staffShow">
         <card>
           <staff-detail 
-            :staff="staff"
+            :iniStaff="staff"
             :type="type"
             :isNew="isNew"
             :canEdit="canEdit"
             @reloadDetail="reloadDetail"
+            @cancelNew="cancelNew"
             @deleteSuccess="deleteSuccess"
             @modifySuccess="modifySuccess"></staff-detail>
         </card>
@@ -199,7 +200,40 @@ export default {
         // }
       ],
       staffId: '',
-      staff: {},
+      staff: {
+        id: '',
+        telephone: '',
+        name: '',
+        gender: '',
+        jobNumber: '',
+        department: '',
+        subDepartment: '',
+        duties: '',
+        authority: [{
+          name: '',
+          authority: ''
+        }],
+        level: '',
+        idCard: '',
+        email: '',
+        education: '',
+        jonTitle: '',
+        entryTime: '',
+        expireTime: '',
+        singleSubjects: [],
+        professionalCertificate: [],
+        singleSubjectsArray: [],
+        professionalCertificateArray: [],
+        companyDepartment: '',
+        projectDepartment: '',
+        group: '',
+        isPrincipal: '0',
+        isHaveCertificate: '0',
+        wechatName: '',
+        wechatHeadImg: '',
+        nation: '',
+        shortcutArray: []
+      },
       staffEmpty: {
         id: '',
         telephone: '',
@@ -268,6 +302,10 @@ export default {
       this.staffId = id
       this.getStaffInfo()
     },
+    cancelNew () {
+      this.staffShow = false
+      this.isOpen = false
+    },
     deleteSuccess () {
       this.staffFilter()
       this.staffShow = false
@@ -331,6 +369,8 @@ export default {
             this.staff = rep.data.data
             this.staff.singleSubjectsArray = rep.data.data.singleSubjects.split('，')
             this.staff.professionalCertificateArray = rep.data.data.professionalCertificate.split('，')
+            // console.log(this.staff)
+            // this.staffShow = true
             resolve('done');
           } else {
             this.$message.error(rep.data.msg)
@@ -576,14 +616,17 @@ export default {
             li {
               height: 36px;
               line-height: 36px;
-              font-size: 14px;
+              font-size: 0;
               list-style: none;
               cursor: pointer;
               &:hover {
                 background-color: #e4e8f1;
               }
               span {
-                margin-left: 45px;
+                display: inline-block;
+                width: 33%;
+                padding-left: 20px;
+                font-size: 14px;
               }
               &.active {
                 background-color: #DBEAFE;
@@ -606,6 +649,9 @@ export default {
           text-align: center;
           line-height: 40px;
           height: 40px;
+          a {
+            color: #3EA8DE;
+          }
         } 
       }  
     }

@@ -3,7 +3,10 @@
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
     <card>
-      <h5 class="main-title" v-if="!editAble">可报销金额：</h5>
+      <template v-if="!editAble">
+        <h5 class="main-title">可报销金额：</h5>
+        <hr>
+      </template>
       <div class="title-wrapper">
         <el-row>
           <el-col :span="6" class="d-f">
@@ -454,18 +457,15 @@
       <state-svg
         :status="status"
         v-if="status"></state-svg>
-      <div class="f-l">
-        状态描述：
+      <div class="state-description d-f">
+        <div style="width:90px;">
+          状态描述：
+        </div>
+        <div class="description">
+          <p v-model="reimbursementInfo.statusDescription" v-if="reimbursementInfo.statusDescription"></p>
+          <p v-else>暂无</p>
+        </div>
       </div>
-      <!-- <el-input
-        type="textarea"
-        :rows="3"
-        placeholder="暂无"
-        v-model="reimbursementInfo.statusDescription"
-        disabled>
-      </el-input> -->
-      <p v-model="reimbursementInfo.statusDescription" v-if="reimbursementInfo.statusDescription"></p>
-      <p v-else>暂无</p>
       <p class="btns" v-if="!editAble && detailType === 'review'">
         <button class="btn my-btn submit-btn" @click="agree">审批通过</button>
         <button class="btn my-btn cancel-btn" @click="showReject">驳回</button>
@@ -1258,6 +1258,10 @@ export default {
 
 <style lang="sass">
   .expenses-detail {
+    hr {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
     .width-limit {
       max-width: 20px;
       overflow: hidden;
@@ -1323,6 +1327,13 @@ export default {
     }
     .card3 {
       padding: 15px 20px;
+      .state-description {
+        .description {
+          flex: 1;
+          padding: 10px 20px;
+          background-color: #f9fbfe;
+        }
+      }
     }
     .btns {
       margin-top: 20px;

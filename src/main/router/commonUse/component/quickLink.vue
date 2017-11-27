@@ -45,12 +45,21 @@ export default {
       margin-bottom: 20px;
     }
     &.quick0 {
+<<<<<<< HEAD
       background-color: #B1E17E;
       &:hover {
         background-color: #BBEB89;
       }
       &:active {
         background-color: #A0D06D;
+=======
+      background-color: #b1e17e;
+      &:hover {
+        background-color: #bbeb89;
+      }
+      &:active {
+        background-color: #a0d06d;
+>>>>>>> 98a7e126dac1391c6f486580ff0d50d876f81eeb
       }
     }
     &.quick1 {
