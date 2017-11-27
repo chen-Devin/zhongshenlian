@@ -340,7 +340,7 @@ h4 {
           border: 1px solid #000;
           border-radius: 2px;
           margin-right: 10px;
-          font-size: 14px;
+          font-size: 13px;
           padding-left: 5px;
           padding-right: 5px;
           padding-top: 1px;
@@ -535,8 +535,11 @@ label.col-sm-2.control-label {
 .my-btn {
   min-width: 100px;
   height: 30px;
+  + .my-btn {
+    margin-left: 10px;
+  }
   font-family: "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   color: #fff;
   border: none;
   &:focus {
@@ -826,6 +829,15 @@ label.col-sm-2.control-label {
 
 .el-radio__input.is-disabled+.el-radio__label {
   color: #666;
+}
+
+.el-checkbox+.el-checkbox {
+    margin-left: 0;
+}
+
+.el-checkbox {
+    margin-left: 0;
+    margin-right: 30px;
 }
 
 .text-info {

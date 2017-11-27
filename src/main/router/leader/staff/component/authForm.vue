@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="auth-form">
     <h5 class="main-title">
       权限设置
       <div class="f-r o-h">
@@ -12,7 +12,7 @@
         </template>
       </div>
     </h5>
-    <div class="basic-content">
+    <div class="basic-content" :style="{ backgroundColor: bgc }">
       <table class="table table-hover table-inner" v-if="type === 'function'">
         <thead>
           <tr>
@@ -37,7 +37,7 @@
         </tbody>
       </table>
       <p class="empty-list-p" v-if="authorityData.length === 0">暂无数据</p>
-      <div v-if="type !== 'function'">
+      <div class="function-auth" v-if="type !== 'function'">
         <p>
           <el-checkbox-group v-model="selectedAuthority">
             <el-checkbox 
@@ -82,6 +82,15 @@ export default {
       selectedAuthority: [],
       transData: ''
     };
+  },
+  computed: {
+    bgc () {
+      if (this.type === 'function') {
+        return '#fff'
+      } else {
+        return '#F9FBFE'
+      }
+    }
   },
   props: ['id', 'type', 'canEdit'],
   watch: {
@@ -229,7 +238,25 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  .main-title {
-    margin-left: 0;
+  .auth-form {
+    .main-title {
+      padding-left: 40px;
+      padding-right: 10px;
+      // padding-bottom: 20px;
+      margin-left: 0;
+      margin-bottom: 10px;
+      // background-color: #fff;
+    }
+    .basic-content {
+      padding-top: 10px;
+      padding-left: 40px;
+      padding-right: 40px;
+      // background-color: #F9FBFE;
+      overflow: hidden;
+    }
+    // .function-auth {
+    //   background-color: #F9FBFE;
+    // }
   }
+  
 </style>

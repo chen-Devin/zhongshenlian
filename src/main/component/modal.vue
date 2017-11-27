@@ -8,6 +8,7 @@
               default body
             </slot>
           </div>
+          <hr>
           <div class="modal-footer">
             <slot name="footer">
               default footer
@@ -39,12 +40,16 @@ export default {
   justify-content: center;
   align-items: center;
   transition: opacity .3s ease;
+  hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
 
 .modal-container {
-  width: 500px;
+  width: 400px;
   margin: 0px auto;
-  padding: 10px 20px;
+  padding: 20px 20px 10px;
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);

@@ -73,7 +73,7 @@ export default {
       .el-radio-group {
         margin-top: 10px;
         .el-radio {
-          margin-right: 20px;
+          margin-right: 50px;
           &:last-child {
             margin-right: 0;
           }

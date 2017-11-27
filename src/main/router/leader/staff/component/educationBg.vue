@@ -1,10 +1,10 @@
 <template>
   <div class="staff-wrapper">
-    <div class="basic-contain">
+    <div class="title">
       <div class="f-r o-h">
         <template v-if="!editAble">
           <button class="btn my-btn submit-btn" @click="edit" :disabled="!canEdit.canEditEducation">编辑</button>
-          <button class="btn my-btn submit-btn" @click="add" :disabled="!canEdit.canEditEducation">新增</button>
+          <button class="btn my-btn draft-btn" @click="add" :disabled="!canEdit.canEditEducation">新增</button>
         </template>
         <template v-else>
           <button class="btn my-btn submit-btn" @click="save">保存</button>
@@ -12,6 +12,8 @@
         </template>
       </div>
       <h5 class="main-title">教育背景</h5>
+    </div>
+    <div class="basic-contain">
       <div class="basic-form"> 
         <table class="table table-inner table-hover table-input">
           <thead>
@@ -208,15 +210,21 @@ export default {
 
 <style lang="sass" scoped>
   .staff-wrapper {
-    .basic-contain {
+    .title {
       padding-left: 40px;
-      padding-right: 40px;
-      padding-bottom: 20px;
+      padding-right: 10px;
       .main-title {
         margin-left: 0;
       }
-      .basic-form {
-        margin-top: 30px;
+    }
+    .basic-contain {
+      padding-top: 10px;
+      padding-left: 40px;
+      padding-right: 40px;
+      padding-bottom: 20px;
+      background-color: #f9fbfe;
+      table {
+        margin-top: 0;
       }
     }
   }
