@@ -670,14 +670,15 @@
       </div>
     </el-form>
     <modal v-show="cancelModal">
-      <p slot="body" class="ta-c cancel-word">
-        <i class="fa fa-exclamation-triangle fa-3x icon" aria-hidden="true"></i>
+      <div slot="body">
+        <p class="ta-c">
         撤销后项目将不存在，是否确定撤销？
-      </p>
-      <p slot="footer">
-        <button class="btn my-btn submit-btn" @click="queding()">确定</button>
-        <button class="btn my-btn draft-btn" @click="quxiao()">取消</button>
-      </p>
+        </p>
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn submit-btn" @click="quxiao()">取消</button>
+        <button class="btn my-btn cancel-btn" @click="queding()">确定</button>
+      </div>
     </modal>
   </div>
 </template>
