@@ -657,7 +657,7 @@ export default {
         > .card {
           margin-right: 0;
           &.rule-card {
-            height: 354px;
+            height: 353px;
             padding-top: 14px;
             padding-bottom: 28px;
             padding-left: 20px;
