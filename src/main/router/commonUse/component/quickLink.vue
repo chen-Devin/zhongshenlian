@@ -45,48 +45,48 @@ export default {
       margin-bottom: 20px;
     }
     &.quick0 {
-      background-color: #8ad637;
+      background-color: #B1E17E;
       &:hover {
-        background-color: #a0f247;
+        background-color: #BBEB89;
       }
       &:active {
-        background-color: #6eb620;
+        background-color: #A0D06D;
       }
     }
     &.quick1 {
-      background-color: #4ddabb;
+      background-color: #95DCCC;
       &:hover {
-        background-color: #59f8d5;
+        background-color: #A1EDDC;
       }
       &:active {
-        background-color: #37b095;
+        background-color: #78CBB8;
       }
     }
     &.quick2 {
-      background-color: #f5bd23;
+      background-color: #EAC55F;
       &:hover {
-        background-color: #fbce50;
+        background-color: #F1D382;
       }
       &:active {
-        background-color: #d7a61e;
+        background-color: #D4B14F;
       }
     }
     &.quick3 {
-      background-color: #f67988;
+      background-color: #E89EA8;
       &:hover {
-        background-color: #f89da8;
+        background-color: #EFB3BA;
       }
       &:active {
-        background-color: #e05043;
+        background-color: #E28994;
       }
     }
     &.quick4 {
-      background-color: #62b6ff;
+      background-color: #9CD0FE;
       &:hover {
-        background-color: #8ac5f8;
+        background-color: #ABD4F7;
       }
       &:active {
-        background-color: #168fcd;
+        background-color: #7EB7EA;
       }
     }
     &.quick5 {
