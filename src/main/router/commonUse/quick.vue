@@ -12,7 +12,7 @@
         <p class="todo-title">待办事项（{{ itemCounts }}）</p>
         <card class="card">
           <div class="to-wrapper">
-            <table class="table table-bordered table-hover table-list">
+            <table class="table table-bordered table-list">
               <thead>
                 <tr>
                   <th>标题</th>
@@ -49,31 +49,33 @@
       <el-col :span="24">
         <p class="todo-title">项目概况</p>
         <card class="card">
-          <table class="table table-bordered table-list">
-            <thead>
-              <tr>
-                <th>项目动态</th>
-                <th>状态</th>
-                <th>发起人</th>
-                <th>时间</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr 
-                v-for="(project, index) in projectData" 
-                :key="index">
-                <td width="60%">
-                  <p>
-                    <span class="project-dynamic">{{ project.projectName }}</span>
-                  </p>
-                </td>
-                <td>{{ statusMap(project.projectStatus) }}</td>
-                <td>{{ project.applicantName }}</td>
-                <td>{{ project.startTime }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="empty-list-p" v-if="projectData.length === 0">暂无数据</p>
+          <div class="to-wrapper">
+            <table class="table table-bordered table-list">
+              <thead>
+                <tr>
+                  <th>项目动态</th>
+                  <th>状态</th>
+                  <th>发起人</th>
+                  <th>时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr 
+                  v-for="(project, index) in projectData" 
+                  :key="index">
+                  <td width="60%">
+                    <p>
+                      <span class="project-dynamic">{{ project.projectName }}</span>
+                    </p>
+                  </td>
+                  <td>{{ statusMap(project.projectStatus) }}</td>
+                  <td>{{ project.applicantName }}</td>
+                  <td>{{ project.startTime }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="empty-list-p" v-if="projectData.length === 0">暂无数据</p>
+          </div>         
         </card>
       </el-col>
     </el-row>
@@ -678,10 +680,11 @@ export default {
       }
     }
     .to-wrapper {
-      .more {
-        padding: 10px 0;
-        border: 1px solid #eee;
-        text-align: center;
+      .table {
+        thead {
+          background-color: #fff;
+          border-bottom: 10px solid #F9FBFE;
+        }
       }
     }
     .operate {
