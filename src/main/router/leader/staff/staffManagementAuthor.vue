@@ -525,7 +525,10 @@ export default {
       this.reloadStaffList = true
       this.staffId = staff.id
       this.getStaffInfo().then(() => {
+        this.staffShow = false
+        setTimeout(() => {
         this.staffShow = true
+      }, 200)        
       }, () => {})
     },
     // switchDepart () {
