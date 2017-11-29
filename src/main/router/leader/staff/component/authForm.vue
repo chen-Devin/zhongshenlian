@@ -251,6 +251,7 @@ export default {
       padding-top: 10px;
       padding-left: 40px;
       padding-right: 40px;
+      padding-bottom: 20px;
       // background-color: #F9FBFE;
       overflow: hidden;
     }
