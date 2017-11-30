@@ -40,7 +40,7 @@
                 <el-input v-model="staff.idCard"></el-input>
               </el-form-item>
               <p v-else>身份证号：{{staff.idCard}}</p>
-              <el-form-item label="手机号：" label-width="80px" prop="telephone" v-if="editAble">
+              <el-form-item label="手机号：" label-width="80px" prop="telephone" v-if="editAble" required>
                 <el-input v-model="staff.telephone"></el-input>
               </el-form-item>
               <p v-else>手机号：{{staff.telephone}}</p>
@@ -254,10 +254,10 @@ export default {
       staffRules: {
         telephone: [
           {
-            required: true, 
-            pattern: /^1\d{10}$/, 
-            message: '请输入以1开头的11位手机号', 
-            trigger: 'blur'
+            // required: true
+            // pattern: /^1\d{10}$/, 
+            // message: '请输入以1开头的11位手机号', 
+            // trigger: 'blur'
           }
         ],
         name: [
@@ -590,7 +590,7 @@ export default {
             this.$message.success('修改成员成功')
             this.addShow = false
             this.addFuncShow = false
-            this.$emit('modifySuccess')
+            this.$emit('modifySuccess', typeArray[0])
             resolve('done')
           } else {
             this.$message.error(rep.data.msg)

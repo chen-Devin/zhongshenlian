@@ -6,11 +6,17 @@
       <search-bar class="f-r" :searchItems="searchItems"
         @search="search" v-if="reloadSearch"></search-bar>
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane 
+        <!-- <el-tab-pane 
           :label="tab.label" 
           :name="tab.name"
           v-for="(tab, index) in tabList"
-          :key="index"></el-tab-pane>
+          :key="index"></el-tab-pane> -->
+          <el-tab-pane 
+          label="职能部门" 
+          name="function"></el-tab-pane>
+          <el-tab-pane 
+          label="业务部门" 
+          name="business"></el-tab-pane>
       </el-tabs>
     </card>
     <div class="left-contain">
@@ -509,7 +515,17 @@ export default {
       this.searchObj = {}
       this.staffFilter()
     },
-    modifySuccess () {
+    modifySuccess (value) {
+      // console.log(value)
+      // if (value === '0') {
+      //   this.staffFilterType = 'department'
+      //   this.activeName = 'function'
+      //   this.handleClick()
+      // } else if (value === '1') {
+      //   this.activeName = 'business'
+      //   this.staffFilterType = 'company'
+      //   this.handleClick()
+      // }
       this.staffFilter()
       this.reloadStaffList = false
       this.reloadStaffList = true
