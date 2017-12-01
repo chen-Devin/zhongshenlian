@@ -36,7 +36,7 @@
     <p class="btns">
       <button type="button" class="btn my-btn submit-btn" @click="edit">编辑</button>
       <button type="button" class="btn my-btn draft-btn" @click="add">新增部门</button>
-      <button type="button" class="btn my-btn cancel-btn" @click="deleteDep">删除</button>
+      <!-- <button type="button" class="btn my-btn cancel-btn" @click="deleteDep">删除</button> -->
     </p>
   </div>
 </div>

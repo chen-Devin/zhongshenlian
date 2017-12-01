@@ -276,7 +276,7 @@ export default {
           { required: true, message: '请输入身份证号', trigger: 'blur' }
         ],
         email: [
-          { type: 'email', required: true, message: '请输入正确的邮箱格式', trigger: 'blur' }
+          { type: 'email', required: false, message: '请输入正确的邮箱格式', trigger: 'blur' }
         ],
         education: [
           { required: true, message: '请输入学历', trigger: 'blur' }
@@ -333,7 +333,7 @@ export default {
       return '/fileUpload?data=' + JSON.stringify(obj)
     },
     saveAble () {
-      if (this.staff.name && this.staff.jobNumber && this.staff.gender && this.staff.nation && this.staff.idCard && this.staff.telephone && this.staff.email && this.staff.duties && this.staff.education && this.staff.level && this.staff.entryTime && this.staff.expireTime) {
+      if (this.staff.name && this.staff.jobNumber && this.staff.gender && this.staff.nation && this.staff.idCard && this.staff.telephone && this.staff.duties && this.staff.education && this.staff.level && this.staff.entryTime && this.staff.expireTime) {
         return false
       } else {
         return true
