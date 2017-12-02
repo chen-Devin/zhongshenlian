@@ -21,7 +21,7 @@
                 </el-option>
               </el-select>
             </template>
-            <p v-else>报销方式：{{ reimbursementInfo.submitType === 'nonContractR' ? '非合同报销' : '合同报销' }}</p>
+            <p v-else>报销方式：{{ getsubmitType(reimbursementInfo.submitType) }}</p>
           </el-col>
           <el-col class="d-f" :span="9">
             <template v-if="editAble">
@@ -483,6 +483,15 @@ export default {
   methods: {
     cancelCon () {
       this.cancelShow = true
+    },
+    getsubmitType (id) {
+      if (id === 'personalR') {
+        return '个人报销'
+      } else if (id === 'publicR') {
+        return '对公报销'
+      } else if (id === 'projectR') {
+        return '项目报销'
+      }
     },
     getProjectByPerson () {
       return new Promise((resolve, reject) => {

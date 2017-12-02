@@ -6,17 +6,12 @@
       <search-bar class="f-r" :searchItems="searchItems"
         @search="search" v-if="reloadSearch"></search-bar>
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <!-- <el-tab-pane 
-          :label="tab.label" 
-          :name="tab.name"
-          v-for="(tab, index) in tabList"
-          :key="index"></el-tab-pane> -->
-          <el-tab-pane 
-          label="职能部门" 
-          name="function"></el-tab-pane>
-          <el-tab-pane 
-          label="业务部门" 
-          name="business"></el-tab-pane>
+        <el-tab-pane 
+        label="职能部门" 
+        name="function"></el-tab-pane>
+        <el-tab-pane 
+        label="业务部门" 
+        name="business"></el-tab-pane>
       </el-tabs>
     </card>
     <div class="left-contain">
@@ -66,6 +61,7 @@
             :type="type"
             :isNew="isNew"
             :canEdit="canEdit"
+            :staffCompanyId="staffCompanyId"
             @reloadDetail="reloadDetail"
             @cancelNew="cancelNew"
             @deleteSuccess="deleteSuccess"
@@ -137,6 +133,7 @@ export default {
   data() {
     return {
       isNew: [false],
+      staffCompanyId: '',
       paths1: [
         { name: '职员管理', url: '/staff-management-author', present: false },
         { name: '职能部门', url: '/staff-management-author', present: true }
@@ -201,16 +198,12 @@ export default {
       staffFilterId: '',
       staffFilterType: '',
       staffAllList: [
-        // {
-          // jobNumber: '',
-          // name: '',
-          // duty: '',
-          // isActive: false
-        // }
+        
       ],
       staffId: '',
       staff: {
         id: '',
+        companyId: '',
         telephone: '',
         name: '',
         gender: '',
@@ -245,6 +238,7 @@ export default {
       },
       staffEmpty: {
         id: '',
+        companyId: '',
         telephone: '',
         name: '',
         gender: '',
@@ -494,6 +488,7 @@ export default {
           this.staffFilterType = 'department'
         } else if (this.departActive) {
           this.staffFilterType = 'company'
+          this.staffCompanyId = data.id
         }
       } else if (data.level === 3) {
         this.staffFilterType = 'companyDepartment'
@@ -519,16 +514,6 @@ export default {
       this.staffFilter()
     },
     modifySuccess (value) {
-      // console.log(value)
-      // if (value === '0') {
-      //   this.staffFilterType = 'department'
-      //   this.activeName = 'function'
-      //   this.handleClick()
-      // } else if (value === '1') {
-      //   this.activeName = 'business'
-      //   this.staffFilterType = 'company'
-      //   this.handleClick()
-      // }
       this.staffFilter()
       this.reloadStaffList = false
       this.reloadStaffList = true
@@ -550,28 +535,7 @@ export default {
       }, 200)        
       }, () => {})
     },
-    // switchDepart () {
-    //   this.functionActive = true
-    //   this.departActive = false
-    //   this.staffShow = false
-    //   this.isOpen = false
-    //   this.type = 'function'
-    //   this.treeData = []
-    //   this.staffAllList = []
-    //   this.getInfoDepartmentList()
-    // },
-    // switchFunction () {
-    //   this.functionActive = false
-    //   this.departActive = true
-    //   this.staffShow = false
-    //   this.isOpen = false
-    //   this.type = 'department'
-    //   this.treeData = []
-    //   this.staffAllList = []
-    //   this.getFullCompanyList()
-    // },
     showAdd () {
-      // console.log(this.functionActive, this.departActive)
       if (this.functionActive) {
         this.addFuncShow = true
       } else if (this.departActive) {

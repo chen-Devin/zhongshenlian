@@ -149,12 +149,12 @@
         </el-row>
         <el-row>
           <el-form :label-position="labelPosition" label-width="130px" :rules="staffRules">
-            <el-form-item label="单科成绩：" label-width="90px" prop="singleSubjects" v-if="editAble">
+            <el-form-item label="单科成绩：" label-width="90px" prop="singleSubjects" v-if="editAble && isNone">
               <el-checkbox-group v-model="singleSubjectsArray">
                 <el-checkbox :label="option" v-for="(option, index) in scoresOption" :key="index">{{ option }}</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
-            <p v-else>单科成绩：{{ singleSubjectsArray.join('、') }}</p>
+            <p v-if="!editAble && isNone">单科成绩：{{ singleSubjectsArray.join('、') }}</p>
           </el-form>
         </el-row>
         <el-row>
@@ -163,8 +163,12 @@
               <el-checkbox-group v-model="professionalCertificateArray">
                 <el-checkbox :label="option" :value="option" v-for="(option, index) in certificatesOption" :key="index"></el-checkbox>
               </el-checkbox-group>
+              <el-checkbox v-model="isNone">暂无</el-checkbox>
             </el-form-item>
-            <p v-else>执行证书：{{professionalCertificateArray.join('、')}}</p>
+            <p v-else>执行证书：
+              <span v-if="isNone">暂无</span>
+              <span v-else>{{professionalCertificateArray.join('、')}}</span>
+            </p>
           </el-form>
         </el-row>
       </div>
@@ -223,6 +227,7 @@ export default {
   data() {
     return {
       staff: this.iniStaff,
+      isNone: true,
       cancelShow: false,
       editAble: false,
       deleteStaffShow: false,
@@ -315,8 +320,8 @@ export default {
           { required: true, message: '提交劳动合同' }
         ]
       },
-      scoresOption: ['会计', '财务成本管理', '税务', '经济法', '公司战略管理', '审计'],
-      certificatesOption: ['注册会计师', '资产评估师', '房地产估计师', '土地评估师', '造价工程师', '税务师', '暂无'],
+      scoresOption: [],
+      certificatesOption: ['注册会计师', '资产评估师', '房地产估计师', '土地评估师', '造价工程师', '税务师'],
       levelList: ['一级', '二级', '三级'],
       jonTitleList: ['初级', '中级', '副高级', '高级'],
       dutiesList: ['部门经理', '项目经理', '主审', '组员']
@@ -357,6 +362,20 @@ export default {
           this.canEdit.canEditEducation = true
         }
       }
+    },
+    isNone: function (val, oldVal) {
+      if (val !== oldVal) {
+        if (val) {
+          this.professionalCertificateArray = []
+        }
+      }
+    },
+    professionalCertificateArray: function (val, oldVal) {
+      if (val !== oldVal) {
+        if (val.length > 0) {
+          this.isNone = false
+        }
+      }
     }
   },
   methods: {
@@ -371,6 +390,46 @@ export default {
         d = '0' + d
       }
       return y + '-' + m + '-' + d
+    },
+    getSingleSubjectsOption () {
+      var companyId = 0
+      if (this.isNew[0] === false) {
+        if (this.type === 'department') {
+          companyId = this.staffCompanyId
+        } else {
+          companyId = 0
+        }
+      } else {
+        if (this.type === 'department') {
+          companyId = this.isNew[1]
+        } else {
+          companyId = 0
+        }
+      }
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'getSingleSubjectsOption',
+                platform: 'web',
+                companyId: companyId
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.scoresOption = rep.data.data.option.split(',')
+            resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
     },
     UploadSuccess (response, file, fileList) {
       if (response.statusCode === '10001') {
@@ -389,7 +448,6 @@ export default {
       console.log(file, fileList)
     }, 
     save1 () {
-      console.log(1)
       if (this.isNew[0] !== false) {
         if (this.workContract.name) {
           this.addUser().then(() => {
@@ -452,9 +510,7 @@ export default {
                 level: this.staff.level,
                 jonTitle: this.staff.jonTitle,
                 entryTime: this.entryTime,
-                expireTime: this.expireTime,
-                singleSubjects: this.singleSubjectsArray.join('，'),
-                professionalCertificate: this.professionalCertificateArray.join('，')
+                expireTime: this.expireTime
               }
               if (this.isNew[0] === 0) {
                 Object.assign(obj, {
@@ -467,6 +523,23 @@ export default {
                   companyDepartmentId: this.isNew[2],
                   subdepartmentId: this.isNew[3],
                   groupId: this.isNew[4]
+                })
+              }
+              if (this.isNone) {
+                this.singleSubjectsArray = this.singleSubjectsArray.filter((item) => {
+                  return item !== ''
+                })
+                Object.assign(obj, {
+                  professionalCertificate: '暂无',
+                  singleSubjects: this.singleSubjectsArray.join('，')
+                })
+              } else {
+                this.professionalCertificateArray = this.professionalCertificateArray.filter((item) => {
+                  return item !== '暂无'
+                })
+                Object.assign(obj, {
+                  professionalCertificate: this.professionalCertificateArray.join('，'),
+                  singleSubjects: ''
                 })
               }
               return JSON.stringify(obj);
@@ -493,6 +566,7 @@ export default {
       } else {
         this.expireTime = this.staff.expireTime
       }
+      console.log('save', this.professionalCertificateArray)
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -516,9 +590,24 @@ export default {
                 level: this.staff.level,
                 jonTitle: this.staff.jonTitle,
                 entryTime: this.entryTime,
-                expireTime: this.expireTime,
-                singleSubjects: this.singleSubjectsArray.join('，'),
-                professionalCertificate: this.professionalCertificateArray.join('，')
+                expireTime: this.expireTime
+              }
+              if (this.isNone) {
+                this.singleSubjectsArray = this.singleSubjectsArray.filter((item) => {
+                  return item !== ''
+                })
+                Object.assign(obj, {
+                  professionalCertificate: '暂无',
+                  singleSubjects: this.singleSubjectsArray.join('，')
+                })
+              } else {
+                this.professionalCertificateArray = this.professionalCertificateArray.filter((item) => {
+                  return item !== '暂无'
+                })
+                Object.assign(obj, {
+                  professionalCertificate: this.professionalCertificateArray.join('，'),
+                  singleSubjects: ''
+                })
               }
               return JSON.stringify(obj);
             })()
@@ -626,11 +715,16 @@ export default {
       })
     }
   },
-  props: ['type', 'iniStaff', 'isNew', 'canEdit'],
+  props: ['type', 'iniStaff', 'isNew', 'canEdit', 'staffCompanyId'],
   created () {
-    console.log(this.staff)
+    this.getSingleSubjectsOption()
     if (this.isNew[0] !== false) {
       this.editAble = true
+    }
+    if (this.iniStaff.professionalCertificate === '暂无') {
+      this.isNone = true
+    } else {
+      this.isNone = false
     }
   },
   components: {

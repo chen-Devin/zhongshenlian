@@ -1,0 +1,14 @@
+diff a/src/main/router/commonUse/expenses/component/expensesTrip.vue b/src/main/router/commonUse/expenses/component/expensesTrip.vue	(rejected hunks)
+@@ -225,9 +225,10 @@
+           </el-col>
+           <el-col :span="4">
+             <div v-for="(each, index) in reimbursementInfo.stayRArray" :key="index" class="each">
+-              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble">
++              <!-- <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble">
+                 <template slot="append">元</template>
+-              </el-input>
++              </el-input> -->
++              <div v-if="editAble">{{ each.amount }}元</div>
+               <p v-else>{{ each.amount }}元</p>
+             </div>
+           </el-col>
