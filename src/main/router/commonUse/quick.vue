@@ -116,7 +116,7 @@ export default {
       tableData: [],
       projectData: [],
       shortcutArray: [],
-      itemCounts: 3,
+      itemCounts: 0,
       addItem: false,
       quickArray: [],
       allQuickArray: [],
@@ -697,8 +697,14 @@ export default {
       border-radius: 5px;
       color: #fff;
       margin: 0 10px;
-      background-color: #9E9E9E;
+      background-color: #8c8c8c;
       cursor: pointer;
+      &:hover {
+        background-color: #a6a6a6;
+      }
+      &:active {
+        background-color: #555454;
+      }
     }
     .items-wrap {
       display: flex;

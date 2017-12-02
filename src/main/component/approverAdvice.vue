@@ -31,6 +31,7 @@
         </tr>
       </tbody>
     </table>
+    <p class="empty-list-p" v-if="advices.length === 0">暂无</p>
     <modal v-if="showModal">
       <div slot="body">
         <p>{{reason}}</p>

@@ -1,6 +1,5 @@
 <template>
   <div class="svg-wrap">
-    <!-- <p>{{ status }}</p> -->
     <svg width="860" height="100" xmlns="http://www.w3.org/2000/svg">
       <line x1="50" y1="40" x2="190" y2="40" style="stroke:rgb(186,186,186);stroke-width:.5"/>
       <circle :cx="radiusX[0]" cy="40" :r="radiusActive(state[0].active)" :fill="colorActive(state[0].active)"/>
@@ -50,11 +49,11 @@ export default {
         time: '2017-09-16 11:21',
         active: this.status[1]
       }, {
-        name: '所长通过',
+        name: '财务核单',
         time: '2017-09-16 11:21',
         active: this.status[2]
       }, {
-        name: '财务核单',
+        name: '所长通过',
         time: '2017-09-16 11:21',
         active: this.status[3]
       }, {

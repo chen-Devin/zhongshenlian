@@ -132,7 +132,7 @@
             附件张数
           </el-col>
           <el-col :span="4">
-            金额
+            小计
           </el-col>
           <el-col :span="4">
             单笔金额
@@ -158,10 +158,8 @@
             <p v-else>{{ reimbursementInfo.paperInvoiceNum }}张</p>
           </el-col>
           <el-col :span="4">
-            <el-input v-model="reimbursementInfo.paperInvoiceAmount" placeholder="请填写金额" v-if="editAble">
-              <template slot="append">元</template>
-            </el-input>
-            <p v-else>{{ reimbursementInfo.paperInvoiceAmount }}元</p>
+            <div v-if="editAble">{{ paperInvoiceAmount }}元</div>
+            <p v-else>{{ paperInvoiceAmount }}元</p>
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.paperRArray" :key="index" class="each">
@@ -192,10 +190,8 @@
             <p v-else>{{ reimbursementInfo.electricInvoiceNum }}张</p>
           </el-col>
           <el-col :span="4">
-            <el-input v-model="reimbursementInfo.electricInvoiceAmount" placeholder="请填写金额" v-if="editAble">
-              <template slot="append">元</template>
-            </el-input>
-            <p v-else>{{ reimbursementInfo.electricInvoiceAmount }}元</p>
+            <div v-if="editAble">{{ electricInvoiceAmount }}元</div>
+            <p v-else>{{ electricInvoiceAmount }}元</p>
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.electricRArray" :key="index" class="each">
@@ -460,12 +456,26 @@ export default {
       }
       return arr
     },
+    paperInvoiceAmount () {
+      let total = 0
+      this.reimbursementInfo.paperRArray.forEach((item) => {
+        total = total + Number(item.amount)
+      })
+      return total
+    },
+    electricInvoiceAmount () {
+      let total = 0
+      this.reimbursementInfo.electricRArray.forEach((item) => {
+        total = total + Number(item.amount)
+      })
+      return total
+    },
     totalAmount () {
       let total = 0
       if (this.reimbursementInfo.billingType === '纸质发票报销') {
-        total = Number(this.reimbursementInfo.paperInvoiceAmount)
+        total = Number(this.paperInvoiceAmount)
       } else {
-        total = Number(this.reimbursementInfo.electricInvoiceAmount)
+        total = Number(this.electricInvoiceAmount)
       }
       return total.toFixed(2)
     }

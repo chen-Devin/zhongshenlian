@@ -19,7 +19,7 @@ export default {
   },
   props: ['iniLink', 'iniItemIndex'],
   created() {
-    this.quicks[this.iniItemIndex % 6] = true
+    this.quicks[this.iniItemIndex % 5] = true
   },
   methods: {
 
@@ -87,15 +87,6 @@ export default {
       }
       &:active {
         background-color: #7EB7EA;
-      }
-    }
-    &.quick5 {
-      background-color: #8c8c8c;
-      &:hover {
-        background-color: #a6a6a6;
-      }
-      &:active {
-        background-color: #555454;
       }
     }
   }

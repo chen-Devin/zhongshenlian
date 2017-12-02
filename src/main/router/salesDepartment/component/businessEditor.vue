@@ -107,7 +107,7 @@
         </el-row> 
         <el-row>
           <el-col :span="8">
-            <p>客户联系人：{{user.telephone}}</p>
+            <p>提交人所在部门：{{user.telephone}}</p>
           </el-col>
           <el-col :span="16">
             <el-form-item label="计划工期：" required v-if="editable">
@@ -915,7 +915,7 @@ export default {
                   contractNo: this.business.number,
                   requester: this.business.institution.customerName,
                   requesterId: this.business.institution.id,
-                  requesterName: this.business.institution.name,  // 客户联系人
+                  requesterName: this.business.institution.name,  // 提交人所在部门
                   requesterPhone: this.business.institution.telephone,
                   reportPurpose: this.business.report.usage,
                   startTime: this.business.time.start.slice(0,10),

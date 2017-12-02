@@ -3,7 +3,7 @@
     <div class="message-box">
       <side-message :user="user"></side-message>
     </div>
-    <el-menu class="el-menu-vertical-demo" :router="routerVal" :default-active="activeUrl" :unique-opened="uniqueOpened" @open="handleOpen">
+    <el-menu :router="routerVal" :default-active="activeUrl" :unique-opened="uniqueOpened" @open="handleOpen">
       <el-submenu index="quick">
         <template slot="title">
           <span>我的快捷</span>
@@ -11,7 +11,10 @@
       </el-submenu>
       <template v-if="leader">
         <el-submenu index="business-review-list-leader">
-          <template slot="title">待办事项</template>
+          <template slot="title">
+            待办事项
+            <span v-if="itemCounts" class="to-do-number">{{ itemCounts }}</span>
+          </template>
           <el-menu-item index="/business-review-list-leader">立项审批</el-menu-item>
           <el-menu-item index="/bid-info-list">招投标审批</el-menu-item>
           <el-menu-item index="/expenses-review/10">报销审批</el-menu-item>
@@ -178,14 +181,16 @@
 </template>
 
 <script>
-import sideMessage from "./sideMessage.vue";
+import axios from 'axios'
+import sideMessage from "./sideMessage.vue"
 
 export default {
   name: 'sideBar',
   data() {
     return {
       routerVal: true,
-      uniqueOpened: true
+      uniqueOpened: true,
+      itemCounts: 0
     };
   },
   computed: {
@@ -304,7 +309,32 @@ export default {
   methods: {
     handleOpen(key, keyPath) {
       this.$router.push('/' + key)
+    },
+    getToBeDoneList() {
+      axios({
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            var obj = {
+              command: 'getToBeDoneList',
+              platform: 'web',
+              pageNum: 1
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.itemCounts = rep.data.data.totalNum;
+        } else if (rep.data.statusCode === '10012') {
+          window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
     }
+  },
+  created () {
+    this.getToBeDoneList()
   },
   components: {
     sideMessage
@@ -331,6 +361,19 @@ export default {
   .el-menu {
     position: relative;
     background-color: #364A62;
+    .to-do-number {
+      position: absolute;
+      top: 12px;
+      right: 48px;
+      display: inline-block;
+      height: 16px;
+      line-height: 16px;
+      padding: 0 5px;
+      font-size: 12px;
+      background-color: #e51c23;
+      border-radius: 50%;
+      vertical-align: middle;
+    }
     .el-submenu {
       &.is-opened {
         > .el-submenu__title {

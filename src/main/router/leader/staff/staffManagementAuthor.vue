@@ -56,6 +56,9 @@
       </card>
     </div>
     <div class="right-contain">
+      <card class="not-selected" v-if="!(staffShow || isOpen)">
+        <p class="ta-c">请选择职员</p>
+      </card>
       <template v-if="staffShow">
         <card>
           <staff-detail 
@@ -660,6 +663,11 @@ export default {
     }
     .right-contain {
       // width: 100%;
+      .not-selected {
+        p {
+          margin-top: 10px;
+        }
+      }
       margin-left: 380px;
       .basic-contain{
         margin-bottom: 20px;

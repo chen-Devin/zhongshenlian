@@ -19,9 +19,9 @@
         </thead>
         <tbody>
           <tr v-for="(item, index) in expensesList" @click="checkDetail(item)">
-            <td class="text-left">{{ item.companyName }}</td>
-            <td class="text-left">{{ item.departmentName }}</td>
-            <td class="text-left">{{ item.applicantName }}</td>
+            <td class="text-left">{{ item.companyName || '暂无' }}</td>
+            <td class="text-left">{{ item.departmentName || '暂无' }}</td>
+            <td class="text-left">{{ item.applicantName || '暂无' }}</td>
             <td class="text-left">
               <span v-if="item.type === 'contractR'">合同报销</span>
               <span v-else-if="item.type === 'nonContractR'">非合同报销</span>

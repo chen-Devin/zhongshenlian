@@ -40,9 +40,6 @@
             <p>项目申请人电话：{{business.proposer.tele}}</p>       
           </el-col>
         </el-row>
-       <!--  <el-row>
-          <p v-for="auditedUnit in business.beingAuditedUnit">被审计单位：{{ auditedUnit.unit }}</p>
-        </el-row> -->
         <el-row>
           <el-col :span="15">
             <el-form-item label="被审计单位：" required label-width="110px">
@@ -73,11 +70,6 @@
         </el-row>
         <hr>
         <el-row>
-          <!-- <el-form-item label="出具报告类型：" label-width = "110px">
-            <div> 
-              <p v-html="reportFormat"></p>
-            </div>
-          </el-form-item> -->
           <div class="d-f">
             <p style="width:100px;">出具报告类型：</p>
             <div class="check-wrap">
@@ -94,7 +86,6 @@
       </div>
       <div class="basic-message" v-if="showMore" style="border: none">
         <el-row>
-          <!-- <el-col :span="8" v-if="business.auditTime.exist"> -->
           <el-col :span="8">
             <p>审计期间：{{business.auditTime.start}} 至 {{business.auditTime.end}}</p>
           </el-col>
@@ -112,7 +103,6 @@
           <el-col :span="8">
             <p>参审助理：{{ reviewAssistantsName }}</p>           
           </el-col>
-          <!-- <el-col :span="8" v-if="business.auditTime.exist"> -->
           <el-col :span="8">
             <p>上次报告事务所：{{business.lastOffice}}</p>
           </el-col>
@@ -236,68 +226,6 @@
         <img src="../../img/arrow-down.png">
       </div>
     </div>
-    <div class="basic-message" style="border: none">
-      <!-- <el-row  v-if="contractUploadShow">
-        <el-col :span="2">
-          <label class="control-label">正式合同</label>
-        </el-col>
-        <el-col :span="22">
-          <el-upload 
-             :multiple="false"
-             :action="contractUpload.URL"
-             :on-progress="contractUploadProgress"
-             :on-success="contractUploadSuccess"
-             :show-file-list="false">
-          <button class="btn my-btn submit-btn"
-                  type="button"
-                  :disabled="contractUpload.progressShow">点击上传</button>
-          <span slot="tip" class="text-info">&emsp;文件大小建议不超过3Mb</span>
-          </el-upload>
-          <label class="control-label"></label>
-          <div>
-            <div class="progress-wrap" v-show="contractUpload.progressShow">
-              <div class="progress">
-                <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: contractUpload.percentage}">
-                  {{contractUpload.percentage}}
-                </div>
-              </div>
-            </div>
-          </div>
-          <label class="control-label"></label>
-          <div>
-            <ul class="com-list attachment-list list-group">
-              <li class="list-group-item"
-                  v-for="(FILE,index) in business.contracts"
-                  :key="index">
-                <span class="fa fa-file-text-o"></span>
-                <a class="text-primary title"
-                   :href="FILE.url"
-                   target="_blank">{{FILE.name}}</a>
-                <a class="text-danger pull-right"
-                   @click="contractDelFile(FILE)"><i class="fa fa-times"></i></a>
-              </li>
-            </ul>
-          </div>
-        </el-col>
-      </el-row> -->
-      <!-- <el-row>
-        <el-col :span="2" v-if="contractFileShow">
-          <label class="control-label">正式合同</label>
-        </el-col>
-        <el-col :span="22">
-          <ul class=" com-list attachment-list list-group">
-            <li class="list-group-item"
-                v-for="(FILE,index) in business.contracts"
-                :key="index">
-              <span class="fa fa-file-text-o"></span>
-              <a class="text-primary title"
-                 :href="FILE.url"
-                 target="_blank">{{FILE.name}}</a>
-            </li>
-          </ul>
-        </el-col>
-      </el-row> -->
-    </div>
   </el-form>
 </template>
 
@@ -410,33 +338,6 @@ export default {
       type: 'electronicContract'
     };
     this.contractUpload.URL = '/fileUpload?data=' + JSON.stringify(data);
-
-    // if (this.user.department === '业务部') {
-    //   this.paths.push({ name: '待处理项目', url: '/business-handle-list-sales', present: false });
-    //   this.paths.push({ name: '项目详情', url: `/business-handle-detail-sales-${this.$route.params.id}/business-profile`, present: false });
-    //   this.paths.push({ name: '项目概况', url: `/business-handle-detail-sales-${this.$route.params.id}/business-profile`, present: true });
-    // } else if (this.user.department === '风险评估部') {
-    //   this.paths.push({ name: '待复审项目', url: '/business-handle-list-risk', present: false });
-    //   this.paths.push({ name: '项目详情', url: `/business-handle-detail-risk-${this.$route.params.id}/business-profile`, present: false });
-    //   this.paths.push({ name: '项目概况', url: `/business-handle-detail-risk-${this.$route.params.id}/business-profile`, present: true });
-    // } else if (this.user.department === '所长') {
-    //   this.paths.push({ name: '待处理项目', url: '/business-handle-list-leader', present: false });
-    //   this.paths.push({ name: '项目详情', url: `/business-handle-detail-leader-${this.$route.params.id}/business-profile`, present: false });
-    //   this.paths.push({ name: '项目概况', url: `/business-handle-detail-leader-${this.$route.params.id}/business-profile`, present: true });
-    // } else if (this.user.department === '办公室') {
-    //   this.paths.push({ name: '待完结项目', url: '/business-handle-list-office', present: false });
-    //   this.paths.push({ name: '项目详情', url: `/business-handle-detail-office-${this.$route.params.id}/business-profile`, present: false });
-    //   this.paths.push({ name: '项目概况', url: `/business-handle-detail-office-${this.$route.params.id}/business-profile`, present: true });
-    // } else if (this.user.department === '财务部') {
-    //   this.paths.push({ name: '待开发票', url: '/business-handle-list-financial', present: false });
-    //   this.paths.push({ name: '项目详情', url: `/business-handle-detail-financial-${this.$route.params.id}/business-profile`, present: false });
-    //   this.paths.push({ name: '项目概况', url: `/business-handle-detail-financial-${this.$route.params.id}/business-profile`, present: true });
-    // } else if (this.user.department === '档案部') {
-    //   this.paths.push({ name: '待处理项目', url: '/business-handle-list-archives', present: false });
-    //   this.paths.push({ name: '项目详情', url: `/business-handle-detail-archives-${this.$route.params.id}/business-profile`, present: false });
-    //   this.paths.push({ name: '项目概况', url: `/business-handle-detail-archives-${this.$route.params.id}/business-profile`, present: true });
-    // }
-    // this.$emit('pathsChan', this.paths);
   },
   methods: {
     wordsMap(words) {

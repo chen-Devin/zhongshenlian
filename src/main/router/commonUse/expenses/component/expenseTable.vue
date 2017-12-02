@@ -47,14 +47,8 @@
             </td>
           </tr>
           <tr>
-            <td class="table-label">总计金额：</td>
+            <td class="table-label">合计金额：</td>
             <td colspan="3">
-              <!-- <el-input 
-                v-model="reimbursementInfo.totalAmount" 
-                placeholder="请填写总计金额" 
-                type="number" 
-                v-if="editAble"
-                @change="changeTotalAmount"></el-input> -->
               <p>{{ totalAmount }}</p> 
             </td>
           </tr>
@@ -81,7 +75,7 @@
                   :value="item">
                 </el-option>
               </el-select>
-              <p v-else>{{reimbursementInfo.expenditureProject.join('、')}}</p>
+              <p v-else>{{ reimbursementInfo.expenditureProject }}</p>
             </td>
             <td class="table-label">报销金额：</td>
             <td>
@@ -108,24 +102,40 @@ export default {
   data() {
     return {
       reason: '',
-      startDate: '',
-      expenditureProjects: [
-        '项目通讯',
-        '项目修理',
-        '项目其他',
-        '项目资产',
-        '职工培训费',
-        '管理耗材',
-        '管理消耗',
-        '管理通讯',
-        '管理修理',
-        '管理房租',
-        '管理水电气',
-        '管理其他',
-        '管理资产',
-        '财务费'
-      ]
-    };
+      startDate: ''
+    }
+  },
+  computed: {
+    expenditureProjects() {
+      if (this.reimbursementInfo.submitType === 'projectR') {
+        return  [
+          '咨询服务费',
+          '劳务费',
+          '过路费',
+          '汽油费',
+          '其他'
+        ]
+      } else if (this.reimbursementInfo.submitType === 'personalR' || this.reimbursementInfo.submitType === 'publicR') {
+        return  [
+          '办公费',
+          '通讯费',
+          '晒鼓纸',
+          '硬盘U盘',
+          '低值易耗品',
+          '购置资产',
+          '修理费',
+          '房租',
+          '水电费',
+          '物业费',
+          '财务费',
+          '协会费用',
+          '业务招待费',
+          '其他'
+        ]
+      } else {
+        return []
+      }
+    }
   },
   props: ['type', 'editAble', 'reimbursementInfo', 'totalAmount']
 }

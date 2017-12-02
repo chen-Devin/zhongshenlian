@@ -125,7 +125,7 @@
             附件张数
           </el-col>
           <el-col :span="4">
-            金额
+            小计
           </el-col>
           <el-col :span="4">
             单笔金额
@@ -151,14 +151,8 @@
             <p v-else>{{ reimbursementInfo.transportationBillingNum }}张</p>
           </el-col>
           <el-col :span="4">
-            <el-input 
-              v-model="reimbursementInfo.transportationTotalFee" 
-              placeholder="请填写金额" 
-              type="number"
-              v-if="editAble">
-                <template slot="append">元</template>
-              </el-input>
-            <p v-else>{{ reimbursementInfo.transportationTotalFee }}元</p>
+            <div v-if="editAble">{{ transportationTotalFee }}元</div>
+            <p v-else>{{ transportationTotalFee }}元</p>
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.travelRArray" :key="index" class="each">
@@ -226,14 +220,8 @@
             <p v-else>{{ reimbursementInfo.stayBillingNum }}张</p>
           </el-col>
           <el-col :span="4">
-            <el-input 
-              v-model="reimbursementInfo.stayTotalFee" 
-              placeholder="请填写金额"
-              type="number" 
-              v-if="editAble">
-                <template slot="append">元</template>
-              </el-input> 
-            <p v-else>{{ reimbursementInfo.stayTotalFee }}元</p>
+            <div v-if="editAble">{{ stayTotalFee }}元</div>
+            <p v-else>{{ stayTotalFee }}元</p>
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.stayRArray" :key="index" class="each">
@@ -301,14 +289,8 @@
             <p v-else>{{ reimbursementInfo.localMealsBillingNum }}张</p>
           </el-col>
           <el-col :span="4">
-            <el-input 
-              v-model="reimbursementInfo.localMealsTotalFee" 
-              placeholder="请填写金额"
-              type="number" 
-              v-if="editAble">
-                <template slot="append">元</template>
-              </el-input>
-            <p v-else>{{ reimbursementInfo.localMealsTotalFee }}元</p>
+            <div v-if="editAble">{{ localMealsTotalFee }}元</div>
+            <p v-else>{{ localMealsTotalFee }}元</p>
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.localRArray" :key="index" class="each">
@@ -376,14 +358,8 @@
             <p v-else>{{ reimbursementInfo.fieldMealsBillingNum }}张</p>
           </el-col>
           <el-col :span="4">
-            <el-input 
-              v-model="reimbursementInfo.fieldMealsTotalFee" 
-              placeholder="请填写金额"
-              type="number" 
-              v-if="editAble">
-                <template slot="append">元</template>
-              </el-input>
-            <p v-else>{{ reimbursementInfo.fieldMealsTotalFee }}元</p>
+            <div v-if="editAble">{{ localMealsTotalFee }}元</div>
+            <p v-else>{{ localMealsTotalFee }}元</p>
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.fieldRArray" :key="index" class="each">
@@ -688,8 +664,36 @@ export default {
         return true
       }
     },
+    transportationTotalFee () {
+      let total = 0
+      this.reimbursementInfo.travelRArray.forEach((item) => {
+        total = Number(total) + Number(item.amount)
+      })
+      return total
+    },
+    stayTotalFee () {
+      let total = 0
+      this.reimbursementInfo.stayRArray.forEach((item) => {
+        total = Number(total) + Number(item.amount)
+      })
+      return total
+    },
+    localMealsTotalFee () {
+      let total = 0
+      this.reimbursementInfo.localRArray.forEach((item) => {
+        total = Number(total) + Number(item.amount)
+      })
+      return total
+    },
+    fieldMealsTotalFee () {
+      let total = 0
+      this.reimbursementInfo.fieldRArray.forEach((item) => {
+        total = Number(total) + Number(item.amount)
+      })
+      return total
+    },
     totalAmount () {
-      let total = Number(this.reimbursementInfo.transportationTotalFee) + Number(this.reimbursementInfo.stayTotalFee) + Number(this.reimbursementInfo.localMealsTotalFee) + Number(this.reimbursementInfo.fieldMealsTotalFee)
+      let total = Number(this.transportationTotalFee) + Number(this.stayTotalFee) + Number(this.localMealsTotalFee) + Number(this.fieldMealsTotalFee)
       return total.toFixed(2)
     }
   },
@@ -1066,7 +1070,7 @@ export default {
     addOrEditReimbursement () {
       let flag = 0
       if (this.reimbursementInfo.submitType === 'contractR') {
-        if (this.totalAmount > Number(this.reimbursementInfo.contractAmount) * 0.1) {
+        if (this.totalAmount > Number(this.reimbursementInfo.contractAmount) * 0.09) {
           this.warnModalShow = true
         } else {
           flag = 1
