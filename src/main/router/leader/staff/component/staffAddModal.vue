@@ -213,6 +213,7 @@ export default {
     },
     save () {
       let type = 1
+      var staffCompanyName = ''
       if (this.departmentSelected === '') {
         type = 1
       } else if (this.projectSelected === '') {
@@ -222,7 +223,12 @@ export default {
       } else {
         type = 4
       }
-      this.$emit('saveNewStaff', [type, this.companySelected, this.departmentSelected, this.projectSelected, this.groupSelected])
+      this.companyList.forEach((item) => {
+        if (item.id === this.companySelected) {
+          staffCompanyName = item.name
+        }
+      })
+      this.$emit('saveNewStaff', [type, this.companySelected, this.departmentSelected, this.projectSelected, this.groupSelected], staffCompanyName)
     },
     cancel() {
       this.cancelShow = false

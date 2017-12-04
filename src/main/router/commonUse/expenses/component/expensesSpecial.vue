@@ -195,10 +195,11 @@
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.electricRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" v-if="editAble">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble && paper">
                 <template slot="append">元</template>
               </el-input>
-              <p v-else>{{ each.amount }}元</p>
+              <div v-if="editAble && electric">{{ each.amount }}元</div>
+              <p v-if="!editAble">{{ each.amount }}元</p>
             </div>
           </el-col>
           <el-col :span="7">
@@ -210,7 +211,7 @@
                 <button class="btn my-btn submit-btn"
                         type="button"
                         slot="trigger"
-                        :disabled="!item.amount" @click="selIndex(index)">点击上传</button>
+                        @click="selIndex(index)">点击上传</button>
                 <span slot="tip"
                       class="text-info" v-if="item.state.notUpload">&emsp;文件大小建议不超过3Mb</span>
                 <span slot="tip"
@@ -315,7 +316,7 @@ export default {
         paperRArray: [
           {
             id: '',
-            amount: ''
+            amount: 0
           }
         ],
         electricInvoiceNum: 1,
@@ -323,7 +324,7 @@ export default {
         electricRArray: [
           {
             id: '',
-            amount: '',
+            amount: 0,
             annexUrl: '',
             uploadURL: '',
             path: '',
@@ -593,7 +594,7 @@ export default {
           this.reimbursementInfo.paperRArray.push(
             {
               id: '',
-              amount: ''
+              amount: 0
             }
           )
         }
@@ -603,7 +604,7 @@ export default {
           this.reimbursementInfo.electricRArray.push(
             {
               id: '',
-              amount: '',
+              amount: 0,
               annexUrl: '',
               uploadURL: '',
               state: {
@@ -704,6 +705,9 @@ export default {
         this.reimbursementInfo.electricRArray[this.uploadIndex].path = response.data.path
         this.reimbursementInfo.electricRArray[this.uploadIndex].name = response.data.name
         this.reimbursementInfo.id = response.data.id
+        if (this.electric) {
+          this.reimbursementInfo.electricRArray[this.uploadIndex].amount = response.data.amount
+        }
       } else {
         this.reimbursementInfo.electricRArray[this.uploadIndex].state.uploadFail = true
       }

@@ -61,7 +61,7 @@
             :type="type"
             :isNew="isNew"
             :canEdit="canEdit"
-            :staffCompanyId="staffCompanyId"
+            :staffCompanyName="staffCompanyName"
             @reloadDetail="reloadDetail"
             @cancelNew="cancelNew"
             @deleteSuccess="deleteSuccess"
@@ -133,7 +133,7 @@ export default {
   data() {
     return {
       isNew: [false],
-      staffCompanyId: '',
+      staffCompanyName: '',
       paths1: [
         { name: '职员管理', url: '/staff-management-author', present: false },
         { name: '职能部门', url: '/staff-management-author', present: true }
@@ -285,7 +285,8 @@ export default {
       this.searchObj = obj
       this.staffFilter()
     },
-    saveNewStaff (type) {
+    saveNewStaff (type, staffCompanyName) {
+      this.staffCompanyName = staffCompanyName
       if (type[0] === 0) {
         this.type = 'function'
       } else {
@@ -488,7 +489,6 @@ export default {
           this.staffFilterType = 'department'
         } else if (this.departActive) {
           this.staffFilterType = 'company'
-          this.staffCompanyId = data.id
         }
       } else if (data.level === 3) {
         this.staffFilterType = 'companyDepartment'

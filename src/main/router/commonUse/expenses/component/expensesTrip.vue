@@ -156,10 +156,11 @@
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.travelRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble && paper">
                 <template slot="append">元</template>
               </el-input>
-              <p v-else>{{ each.amount }}元</p>
+              <div v-if="editAble && electric">{{ each.amount }}元</div>
+              <p v-if="!editAble">{{ each.amount }}元</p>
             </div>
           </el-col>
           <el-col :span="7" v-if="electric && !editAble">
@@ -176,7 +177,7 @@
                 <button class="btn my-btn submit-btn"
                         type="button"
                         slot="trigger"
-                        :disabled="!item.amount" @click="selIndex(index, 'transportation')">点击上传</button>
+                        @click="selIndex(index, 'transportation')">点击上传</button>
                 <span slot="tip"
                       class="text-info" v-if="item.state.notUpload">&emsp;文件大小建议不超过3Mb</span>
                 <span slot="tip"
@@ -225,10 +226,11 @@
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.stayRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble && paper">
                 <template slot="append">元</template>
               </el-input>
-              <p v-else>{{ each.amount }}元</p>
+              <div v-if="editAble && electric">{{ each.amount }}元</div>
+              <p v-if="!editAble">{{ each.amount }}元</p>
             </div>
           </el-col>
           <el-col :span="7" v-if="electric && !editAble">
@@ -245,7 +247,7 @@
                 <button class="btn my-btn submit-btn"
                         type="button"
                         slot="trigger"
-                        :disabled="!item.amount" @click="selIndex(index, 'stay')">点击上传</button>
+                        @click="selIndex(index, 'stay')">点击上传</button>
                 <span slot="tip"
                       class="text-info" v-if="item.state.notUpload">&emsp;文件大小建议不超过3Mb</span>
                 <span slot="tip"
@@ -294,10 +296,11 @@
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.localRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble && paper">
                 <template slot="append">元</template>
               </el-input>
-              <p v-else>{{ each.amount }}元</p>
+              <div v-if="editAble && electric">{{ each.amount }}元</div>
+              <p v-if="!editAble">{{ each.amount }}元</p>
             </div>
           </el-col>
           <el-col :span="7" v-if="electric && !editAble">
@@ -314,7 +317,7 @@
                 <button class="btn my-btn submit-btn"
                         type="button"
                         slot="trigger"
-                        :disabled="!item.amount" @click="selIndex(index, 'local')">点击上传</button>
+                        @click="selIndex(index, 'local')">点击上传</button>
                 <span slot="tip"
                       class="text-info" v-if="item.state.notUpload">&emsp;文件大小建议不超过3Mb</span>
                 <span slot="tip"
@@ -358,15 +361,16 @@
             <p v-else>{{ reimbursementInfo.fieldMealsBillingNum }}张</p>
           </el-col>
           <el-col :span="4">
-            <div v-if="editAble">{{ localMealsTotalFee }}元</div>
-            <p v-else>{{ localMealsTotalFee }}元</p>
+            <div v-if="editAble">{{ fieldMealsTotalFee }}元</div>
+            <p v-else>{{ fieldMealsTotalFee }}元</p>
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.fieldRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble && paper">
                 <template slot="append">元</template>
               </el-input>
-              <p v-else>{{ each.amount }}元</p>
+              <div v-if="editAble && electric">{{ each.amount }}元</div>
+              <p v-if="!editAble">{{ each.amount }}元</p>
             </div>
           </el-col>
           <el-col :span="7" v-if="electric && !editAble">
@@ -383,7 +387,7 @@
                 <button class="btn my-btn submit-btn"
                         type="button"
                         slot="trigger"
-                        :disabled="!item.amount" @click="selIndex(index, 'field')">点击上传</button>
+                        @click="selIndex(index, 'field')">点击上传</button>
                 <span slot="tip"
                       class="text-info" v-if="item.state.notUpload">&emsp;文件大小建议不超过3Mb</span>
                 <span slot="tip"
@@ -993,6 +997,9 @@ export default {
             this.reimbursementInfo.travelRArray[this.uploadIndex].path = response.data.path
             this.reimbursementInfo.travelRArray[this.uploadIndex].name = response.data.name
             this.reimbursementInfo.id = response.data.id
+            if (this.electric) {
+              this.reimbursementInfo.travelRArray[this.uploadIndex].amount = response.data.amount
+            }
           } else {
             this.reimbursementInfo.travelRArray[this.uploadIndex].state.uploadFail = true
           }
@@ -1009,6 +1016,9 @@ export default {
             this.reimbursementInfo.stayRArray[this.uploadIndex].path = response.data.path
             this.reimbursementInfo.stayRArray[this.uploadIndex].name = response.data.name
             this.reimbursementInfo.id = response.data.id
+            if (this.electric) {
+              this.reimbursementInfo.stayRArray[this.uploadIndex].amount = response.data.amount
+            }
           } else {
             this.reimbursementInfo.stayRArray[this.uploadIndex].state.uploadFail = true
           }
@@ -1025,6 +1035,9 @@ export default {
             this.reimbursementInfo.localRArray[this.uploadIndex].path = response.data.path
             this.reimbursementInfo.localRArray[this.uploadIndex].name = response.data.name
             this.reimbursementInfo.id = response.data.id
+            if (this.electric) {
+              this.reimbursementInfo.localRArray[this.uploadIndex].amount = response.data.amount
+            }
           } else {
             this.reimbursementInfo.localRArray[this.uploadIndex].state.uploadFail = true
           }
@@ -1041,6 +1054,9 @@ export default {
             this.reimbursementInfo.fieldRArray[this.uploadIndex].path = response.data.path
             this.reimbursementInfo.fieldRArray[this.uploadIndex].name = response.data.name
             this.reimbursementInfo.id = response.data.id
+            if (this.electric) {
+              this.reimbursementInfo.fieldRArray[this.uploadIndex].amount = response.data.amount
+            }
           } else {
             this.reimbursementInfo.fieldRArray[this.uploadIndex].state.uploadFail = true
           }

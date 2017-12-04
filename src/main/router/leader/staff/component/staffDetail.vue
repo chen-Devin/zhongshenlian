@@ -392,18 +392,19 @@ export default {
       return y + '-' + m + '-' + d
     },
     getSingleSubjectsOption () {
-      var companyId = 0
+      console.log('debug')
+      var companyName = 0
       if (this.isNew[0] === false) {
         if (this.type === 'department') {
-          companyId = this.staffCompanyId
+          companyName = this.staff.companyName
         } else {
-          companyId = 0
+          companyName = ''
         }
       } else {
         if (this.type === 'department') {
-          companyId = this.isNew[1]
+          companyName = this.staffCompanyName
         } else {
-          companyId = 0
+          companyName = ''
         }
       }
       return new Promise((resolve, reject) => {
@@ -416,7 +417,7 @@ export default {
               var obj = {
                 command: 'getSingleSubjectsOption',
                 platform: 'web',
-                companyId: companyId
+                companyName: companyName
               }
               return JSON.stringify(obj);
             })()
@@ -715,7 +716,7 @@ export default {
       })
     }
   },
-  props: ['type', 'iniStaff', 'isNew', 'canEdit', 'staffCompanyId'],
+  props: ['type', 'iniStaff', 'isNew', 'canEdit', 'staffCompanyName'],
   created () {
     this.getSingleSubjectsOption()
     if (this.isNew[0] !== false) {

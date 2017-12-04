@@ -92,7 +92,7 @@ export default {
       })
     },
     save () {
-      this.$emit('saveNewStaff', [0, this.companySelected])
+      this.$emit('saveNewStaff', [0, this.companySelected], '')
     },
     cancel() {
       this.cancelShow = false;
