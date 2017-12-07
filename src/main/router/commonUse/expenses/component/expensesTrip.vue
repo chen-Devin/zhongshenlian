@@ -188,7 +188,7 @@
                       {{ item.percentage }}%
                       </span>
                 <span slot="tip"
-                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>上传失败，请重试</span>
+                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>{{ item.uploadFailInfo }}</span>
                 <span slot="tip"
                       class="text-info" v-if="item.state.uploaded">&emsp;<i class="el-icon-check"></i>已上传</span>
                 <span slot="tip"
@@ -258,7 +258,7 @@
                       {{ item.percentage }}%
                       </span>
                 <span slot="tip"
-                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>上传失败，请重试</span>
+                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>{{ item.uploadFailInfo }}</span>
                 <span slot="tip"
                       class="text-info" v-if="item.state.uploaded">&emsp;<i class="el-icon-check"></i>已上传</span>
                 <span slot="tip"
@@ -328,7 +328,7 @@
                       {{ item.percentage }}%
                       </span>
                 <span slot="tip"
-                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>上传失败，请重试</span>
+                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>{{ item.uploadFailInfo }}</span>
                 <span slot="tip"
                       class="text-info" v-if="item.state.uploaded">&emsp;<i class="el-icon-check"></i>已上传</span>
                 <span slot="tip"
@@ -398,7 +398,7 @@
                       {{ item.percentage }}%
                       </span>
                 <span slot="tip"
-                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>上传失败，请重试</span>
+                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>{{ item.uploadFailInfo }}</span>
                 <span slot="tip"
                       class="text-info" v-if="item.state.uploaded">&emsp;<i class="el-icon-check"></i>已上传</span>
                 <span slot="tip"
@@ -509,6 +509,7 @@ export default {
             amount: 0,
             annexUrl: '',
             uploadURL: '',
+            uploadFailInfo: '上传失败，请重试',
             state: {
               notUpload: true,
               uploading: false,
@@ -527,6 +528,7 @@ export default {
             amount: 0,
             annexUrl: '',
             uploadURL: '',
+            uploadFailInfo: '上传失败，请重试',
             state: {
               notUpload: true,
               uploading: false,
@@ -545,6 +547,7 @@ export default {
             amount: 0,
             annexUrl: '',
             uploadURL: '',
+            uploadFailInfo: '上传失败，请重试',
             state: {
               notUpload: true,
               uploading: false,
@@ -563,6 +566,7 @@ export default {
             amount: 0,
             annexUrl: '',
             uploadURL: '',
+            uploadFailInfo: '上传失败，请重试',
             state: {
               notUpload: true,
               uploading: false,
@@ -708,7 +712,6 @@ export default {
           this.reimbursementInfo.contractAmount = item.contractAmount
         }
       })
-      console.log(val)
     },
     agree () {
       this.handleReimbursement('通过', '').then(() => {
@@ -1002,6 +1005,7 @@ export default {
             }
           } else {
             this.reimbursementInfo.travelRArray[this.uploadIndex].state.uploadFail = true
+            this.reimbursementInfo.travelRArray[this.uploadIndex].uploadFailInfo = response.msg
           }
           break;
         case 'stay':
@@ -1021,6 +1025,7 @@ export default {
             }
           } else {
             this.reimbursementInfo.stayRArray[this.uploadIndex].state.uploadFail = true
+            this.reimbursementInfo.stayRArray[this.uploadIndex].uploadFailInfo = response.msg
           }
           break;
         case 'local':
@@ -1040,6 +1045,7 @@ export default {
             }
           } else {
             this.reimbursementInfo.localRArray[this.uploadIndex].state.uploadFail = true
+            this.reimbursementInfo.localRArray[this.uploadIndex].uploadFailInfo = response.msg
           }
           break;
         case 'field':
@@ -1059,6 +1065,7 @@ export default {
             }
           } else {
             this.reimbursementInfo.fieldRArray[this.uploadIndex].state.uploadFail = true
+            this.reimbursementInfo.fieldRArray[this.uploadIndex].uploadFailInfo = response.msg
           }
           break;
         default: 

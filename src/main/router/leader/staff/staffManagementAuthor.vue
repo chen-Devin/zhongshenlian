@@ -110,6 +110,14 @@
       @saveNewStaff="saveNewStaff" 
       @cancel="cancel" 
       v-if="addFuncShow"></function-staff-add>
+    <modal v-if="modifySuccessInfo">
+      <div slot="body">
+        成员已成功移动，TA的职位或权限可能被清空，请到其新部门查看
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn draft-btn" @click="modifySuccessInfo=false">返回</button>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -142,6 +150,7 @@ export default {
         { name: '职员管理', url: '/staff-management-author', present: false },
         { name: '业务部门', url: '/staff-management-author', present: true }
       ],
+      modifySuccessInfo: false,
       reloadSearch: true,
       departments: [],
       canEdit: {
@@ -514,6 +523,7 @@ export default {
       this.staffFilter()
     },
     modifySuccess (value) {
+      this.modifySuccessInfo = true,
       this.staffFilter()
       this.reloadStaffList = false
       this.reloadStaffList = true
@@ -559,6 +569,7 @@ export default {
   components: {
     crumbs,
     card,
+    modal,
     TreeDataHandle,
     staffDetail,
     authoritySet,

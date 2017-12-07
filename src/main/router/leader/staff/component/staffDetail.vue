@@ -567,7 +567,6 @@ export default {
       } else {
         this.expireTime = this.staff.expireTime
       }
-      console.log('save', this.professionalCertificateArray)
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },

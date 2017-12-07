@@ -107,7 +107,8 @@
         </el-row> 
         <el-row>
           <el-col :span="8">
-            <p>提交人所在部门：{{user.telephone}}</p>
+            <p v-if="!editable">提交人所在部门：{{business.applicantDepartment}}</p>
+            <p v-else>提交人所在部门：{{user.companyDepartment}}</p>
           </el-col>
           <el-col :span="16">
             <el-form-item label="计划工期：" required v-if="editable">
@@ -223,7 +224,7 @@
             </el-form-item>
             <p v-else>
               <span v-if="business.report.usage">报告用途：{{business.report.usage}}</span>
-              <span v-esle>报告用途：暂无</span>
+              <span v-else>报告用途：暂无</span>
             </p>
           </el-col>
         </el-row>
@@ -701,45 +702,15 @@ export default {
       })
       return arr.join('、')
     },
-    // getBussinessUnitUserList () {
-    //   return new Promise((resolve, reject) => {
-    //     axios({
-    //       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-    //       method: 'get',
-    //       url: '/service',
-    //       params: {
-    //         data: (() => {
-    //           let obj = {
-    //             command: 'getBussinessUnitUserList',
-    //             platform: 'web',
-    //             pageNum: 1
-    //           }
-    //           return JSON.stringify(obj);
-    //         })()
-    //       }
-    //     }).then((rep) => {
-    //       if (rep.data.statusCode === '10001') {
-    //         // this.$message.success(rep.data.msg)
-    //         this.staffArray = rep.data.data.userArray
-    //         this.staffArray.forEach((item) => {
-    //           item.checked = false
-    //         })
-    //         resolve('done');
-    //       } else {
-    //         this.$message.error(rep.data.msg)
-    //       }
-    //     }, (rep) => { });
-    //   })
-    // },
     currencyMask,
-    selected (type, val) {
-      console.log(val)
+    selected (type, name, id) {
       if (type === '项目经理') {
-        this.business.manager.name = val
+        this.business.manager.id = id
+        this.business.manager.name = name
       } else if (type === '参审注师') {
-        this.business.reviewCPA = val
+        this.business.reviewCPA = name
       } else if (type === '参审助理') {
-        this.business.reviewAssistant = val
+        this.business.reviewAssistant = name
       }
       this.cancel()
     },
@@ -753,7 +724,6 @@ export default {
           this.staffModalIdentity = '参审注师'
           this.staffModalSelect = 'check'
           let arr = []
-          console.log(this.business.reviewCPA)
           this.business.reviewCPA.forEach((item) => {
             arr.push(item.id)
           })
@@ -912,6 +882,7 @@ export default {
                   applicantId: this.user.id,
                   applicantName: this.user.name,
                   applicantPhone: this.user.telephone,
+                  applicantDepartment: this.user.companyDepartment,
                   contractNo: this.business.number,
                   requester: this.business.institution.customerName,
                   requesterId: this.business.institution.id,
@@ -1071,7 +1042,7 @@ export default {
                     applicantId: this.user.id,
                     applicantName: this.user.name,
                     applicantPhone: this.user.telephone,
-
+                    applicantDepartment: this.user.companyDepartment,
                     contractNo: this.business.number,
                     requester: this.business.institution.customerName,
                     requesterId: this.business.institution.id,

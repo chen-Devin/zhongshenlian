@@ -1,7 +1,7 @@
 <template>
   <modal class="select-staff-modal" modalWidth="600px" :setPadding="paddingValue">
     <div slot="body">
-      <div class="list-header">
+      <div class="list-header ta-l">
         <span>
           选择{{ staffModalIdentity }}
         </span>
@@ -14,12 +14,12 @@
         <table class="table table-bordered" v-if="showTable">
           <thead>
             <tr>
-              <th v-if="radio">单选</th>
-              <th v-else>多选</th>
-              <th>姓名</th>
-              <th>职务</th>
-              <th>所属部门</th>
-              <th>公司简称</th>
+              <th class="ta-c" v-if="radio">单选</th>
+              <th class="ta-c" v-else>多选</th>
+              <th class="ta-c">姓名</th>
+              <th class="ta-c">职务</th>
+              <th class="ta-c">所属部门</th>
+              <th class="ta-c">公司简称</th>
             </tr>
           </thead>
           <tbody>
@@ -27,14 +27,14 @@
               v-for="(staff, index) in staffArray"
               :key="index">
               <td v-if="radio">
-                <el-radio :label="staff.name" v-model="staffRadio">{{ emptyString }}</el-radio>
+                <el-radio :label="staff.id" v-model="staffRadio">{{ emptyString }}</el-radio>
               </td>
               <td v-else>
                 <input type="checkbox" v-model="staff.checked">
               </td>
               <td>{{ staff.name }}</td>
-              <td>{{ staff.duty }}</td>
-              <td>{{ staff.department }}</td>
+              <td>{{ staff.duties }}</td>
+              <td>{{ staff.companyDepartment }}</td>
               <td>{{ staff.companyName }}</td>
             </tr>
           </tbody>
@@ -87,37 +87,72 @@ export default {
       }, 1000)
     },
     getBussinessUnitUserList () {
-      return new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              let obj = {
-                command: 'getBussinessUnitUserList',
-                platform: 'web',
-                pageNum: 'all'
-              }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.staffArray = rep.data.data.userArray
-            this.staffArray.forEach((item) => {
-              item.checked = false
-            })
-            resolve('done');
-          } else {
-            this.$message.error(rep.data.msg)
-          }
-        }, (rep) => { });
-      })
+      if (this.staffModalIdentity === '项目经理') {
+        return new Promise((resolve, reject) => {
+          axios({
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+            method: 'get',
+            url: '/service',
+            params: {
+              data: (() => {
+                let obj = {
+                  command: 'getUserListOfAComDepartment',
+                  platform: 'web'
+                }
+                return JSON.stringify(obj);
+              })()
+            }
+          }).then((rep) => {
+            if (rep.data.statusCode === '10001') {
+              this.staffArray = rep.data.data.userArray
+              this.staffArray.forEach((item) => {
+                item.checked = false
+              })
+              resolve('done');
+            } else {
+              this.$message.error(rep.data.msg)
+            }
+          }, (rep) => { });
+        })
+      } else {
+        return new Promise((resolve, reject) => {
+          axios({
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+            method: 'get',
+            url: '/service',
+            params: {
+              data: (() => {
+                let obj = {
+                  command: 'getBussinessUnitUserList',
+                  platform: 'web',
+                  pageNum: 'all'
+                }
+                return JSON.stringify(obj);
+              })()
+            }
+          }).then((rep) => {
+            if (rep.data.statusCode === '10001') {
+              this.staffArray = rep.data.data.userArray
+              this.staffArray.forEach((item) => {
+                item.checked = false
+              })
+              resolve('done');
+            } else {
+              this.$message.error(rep.data.msg)
+            }
+          }, (rep) => { });
+        })
+      }
     },
     submit () {
       if (this.staffModalSelect === 'radio') {
-        this.$emit('selected', this.staffModalIdentity, this.staffRadio)
+        var staffName = ''
+        this.staffArray.forEach((item) => {
+          if (item.id === this.staffRadio) {
+            staffName = item.name
+          }
+        })
+        this.$emit('selected', this.staffModalIdentity, staffName, this.staffRadio)
       } else if (this.staffModalSelect === 'check') {
         let checkList = []
         this.staffArray.forEach((item) => {
@@ -125,7 +160,7 @@ export default {
             checkList.push(item)
           }
         })
-        this.$emit('selected', this.staffModalIdentity, checkList)
+        this.$emit('selected', this.staffModalIdentity, checkList, '')
       }
     },
     cancel() {
@@ -162,6 +197,7 @@ export default {
 <style lang="sass" scoped>
   .select-staff-modal {
     .modal-body {
+      text-align: left;
       .list-header {
         width: 100%;
         height: 50px;

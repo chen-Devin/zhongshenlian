@@ -222,7 +222,7 @@
                       {{ item.percentage }}%
                       </span>
                 <span slot="tip"
-                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>上传失败，请重试</span>
+                      class="text-info" v-if="item.state.uploadFail">&emsp;<i class="el-icon-close"></i>{{ item.uploadFailInfo }}</span>
                 <span slot="tip"
                       class="text-info" v-if="item.state.uploaded">&emsp;<i class="el-icon-check"></i>已上传</span>
                 <span slot="tip"
@@ -327,6 +327,7 @@ export default {
             amount: 0,
             annexUrl: '',
             uploadURL: '',
+            uploadFailInfo: '上传失败，请重试',
             path: '',
             state: {
               notUpload: true,
@@ -710,6 +711,7 @@ export default {
         }
       } else {
         this.reimbursementInfo.electricRArray[this.uploadIndex].state.uploadFail = true
+        this.reimbursementInfo.electricRArray[this.uploadIndex].uploadFailInfo = response.msg
       }
     },
     uploadAmount (amount, type) {
