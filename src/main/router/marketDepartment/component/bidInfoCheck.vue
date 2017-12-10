@@ -120,8 +120,8 @@
               <el-input v-model="project.openBidPlace" :disabled="!editable" placeholder="请输入公告开标地点"></el-input>
             </el-form-item>
             <p v-else>
-              <span v-if="project.openBidPlace">公告开标地点：{{ project.openBidPlace }}</span>
-              <span v-else>公告开标地点：暂无</span>
+              <span>公告开标地点：{{ project.openBidPlace  || '暂无' }}</span>
+              <!-- <span v-else>公告开标地点：暂无</span> -->
             </p>
           </el-col>
         </el-row>

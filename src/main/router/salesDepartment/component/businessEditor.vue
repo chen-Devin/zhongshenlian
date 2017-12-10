@@ -1004,6 +1004,8 @@ export default {
             resolve(rep);
           } else if (rep.data.statusCode === '10012') {
             window.location.href = 'signIn.html';
+          } else {
+            this.$message.error(rep.data.msg)
           }
         }, (rep) => { });
       });
@@ -1164,6 +1166,8 @@ export default {
               resolve(rep);
             } else if (rep.data.statusCode === '10012') {
               window.location.href = 'signIn.html';
+            }  else {
+              this.$message.error(rep.data.msg)
             }
           }, (rep) => { });
         });

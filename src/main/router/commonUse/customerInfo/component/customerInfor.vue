@@ -26,7 +26,7 @@
             :key="index"
             @click.prevent="mod(CUSTOMER)">
           <td class="text-center link-wrap">{{CUSTOMER.customerName}}</td>
-          <td class="text-center">{{CUSTOMER.code}}</td>
+          <td class="text-center">{{CUSTOMER.code || '暂无'}}</td>
           <td class="text-center">
             {{CUSTOMER.setUpTime}}
           </td>

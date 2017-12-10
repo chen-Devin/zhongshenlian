@@ -4,7 +4,7 @@
     <!-- <div class="message-box">
       <side-message :user="user"></side-message>
     </div> -->    
-    <side-bar :user="user"></side-bar>
+    <side-bar></side-bar>
     <div class="page-main">
       <com-header :user="user"></com-header>
       <router-view class="main-contain" :user="user"></router-view>

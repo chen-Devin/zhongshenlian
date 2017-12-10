@@ -501,6 +501,7 @@ export default {
         summary: '',
         budgetCompanyId: '',
         budgetDepartmentId: '',
+        budgetDepartmentType: '',
         transportationTotalFee: 0,
         transportationBillingNum: 1,
         travelRArray: [
@@ -592,6 +593,7 @@ export default {
       classOptions: ['纸质发票报销', '电子发票报销'],
       companyList: [],
       departmentList: [],
+      companyArray: [],
       typeSelected: '',
       classSelected: '',
       companySelected: '',
@@ -813,6 +815,32 @@ export default {
         }, (rep) => { });
       })
     },
+    getFullCompanyList () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getInfoDepartmentList',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.companyArray = rep.data.data.departmentList
+            this.companyArray.forEach((item) => {
+              item.id = '00' + item.id
+            })
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
     getCompanyDepartmentListByCom () {
       return new Promise((resolve, reject) => {
         axios({
@@ -831,15 +859,19 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            this.departmentList = rep.data.data.departmentList
-            resolve('done');
+            resolve(rep.data.data.departmentList)
           }
         }, (rep) => { });
       })
     },
     companyChange () {
       this.reimbursementInfo.budgetDepartmentId = ''
-      this.getCompanyDepartmentListByCom()
+      this.reimbursementInfo.budgetDepartmentType = ''
+      this.getCompanyDepartmentListByCom().then((departmentList) => {
+        this.getFullCompanyList().then(() => {
+          this.departmentList = departmentList.concat(this.companyArray)
+        }, () => {})
+      }, () => {})
     },
     changeNumbers (item) {
       switch(item) {
@@ -1091,6 +1123,13 @@ export default {
       })
     },
     addOrEditReimbursement () {
+      let reg = /^00.*/
+      if (reg.test(this.reimbursementInfo.budgetDepartmentId)) {
+        this.reimbursementInfo.budgetDepartmentType = 'department'
+        this.reimbursementInfo.budgetDepartmentId = this.reimbursementInfo.budgetDepartmentId.slice(2)
+      } else {
+        this.reimbursementInfo.budgetDepartmentType = 'companyDepartment'
+      }
       let flag = 0
       if (this.reimbursementInfo.submitType === 'contractR') {
         if (this.totalAmount > Number(this.reimbursementInfo.contractAmount) * 0.09) {

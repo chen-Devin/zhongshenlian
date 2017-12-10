@@ -171,6 +171,11 @@
           </template>
         </el-submenu>
       </template>
+      <el-submenu index="expenses-review/10" v-if="canReviewBidNotLeader">
+        <template slot="title">
+          <span>报销审批</span>
+        </template>
+      </el-submenu>
       <el-submenu index="rule-regulation">
         <template slot="title">
           <span>规章制度</span>
@@ -190,7 +195,8 @@ export default {
     return {
       routerVal: true,
       uniqueOpened: true,
-      itemCounts: 0
+      itemCounts: 0,
+      user: {}
     };
   },
   computed: {
@@ -303,9 +309,16 @@ export default {
         } else {
           return false;
         }
+    },
+    canReviewBidNotLeader() {
+      console.log('debug');
+      if (Boolean(Number(this.user.isPrincipal)) && (Number(this.user.type) === 0 || Number(this.user.type) === 2)) {
+        return true
+      } else {
+        return false
+      }
     }
   },
-  props: ['user'],
   methods: {
     handleOpen(key, keyPath) {
       this.$router.push('/' + key)
@@ -335,6 +348,9 @@ export default {
   },
   created () {
     this.getToBeDoneList()
+    this.$store.dispatch('fetchUserInfo').then(() => {
+      this.user = this.$store.getters.getUser
+    }, () => { });
   },
   components: {
     sideMessage

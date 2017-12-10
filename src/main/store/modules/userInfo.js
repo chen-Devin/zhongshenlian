@@ -14,7 +14,9 @@ const state = {
 		gender: '',
 		wechatName: '',
 		wechatHeadImg: '',
-        shortcutArray: []
+        shortcutArray: [],
+        isPrincipal: 0,
+        type: 0
 	}
 };
 
