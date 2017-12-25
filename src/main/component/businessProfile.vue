@@ -37,7 +37,7 @@
             <p>合同预估金额：{{business.contractAmount===''?'':`${business.contractAmount}元`}}</p>
           </el-col>
           <el-col :span="8">
-            <p>项目申请人电话：{{business.proposer.tele}}</p>       
+            <p>提交人所在部门：{{business.proposer.department}}</p>       
           </el-col>
         </el-row>
         <el-row>

@@ -81,7 +81,8 @@ export default {
         proposer: {
           id: '',
           name: '',
-          tele: ''
+          tele: '',
+          department: ''
         },
         institution: {
           id: '',
@@ -594,6 +595,7 @@ export default {
             this.business.proposer.id = rep.data.data.applicantId;
             this.business.proposer.name = rep.data.data.applicantName;
             this.business.proposer.tele = rep.data.data.applicantPhone;
+            this.business.proposer.department = rep.data.data.applicantDepartment;
 
             this.business.institution.id = rep.data.data.requesterId;
             this.business.institution.customerName = rep.data.data.requester;

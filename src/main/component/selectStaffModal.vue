@@ -5,10 +5,10 @@
         <span>
           选择{{ staffModalIdentity }}
         </span>
-        <search-bar 
+        <!-- <search-bar 
           class="f-r" 
           :searchItems="searchItems"
-          @search="search"></search-bar>
+          @search="search"></search-bar> -->
       </div>
       <div class="table-wrapper">
         <table class="table table-bordered" v-if="showTable">
@@ -123,7 +123,7 @@ export default {
             params: {
               data: (() => {
                 let obj = {
-                  command: 'getBussinessUnitUserList',
+                  command: 'getCompanyUserListByOneUser',
                   platform: 'web',
                   pageNum: 'all'
                 }
