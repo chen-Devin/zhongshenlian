@@ -55,8 +55,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="销售方单位名称：" label-width="120px" prop="billingUnit">
-              <div>{{ billingUnit || '暂无' }}</div>
+            <el-form-item label="销售方单位名称：" label-width="120px">
+              <div>{{ bill.billingUnit }}</div>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -86,8 +86,17 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="单位名称：" prop="companyName">
-              <el-input placeholder="请输入单位名称" v-model="bill.companyName"></el-input>
+              <el-select  v-model="bill.companyName" placeholder="选择单位名称">
+                <el-option 
+                v-for="(item, index) in companyArray" 
+                :value="item" 
+                :key="index">
+                </el-option>
+              </el-select>
             </el-form-item>
+            <!-- <el-form-item label="单位名称：" prop="companyName">
+              <el-input placeholder="请输入单位名称" v-model="bill.companyName"></el-input>
+            </el-form-item> -->
           </el-col>
           <el-col :span="12">
             <el-form-item label="服务内容：" prop="serviceContent">
@@ -148,6 +157,7 @@ export default {
   data() {
     return {
       bill: {
+        billingUnit: this.business.applicantCompany,
         id: '',
         projectId: this.business.id,
         billingApplicantId: this.user.id,
@@ -177,7 +187,6 @@ export default {
         startServiceTime: '',
         endServiceTime: '',
         annexArray: [],
-        billingUnit: ''
       },
       billingTypes: ['增值税普通发票', '增值税专用发票'],
       deliveryMethods: ['申请人送达', '快递'],
@@ -198,27 +207,27 @@ export default {
       }
       return y + '-' + m + '-' + d
     },
-    billingUnit() {
-      if (this.business.contractType.name === "联合体") {
-        return this.business.contractType.basicFee.main.name
-      } else {
-        if (this.business.reportType[0] === "会计所") {
-          return '天津中审联有限责任会计师事务所'
-        } else if (this.business.reportType[0].department === "造价所") {
-          return '天津中审联工程造价咨询有限公司'
-        } else if (this.business.reportType[0].department === "评估所") {
-          return '天津中审联资产评估有限公司'
-        } else if (this.business.reportType[0].department === "税务所") {
-          return '天津中审联税务师事务所有限公司'
-        } else if (this.business.reportType[0].department === "BH") {
-          return '天津中审联有限责任会计师事务所滨海新区分所'
-        } else if (this.business.reportType[0].department === "QT") {
-          return '其他'
-        } else {
-          return ''
-        }
-      }
-    },
+    // billingUnit() {
+    //   if (this.business.contractType.name === "联合体") {
+    //     return this.business.contractType.basicFee.main.name
+    //   } else {
+    //     if (this.business.reportType[0] === "会计所") {
+    //       return '天津中审联有限责任会计师事务所'
+    //     } else if (this.business.reportType[0].department === "造价所") {
+    //       return '天津中审联工程造价咨询有限公司'
+    //     } else if (this.business.reportType[0].department === "评估所") {
+    //       return '天津中审联资产评估有限公司'
+    //     } else if (this.business.reportType[0].department === "税务所") {
+    //       return '天津中审联税务师事务所有限公司'
+    //     } else if (this.business.reportType[0].department === "BH") {
+    //       return '天津中审联有限责任会计师事务所滨海新区分所'
+    //     } else if (this.business.reportType[0].department === "QT") {
+    //       return '其他'
+    //     } else {
+    //       return ''
+    //     }
+    //   }
+    // },
     serviceContents() {
       if (this.business.contractType.name === "联合体") {
         return ['无'];
@@ -241,14 +250,14 @@ export default {
       }
     }
   },
-  props: ['business', 'user'],
+  props: ['business', 'user', 'companyArray'],
   methods: {
     cancel () {
       this.$emit('cancel')
     },
     submit () {
       this.bill.applicationDate = this.requestTime
-      this.bill.billingUnit = this.billingUnit
+      // this.bill.billingUnit = this.billingUnit
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },

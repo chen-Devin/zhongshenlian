@@ -2,7 +2,7 @@
   <div class="customer-info-add">
     <crumbs :paths="paths"></crumbs>
     <card v-if="loaded">
-      <billing-info :business="business" :user="user" @cancel="cancel"></billing-info>
+      <billing-info :business="business" :companyArray="companyArray" :user="user" @cancel="cancel"></billing-info>
     </card>
   </div>
 </template>
@@ -17,6 +17,7 @@ export default {
   name: 'contractChange',
   data() {
     return {
+      companyArray: [],
       paths: [
         { name: '开票申请', url: '/bill-apply', present: true }
       ],
@@ -54,6 +55,10 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.business = rep.data.data
+            this.companyArray.push(this.business.requester)
+            this.business.beingAuditedUnit.forEach((item) => {
+              this.companyArray.push(item.unit)
+            })
             resolve('done');
           } else {
             this.$message.error(rep.data.msg)

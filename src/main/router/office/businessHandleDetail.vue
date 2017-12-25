@@ -8,6 +8,7 @@
       <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="checkContract" v-if="reviewAble">审核通过</button>
       <button class="btn my-btn draft-btn pull-right mr-10 mt-10" @click="showChangeModal" v-if="reviewAble">金额变更</button>
       <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="showSealModal" v-if="signAble">确定盖章</button>
+      <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="showUploadContract" v-if="uploadAble">上传合同</button>
       <h3 class="main-title">
         {{ business.name }}
       </h3>
@@ -87,7 +88,8 @@ export default {
         proposer: {
           id: '',
           name: '',
-          tele: ''
+          tele: '',
+          department: ''
         },
         institution: {
           id: '',
@@ -363,6 +365,9 @@ export default {
     signAble () {
       return (this.business.projectStatus === 70) ? true : false
     },
+    uploadAble () {
+      return (this.business.projectStatus === 71) ? true : false
+    },
     sendAble () {
       return (this.business.projectStatus === 80) ? true : false
     },
@@ -564,11 +569,39 @@ export default {
     },
     changeSuccess (next) {
       if (next === 'upload') {
-        this.showUploadContract()
+        this.sealContract()
       } else {
         this.getInfo()
         this.cancel()
       }
+    },
+    sealContract () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'sealContract',
+                platform: 'web',
+                id: this.business.id
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.sealModalShow = false
+            this.$message.success(rep.data.msg)
+            this.getInfo()
+            resolve('done')
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
     },
     checkContract () {
       return new Promise((resolve, reject) => {
@@ -628,6 +661,7 @@ export default {
             this.business.proposer.id = rep.data.data.applicantId;
             this.business.proposer.name = rep.data.data.applicantName;
             this.business.proposer.tele = rep.data.data.applicantPhone;
+            this.business.proposer.department = rep.data.data.applicantDepartment;
 
             this.business.institution.id = rep.data.data.requesterId;
             this.business.institution.customerName = rep.data.data.requester;

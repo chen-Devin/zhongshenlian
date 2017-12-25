@@ -138,6 +138,10 @@ export default {
           name: 'sign'
         },
         {
+          label: '上传合同',
+          name: 'upload'
+        },
+        {
           label: '待发放编号',
           name: 'number'
         },
@@ -284,8 +288,10 @@ export default {
         this.officeType = 2
       } else if (tab.name === 'back') {
         this.officeType = 5
-      }  else if (tab.name === 'change') {
+      } else if (tab.name === 'change') {
         this.officeType = 4
+      } else if (tab.name === 'upload') {
+        this.officeType = 6
       }
       this.searchObj = {}
       this.getUnDealListOfOffice()
