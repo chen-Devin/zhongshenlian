@@ -80,7 +80,6 @@ export default {
       return arr
     }
   },
-  // props: ['state'],
   methods: {
     radiusActive (active) {
       if (active) {

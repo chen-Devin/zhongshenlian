@@ -3,7 +3,7 @@
     <div class="modal-mask">
       <div class="modal-wrapper" :style="{alignSelf: alignSelf}">
         <div class="modal-container" :style="{width: modalWidth, padding: setPadding}">
-          <div class="modal-body ta-c" :style="{padding: setPadding}">
+          <div class="modal-body" :style="{padding: setPadding}">
             <slot name="body">
               default body
             </slot>
@@ -54,6 +54,8 @@ export default {
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
+  max-height: 600px;
+  overflow: auto;
 }
 
 .modal-header h3 {

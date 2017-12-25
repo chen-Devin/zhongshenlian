@@ -15,7 +15,7 @@
                 placeholder="选择出差起始日期"
                 v-if="editAble">
               </el-date-picker>
-              <p v-else>{{reimbursementInfo.startTime}}</p>
+              <p v-else>{{reimbursementInfo.startTime.slice(0, 10)}}</p>
             </td>
             <td class="table-label">出差结束日期：</td>
             <td>
@@ -25,7 +25,7 @@
                 placeholder="选择出差结束日期"
                 v-if="editAble">
               </el-date-picker>
-              <p v-else>{{reimbursementInfo.endTime}}</p>
+              <p v-else>{{reimbursementInfo.endTime.slice(0, 10)}}</p>
             </td>
           </tr>
           <tr>
@@ -134,6 +134,16 @@ export default {
         ]
       } else {
         return []
+      }
+    },
+    _submitType() {
+      return this.reimbursementInfo.submitType
+    }
+  },
+  watch: {
+    _submitType: function (val, oldVal) {
+      if (val !== oldVal) {
+        this.reimbursementInfo.expenditureProject = ''
       }
     }
   },

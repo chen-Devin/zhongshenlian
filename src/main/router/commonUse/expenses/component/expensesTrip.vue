@@ -156,10 +156,9 @@
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.travelRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble && paper">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble">
                 <template slot="append">元</template>
               </el-input>
-              <div v-if="editAble && electric">{{ each.amount }}元</div>
               <p v-if="!editAble">{{ each.amount }}元</p>
             </div>
           </el-col>
@@ -171,7 +170,7 @@
           <el-col :span="7" v-if="electric && editAble">
             <div v-for="(item, index) in reimbursementInfo.travelRArray" :key="index" class="each">
               <el-upload :show-file-list="false"
-                         :action="getUploadUrl(item.amount, 'travelR')"
+                         :action="getUploadUrl(item.amount, 'travelR', item.annexId)"
                          :on-progress="UploadProgress"
                          :on-success="UploadSuccess">
                 <button class="btn my-btn submit-btn"
@@ -226,10 +225,9 @@
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.stayRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble && paper">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble">
                 <template slot="append">元</template>
               </el-input>
-              <div v-if="editAble && electric">{{ each.amount }}元</div>
               <p v-if="!editAble">{{ each.amount }}元</p>
             </div>
           </el-col>
@@ -241,7 +239,7 @@
           <el-col :span="7" v-if="electric && editAble">
             <div v-for="(item, index) in reimbursementInfo.stayRArray" :key="index" class="each">
               <el-upload :show-file-list="false"
-                         :action="getUploadUrl(item.amount, 'stayR')"
+                         :action="getUploadUrl(item.amount, 'stayR', item.annexId)"
                          :on-progress="UploadProgress"
                          :on-success="UploadSuccess">
                 <button class="btn my-btn submit-btn"
@@ -296,10 +294,9 @@
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.localRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble && paper">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble">
                 <template slot="append">元</template>
               </el-input>
-              <div v-if="editAble && electric">{{ each.amount }}元</div>
               <p v-if="!editAble">{{ each.amount }}元</p>
             </div>
           </el-col>
@@ -311,7 +308,7 @@
           <el-col :span="7" v-if="electric && editAble">
             <div v-for="(item, index) in reimbursementInfo.localRArray" :key="index" class="each">
               <el-upload :show-file-list="false"
-                         :action="getUploadUrl(item.amount, 'localR')"
+                         :action="getUploadUrl(item.amount, 'localR', item.annexId)"
                          :on-progress="UploadProgress"
                          :on-success="UploadSuccess">
                 <button class="btn my-btn submit-btn"
@@ -366,10 +363,9 @@
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.fieldRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble && paper">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble">
                 <template slot="append">元</template>
               </el-input>
-              <div v-if="editAble && electric">{{ each.amount }}元</div>
               <p v-if="!editAble">{{ each.amount }}元</p>
             </div>
           </el-col>
@@ -381,7 +377,7 @@
           <el-col :span="7" v-if="electric && editAble">
             <div v-for="(item, index) in reimbursementInfo.fieldRArray" :key="index" class="each">
               <el-upload :show-file-list="false"
-                         :action="getUploadUrl(item.amount, 'fieldR')"
+                         :action="getUploadUrl(item.amount, 'fieldR', item.annexId)"
                          :on-progress="UploadProgress"
                          :on-success="UploadSuccess">
                 <button class="btn my-btn submit-btn"
@@ -433,10 +429,12 @@
       </div>
     </modal>
     <card class="card3" v-if="!editAble">
-      <div class="f-l">报销状态：</div>
-      <state-svg
-        :status="status"
-        v-if="status"></state-svg>
+      <div>
+        <div class="f-l">报销状态：</div>
+        <state-svg
+          :status="status"
+          v-if="status"></state-svg>
+      </div>
       <div class="state-description d-f">
         <div style="width:90px;">
           状态描述：
@@ -509,6 +507,7 @@ export default {
             id: '',
             amount: 0,
             annexUrl: '',
+            annexId: '',
             uploadURL: '',
             uploadFailInfo: '上传失败，请重试',
             state: {
@@ -644,19 +643,31 @@ export default {
         case '0010':
           arr[0] = 1
           break;
+        case '0030':
+          arr[0] = 1
+          break;
         case '0020':
           arr[1] = 1
           break;
-        case '0030' || '0050' || '0070' || '0090':
-          arr[0] = 1
+        case '0050':
+          arr[1] = 1
           break;
         case '0040':
+          arr[2] = 1
+          break;
+        case '0070':
           arr[2] = 1
           break;
         case '0060':
           arr[3] = 1
           break;
+        case '0090':
+          arr[3] = 1
+          break;
         case '0080':
+          arr[4] = 1
+          break;
+        case '0101':
           arr[4] = 1
           break;
         case '0100':
@@ -883,6 +894,7 @@ export default {
                 id: '',
                 amount: 0,
                 annexUrl: '',
+                annexId: '',
                 uploadURL: '',
                 state: {
                   notUpload: true,
@@ -904,6 +916,7 @@ export default {
                 id: '',
                 amount: 0,
                 annexUrl: '',
+                annexId: '',
                 uploadURL: '',
                 state: {
                   notUpload: true,
@@ -925,6 +938,7 @@ export default {
                 id: '',
                 amount: 0,
                 annexUrl: '',
+                annexId: '',
                 uploadURL: '',
                 state: {
                   notUpload: true,
@@ -946,6 +960,7 @@ export default {
                 id: '',
                 amount: 0,
                 annexUrl: '',
+                annexId: '',
                 uploadURL: '',
                 state: {
                   notUpload: true,
@@ -970,11 +985,12 @@ export default {
       this.uploadIndex = i
       this.uploadType = type
     },
-    getUploadUrl (amount, type) {
+    getUploadUrl (amount, type, annexId) {
       let obj = {
         command: 'handlerBusiness',
         platform: 'web',
         id: this.reimbursementInfo.id,
+        annexId: annexId,
         type: type,
         amount: amount
       }
@@ -1033,7 +1049,7 @@ export default {
             this.reimbursementInfo.travelRArray[this.uploadIndex].name = response.data.name
             this.reimbursementInfo.id = response.data.id
             if (this.electric) {
-              this.reimbursementInfo.travelRArray[this.uploadIndex].amount = response.data.amount
+              this.reimbursementInfo.travelRArray[this.uploadIndex].annexId = response.data.annexId
             }
           } else {
             this.reimbursementInfo.travelRArray[this.uploadIndex].state.uploadFail = true
@@ -1053,7 +1069,7 @@ export default {
             this.reimbursementInfo.stayRArray[this.uploadIndex].name = response.data.name
             this.reimbursementInfo.id = response.data.id
             if (this.electric) {
-              this.reimbursementInfo.stayRArray[this.uploadIndex].amount = response.data.amount
+              this.reimbursementInfo.stayRArray[this.uploadIndex].annexId = response.data.annexId
             }
           } else {
             this.reimbursementInfo.stayRArray[this.uploadIndex].state.uploadFail = true
@@ -1073,7 +1089,7 @@ export default {
             this.reimbursementInfo.localRArray[this.uploadIndex].name = response.data.name
             this.reimbursementInfo.id = response.data.id
             if (this.electric) {
-              this.reimbursementInfo.localRArray[this.uploadIndex].amount = response.data.amount
+              this.reimbursementInfo.localRArray[this.uploadIndex].annexId = response.data.annexId
             }
           } else {
             this.reimbursementInfo.localRArray[this.uploadIndex].state.uploadFail = true
@@ -1093,7 +1109,7 @@ export default {
             this.reimbursementInfo.fieldRArray[this.uploadIndex].name = response.data.name
             this.reimbursementInfo.id = response.data.id
             if (this.electric) {
-              this.reimbursementInfo.fieldRArray[this.uploadIndex].amount = response.data.amount
+              this.reimbursementInfo.fieldRArray[this.uploadIndex].annexId = response.data.annexId
             }
           } else {
             this.reimbursementInfo.fieldRArray[this.uploadIndex].state.uploadFail = true
@@ -1110,7 +1126,7 @@ export default {
        axios({
          headers: { 'Content-Type': 'multipart/form-data' },
          method: 'post',
-         url: this.getUploadUrl(amount, type),
+         url: this.getUploadUrl(amount, type, ''),
          data: nd
        }).then((rep) => {
          if (rep.data.statusCode === '10001') {

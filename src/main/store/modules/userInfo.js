@@ -66,6 +66,8 @@ const mutations = {
 		state.user.wechatName = user.wechatName;
         state.user.wechatHeadImg = user.wechatHeadImg;
 		state.user.shortcutArray = user.shortcutArray;
+		state.user.isPrincipal = user.isPrincipal;
+		state.user.type = user.type;
 	}
 };
 

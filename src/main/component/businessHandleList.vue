@@ -211,7 +211,7 @@ export default {
     if (this.department === 'sales') {
       this.getUnDealListOfBusinessUnit()
     } else if (this.department === 'leader') {
-      //  office leader archives
+      this.getBusinessReviewing()
     } else if (this.department === 'office') {
       this.getUnDealListOfOffice()
     } else if (this.department === 'archives') {
@@ -246,7 +246,7 @@ export default {
   },
   props: ['iconType', 'department'],
   methods: {
-    tabClickSales (tab, event) {  // 尚未给接口
+    tabClickSales (tab, event) {  
       this.pageNum = 1
       this.reloadPagination = false
       setTimeout(() => {
@@ -264,7 +264,7 @@ export default {
       this.searchObj = {}
       this.getUnDealListOfBusinessUnit()
     },
-    tabClickOffice (tab, event) {  // 尚未给接口
+    tabClickOffice (tab, event) {  
       this.pageNum = 1
       this.reloadPagination = false
       setTimeout(() => {
@@ -308,14 +308,12 @@ export default {
         this.getUnDealListOfRiskAssessment()
       } else if (this.department === 'sales') {
         this.getUnDealListOfBusinessUnit()
+      } else if (this.department === 'leader') {
+        this.getBusinessReviewing()
       }
     },
     mod(BUSINESS) {
-      // if (this.thiDepartment === 'office') {
-      //   this.$router.push('/business-review-detail-office-' +BUSINESS.id)
-      // } else {
-        this.$router.push('/business-handle-detail-' + this.department + '-' +BUSINESS.id)
-      // }
+      this.$router.push('/business-handle-detail-' + this.department + '-' +BUSINESS.id)
     },
     getUnDealListOfBusinessUnit () {
       return new Promise((resolve, reject) => {
@@ -370,6 +368,33 @@ export default {
         }, (rep) => { });
       })
     },
+    getBusinessReviewing () {
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'getBusinessReviewing',
+                platform: 'web',
+                pageNum: this.pageNum
+              }
+              Object.assign(obj, this.searchObj)
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            console.log(rep.data.data.businessArray)
+            this.businesses = rep.data.data.businessArray
+            this.totalNum = parseInt(rep.data.data.totalNum)
+            resolve('done');
+          }
+        }, (rep) => { });
+      })
+    },
     getUnDealListOfOffice () {
       return new Promise((resolve, reject) => {
         axios({
@@ -390,7 +415,6 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
-            console.log(rep.data.data.businessArray)
             this.businesses = rep.data.data.businessArray
             this.totalNum = parseInt(rep.data.data.totalNum)
             resolve('done');
@@ -451,75 +475,15 @@ export default {
         }, (rep) => { });
       })
     },
-    // getInfo() {
-    //   let start = ''
-    //   let end = ''
-    //   if (this.sea.time.start === null) {
-    //     start = ''
-    //   } else {
-    //     start = this.sea.time.start
-    //   }
-    //   if (this.sea.time.end === null) {
-    //     end = ''
-    //   } else {
-    //     end = this.sea.time.end
-    //   }
-    //   axios({
-    //     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-    //     method: 'get',
-    //     url: '/service',
-    //     params: {
-    //       data: (() => {
-    //         var obj = {
-    //           command: 'getBusinessReviewing',
-    //           platform: 'web',
-    //           searchContent: this.searchCont,
-    //           beginTime: start,
-    //           endTime: end,
-    //           businessAmount: this.sea.amount,
-    //           businessType: this.sea.type,
-    //           requester: this.sea.requester,
-    //           requesterName: this.sea.requesterName,
-    //           applicantName: this.sea.applicantName,
-    //           pageNum: this.pageNum
-    //         }
-    //         return JSON.stringify(obj);
-    //       })()
-    //     }
-    //   }).then((rep) => {
-    //     if (rep.data.statusCode === '10001') {
-    //       this.totalPage = parseInt(rep.data.data.pageNum);
-    //       this.totalNum = parseInt(rep.data.data.totalNum);
-    //       this.businesses.length = 0;
-    //       for (let i = 0; i < rep.data.data.businessArray.length; i++) {
-    //         let obj = {
-    //           id: rep.data.data.businessArray[i].id,
-    //           businessName: rep.data.data.businessArray[i].businessName,
-    //           projectManager: rep.data.data.businessArray[i].projectManager,
-    //           finishTime: rep.data.data.businessArray[i].finishTime,
-    //           projectStatus: parseInt(rep.data.data.businessArray[i].projectStatus),
-    //           billState: parseInt(rep.data.data.businessArray[i].financeCreateBillingState)
-    //         };
-    //         this.businesses.push(obj);
-    //       }
-    //     } else if (rep.data.statusCode === '10012') {
-    //       window.location.href = 'signIn.html';
-    //     }
-    //   }, (rep) => { });
-    // },
     businessRoute(BUSINESS) {
-      // if (this.thiDepartment === 'office') {
-      //   return '/business-handle-detail-office-' +BUSINESS.id;
-      // } else {
-        return '/business-handle-detail-' + this.department + '-' +BUSINESS.id;
-      // }
+      return '/business-handle-detail-' + this.department + '-' +BUSINESS.id;
     },
     currentChange(val) {
       this.pageNum = val
       if (this.department === 'sales') {
         this.getUnDealListOfBusinessUnit()
       } else if (this.department === 'leader') {
-        //  office leader archives
+        this.getBusinessReviewing()
       } else if (this.department === 'office') {
         this.getUnDealListOfOffice()
       } else if (this.department === 'archives') {
@@ -530,37 +494,7 @@ export default {
         this.getUnDealListOfRiskAssessment()
       }
 
-    },
-    showHigherSearch() {
-      if (this.higherSearch === false) {
-        this.higherSearch = true;
-        this.simpleSearch = false;
-        this.searchUp = true;
-        this.searchDown = false;
-      } else {
-        this.higherSearch = false;
-        this.simpleSearch = true;
-        this.searchUp = false;
-        this.searchDown = true;
-      }
     }
-    // higherSearchEvent (sea) {
-    //   this.sea = sea
-    //   this.searchCont = ''
-    //   this.pageNum = 1
-    //   this.getInfo()
-    // },
-    // tog(searchCont) {
-    //   this.searchCont = searchCont
-    //   this.sea = this.seaEmpty
-    //   this.pageNum = 1
-    //   this.getInfo()
-    // },
-    // reset () {
-    //   this.pageNum = 1
-    //   this.sea = this.seaEmpty
-    //   this.getInfo()
-    // }
   },
   components: {
     crumbs,

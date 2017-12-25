@@ -104,7 +104,7 @@
           </template>
         </el-submenu>
       </template>
-      <template v-if="riskHandle || riskReview">
+      <template v-if="risk">
         <el-submenu index="business-handle-list-risk">
           <template slot="title">
             <span>待处理项目</span>
@@ -171,7 +171,7 @@
           </template>
         </el-submenu>
       </template>
-      <el-submenu index="expenses-review/10" v-if="canReviewBidNotLeader">
+      <el-submenu index="expenses-review/3" v-if="canReviewBidNotLeader">
         <template slot="title">
           <span>报销审批</span>
         </template>
@@ -288,31 +288,15 @@ export default {
         return false
       }
     },
-    riskReview() {
+    risk() {
       if (this.user.department === '质控部') {
-        if (this.user.authority['项目初审']) {
-          return true;
-        } else {
-          return false;
-        }
+        return true
       } else {
-        return false;
+        return false
       }
     },
-    riskHandle() {
-        if (this.user.department === '质控部') {
-          if (this.user.authority['项目复审']) {
-            return true;
-          } else {
-            return false;
-          }
-        } else {
-          return false;
-        }
-    },
     canReviewBidNotLeader() {
-      console.log('debug');
-      if (Boolean(Number(this.user.isPrincipal)) && (Number(this.user.type) === 0 || Number(this.user.type) === 2)) {
+      if (Boolean(Number(this.user.isPrincipal)) && (Number(this.user.type) === 0 || Number(this.user.type) === 2) && this.user.department !== '所长') {
         return true
       } else {
         return false
