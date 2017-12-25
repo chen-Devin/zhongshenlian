@@ -32,6 +32,11 @@
                 <el-radio v-model="staff.gender" label="女">女</el-radio>
               </el-form-item>
               <p v-else>性别：{{staff.gender}}</p>
+              <el-form-item label="是否为部门负责人：" label-width="140px" prop="isPrincipal" v-if="editAble">
+                <el-radio v-model="staff.isPrincipal" label="1">是</el-radio>
+                <el-radio v-model="staff.isPrincipal" label="0">否</el-radio>
+              </el-form-item>
+              <p v-else>是否为部门负责人：{{staff.isPrincipal === '1' ? '是' : '否'}}</p>
               <el-form-item label="民族：" label-width="70px" prop="nation" v-if="editAble">
                 <el-input v-model="staff.nation"></el-input>
               </el-form-item>
@@ -113,7 +118,7 @@
                 </el-date-picker>
               </el-form-item>
               <p v-else>入职时间：{{staff.entryTime}}</p>
-              <el-form-item label="合同到期日：" prop="expireTime" label-width="100px" v-if="editAble">
+              <el-form-item label="合同到期日：" label-width="100px" v-if="editAble">
                 <el-date-picker
                   style="width:100%"
                   v-model="staff.expireTime"
@@ -338,7 +343,7 @@ export default {
       return '/fileUpload?data=' + JSON.stringify(obj)
     },
     saveAble () {
-      if (this.staff.name && this.staff.jobNumber && this.staff.gender && this.staff.nation && this.staff.idCard && this.staff.telephone && this.staff.duties && this.staff.education && this.staff.level && this.staff.entryTime && this.staff.expireTime) {
+      if (this.staff.name && this.staff.jobNumber && this.staff.gender && this.staff.nation && this.staff.idCard && this.staff.telephone && this.staff.duties && this.staff.education && this.staff.level && this.staff.entryTime) {
         return false
       } else {
         return true
@@ -508,6 +513,7 @@ export default {
                 idCard: this.staff.idCard,
                 email: this.staff.email,
                 education: this.staff.education,
+                isPrincipal: this.staff.isPrincipal,
                 level: this.staff.level,
                 jonTitle: this.staff.jonTitle,
                 entryTime: this.entryTime,
@@ -587,6 +593,7 @@ export default {
                 idCard: this.staff.idCard,
                 email: this.staff.email,
                 education: this.staff.education,
+                isPrincipal: this.staff.isPrincipal,
                 level: this.staff.level,
                 jonTitle: this.staff.jonTitle,
                 entryTime: this.entryTime,

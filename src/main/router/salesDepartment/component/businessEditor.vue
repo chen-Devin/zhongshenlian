@@ -1183,10 +1183,11 @@ export default {
       this.business.contractType.basicFee.depend.push({ name: '', percentage: 0 });
     },
     basicFeeCheck() {
+      console.log(1)
       if (this.business.contractType.name === '联合体') {
-        let total = this.business.contractType.basicFee.main.percentage;
+        let total = Number(this.business.contractType.basicFee.main.percentage);
         for (let i = 0; i < this.business.contractType.basicFee.depend.length; i++) {
-          total += this.business.contractType.basicFee.depend[i].percentage;
+          total += Number(this.business.contractType.basicFee.depend[i].percentage);
         }
         if (total === 100) {
           return true;
@@ -1208,9 +1209,9 @@ export default {
     },
     benefitFeeCheck() {
       if (this.business.contractType.name === '联合体') {
-        let total = this.business.contractType.benefitFee.main.percentage;
+        let total = Number(this.business.contractType.benefitFee.main.percentage);
         for (let i = 0; i < this.business.contractType.benefitFee.depend.length; i++) {
-          total += this.business.contractType.benefitFee.depend[i].percentage;
+          total += Number(this.business.contractType.benefitFee.depend[i].percentage);
         }
         if (total === 100) {
           return true;
@@ -1240,9 +1241,9 @@ export default {
     },
     departmentsCheck() {
       if (this.business.departmentCoop.name === '有部门合作') {
-        let total = this.business.departmentCoop.departments.main.percentage;
+        let total = Number(this.business.departmentCoop.departments.main.percentage);
         for (let i = 0; i < this.business.departmentCoop.departments.coop.length; i++) {
-          total += this.business.departmentCoop.departments.coop[i].percentage;
+          total += Number(this.business.departmentCoop.departments.coop[i].percentage);
         }
         if (total === 100) {
           return true;

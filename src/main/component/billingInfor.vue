@@ -33,9 +33,9 @@
               <span class="state rush" v-else-if="Number(BILL.revokeState) === 30">冲回</span>
             </td>
             <td class="ta-c">{{ BILL.amount }}</td>
-            <td class="ta-c">{{ BILL.filingDate }}</td>
-            <td class="ta-c">{{ BILL.startServiceTime === '' ? empty : BILL.startServiceTime }}</td>
-            <td class="ta-c">{{ BILL.endServiceTime === '' ? empty : BILL.endServiceTime }}</td>
+            <td class="ta-c">{{ BILL.applicationTime }}</td>
+            <td class="ta-c">{{ BILL.billingTime === '' ? empty : BILL.billingTime }}</td>
+            <td class="ta-c">{{ BILL.paymentTime === '' ? empty : BILL.paymentTime }}</td>
             <td class="ta-c">
               <button class="btn my-btn submit-btn" @click="check(BILL, index)">查看</button>
               <button 
@@ -113,6 +113,7 @@ export default {
     submited() {
       this.business.financeCreateBillingState = 1;
       this.showModal = false;
+      bus.$emit('bill-completed')
     },
     canceled() {
       this.showModal = false;

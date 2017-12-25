@@ -1,5 +1,5 @@
 <template>
-  <modal modalWidth="800px">
+  <modal class="contract-number" modalWidth="800px">
     <form class="form-horizontal clearfix"
           slot="body"
           @submit.prevent

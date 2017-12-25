@@ -20,7 +20,7 @@
         <tr>
           <th class="ta-c">报告编号</th>
           <th class="ta-c">报告名称</th>
-          <th class="ta-c">复审状态</th>
+          <th class="ta-c">审核状态</th>
           <th class="ta-c">附件下载</th>
           <th class="ta-c">二维码</th>
           <th class="ta-c">归档状态</th>
@@ -36,7 +36,7 @@
           </td>
           <td class="ta-c" v-else>{{ REPORT.number === '' ? '暂无' : REPORT.number }}</td>
           <td class="ta-c">{{ REPORT.name }}</td>
-          <td class="ta-c" v-if="user.department === '质控部' && !REPORT.FStatus">
+          <td class="ta-c" v-if="user.department === '质控部' && (Number(REPORT.FStatus)===0 || Number(REPORT.FStatus)===2)">
             <button class="btn my-btn submit-btn small-btn" @click="handleBusiness(REPORT.id, '通过')">通过</button>
             <button class="btn my-btn cancel-btn small-btn" @click="handleBusiness(REPORT.id, '不通过')">不通过</button>
           </td>
@@ -87,16 +87,6 @@
       :projectId="business.id"
       @canceled="codeCanceled"
       @codeSubmitted="codeSubmitted"></report-code-modal>
-    <!-- <report-del-modal v-if="showDelModal"
-                      :initReport="delReport"
-                      :initBusiness="business"
-                      @deleted="deleted"
-                      @canceled="delCanceled"></report-del-modal>
-    <report-sub-modal v-if="showSubModal"
-                      :initReport="subReport"
-                      :initBusiness="business"
-                      @submited="submited"
-                      @canceled="subCanceled"></report-sub-modal> -->
   </div>
 </template>
 
@@ -126,7 +116,7 @@ export default {
       addReport: {},
       showSubModal: false,
       subReport: {},
-      FStatusMap: ['未复审', '未通过', '已通过'],
+      FStatusMap: ['未初审', '初审未通过', '未复审', '复审通过', '复审未通过'],
       archivingStateMap: ['未归档', '已归档'],
       projectReportShow: false,
       downloadModalShow: false,

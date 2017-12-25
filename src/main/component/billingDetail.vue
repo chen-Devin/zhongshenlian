@@ -1,6 +1,6 @@
 <template>
   <div class="billing-detail">
-    <modal modalWidth="800px">
+    <modal modalWidth="800px" v-if="detailModalShow">
       <div slot="body">
         <template v-if="!sended">
           <p 
@@ -91,15 +91,10 @@
               备注：{{ bill.remark }}
             </el-col>
           </el-row>
-          <!-- <hr>
-          <p class="d-f">
-            <span style="width:70px;">撤销原因：</span>
-            <span>。。。</span>
-          </p> -->
         </div>
       </div>
       <div slot="footer">
-        
+        <button class="btn my-btn draft-btn" @click="detailModalShow=false">返回</button>
       </div>
     </modal>
     <modal v-if="billUploadShow">
@@ -172,6 +167,7 @@ export default {
       dialogVisible: false,
       autoUpload: false,
       remark: '',
+      detailModalShow: true,
       fileList: [
         
       ],

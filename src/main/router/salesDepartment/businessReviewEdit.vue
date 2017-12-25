@@ -373,7 +373,7 @@ export default {
 
             this.business.id = rep.data.data.id;
             this.business.name = rep.data.data.projectName;
-            this.business.scope = rep.data.data.businessScope;
+            this.business.businessScope = rep.data.data.businessScope;
             this.business.beingAuditedUnit = rep.data.data.beingAuditedUnit;
 
             // this.business.proposer.id = rep.data.data.applicantId;
@@ -516,6 +516,9 @@ export default {
             for (let i = 0; i < rep.data.data.projectBillingArray.length; i++) {
               let obj = {
                 id: rep.data.data.projectBillingArray[i].id,
+                applicationTime: rep.data.data.projectBillingArray[i].applicationTime,
+                paymentTime: rep.data.data.projectBillingArray[i].paymentTime,
+                billingTime: rep.data.data.projectBillingArray[i].billingTime,
                 proposer: {
                   id: rep.data.data.projectBillingArray[i].billingApplicantId,
                   name: rep.data.data.projectBillingArray[i].billingApplicantName,

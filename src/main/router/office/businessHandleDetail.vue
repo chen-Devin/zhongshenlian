@@ -460,7 +460,7 @@ export default {
             },
             { name: '项目完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus >= 111 && this.business.financeCreateBillingState === 0) {
+      } else if (this.business.projectStatus >= 120 && this.business.financeCreateBillingState === 0) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -488,7 +488,7 @@ export default {
             },
             { name: '项目完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus >= 111 && this.business.projectStatus < 130 && this.business.financeCreateBillingState === 1) {
+      } else if (this.business.projectStatus >= 120 && this.business.projectStatus < 130 && this.business.financeCreateBillingState === 1) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -624,7 +624,7 @@ export default {
 
             this.business.id = rep.data.data.id;
             this.business.name = rep.data.data.projectName;
-
+            this.business.businessScope = rep.data.data.businessScope;
             this.business.proposer.id = rep.data.data.applicantId;
             this.business.proposer.name = rep.data.data.applicantName;
             this.business.proposer.tele = rep.data.data.applicantPhone;
@@ -768,6 +768,9 @@ export default {
             for (let i = 0; i < rep.data.data.projectBillingArray.length; i++) {
               let obj = {
                 id: rep.data.data.projectBillingArray[i].id,
+                applicationTime: rep.data.data.projectBillingArray[i].applicationTime,
+                paymentTime: rep.data.data.projectBillingArray[i].paymentTime,
+                billingTime: rep.data.data.projectBillingArray[i].billingTime,
                 proposer: {
                   id: rep.data.data.projectBillingArray[i].billingApplicantId,
                   name: rep.data.data.projectBillingArray[i].billingApplicantName,

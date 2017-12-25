@@ -3,7 +3,7 @@
       <div class="basic-message">        
         <p v-if="contractNumShow">项目编号：{{business.number}}</p>           
         <p>项目名称：{{business.name}}</p>
-       <p>项目范围与审计目标：{{business.scope}}</p>
+       <p>项目范围与审计目标：{{business.businessScope}}</p>
       </div>
       <hr>
       <div class="basic-message" style="border: none">
@@ -87,13 +87,10 @@
       <div class="basic-message" v-if="showMore" style="border: none">
         <el-row>
           <el-col :span="8">
-            <p>审计期间：{{business.auditTime.start}} 至 {{business.auditTime.end}}</p>
-          </el-col>
-          <el-col :span="8">
             <p>参审注师：{{ reviewCPAsName }}</p> 
           </el-col>
           <el-col :span="8">
-            <p>报告用途：{{business.report.usage}}</p>    
+            <p>参审助理：{{ reviewAssistantsName }}</p>           
           </el-col>
         </el-row>
         <el-row>
@@ -101,10 +98,7 @@
             <p>报告数量：{{business.report.amount===''?'':`${business.report.amount}份（类）`}}</p>
           </el-col>
           <el-col :span="8">
-            <p>参审助理：{{ reviewAssistantsName }}</p>           
-          </el-col>
-          <el-col :span="8">
-            <p>上次报告事务所：{{business.lastOffice}}</p>
+            <p>报告用途：{{business.report.usage}}</p>    
           </el-col>
         </el-row>
         <hr>

@@ -37,11 +37,11 @@
         :label-position="labelPosition"
         :rules="rules"
         ref="bill"
-        label-width="70px" 
+        label-width="80px" 
         class="bill-form">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="本次开票金额：" label-width="100px" prop="billingAmount">
+            <el-form-item label="本次开票金额：" label-width="110px" prop="billingAmount">
               <el-input placeholder="请输入本次开票金额" type="number" v-model="bill.billingAmount">
                 <template slot="append">元</template>
               </el-input>
@@ -55,8 +55,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="销售方单位名称：" label-width="110px" prop="billingUnit">
-              <el-input placeholder="请输入销售方单位名称" v-model="billingUnit" :disabled="1"></el-input>
+            <el-form-item label="销售方单位名称：" label-width="120px" prop="billingUnit">
+              <div>{{ billingUnit || '暂无' }}</div>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -67,7 +67,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="申请开票种类：" label-width="100px" prop="billingType">
+            <el-form-item label="申请开票种类：" label-width="120px" prop="billingType">
               <el-select  v-model="bill.billingType" placeholder="选择开票种类">
                 <el-option 
                 v-for="(TYPE, index) in billingTypes" 
@@ -121,7 +121,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="备注：" label-width="50px" prop="remark">
+            <el-form-item label="备注：" label-width="60px" prop="remark">
               <el-input placeholder="请输入备注信息" type="textarea" :rows="4" v-model="bill.remark"></el-input>
             </el-form-item>
           </el-col>

@@ -110,11 +110,14 @@ export default {
     }
   },
   created () {
-    if (parseInt(this.$route.params.id) === 10) {
-      this.getExpensesList()
-    } else {
-      this.getUnDealRListOfFinance()
-    }
+    this.$store.dispatch('fetchUserInfo').then(() => {
+      let user = this.$store.getters.getUser
+      if (parseInt(this.$route.params.id) === 10) {
+        this.getExpensesList()
+      } else {
+        this.getUnDealRListOfFinance()
+      }
+    }, () => { })
   },
   components: {
     crumbs,

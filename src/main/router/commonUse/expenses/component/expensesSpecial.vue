@@ -195,17 +195,16 @@
           </el-col>
           <el-col :span="4">
             <div v-for="(each, index) in reimbursementInfo.electricRArray" :key="index" class="each">
-              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble && paper">
+              <el-input v-model="each.amount" placeholder="请填写单笔金额" type="number" v-if="editAble">
                 <template slot="append">元</template>
               </el-input>
-              <div v-if="editAble && electric">{{ each.amount }}元</div>
               <p v-if="!editAble">{{ each.amount }}元</p>
             </div>
           </el-col>
           <el-col :span="7">
             <div v-for="(item, index) in reimbursementInfo.electricRArray" :key="index" class="each">
               <el-upload :show-file-list="false"
-                         :action="getUploadUrl(item.amount, 'electricR')"
+                         :action="getUploadUrl(item.amount, 'electricR', item.annexId)"
                          :on-progress="UploadProgress"
                          :on-success="UploadSuccess">
                 <button class="btn my-btn submit-btn"
@@ -327,6 +326,7 @@ export default {
             id: '',
             amount: 0,
             annexUrl: '',
+            annexId: '',
             uploadURL: '',
             uploadFailInfo: '上传失败，请重试',
             path: '',
@@ -434,22 +434,19 @@ export default {
     status () {
       let arr = new Array(6).fill(0)
       switch(this.reimbursementInfo.status) {
-        case '0010':
+        case '0010' || '0030':
           arr[0] = 1
           break;
-        case '0020':
+        case '0020' || '0050':
           arr[1] = 1
           break;
-        case '0030' || '0050' || '0070' || '0090':
-          arr[0] = 1
-          break;
-        case '0040':
+        case '0040' || '0070':
           arr[2] = 1
           break;
-        case '0060':
+        case '0060' || '0090':
           arr[3] = 1
           break;
-        case '0080':
+        case '0080' || '0101':
           arr[4] = 1
           break;
         case '0100':
@@ -609,6 +606,7 @@ export default {
               id: '',
               amount: 0,
               annexUrl: '',
+              annexId: '',
               uploadURL: '',
               state: {
                 notUpload: true,
@@ -705,11 +703,12 @@ export default {
         }, () => {})
       }, () => {})
     },
-    getUploadUrl (amount, type) {
+    getUploadUrl (amount, type, annexId) {
       let obj = {
         command: 'handlerBusiness',
         platform: 'web',
         id: this.reimbursementInfo.id,
+        annexId: annexId,
         type: type,
         amount: amount
       }
@@ -739,7 +738,7 @@ export default {
         this.reimbursementInfo.electricRArray[this.uploadIndex].name = response.data.name
         this.reimbursementInfo.id = response.data.id
         if (this.electric) {
-          this.reimbursementInfo.electricRArray[this.uploadIndex].amount = response.data.amount
+          this.reimbursementInfo.electricRArray[this.uploadIndex].annexId = response.data.annexId
         }
       } else {
         this.reimbursementInfo.electricRArray[this.uploadIndex].state.uploadFail = true
@@ -752,7 +751,7 @@ export default {
        axios({
          headers: { 'Content-Type': 'multipart/form-data' },
          method: 'post',
-         url: this.getUploadUrl(amount, type),
+         url: this.getUploadUrl(amount, type, ''),
          data: nd
        }).then((rep) => {
          if (rep.data.statusCode === '10001') {
