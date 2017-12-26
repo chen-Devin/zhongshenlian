@@ -2,6 +2,12 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
+      <div class="pull-right">
+        <template v-if="agree">
+          <button class="btn my-btn submit-btn" @click="approve()">通过</button>
+          <button class="btn my-btn draft-btn mr-10" @click="refuse()">不通过</button>
+        </template>
+      </div>
       <h3 class="main-title">
         {{business.name}}
       </h3>
@@ -9,13 +15,25 @@
         <business :initBusiness="business" :user="user" :progress="progress" @pathsChan="pathsChan"></business>
         <template v-if="approverAdviceShow">
           <hr>
-          <div class="row">
-            <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
-            <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
-          </div>
+          <el-row>
+            <el-col :span="12">
+              <approver-advice :advices="riskAdvices">质控部意见</approver-advice>
+            </el-col>
+            <el-col :span="12">
+              <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
+            </el-col>
+          </el-row>
         </template>
       </div>
     </card>
+    <business-approve-modal v-if="showApproveModal"
+                            :initalBusiness="business"
+                            @approved="approved"
+                            @canceled="appCanceled"></business-approve-modal>
+    <business-refuse-modal v-if="showRefuseModal"
+                           :initalBusiness="business"
+                           @refused="refused"
+                           @canceled="refCanceled"></business-refuse-modal>
   </div>
 </template>
 
@@ -26,6 +44,8 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
+import businessApproveModal from '@/main/component/businessApproveModal.vue';
+import businessRefuseModal from '@/main/component/businessRefuseModal.vue';
 
 export default {
   name: 'businessHandleDetailLeader',
@@ -35,6 +55,8 @@ export default {
         { name: '待处理项目', url: '/business-handle-list-leader', present: false },
         { name: '项目详情', url: `/business-handle-detail-leader-${this.$route.params.id}`, present: false }
       ],
+      showApproveModal: false,
+      showRefuseModal: false,
       business: {
         id: this.$route.params.id,
         name: '',
@@ -310,6 +332,13 @@ export default {
   },
   props: ['user'],
   computed: {
+    agree() {
+      if (this.business.projectStatus === 40) {
+        return true
+      } else {
+        return false
+      }
+    },
     progress() {
       if (this.business.projectStatus === 20 || this.business.projectStatus === 30) {
           return [
@@ -464,6 +493,76 @@ export default {
     $route: 'getInfo'
   },
   methods: {
+    approve() {
+      this.showApproveModal = true;
+    },
+    approved(id) {
+      let obj = {
+        id: id,
+        approverId: this.user.id,
+        approverName: this.user.name,
+        department: this.user.department,
+        approveResult: '通过',
+        approveOpinion: '',
+        updateAt: (() => {
+          let t = new Date();
+          let Y = t.getFullYear();
+          let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+          let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
+          return `${Y}-${M}-${D}`;
+        })(),
+        createAt: (()=>{
+          let t = new Date();
+          let Y = t.getFullYear();
+          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
+          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
+          return `${Y}-${M}-${D}`;
+        })()
+      };
+      this.business.projectApproverArray.push(obj);
+      this.leaderAdivces.push(obj);
+      this.business.projectStatus = 60;
+
+      this.showApproveModal = false;
+    },
+    appCanceled() {
+      this.showApproveModal = false;
+    },
+    refuse() {
+      this.showRefuseModal = true;
+    },
+    refused(id, reason) {
+      let obj = {
+        id: id,
+        approverId: this.user.id,
+        approverName: this.user.name,
+        department: this.user.department,
+        approveResult: '不通过',
+        approveOpinion: reason,
+        updateAt: (() => {
+          let t = new Date();
+          let Y = t.getFullYear();
+          let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+          let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
+          return `${Y}-${M}-${D}`;
+        })(),
+        createAt: (()=>{
+          let t = new Date();
+          let Y = t.getFullYear();
+          let M = (t.getMonth()+1<10)?`0${t.getMonth()+1}`:`${t.getMonth()+1}`;
+          let D = (t.getDate()<10)?`0${t.getDate()}`:`${t.getDate()}`;
+          return `${Y}-${M}-${D}`;
+        })()
+      };
+      this.business.projectApproverArray.push(obj);
+      this.leaderAdivces.push(obj);
+      this.business.projectStatus = 50;
+
+      this.showRefuseModal = false;
+    },
+    refCanceled() {
+      this.showRefuseModal = false;
+    },
     getInfo() {
       let promise = new Promise((resolve, reject) => {
         axios({
@@ -723,7 +822,7 @@ export default {
       this.riskAdvices = [];
       this.leaderAdivces = [];
       for (let i = 0; i < this.business.projectApproverArray.length; i++) {
-        if (this.business.projectApproverArray[i].department === '风险评估部') {
+        if (this.business.projectApproverArray[i].department === '质控部') {
           this.business.projectApproverArray[i].approverName = '';
           this.riskAdvices.push(this.business.projectApproverArray[i]);
         } else {
@@ -739,10 +838,15 @@ export default {
     crumbs,
     card,
     business,
-    approverAdvice
+    approverAdvice,
+    businessApproveModal,
+    businessRefuseModal
   }
 }
 </script>
 
 <style lang="sass" scoped>
+  .pull-right {
+    margin-top: 10px;
+  }
 </style>

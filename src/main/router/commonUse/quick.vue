@@ -485,7 +485,7 @@ export default {
               }, 
               {
                 title: '项目管理',
-                detailArray: ['立项项目', '进行中项目', '已完成项目']
+                detailArray: ['进行中项目', '已完成项目']
               }
             ]
           break;

@@ -490,6 +490,7 @@ export default {
   methods: {
     changeType () {
       this.selectedCompany = false
+      this.reimbursementInfo.budgetCompanyId = ''
     },
     changeContract (val) {
       this.selectedCompany = true

@@ -723,11 +723,12 @@ export default {
   methods: {
     changeType () {
       this.selectedCompany = false
+      this.reimbursementInfo.budgetCompanyId = ''
     },
     changeContract (val) {
       this.selectedCompany = true
       this.contracts.forEach((item) => {
-        if (item.id === val) {
+        if (item.contractNo === val) {
           this.reimbursementInfo.contractAmount = item.contractAmount
           this.reimbursementInfo.budgetCompanyId = item.applicantCompanyId
         }

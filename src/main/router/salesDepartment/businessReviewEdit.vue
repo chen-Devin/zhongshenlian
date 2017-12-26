@@ -26,10 +26,14 @@
                        @refuseSub="refuseSub"></business-editor>
       <template v-if="business.projectStatus>=30">
         <hr>
-        <div class="row">
-          <approver-advice :advices="riskAdvices">风险评估部意见</approver-advice>
-          <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
-        </div>
+        <el-row>
+          <el-col :span="12">
+            <approver-advice :advices="riskAdvices">质控部意见</approver-advice>
+          </el-col>
+          <el-col :span="12">
+            <approver-advice :advices="leaderAdivces">审批人意见</approver-advice>
+          </el-col>
+        </el-row>
       </template>
     </card>
     <business-del-modal v-if="showDelModal"
@@ -611,7 +615,7 @@ remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
       this.leaderAdivces = [];
       console.log('test')
       for (let i = 0; i < this.business.projectApproverArray.length; i++) {
-        if (this.business.projectApproverArray[i].department === '风险评估部') {
+        if (this.business.projectApproverArray[i].department === '质控部') {
           this.riskAdvices.push(this.business.projectApproverArray[i]);
         } else {
           this.leaderAdivces.push(this.business.projectApproverArray[i]);
