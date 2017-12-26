@@ -215,7 +215,7 @@ const router = new VueRouter({
             component: businessHandleListLeader
         },
         {
-            path: '/business-handle-list',
+            path: '/business-handle-list/:department',
             component: businessHandleListAdd
         },
         {

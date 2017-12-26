@@ -88,6 +88,9 @@ export default {
     this.getOnGogingProjectByPerson()
   },
   methods: {
+    mod(BUSINESS) {
+      this.$router.push('/business-handle-detail-' + this.$route.params.department + '-' +BUSINESS.id)
+    },
   	getOnGogingProjectByPerson () {
   	  return new Promise((resolve, reject) => {
   	    axios({

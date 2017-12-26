@@ -68,20 +68,22 @@ export default {
           name: ''
         },
         time: {
-          start: (() => {
-            let t = new Date();
-            let Y = t.getFullYear();
-            let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
-            let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
-            return `${Y}-${M}-${D}`;
-          })(),
-          end: (() => {
-            let t = new Date();
-            let Y = t.getFullYear();
-            let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
-            let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
-            return `${Y}-${M}-${D}`;
-          })(),
+          start: '',
+            // (() => {
+            //   let t = new Date();
+            //   let Y = t.getFullYear();
+            //   let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+            //   let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
+            //   return `${Y}-${M}-${D}`;
+            // })(),
+          end: ''
+            // (() => {
+            //   let t = new Date();
+            //   let Y = t.getFullYear();
+            //   let M = (t.getMonth() + 1 < 10) ? `0${t.getMonth() + 1}` : `${t.getMonth() + 1}`;
+            //   let D = (t.getDate() < 10) ? `0${t.getDate()}` : `${t.getDate()}`;
+            //   return `${Y}-${M}-${D}`;
+            // })(),
         },
         contractAmount: '',
         feeBasis: '',

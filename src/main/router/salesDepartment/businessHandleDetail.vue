@@ -1,5 +1,5 @@
 <template>
-  <div class="business-handle-wrapper">
+  <div class="business-handle-wrapper" v-if="reload">
     <crumbs :paths="paths"></crumbs>
     <card class="card">
       <button class="btn my-btn cancel-btn f-r mr-10" @click="showChangeModal">合同变更申请</button>
@@ -47,6 +47,7 @@ export default {
   name: 'businessHandleDetailSales',
   data() {
     return {
+      reload: true,
       paths: [
         { name: '进行中项目', url: '/business-handle-list-sales', present: false },
         { name: '项目详情', url: `/business-handle-detail-sales-${this.$route.params.id}`, present: true }
@@ -480,6 +481,10 @@ export default {
   },
   created() {
     bus.$on('bill-selected', (bill) => {
+      this.reload = false
+      setTimeout(() => {
+        this.reload = true
+      }, 100)
       this.bill = bill
       this.billDetailShow = true
     })

@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" v-if="reload">
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3 class="main-title">
@@ -37,6 +37,7 @@ export default {
   name: 'businessHandleDetailFinancial',
   data() {
     return {
+      reload: true,
       paths: [
         { name: '待开发票', url: '/business-handle-list-financial/0', present: false },
         { name: '项目详情', url: `/business-handle-detail-financial-${this.$route.params.id}`, present: true },
@@ -471,6 +472,10 @@ export default {
   },
   created() {
     bus.$on('bill-selected', (bill) => {
+      this.reload = false
+      setTimeout(() => {
+        this.reload = true
+      }, 100)
       this.bill = bill
       this.billDetailShow = true
     })
@@ -722,12 +727,12 @@ remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
             for (let i = 0; i < rep.data.data.reportArray.length; i++) {
               let obj = {
                 id: rep.data.data.reportArray[i].id,
-                name: rep.data.data.reportArray[i].annexName,
-                url: rep.data.data.reportArray[i].annexUrl,
-                state: rep.data.data.reportArray[i].status === '1' ? false : true,
-                archivingState: rep.data.data.reportArray[i].archivingState === '0' ? false : true,
-                reportName: rep.data.data.reportArray[i].reportName,
-                adviceState: parseInt(rep.data.data.reportArray[i].fStatus)
+                name: rep.data.data.reportArray[i].reportName,
+                number: rep.data.data.reportArray[i].number,
+                downloadStatus: rep.data.data.reportArray[i].downloadStatus,
+                QRcodeUrl: rep.data.data.reportArray[i].QRcodeUrl,
+                archivingState: rep.data.data.reportArray[i].archivingState,
+                FStatus: parseInt(rep.data.data.reportArray[i].FStatus)
               }
               this.business.reports.push(obj);
             }

@@ -104,7 +104,7 @@
         </el-submenu>
         <el-submenu index="business-complete-list">
           <template slot="title">项目管理</template>
-          <el-menu-item index="/business-handle-list">进行中项目</el-menu-item>
+          <el-menu-item index="/business-handle-list/archives">进行中项目</el-menu-item>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
         <el-submenu index="bid-info-list">
@@ -131,7 +131,7 @@
         </el-submenu>
         <el-submenu index="business-complete-list">
           <template slot="title">项目管理</template>
-          <el-menu-item index="/business-handle-list">进行中项目</el-menu-item>
+          <el-menu-item index="/business-handle-list/risk">进行中项目</el-menu-item>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
         <el-submenu index="bid-info-list">
@@ -162,7 +162,7 @@
         </el-submenu>
         <el-submenu index="business-complete-list">
           <template slot="title">项目管理</template>
-          <el-menu-item index="/business-handle-list">进行中项目</el-menu-item>
+          <el-menu-item index="/business-handle-list/financial">进行中项目</el-menu-item>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
         <el-submenu index="bid-info-list">
@@ -189,7 +189,7 @@
         </el-submenu>
         <el-submenu index="business-complete-list">
           <template slot="title">项目管理</template>
-          <el-menu-item index="/business-handle-list">进行中项目</el-menu-item>
+          <el-menu-item index="/business-handle-list/office">进行中项目</el-menu-item>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
         <el-submenu index="bid-info-list">

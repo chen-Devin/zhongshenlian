@@ -471,8 +471,6 @@ export default {
       setTimeout(() => {
         this.reload = true
       }, 100)
-      
-      
       this.bill = bill
       this.billDetailShow = true
       console.log(this.billDetailShow)

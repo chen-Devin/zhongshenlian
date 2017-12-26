@@ -23,9 +23,9 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="业务范围与审计目标：" label-width="160px" prop="scope" required v-if="editable">
-              <el-input v-model="business.scope" type="textarea"></el-input>
+              <el-input v-model="business.businessScope" type="textarea"></el-input>
             </el-form-item>
-            <p v-else>业务范围与审计目标：{{business.scope}}</p>
+            <p v-else>业务范围与审计目标：{{business.businessScope}}</p>
           </el-col>
         </el-row>
         <el-row>
@@ -114,13 +114,23 @@
             <el-form-item label="计划工期：" required v-if="editable">
               <el-col :span="11">
                 <el-form-item >
-                  <el-date-picker type="date" placeholder="选择日期" v-model="business.time.start" style="width: 100%;"></el-date-picker>                 
+                  <el-date-picker 
+                    type="date" 
+                    placeholder="选择日期" 
+                    v-model="business.time.start" 
+                    style="width: 100%;"
+                    @change="FormatTimeStart"></el-date-picker>                 
                 </el-form-item>           
               </el-col>
               <el-col class="line" :span="2">至</el-col>
               <el-col :span="11">
                <el-form-item>
-                 <el-date-picker type="date" placeholder="选择日期" v-model="business.time.end" style="width: 100%;" v-if="editable"></el-date-picker>
+                 <el-date-picker 
+                  type="date" placeholder="选择日期" 
+                  v-model="business.time.end" 
+                  style="width: 100%;" 
+                  v-if="editable"
+                  @change="FormatTimeEnd"></el-date-picker>
                </el-form-item>
               </el-col>
             </el-form-item>
@@ -677,7 +687,6 @@ export default {
 
     this.getCustomerListWithoutPage()
     this.getOtherComDepartmentList()
-    // this.getBussinessUnitUserList()
 
     if (this.business.type === '') {
       this.business.type = this.businessType[0];
@@ -690,6 +699,12 @@ export default {
     bus.$off('savBusiness');
   },
   methods: {
+    FormatTimeStart (val) {
+      this.business.time.start = val
+    },
+    FormatTimeEnd (val) {
+      this.business.time.end = val
+    },
     getOtherComDepartmentList() {
       let promise = new Promise((resolve, reject) => {
         axios({
