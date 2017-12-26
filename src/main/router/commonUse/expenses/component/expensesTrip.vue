@@ -12,7 +12,7 @@
           <el-col :span="6" class="d-f">
             <template v-if="editAble">
               <span style="width:110px" class="required">报销方式：</span>
-              <el-select v-model="reimbursementInfo.submitType" placeholder="请选择报销方式">
+              <el-select v-model="reimbursementInfo.submitType" placeholder="请选择报销方式" @change="changeType">
                 <el-option
                   v-for="item in typeOptions"
                   :key="item.id"
@@ -33,9 +33,9 @@
                 @change="changeContract">
                 <el-option
                   v-for="item in contracts"
-                  :key="item.id"
-                  :label="item.id"
-                  :value="item.id">
+                  :key="item.contractNo"
+                  :label="item.contractNo"
+                  :value="item.contractNo">
                 </el-option>
               </el-select>
             </template>
@@ -81,6 +81,7 @@
               v-model="reimbursementInfo.budgetCompanyId" 
               placeholder="请选择预算所属公司" 
               @change="companyChange()"
+              :disabled="selectedCompany"
               v-else>
               <el-option
                 v-for="item in companyList"
@@ -601,7 +602,8 @@ export default {
       user: {},
       rejectShow: false,
       warnModalShow: false,
-      detailType: 'detail'
+      detailType: 'detail',
+      selectedCompany: false
     };
   },
   computed: {
@@ -719,10 +721,15 @@ export default {
     }
   },
   methods: {
+    changeType () {
+      this.selectedCompany = false
+    },
     changeContract (val) {
+      this.selectedCompany = true
       this.contracts.forEach((item) => {
         if (item.id === val) {
           this.reimbursementInfo.contractAmount = item.contractAmount
+          this.reimbursementInfo.budgetCompanyId = item.applicantCompanyId
         }
       })
     },

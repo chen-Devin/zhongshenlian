@@ -13,6 +13,7 @@ import customerInfoAdd from './commonUse/customerInfo/component/customerInfoAdd.
 import customerInfoDetail from './commonUse/customerInfo/component/customerInfoDetail.vue';
 import Quick from './commonUse/quick.vue';
 import ToDo from './commonUse/toDo.vue';
+import businessHandleListAdd from './commonUse/businessHandleListAdd.vue';
 // import businessManage from './commonUse/business-manage.vue';
 
 import billingInfor from '../component/billingInfor.vue';
@@ -25,6 +26,7 @@ import operatHistory from '../component/operatHistory.vue';
   // 报销
 import expensesList from './commonUse/expenses/expensesList.vue'
 import expensesReview from './commonUse/expenses/expensesReview.vue'
+import expensesReviewRecord from './commonUse/expenses/expensesReviewRecord.vue'
 import expensesRecord from './commonUse/expenses/component/expensesRecord.vue'
 import expensesTrip from './commonUse/expenses/component/expensesTrip.vue'
 import expensesSpecial from './commonUse/expenses/component/expensesSpecial.vue'
@@ -146,6 +148,10 @@ const router = new VueRouter({
             component: expensesReview
         },
         {
+            path: '/expenses-review-record',
+            component: expensesReviewRecord
+        },
+        {
             path: '/expenses-record/:id/:type/:listType',
             component: expensesRecord
         },
@@ -207,6 +213,10 @@ const router = new VueRouter({
         {
             path: '/business-handle-list-leader',
             component: businessHandleListLeader
+        },
+        {
+            path: '/business-handle-list',
+            component: businessHandleListAdd
         },
         {
             path: '/business-handle-detail-leader-:id',

@@ -92,9 +92,9 @@ export default {
       } else if (status === '0020') {
         return '部门通过'
       } else if (status === '0040') {
-        return '所长通过'
-      } else if (status === '0060') {
         return '财务核单'
+      } else if (status === '0060') {
+        return '所长通过'
       } else if (status === '0080') {
         return '付款申请'
       } else if (status === '0100') {

@@ -2,7 +2,7 @@
   <div class="main">
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
-    <expense-list-only :expensesList="expensesList" listType="review" :totalNum="totalNum" @currentChange="currentChange" @search="search"></expense-list-only>
+    <expense-list-only :expensesList="expensesList" listType="list" :totalNum="totalNum" @currentChange="currentChange" @search="search"></expense-list-only>
   </div>
 </template>
 
@@ -36,12 +36,12 @@ export default {
     $route: function(val, oldVal) {
       if (val !== oldVal) {
         this.pageNum = 1
-        this.getUnDealRListOfFinance()
+        this.getHandledHistory()
       }
     }
   },
   methods: {
-    getUnDealRListOfFinance () {
+    getHandledHistory () {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -50,40 +50,10 @@ export default {
           params: {
             data: (() => {
               let obj = {
-                command: 'getUnDealRListOfFinance',
+                command: 'getHandledHistory',
                 platform: 'web',
-                type: this.$route.params.id,
                 pageNum: this.pageNum
               }
-              return JSON.stringify(obj);
-            })()
-          }
-        }).then((rep) => {
-          if (rep.data.statusCode === '10001') {
-            this.totalNum = rep.data.data.totalNum
-            this.expensesList = rep.data.data.reimbursementArray
-            resolve('done');
-          } else {
-            this.$message.error(rep.data.msg)
-          }
-        }, (rep) => { });
-      })
-    },
-    getExpensesList () {
-      return new Promise((resolve, reject) => {
-        axios({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-          method: 'get',
-          url: '/service',
-          params: {
-            data: (() => {
-              let obj = {
-                command: 'getUnDealRListOfFinance',
-                platform: 'web',
-                type: 5,
-                pageNum: this.pageNum
-              }
-              Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
             })()
           }
@@ -100,24 +70,17 @@ export default {
     },
     currentChange (pageNum) {
       this.pageNum = pageNum
-      this.getExpensesList()
+      this.getHandledHistory()
     },
     search (obj) {
       this.searchObj = {}
       this.searchObj = obj
       this.pageNum = 1
-      this.getExpensesList()
+      this.getHandledHistory()
     }
   },
   created () {
-    this.$store.dispatch('fetchUserInfo').then(() => {
-      let user = this.$store.getters.getUser
-      if (parseInt(this.$route.params.id) === 10) {
-        this.getExpensesList()
-      } else {
-        this.getUnDealRListOfFinance()
-      }
-    }, () => { })
+    this.getHandledHistory()
   },
   components: {
     crumbs,

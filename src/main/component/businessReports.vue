@@ -58,10 +58,16 @@
               v-if="(REPORT.QRcodeUrl === '')" 
               @click="showCodeModal(index, REPORT.id)"
               :disabled="REPORT.FStatus === 1">待上传</button>
-            <span v-else>{{ REPORT.QRcodeUrl === '' ? '未上传' : '已上传' }}</span>
+            <a target="_blank" :href="REPORT.QRcodeUrl" v-else download>
+              <span class="fa fa-file-text-o"></span>
+            </a>
           </td>
-          <td class="ta-c" v-else>{{ REPORT.QRcodeUrl === '' ? '未上传' : '已上传' }}</td>
-          
+          <td class="ta-c" v-else>
+            <span v-if="(REPORT.QRcodeUrl === '')">未上传</span>
+            <a target="_blank" :href="REPORT.QRcodeUrl" v-else download>
+              <span class="fa fa-file-text-o"></span>
+            </a>
+          </td>
           <td class="ta-c">{{ archivingStateMap[Number(REPORT.archivingState)] }}</td>
         </tr>
       </tbody>

@@ -392,7 +392,7 @@ export default {
             },
             { name: '项目完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus === 70) {
+      } else if (this.business.projectStatus === 70 || this.business.projectStatus === 71) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -420,7 +420,7 @@ export default {
             },
             { name: '项目完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus === 90 || this.business.projectStatus === 110) {
+      } else if (this.business.projectStatus >= 90 && this.business.projectStatus < 120) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -695,7 +695,8 @@ export default {
                       let obj = {
                         id: rep.data.data.projectBillingArray[i].annexArray[j].id,
                         name: rep.data.data.projectBillingArray[i].annexArray[j].annexName,
-                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl
+                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl,
+remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                       };
                       arr.push(obj);
                     }
@@ -709,7 +710,8 @@ export default {
                       let obj = {
                         id: rep.data.data.projectBillingArray[i].annexArray[j].id,
                         name: rep.data.data.projectBillingArray[i].annexArray[j].annexName,
-                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl
+                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl,
+remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                       };
                       arr.push(obj);
                     }

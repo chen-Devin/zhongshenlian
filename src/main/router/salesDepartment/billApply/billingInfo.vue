@@ -49,7 +49,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="单位电话：" prop="companyPhone">
-              <el-input placeholder="请输入单位电话" v-model="bill.companyPhone"></el-input>
+              <el-input placeholder="请输入单位电话" v-model="bill.companyPhone" :disabled="isNotFirst"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -61,7 +61,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="开户银行：" prop="openCountBank">
-              <el-input placeholder="请输入开户银行" v-model="bill.openCountBank"></el-input>
+              <el-input placeholder="请输入开户银行" v-model="bill.openCountBank" :disabled="isNotFirst"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -79,7 +79,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="开户账号：" prop="openBankNumber">
-              <el-input placeholder="请输入开户账号" v-model="bill.openBankNumber"></el-input>
+              <el-input placeholder="请输入开户账号" v-model="bill.openBankNumber" :disabled="isNotFirst"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -94,9 +94,6 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <!-- <el-form-item label="单位名称：" prop="companyName">
-              <el-input placeholder="请输入单位名称" v-model="bill.companyName"></el-input>
-            </el-form-item> -->
           </el-col>
           <el-col :span="12">
             <el-form-item label="服务内容：" prop="serviceContent">
@@ -113,7 +110,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="纳税人识别号：" label-width="110px" prop="taxpayerNumber">
-              <el-input placeholder="请输入纳税人识别号" v-model="bill.taxpayerNumber"></el-input>
+              <el-input placeholder="请输入纳税人识别号" v-model="bill.taxpayerNumber" :disabled="isNotFirst"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -190,7 +187,8 @@ export default {
       },
       billingTypes: ['增值税普通发票', '增值税专用发票'],
       deliveryMethods: ['申请人送达', '快递'],
-      labelPosition: 'left'
+      labelPosition: 'left',
+      isNotFirst: false
     }
   },
   computed: {
@@ -207,32 +205,11 @@ export default {
       }
       return y + '-' + m + '-' + d
     },
-    // billingUnit() {
-    //   if (this.business.contractType.name === "联合体") {
-    //     return this.business.contractType.basicFee.main.name
-    //   } else {
-    //     if (this.business.reportType[0] === "会计所") {
-    //       return '天津中审联有限责任会计师事务所'
-    //     } else if (this.business.reportType[0].department === "造价所") {
-    //       return '天津中审联工程造价咨询有限公司'
-    //     } else if (this.business.reportType[0].department === "评估所") {
-    //       return '天津中审联资产评估有限公司'
-    //     } else if (this.business.reportType[0].department === "税务所") {
-    //       return '天津中审联税务师事务所有限公司'
-    //     } else if (this.business.reportType[0].department === "BH") {
-    //       return '天津中审联有限责任会计师事务所滨海新区分所'
-    //     } else if (this.business.reportType[0].department === "QT") {
-    //       return '其他'
-    //     } else {
-    //       return ''
-    //     }
-    //   }
-    // },
     serviceContents() {
-      if (this.business.contractType.name === "联合体") {
+      if (this.business.contractType.type === "联合体") {
         return ['无'];
       } else {
-        if (this.business.reportType[0] === "会计所") {
+        if (this.business.reportType[0].department === "会计所") {
           return ['审计费', '验资费', '咨询费', '专项审计费'];
         } else if (this.business.reportType[0].department === "造价所") {
           return ['审计费','审核费', '咨询费'];
@@ -257,7 +234,6 @@ export default {
     },
     submit () {
       this.bill.applicationDate = this.requestTime
-      // this.bill.billingUnit = this.billingUnit
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -287,7 +263,13 @@ export default {
     }
   },
   created () {
-    
+    if (this.business.projectBillingArray[0].id) {
+      this.isNotFirst = true
+      this.bill.taxpayerNumber = this.business.projectBillingArray[0].taxpayerNumber
+      this.bill.companyPhone = this.business.projectBillingArray[0].companyPhone
+      this.bill.openCountBank = this.business.projectBillingArray[0].openCountBank
+      this.bill.openBankNumber = this.business.projectBillingArray[0].openBankNumber
+    }
   },
   components: {
     

@@ -111,8 +111,6 @@ export default {
         return  [
           '咨询服务费',
           '劳务费',
-          '过路费',
-          '汽油费',
           '其他'
         ]
       } else if (this.reimbursementInfo.submitType === 'personalR' || this.reimbursementInfo.submitType === 'publicR') {
@@ -130,6 +128,8 @@ export default {
           '财务费',
           '协会费用',
           '业务招待费',
+          '过路费',
+          '汽油费',
           '其他'
         ]
       } else {

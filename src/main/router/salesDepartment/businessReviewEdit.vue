@@ -549,7 +549,8 @@ export default {
                       let obj = {
                         id: rep.data.data.projectBillingArray[i].annexArray[j].id,
                         name: rep.data.data.projectBillingArray[i].annexArray[j].annexName,
-                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl
+                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl,
+remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                       };
                       arr.push(obj);
                     }
@@ -563,7 +564,8 @@ export default {
                       let obj = {
                         id: rep.data.data.projectBillingArray[i].annexArray[j].id,
                         name: rep.data.data.projectBillingArray[i].annexArray[j].annexName,
-                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl
+                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl,
+remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                       };
                       arr.push(obj);
                     }

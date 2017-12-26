@@ -78,12 +78,26 @@
                 :key="index">{{ item.name }}</a>
             </el-col>
             <el-col :span="12">
+              发票图片备注：
+              <span  
+                v-for="(item, index) in bill.billFiles"
+                :key="index">{{ item.remark }}</span>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
               收款图片：
               <a 
                 target="_blank" 
                 :href="item.url" 
                 v-for="(item, index) in bill.receiptFiles"
                 :key="index">{{ item.name }}</a>
+            </el-col>
+            <el-col :span="12">
+              收款图片备注：
+              <span  
+                v-for="(item, index) in bill.receiptFiles"
+                :key="index">{{ item.remark }}</span>
             </el-col>
           </el-row>
           <el-row>

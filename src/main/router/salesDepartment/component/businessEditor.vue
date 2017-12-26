@@ -417,14 +417,8 @@
           <div>
             <el-row>
               <el-col :span="10">
-                <el-input 
-                  placeholder="无" 
-                  type="text" 
-                  v-model="business.departmentCoop.departments.main.name" 
-                  v-if="editable">
-                  <template slot="prepend">合作部门</template>
-                </el-input>
-                <p v-else>合作部门：{{business.departmentCoop.departments.main.name}}</p>
+                <p v-if="editable">合作部门：{{user.companyDepartment}}</p>
+                <p v-else>合作部门：{{user.companyDepartment}}</p>
               </el-col>
               <el-col :span="10">
                 <el-input 
@@ -442,13 +436,14 @@
           <div class="support-box">
             <el-row v-for="(COOP, index) in business.departmentCoop.departments.coop" :key="index">
               <el-col :span="10">
-                <el-input 
-                  placeholder="请输入合作部门" 
-                  type="text" 
-                  v-model="COOP.name" 
-                  v-if="editable">
-                  <template slot="prepend">合作部门</template>
-                </el-input>
+                <el-select v-model="COOP.name" placeholder="请选择合作部门" v-if="editable">
+                  <el-option
+                    v-for="item in coopDepartments"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.name">
+                  </el-option>
+                </el-select>
                 <p v-else>合作部门：{{COOP.name}}</p>
               </el-col>
               <el-col :span="10">
@@ -618,7 +613,8 @@ export default {
       staffModalShow: false,
       staffModalIdentity: '',
       staffModalSelect: '',
-      staffSelected: ''
+      staffSelected: '',
+      coopDepartments: []
     };
   },
   computed: {
@@ -680,6 +676,7 @@ export default {
     bus.$on('savBusiness', () => { this.save() });
 
     this.getCustomerListWithoutPage()
+    this.getOtherComDepartmentList()
     // this.getBussinessUnitUserList()
 
     if (this.business.type === '') {
@@ -693,6 +690,28 @@ export default {
     bus.$off('savBusiness');
   },
   methods: {
+    getOtherComDepartmentList() {
+      let promise = new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              var obj = {
+                command: 'getOtherComDepartmentList',
+                platform: 'web'
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+            this.coopDepartments = rep.data.data.departmentList
+            resolve('done');
+        }, (rep) => { });
+      });
+      return promise;
+    },
     wordsMap(words) {
       let arr = []
       words.forEach((item) => {
@@ -931,7 +950,7 @@ export default {
                   cooperationDepartment: (() => {
                     let out = {};
                     if (this.business.departmentCoop.name === '有部门合作') {
-                      out.mainDepartment = this.business.departmentCoop.departments.main.name;
+                      out.mainDepartment = this.user.companyDepartment;
                       out.mainRate = this.business.departmentCoop.departments.main.percentage;
                       out.otherArray = [];
                       for (let i = 0; i < this.business.departmentCoop.departments.coop.length; i++) {
@@ -1016,8 +1035,6 @@ export default {
         return false;
       } else if (!this.auditTimeCheck()) {
         return false;
-      } else if (!this.departmentsNameCheck()) {
-        return false;
       } else if (!this.basicFeeCheck()) {
         return false;
       } else if (!this.benefitFeeCheck()) {
@@ -1093,7 +1110,7 @@ export default {
                     cooperationDepartment: (() => {
                       let out = {};
                       if (this.business.departmentCoop.name === '有部门合作') {
-                        out.mainDepartment = this.business.departmentCoop.departments.main.name;
+                        out.mainDepartment = this.user.companyDepartment;
                         out.mainRate = this.business.departmentCoop.departments.main.percentage;
                         out.otherArray = [];
                         for (let i = 0; i < this.business.departmentCoop.departments.coop.length; i++) {
@@ -1255,25 +1272,25 @@ export default {
         return true;
       }
     },
-    departmentsNameCheck() {
-      if (this.business.departmentCoop.name === '有部门合作') {
-        let flag = true;
-        for (let i = 0; i < this.business.departmentCoop.departments.coop.length; i++) {
-          if(this.business.departmentCoop.departments.main.name === this.business.departmentCoop.departments.coop[i].name) {
-            flag = false;
-            break;
-          }
-        }
-        if (flag) {
-          return true;
-        } else {
-          this.$emit('refuseSub', '合作部门与主要部门不能是同一部门，请检查');
-          return false;
-        }
-      } else {
-        return true;
-      }
-    },
+    // departmentsNameCheck() {
+    //   if (this.business.departmentCoop.name === '有部门合作') {
+    //     let flag = true;
+    //     for (let i = 0; i < this.business.departmentCoop.departments.coop.length; i++) {
+    //       if(this.business.departmentCoop.departments.main.name === this.business.departmentCoop.departments.coop[i].name) {
+    //         flag = false;
+    //         break;
+    //       }
+    //     }
+    //     if (flag) {
+    //       return true;
+    //     } else {
+    //       this.$emit('refuseSub', '合作部门与主要部门不能是同一部门，请检查');
+    //       return false;
+    //     }
+    //   } else {
+    //     return true;
+    //   }
+    // },
     contractAmountCheck() {
       if (this.business.contractAmount === '') {
         this.$emit('refuseSub', '请填写合同预估金额');

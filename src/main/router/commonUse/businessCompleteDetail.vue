@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" v-if="reload">
     <crumbs :paths="paths"></crumbs>
     <card>
       <h3 class="main-title">
@@ -36,6 +36,7 @@ export default {
   name: 'businessCompleteDetail',
   data() {
     return {
+      reload: true,
       paths: [
         { name: '已完成项目', url: '/business-complete-list', present: false },
         { name: '项目详情', url: `/business-complete-list/business-complete-detail-${this.$route.params.id}`, present: true }
@@ -360,7 +361,7 @@ export default {
             },
             { name: '项目完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus === 70) {
+      } else if (this.business.projectStatus === 70 || this.business.projectStatus === 71) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -388,7 +389,7 @@ export default {
             },
             { name: '项目完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus === 90 || this.business.projectStatus === 110) {
+      } else if (this.business.projectStatus >= 90 && this.business.projectStatus < 120) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -466,8 +467,15 @@ export default {
   },
   created() {
     bus.$on('bill-selected', (bill) => {
+      this.reload = false
+      setTimeout(() => {
+        this.reload = true
+      }, 100)
+      
+      
       this.bill = bill
       this.billDetailShow = true
+      console.log(this.billDetailShow)
     })
     bus.$on('reloadFinancialDetail', () => {
       this.getInfo()
@@ -677,7 +685,8 @@ export default {
                       let obj = {
                         id: rep.data.data.projectBillingArray[i].annexArray[j].id,
                         name: rep.data.data.projectBillingArray[i].annexArray[j].annexName,
-                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl
+                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl,
+                        remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                       };
                       arr.push(obj);
                     }
@@ -691,7 +700,8 @@ export default {
                       let obj = {
                         id: rep.data.data.projectBillingArray[i].annexArray[j].id,
                         name: rep.data.data.projectBillingArray[i].annexArray[j].annexName,
-                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl
+                        url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl,
+                        remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                       };
                       arr.push(obj);
                     }
@@ -740,9 +750,6 @@ export default {
         }
       }
     }
-    // pathsChan(paths) {
-    //   this.paths = paths;
-    // }
   },
   components: {
     crumbs,

@@ -35,13 +35,16 @@
             <span>职员管理</span>
           </template>
         </el-submenu>
-        <!-- <el-menu-item index="/staff-management-author">职员管理</el-menu-item> -->
         <el-submenu index="expenses-list">
           <template slot="title">
             <span>报销申请</span>
           </template>
         </el-submenu>
-        <!-- <el-menu-item index="/expenses-list">报销申请</el-menu-item> -->
+        <el-submenu index="expenses-review-record">
+          <template slot="title">
+            <span>报销审批记录</span>
+          </template>
+        </el-submenu>
       </template>
       <template v-if="sales">
         <el-submenu index="business-review-list-sales">
@@ -58,6 +61,11 @@
         <el-submenu index="bid-info-list">
           <template slot="title">
             <span>招投标信息</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="expenses-review-record">
+          <template slot="title">
+            <span>报销审批记录</span>
           </template>
         </el-submenu>
         <el-submenu index="expenses-list">
@@ -77,6 +85,11 @@
             <span>草稿箱</span>
           </template>
         </el-submenu>
+        <el-submenu index="expenses-review-record">
+          <template slot="title">
+            <span>报销审批记录</span>
+          </template>
+        </el-submenu>
         <el-submenu index="expenses-list">
           <template slot="title">
             <span>报销申请</span>
@@ -91,11 +104,17 @@
         </el-submenu>
         <el-submenu index="business-complete-list">
           <template slot="title">项目管理</template>
+          <el-menu-item index="/business-handle-list">进行中项目</el-menu-item>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
         <el-submenu index="bid-info-list">
           <template slot="title">
             <span>招投标信息</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="expenses-review-record">
+          <template slot="title">
+            <span>报销审批记录</span>
           </template>
         </el-submenu>
         <el-submenu index="expenses-list">
@@ -112,11 +131,17 @@
         </el-submenu>
         <el-submenu index="business-complete-list">
           <template slot="title">项目管理</template>
+          <el-menu-item index="/business-handle-list">进行中项目</el-menu-item>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
         <el-submenu index="bid-info-list">
           <template slot="title">
             <span>招投标信息</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="expenses-review-record">
+          <template slot="title">
+            <span>报销审批记录</span>
           </template>
         </el-submenu>
         <el-submenu index="expenses-list">
@@ -137,11 +162,17 @@
         </el-submenu>
         <el-submenu index="business-complete-list">
           <template slot="title">项目管理</template>
+          <el-menu-item index="/business-handle-list">进行中项目</el-menu-item>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
         <el-submenu index="bid-info-list">
           <template slot="title">
             <span>招投标信息</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="expenses-review-record">
+          <template slot="title">
+            <span>报销审批记录</span>
           </template>
         </el-submenu>
         <el-submenu index="expenses-list">
@@ -158,11 +189,17 @@
         </el-submenu>
         <el-submenu index="business-complete-list">
           <template slot="title">项目管理</template>
+          <el-menu-item index="/business-handle-list">进行中项目</el-menu-item>
           <el-menu-item index="/business-complete-list">已完成项目</el-menu-item>
         </el-submenu>
         <el-submenu index="bid-info-list">
           <template slot="title">
             <span>招投标信息</span>
+          </template>
+        </el-submenu>
+        <el-submenu index="expenses-review-record">
+          <template slot="title">
+            <span>报销审批记录</span>
           </template>
         </el-submenu>
         <el-submenu index="expenses-list">

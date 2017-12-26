@@ -243,7 +243,8 @@ export default {
         percentage: '0%'
       },
       showMore: false,
-      labelPosition: 'left'
+      labelPosition: 'left',
+      editable: false
     };
   },
   computed: {

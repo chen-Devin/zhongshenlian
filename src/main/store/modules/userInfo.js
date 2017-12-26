@@ -8,6 +8,7 @@ const state = {
 		name: '',
 		jobNumber: '',
 		department: '',
+		companyDepartment: '',
         companyName: '',
 		duties: '',
 		authority: [],
@@ -59,6 +60,7 @@ const mutations = {
 		state.user.name = user.name;
 		state.user.jobNumber = user.jobNumber;
         state.user.department = user.department;
+        state.user.companyDepartment = user.companyDepartment;
 		state.user.companyName = user.companyName;
 		state.user.duties = user.duties;
 		state.user.authority = user.authority;

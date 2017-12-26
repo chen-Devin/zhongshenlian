@@ -32,13 +32,8 @@ export default {
       this.$emit('pathsChan', paths);
     },
     sel(obj) {
-      console.log(obj)
       bus.$emit('hideBillingDetail')
       this.$router.push(obj.name)
-      // for (let i = 0; i < this.parts.length; i++) {
-      //   this.parts[i].state = false;
-      // }
-      // this.parts[index].state = true;
     }
   }
 }
