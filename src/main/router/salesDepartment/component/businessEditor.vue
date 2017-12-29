@@ -9,6 +9,7 @@
       class="business-editor" 
       :disabled="!editable">
       <div class="basic-message">
+        <p>{{business.reviewCPA.id}}</p>
         <el-row>
           <el-form-item label="基础信息："></el-form-item>
         </el-row>
@@ -30,7 +31,8 @@
         </el-row>
         <el-row>
           <el-col :span="8">
-            <p>提交申请人：{{user.name}}</p>
+            <p v-if="editable">提交申请人：{{user.name}}</p>
+            <p v-else>提交申请人：{{business.proposer.name}}</p>
           </el-col>
           <el-col :span="8">
             <el-form-item label="业务类型：" required v-if="editable">
@@ -79,25 +81,9 @@
               </div>              
             </el-form-item>
             <p v-else>项目经理：{{ projectManager }}</p>
-            <!-- <el-form-item label="项目经理：" required>
-              <el-select v-model="business.projectManager" placeholder="请选择项目经理">
-                <el-option
-                  v-for="item in staffArray"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item> -->
           </el-col>
           <el-col :span="8">
             <el-form-item label="合同预估金额：" label-width="120px" required v-if="editable" prop="contractAmount">
-              <!-- <masked-input type="text" placeholder="请输入合同预估金额"  v-model="business.contractAmount"
-                            v-if="editable"
-                            :mask="currencyMask"
-                            :guide="false"
-                            placeholderChar="#">
-              </masked-input> -->
               <el-input v-model="business.contractAmount">
                 <template slot="append">元</template>
               </el-input>
@@ -189,7 +175,6 @@
         </el-row>
         <div class="d-f">
           <el-form-item label="出具报告类型：" required label-width="120px "></el-form-item>
-         <!--  <p style="width:100px;">出具报告类型：</p> -->
           <div class="check-wrap">
             <p class="d-ib" v-if="!editable">{{ reportType }}</p>
             <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index" v-else>
@@ -610,7 +595,7 @@ export default {
         name: [
           { required: true, message: '请输入项目名称', trigger: 'blur' }
         ],
-        scope:[
+        businessScope:[
           { required: true, message: '请输入业务范围与审计目标', trigger: 'blur' }
         ],
         contractAmount:[
@@ -647,7 +632,11 @@ export default {
       if (this.business.manager.name) {
         return this.business.manager.name
       } else {
-        return '点击选择项目经理'
+        if (this.editable) {
+          return '点击选择项目经理'
+        } else {
+          return '暂无'
+        }
       }
     },
     reviewCPAsName () {
@@ -898,7 +887,18 @@ export default {
       });
       return promise;
     },
+    formatDate() {
+      let nd = new Date()
+      let y = nd.getFullYear()
+      let m = nd.getMonth() + 1
+      let d = nd.getDate()
+      m < 10 ? '0' + m : m
+      d < 10 ? '0' + d : d
+      return y + '-' + m + '-' + d
+    },
     save() {
+      bus.$emit('subing');
+      this.business.time.start = this.business.time.start === '' ? this.formatDate() : this.business.time.start
       let promise = new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
@@ -912,7 +912,7 @@ export default {
                 data: {
                   id: this.business.id,
                   projectName: this.business.name,
-                  businessScope: this.business.scope,
+                  businessScope: this.business.businessScope,
                   applicantId: this.user.id,
                   applicantName: this.user.name,
                   applicantPhone: this.user.telephone,
@@ -977,13 +977,7 @@ export default {
                     }
                     return out;
                   })(),
-                  trialTeacherId: this.business.reviewCPA.id,
-                  trialTeacherName: this.business.reviewCPA.name,
-                  //手动输入
                   trialTeacher: this.business.reviewCPA,
-                  trialAssistantId: this.business.reviewAssistant.id,
-                  trialAssistantName: this.business.reviewAssistant.name,
-                  //手动输入
                   trialAssistant: this.business.reviewAssistant,
                   lastOffice: this.business.lastOffice,
                   getWay: this.business.getWay,
@@ -1058,7 +1052,11 @@ export default {
         return false;
       } else if (this.business.institution.id === '') {
         this.$message.warning('请选择委托单位')
+      } else if (!(this.business.name && this.business.businessScope && this.business.basisQuote && this.reviewCPAsName && this.reviewAssistantsName)) {
+        this.$message.warning('请将必填项填写完整')
       } else {
+        bus.$emit('subing');
+        this.business.time.start = this.business.time.start === '' ? this.formatDate() : this.business.time.start
         let promise = new Promise((resolve, reject) => {
           axios({
             headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
@@ -1072,7 +1070,7 @@ export default {
                   data: {
                     id: this.business.id,
                     projectName: this.business.name,
-                    businessScope: this.business.scope,
+                    businessScope: this.business.businessScope,
                     applicantId: this.user.id,
                     applicantName: this.user.name,
                     applicantPhone: this.user.telephone,
@@ -1137,14 +1135,8 @@ export default {
                       }
                       return out;
                     })(),
-                    trialTeacherId: this.business.reviewCPA.id,
-                    trialTeacherName: this.business.reviewCPA.name,
-                    //手动输入
-                    trialTeacher: this.business.reviewCPA.name,
-                    trialAssistantId: this.business.reviewAssistant.id,
-                    trialAssistantName: this.business.reviewAssistant.name,
-                    //手动输入
-                    trialAssistant: this.business.reviewAssistant.name,
+                    trialTeacher: this.business.reviewCPA,
+                    trialAssistant: this.business.reviewAssistant,
                     lastOffice: this.business.lastOffice,
                     getWay: this.business.getWay,
                     contractType: (() => {
@@ -1215,7 +1207,6 @@ export default {
       this.business.contractType.basicFee.depend.push({ name: '', percentage: 0 });
     },
     basicFeeCheck() {
-      console.log(1)
       if (this.business.contractType.name === '联合体') {
         let total = Number(this.business.contractType.basicFee.main.percentage);
         for (let i = 0; i < this.business.contractType.basicFee.depend.length; i++) {
@@ -1287,25 +1278,6 @@ export default {
         return true;
       }
     },
-    // departmentsNameCheck() {
-    //   if (this.business.departmentCoop.name === '有部门合作') {
-    //     let flag = true;
-    //     for (let i = 0; i < this.business.departmentCoop.departments.coop.length; i++) {
-    //       if(this.business.departmentCoop.departments.main.name === this.business.departmentCoop.departments.coop[i].name) {
-    //         flag = false;
-    //         break;
-    //       }
-    //     }
-    //     if (flag) {
-    //       return true;
-    //     } else {
-    //       this.$emit('refuseSub', '合作部门与主要部门不能是同一部门，请检查');
-    //       return false;
-    //     }
-    //   } else {
-    //     return true;
-    //   }
-    // },
     contractAmountCheck() {
       if (this.business.contractAmount === '') {
         this.$emit('refuseSub', '请填写合同预估金额');

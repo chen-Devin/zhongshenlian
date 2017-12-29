@@ -30,7 +30,7 @@
             @click="businessRoute(project)" 
             :key="index">
             <td>{{ project.projectName }}</td>
-            <td>{{ project.startTime.substring(0,10) }}</td>
+            <td>{{ project.standingTime }}</td>
             <td>
               <span class="label label-danger"
                     v-if="project.projectStatus==='0010'">尚未完成</span>
@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '立项审批', url: '/business-review-list-sales', present: true }
+        { name: '立项项目', url: '/business-review-list-sales', present: true }
       ],
       businessArray: [],
       addBusiness: false,

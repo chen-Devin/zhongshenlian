@@ -135,8 +135,8 @@
             <el-form-item label="快递收件人：" label-width="90px" prop="recipientName">
               <el-input placeholder="请输入快递收件人" v-model="bill.recipientName"></el-input>
             </el-form-item>
-            <el-form-item label="收件地址：" label-width="80px" prop="recipientAddress">
-              <el-input placeholder="请输入收件地址" v-model="bill.recipientAddress"></el-input>
+            <el-form-item label="收件地址：" label-width="80px" prop="deliveryAddress">
+              <el-input placeholder="请输入收件地址" v-model="bill.deliveryAddress"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -177,7 +177,7 @@ export default {
         deliveryMethod: '',
         recipientName: '',
         recipientId: '',
-        recipientAddress: '',
+        deliveryAddress: '',
         signContractNumber: this.business.contractNo,
         serviceContent: '',
         signContractAmount: this.business.contractAmount,

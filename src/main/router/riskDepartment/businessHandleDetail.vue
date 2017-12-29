@@ -374,7 +374,7 @@ export default {
             },
             { name: '项目完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus === 70 || this.business.projectStatus === 71) {
+      } else if (this.business.projectStatus === 70) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -388,7 +388,7 @@ export default {
             },
             { name: '项目完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus === 80) {
+      } else if (this.business.projectStatus === 71) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -676,6 +676,7 @@ export default {
               let obj = {
                 id: rep.data.data.projectBillingArray[i].id,
                 applicationTime: rep.data.data.projectBillingArray[i].applicationTime,
+                revokeState: parseInt(rep.data.data.projectBillingArray[i].revokeState),
                 paymentTime: rep.data.data.projectBillingArray[i].paymentTime,
                 billingTime: rep.data.data.projectBillingArray[i].billingTime,
                 proposer: {
@@ -698,8 +699,8 @@ export default {
                 filingDate: rep.data.data.projectBillingArray[i].applicationDate,
                 billingDate: rep.data.data.projectBillingArray[i].billingDate,
                 way: rep.data.data.projectBillingArray[i].deliveryMethod,
-                receiver: rep.data.data.projectBillingArray[i].recipientName,
-                receiveAdd: rep.data.data.projectBillingArray[i].deliverAddress,
+                recipientName: rep.data.data.projectBillingArray[i].recipientName,
+                deliveryAddress: rep.data.data.projectBillingArray[i].deliveryAddress,
                 content: rep.data.data.projectBillingArray[i].serviceContent,
                 billFiles: (() => {
                   let arr = [];

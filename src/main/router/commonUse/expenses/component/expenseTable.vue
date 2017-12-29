@@ -13,6 +13,7 @@
                 v-model="reimbursementInfo.startTime"
                 type="date"
                 placeholder="选择出差起始日期"
+                :picker-options="pickerOptions0"
                 v-if="editAble">
               </el-date-picker>
               <p v-else>{{reimbursementInfo.startTime.slice(0, 10)}}</p>
@@ -23,6 +24,7 @@
                 v-model="reimbursementInfo.endTime"
                 type="date"
                 placeholder="选择出差结束日期"
+                :picker-options="pickerOptions1"
                 v-if="editAble">
               </el-date-picker>
               <p v-else>{{reimbursementInfo.endTime.slice(0, 10)}}</p>
@@ -100,9 +102,24 @@
 export default {
   name: 'expenseTable',
   data() {
+    let that = this
     return {
       reason: '',
-      startDate: ''
+      startDate: '',
+      pickerOptions0: {
+        disabledDate (time) {
+          return time.getTime() > Date.now() - 8.64e7;
+        }
+      },
+      pickerOptions1: {
+        disabledDate (time) {
+          if (that.reimbursementInfo.startTime === '') {
+            return false
+          } else {
+            return time.getTime() < that.reimbursementInfo.startTime
+          }
+        }
+      }
     }
   },
   computed: {
@@ -143,7 +160,9 @@ export default {
   watch: {
     _submitType: function (val, oldVal) {
       if (val !== oldVal) {
-        this.reimbursementInfo.expenditureProject = ''
+        if (this.editAble) {
+          this.reimbursementInfo.expenditureProject = ''
+        }
       }
     }
   },

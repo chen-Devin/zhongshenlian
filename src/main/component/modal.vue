@@ -63,10 +63,6 @@ export default {
   color: #42b983;
 }
 
-.modal-body {
-  margin: 10px 0;
-}
-
 .modal-footer {
   border-top: none;
   text-align: center;

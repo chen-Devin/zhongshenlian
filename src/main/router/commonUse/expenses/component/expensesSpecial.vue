@@ -12,7 +12,11 @@
           <el-col class="d-f" :span="9">
             <template v-if="editAble">
               <span style="width:90px" class="required">报销类型：</span>
-              <el-select v-model="reimbursementInfo.submitType" placeholder="请选择报销方式" v-if="editAble" @change="changeType">
+              <el-select 
+                v-model="reimbursementInfo.submitType" 
+                placeholder="请选择报销方式" 
+                v-if="editAble" 
+                @change="changeType">
                 <el-option
                   v-for="item in typeOptions"
                   :key="item.id"
@@ -26,7 +30,12 @@
           <el-col class="d-f" :span="9">
             <template v-if="editAble">
               <span style="width:90px">开票类型：</span>
-              <el-select v-model="reimbursementInfo.billingType" placeholder="请选择开票类型" v-if="editAble">
+              <el-select 
+                v-model="reimbursementInfo.billingType" 
+                placeholder="请选择开票类型" 
+                v-if="editAble" 
+                :disabled="changeTypeDisabled"
+                @change="changeBillingType">
                 <el-option
                   v-for="item in classOptions"
                   :key="item"
@@ -39,7 +48,7 @@
           </el-col>
           <el-col class="d-f" :span="6">
             <span style="width:70px">申请人：</span>
-            {{ user.name }}
+            {{ applicantName }}
           </el-col>
         </el-row>
       </div>
@@ -52,10 +61,11 @@
         :editAble="editAble"></expense-table>
       <div class="message-box">
         <template v-if="group || project">
-          <el-row>
-            <el-col class="d-f" :span="12" v-if="project">
+          <el-row v-if="project">
+            <el-col class="d-f" :span="12" v-if="editAble">
               <span style="width:100px;" class="required">合同编号：</span>
               <el-select 
+                multiple 
                 v-model="reimbursementInfo.projectNumberArray" 
                 placeholder="请选择合同编号" 
                 @change="changeContract"
@@ -68,66 +78,84 @@
                 </el-option>
               </el-select>
             </el-col>
+            <p v-else>合同编号：{{ reimbursementInfo.projectNumberArray.join('、') }}</p>
           </el-row>
           <el-row>
             <el-col style="display: flex;" :span="12">
-              <span style="width:100px;" class="required">账户名称：</span>
-              <el-input v-model="reimbursementInfo.accountName" placeholder="请填写账户名称" v-if="editAble"></el-input>
+              <template v-if="editAble">
+                <span style="width:100px;" class="required">账户名称：</span>
+                <el-input v-model="reimbursementInfo.accountName" placeholder="请填写账户名称"></el-input>
+              </template>
+              <p v-else>账户名称：{{ reimbursementInfo.accountName }}</p>
             </el-col>
             <el-col style="display: flex;" :span="12">
-              <span style="width:100px;" class="required">开户银行：</span>
-              <el-input v-model="reimbursementInfo.accountBank" placeholder="请填写开户银行" v-if="editAble"></el-input>
+              <template v-if="editAble">
+                <span style="width:100px;" class="required">开户银行：</span>
+                <el-input v-model="reimbursementInfo.accountBank" placeholder="请填写开户银行"></el-input>
+              </template>
+              <p v-else>开户银行：{{ reimbursementInfo.accountBank }}</p>
             </el-col>
           </el-row>
           <el-row>
             <el-col style="display: flex;" :span="12">
-              <span style="width:100px;" class="required">银行账户：</span>
-              <el-input v-model="reimbursementInfo.accountBankNumber" placeholder="请填写银行账户" v-if="editAble"></el-input>
+              <template v-if="editAble">
+                <span style="width:100px;" class="required">银行账户：</span>
+                <el-input v-model="reimbursementInfo.accountBankNumber" placeholder="请填写银行账户"></el-input>
+              </template>
+              <p v-else>银行账户：{{ reimbursementInfo.accountBankNumber }}</p>
             </el-col>
           </el-row>
         </template>
         <el-row>
           <el-col class="d-f" :span="12">
-            <span style="width:110px" class="required">报销单ID：</span>
-            {{ reimbursementInfo.id }}
+            <template v-if="editAble">
+              <span style="width:110px" class="required">报销单ID：</span>
+              {{ reimbursementInfo.id }}
+            </template>
+            <p v-else>报销单ID：{{ reimbursementInfo.id }}</p>
           </el-col>
           <el-col class="d-f" :span="12">
-            <span style="width:140px" class="required">预算所属公司：</span>
-            <span v-if="!editAble">{{ reimbursementInfo.budgetCompanyName }}</span>
-            <el-select 
-              v-model="reimbursementInfo.budgetCompanyId" 
-              placeholder="请选择预算所属公司" 
-              @change="companyChange()"
-              :disabled="selectedCompany"
-              v-else>
-              <el-option
-                v-for="item in companyList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-              </el-option>
-            </el-select>
+            <template v-if="editAble">
+              <span style="width:140px" class="required">预算所属公司：</span>
+              <el-select 
+                v-model="reimbursementInfo.budgetCompanyId" 
+                placeholder="请选择预算所属公司" 
+                @change="companyChange()"
+                :disabled="selectedCompany">
+                <el-option
+                  v-for="item in companyList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </template>
+            <p v-else>预算所属公司：{{ reimbursementInfo.budgetCompanyName }}</p>
           </el-col>
         </el-row>
         <el-row>
           <el-col class="d-f" :span="12">
-            <span style="width:110px" class="required">所在公司：</span>
-            {{ user.companyName }}
+            <template v-if="editAble">
+              <span style="width:110px" class="required">所在公司：</span>
+              {{ companyName }}
+            </template>
+            <p v-else>所在公司：{{ reimbursementInfo.companyName }}</p>
           </el-col>
           <el-col class="d-f" :span="12">
-            <span style="width:140px" class="required">预算所属部门：</span>
-            <span v-if="!editAble">{{ reimbursementInfo.budgetDepartmentName }}</span>
-            <el-select 
-              v-model="reimbursementInfo.budgetDepartmentId"
-              placeholder="请选择预算所属部门" 
-              v-else>
-              <el-option
-                v-for="item in departmentList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-              </el-option>
-            </el-select>
+            <template v-if="editAble">
+              <span style="width:140px" class="required">预算所属部门：</span>
+              <el-select 
+                v-model="reimbursementInfo.budgetDepartmentId"
+                placeholder="请选择预算所属部门">
+                <el-option
+                  v-for="item in departmentList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </template>
+            <p v-else>预算所属部门：{{ reimbursementInfo.budgetDepartmentName }}</p>
           </el-col>
         </el-row>
       </div>
@@ -152,7 +180,8 @@
               v-model="reimbursementInfo.paperInvoiceNum" 
               placeholder="请选择张数" 
               v-if="editAble" 
-              @change="changeNumbers('paper')">
+              :disabled="paperDisabled"
+              @change="changeNumbersP">
               <el-option
                 v-for="item in numbers"
                 :key="item"
@@ -184,7 +213,8 @@
               v-model="reimbursementInfo.electricInvoiceNum" 
               placeholder="请选择张数" 
               v-if="editAble" 
-              @change="changeNumbers('electric')">
+              :disabled="electricDisabled"
+              @change="changeNumbersE">
               <el-option
                 v-for="item in numbers"
                 :key="item"
@@ -206,7 +236,7 @@
               <p v-if="!editAble">{{ each.amount }}元</p>
             </div>
           </el-col>
-          <el-col :span="7">
+          <el-col :span="7" v-if="electric && editAble">
             <div v-for="(item, index) in reimbursementInfo.electricRArray" :key="index" class="each">
               <el-upload :show-file-list="false"
                          :action="getUploadUrl(item.amount, 'electricR', item.annexId)"
@@ -303,7 +333,13 @@ export default {
       user: {},
       paths: [],
       rejectShow: false,
+      paperDisabled: false,
+      electricDisabled: false,
+      changeTypeDisabled: false,
       reimbursementInfo: {
+        id: '',
+        applicantName: '',
+        companyName: '',
         submitType: '',
         billingType: '',
         expenditureProject: '',
@@ -315,35 +351,16 @@ export default {
         accountName: '',
         accountBank: '',
         accountBankNumber: '',
-        paperInvoiceNum: 1,
+        paperInvoiceNum: 0,
         paperInvoiceAmount: '',
         projectNumberArray: [],
         paperRArray: [
-          {
-            id: '',
-            amount: 0
-          }
+          
         ],
-        electricInvoiceNum: 1,
+        electricInvoiceNum: 0,
         electricInvoiceAmount: '',
         electricRArray: [
-          {
-            id: '',
-            amount: 0,
-            annexUrl: '',
-            annexId: '',
-            uploadURL: '',
-            uploadFailInfo: '上传失败，请重试',
-            path: '',
-            state: {
-              notUpload: true,
-              uploading: false,
-              uploadFail: false,
-              uploaded: false
-            },
-            percentage: 0,
-            name: ''
-          }
+          
         ],
       },
       recordList: [{
@@ -437,6 +454,12 @@ export default {
         return false
       }
     },
+    applicantName () {
+      return this.reimbursementInfo.applicantName === '' ? this.user.name : this.reimbursementInfo.applicantName
+    },
+    companyName () {
+      return this.reimbursementInfo.companyName === '' ? this.user.companyName : this.reimbursementInfo.companyName
+    },
     status () {
       let arr = new Array(6).fill(0)
       switch(this.reimbursementInfo.status) {
@@ -491,11 +514,16 @@ export default {
     changeType () {
       this.selectedCompany = false
       this.reimbursementInfo.budgetCompanyId = ''
+      this.reimbursementInfo.projectNumberArray = []
     },
-    changeContract (val) {
+    changeBillingType () {
+      this.changeTypeDisabled = true
+    },
+    changeContract () {
       this.selectedCompany = true
+      let budgetCompany = this.user.companyName
       this.contracts.forEach((item, index) => {
-        if (item.contractNo === val) {
+        if (item.applicantCompany === budgetCompany) {
           this.reimbursementInfo.budgetCompanyId = item.applicantCompanyId
         }
       })
@@ -564,14 +592,19 @@ export default {
                 command: 'handleReimbursement',
                 platform: 'web',
                 result: type,
-                idArray: [{id: this.expenseId}],
-                reason: reason
+                idArray: [
+                  {
+                    id: this.expenseId,
+                    reason: reason
+                  }
+                ]
               }
               return JSON.stringify(obj);
             })()
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            window.history.go(-1)
             this.$message.success('审批成功')
             resolve('done');
           } else {
@@ -599,46 +632,47 @@ export default {
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
             this.reimbursementInfo = rep.data.data
-            // this.companyList = rep.data.data.companyList
+            console.log(rep.data.data)
             resolve('done');
           }
         }, (rep) => { });
       })
     },
-    changeNumbers (type) {
-      if (type === 'paper') {
-        this.reimbursementInfo.paperRArray = []
-        for (let i = 0; i < Number(this.reimbursementInfo.paperInvoiceNum); i++) {
-          this.reimbursementInfo.paperRArray.push(
-            {
-              id: '',
-              amount: 0
-            }
-          )
-        }
-      } else if (type === 'electric') {
-        this.reimbursementInfo.electricRArray = []
-        for (let i = 0; i < Number(this.reimbursementInfo.electricInvoiceNum); i++) {
-          this.reimbursementInfo.electricRArray.push(
-            {
-              id: '',
-              amount: 0,
-              annexUrl: '',
-              annexId: '',
-              uploadURL: '',
-              state: {
-                notUpload: true,
-                uploading: false,
-                uploadFail: false,
-                uploaded: false
-              },
-              percentage: 0,
-              name: '',
-              path: ''
-            }
-          )
-        }
+    changeNumbersE() {
+      this.reimbursementInfo.electricRArray = []
+      for (let i = 0; i < Number(this.reimbursementInfo.electricInvoiceNum); i++) {
+        this.reimbursementInfo.electricRArray.push(
+          {
+            id: '',
+            amount: 0,
+            annexUrl: '',
+            annexId: '',
+            uploadURL: '',
+            state: {
+              notUpload: true,
+              uploading: false,
+              uploadFail: false,
+              uploaded: false
+            },
+            percentage: 0,
+            name: '',
+            path: ''
+          }
+        )
       }
+      this.electricDisabled = true
+    },
+    changeNumbersP() {
+      this.reimbursementInfo.paperRArray = []
+      for (let i = 0; i < Number(this.reimbursementInfo.paperInvoiceNum); i++) {
+        this.reimbursementInfo.paperRArray.push(
+          {
+            id: '',
+            amount: 0
+          }
+        )
+      }
+      this.paperDisabled = true
     },
     getCompanyList () {
       return new Promise((resolve, reject) => {
@@ -794,11 +828,15 @@ export default {
         this.uploadAmount(this.reimbursementInfo.paperRArray[0].amount, 'paperR').then(() => {
           var promiseArr = []
           if (this.reimbursementInfo.paperRArray.length > 1) {
-            this.reimbursementInfo.paperRArray.forEach((item) => {
-              promiseArr.push(this.uploadAmount(item.amount, 'paperR'))
+            this.reimbursementInfo.paperRArray.forEach((item, index) => {
+              if (index > 0) {
+                promiseArr.push(this.uploadAmount(item.amount, 'paperR'))
+              }
             })
           }
           Promise.all(promiseArr).then(() => {
+            this.reimbursementInfo.companyName = this.user.companyName
+            this.reimbursementInfo.applicantName = this.user.applicantName
             if (this.reimbursementInfo.id === '') {
               delete this.reimbursementInfo.id
             }
@@ -996,5 +1034,8 @@ export default {
   }
   .table-bordered > tbody > tr > td {
       border: none;
+  }
+  .el-input.is-disabled .el-input__inner {
+    background-color: #eef1f6;
   }
 </style>

@@ -4,7 +4,7 @@
       <div slot="body">
         <template v-if="!sended">
           <p 
-            class="btns f-r" 
+            class="f-r" 
             v-if="user.department === '财务部'">
             <template v-if="Number(bill.revokeState) === 10">
               <button 
@@ -58,6 +58,14 @@
             </el-col>
             <el-col :span="12">
               送达方式：{{ bill.way }}
+            </el-col>
+          </el-row>
+          <el-row v-if="bill.way === '快递'">
+            <el-col :span="12">
+              快递地址：{{ bill.deliveryAddress }}
+            </el-col>
+            <el-col :span="12">
+              快递收件人：{{ bill.recipientName }}
             </el-col>
           </el-row>
           <el-row>

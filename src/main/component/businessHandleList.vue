@@ -138,7 +138,7 @@ export default {
           name: 'sign'
         },
         {
-          label: '上传合同',
+          label: '待上传合同',
           name: 'upload'
         },
         {

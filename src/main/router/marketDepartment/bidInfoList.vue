@@ -27,6 +27,21 @@ export default {
       ]
     };
   },
+  created () {
+    this.$store.dispatch('fetchUserInfo').then(() => {
+      let user = this.$store.getters.getUser
+      if (user.department === '所长') {
+        this.paths = [
+          { name: '待办事项', url: '/expenses-review', present: true },
+          { name: '招投标审批', url: '/expenses-review/0', present: true }
+        ]
+      } else {
+        this.paths = [
+          { name: '招投标信息', url: '/bid-info-list', present: true }
+        ]
+      }
+    }, () => { })
+  },
   components: {
     crumbs,
     card,

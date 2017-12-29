@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       paths: [
-        { name: '立项审批', url: '/business-review-list-sales', present: false },
+        { name: '立项项目', url: '/business-review-list-sales', present: false },
         { name: '项目详情', url: `/business-review-edit-${this.$route.params.id}`, present: true },
       ],
       business: {
@@ -520,6 +520,7 @@ export default {
             for (let i = 0; i < rep.data.data.projectBillingArray.length; i++) {
               let obj = {
                 id: rep.data.data.projectBillingArray[i].id,
+                revokeState: parseInt(rep.data.data.projectBillingArray[i].revokeState),
                 applicationTime: rep.data.data.projectBillingArray[i].applicationTime,
                 paymentTime: rep.data.data.projectBillingArray[i].paymentTime,
                 billingTime: rep.data.data.projectBillingArray[i].billingTime,
@@ -543,8 +544,8 @@ export default {
                 filingDate: rep.data.data.projectBillingArray[i].applicationDate,
                 billingDate: rep.data.data.projectBillingArray[i].billingDate,
                 way: rep.data.data.projectBillingArray[i].deliveryMethod,
-                receiver: rep.data.data.projectBillingArray[i].recipientName,
-                receiveAdd: rep.data.data.projectBillingArray[i].deliverAddress,
+                recipientName: rep.data.data.projectBillingArray[i].recipientName,
+                deliveryAddress: rep.data.data.projectBillingArray[i].deliveryAddress,
                 content: rep.data.data.projectBillingArray[i].serviceContent,
                 billFiles: (() => {
                   let arr = [];
@@ -554,7 +555,7 @@ export default {
                         id: rep.data.data.projectBillingArray[i].annexArray[j].id,
                         name: rep.data.data.projectBillingArray[i].annexArray[j].annexName,
                         url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl,
-remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
+                        remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                       };
                       arr.push(obj);
                     }
@@ -569,7 +570,7 @@ remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                         id: rep.data.data.projectBillingArray[i].annexArray[j].id,
                         name: rep.data.data.projectBillingArray[i].annexArray[j].annexName,
                         url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl,
-remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
+                        remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                       };
                       arr.push(obj);
                     }

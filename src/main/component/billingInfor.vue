@@ -29,8 +29,8 @@
             <td class="ta-c">
               <span class="state reject" v-if="Number(BILL.revokeState) === 60">驳回</span>
               <span class="state back" v-else-if="Number(BILL.revokeState) === 30">退回</span>
-              <span class="state ruin" v-else-if="Number(BILL.revokeState) === 30">作废</span>
-              <span class="state rush" v-else-if="Number(BILL.revokeState) === 30">冲回</span>
+              <span class="state ruin" v-else-if="Number(BILL.revokeState) === 40">作废</span>
+              <span class="state rush" v-else-if="Number(BILL.revokeState) === 50">冲回</span>
             </td>
             <td class="ta-c">{{ BILL.amount }}</td>
             <td class="ta-c">{{ BILL.applicationTime }}</td>

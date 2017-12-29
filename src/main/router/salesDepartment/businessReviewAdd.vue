@@ -5,9 +5,9 @@
       <h3 class="main-title">
         立项申请
         <div class="pull-right">
-          <button class="btn my-btn submit-btn" @click="sub()">提交</button>
-          <button class="btn my-btn draft-btn" @click="sav()">暂存</button>
-          <button class="btn my-btn cancel-btn mr-10" @click="del()">撤销</button>
+          <button class="btn my-btn submit-btn" @click="sub()" :disabled="commitDisable">提交</button>
+          <button class="btn my-btn draft-btn" @click="sav()" :disabled="commitDisable">暂存</button>
+          <button class="btn my-btn cancel-btn mr-10" @click="del()" :disabled="commitDisable">撤销</button>
         </div>
       </h3>
       <business-editor :initBusiness="business"
@@ -46,6 +46,7 @@ export default {
         { name: '立项项目', url: '/business-review-list-sales', present: false },
         { name: '立项申请', url: '/business-review-add', present: true },
       ],
+      commitDisable: false,
       business: {
         id: '',
         name: '',
@@ -347,6 +348,7 @@ export default {
       bus.$emit('subBusiness');
     },
     submited(submitedBusiness) {
+      this.commitDisable = false
       this.business = submitedBusiness;
       this.$message({
         message: '提交成功，将返回立项审批列表',
@@ -358,14 +360,17 @@ export default {
       bus.$emit('savBusiness');
     },
     saved(savedBusiness) {
+      this.commitDisable = false
       this.business = savedBusiness;
       this.$message('暂存成功，将返回立项审批列表');
       this.$router.push({ path: '/business-review-list-sales' });
     },
     del() {
+      this.commitDisable = true
       this.showDelModal = true;
     },
     deleted() {
+      this.commitDisable = false
       this.showDelModal = false;
       this.$router.push({ path: '/business-review-list-sales' });
     },
@@ -384,6 +389,9 @@ export default {
         type: 'warning'
       });
     }
+  },
+  created () {
+    bus.$on('subing', () => { this.commitDisable = true });
   },
   components: {
     crumbs,

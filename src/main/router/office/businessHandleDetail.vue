@@ -375,9 +375,6 @@ export default {
     sendAble () {
       return (this.business.projectStatus === 80) ? true : false
     },
-    // sended() {
-    //   return (this.business.projectStatus === 90) ? true : false
-    // },
     packAble () {
       return (this.business.projectStatus === 112) ? true : false
     },
@@ -427,7 +424,7 @@ export default {
             },
             { name: '项目完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus === 70 || this.business.projectStatus === 71) {
+      } else if (this.business.projectStatus === 70) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -441,7 +438,7 @@ export default {
             },
             { name: '项目完结', passed: false, active: false }
           ];
-      } else if (this.business.projectStatus === 80) {
+      } else if (this.business.projectStatus === 71) {
           return [
             { name: '立项申请', passed: true, active: false },
             { name: '风控初审', passed: true, active: false },
@@ -806,6 +803,7 @@ export default {
             for (let i = 0; i < rep.data.data.projectBillingArray.length; i++) {
               let obj = {
                 id: rep.data.data.projectBillingArray[i].id,
+                revokeState: parseInt(rep.data.data.projectBillingArray[i].revokeState),
                 applicationTime: rep.data.data.projectBillingArray[i].applicationTime,
                 paymentTime: rep.data.data.projectBillingArray[i].paymentTime,
                 billingTime: rep.data.data.projectBillingArray[i].billingTime,
@@ -829,8 +827,8 @@ export default {
                 filingDate: rep.data.data.projectBillingArray[i].applicationDate,
                 billingDate: rep.data.data.projectBillingArray[i].billingDate,
                 way: rep.data.data.projectBillingArray[i].deliveryMethod,
-                receiver: rep.data.data.projectBillingArray[i].recipientName,
-                receiveAdd: rep.data.data.projectBillingArray[i].deliverAddress,
+                recipientName: rep.data.data.projectBillingArray[i].recipientName,
+                deliveryAddress: rep.data.data.projectBillingArray[i].deliveryAddress,
                 content: rep.data.data.projectBillingArray[i].serviceContent,
                 billFiles: (() => {
                   let arr = [];
@@ -840,7 +838,7 @@ export default {
                         id: rep.data.data.projectBillingArray[i].annexArray[j].id,
                         name: rep.data.data.projectBillingArray[i].annexArray[j].annexName,
                         url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl,
-remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
+                        remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                       };
                       arr.push(obj);
                     }

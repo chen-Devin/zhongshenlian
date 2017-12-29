@@ -44,7 +44,12 @@
           <el-col class="d-f" :span="6">
             <template v-if="editAble">
               <span style="width:100px">开票类型：</span>
-              <el-select v-model="reimbursementInfo.billingType" placeholder="请选择开票类型" v-if="editAble">
+              <el-select 
+                v-model="reimbursementInfo.billingType" 
+                placeholder="请选择开票类型" 
+                :disabled="changeTypeDisabled"
+                @change="changeBillingType"
+                v-if="editAble">
                 <el-option
                   v-for="item in classOptions"
                   :key="item"
@@ -141,6 +146,7 @@
               v-model="reimbursementInfo.transportationBillingNum" 
               placeholder="请选择张数" 
               v-if="editAble" 
+              :disabled="transportationDisabled"
               @change="changeNumbers('transportation')">
               <el-option
                 v-for="item in numbers"
@@ -210,6 +216,7 @@
               v-model="reimbursementInfo.stayBillingNum" 
               placeholder="请选择张数" 
               v-if="editAble" 
+              :disabled="stayDisabled"
               @change="changeNumbers('stay')">
               <el-option
                 v-for="item in numbers"
@@ -279,6 +286,7 @@
               v-model="reimbursementInfo.localMealsBillingNum" 
               placeholder="请选择张数" 
               v-if="editAble" 
+              :disabled="localDisabled"
               @change="changeNumbers('local')">
               <el-option
                 v-for="item in numbers"
@@ -348,6 +356,7 @@
               v-model="reimbursementInfo.fieldMealsBillingNum" 
               placeholder="请选择张数" 
               v-if="editAble" 
+              :disabled="fieldDisabled"
               @change="changeNumbers('field')">
               <el-option
                 v-for="item in numbers"
@@ -441,8 +450,7 @@
           状态描述：
         </div>
         <div class="description">
-          <p v-model="reimbursementInfo.statusDescription" v-if="reimbursementInfo.statusDescription"></p>
-          <p v-else>暂无</p>
+          <p>{{ reimbursementInfo.statusDescription || '暂无' }}</p>
         </div>
       </div>
       <p class="btns" v-if="!editAble && detailType === 'review'">
@@ -486,9 +494,19 @@ export default {
       uploadType: '',
       expenseId: '',
       projectNumber: '',
+      changeTypeDisabled: false,
+      transportationDisabled: false,
+      stayDisabled: false,
+      localDisabled: false,
+      fieldDisabled: false,
+      transportationChange: 0,
+      stayChange: 0,
+      localMealsChange: 0,
+      fieldChange: 0,
       reimbursementInfo: {
         id: '',
         applicantName: '',
+        companyName: '',
         contractAmount: 0,
         submitType: '',
         billingType: '',
@@ -502,82 +520,25 @@ export default {
         budgetDepartmentId: '',
         budgetDepartmentType: '',
         transportationTotalFee: 0,
-        transportationBillingNum: 1,
+        transportationBillingNum: 0,
         travelRArray: [
-          {
-            id: '',
-            amount: 0,
-            annexUrl: '',
-            annexId: '',
-            uploadURL: '',
-            uploadFailInfo: '上传失败，请重试',
-            state: {
-              notUpload: true,
-              uploading: false,
-              uploadFail: false,
-              uploaded: false
-            },
-            percentage: 0,
-            name: ''
-          }
+          
         ],
         stayTotalFee: 0,
-        stayBillingNum: 1,
+        stayBillingNum: 0,
         stayRArray: [
-          {
-            id: '',
-            amount: 0,
-            annexUrl: '',
-            uploadURL: '',
-            uploadFailInfo: '上传失败，请重试',
-            state: {
-              notUpload: true,
-              uploading: false,
-              uploadFail: false,
-              uploaded: false
-            },
-            percentage: 0,
-            name: ''
-          }
+          
         ],
         localMealsTotalFee: 0,
-        localMealsBillingNum: 1,
+        localMealsBillingNum: 0,
         localRArray: [
-          {
-            id: '',
-            amount: 0,
-            annexUrl: '',
-            uploadURL: '',
-            uploadFailInfo: '上传失败，请重试',
-            state: {
-              notUpload: true,
-              uploading: false,
-              uploadFail: false,
-              uploaded: false
-            },
-            percentage: 0,
-            name: ''
-          }
+          
         ],
         fieldMealsTotalFee: 0,
-        fieldMealsBillingNum: 1,
+        fieldMealsBillingNum: 0,
         fieldRArray: [
-          {
-            id: '',
-            amount: 0,
-            annexUrl: '',
-            uploadURL: '',
-            uploadFailInfo: '上传失败，请重试',
-            state: {
-              notUpload: true,
-              uploading: false,
-              uploadFail: false,
-              uploaded: false
-            },
-            percentage: 0,
-            name: ''
-          }
-        ]
+          
+        ],
       },
       textarea: '',
       typeOptions: [
@@ -733,6 +694,9 @@ export default {
           this.reimbursementInfo.budgetCompanyId = item.applicantCompanyId
         }
       })
+    },
+    changeBillingType() {
+      this.changeTypeDisabled = true
     },
     agree () {
       this.handleReimbursement('通过', '').then(() => {
@@ -893,93 +857,110 @@ export default {
       }, () => {})
     },
     changeNumbers (item) {
+      console.log(123)
       switch(item) {
         case 'transportation':
-          this.reimbursementInfo.travelRArray = []
-          for (let i = 0; i < Number(this.reimbursementInfo.transportationBillingNum); i++) {
-            this.reimbursementInfo.travelRArray.push(
-              {
-                id: '',
-                amount: 0,
-                annexUrl: '',
-                annexId: '',
-                uploadURL: '',
-                state: {
-                  notUpload: true,
-                  uploading: false,
-                  uploadFail: false,
-                  uploaded: false
-                },
-                percentage: 0,
-                fileName: ''
-              }
-            )
+          if (this.transportationChange < 1) {
+            this.transportationChange++
+            this.reimbursementInfo.travelRArray = []
+            for (let i = 0; i < Number(this.reimbursementInfo.transportationBillingNum); i++) {
+              this.reimbursementInfo.travelRArray.push(
+                {
+                  id: '',
+                  amount: 0,
+                  annexUrl: '',
+                  annexId: '',
+                  uploadURL: '',
+                  state: {
+                    notUpload: true,
+                    uploading: false,
+                    uploadFail: false,
+                    uploaded: false
+                  },
+                  percentage: 0,
+                  fileName: ''
+                }
+              )
+            }
+            this.transportationDisabled = true
           }
           break;
         case 'stay':
-          this.reimbursementInfo.stayRArray = []
-          for (let i = 0; i < Number(this.reimbursementInfo.stayBillingNum); i++) {
-            this.reimbursementInfo.stayRArray.push(
-              {
-                id: '',
-                amount: 0,
-                annexUrl: '',
-                annexId: '',
-                uploadURL: '',
-                state: {
-                  notUpload: true,
-                  uploading: false,
-                  uploadFail: false,
-                  uploaded: false
-                },
-                percentage: 0,
-                fileName: ''
-              }
-            )
+          if (this.stayChange < 1) {
+            this.stayChange++
+            this.reimbursementInfo.stayRArray = []
+            for (let i = 0; i < Number(this.reimbursementInfo.stayBillingNum); i++) {
+              this.reimbursementInfo.stayRArray.push(
+                {
+                  id: '',
+                  amount: 0,
+                  annexUrl: '',
+                  annexId: '',
+                  uploadURL: '',
+                  state: {
+                    notUpload: true,
+                    uploading: false,
+                    uploadFail: false,
+                    uploaded: false
+                  },
+                  percentage: 0,
+                  fileName: ''
+                }
+              )
+            }
+            this.stayDisabled = true
           }
           break;
         case 'local':
-          this.reimbursementInfo.localRArray = []
-          for (let i = 0; i < Number(this.reimbursementInfo.localMealsBillingNum); i++) {
-            this.reimbursementInfo.localRArray.push(
-              {
-                id: '',
-                amount: 0,
-                annexUrl: '',
-                annexId: '',
-                uploadURL: '',
-                state: {
-                  notUpload: true,
-                  uploading: false,
-                  uploadFail: false,
-                  uploaded: false
-                },
-                percentage: 0,
-                fileName: ''
-              }
-            )
+          if (this.localMealsChange < 1) {
+            this.localMealsChange++
+            this.reimbursementInfo.localRArray = []
+            for (let i = 0; i < Number(this.reimbursementInfo.localMealsBillingNum); i++) {
+              this.reimbursementInfo.localRArray.push(
+                {
+                  id: '',
+                  amount: 0,
+                  annexUrl: '',
+                  annexId: '',
+                  uploadURL: '',
+                  state: {
+                    notUpload: true,
+                    uploading: false,
+                    uploadFail: false,
+                    uploaded: false
+                  },
+                  percentage: 0,
+                  fileName: ''
+                }
+              )
+            }
+            this.localDisabled = true
           }
           break;
         case 'field':
-          this.reimbursementInfo.fieldRArray = []
-          for (let i = 0; i < Number(this.reimbursementInfo.fieldMealsBillingNum); i++) {
-            this.reimbursementInfo.fieldRArray.push(
-              {
-                id: '',
-                amount: 0,
-                annexUrl: '',
-                annexId: '',
-                uploadURL: '',
-                state: {
-                  notUpload: true,
-                  uploading: false,
-                  uploadFail: false,
-                  uploaded: false
-                },
-                percentage: 0,
-                fileName: ''
-              }
-            )
+          if (this.fieldChange < 1) {
+            this.fieldChange++
+            this.reimbursementInfo.fieldRArray = []
+            for (let i = 0; i < Number(this.reimbursementInfo.fieldMealsBillingNum); i++) {
+              this.reimbursementInfo.fieldRArray.push(
+                {
+                  id: '',
+                  amount: 0,
+                  annexUrl: '',
+                  annexId: '',
+                  uploadURL: '',
+                  state: {
+                    notUpload: true,
+                    uploading: false,
+                    uploadFail: false,
+                    uploaded: false
+                  },
+                  percentage: 0,
+                  fileName: ''
+                }
+              )
+            }
+            this.fieldDisabled = true
           }
           break;
         default: 
@@ -1169,8 +1150,10 @@ export default {
           this.uploadAmount(this.reimbursementInfo.travelRArray[0].amount, 'travelR').then(() => {
             var promiseArr = []
             if (this.reimbursementInfo.travelRArray.length > 1) {
-              this.reimbursementInfo.travelRArray.forEach((item) => {
-                promiseArr.push(this.uploadAmount(item.amount, 'travelR'))
+              this.reimbursementInfo.travelRArray.forEach((item, index) => {
+                if (index > 0) {
+                  promiseArr.push(this.uploadAmount(item.amount, 'travelR'))
+                }
               })
             }
             this.reimbursementInfo.stayRArray.forEach((item) => {
@@ -1186,6 +1169,7 @@ export default {
               let arr = []
               this.reimbursementInfo.projectNumberArray = this.projectNumberArray
               this.reimbursementInfo.companyName = this.user.companyName
+              this.reimbursementInfo.applicantName = this.user.applicantName
               this.reimbursementInfo.travelRArray.forEach((item) => {
                 delete item.percentage
                 delete item.state
@@ -1301,39 +1285,50 @@ export default {
     this.getProjectByPerson()
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser
-    }, () => { })
-    this.getCompanyList()
-    this.numbers = new Array(100).fill(0).map((item, index) => {
-      item = index
-      return item
-    })
-    if (this.$route.params.id.split('&').length > 1) {
-      this.expenseId = this.$route.params.id.split('&')[0]
-      this.detailType = this.$route.params.id.split('&')[1]
-      if (this.detailType === 'review') {
-        this.paths =  [
-          { name: '待处理项目', url: '/expenses-review', present: false },
-          { name: '单据审核', url: '/expenses-review', present: false },
-          { name: '报销详情', url: '/expenses-detail', present: true }
-        ]
+      this.getCompanyList()
+      this.numbers = new Array(100).fill(0).map((item, index) => {
+        item = index
+        return item
+      })
+      if (this.$route.params.id.split('&').length > 1) {
+        this.expenseId = this.$route.params.id.split('&')[0]
+        this.detailType = this.$route.params.id.split('&')[1]
+        if (this.detailType === 'review') {
+          console.log(2)
+          if (this.user.department === '所长') {
+
+            this.paths =  [
+              { name: '待办事项', url: '/expenses-review', present: true },
+              { name: '报销审批', url: '/expenses-review/10', present: false },
+              { name: '报销详情', url: '/expenses-detail', present: true }
+            ]
+          } else {
+            this.paths =  [
+              { name: '待处理项目', url: '/expenses-review', present: false },
+              { name: '单据审核', url: '/expenses-review', present: false },
+              { name: '报销详情', url: '/expenses-detail', present: true }
+            ]
+          }
+        } else {
+          this.paths = [
+            { name: '报销申请', url: '/expenses-list', present: false },
+            { name: '报销列表', url: '/expenses-list', present: false },
+            { name: '报销详情', url: '/expenses-detail', present: true }
+          ]
+        }
       } else {
+        this.expenseId = this.$route.params.id
         this.paths = [
           { name: '报销申请', url: '/expenses-list', present: false },
           { name: '报销列表', url: '/expenses-list', present: false },
           { name: '报销详情', url: '/expenses-detail', present: true }
         ]
       }
-    } else {
-      this.expenseId = this.$route.params.id
-      this.paths = [
-        { name: '报销申请', url: '/expenses-list', present: false },
-        { name: '报销列表', url: '/expenses-list', present: false },
-        { name: '报销详情', url: '/expenses-detail', present: true }
-      ]
-    }
-    if (this.expenseId !== 'new') {
-      this.getReimbursementInfo()
-    }
+      if (this.expenseId !== 'new') {
+        this.getReimbursementInfo()
+      }
+    }, () => { })
+
   },
   components: {
     crumbs,
@@ -1438,6 +1433,9 @@ export default {
     }
     .table-bordered > tbody > tr > td {
         border: none;
+    }
+    .el-input.is-disabled .el-input__inner {
+      background-color: #eef1f6;
     }
   }
 </style>

@@ -17,8 +17,7 @@ export default {
     return {
       pageNum: 1,
       paths: [
-        { name: '待处理项目', url: '/expenses-review', present: false },
-        { name: '单据审核', url: '/expenses-review', present: true }
+        
       ],
       expensesList: [{
         id: '',
@@ -112,6 +111,32 @@ export default {
   created () {
     this.$store.dispatch('fetchUserInfo').then(() => {
       let user = this.$store.getters.getUser
+      console.log(this.$route.params.id)
+      if (parseInt(this.$route.params.id) === 0) {
+        this.paths = [
+          { name: '待处理项目', url: '/expenses-review', present: true },
+          { name: '单据审核', url: '/expenses-review/0', present: true }
+        ]
+      } else if (parseInt(this.$route.params.id) === 1) {
+        this.paths = [
+          { name: '待处理项目', url: '/expenses-review', present: true },
+          { name: '付款申请', url: '/expenses-review/1', present: true }
+        ]
+      } else if (parseInt(this.$route.params.id) === 2) {
+        this.paths = [
+          { name: '待处理项目', url: '/expenses-review', present: true },
+          { name: '付款审批', url: '/expenses-review/2', present: true }
+        ]
+      } else if (parseInt(this.$route.params.id) === 10) {
+        this.paths = [
+          { name: '待办事项', url: '/expenses-review', present: true },
+          { name: '报销审批', url: '/expenses-review/10', present: true }
+        ]
+      } else {
+        this.paths = [
+          { name: '报销审批', url: '/expenses-review/' + this.$route.params.id, present: true }
+        ]
+      }
       if (parseInt(this.$route.params.id) === 10) {
         this.getExpensesList()
       } else {
