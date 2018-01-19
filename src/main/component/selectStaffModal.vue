@@ -157,7 +157,10 @@ export default {
         let checkList = []
         this.staffArray.forEach((item) => {
           if (item.checked) {
-            checkList.push(item)
+            checkList.push({
+              id: item.id,
+              name: item.name
+            })
           }
         })
         this.$emit('selected', this.staffModalIdentity, checkList, '')

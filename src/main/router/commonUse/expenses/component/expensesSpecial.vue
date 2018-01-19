@@ -408,12 +408,13 @@ export default {
       contractsArray: [],
       detailType: 'detail',
       companyArray: [],
-      selectedCompany: false
+      selectedCompany: false,
+      comunicating: false
     };
   },
   computed: {
     saveAble () {
-      if (this.reimbursementInfo.submitType && this.reimbursementInfo.budgetCompanyId && this.reimbursementInfo.budgetDepartmentId) {
+      if (this.reimbursementInfo.submitType && this.reimbursementInfo.budgetCompanyId && this.reimbursementInfo.budgetDepartmentId && !this.comunicating) {
         return false
       } else {
         return true
@@ -491,14 +492,14 @@ export default {
       this.reimbursementInfo.paperRArray.forEach((item) => {
         total = total + Number(item.amount)
       })
-      return total
+      return total.toFixed(2)
     },
     electricInvoiceAmount () {
       let total = 0
       this.reimbursementInfo.electricRArray.forEach((item) => {
         total = total + Number(item.amount)
       })
-      return total
+      return total.toFixed(2)
     },
     totalAmount () {
       let total = 0
@@ -816,6 +817,7 @@ export default {
       })
     },
     addOrEditReimbursement () {
+      this.comunicating = true
       let reg = /^00.*/
       if (reg.test(this.reimbursementInfo.budgetDepartmentId)) {
         this.reimbursementInfo.budgetDepartmentType = 'department'
@@ -907,7 +909,7 @@ export default {
       this.user = this.$store.getters.getUser
     }, () => { })
     this.getCompanyList()
-    this.numbers = new Array(100).fill(0).map((item, index) => {
+    this.numbers = new Array(11).fill(0).map((item, index) => {
       item = index
       return item
     })

@@ -2,7 +2,7 @@
   <div class="customer-info-add">
     <crumbs :paths="paths"></crumbs>
     <card v-if="loaded">
-      <billing-info :business="business" :companyArray="companyArray" :user="user" @cancel="cancel"></billing-info>
+      <billing-info :business="business" :companyArray="companyArray" @cancel="cancel"></billing-info>
     </card>
   </div>
 </template>

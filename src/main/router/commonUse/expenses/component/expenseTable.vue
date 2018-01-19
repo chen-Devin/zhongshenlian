@@ -116,7 +116,7 @@ export default {
           if (that.reimbursementInfo.startTime === '') {
             return false
           } else {
-            return time.getTime() < that.reimbursementInfo.startTime
+            return ((time.getTime() < that.reimbursementInfo.startTime) || (time.getTime() > Date.now() - 8.64e7))
           }
         }
       }
@@ -147,6 +147,7 @@ export default {
           '业务招待费',
           '过路费',
           '汽油费',
+          '停车费',
           '其他'
         ]
       } else {

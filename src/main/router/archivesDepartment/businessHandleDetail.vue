@@ -2,6 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
+      <button class="btn my-btn submit-btn f-r mr-10 mt-10" @click="checkContractShow=true;">查看合同</button>
       <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="showfileModal" v-if="fileAble">归档报告</button>
       <h3 class="main-title">
         {{business.name}}
@@ -31,6 +32,10 @@
                     :initBusiness="business"
                     @submited="submited"
                     @canceled="canceled"></complete-modal>
+    <check-contract
+      v-if="checkContractShow"
+      :businessId="business.id"
+      @cancel="checkContractShow=false;"></check-contract>
   </div>
 </template>
 
@@ -45,6 +50,7 @@ import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
 import completeModal from './component/completeModal.vue';
 import fileModal from './component/fileModal.vue';
+import checkContract from '@/main/router/salesDepartment/component/checkContract.vue';
 
 Vue.prototype.$message = Message;
 
@@ -57,6 +63,7 @@ export default {
         { name: '项目详情', url: `/business-handle-detail-archives-${this.$route.params.id}`, present: true },
       ],
       fileModalShow: false,
+      checkContractShow: false,
       business: {
         id: this.$route.params.id,
         name: '',
@@ -744,7 +751,8 @@ remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                 downloadStatus: rep.data.data.reportArray[i].downloadStatus,
                 QRcodeUrl: rep.data.data.reportArray[i].QRcodeUrl,
                 archivingState: rep.data.data.reportArray[i].archivingState,
-                FStatus: parseInt(rep.data.data.reportArray[i].FStatus)
+                FStatus: parseInt(rep.data.data.reportArray[i].FStatus),
+                reportApproverArray: rep.data.data.reportArray[i].reportApproverArray
               }
               this.business.reports.push(obj);
             }
@@ -804,7 +812,8 @@ remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
     business,
     approverAdvice,
     completeModal,
-    fileModal
+    fileModal,
+    checkContract
   }
 }
 </script>

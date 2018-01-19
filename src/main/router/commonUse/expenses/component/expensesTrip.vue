@@ -564,7 +564,8 @@ export default {
       rejectShow: false,
       warnModalShow: false,
       detailType: 'detail',
-      selectedCompany: false
+      selectedCompany: false,
+      comunicating: false
     };
   },
   computed: {
@@ -642,7 +643,7 @@ export default {
       return arr
     },
     saveAble () {
-      if (this.reimbursementInfo.submitType && this.reimbursementInfo.budgetCompanyId && this.reimbursementInfo.budgetDepartmentId) {
+      if (this.reimbursementInfo.submitType && this.reimbursementInfo.budgetCompanyId && this.reimbursementInfo.budgetDepartmentId && !this.comunicating) {
         return false
       } else {
         return true
@@ -653,28 +654,28 @@ export default {
       this.reimbursementInfo.travelRArray.forEach((item) => {
         total = Number(total) + Number(item.amount)
       })
-      return total
+      return total.toFixed(2)
     },
     stayTotalFee () {
       let total = 0
       this.reimbursementInfo.stayRArray.forEach((item) => {
         total = Number(total) + Number(item.amount)
       })
-      return total
+      return total.toFixed(2)
     },
     localMealsTotalFee () {
       let total = 0
       this.reimbursementInfo.localRArray.forEach((item) => {
         total = Number(total) + Number(item.amount)
       })
-      return total
+      return total.toFixed(2)
     },
     fieldMealsTotalFee () {
       let total = 0
       this.reimbursementInfo.fieldRArray.forEach((item) => {
         total = Number(total) + Number(item.amount)
       })
-      return total
+      return total.toFixed(2)
     },
     totalAmount () {
       let total = Number(this.transportationTotalFee) + Number(this.stayTotalFee) + Number(this.localMealsTotalFee) + Number(this.fieldMealsTotalFee)
@@ -1128,6 +1129,12 @@ export default {
       })
     },
     addOrEditReimbursement () {
+      this.comunicating = true
+      let totalBillingNum = Number(this.reimbursementInfo.transportationBillingNum) + Number(this.reimbursementInfo.stayBillingNum) + Number(this.reimbursementInfo.localMealsBillingNum) + Number(this.reimbursementInfo.fieldMealsBillingNum)
+      if (totalBillingNum > 30) {
+        this.$message.error('发票总数不能超过30张，请重新申请发票')
+        return;
+      }
       let reg = /^00.*/
       if (reg.test(this.reimbursementInfo.budgetDepartmentId)) {
         this.reimbursementInfo.budgetDepartmentType = 'department'
@@ -1286,7 +1293,7 @@ export default {
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser
       this.getCompanyList()
-      this.numbers = new Array(100).fill(0).map((item, index) => {
+      this.numbers = new Array(11).fill(0).map((item, index) => {
         item = index
         return item
       })
@@ -1294,7 +1301,6 @@ export default {
         this.expenseId = this.$route.params.id.split('&')[0]
         this.detailType = this.$route.params.id.split('&')[1]
         if (this.detailType === 'review') {
-          console.log(2)
           if (this.user.department === '所长') {
 
             this.paths =  [

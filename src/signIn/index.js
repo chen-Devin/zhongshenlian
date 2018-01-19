@@ -17,7 +17,7 @@ loadScript('http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js', funct
         id: 'wechatLogin',
         appid: 'wxa606acd488841da7',
         scope: 'snsapi_login',
-        redirect_uri: 'http://www.tzucpa.cn/wechat',
+        redirect_uri: 'http://2018.tzucpa.cn/wechat',
         state: Math.random(),
         style: 'black'
     });

@@ -1,7 +1,8 @@
 <template>
-  <div class="main">
+  <div class="main" v-if="reload">
     <crumbs :paths="paths"></crumbs>
     <card>
+      <button class="btn my-btn submit-btn f-r mr-10 mt-10" @click="checkContractShow=true;">查看合同</button>
       <div class="pull-right">
         <template v-if="agree">
           <button class="btn my-btn submit-btn" @click="approve()">通过</button>
@@ -34,18 +35,25 @@
                            :initalBusiness="business"
                            @refused="refused"
                            @canceled="refCanceled"></business-refuse-modal>
+    <billing-detail :bill="bill" v-if="billDetailShow"></billing-detail>
+    <check-contract
+      v-if="checkContractShow"
+      :businessId="business.id"
+      @cancel="checkContractShow=false;"></check-contract>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-
+import bus from '@/main/bus.js'
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import business from '../../component/business.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
 import businessApproveModal from '@/main/component/businessApproveModal.vue';
 import businessRefuseModal from '@/main/component/businessRefuseModal.vue';
+import billingDetail from '@/main/component/billingDetail.vue'
+import checkContract from '@/main/router/salesDepartment/component/checkContract.vue';
 
 export default {
   name: 'businessHandleDetailLeader',
@@ -55,8 +63,10 @@ export default {
         { name: '待处理项目', url: '/business-handle-list-leader', present: false },
         { name: '项目详情', url: `/business-handle-detail-leader-${this.$route.params.id}`, present: false }
       ],
+      reload: true,
       showApproveModal: false,
       showRefuseModal: false,
+      checkContractShow: false,
       business: {
         id: this.$route.params.id,
         name: '',
@@ -327,7 +337,9 @@ export default {
         projectOperatingArray: []
       },
       riskAdvices: [],
-      leaderAdivces: []
+      leaderAdivces: [],
+      billDetailShow: false,
+      bill: {}
     };
   },
   props: ['user'],
@@ -487,6 +499,14 @@ export default {
     }
   },
   created() {
+    bus.$on('bill-selected', (bill) => {
+      this.reload = false
+      setTimeout(() => {
+        this.reload = true
+      }, 100)
+      this.bill = bill
+      this.billDetailShow = true
+    })
     this.getInfo();
   },
   watch: {
@@ -802,7 +822,8 @@ export default {
                 downloadStatus: rep.data.data.reportArray[i].downloadStatus,
                 QRcodeUrl: rep.data.data.reportArray[i].QRcodeUrl,
                 archivingState: rep.data.data.reportArray[i].archivingState,
-                FStatus: parseInt(rep.data.data.reportArray[i].FStatus)
+                FStatus: parseInt(rep.data.data.reportArray[i].FStatus),
+                reportApproverArray: rep.data.data.reportArray[i].reportApproverArray
               }
               this.business.reports.push(obj);
             }
@@ -841,7 +862,9 @@ export default {
     business,
     approverAdvice,
     businessApproveModal,
-    businessRefuseModal
+    businessRefuseModal,
+    billingDetail,
+    checkContract
   }
 }
 </script>

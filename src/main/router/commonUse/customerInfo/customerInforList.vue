@@ -100,6 +100,7 @@ export default {
               assetSize: rep.data.data.customerArray[i].assetSize,
               industry: rep.data.data.customerArray[i].industry,
               setUpTime: rep.data.data.customerArray[i].createAt,
+              code: rep.data.data.customerArray[i].code,
               founderId: rep.data.data.customerArray[i].founderId,
               founderName: rep.data.data.customerArray[i].founderName,
               founderDepartment: rep.data.data.customerArray[i].founderDepartment

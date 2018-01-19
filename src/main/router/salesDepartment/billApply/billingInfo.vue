@@ -35,7 +35,6 @@
       <el-form 
         :model="bill" 
         :label-position="labelPosition"
-        :rules="rules"
         ref="bill"
         label-width="80px" 
         class="bill-form">
@@ -49,7 +48,8 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="单位电话：" prop="companyPhone">
-              <el-input placeholder="请输入单位电话" v-model="bill.companyPhone" :disabled="isNotFirst"></el-input>
+              <el-input placeholder="请输入单位电话" v-model="bill.companyPhone" :disabled="isNotFirst" v-if="!isNotFirst"></el-input>
+              <div v-else>{{ bill.companyPhone || '暂无' }}</div>
             </el-form-item>
           </el-col>
         </el-row>
@@ -61,7 +61,8 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="开户银行：" prop="openCountBank">
-              <el-input placeholder="请输入开户银行" v-model="bill.openCountBank" :disabled="isNotFirst"></el-input>
+              <el-input placeholder="请输入开户银行" v-model="bill.openCountBank" :disabled="isNotFirst" v-if="!isNotFirst"></el-input>
+              <div v-else>{{ bill.openCountBank || '暂无' }}</div>
             </el-form-item>
           </el-col>
         </el-row>
@@ -79,7 +80,8 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="开户账号：" prop="openBankNumber">
-              <el-input placeholder="请输入开户账号" v-model="bill.openBankNumber" :disabled="isNotFirst"></el-input>
+              <el-input placeholder="请输入开户账号" v-model="bill.openBankNumber" :disabled="isNotFirst" v-if="!isNotFirst"></el-input>
+              <div v-else>{{ bill.openBankNumber || '暂无' }}</div>
             </el-form-item>
           </el-col>
         </el-row>
@@ -127,6 +129,13 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            <el-form-item label="公司地址：" label-width="110px" prop="companyAddress">
+              <el-input placeholder="请输入公司地址" v-model="bill.companyAddress"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
             <el-form-item label="备注：" label-width="60px" prop="remark">
               <el-input placeholder="请输入备注信息" type="textarea" :rows="4" v-model="bill.remark"></el-input>
             </el-form-item>
@@ -153,13 +162,16 @@ export default {
   name: 'billingInfo',
   data() {
     return {
+      user: {
+        name: ''
+      },
       bill: {
         billingUnit: this.business.applicantCompany,
         id: '',
         projectId: this.business.id,
-        billingApplicantId: this.user.id,
-        billingApplicantName: this.user.name,
-        billingApplicantPhone: this.user.telephone,
+        billingApplicantId: '',
+        billingApplicantName: '',
+        billingApplicantPhone: '',
         requesterId: this.business.requesterId,
         requesterName: this.business.requesterName,
         requesterPhone: this.business.requesterPhone,
@@ -178,6 +190,7 @@ export default {
         recipientName: '',
         recipientId: '',
         deliveryAddress: '',
+        companyAddress: '',
         signContractNumber: this.business.contractNo,
         serviceContent: '',
         signContractAmount: this.business.contractAmount,
@@ -227,12 +240,17 @@ export default {
       }
     }
   },
-  props: ['business', 'user', 'companyArray'],
+  props: ['business', 'companyArray'],
   methods: {
     cancel () {
       this.$emit('cancel')
     },
     submit () {
+      let maxAmount = Number(this.business.contractAmount) - Number(this.business.sumBillingAmount)
+      if (maxAmount < Number(this.bill.billingAmount)) {
+        this.$message.error('本次开票金额不能超过' + maxAmount + '元')
+        return;
+      }
       this.bill.applicationDate = this.requestTime
       return new Promise((resolve, reject) => {
         axios({
@@ -263,13 +281,19 @@ export default {
     }
   },
   created () {
-    if (this.business.projectBillingArray[0].id) {
-      this.isNotFirst = true
-      this.bill.taxpayerNumber = this.business.projectBillingArray[0].taxpayerNumber
-      this.bill.companyPhone = this.business.projectBillingArray[0].companyPhone
-      this.bill.openCountBank = this.business.projectBillingArray[0].openCountBank
-      this.bill.openBankNumber = this.business.projectBillingArray[0].openBankNumber
-    }
+    this.$store.dispatch('fetchUserInfo').then(() => {
+      this.user = this.$store.getters.getUser
+      if (this.business.projectBillingArray.length) {
+        this.isNotFirst = true
+        this.bill.taxpayerNumber = this.business.projectBillingArray[0].taxpayerNumber
+        this.bill.companyPhone = this.business.projectBillingArray[0].companyPhone
+        this.bill.openCountBank = this.business.projectBillingArray[0].openCountBank
+        this.bill.openBankNumber = this.business.projectBillingArray[0].openBankNumber
+        this.billingApplicantId = this.user.id
+        this.billingApplicantName = this.user.name
+        this.billingApplicantPhone = this.user.telephone
+      }
+    }, () => { })
   },
   components: {
     

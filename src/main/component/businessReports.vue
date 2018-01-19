@@ -38,9 +38,15 @@
           <td class="ta-c">{{ REPORT.name }}</td>
           <td class="ta-c" v-if="user.department === '质控部' && (Number(REPORT.FStatus)===0 || Number(REPORT.FStatus)===2)">
             <button class="btn my-btn submit-btn small-btn" @click="handleBusiness(REPORT.id, '通过')">通过</button>
-            <button class="btn my-btn cancel-btn small-btn" @click="handleBusiness(REPORT.id, '不通过')">不通过</button>
+            <button class="btn my-btn cancel-btn small-btn" @click="notAgress(REPORT.id)">不通过</button>
           </td>
-          <td class="ta-c" v-else>{{ FStatusMap[Number(REPORT.FStatus)] }}</td>
+          <td class="ta-c" v-else>
+            {{ FStatusMap[Number(REPORT.FStatus)] }}
+            <button 
+              class="btn my-btn submit-btn small-btn" 
+              v-if="Number(REPORT.FStatus) === 1" 
+              @click="checkReason(REPORT.reportApproverArray[REPORT.reportApproverArray.length-1].approveOpinion)">查看</button>
+          </td>
           <td class="ta-c" v-if="user.department === '档案部'">
             <a href="javascript:void(0);" class="btn my-btn submit-btn small-btn" v-if="!Number(REPORT.downloadStatus)" @click="showDownloadModal(index, REPORT.id)">待下载</a>
             <a href="javascript:void(0);" @click="showDownloadModal(index, REPORT.id)" v-else>
@@ -73,6 +79,25 @@
       </tbody>
     </table>
     <p class="empty-list-p" v-if="business.reports.length === 0">暂无数据</p>
+    <modal v-if="agreeReasonShow">
+      <div slot="body">
+        <p>请填写不通过原因：</p>
+        <el-input v-model="agreeReason" type="textarea"></el-input>
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn submit-btn" @click="handleBusiness(notAgressId, '不通过')">确定</button>
+        <button class="btn my-btn draft-btn" @click="agreeReasonShow=false;">取消</button>
+      </div>
+    </modal>
+    <modal v-if="reasonShow">
+      <div slot="body">
+        <p>不通过原因：</p>
+        <p>{{ reasonContent }}</p>
+      </div>
+      <div slot="footer">
+        <button class="btn my-btn draft-btn" @click="reasonShow=false;">返回</button>
+      </div>
+    </modal>
     <report-add-modal 
       v-if="showAddModal"
       :initBusiness="business"
@@ -99,7 +124,7 @@
 <script>
 import axios from 'axios';
 import qs from 'qs';
-
+import modal from '@/main/component/modal.vue'
 import reportAddModal from './reportAddModal.vue';
 import reportNumberModal from './reportNumberModal.vue';
 import reportDownloadModal from './reportDownloadModal.vue';
@@ -131,7 +156,12 @@ export default {
       numberIndex: '',
       downloadIndex: '',
       codeIndex: '',
-      reportId: ''
+      reportId: '',
+      agreeReason: '',
+      agreeReasonShow: false,
+      notAgressId: '',
+      reasonShow: false,
+      reasonContent: ''
     };
   },
   computed: {
@@ -147,7 +177,15 @@ export default {
   },
   props: ['initBusiness', 'user'],
   methods: {
-    handleBusiness (id, result) {
+    checkReason(reason) {
+      this.reasonContent = reason
+      this.reasonShow = true
+    },
+    notAgress(id) {
+      this.agreeReasonShow=true
+      this.notAgressId = id
+    },
+    handleBusiness (id, result, reason) {
       return new Promise((resolve, reject) => {
         axios({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -160,7 +198,8 @@ export default {
                 platform: 'web',
                 id: this.business.id,
                 reportId: id,
-                result: result
+                result: result,
+                reason: this.agreeReason
               }
               return JSON.stringify(obj)
             })()
@@ -173,6 +212,7 @@ export default {
           } else {
             this.$message.error(rep.data.msg)
           }
+          this.agreeReasonShow = false
         }, (rep) => { })
       })
     },
@@ -230,7 +270,8 @@ export default {
                 downloadStatus: rep.data.data.reportArray[i].downloadStatus,
                 QRcodeUrl: rep.data.data.reportArray[i].QRcodeUrl,
                 archivingState: rep.data.data.reportArray[i].archivingState,
-                FStatus: parseInt(rep.data.data.reportArray[i].FStatus)
+                FStatus: parseInt(rep.data.data.reportArray[i].FStatus),
+                reportApproverArray: rep.data.data.reportArray[i].reportApproverArray
               }
               this.business.reports.push(obj)
             }
@@ -453,7 +494,8 @@ export default {
     reportDownloadModal,
     reportCodeModal,
     reportDelModal,
-    reportSubModal
+    reportSubModal,
+    modal
   }
 };
 </script>

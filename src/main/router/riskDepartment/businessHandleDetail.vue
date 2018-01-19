@@ -2,7 +2,8 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
-      <p class="btns f-r mt-10" v-if="business.projectStatus === 20">
+      <button class="btn my-btn submit-btn f-r mr-10 mt-10" @click="checkContractShow=true;">查看合同</button>
+      <p class="btns f-r" v-if="business.projectStatus === 20">
         <button class="btn my-btn submit-btn" @click="approve">通过</button>
         <button class="btn my-btn cancel-btn" @click="refuse">不通过</button>
       </p>
@@ -33,6 +34,10 @@
                            :initalBusiness="business"
                            @refused="refused"
                            @canceled="refCanceled"></business-refuse-modal>
+    <check-contract
+      v-if="checkContractShow"
+      :businessId="business.id"
+      @cancel="checkContractShow=false;"></check-contract>
   </div>
 </template>
 
@@ -44,6 +49,7 @@ import business from '../../component/business.vue';
 import businessApproveModal from '../../component/businessApproveModal.vue';
 import businessRefuseModal from '../../component/businessRefuseModal.vue';
 import approverAdvice from '../../component/approverAdvice.vue';
+import checkContract from '@/main/router/salesDepartment/component/checkContract.vue';
 
 export default {
   name: 'businessHandleDetailRisk',
@@ -55,6 +61,7 @@ export default {
       ],
       showApproveModal: false,
       showRefuseModal: false,
+      checkContractShow: false,
       business: {
         id: this.$route.params.id,
         name: '',
@@ -725,7 +732,7 @@ remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                         id: rep.data.data.projectBillingArray[i].annexArray[j].id,
                         name: rep.data.data.projectBillingArray[i].annexArray[j].annexName,
                         url: rep.data.data.projectBillingArray[i].annexArray[j].annexUrl,
-remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
+                        remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                       };
                       arr.push(obj);
                     }
@@ -747,7 +754,8 @@ remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                 downloadStatus: rep.data.data.reportArray[i].downloadStatus,
                 QRcodeUrl: rep.data.data.reportArray[i].QRcodeUrl,
                 archivingState: rep.data.data.reportArray[i].archivingState,
-                FStatus: parseInt(rep.data.data.reportArray[i].FStatus)
+                FStatus: parseInt(rep.data.data.reportArray[i].FStatus),
+                reportApproverArray: rep.data.data.reportArray[i].reportApproverArray
               }
               this.business.reports.push(obj);
             }
@@ -786,7 +794,8 @@ remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
     business,
     businessApproveModal,
     businessRefuseModal,
-    approverAdvice
+    approverAdvice,
+    checkContract
   }
 }
 </script>

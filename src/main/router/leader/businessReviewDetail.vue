@@ -737,7 +737,8 @@ export default {
                 downloadStatus: rep.data.data.reportArray[i].downloadStatus,
                 QRcodeUrl: rep.data.data.reportArray[i].QRcodeUrl,
                 archivingState: rep.data.data.reportArray[i].archivingState,
-                FStatus: parseInt(rep.data.data.reportArray[i].FStatus)
+                FStatus: parseInt(rep.data.data.reportArray[i].FStatus),
+                reportApproverArray: rep.data.data.reportArray[i].reportApproverArray
               }
               this.business.reports.push(obj);
             }

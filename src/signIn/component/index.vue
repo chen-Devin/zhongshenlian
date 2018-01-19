@@ -155,29 +155,29 @@ export default {
       }
     },
     judgeTel() {
-      // var reg = /^(1+\d{19})$/;
-      // if (reg.test(this.tel.val)) {
-      //   this.tel.err = false;
-      //   this.alert.cont = '';
-      //   this.alert.show = false;
+      var reg = /^1\d{10}$/;
+      if (reg.test(this.tel.val)) {
+        this.tel.err = false;
+        this.alert.cont = '';
+        this.alert.show = false;
 
-      //   if (!(this.tel.err || this.getBtn.setInter)) {
-      //     this.getBtn.dis = false;
-      //     this.getBtn.cont = '获取验证码';
-      //   }
-      // } else {
-      //   this.tel.err = true;
-      //   this.alert.cont = '手机号输入有误';
-      //   this.alert.show = true;
+        if (!(this.tel.err || this.getBtn.setInter)) {
+          this.getBtn.dis = false;
+          this.getBtn.cont = '获取验证码';
+        }
+      } else {
+        this.tel.err = true;
+        this.alert.cont = '手机号输入有误';
+        this.alert.show = true;
 
-      //   if (!this.getBtn.setInter) {
-      //     this.getBtn.dis = true;
-      //     this.getBtn.cont = '获取验证码';
-      //   }
-      // }
+        if (!this.getBtn.setInter) {
+          this.getBtn.dis = true;
+          this.getBtn.cont = '获取验证码';
+        }
+      }
     },
     judgeVer() {
-      var reg = /^(\d{1,8})$/;
+      var reg = /^\d{4}$/;
       if (reg.test(this.ver.val)) {
         this.ver.err = false;
         this.alert.cont = '';

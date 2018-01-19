@@ -2,6 +2,7 @@
   <div class="main">
     <crumbs :paths="paths"></crumbs>
     <card>
+      <button class="btn my-btn submit-btn f-r mr-10 mt-10" @click="checkContractShow=true;">查看合同</button>
       <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="showPackModal" v-if="packAble">报告打印装订盖章</button>
       <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="showBackModal" v-if="back">返回报告</button>
       <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="sel()" v-if="sendAble">发放合同编号</button>
@@ -56,6 +57,10 @@
       :initBusiness="business"
       @changeSuccess="changeSuccess"
       @cancel="cancel"></back-report-modal>
+    <check-contract
+      v-if="checkContractShow"
+      :businessId="business.id"
+      @cancel="checkContractShow=false;"></check-contract>
   </div>
 </template>
 
@@ -72,6 +77,7 @@ import sealContractModal from './component/sealContractModal.vue';
 import uploadContractModal from './component/uploadContractModal.vue';
 import packContractModal from './component/packContractModal.vue';
 import backReportModal from './component/backReportModal.vue';
+import checkContract from '@/main/router/salesDepartment/component/checkContract.vue';
 
 export default {
   name: 'businessHandleDetailOffice',
@@ -86,6 +92,7 @@ export default {
       uploadContractShow: false,
       packModalShow: false,
       backModalShow: false,
+      checkContractShow: false,
       business: {
         id: this.$route.params.id,
         name: '',
@@ -875,7 +882,8 @@ remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
                 downloadStatus: rep.data.data.reportArray[i].downloadStatus,
                 QRcodeUrl: rep.data.data.reportArray[i].QRcodeUrl,
                 archivingState: rep.data.data.reportArray[i].archivingState,
-                FStatus: parseInt(rep.data.data.reportArray[i].FStatus)
+                FStatus: parseInt(rep.data.data.reportArray[i].FStatus),
+                reportApproverArray: rep.data.data.reportArray[i].reportApproverArray
               }
               this.business.reports.push(obj);
             }
@@ -918,7 +926,8 @@ remark: rep.data.data.projectBillingArray[i].annexArray[j].remark
     sealContractModal,
     uploadContractModal,
     packContractModal,
-    backReportModal
+    backReportModal,
+    checkContract
   }
 }
 </script>

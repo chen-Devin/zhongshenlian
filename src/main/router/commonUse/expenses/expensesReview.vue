@@ -99,13 +99,21 @@ export default {
     },
     currentChange (pageNum) {
       this.pageNum = pageNum
-      this.getExpensesList()
+      if (parseInt(this.$route.params.id) === 10) {
+        this.getExpensesList()
+      } else {
+        this.getUnDealRListOfFinance()
+      }
     },
     search (obj) {
       this.searchObj = {}
       this.searchObj = obj
       this.pageNum = 1
-      this.getExpensesList()
+      if (parseInt(this.$route.params.id) === 10) {
+        this.getExpensesList()
+      } else {
+        this.getUnDealRListOfFinance()
+      }
     }
   },
   created () {

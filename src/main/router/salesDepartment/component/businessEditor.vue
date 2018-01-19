@@ -9,7 +9,6 @@
       class="business-editor" 
       :disabled="!editable">
       <div class="basic-message">
-        <p>{{business.reviewCPA.id}}</p>
         <el-row>
           <el-form-item label="基础信息："></el-form-item>
         </el-row>
@@ -476,7 +475,7 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="参审注师：" required>
+            <el-form-item label="参审注师：">
               <span>{{ reviewCPAsName }}</span>
               <i class="fa fa-x fa-user-plus c-p" :class="{'c-na': !editable }" style="color:#50bef7;" aria-hidden="true" @click="showStaffModal('reviewCPA')"></i>
             </el-form-item>
@@ -1052,7 +1051,7 @@ export default {
         return false;
       } else if (this.business.institution.id === '') {
         this.$message.warning('请选择委托单位')
-      } else if (!(this.business.name && this.business.businessScope && this.business.basisQuote && this.reviewCPAsName && this.reviewAssistantsName)) {
+      } else if (!(this.business.name && this.business.businessScope && this.business.basisQuote && this.reviewAssistantsName)) {
         this.$message.warning('请将必填项填写完整')
       } else {
         bus.$emit('subing');
