@@ -258,6 +258,10 @@ export default {
                   state: false
                 }
               ]
+            },{
+              name: '无报告',
+              code: '无报告',
+              state: false
             }
           ],
           amount: 0,

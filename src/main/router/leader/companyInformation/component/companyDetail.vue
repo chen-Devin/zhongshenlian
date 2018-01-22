@@ -14,7 +14,8 @@
             <p>公司负责人：{{iniCompany2.principalName}}</p>
           </el-col>
           <el-col :span="11" :offset="1">
-            <p>参审人员标签：{{iniCompany2.counselorTag}}</p>
+            <p v-if="iniCompany2.counselorTag.length !== 0">参审人员标签：{{iniCompany2.counselorTag}}</p>
+            <p v-else>参审人员标签：</p>
             <p>经营范围：{{iniCompany2.mainWork}}</p>
             <p>开户银行：{{iniCompany2.openAccountBankName}}</p>
             <p>开户银行账号：{{iniCompany2.openAccountBankNumber}}</p>
@@ -90,9 +91,11 @@ export default {
     }
   },
   props: ['iniCompany2'],
-  created() {
-
-  },
+  // watch: {
+  //   iniCompany2 (a, b) {
+  //     console.log(a)
+  //   }
+  // },
   components: {
     card,
     modal

@@ -7,7 +7,7 @@
       <table border="1" v-if="type==='差旅费报销'">
         <tbody>
           <tr>
-            <td class="table-label">出差起始日期：</td>
+            <td class="table-label"><span class="red">* </span>出差起始日期：</td>
             <td>
               <el-date-picker
                 v-model="reimbursementInfo.startTime"
@@ -18,7 +18,7 @@
               </el-date-picker>
               <p v-else>{{reimbursementInfo.startTime.slice(0, 10)}}</p>
             </td>
-            <td class="table-label">出差结束日期：</td>
+            <td class="table-label"><span class="red">* </span>出差结束日期：</td>
             <td>
               <el-date-picker
                 v-model="reimbursementInfo.endTime"
@@ -31,12 +31,12 @@
             </td>
           </tr>
           <tr>
-            <td class="table-label">出差地：</td>
+            <td class="table-label"><span class="red">* </span>出差地：</td>
             <td>
               <el-input v-model="reimbursementInfo.place" placeholder="请填写出差地" v-if="editAble"></el-input>
               <p v-else>{{reimbursementInfo.place}}</p>
             </td>
-            <td class="table-label">出差事由：</td>
+            <td class="table-label"><span class="red">* </span>出差事由：</td>
             <td>
               <el-radio-group v-model="reimbursementInfo.reason" v-if="editAble">
                 <el-radio label="审计"></el-radio>
@@ -49,13 +49,13 @@
             </td>
           </tr>
           <tr>
-            <td class="table-label">合计金额：</td>
+            <td class="table-label"><span class="red">* </span>合计金额：</td>
             <td colspan="3">
               <p>{{ totalAmount }}</p> 
             </td>
           </tr>
           <tr>
-            <td class="table-label">摘要：</td>
+            <td class="table-label"><span class="red">* </span>摘要：</td>
             <td colspan="3">
               <el-input v-model="reimbursementInfo.summary" placeholder="请填写摘要" v-if="editAble"></el-input>
               <p v-else>{{reimbursementInfo.summary}}</p> 
@@ -210,5 +210,8 @@ export default {
         }
       }
     }
+  }
+  .red{
+    color: red;
   }
 </style>

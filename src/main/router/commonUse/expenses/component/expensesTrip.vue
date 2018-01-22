@@ -643,7 +643,7 @@ export default {
       return arr
     },
     saveAble () {
-      if (this.reimbursementInfo.submitType && this.reimbursementInfo.budgetCompanyId && this.reimbursementInfo.budgetDepartmentId && !this.comunicating) {
+      if (this.reimbursementInfo.submitType && this.reimbursementInfo.budgetCompanyId && this.reimbursementInfo.budgetDepartmentId && !this.comunicating && this.reimbursementInfo.startTime && this.reimbursementInfo.endTime && this.reimbursementInfo.place && this.reimbursementInfo.reason && this.reimbursementInfo.summary) {
         return false
       } else {
         return true

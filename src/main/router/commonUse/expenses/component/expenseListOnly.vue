@@ -15,14 +15,17 @@
             <th class="text-left">报销类型</th>
             <th class="text-left">申请时间</th>
             <th class="text-left">状态</th>
+            <th class="text-left">报销Id</th>
+            <th class="text-left">金额</th>
+            <th class="text-left">操作</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in expensesList" @click="checkDetail(item)">
-            <td class="text-left">{{ item.companyName || '暂无' }}</td>
-            <td class="text-left">{{ item.departmentName || '暂无' }}</td>
-            <td class="text-left">{{ item.applicantName || '暂无' }}</td>
-            <td class="text-left">
+          <tr v-for="(item, index) in expensesList" >
+            <td class="text-left" @click="checkDetail(item)">{{ item.companyName || '暂无' }}</td>
+            <td class="text-left" @click="checkDetail(item)">{{ item.departmentName || '暂无' }}</td>
+            <td class="text-left" @click="checkDetail(item)">{{ item.applicantName || '暂无' }}</td>
+            <td class="text-left" @click="checkDetail(item)">
               <span v-if="item.type === 'contractR'">合同报销</span>
               <span v-else-if="item.type === 'nonContractR'">非合同报销</span>
               <span v-else-if="item.type === 'personalR'">个人报销</span>
@@ -30,8 +33,14 @@
               <span v-else-if="item.type === 'projectR'">项目报销</span>
               <span v-else></span>
             </td>
-            <td class="text-left">{{ item.time }}</td>
-            <td class="text-left">{{ changeStatus(item.status) }}</td>
+            <td class="text-left" @click="checkDetail(item)">{{ item.time }}</td>
+            <td class="text-left" @click="checkDetail(item)">{{ changeStatus(item.status) }}</td>
+            <td class="text-left" @click="checkDetail(item)">{{ item.id }}</td>
+            <td class="text-left" @click="checkDetail(item)">{{ item.amount }}</td>
+            <td class="text-left backMessage" @click="backMessageClick(item)" v-if="changeStatus(item.status) === '发出申请'">
+              撤销
+            </td>
+            <td class="text-left" v-else @click="checkDetail(item)">无法撤销</td>
           </tr>
         </tbody>
       </table>
@@ -72,6 +81,46 @@ export default {
         // this.$router.push('/expenses-record/' + item.id + '/special/' + this.listType)
       }
     },
+    backMessageClick (item) {
+      this.$confirm('此操作将撤销申请, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            })
+                .then(() => {
+                    return new Promise((resolve, reject) => {
+                      axios({
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+                        method: 'get',
+                        url: '/service',
+                        params: {
+                          data: (() => {
+                            let obj = {
+                              command: 'undoReimbursement',
+                              platform: 'web',
+                              id: item.id
+                            }
+                            return JSON.stringify(obj);
+                          })()
+                        }
+                      }).then((rep) => {
+                        if (rep.data.statusCode === '10001') {
+                          this.$router.push('/expenses-list')
+                          this.$message('撤销成功')
+                          resolve('done');
+                        } else {
+                          this.$message.error(rep.data.msg)
+                        }
+                      }, (rep) => { });
+                    })
+                })
+                .catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消退出'
+                    })
+                })
+    },
     applyExpense () {
       this.$router.push('/expenses-apply')
     },
@@ -106,6 +155,7 @@ export default {
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser
     }, () => { })
+    console.log(this.expensesList)
   },
   components: {
     card,
@@ -116,5 +166,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  
+  .backMessage:hover{
+    color: #70b0e8;
+  }
 </style>

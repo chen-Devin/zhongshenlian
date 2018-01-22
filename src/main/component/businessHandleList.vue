@@ -57,6 +57,7 @@
             <th class="text-center">项目经理</th>
             <th class="text-center">立项时间</th>
             <th class="text-center">状态</th>
+            <th class="text-center">开票金额</th>
           </tr>
         </thead>
         <tbody>
