@@ -49,7 +49,7 @@
           <el-col :span="12">
             <el-form-item label="单位电话：" prop="companyPhone">
               <el-input placeholder="请输入单位电话" v-model="bill.companyPhone" :disabled="isNotFirst" v-if="!isNotFirst"></el-input>
-              <div v-else>{{ bill.companyPhone || '暂无' }}</div>
+              <el-input v-else v-model="bill.companyPhone || '暂无'"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -62,7 +62,7 @@
           <el-col :span="12">
             <el-form-item label="开户银行：" prop="openCountBank">
               <el-input placeholder="请输入开户银行" v-model="bill.openCountBank" :disabled="isNotFirst" v-if="!isNotFirst"></el-input>
-              <div v-else>{{ bill.openCountBank || '暂无' }}</div>
+               <el-input v-else v-model="bill.openCountBank || '暂无'"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -81,7 +81,7 @@
           <el-col :span="12">
             <el-form-item label="开户账号：" prop="openBankNumber">
               <el-input placeholder="请输入开户账号" v-model="bill.openBankNumber" :disabled="isNotFirst" v-if="!isNotFirst"></el-input>
-              <div v-else>{{ bill.openBankNumber || '暂无' }}</div>
+              <el-input v-else v-model="bill.openBankNumber || '暂无'"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
