@@ -2,7 +2,7 @@
   <div class="main">
     <!--面包屑导航-->
     <crumbs :paths="paths"></crumbs>
-    <expense-list-only :expensesList="expensesList" listType="review" :totalNum="totalNum" @currentChange="currentChange" @search="search"></expense-list-only>
+    <expense-list-only :expensesList="expensesList" listType="review" :totalNum="totalNum" @currentChange="currentChange" @search="search" @changeClick="changeClick"></expense-list-only>
   </div>
 </template>
 
@@ -16,6 +16,7 @@ export default {
   data() {
     return {
       pageNum: 1,
+      companyId: '',
       paths: [
         
       ],
@@ -28,7 +29,8 @@ export default {
         time: ''
       }],
       totalNum: 1,
-      searchObj: {}
+      searchObj: {},
+      companyList: []
     }
   },
   watch: {
@@ -40,6 +42,47 @@ export default {
     }
   },
   methods: {
+    getCompanyList() {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            var obj = {
+              command: 'getCompanyList',
+              platform: 'web'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.companyList = rep.data.data.companyList
+        } else if (rep.data.statusCode === '10012') {
+          // window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
+    },
+    changeClick (companyId) {
+      this.companyList.forEach((item) => {
+          if (item.id === companyId) {
+            this.projectNames = item.name
+          }
+        })
+        this.companyId = companyId
+        if (companyId === 'all') {
+          this.projectNames = ''
+          this.companyId = ''
+        }
+        // console.log(this.projectNames)
+        if (parseInt(this.$route.params.id) === 10) {
+          this.getExpensesList()
+        } else {
+          this.getUnDealRListOfFinance()
+        }
+      //this.getUnDealRListOfFinance()
+    },
     getUnDealRListOfFinance () {
       return new Promise((resolve, reject) => {
         axios({
@@ -52,7 +95,8 @@ export default {
                 command: 'getUnDealRListOfFinance',
                 platform: 'web',
                 type: this.$route.params.id,
-                pageNum: this.pageNum
+                pageNum: this.pageNum,
+                companyId: this.companyId
               }
               return JSON.stringify(obj);
             })()
@@ -80,7 +124,8 @@ export default {
                 command: 'getUnDealRListOfFinance',
                 platform: 'web',
                 type: 5,
-                pageNum: this.pageNum
+                pageNum: this.pageNum,
+                companyId: this.companyId
               }
               Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
@@ -117,6 +162,7 @@ export default {
     }
   },
   created () {
+    this.getCompanyList()
     this.$store.dispatch('fetchUserInfo').then(() => {
       let user = this.$store.getters.getUser
       console.log(this.$route.params.id)

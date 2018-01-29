@@ -17,7 +17,6 @@
           </template>
           <el-menu-item index="/business-review-list-leader">立项审批</el-menu-item>
           <el-menu-item index="/bid-info-list">招投标审批</el-menu-item>
-          <el-menu-item index="/expenses-review/10">报销审批</el-menu-item>
         </el-submenu>
         <el-submenu index="customer-infor-list">
           <template slot="title">信息管理</template>
@@ -35,7 +34,7 @@
             <span>职员管理</span>
           </template>
         </el-submenu>
-        <el-submenu index="expenses-list">
+        <!-- <el-submenu index="expenses-list">
           <template slot="title">
             <span>报销申请</span>
           </template>
@@ -44,6 +43,13 @@
           <template slot="title">
             <span>报销审批记录</span>
           </template>
+        </el-submenu> -->
+        <el-submenu index="expenses-review/10">
+          <template slot="title">
+            报销管理
+          </template>
+          <el-menu-item index="/expenses-review/10">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-list">我的报销</el-menu-item>
         </el-submenu>
       </template>
       <template v-if="sales">

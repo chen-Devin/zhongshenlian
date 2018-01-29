@@ -261,7 +261,14 @@ export default {
             },{
               name: '无报告',
               code: '无报告',
-              state: false
+              state: false,
+              words: [
+                {
+                  name: '无',
+                  code: '01',
+                  state: false
+                }
+              ]
             }
           ],
           amount: 0,

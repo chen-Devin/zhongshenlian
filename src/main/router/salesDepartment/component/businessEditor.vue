@@ -22,7 +22,7 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="业务范围与审计目标：" label-width="160px" prop="scope" required v-if="editable">
+            <el-form-item label="业务范围与审计目标：" label-width="160px" prop="scope" v-if="editable">
               <el-input v-model="business.businessScope" type="textarea"></el-input>
             </el-form-item>
             <p v-else>业务范围与审计目标：{{business.businessScope}}</p>

@@ -87,6 +87,7 @@ export default {
       }, 1000)
     },
     getBussinessUnitUserList () {
+      console.log(this.staffModalIdentity)
       if (this.staffModalIdentity === '项目经理') {
         return new Promise((resolve, reject) => {
           axios({
@@ -96,8 +97,36 @@ export default {
             params: {
               data: (() => {
                 let obj = {
-                  command: 'getUserListOfAComDepartment',
+                  command: 'getProjectManagerList',
                   platform: 'web'
+                }
+                return JSON.stringify(obj);
+              })()
+            }
+          }).then((rep) => {
+            if (rep.data.statusCode === '10001') {
+              this.staffArray = rep.data.data.userArray
+              this.staffArray.forEach((item) => {
+                item.checked = false
+              })
+              resolve('done');
+            } else {
+              this.$message.error(rep.data.msg)
+            }
+          }, (rep) => { });
+        })
+      } else if (this.staffModalIdentity === '参审助理') {
+        return new Promise((resolve, reject) => {
+          axios({
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+            method: 'get',
+            url: '/service',
+            params: {
+              data: (() => {
+                let obj = {
+                  command: 'getAssistantList',
+                  platform: 'web',
+                  pageNum: 'all'
                 }
                 return JSON.stringify(obj);
               })()
@@ -123,7 +152,7 @@ export default {
             params: {
               data: (() => {
                 let obj = {
-                  command: 'getCompanyUserListByOneUser',
+                  command: 'getCounselorList',
                   platform: 'web',
                   pageNum: 'all'
                 }

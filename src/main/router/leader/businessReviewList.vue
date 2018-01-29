@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <crumbs :paths="paths"></crumbs>
-    <card class="card-tabs">
+    <card class="card-tabs" style="box-shadow: none;">
       <el-tabs class="f-l" v-model="activeName" @tab-click="tabClick">
         <el-tab-pane 
           :label="tab.label" 
@@ -14,9 +14,10 @@
         :searchItems="searchItems"
         @search="search" v-if="reloadSearch"></search-bar>
     </card>
-    <card>
+    <radios :companyList="companyList" @changeClick="changeClick"></radios>
+    <card style="margin-top: 0;">
       <table class="table table-bordered table-hover table-list">
-        <thead>
+        <thead style="background: #fff;">
           <tr>
             <th>项目名称</th>
             <th>分管公司</th>
@@ -63,6 +64,7 @@ import axios from 'axios';
 
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
+import radios from '../../component/selectRadio.vue'
 import myPagination from '../../component/pagination.vue';
 import searchBar from '@/main/component/searchBar.vue'
 
@@ -74,6 +76,7 @@ export default {
         { name: '待办事项', url: '/expenses-review', present: true },
         { name: '立项审批', url: '/business-review-list-leader', present: true }
       ],
+      data: {},
       businessArray: [],
       totalPage: 1,
       pageNum: 1,
@@ -99,14 +102,28 @@ export default {
       projectShow: true,
       searchObj: {},
       reloadPagination: true,
-      reloadSearch: true
+      reloadSearch: true,
+      companyList: [],
+      projectNames: '',
+      companyId: ''
     };
   },
-  created() {
-    this.getBusinessChecking();
-  },
   watch: {
-    $route: 'getBusinessChecking'
+    $route: 'getBusinessChecking',
+    userId (a, b) {
+      if (a) {
+        this.getCompanyList();
+      }
+    }
+  },
+  computed : {
+    userId () {
+      return this.$store.getters.getUser.id
+    }
+  },
+  created () {
+    this.getCompanyList()
+    this.getBusinessChecking()
   },
   methods: {
     jumpLink (project) {
@@ -114,6 +131,24 @@ export default {
         this.$router.push('/business-review-detail-leader-'+project.id)
       } else {
         this.$router.push('/contract-change-check/'+project.id)
+      }
+    },
+    changeClick (companyId) {
+      this.companyList.forEach((item) => {
+          if (item.id === companyId) {
+            this.projectNames = item.name
+          }
+        })
+        this.companyId = companyId
+        if (companyId === 'all') {
+          this.projectNames = ''
+          this.companyId = ''
+        }
+        // console.log(this.projectNames)
+      if(this.projectShow === true) {
+        this.getBusinessChecking()
+      } else {
+        this.getContractChangeList()
       }
     },
     tabClick (tab, event) {
@@ -141,8 +176,30 @@ export default {
         this.getBusinessChecking()
       } else {
         this.getContractChangeList()
-      }
-      
+      } 
+    },
+    getCompanyList() {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            var obj = {
+              command: 'getCompanyList',
+              platform: 'web',
+              userId: this.userId
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.companyList = rep.data.data.companyList
+        } else if (rep.data.statusCode === '10012') {
+          // window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
     },
     getBusinessChecking() {
       axios({
@@ -154,7 +211,9 @@ export default {
             var obj = {
               command: 'getBusinessChecking',
               platform: 'web',
-              pageNum: this.pageNum
+              pageNum: this.pageNum,
+              companyId: this.companyId,
+              projectName: this.projectNames
             }
             Object.assign(obj, this.searchObj);
             return JSON.stringify(obj);
@@ -181,7 +240,9 @@ export default {
               let obj = {
                 command: 'getContractChangeList',
                 platform: 'web',
-                pageNum: this.pageNum
+                pageNum: this.pageNum,
+                companyId: this.companyId,
+                projectName: this.projectNames
               }
               Object.assign(obj, this.searchObj);
               return JSON.stringify(obj);
@@ -218,7 +279,8 @@ export default {
     crumbs,
     card,
     myPagination,
-    searchBar
+    searchBar,
+    radios
   }
 }
 </script>

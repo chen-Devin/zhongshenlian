@@ -858,7 +858,6 @@ export default {
       }, () => {})
     },
     changeNumbers (item) {
-      console.log(123)
       switch(item) {
         case 'transportation':
           if (this.transportationChange < 1) {
@@ -1152,8 +1151,10 @@ export default {
       } else {
         flag = 1
       }
+      //this.reimbursementInfo.totalAmount = this.totalAmount
       if (flag) {
         if (this.paper) {
+          //this.reimbursementInfo.totalAmount = this.totalAmount
           this.uploadAmount(this.reimbursementInfo.travelRArray[0].amount, 'travelR').then(() => {
             var promiseArr = []
             if (this.reimbursementInfo.travelRArray.length > 1) {
@@ -1176,6 +1177,8 @@ export default {
               let arr = []
               this.reimbursementInfo.projectNumberArray = this.projectNumberArray
               this.reimbursementInfo.companyName = this.user.companyName
+              this.reimbursementInfo.totalAmount = this.totalAmount
+              console.log(this.totalAmount)
               this.reimbursementInfo.applicantName = this.user.applicantName
               this.reimbursementInfo.travelRArray.forEach((item) => {
                 delete item.percentage
@@ -1200,6 +1203,7 @@ export default {
               if (this.reimbursementInfo.id === '') {
                 delete this.reimbursementInfo.id
               }
+              console.log(this.reimbursementInfo)
               return new Promise((resolve, reject) => {
                 axios({
                   headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
@@ -1229,6 +1233,7 @@ export default {
             }, () => {})
           }, () => {})
         } else {
+          console.log(this.reimbursementInfo)
           return new Promise((resolve, reject) => {
             axios({
               headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },

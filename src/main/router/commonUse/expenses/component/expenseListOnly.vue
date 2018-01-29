@@ -5,9 +5,10 @@
       <h3 class="main-title">报销列表
         <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar></h3>
     </card>
-    <card>
+    <select-radio @changeClick="changeClick" v-show="styleShow" :companyList="companyList"></select-radio>
+    <card :class="{mt: styleShow}">
       <table class="table table-bordered table-hover table-list">
-        <thead>
+        <thead :class="{bgColor: styleShow}">
           <tr>
             <th class="text-left">公司</th>
             <th class="text-left">部门</th>
@@ -55,6 +56,7 @@ import axios from 'axios'
 import card from '@/main/component/card.vue'
 import myPagination from '@/main/component/pagination.vue'
 import searchBar from '@/main/component/searchBar.vue';
+import selectRadio from '@/main/component/selectRadio.vue'
 
 export default {
   name: 'expensesList',
@@ -67,11 +69,38 @@ export default {
           value: 'companyName'
         }
       ],
-      reloadPagination: true
+      reloadPagination: true,
+      styleShow: false,
+      companyList: []
     }
   },
   props: ['expensesList', 'totalNum', 'applyAble', 'listType'],
   methods: {
+    changeClick (radio) {
+      this.$emit('changeClick', radio)
+    },
+    getCompanyList() {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            var obj = {
+              command: 'getCompanyList',
+              platform: 'web'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.companyList = rep.data.data.companyList
+        } else if (rep.data.statusCode === '10012') {
+          // window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
+    },
     checkDetail (item) {
       if (item.type === 'contractR' ||  item.type === 'nonContractR') {
         this.$router.push('/expenses-trip/' + item.id + '&' + this.listType)
@@ -152,15 +181,21 @@ export default {
     }
   },
   created () {
+    this.getCompanyList()
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser
     }, () => { })
-    console.log(this.expensesList)
+    //console.log(this.expensesList)
+    console.log(this.$route.fullPath)
+    if (this.$route.fullPath === '/expenses-review/10') {
+      this.styleShow = true
+    }
   },
   components: {
     card,
     myPagination,
-    searchBar
+    searchBar,
+    selectRadio
   }
 }
 </script>
@@ -168,5 +203,11 @@ export default {
 <style lang="sass" scoped>
   .backMessage:hover{
     color: #70b0e8;
+  }
+  .mt{
+    margin-top: 0 !important;
+  }
+  .bgColor{
+    background-color: #fff !important;
   }
 </style>
