@@ -6,8 +6,9 @@
         已完成项目
           <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
+      <select-radio @changeClick="changeClick" :companyList="companyList" style="margin: 0;"></select-radio>
       <table class="table table-bordered table-hover table-list">
-        <thead>
+        <thead style="background: #fff;">
           <tr>
             <th class="text-center">合同号</th>
             <th class="text-center">项目名称</th>
@@ -77,6 +78,7 @@ import searchBar from '@/main/component/searchBar.vue';
 import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import myPagination from '../../component/pagination.vue';
+import selectRadio from '@/main/component/selectRadio.vue'
 
 export default {
   name: 'businessCompleteList',
@@ -113,17 +115,54 @@ export default {
       },
       totalPage: 1,
       totalNum: 1,
-      pageNum: 1
+      pageNum: 1,
+      companyList: []
     };
   },
   created() {
     this.pageNum = 1;
     this.getBusinessFinished();
+    this.getCompanyList()
   },
   watch: {
     $route: 'getInfo'
   },
   methods: {
+    changeClick (companyId) {
+      this.companyList.forEach((item) => {
+          if (item.id === companyId) {
+            this.projectNames = item.name
+          }
+        })
+        this.companyId = companyId
+        if (companyId === 'all') {
+          this.projectNames = ''
+          this.companyId = ''
+        }
+        this.getBusinessFinished()
+    },
+    getCompanyList() {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            var obj = {
+              command: 'getCompanyList',
+              platform: 'web'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.companyList = rep.data.data.companyList
+        } else if (rep.data.statusCode === '10012') {
+          // window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
+    },
     mod(BUSINESS) {
     this.$router.push('/business-complete-list/business-complete-detail-'+BUSINESS.id)
     },
@@ -193,7 +232,8 @@ export default {
               var obj = {
                 command: 'getBusinessFinished',
                 platform: 'web',
-                pageNum: this.pageNum
+                pageNum: this.pageNum,
+                companyId: this.companyId
               }
               Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
@@ -285,7 +325,8 @@ export default {
     card,
     businessCompleteSearchBar,
     searchBar,
-    myPagination
+    myPagination,
+    selectRadio
   }
 }
 </script>

@@ -17,6 +17,7 @@
           </template>
           <el-menu-item index="/business-review-list-leader">立项审批</el-menu-item>
           <el-menu-item index="/bid-info-list">招投标审批</el-menu-item>
+          <el-menu-item index="/expenses-review/10">报销审批</el-menu-item>
         </el-submenu>
         <el-submenu index="customer-infor-list">
           <template slot="title">信息管理</template>
@@ -44,11 +45,11 @@
             <span>报销审批记录</span>
           </template>
         </el-submenu> -->
-        <el-submenu index="expenses-review/10">
+        <el-submenu index="expenses-review-record">
           <template slot="title">
             报销管理
           </template>
-          <el-menu-item index="/expenses-review/10">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
           <el-menu-item index="/expenses-list">我的报销</el-menu-item>
         </el-submenu>
       </template>
@@ -71,6 +72,13 @@
         </el-submenu>
         <el-submenu index="expenses-review-record">
           <template slot="title">
+            报销管理
+          </template>
+          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-list">我的报销</el-menu-item>
+        </el-submenu>
+<!--         <el-submenu index="expenses-review-record">
+          <template slot="title">
             <span>报销审批记录</span>
           </template>
         </el-submenu>
@@ -78,7 +86,7 @@
           <template slot="title">
             <span>报销申请</span>
           </template>
-        </el-submenu>
+        </el-submenu> -->
       </template>
       <template v-if="market">
         <el-submenu index="bid-info-list">
@@ -93,6 +101,13 @@
         </el-submenu>
         <el-submenu index="expenses-review-record">
           <template slot="title">
+            报销管理
+          </template>
+          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-list">我的报销</el-menu-item>
+        </el-submenu>
+        <!-- <el-submenu index="expenses-review-record">
+          <template slot="title">
             <span>报销审批记录</span>
           </template>
         </el-submenu>
@@ -100,7 +115,7 @@
           <template slot="title">
             <span>报销申请</span>
           </template>
-        </el-submenu>
+        </el-submenu> -->
       </template>
       <template v-if="archives">
         <el-submenu index="business-handle-list-archives">
@@ -120,6 +135,13 @@
         </el-submenu>
         <el-submenu index="expenses-review-record">
           <template slot="title">
+            报销管理
+          </template>
+          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-list">我的报销</el-menu-item>
+        </el-submenu>
+        <!-- <el-submenu index="expenses-review-record">
+          <template slot="title">
             <span>报销审批记录</span>
           </template>
         </el-submenu>
@@ -127,7 +149,7 @@
           <template slot="title">
             <span>报销申请</span>
           </template>
-        </el-submenu>
+        </el-submenu> -->
       </template>
       <template v-if="risk">
         <el-submenu index="business-handle-list-risk">
@@ -147,6 +169,13 @@
         </el-submenu>
         <el-submenu index="expenses-review-record">
           <template slot="title">
+            报销管理
+          </template>
+          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-list">我的报销</el-menu-item>
+        </el-submenu>
+        <!-- <el-submenu index="expenses-review-record">
+          <template slot="title">
             <span>报销审批记录</span>
           </template>
         </el-submenu>
@@ -154,7 +183,7 @@
           <template slot="title">
             <span>报销申请</span>
           </template>
-        </el-submenu>
+        </el-submenu> -->
       </template>
       <template v-if="financial">
         <el-submenu index="business-handle-list-financial/0" v-if="financial">
@@ -178,14 +207,18 @@
         </el-submenu>
         <el-submenu index="expenses-review-record">
           <template slot="title">
-            <span>报销审批记录</span>
+            报销管理
           </template>
+          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-list">我的报销</el-menu-item>
         </el-submenu>
-        <el-submenu index="expenses-list">
+        <!-- <el-submenu index="expenses-review-record">
           <template slot="title">
-            <span>报销申请</span>
+            报销管理
           </template>
-        </el-submenu>
+          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-list">我的报销</el-menu-item>
+        </el-submenu> -->
       </template>
       <template v-if="office">
         <el-submenu index="business-handle-list-office">
@@ -205,6 +238,13 @@
         </el-submenu>
         <el-submenu index="expenses-review-record">
           <template slot="title">
+            报销管理
+          </template>
+          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-list">我的报销</el-menu-item>
+        </el-submenu>
+        <!-- <el-submenu index="expenses-review-record">
+          <template slot="title">
             <span>报销审批记录</span>
           </template>
         </el-submenu>
@@ -212,7 +252,7 @@
           <template slot="title">
             <span>报销申请</span>
           </template>
-        </el-submenu>
+        </el-submenu> -->
       </template>
       <el-submenu index="expenses-review/3" v-if="canReviewBidNotLeader">
         <template slot="title">

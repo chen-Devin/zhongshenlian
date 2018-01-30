@@ -6,8 +6,9 @@
         进行中项目
           <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
+      <radios :companyList="companyList" @changeClick="changeClick" style="margin: 0;"></radios>
       <table class="table table-bordered table-hover table-list">
-        <thead>
+        <thead style="background: #fff;">
           <tr>
             <th class="text-center">项目名称</th>
             <th class="text-center">项目经理</th>
@@ -43,6 +44,42 @@
                 <span class="label label-success"
                       v-else-if="business.billState===1">已完成开票</span>
               </template> 
+              <template v-if="statusShow">
+                <span class="label label-warning"
+                      v-if="business.projectStatus === '0000'">废弃</span>
+                <span class="label label-info"
+                      v-else-if="business.projectStatus==='0011'">草稿</span>
+                <span class="label label-danger"
+                      v-else-if="business.projectStatus==='0020'">已提交</span>
+                <span class="label label-success"
+                      v-else-if="business.projectStatus==='0030'">质控部不通过</span>
+                <span class="label label-primary"
+                      v-else-if="business.projectStatus==='0040'">质控部通过</span>
+                <span class="label label-default"
+                      v-else-if="business.projectStatus==='0050'">所长不通过</span>
+                      <span class="label label-default"
+                      v-else-if="business.projectStatus==='0060'">所长通过</span>
+                      <span class="label label-default"
+                      v-else-if="business.projectStatus==='0070'">办公室审核完成</span>
+                      <span class="label label-default"
+                      v-else-if="business.projectStatus==='0080'">办公室盖章完成</span>
+                      <span class="label label-default"
+                      v-else-if="business.projectStatus==='0090'">办公室上传合同</span>
+                      <span class="label label-default"
+                      v-else-if="business.projectStatus==='0110'">业务部上传报告</span>
+                      <span class="label label-default"
+                      v-else-if="business.projectStatus==='0111'">业务部确认上传</span>
+                      <span class="label label-default"
+                      v-else-if="business.projectStatus==='0112'">报告二维码上传完成</span>
+                      <span class="label label-default"
+                      v-else-if="business.projectStatus==='0113'">办公室完成装订盖章</span>
+                      <span class="label label-default"
+                      v-else-if="business.projectStatus==='0114'">办公室返回报告</span>
+                      <span class="label label-default"
+                      v-else-if="business.projectStatus==='0120'">档案部归档</span>
+                      <span class="label label-default"
+                      v-else-if="business.projectStatus==='0130'">业务完结</span>
+              </template>
             </td>
           </tr>
         </tbody>
@@ -62,6 +99,7 @@ import axios from 'axios';
 import searchBar from '@/main/component/searchBar.vue';
 import crumbs from '@/main/component/crumbs.vue';
 import card from '@/main/component/card.vue';
+import radios from '@/main/component/selectRadio.vue'
 import myPagination from '@/main/component/pagination.vue';
 
 export default {
@@ -81,15 +119,38 @@ export default {
       ],
       pageNum: 1,
       searchObj: {},
-      reloadPagination: true
+      reloadPagination: true,
+      companyList: [],
+      projectNames: '',
+      companyId: '',
+      statusShow: false
     };
   },
   created() {
     this.getOnGogingProjectByPerson()
+    this.getCompanyList()
+    console.log(this.$route.params)
+    if (this.$route.params.department === 'risk') {
+      this.statusShow = true
+    }
   },
   methods: {
     mod(BUSINESS) {
       this.$router.push('/business-handle-detail-' + this.$route.params.department + '-' +BUSINESS.id)
+    },
+    changeClick (companyId) {
+      this.companyList.forEach((item) => {
+          if (item.id === companyId) {
+            this.projectNames = item.name
+          }
+        })
+        this.companyId = companyId
+        if (companyId === 'all') {
+          this.projectNames = ''
+          this.companyId = ''
+        }
+        // console.log(this.projectNames)
+        this.getOnGogingProjectByPerson()
     },
   	getOnGogingProjectByPerson () {
   	  return new Promise((resolve, reject) => {
@@ -102,7 +163,8 @@ export default {
   	          let obj = {
   	            command: 'getOnGogingProjectByPerson',
   	            platform: 'web',
-  	            pageNum: this.pageNum
+  	            pageNum: this.pageNum,
+                companyId: this.companyId
   	          }
   	          Object.assign(obj, this.searchObj)
   	          return JSON.stringify(obj);
@@ -130,13 +192,37 @@ export default {
     currentChange(val) {
       this.pageNum = val
       this.getOnGogingProjectByPerson()
+    },
+    getCompanyList() {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            var obj = {
+              command: 'getCompanyList',
+              platform: 'web',
+              userId: this.userId
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.companyList = rep.data.data.companyList
+        } else if (rep.data.statusCode === '10012') {
+          // window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
     }
   },
   components: {
     crumbs,
     card,
     searchBar,
-    myPagination
+    myPagination,
+    radios
   }
 };
 </script>

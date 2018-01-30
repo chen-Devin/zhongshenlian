@@ -67,6 +67,10 @@ export default {
         {
           label: '公司全称',
           value: 'companyName'
+        },
+        {
+          label: '报销Id',
+          value: 'id'
         }
       ],
       reloadPagination: true,
@@ -187,7 +191,7 @@ export default {
     }, () => { })
     //console.log(this.expensesList)
     console.log(this.$route.fullPath)
-    if (this.$route.fullPath === '/expenses-review/10') {
+    if (this.$route.fullPath === '/expenses-review/10' || this.$route.fullPath === '/expenses-review-record') {
       this.styleShow = true
     }
   },

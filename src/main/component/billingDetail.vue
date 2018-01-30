@@ -14,7 +14,7 @@
               <button 
                 class="btn my-btn submit-btn" 
                 v-if="Number(bill.state) === 0 || Number(bill.state) === 2" 
-                @click="showBillUpload('receive')">上传收款截图</button>
+                @click="showBillUpload('receive')">上传回单</button>
               <button 
                 class="btn my-btn cancel-btn" 
                 v-if="Number(bill.revokeState) === 10"
@@ -38,7 +38,15 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              销售方单位名称：{{ bill.unit.name }}
+              项目编号{{ contractNo }}
+            </el-col>
+            <el-col :span="12">
+              单位地址{{ bill.unit.address }}
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              销售方单位名称：{{ bill.billingUnit }}
             </el-col>
             <el-col :span="12">
               开户银行：{{ bill.unit.depositBank }}
@@ -54,7 +62,7 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              单位名称：{{ bill.billingUnit }}
+              单位名称：{{ bill.unit.name }}
             </el-col>
             <el-col :span="12">
               送达方式：{{ bill.way }}
@@ -221,7 +229,7 @@ export default {
       return '/fileUpload?data=' + JSON.stringify(data); 
     }
   },
-  props: ['bill', 'sended'],
+  props: ['bill', 'sended', 'contractNo'],
   methods: {
     reject () {
       this.rejectModalShow = true
@@ -332,6 +340,7 @@ export default {
     modal
   },
   created () {
+    console.log(this.bill)
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser
     }, () => { })

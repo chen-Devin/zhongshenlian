@@ -15,9 +15,10 @@
       <search-bar class="f-r" :searchItems="searchItems" v-if="reloadSearch"
       @search="search"></search-bar>
     </card>
-    <card>
-      <table class="table table-bordered table-hover table-list">
-        <thead>
+    <select-radio @changeClick="changeClick" :companyList="companyList"></select-radio>
+    <card style="margin-top: 0;">
+      <table class="table table-bordered table-hover table-list" >
+        <thead style="background-color: #fff;">
           <tr>
             <th>项目名称</th>
             <th>立项时间</th>
@@ -58,6 +59,7 @@ import crumbs from '../../component/crumbs.vue';
 import card from '../../component/card.vue';
 import myPagination from '../../component/pagination.vue';
 import searchBar from '@/main/component/searchBar.vue'
+import selectRadio from '@/main/component/selectRadio.vue'
 
 export default {
   name: 'businessReviewListSales',
@@ -94,7 +96,9 @@ export default {
       reloadPagination: true,
       pageNum: 1,
       //立项申请为0， 草稿箱为1 （搜索判断）
-      contentType: 0
+      contentType: 0,
+      companyList: [],
+      companyId: ''
     };
   },
   props: ['user'],
@@ -103,11 +107,52 @@ export default {
     setTimeout(() => {
       this.addBusinessJud();
     }, 500);
+    this.getCompanyList()
   },
   watch: {
     $route: 'getBusinessChecking'
   },
   methods: {
+    changeClick (companyId) {
+      this.companyList.forEach((item) => {
+          if (item.id === companyId) {
+            this.projectNames = item.name
+          }
+        })
+        this.companyId = companyId
+        if (companyId === 'all') {
+          this.projectNames = ''
+          this.companyId = ''
+        }
+        if (this.contentType === 0) {
+          this.getUnDealListOfBusinessUnit()
+        } else if (this.contentType === 1) {
+          this.getBusinessUnFinished()
+        }
+      //this.getUnDealRListOfFinance()
+    },
+    getCompanyList() {
+      axios({
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+        method: 'get',
+        url: '/service',
+        params: {
+          data: (() => {
+            var obj = {
+              command: 'getCompanyList',
+              platform: 'web'
+            }
+            return JSON.stringify(obj);
+          })()
+        }
+      }).then((rep) => {
+        if (rep.data.statusCode === '10001') {
+          this.companyList = rep.data.data.companyList
+        } else if (rep.data.statusCode === '10012') {
+          // window.location.href = 'signIn.html';
+        }
+      }, (rep) => { });
+    },
     tabClick(tab, event) {
       this.pageNum = 1
       this.reloadPagination = false
@@ -162,7 +207,8 @@ export default {
                 command: 'getUnDealListOfBusinessUnit',
                 platform: 'web',
                 type: 2,
-                pageNum: this.pageNum
+                pageNum: this.pageNum,
+                companyId: this.companyId
               }
               Object.assign(obj, this.searchObj);
               return JSON.stringify(obj);
@@ -215,7 +261,8 @@ export default {
               let obj = {
                 command: 'getBusinessUnFinished',
                 platform: 'web',
-                pageNum: this.pageNum
+                pageNum: this.pageNum,
+                companyId: this.companyId
               }
               Object.assign(obj, this.searchObj);
               return JSON.stringify(obj);
@@ -244,7 +291,8 @@ export default {
     crumbs,
     card,
     myPagination,
-    searchBar
+    searchBar,
+    selectRadio
   }
 };
 </script>

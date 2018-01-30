@@ -112,7 +112,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="纳税人识别号：" label-width="110px" prop="taxpayerNumber">
-              <el-input placeholder="请输入纳税人识别号" v-model="bill.taxpayerNumber" :disabled="isNotFirst"></el-input>
+              <el-input placeholder="请输入纳税人识别号" v-model="bill.taxpayerNumber" ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">

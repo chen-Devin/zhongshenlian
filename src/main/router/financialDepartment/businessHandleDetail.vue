@@ -24,7 +24,7 @@
         </template>
       </div>
     </card>
-    <billing-detail :bill="bill" :sended="sended" v-if="billDetailShow"></billing-detail>
+    <billing-detail :bill="bill" :sended="sended" v-if="billDetailShow" :contractNo="contractNo"></billing-detail>
   </div>
 </template>
 
@@ -319,7 +319,8 @@ export default {
       riskAdvices: [],
       leaderAdivces: [],
       bill: {},
-      billDetailShow: false
+      billDetailShow: false,
+      contractNo: ''
     };
   },
   props: ['user'],
@@ -514,6 +515,7 @@ export default {
           }
         }).then((rep) => {
           if (rep.data.statusCode === '10001') {
+            this.contractNo = rep.data.data.contractNo
             if (rep.data.data.reportType.length === 0) {
               this.business.reportType = [''];
             } else {

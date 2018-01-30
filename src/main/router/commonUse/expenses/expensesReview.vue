@@ -96,7 +96,8 @@ export default {
                 platform: 'web',
                 type: this.$route.params.id,
                 pageNum: this.pageNum,
-                companyId: this.companyId
+                companyId: this.companyId,
+                id: this.id
               }
               return JSON.stringify(obj);
             })()
@@ -125,7 +126,8 @@ export default {
                 platform: 'web',
                 type: 5,
                 pageNum: this.pageNum,
-                companyId: this.companyId
+                companyId: this.companyId,
+                id: this.id
               }
               Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
@@ -153,6 +155,14 @@ export default {
     search (obj) {
       this.searchObj = {}
       this.searchObj = obj
+      console.log(this.searchObj)
+      if (this.searchObj.id) {
+        this.companyId = ''
+        this.id = this.searchObj.id
+      } else if (this.searchObj.companyName) {
+        this.id = ''
+        this.companyId = this.searchObj.companyName
+      }
       this.pageNum = 1
       if (parseInt(this.$route.params.id) === 10) {
         this.getExpensesList()
