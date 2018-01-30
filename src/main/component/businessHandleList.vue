@@ -41,21 +41,24 @@
         待开发票
           <search-bar  class="f-r" v-if="reloadSearch" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
+      <select-radio @changeClick="changeClick" :companyList="companyList" style="margin: 0;" v-if="financialType === '0'"></select-radio>
       <h3 class="main-title" v-if="financialType === '1'">
         待上传截图
           <search-bar  class="f-r" v-if="reloadSearch" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
+      <select-radio @changeClick="changeClick" :companyList="companyList" style="margin: 0;" v-if="financialType === '1'"></select-radio>
       <h3 class="main-title" v-if="financialType === '2'">
         开票撤销复核
           <search-bar  class="f-r" v-if="reloadSearch" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
+      <select-radio @changeClick="changeClick" :companyList="companyList" style="margin: 0;" v-if="financialType === '2'"></select-radio>
       <h3 class="main-title" v-if="department === 'risk'">
         报告审核
           <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
 
       <table class="table table-bordered table-hover table-list">
-        <thead :class="{bgColor: department === 'leader' || department === 'archives' || department === 'office' || department === 'sales'}">
+        <thead :class="{bgColor: department === 'leader' || department === 'archives' || department === 'office' || department === 'sales' || financialType === '0' || financialType === '1' || financialType === '2'}">
           <tr>
             <th class="text-center">项目编号</th>
             <th class="text-center">项目名称</th>

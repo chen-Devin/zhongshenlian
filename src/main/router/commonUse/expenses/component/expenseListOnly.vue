@@ -38,10 +38,10 @@
             <td class="text-left" @click="checkDetail(item)">{{ changeStatus(item.status) }}</td>
             <td class="text-left" @click="checkDetail(item)">{{ item.id }}</td>
             <td class="text-left" @click="checkDetail(item)">{{ item.amount }}</td>
-            <td class="text-left backMessage" @click="backMessageClick(item)" v-if="changeStatus(item.status) === '发出申请'">
-              撤销
+            <td class="text-left backMessage" @click="backMessageClick(item)" v-if="changeStatus(item.status) === '发出申请'" >
+              <span class="reset-s">撤销</span>
             </td>
-            <td class="text-left" v-else @click="checkDetail(item)">无法撤销</td>
+            <td class="text-left" v-else @click="checkDetail(item)" >无法撤销</td>
           </tr>
         </tbody>
       </table>
@@ -191,7 +191,7 @@ export default {
     }, () => { })
     //console.log(this.expensesList)
     console.log(this.$route.fullPath)
-    if (this.$route.fullPath === '/expenses-review/10' || this.$route.fullPath === '/expenses-review-record') {
+    if (this.$route.fullPath === '/expenses-review/10' || this.$route.fullPath === '/expenses-review-record' || this.$route.fullPath === '/expenses-review/1' || this.$route.fullPath === '/expenses-review/0' || this.$route.fullPath === '/expenses-review/2') {
       this.styleShow = true
     }
   },
@@ -213,5 +213,18 @@ export default {
   }
   .bgColor{
     background-color: #fff !important;
+  }
+  .reset-s{
+    display: inline-block; 
+    background-color: #FF636D; 
+    width: 70px;
+    height: 28px;
+    border-radius: 4px; 
+    line-height: 28px; 
+    color: #fff; 
+    text-align: center
+  }
+  .reset-s:hover{
+    background-color: #dd5566; 
   }
 </style>

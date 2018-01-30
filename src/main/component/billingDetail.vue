@@ -38,10 +38,10 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              项目编号{{ contractNo }}
+              项目编号：{{ contractNo }}
             </el-col>
             <el-col :span="12">
-              单位地址{{ bill.unit.address }}
+              单位地址：{{ bill.unit.address }}
             </el-col>
           </el-row>
           <el-row>
