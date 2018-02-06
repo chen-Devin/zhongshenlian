@@ -49,7 +49,7 @@
           <template slot="title">
             报销管理
           </template>
-          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-review-record">审批记录</el-menu-item>
           <el-menu-item index="/expenses-list">我的报销</el-menu-item>
         </el-submenu>
       </template>
@@ -74,7 +74,8 @@
           <template slot="title">
             报销管理
           </template>
-          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-review/3" v-if="canReviewBidNotLeader">报销审批</el-menu-item>
+          <el-menu-item index="/expenses-review-record">审批记录</el-menu-item>
           <el-menu-item index="/expenses-list">我的报销</el-menu-item>
         </el-submenu>
 <!--         <el-submenu index="expenses-review-record">
@@ -103,7 +104,8 @@
           <template slot="title">
             报销管理
           </template>
-          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-review/3" v-if="canReviewBidNotLeader">报销审批</el-menu-item>
+          <el-menu-item index="/expenses-review-record">审批记录</el-menu-item>
           <el-menu-item index="/expenses-list">我的报销</el-menu-item>
         </el-submenu>
         <!-- <el-submenu index="expenses-review-record">
@@ -137,7 +139,8 @@
           <template slot="title">
             报销管理
           </template>
-          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-review/3" v-if="canReviewBidNotLeader">报销审批</el-menu-item>
+          <el-menu-item index="/expenses-review-record">审批记录</el-menu-item>
           <el-menu-item index="/expenses-list">我的报销</el-menu-item>
         </el-submenu>
         <!-- <el-submenu index="expenses-review-record">
@@ -171,7 +174,8 @@
           <template slot="title">
             报销管理
           </template>
-          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-review/3" v-if="canReviewBidNotLeader">报销审批</el-menu-item>
+          <el-menu-item index="/expenses-review-record">审批记录</el-menu-item>
           <el-menu-item index="/expenses-list">我的报销</el-menu-item>
         </el-submenu>
         <!-- <el-submenu index="expenses-review-record">
@@ -209,7 +213,8 @@
           <template slot="title">
             报销管理
           </template>
-          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-review/3" v-if="canReviewBidNotLeader">报销审批</el-menu-item>
+          <el-menu-item index="/expenses-review-record">审批记录</el-menu-item>
           <el-menu-item index="/expenses-list">我的报销</el-menu-item>
         </el-submenu>
         <!-- <el-submenu index="expenses-review-record">
@@ -240,7 +245,8 @@
           <template slot="title">
             报销管理
           </template>
-          <el-menu-item index="/expenses-review-record">报销审核</el-menu-item>
+          <el-menu-item index="/expenses-review/3" v-if="canReviewBidNotLeader">报销审批</el-menu-item>
+          <el-menu-item index="/expenses-review-record">审批记录</el-menu-item>
           <el-menu-item index="/expenses-list">我的报销</el-menu-item>
         </el-submenu>
         <!-- <el-submenu index="expenses-review-record">
@@ -254,11 +260,6 @@
           </template>
         </el-submenu> -->
       </template>
-      <el-submenu index="expenses-review/3" v-if="canReviewBidNotLeader">
-        <template slot="title">
-          <span>报销审批</span>
-        </template>
-      </el-submenu>
       <el-submenu index="rule-regulation">
         <template slot="title">
           <span>规章制度</span>

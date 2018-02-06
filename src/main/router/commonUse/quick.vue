@@ -467,6 +467,8 @@ export default {
       this.user = this.$store.getters.getUser;
       this.shortcutArray = this.user.shortcutArray;
       this.allQuickArray = this.getAllQuickArray(this.user.department)
+      console.log(1)
+      console.log(this.user)
       switch(this.user.department) {
         case '所长':
           this.identity = 'leader'

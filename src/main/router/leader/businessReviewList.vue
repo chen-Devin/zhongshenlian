@@ -212,8 +212,7 @@ export default {
               command: 'getBusinessChecking',
               platform: 'web',
               pageNum: this.pageNum,
-              companyId: this.companyId,
-              projectName: this.projectNames
+              companyId: this.companyId
             }
             Object.assign(obj, this.searchObj);
             return JSON.stringify(obj);
@@ -241,8 +240,7 @@ export default {
                 command: 'getContractChangeList',
                 platform: 'web',
                 pageNum: this.pageNum,
-                companyId: this.companyId,
-                projectName: this.projectNames
+                companyId: this.companyId
               }
               Object.assign(obj, this.searchObj);
               return JSON.stringify(obj);
