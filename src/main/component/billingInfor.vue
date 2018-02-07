@@ -180,6 +180,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+
   .billing-infor {
     .main-title {
       margin-top: 0;

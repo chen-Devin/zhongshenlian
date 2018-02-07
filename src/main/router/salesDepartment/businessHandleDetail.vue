@@ -807,5 +807,12 @@ export default {
         margin-top: 20px;
       }
     }
+    .detail-wrapper{
+      padding-left: 0 !important;
+    }
+    .billing-detail .detail-wrapper {
+    padding-left: 0px !important; 
   }
+  }
+
 </style>

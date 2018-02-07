@@ -1,6 +1,6 @@
 <template>
   <div class="billing-detail">
-    <modal modalWidth="800px" v-if="detailModalShow">
+    <modal modalWidth="1000px" v-if="detailModalShow">
       <div slot="body">
         <template v-if="!sended">
           <p 

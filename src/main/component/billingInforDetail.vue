@@ -1,5 +1,5 @@
 <template>
-  <div class="normal-wrap">
+  <div class="normal-wrap" >
     <h4 class="main-title">
       开票信息
       <div class="pull-right" v-if="uploadEnabled">
@@ -13,11 +13,11 @@
       <small class="label label-success pull-right" v-if="finished">已完成该申请</small>
     </h4>
     <form class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
-      <div class="form-group" v-if="uploadEnabled">
+      <div class="form-group" v-if="uploadEnabled" style="width: 1000px">
         <label class="col-sm-2 control-label">
           发票图片
         </label>
-        <el-upload class="col-sm-9"
+        <el-upload class="col-sm-10"
                   :multiple="false"
                   :action="uploadBill.URL"
                   :on-progress="uploadBillProgress"
@@ -29,7 +29,7 @@
           <span slot="tip"
                 class="text-info">&emsp;文件大小建议不超过3Mb</span>
         </el-upload>
-        <div class="col-sm-offset-2 col-sm-9">
+        <div class="col-sm-offset-2 col-sm-10">
           <div class="progress-wrap" v-show="uploadBill.progressShow">
             <div class="progress">
               <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: uploadBill.percentage}">
@@ -38,7 +38,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-offset-2 col-sm-9">
+        <div class="col-sm-offset-2 col-sm-10">
           <ul class="com-list attachment-list list-group">
             <li class="list-group-item" v-for="(FILE,index) in bill.billFiles" :key="index">
               <span class="fa fa-file-text-o"></span>
@@ -52,7 +52,7 @@
         <label class="col-sm-2 control-label">
           收款图片
         </label>
-        <el-upload class="col-sm-9"
+        <el-upload class="col-sm-10"
                   :multiple="false"
                   :action="uploadReceipt.URL"
                   :on-progress="uploadReceiptProgress"
@@ -64,7 +64,7 @@
           <span slot="tip"
                 class="text-info">&emsp;文件大小建议不超过3Mb</span>
         </el-upload>
-        <div class="col-sm-offset-2 col-sm-9">
+        <div class="col-sm-offset-2 col-sm-10">
           <div class="progress-wrap" v-show="uploadReceipt.progressShow">
             <div class="progress">
               <div class="progress-bar progress-bar-info progress-bar-striped active" :style="{width: uploadReceipt.percentage}">
@@ -73,7 +73,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-offset-2 col-sm-9">
+        <div class="col-sm-offset-2 col-sm-10">
           <ul class="com-list attachment-list list-group">
             <li class="list-group-item" v-for="(FILE,index) in bill.receiptFiles" :key="index">
               <span class="fa fa-file-text-o"></span>
@@ -87,7 +87,7 @@
         <label class="col-sm-2 control-label">
           发票图片
         </label>
-        <ul class="col-sm-9 com-list attachment-list list-group">
+        <ul class="col-sm-10 com-list attachment-list list-group">
           <li class="list-group-item" v-for="(FILE,index) in bill.billFiles" :key="index">
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
@@ -98,7 +98,7 @@
         <label class="col-sm-2 control-label">
           收款图片
         </label>
-        <ul class="col-sm-9 com-list attachment-list list-group">
+        <ul class="col-sm-10 com-list attachment-list list-group">
           <li class="list-group-item" v-for="(FILE,index) in bill.receiptFiles" :key="index">
             <span class="fa fa-file-text-o"></span>
             <a class="text-primary title" :href="FILE.url" target="_blank">{{FILE.name}}</a>
@@ -107,49 +107,49 @@
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">签订合同编号</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{business.number}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">项目名称</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{business.name}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">签订合同金额</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{business.contractAmount===''?'':`${business.contractAmount}元`}}</p>
         </div>
       </div>
       <!-- <div class="form-group">
         <label class="col-sm-2 control-label">开票申请人</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.proposer.name}}</p>
         </div>
       </div>
       <div class="form-group" v-if="false">
         <label class="col-sm-2 control-label">申请人电话</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.proposer.tele}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">委托单位联系人</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{business.institution.name}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">联系人电话</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{business.institution.telephone}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">计划工期</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <div class="row">
             <div class="col-sm-6">
               <p class="form-control-static">开始时间：{{business.time.start}}</p>
@@ -162,14 +162,14 @@
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">合同体制</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{business.contractType.name}}</p>
         </div>
       </div>
       <div class="form-group"
           v-if="contractTypeChan">
         <label class="col-sm-2 control-label">基本取费</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <div class="row form-group">
             <div class="col-sm-6">
               <p class="form-control-static">
@@ -201,7 +201,7 @@
       <div class="form-group"
           v-if="contractTypeChan">
         <label class="col-sm-2 control-label">效益取费</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <div class="row form-group">
             <div class="col-sm-6">
               <p class="form-control-static">
@@ -232,103 +232,103 @@
       </div> -->
       <div class="form-group">
         <label class="col-sm-2 control-label">累计开票金额</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.addUpAmount===''?'':`${bill.addUpAmount}元`}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">本次开票金额</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.amount===''?'':`${bill.amount}元`}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">销售方单位名称</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.billingUnit}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">申请开票种类</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.type}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">单位名称</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.unit.name}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">纳税人识别号</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.taxpayerID}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">单位地址</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.unit.address}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">单位电话</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.unit.tele}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">开户银行</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.unit.depositBank}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">开户账号</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.unit.account}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">申请日期</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.filingDate}}</p>
         </div>
       </div>
       <div class="form-group" v-if="receiptNotUpload">
         <label class="col-sm-2 control-label">开票日期</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.billingDate}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">送达方式</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.way}}</p>
         </div>
       </div>
       <div class="form-group" v-show="bill.way==='快递'">
         <label class="col-sm-2 control-label">快递收件人</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.receiver}}</p>
         </div>
       </div>
       <div class="form-group" v-show="bill.way==='快递'">
         <label class="col-sm-2 control-label">收件地址</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.receiveAdd}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">服务内容</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.content}}</p>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">备注</label>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           <p class="form-control-static">{{bill.remark}}</p>
         </div>
       </div>
@@ -654,4 +654,10 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.modal-container{
+  width: 1000px !important;
+}
+.billing-detail .detail-wrapper{
+  padding-left: 0 !important;
+}
 </style>
