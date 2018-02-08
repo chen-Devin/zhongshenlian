@@ -53,10 +53,17 @@
       </h3>
       <select-radio @changeClick="changeClick" :companyList="companyList" style="margin: 0;" v-if="financialType === '2'"></select-radio>
       <h3 class="main-title" v-if="department === 'risk'">
-        报告审核
+        <span class="title-hover" @click="tabChange('project')">
+          立项审批
+          <span class="tran" v-show="!reportShow"></span>
+        </span>
+        <span class="title-hover" @click="tabChange('report')">
+          报告审核
+          <span class="tran" v-show="reportShow"></span>
+        </span>
           <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar>
       </h3>
-
+      <select-radio @changeClick="changeClick" :companyList="companyList" style="margin: 0;" v-if="department === 'risk'"></select-radio>
       <table class="table table-bordered table-hover table-list">
         <thead :class="{bgColor: department === 'leader' || department === 'archives' || department === 'office' || department === 'sales' || financialType === '0' || financialType === '1' || financialType === '2'}">
           <tr>
@@ -263,7 +270,9 @@ export default {
       reloadSearch: true,
       searchObj: {},
       companyList: [],
-      statusShow: false
+      statusShow: false,
+      reportShow: false,
+      chooseType: ''
     };
   },
   created() {
@@ -312,6 +321,17 @@ export default {
   },
   props: ['iconType', 'department'],
   methods: {
+    tabChange (type) {
+      if (type === 'report') {
+        this.reportShow = true
+        this.chooseType = '2'
+        this.getUnDealListOfRiskAssessment()
+      } else if (type === 'project'){
+        this.chooseType = '1'
+        this.reportShow = false
+        this.getUnDealListOfRiskAssessment()
+      }
+    },
     changeClick (companyId) {
       this.companyList.forEach((item) => {
           if (item.id === companyId) {
@@ -583,7 +603,8 @@ export default {
                 command: 'getUnDealListOfRiskAssessment',
                 platform: 'web',
                 pageNum: this.pageNum,
-                companyId: this.companyId
+                companyId: this.companyId,
+                type: this.chooseType
               }
               Object.assign(obj, this.searchObj)
               return JSON.stringify(obj);
@@ -646,5 +667,22 @@ export default {
 }
 .bgColor{
   background-color: #fff;
+}
+.title-hover{
+  display: inline-block;
+  width: 150px;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+}
+.tran{
+  position: absolute;
+  left: 15%;
+  top: 25px;
+  width: 0px;
+  height: 0px;
+border-width: 10px;
+border-style: solid;
+border-color: transparent transparent #C4F4FF transparent; 
 }
 </style>
