@@ -180,96 +180,97 @@ export default {
                   state: false
                 }
               ]
-            },{
-              name: 'BH',
-              code: 'BH',
-              state: false,
-              words: [
-                {
-                  name: '审字',
-                  code: '01',
-                  state: false
-                },{
-                  name: '专字',
-                  code: '02',
-                  state: false
-                },{
-                  name: '咨字',
-                  code: '03',
-                  state: false
-                },{
-                  name: '基决审字',
-                  code: '04',
-                  state: false
-                },{
-                  name: '外汇检字',
-                  code: '05',
-                  state: false
-                },{
-                  name: '验字',
-                  code: '06',
-                  state: false
-                },{
-                  name: '外审字',
-                  code: '07',
-                  state: false
-                },{
-                  name: '无报告',
-                  code: '08',
-                  state: false
-                }
-              ]
-            },{
-              name: 'QT',
-              code: 'QT',
-              state: false,
-              words: [
-                {
-                  name: '审字',
-                  code: '01',
-                  state: false
-                },{
-                  name: '专字',
-                  code: '02',
-                  state: false
-                },{
-                  name: '咨字',
-                  code: '03',
-                  state: false
-                },{
-                  name: '基决审字',
-                  code: '04',
-                  state: false
-                },{
-                  name: '外汇检字',
-                  code: '05',
-                  state: false
-                },{
-                  name: '验字',
-                  code: '06',
-                  state: false
-                },{
-                  name: '外审字',
-                  code: '07',
-                  state: false
-                },{
-                  name: '无报告',
-                  code: '08',
-                  state: false
-                }
-              ]
-            },{
-              name: '无报告',
-              code: '无报告',
-              state: false,
-              words: [
-                {
-                  name: '无',
-                  code: '01',
-                  state: false
-                }
-              ]
             }
+            // ,{
+            //   name: 'BH',
+            //   code: 'BH',
+            //   state: false,
+            //   words: [
+            //     {
+            //       name: '审字',
+            //       code: '01',
+            //       state: false
+            //     },{
+            //       name: '专字',
+            //       code: '02',
+            //       state: false
+            //     },{
+            //       name: '咨字',
+            //       code: '03',
+            //       state: false
+            //     },{
+            //       name: '基决审字',
+            //       code: '04',
+            //       state: false
+            //     },{
+            //       name: '外汇检字',
+            //       code: '05',
+            //       state: false
+            //     },{
+            //       name: '验字',
+            //       code: '06',
+            //       state: false
+            //     },{
+            //       name: '外审字',
+            //       code: '07',
+            //       state: false
+            //     },{
+            //       name: '无报告',
+            //       code: '08',
+            //       state: false
+            //     }
+            //   ]
+            // },{
+            //   name: 'QT',
+            //   code: 'QT',
+            //   state: false,
+            //   words: [
+            //     {
+            //       name: '审字',
+            //       code: '01',
+            //       state: false
+            //     },{
+            //       name: '专字',
+            //       code: '02',
+            //       state: false
+            //     },{
+            //       name: '咨字',
+            //       code: '03',
+            //       state: false
+            //     },{
+            //       name: '基决审字',
+            //       code: '04',
+            //       state: false
+            //     },{
+            //       name: '外汇检字',
+            //       code: '05',
+            //       state: false
+            //     },{
+            //       name: '验字',
+            //       code: '06',
+            //       state: false
+            //     },{
+            //       name: '外审字',
+            //       code: '07',
+            //       state: false
+            //     },{
+            //       name: '无报告',
+            //       code: '08',
+            //       state: false
+            //     }
+            //   ]
+            // },{
+            //   name: '无报告',
+            //   code: '无报告',
+            //   state: false,
+            //   words: [
+            //     {
+            //       name: '无',
+            //       code: '01',
+            //       state: false
+            //     }
+            //   ]
+            // }
           ],
           amount: 0,
           usage: ''
@@ -403,6 +404,24 @@ export default {
   },
   created () {
     bus.$on('subing', () => { this.commitDisable = true });
+    var _this = this
+    this.$store.dispatch('fetchUserInfo').then(function () {
+      var usear = _this.$store.getters.getUser;
+      console.log(usear.companyName)
+      var test1 = /会计/
+      var test2 = /评估/
+      var test3 = /税务/
+      var test4 = /造价/
+      if (test1.test(usear.companyName)) {
+        _this.business.report.type[0].state = true
+      } else if (test2.test(usear.companyName)) {
+        _this.business.report.type[1].state = true
+      } else if (test3.test(usear.companyName)) {
+        _this.business.report.type[2].state = true
+      } else if (test4.test(usear.companyName)) {
+        _this.business.report.type[3].state = true
+      }
+     }, function () {});
   },
   components: {
     crumbs,

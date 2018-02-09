@@ -272,7 +272,7 @@ export default {
       companyList: [],
       statusShow: false,
       reportShow: false,
-      chooseType: ''
+      chooseType: '1'
     };
   },
   created() {
