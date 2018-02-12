@@ -177,7 +177,7 @@
           <div class="check-wrap">
             <p class="d-ib" v-if="!editable">{{ reportType }}</p>
             <div class="d-ib" v-for="(TYPE, index) in business.report.type" :key="index" v-else>
-              <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :id="TYPE.name+index">
+              <input class="magic-checkbox" type="checkbox" v-model="TYPE.state" @change="typeChan(TYPE)" :id="TYPE.name+index" :disabled="true">
               <label class="checkbox-inline" :key="index" :for="TYPE.name+index">
                 {{TYPE.name}}
               </label>

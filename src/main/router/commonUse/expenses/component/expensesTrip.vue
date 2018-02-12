@@ -678,8 +678,12 @@ export default {
       return total.toFixed(2)
     },
     totalAmount () {
-      let total = Number(this.transportationTotalFee) + Number(this.stayTotalFee) + Number(this.localMealsTotalFee) + Number(this.fieldMealsTotalFee)
-      return total.toFixed(2)
+      if (this.transportationTotalFee || this.stayTotalFee || this.localMealsTotalFee || this.fieldMealsTotalFee) {
+        let total = Number(this.transportationTotalFee) + Number(this.stayTotalFee) + Number(this.localMealsTotalFee) + Number(this.fieldMealsTotalFee)
+        return total.toFixed(2)
+      } else {
+        return 0
+      }
     }
   },
   methods: {
@@ -1155,83 +1159,152 @@ export default {
       if (flag) {
         if (this.paper) {
           //this.reimbursementInfo.totalAmount = this.totalAmount
-          this.uploadAmount(this.reimbursementInfo.travelRArray[0].amount, 'travelR').then(() => {
-            var promiseArr = []
-            if (this.reimbursementInfo.travelRArray.length > 1) {
-              this.reimbursementInfo.travelRArray.forEach((item, index) => {
-                if (index > 0) {
-                  promiseArr.push(this.uploadAmount(item.amount, 'travelR'))
-                }
-              })
-            }
-            this.reimbursementInfo.stayRArray.forEach((item) => {
-              promiseArr.push(this.uploadAmount(item.amount, 'stayR'))
-            })
-            this.reimbursementInfo.localRArray.forEach((item) => {
-              promiseArr.push(this.uploadAmount(item.amount, 'localR'))
-            })
-            this.reimbursementInfo.fieldRArray.forEach((item) => {
-              promiseArr.push(this.uploadAmount(item.amount, 'fieldR'))
-            })
-            Promise.all(promiseArr).then(() => {
-              let arr = []
-              this.reimbursementInfo.projectNumberArray = this.projectNumberArray
-              this.reimbursementInfo.companyName = this.user.companyName
-              this.reimbursementInfo.totalAmount = this.totalAmount
-              console.log(this.totalAmount)
-              this.reimbursementInfo.applicantName = this.user.applicantName
-              this.reimbursementInfo.travelRArray.forEach((item) => {
-                delete item.percentage
-                delete item.state
-                delete item.uploadURL
-              })
-              this.reimbursementInfo.stayRArray.forEach((item) => {
-                delete item.percentage
-                delete item.state
-                delete item.uploadURL
-              })
-              this.reimbursementInfo.localRArray.forEach((item) => {
-                delete item.percentage
-                delete item.state
-                delete item.uploadURL
-              })
-              this.reimbursementInfo.fieldRArray.forEach((item) => {
-                delete item.percentage
-                delete item.state
-                delete item.uploadURL
-              })
-              if (this.reimbursementInfo.id === '') {
-                delete this.reimbursementInfo.id
+          if (this.reimbursementInfo.stayRArray.length !== 0 && this.reimbursementInfo.travelRArray.length !== 0 && this.reimbursementInfo.localRArray.length !== 0 && this.reimbursementInfo.fieldRArray.length !== 0) {
+            this.uploadAmount(this.reimbursementInfo.travelRArray[0].amount, 'travelR').then(() => {
+              var promiseArr = []
+              if (this.reimbursementInfo.travelRArray.length > 1) {
+                this.reimbursementInfo.travelRArray.forEach((item, index) => {
+                  if (index > 0) {
+                    promiseArr.push(this.uploadAmount(item.amount, 'travelR'))
+                  }
+                })
               }
-              console.log(this.reimbursementInfo)
-              return new Promise((resolve, reject) => {
-                axios({
-                  headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
-                  method: 'get',
-                  url: '/service',
-                  params: {
-                    data: (() => {
-                      let obj = {
-                        command: 'addOrEditReimbursement',
-                        platform: 'web',
-                        type: this.reimbursementInfo.submitType,
-                        data: this.reimbursementInfo
-                      }
-                      return JSON.stringify(obj);
-                    })()
-                  }
-                }).then((rep) => {
-                  if (rep.data.statusCode === '10001') {
-                    this.$message.success('提交成功，返回报销列表')
-                    this.$router.push('/expenses-list')
-                    resolve('done')
-                  } else {
-                    this.$message.error(rep.data.msg)
-                  }
-                }, (rep) => { });
-              })
+              if (this.reimbursementInfo.stayRArray) {
+                this.reimbursementInfo.stayRArray.forEach((item) => {
+                  promiseArr.push(this.uploadAmount(item.amount, 'stayR'))
+                })
+              }
+              if (this.reimbursementInfo.localRArray) {
+                this.reimbursementInfo.localRArray.forEach((item) => {
+                  promiseArr.push(this.uploadAmount(item.amount, 'localR'))
+                })
+              }
+              if (this.reimbursementInfo.fieldRArray) {
+                this.reimbursementInfo.fieldRArray.forEach((item) => {
+                  promiseArr.push(this.uploadAmount(item.amount, 'fieldR'))
+                })
+              }
+              
+              Promise.all(promiseArr).then(() => {
+                let arr = []
+                this.reimbursementInfo.projectNumberArray = this.projectNumberArray
+                this.reimbursementInfo.companyName = this.user.companyName
+                this.reimbursementInfo.totalAmount = this.totalAmount
+                console.log(this.totalAmount)
+                this.reimbursementInfo.applicantName = this.user.applicantName
+                this.reimbursementInfo.travelRArray.forEach((item) => {
+                  delete item.percentage
+                  delete item.state
+                  delete item.uploadURL
+                })
+                this.reimbursementInfo.stayRArray.forEach((item) => {
+                  delete item.percentage
+                  delete item.state
+                  delete item.uploadURL
+                })
+                this.reimbursementInfo.localRArray.forEach((item) => {
+                  delete item.percentage
+                  delete item.state
+                  delete item.uploadURL
+                })
+                this.reimbursementInfo.fieldRArray.forEach((item) => {
+                  delete item.percentage
+                  delete item.state
+                  delete item.uploadURL
+                })
+                if (this.reimbursementInfo.id === '') {
+                  delete this.reimbursementInfo.id
+                }
+                console.log(this.reimbursementInfo)
+                return new Promise((resolve, reject) => {
+                  axios({
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+                    method: 'get',
+                    url: '/service',
+                    params: {
+                      data: (() => {
+                        let obj = {
+                          command: 'addOrEditReimbursement',
+                          platform: 'web',
+                          type: this.reimbursementInfo.submitType,
+                          data: this.reimbursementInfo
+                        }
+                        return JSON.stringify(obj);
+                      })()
+                    }
+                  }).then((rep) => {
+                    if (rep.data.statusCode === '10001') {
+                      this.$message.success('提交成功，返回报销列表')
+                      this.$router.push('/expenses-list')
+                      resolve('done')
+                    } else {
+                      this.$message.error(rep.data.msg)
+                    }
+                  }, (rep) => { });
+                })
+              }, () => {})
             }, () => {})
-          }, () => {})
+          } else {
+             var promiseArr = []
+            Promise.all(promiseArr).then(() => {
+                let arr = []
+                this.reimbursementInfo.projectNumberArray = this.projectNumberArray
+                this.reimbursementInfo.companyName = this.user.companyName
+                this.reimbursementInfo.totalAmount = this.totalAmount
+                console.log(this.totalAmount)
+                this.reimbursementInfo.applicantName = this.user.applicantName
+                // this.reimbursementInfo.travelRArray.forEach((item) => {
+                //   delete item.percentage
+                //   delete item.state
+                //   delete item.uploadURL
+                // })
+                // this.reimbursementInfo.stayRArray.forEach((item) => {
+                //   delete item.percentage
+                //   delete item.state
+                //   delete item.uploadURL
+                // })
+                // this.reimbursementInfo.localRArray.forEach((item) => {
+                //   delete item.percentage
+                //   delete item.state
+                //   delete item.uploadURL
+                // })
+                // this.reimbursementInfo.fieldRArray.forEach((item) => {
+                //   delete item.percentage
+                //   delete item.state
+                //   delete item.uploadURL
+                // })
+                if (this.reimbursementInfo.id === '') {
+                  delete this.reimbursementInfo.id
+                }
+                console.log(this.reimbursementInfo)
+                return new Promise((resolve, reject) => {
+                  axios({
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+                    method: 'get',
+                    url: '/service',
+                    params: {
+                      data: (() => {
+                        let obj = {
+                          command: 'addOrEditReimbursement',
+                          platform: 'web',
+                          type: this.reimbursementInfo.submitType,
+                          data: this.reimbursementInfo
+                        }
+                        return JSON.stringify(obj);
+                      })()
+                    }
+                  }).then((rep) => {
+                    if (rep.data.statusCode === '10001') {
+                      this.$message.success('提交成功，返回报销列表')
+                      this.$router.push('/expenses-list')
+                      resolve('done')
+                    } else {
+                      this.$message.error(rep.data.msg)
+                    }
+                  }, (rep) => { });
+                })
+              }, () => {})
+          }
         } else {
           console.log(this.reimbursementInfo)
           return new Promise((resolve, reject) => {
