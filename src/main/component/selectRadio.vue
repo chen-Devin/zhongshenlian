@@ -2,7 +2,7 @@
 	<div class="radios-wrapper">
 		<el-radio-group v-model="radio" @change="changeClick">
 			<el-radio label="all">全部</el-radio>
-	    <el-radio v-for="item in companyList" :label="item.id">{{item.name}}</el-radio>
+	    <el-radio v-for="item in companyList" :label="item.id" :key="item.id">{{item.name}}</el-radio>
 	  </el-radio-group>
 	</div>
 </template>
