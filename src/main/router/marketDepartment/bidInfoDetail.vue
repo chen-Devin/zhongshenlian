@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <crumbs :paths="paths"></crumbs>
-    <card>
+    <!-- <crumbs :paths="paths"></crumbs> -->
+    <card class="detail-page">
       <!--查看招投标信息-->
       <bid-info-check
         :iniProject="project"

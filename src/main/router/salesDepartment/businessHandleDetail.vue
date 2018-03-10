@@ -1,7 +1,7 @@
 <template>
   <div class="business-handle-wrapper" v-if="reload">
-    <crumbs :paths="paths"></crumbs>
-    <card class="card">
+    <!-- <crumbs :paths="paths"></crumbs> -->
+    <card class="card detail-page">
       <button class="btn my-btn cancel-btn f-r mr-10" @click="showChangeModal">合同变更申请</button>
       <button class="btn my-btn submit-btn f-r mr-10" @click="showContract">查看合同</button>
       <h3 class="main-title">

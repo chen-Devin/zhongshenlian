@@ -1,8 +1,8 @@
 <template>
   <div class="main">
     <!--面包屑导航-->
-    <crumbs :paths="paths"></crumbs>
-    <card>
+    <!-- <crumbs :paths="paths"></crumbs> -->
+    <card class="detail-page">
       <!--招投标信息编辑子组件-->
       <bid-info-check :iniProject="project"
                      editable = true

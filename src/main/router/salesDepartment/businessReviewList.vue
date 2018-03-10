@@ -281,9 +281,11 @@ export default {
     },
     businessRoute(business) {
       if (Number(business.projectStatus) >= 60) {
-        this.$router.push('/business-review-detail-sales-' + business.id)
+        let routeData = this.$router.resolve({ path: '/business-review-detail-sales-' + business.id});
+        window.open(routeData.href, '_blank');
       } else {
-        this.$router.push('/business-review-edit-' + business.id)
+        let routeData = this.$router.resolve({ path: '/business-review-edit-' + business.id});
+        window.open(routeData.href, '_blank');
       }
     }
   },

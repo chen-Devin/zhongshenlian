@@ -94,7 +94,8 @@ export default {
       this.$emit('pageChan', newPage);
     },
     mod(CUSTOMER) {
-      this.$router.push('/customer-infor-list/detail/' + CUSTOMER.id)
+      let routeData = this.$router.resolve({ path: '/customer-infor-list/detail/' + CUSTOMER.id});
+      window.open(routeData.href, '_blank');
     },
     del(CUSTOMER) {
       this.delCustomer = CUSTOMER;

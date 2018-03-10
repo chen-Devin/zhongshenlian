@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <crumbs :paths="paths"></crumbs>
-    <card>
+    <!-- <crumbs :paths="paths"></crumbs> -->
+    <card class="detail-page">
       <button class="btn my-btn submit-btn f-r mr-10 mt-10" @click="checkContractShow=true;">查看合同</button>
       <p class="btns f-r" v-if="business.projectStatus === 20">
         <button class="btn my-btn submit-btn" @click="approve">通过</button>

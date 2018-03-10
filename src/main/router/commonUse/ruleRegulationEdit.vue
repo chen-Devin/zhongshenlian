@@ -1,57 +1,59 @@
 <template>
   <div class="main">
-    <crumbs :paths="paths"></crumbs>
-    <card>
-      <h3 class="main-title">
-        编辑制度
-        <div class="pull-right">
-          <button type="button" class="btn my-btn submit-btn" @click="saveEdit()">保存</button>
-          <button type="button" class="btn my-btn draft-btn mr-20" @click="cancel()">取消</button>
-          <!-- <button type="button" class="btn my-btn cancel-btn mr-10" @click="del()">删除</button> -->
-        </div>
-      </h3>
-    </card>
-    <card>
-      <div class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
-        <div class="form-group">
-          <el-form :label-position="labelPosition">
-            <el-row class="el-form-item">
-              <el-col class="d-f" :span="21" :offset="1">
-                <span class="rule-label">标题：</span> 
-                <el-input
-                  type="text"
-                  placeholder="请输入标题"
-                  v-model="editRule.title"
-                  style="flex:1;"></el-input>
-              </el-col>
-            </el-row> 
-            <el-row class="el-form-item"> 
-              <el-col class="d-f" :span="21" :offset="1">
-                <span class="rule-label">正文：</span> 
-                <vue-editor style="flex:1;" v-model="editRule.content" :editorToolbar="customToolbar"></vue-editor>
-              </el-col>
-            </el-row>
-          </el-form>
-        </div>
-        <!-- <div class="form-group">
-          <label class="col-sm-2 control-label">标题</label>
-          <div class="col-sm-9">
-            <input type="text"
-                   class="form-control"
-                   placeholder="请输入标题"
-                   v-model="editRule.title">
+    <!-- <crumbs :paths="paths"></crumbs> -->
+    <card class="detail-page">
+      <card>
+        <h3 class="main-title">
+          编辑制度
+          <div class="pull-right">
+            <button type="button" class="btn my-btn submit-btn" @click="saveEdit()">保存</button>
+            <button type="button" class="btn my-btn draft-btn mr-20" @click="cancel()">取消</button>
+            <!-- <button type="button" class="btn my-btn cancel-btn mr-10" @click="del()">删除</button> -->
           </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">正文</label>
-          <div class="col-sm-9">
-            <vue-editor v-model="editRule.content" :editorToolbar="customToolbar"></vue-editor>
+        </h3>
+      </card>
+      <card>
+        <div class="form-horizontal normal-wrap" @submit.prevent @keyup.enter.prevent>
+          <div class="form-group">
+            <el-form :label-position="labelPosition">
+              <el-row class="el-form-item">
+                <el-col class="d-f" :span="21" :offset="1">
+                  <span class="rule-label">标题：</span> 
+                  <el-input
+                    type="text"
+                    placeholder="请输入标题"
+                    v-model="editRule.title"
+                    style="flex:1;"></el-input>
+                </el-col>
+              </el-row> 
+              <el-row class="el-form-item"> 
+                <el-col class="d-f" :span="21" :offset="1">
+                  <span class="rule-label">正文：</span> 
+                  <vue-editor style="flex:1;" v-model="editRule.content" :editorToolbar="customToolbar"></vue-editor>
+                </el-col>
+              </el-row>
+            </el-form>
           </div>
-        </div> -->
-      </div>
-      <rule-can-modal v-if="showCanModal"
-                      @deleted="canDeleted"
-                      @canceled="canCanceled"></rule-can-modal>
+          <!-- <div class="form-group">
+            <label class="col-sm-2 control-label">标题</label>
+            <div class="col-sm-9">
+              <input type="text"
+                     class="form-control"
+                     placeholder="请输入标题"
+                     v-model="editRule.title">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">正文</label>
+            <div class="col-sm-9">
+              <vue-editor v-model="editRule.content" :editorToolbar="customToolbar"></vue-editor>
+            </div>
+          </div> -->
+        </div>
+        <rule-can-modal v-if="showCanModal"
+                        @deleted="canDeleted"
+                        @canceled="canCanceled"></rule-can-modal>
+      </card>
     </card>
   </div>
 </template>

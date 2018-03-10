@@ -164,7 +164,8 @@ export default {
       }, (rep) => { });
     },
     mod(BUSINESS) {
-    this.$router.push('/business-complete-list/business-complete-detail-'+BUSINESS.id)
+      let routeData = this.$router.resolve({ path: '/business-complete-list/business-complete-detail-'+BUSINESS.id});
+      window.open(routeData.href, '_blank');
     },
     // seaTypeChan() {
     //   this.get(1);

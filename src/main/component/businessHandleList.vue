@@ -450,7 +450,8 @@ export default {
       }
     },
     mod(BUSINESS) {
-      this.$router.push('/business-handle-detail-' + this.department + '-' +BUSINESS.id)
+      let routeData = this.$router.resolve({ path: '/business-handle-detail-' + this.department + '-' +BUSINESS.id});
+      window.open(routeData.href, '_blank');
     },
     getUnDealListOfBusinessUnit () {
       return new Promise((resolve, reject) => {

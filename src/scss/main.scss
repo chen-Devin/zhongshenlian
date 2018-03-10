@@ -848,3 +848,13 @@ label.col-sm-2.control-label {
   color: #9c9c9c;
   font-size: 13px;
 }
+
+// 详情页
+.detail-page {
+  margin-left: -200px !important;
+  margin-top: -50px !important;
+  margin-right: 0px !important;
+  padding-top: 100px;
+  padding-bottom: 200px !important;
+  z-index: 10 !important;
+}

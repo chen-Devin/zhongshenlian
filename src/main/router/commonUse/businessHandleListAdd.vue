@@ -136,7 +136,8 @@ export default {
   },
   methods: {
     mod(BUSINESS) {
-      this.$router.push('/business-handle-detail-' + this.$route.params.department + '-' +BUSINESS.id)
+      let routeData = this.$router.resolve({ path: '/business-handle-detail-' + this.$route.params.department + '-' +BUSINESS.id});
+      window.open(routeData.href, '_blank');
     },
     changeClick (companyId) {
       this.companyList.forEach((item) => {

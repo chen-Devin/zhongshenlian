@@ -1,6 +1,6 @@
 <template>
   <div class="customer-info-add">
-    <crumbs :paths="paths"></crumbs>
+    <!-- <crumbs :paths="paths"></crumbs> -->
     <customer-info-edit :iniNewCustomerInfo="customerInfo" :iniIsEdit="isEdit"></customer-info-edit>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <crumbs :paths="paths"></crumbs>
-    <card>
+    <!-- <crumbs :paths="paths"></crumbs> -->
+    <card class="detail-page">
       <button class="btn my-btn submit-btn f-r mr-10 mt-10" @click="checkContractShow=true;">查看合同</button>
       <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="showPackModal" v-if="packAble">报告打印装订盖章</button>
       <button class="btn my-btn submit-btn pull-right mr-10 mt-10" @click="showBackModal" v-if="back">返回报告</button>

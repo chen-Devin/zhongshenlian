@@ -3,10 +3,11 @@
     <card class="card-tabs">
       <button class="btn my-btn submit-btn f-r" @click="applyExpense" v-if="applyAble">申请报销</button>
       <h3 class="main-title">报销列表
+        <button class="btn my-btn submit-btn pull-right f-r" @click="batchReview" v-if="user.department==='所长'&&$route.params.id==='10'" :disabled="checkedProjects.length===0">批量通过</button>
         <search-bar  class="f-r" :searchItems="searchItems" @search="search"></search-bar></h3>
     </card>
     <select-radio @changeClick="changeClick" v-show="styleShow" :companyList="companyList"></select-radio>
-    <card :class="{mt: styleShow}">
+    <card :class="{mt: styleShow}" v-if="reloadList">
       <table class="table table-bordered table-hover table-list">
         <thead :class="{bgColor: styleShow}">
           <tr>
@@ -19,6 +20,10 @@
             <th class="text-left">报销Id</th>
             <th class="text-left">金额</th>
             <th class="text-left">操作</th>
+            <th class="text-left" v-if="user.department==='所长'&&$route.params.id==='10'">
+              <input type="checkbox" name="all" value="all" v-model="checkAll">
+              <label for="all">全选</label>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +47,9 @@
               <span class="reset-s">撤销</span>
             </td>
             <td class="text-left" v-else @click="checkDetail(item)" >无法撤销</td>
+            <td class="text-left" v-if="user.department==='所长'&&$route.params.id==='10'" @click.stop>
+              <input type="checkbox" :value="item.id" v-model="checkedProjects">
+            </td>
           </tr>
         </tbody>
       </table>
@@ -63,6 +71,7 @@ export default {
   data() {
     return {
       user: {},
+      reloadList: true,
       searchItems: [
         {
           label: '公司全称',
@@ -75,11 +84,73 @@ export default {
       ],
       reloadPagination: true,
       styleShow: false,
-      companyList: []
+      companyList: [],
+      checkedProjects: [],
+      checkAll: false
+    }
+  },
+  watch: {
+    checkAll: function (val, oldVal) {
+      if (val !== oldVal) {
+        if (val) {
+          let arr = []
+          this.expensesList.forEach((item) => {
+            arr.push(item.id)
+          })
+          this.checkedProjects = arr
+        } else if (this.checkedProjects.length === this.expensesList.length) {
+          this.checkedProjects = []
+        }
+      }
+    },
+    checkedProjects: function (val, oldVal) {
+      if (val !== oldVal) {
+        if (val.length !== this.expensesList.length) {
+          this.checkAll = false
+        }
+      }
     }
   },
   props: ['expensesList', 'totalNum', 'applyAble', 'listType'],
   methods: {
+    batchReview () {
+      let arr = []
+      this.checkedProjects.forEach((item) => {
+        arr.push({
+          id: item,
+          reason: ''
+        })
+      })
+      return new Promise((resolve, reject) => {
+        axios({
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' },
+          method: 'get',
+          url: '/service',
+          params: {
+            data: (() => {
+              let obj = {
+                command: 'handleReimbursement',
+                platform: 'web',
+                result: '通过',
+                idArray: arr
+              }
+              return JSON.stringify(obj);
+            })()
+          }
+        }).then((rep) => {
+          if (rep.data.statusCode === '10001') {
+            this.$message.success(rep.data.msg)
+            this.reloadList = false
+            setTimeout(() => {
+              this.reloadList = true
+            }, 500)
+            resolve('done');
+          } else {
+            this.$message.error(rep.data.msg)
+          }
+        }, (rep) => { });
+      })
+    },
     changeClick (radio) {
       this.$emit('changeClick', radio)
     },
@@ -107,11 +178,11 @@ export default {
     },
     checkDetail (item) {
       if (item.type === 'contractR' ||  item.type === 'nonContractR') {
-        this.$router.push('/expenses-trip/' + item.id + '&' + this.listType)
-        // this.$router.push('/expenses-record/' + item.id + '/trip/' + this.listType)
+        let routeData = this.$router.resolve({ path: '/expenses-trip/' + item.id + '&' + this.listType});
+        window.open(routeData.href, '_blank');
       } else if (item.type === 'personalR' ||  item.type === 'publicR' ||  item.type === 'projectR') {
-        this.$router.push('/expenses-special/' + item.id + '&' + this.listType)
-        // this.$router.push('/expenses-record/' + item.id + '/special/' + this.listType)
+        let routeData = this.$router.resolve({ path: '/expenses-special/' + item.id + '&' + this.listType});
+        window.open(routeData.href, '_blank');
       }
     },
     backMessageClick (item) {
@@ -189,8 +260,6 @@ export default {
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser
     }, () => { })
-    //console.log(this.expensesList)
-    console.log(this.$route.fullPath)
     if (this.$route.fullPath === '/expenses-review/10' || this.$route.fullPath === '/expenses-review-record' || this.$route.fullPath === '/expenses-review/1' || this.$route.fullPath === '/expenses-review/0' || this.$route.fullPath === '/expenses-review/2') {
       this.styleShow = true
     }

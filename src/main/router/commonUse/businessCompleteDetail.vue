@@ -1,7 +1,7 @@
 <template>
   <div class="main" v-if="reload">
-    <crumbs :paths="paths"></crumbs>
-    <card>
+    <!-- <crumbs :paths="paths"></crumbs> -->
+    <card class="detail-page">
       <h3 class="main-title">
         {{business.name}}
       </h3>

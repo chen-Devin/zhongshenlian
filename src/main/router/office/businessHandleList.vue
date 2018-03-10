@@ -13,7 +13,8 @@
         <router-link class="list-group-item"
                      :to="businessRoute(BUSINESS)"
                      v-for="(BUSINESS, index) in businesses"
-                     :key="index">
+                     :key="index"
+                     target="_blank">
           <span class="title">{{BUSINESS.businessName}}</span>
           <span class="date pull-right">{{BUSINESS.finishTime.substring(0,10)}}</span>
         </router-link>
