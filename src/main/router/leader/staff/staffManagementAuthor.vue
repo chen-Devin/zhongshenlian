@@ -5,7 +5,7 @@
     <card class="card-tabs">
       <search-bar class="f-r" :searchItems="searchItems"
         @search="search" v-if="reloadSearch"></search-bar>
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tabs style="clear: none; !important" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane 
         label="职能部门" 
         name="function"></el-tab-pane>
