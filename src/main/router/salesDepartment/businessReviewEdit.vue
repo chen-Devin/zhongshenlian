@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <crumbs :paths="paths"></crumbs>
-    <card>
+    <!-- <crumbs :paths="paths"></crumbs> -->
+    <card class="detail-page">
       <h3 class="main-title">
         项目详情
         <div class="pull-right">
@@ -680,5 +680,5 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-
+  
 </style>

@@ -128,11 +128,13 @@ export default {
   methods: {
     //用$router.push()方法转入录入页面
     input() {
-      this.$router.push('/bid-info-input/');
+      let routeData = this.$router.resolve({ path: '/bid-info-input/'});
+      window.open(routeData.href, '_blank');
     },
     //传入项目id和判断项目和草稿箱的标志，两个参数之间用&符号连接
     checkMessage(project) {
-      this.$router.push('/bid-info-detail/' + project.id + "&notDraft");
+      let routeData = this.$router.resolve({ path: '/bid-info-detail/' + project.id + "&notDraft"});
+      window.open(routeData.href, '_blank');
     },
     // 搜索功能
     search(searchObj) {

@@ -1,39 +1,41 @@
 <template>
   <div class="main">
-    <crumbs :paths="paths"></crumbs>
-    <card>
-      <h3 class="main-title">
-        规章制度录入
-        <button type="button" class="btn my-btn submit-btn mr-10 f-r" @click="saveEdit()">保存</button>
-        <button type="button" class="btn my-btn draft-btn f-r mr-10" @click="cancel()">取消</button> 
-      </h3>
-    </card>
-    <card>  
-      <div class="form-horizontal present-wrap" @submit.prevent @keyup.enter.prevent>
-        <div class="form-group">
-          <el-form :label-position="labelPosition">
-            <el-row class="el-form-item">
-              <el-col class="d-f" :span="21" :offset="1">
-                <span class="rule-label">标题：</span> 
-                <el-input
-                  type="text"
-                  placeholder="请输入标题"
-                  v-model="ruleAdd.title"
-                  style="flex:1;"></el-input>
-              </el-col>
-            </el-row> 
-            <el-row class="el-form-item"> 
-              <el-col class="d-f" :span="21" :offset="1">
-                <span class="rule-label">正文：</span> 
-                <vue-editor style="flex:1;" v-model="ruleAdd.content" :editorToolbar="customToolbar"></vue-editor>
-              </el-col>
-            </el-row>
-          </el-form>
-        </div>
-        <rule-can-modal v-if="showCanModal"
-                        @deleted="canDeleted"
-                        @canceled="canCanceled"></rule-can-modal> 
-      </div>   
+    <!-- <crumbs :paths="paths"></crumbs> -->
+    <card class="detail-page">
+      <card>
+        <h3 class="main-title">
+          规章制度录入
+          <button type="button" class="btn my-btn submit-btn mr-10 f-r" @click="saveEdit()">保存</button>
+          <button type="button" class="btn my-btn draft-btn f-r mr-10" @click="cancel()">取消</button> 
+        </h3>
+      </card>
+      <card class="editor">  
+        <div class="form-horizontal present-wrap" @submit.prevent @keyup.enter.prevent>
+          <div class="form-group">
+            <el-form :label-position="labelPosition">
+              <el-row class="el-form-item">
+                <el-col class="d-f" :span="21" :offset="1">
+                  <span class="rule-label">标题：</span> 
+                  <el-input
+                    type="text"
+                    placeholder="请输入标题"
+                    v-model="ruleAdd.title"
+                    style="flex:1;"></el-input>
+                </el-col>
+              </el-row> 
+              <el-row class="el-form-item"> 
+                <el-col class="d-f" :span="21" :offset="1">
+                  <span class="rule-label">正文：</span> 
+                  <vue-editor style="flex:1;" v-model="ruleAdd.content" :editorToolbar="customToolbar"></vue-editor>
+                </el-col>
+              </el-row>
+            </el-form>
+          </div>
+          <rule-can-modal v-if="showCanModal"
+                          @deleted="canDeleted"
+                          @canceled="canCanceled"></rule-can-modal> 
+        </div>   
+      </card>
     </card>
   </div>
 </template>
@@ -131,6 +133,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.editor {
+  height: 700px;
+}
 .rule-label {
   width: 60px;
   line-height: 36px;

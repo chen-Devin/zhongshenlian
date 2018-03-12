@@ -1,36 +1,38 @@
 <template>
   <div class="main">
-    <crumbs :paths="paths"></crumbs>
-    <card>
-      <h3 class="main-title">
-        规章制度
-        <button type="button" class="btn my-btn cancel-btn pull-right mr-20" @click="del()" v-if="btnShow">删除</button>
-        <button class="btn my-btn submit-btn pull-right mr-10" type="button" :user="user" v-if="btnShow" @click="editRule()">编辑</button>       
-      </h3>
-    </card>
-    <card>
-      <div class="wrapper">
-        <h4 v-html="detail.title"></h4>
-        <div class="content">
-          <p class="content-area" v-html="detail.content"></p>
-        </div>
-        <!-- <div class="row">
-          <div class="col-md-10"></div>
-          <div class="col-md-2">
-            <p>
-              {{detail.releaseDepartment}}
-            </p>
+    <!-- <crumbs :paths="paths"></crumbs> -->
+    <card class="detail-page">
+      <card>
+        <h3 class="main-title">
+          规章制度
+          <button type="button" class="btn my-btn cancel-btn pull-right mr-20" @click="del()" v-if="btnShow">删除</button>
+          <button class="btn my-btn submit-btn pull-right mr-10" type="button" :user="user" v-if="btnShow" @click="editRule()">编辑</button>       
+        </h3>
+      </card>
+      <card>
+        <div class="wrapper">
+          <h4 v-html="detail.title"></h4>
+          <div class="content">
+            <p class="content-area" v-html="detail.content"></p>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-10"></div>
-          <div class="col-md-2">
-            <p>
-              {{detail.releaseTime}}
-            </p>
+          <!-- <div class="row">
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+              <p>
+                {{detail.releaseDepartment}}
+              </p>
+            </div>
           </div>
-        </div> -->
-      </div>
+          <div class="row">
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+              <p>
+                {{detail.releaseTime}}
+              </p>
+            </div>
+          </div> -->
+        </div>
+      </card>
     </card>
     <rule-del-modal v-if="showDelModal"
                       :initalRule="editRule1"
@@ -140,7 +142,7 @@ export default {
     resize: vertical;
     margin-top: 20px;
     overflow: auto;
-    height: 500px;
+    height: 600px;
     p{
       // margin-top: 50px;
       white-space: -webkit-pre-wrap;

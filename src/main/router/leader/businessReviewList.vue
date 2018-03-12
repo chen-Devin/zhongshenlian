@@ -128,9 +128,11 @@ export default {
   methods: {
     jumpLink (project) {
       if (this.projectShow) {
-        this.$router.push('/business-review-detail-leader-'+project.id)
+        let routeData = this.$router.resolve({ path: '/business-review-detail-leader-'+project.id});
+        window.open(routeData.href, '_blank');
       } else {
-        this.$router.push('/contract-change-check/'+project.id)
+        let routeData = this.$router.resolve({ path: '/contract-change-check/'+project.id});
+        window.open(routeData.href, '_blank');
       }
     },
     changeClick (companyId) {

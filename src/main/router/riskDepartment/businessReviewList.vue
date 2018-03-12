@@ -13,7 +13,8 @@
         <router-link class="list-group-item"
                      :to="businessRoute(BUSINESS)"
                      v-for="(BUSINESS, index) in businesses"
-                     :key="index">
+                     :key="index"
+                     target="_blank">
           <span class="label label-warning"
                 v-if="business.projectStatus===10">尚未完成</span>
           <span class="label label-info"

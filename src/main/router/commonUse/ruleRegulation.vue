@@ -73,10 +73,12 @@ export default {
   },
   methods: {
     mod(RULE) {
-      this.$router.push('/rule-regulation-detail-'+RULE.id)
+      let routeData = this.$router.resolve({ path: '/rule-regulation-detail-'+RULE.id});
+      window.open(routeData.href, '_blank');
     },
     add() {
-      this.$router.push('/rule-regulation-add')
+      let routeData = this.$router.resolve({ path: '/rule-regulation-add'});
+      window.open(routeData.href, '_blank');
     },
     newRegulation(time) {
       return moment().subtract(7, 'days').isSameOrBefore(time, 'day');

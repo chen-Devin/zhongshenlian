@@ -1,7 +1,7 @@
 <template>
   <div class="main" v-if="reload">
-    <crumbs :paths="paths"></crumbs>
-    <card>
+    <!-- <crumbs :paths="paths"></crumbs> -->
+    <card class="detail-page">
       <button class="btn my-btn submit-btn f-r mr-10 mt-10" @click="checkContractShow=true;">查看合同</button>
       <div class="pull-right">
         <template v-if="agree">

@@ -144,6 +144,10 @@ export default {
                   name: '评咨字',
                   code: '02',
                   state: false
+                },{
+                  name: '无报告',
+                  code: '03',
+                  state: false
                 }
               ]
             },{
@@ -154,6 +158,10 @@ export default {
                 {
                   name: '税鉴字',
                   code: '01',
+                  state: false
+                },{
+                  name: '无报告',
+                  code: '02',
                   state: false
                 }
               ]
@@ -177,6 +185,10 @@ export default {
                 },{
                   name: '咨字',
                   code: '04',
+                  state: false
+                },{
+                  name: '无报告',
+                  code: '05',
                   state: false
                 }
               ]

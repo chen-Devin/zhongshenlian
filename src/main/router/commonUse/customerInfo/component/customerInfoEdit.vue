@@ -1,6 +1,6 @@
 <template>
 <div>
-  <card class="customer-info-edit">
+  <card class="customer-info-edit detail-page">
     <p class="btns f-r">
       <template v-if="!isEdit">
         <button class="btn my-btn submit-btn" @click="save">保存</button>
@@ -439,6 +439,7 @@ export default {
   .customer-info-edit {
     .edit-form {
       padding-top: 20px;
+      padding-bottom: 120px;
       p {
         display: flex;
         > .title {

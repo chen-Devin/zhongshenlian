@@ -30,7 +30,7 @@ export default {
 <style lang="sass" scoped>
 .modal-mask {
   position: fixed;
-  z-index: 4;
+  z-index: 12;
   top: 0;
   bottom: 0;
   left: 0;
