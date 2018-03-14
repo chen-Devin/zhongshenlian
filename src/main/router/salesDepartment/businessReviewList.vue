@@ -193,7 +193,7 @@ export default {
     },
     currentChange(newPage) {
       this.pageNum = newPage
-      // this.getBusinessChecking();
+      this.getUnDealListOfBusinessUnit();
     },
     getUnDealListOfBusinessUnit () {
       return new Promise((resolve, reject) => {

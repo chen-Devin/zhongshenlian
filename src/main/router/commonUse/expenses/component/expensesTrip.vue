@@ -65,7 +65,7 @@
               <span style="width:60px">申请人：</span>
               {{ applicantName }}
             </el-col>
-            <el-col class="d-f" :span="4">
+            <el-col class="d-f" :span="4" v-if="editAble === false">
               <span style="width:70px">申请时间：</span>
               {{ reimbursementInfo.createAt.slice(0,10) }}
             </el-col>
@@ -1431,7 +1431,13 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
+#app .page-main > .main-contain{
+  margin-left: 200px !important;
+}
+.detail-page {
+  margin-top: 0 !important;
+}
   .expenses-detail {
     hr {
       margin-top: 0;

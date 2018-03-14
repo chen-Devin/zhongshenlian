@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header style="height: 50px !important;">
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
