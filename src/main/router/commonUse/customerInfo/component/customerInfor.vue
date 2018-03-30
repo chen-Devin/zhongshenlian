@@ -3,7 +3,7 @@
     <h3 class="main-title">
       客户信息
       <!-- <router-link :to="{ path: '/customer-info-list/add' }"> -->
-        <button class="btn my-btn submit-btn pull-right f-r" @click="add">
+        <button class="btn my-btn submit-btn pull-right f-r" @click="add" v-show="enteringShow">
           <!-- <img class="input-icon" src="../../../../img/market/input.svg">&nbsp; -->
           客户录入
         </button>
@@ -50,6 +50,7 @@ export default {
       thisCustomers: this.customers,
       showModModal: false,
       modCustomer: {},
+      enteringShow: true,
       showDelModal: false,
       delCustomer: {},
       showAddModal: false,
@@ -198,6 +199,7 @@ export default {
   created () {
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser;
+      this.$store.getters.getUser.Jurisdiction[4].authority == 0 ? this.enteringShow = false : this.enteringShow = true;
     }, () => { });
   },
   components: {

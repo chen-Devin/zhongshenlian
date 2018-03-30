@@ -74,7 +74,7 @@
           <template slot="title">
             报销管理
           </template>
-          <el-menu-item index="/expenses-review/3" v-if="canReviewBidNotLeader">报销审批</el-menu-item>
+          <el-menu-item index="/expenses-review/3" v-if="canReviewBidNotLeader" v-show="salesShow">报销审批</el-menu-item>
           <el-menu-item index="/expenses-review-record">审批记录</el-menu-item>
           <el-menu-item index="/expenses-list">我的报销</el-menu-item>
         </el-submenu>
@@ -280,6 +280,7 @@ export default {
       routerVal: true,
       uniqueOpened: true,
       itemCounts: 0,
+      salesShow: true,
       user: {}
     };
   },
@@ -418,6 +419,8 @@ export default {
     this.getToBeDoneList()
     this.$store.dispatch('fetchUserInfo').then(() => {
       this.user = this.$store.getters.getUser
+      console.log(this.$store.getters.getUser);
+      console.log(564545654645);
     }, () => { });
   },
   components: {

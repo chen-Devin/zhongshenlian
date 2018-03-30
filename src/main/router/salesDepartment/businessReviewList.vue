@@ -9,7 +9,7 @@
           v-for="(tab, index) in tabList"
           :key="index"></el-tab-pane>
       </el-tabs>
-      <router-link class="btn my-btn submit-btn pull-right add-btn" to="/business-review-add" tag="button" v-if="addBusiness">
+      <router-link class="btn my-btn submit-btn pull-right add-btn" to="/business-review-add" tag="button" v-show="addJurisdiction" v-if="addBusiness">
         新建项目
       </router-link>
       <search-bar class="f-r" :searchItems="searchItems" v-if="reloadSearch"
@@ -70,6 +70,7 @@ export default {
       ],
       businessArray: [],
       addBusiness: false,
+      addJurisdiction: true,
       totalPage: 1,
       totalNum: 1,
       searchObj: {},
@@ -189,7 +190,11 @@ export default {
     },
     addBusinessJud() {
       this.addBusiness = this.user.authority['项目立项'];
-      this.addBusiness = true
+        setTimeout(() => {
+             this.user.Jurisdiction[0].authority == 0 ? this.addJurisdiction = false : this.addJurisdiction = true;
+        }, 500);
+     
+      this.addBusiness = true;
     },
     currentChange(newPage) {
       this.pageNum = newPage

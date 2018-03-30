@@ -7,8 +7,8 @@
         <button class="btn my-btn cancel-btn" @click="cancelShow = true">取消</button>
       </template>
       <template v-if="isEdit">
-        <button class="btn my-btn submit-btn" @click="edit" v-if="canEdit">编辑</button>
-        <button class="btn my-btn cancel-btn" @click="deleteCustomerShow">删除</button>
+        <button class="btn my-btn submit-btn" @click="edit" v-if="canEdit" v-show="showCompile">编辑</button>
+        <button class="btn my-btn cancel-btn" @click="deleteCustomerShow" v-show="showCompile">删除</button>
       </template>
     </p>
     <h4 class="main-title" v-if="!isEdit">客户信息录入</h4>
@@ -290,6 +290,7 @@ export default {
       cancelShow: false,
       newCustomerInfo: this.iniNewCustomerInfo,
       disSubmit: true,
+      showCompile: true,
       loading: true,
       success: false,
       fail: false,
@@ -428,6 +429,12 @@ export default {
     }, () => { });
   },
   props: ['iniNewCustomerInfo', 'iniIsEdit'],
+  created () {
+    this.$store.dispatch('fetchUserInfo').then(() => {
+      this.user = this.$store.getters.getUser;
+      this.$store.getters.getUser.Jurisdiction[5].authority == 0 ? this.showCompile = false : this.showCompile = true;
+    }, () => { });
+  },
   components: {
     card,
     modal

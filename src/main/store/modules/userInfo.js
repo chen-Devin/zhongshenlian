@@ -13,6 +13,7 @@ const state = {
 		duties: '',
 		authority: [],
 		gender: '',
+		Jurisdiction: '',
 		wechatName: '',
 		wechatHeadImg: '',
         shortcutArray: [],
@@ -43,7 +44,8 @@ const actions = {
             }).then((rep)=>{
                 if(rep.data.statusCode === '10001') {
                     commit('updateUserInfo',rep.data.data);
-                    resolve('done');
+					resolve('done');
+					mutations.getUserJurisdiction(rep.data.data.id);
                 } else if (rep.data.statusCode === '10012') {
                     window.location.href = 'signIn.html';
                 }
@@ -52,6 +54,7 @@ const actions = {
         return pro;
 	}
 };
+
 
 const mutations = {
 	updateUserInfo(state, user) {
@@ -70,6 +73,29 @@ const mutations = {
 		state.user.shortcutArray = user.shortcutArray;
 		state.user.isPrincipal = user.isPrincipal;
 		state.user.type = user.type;
+	},
+	getUserJurisdiction(id){
+		return axios({
+            method: 'get',
+            url: '/service',
+            params: {
+                data: (()=>{
+                var obj = {
+                    command: 'getStaffAuthority',
+                    platform: 'web',
+                    userId: id,
+                    staffId: id
+                }
+                return JSON.stringify(obj);
+                })()
+            }
+        }).then((rep)=>{
+                if(rep.data.statusCode === '10001') {
+                    state.user.Jurisdiction = rep.data.data.resultArray;
+                } else if (rep.data.statusCode === '10012') {
+                    window.location.href = 'signIn.html';
+                }
+            },(rep)=>{});
 	}
 };
 

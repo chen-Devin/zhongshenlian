@@ -28,7 +28,8 @@ var app = new Vue({
             authority: {},
             gender: '',
             wechatName: '',
-            wechatHeadImg: ''
+            wechatHeadImg: '',
+            Jurisdiction: ''
         }
     },
     router,
@@ -53,6 +54,7 @@ axios({
     }
 }).then((rep)=>{
         if(rep.data.statusCode === '10001') {
+            getUserJurisdiction(rep.data.data.id);
             app.user.id = rep.data.data.id;
             app.user.telephone = rep.data.data.telephone;
             app.user.name = rep.data.data.name;
@@ -70,3 +72,28 @@ axios({
           window.location.href = 'signIn.html';
         }
     },(rep)=>{});
+
+    function getUserJurisdiction(id) {
+        return axios({
+            method: 'get',
+            url: '/service',
+            params: {
+                data: (()=>{
+                var obj = {
+                    command: 'getStaffAuthority',
+                    platform: 'web',
+                    userId: id,
+                    staffId: id
+                }
+                return JSON.stringify(obj);
+                })()
+            }
+        }).then((rep)=>{
+                if(rep.data.statusCode === '10001') {
+                    console.log(rep.data.data.resultArray);
+                    app.user.Jurisdiction = rep.data.data.resultArray;
+                } else if (rep.data.statusCode === '10012') {
+                    window.location.href = 'signIn.html';
+                }
+            },(rep)=>{});
+    }
